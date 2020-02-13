@@ -5,10 +5,10 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        const products = 'Products get OK';
-        res.send(products);
+        const products = await ProductModel.find();
+        res.json(products);
     } catch (err) {
-        return console.log(err);
+        res.status(500).json({ message: err.message });
     }
 });
 
@@ -22,11 +22,15 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+    const product = new ProductModel({
+        name: req.body.name,
+        brand: req.body.brand,
+    });
     try {
-        const product = 'Product create OK';
-        console.log(product);
+        const newProduct = await product.save();
+        res.status(201).json(newProduct);
     } catch (err) {
-        return console.log(err);
+        res.status(400).json({ message: err.message });
     }
 });
 
