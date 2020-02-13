@@ -1,6 +1,6 @@
 const express = require('express');
-const connectDB = require('./config/db');
 const morgan = require('morgan');
+const connectDB = require('./config/db');
 
 const auth = require('./api/middleware/auth');
 
@@ -18,12 +18,12 @@ app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('API Running'));
 
-app.use('/api/auth', auth);
+app.use('/auth', auth);
 
-app.use('/api/users', users);
-app.use('/api/products', products);
-app.use('/api/orders', orders);
-app.use('/api/articles', articles);
+app.use('/users', users);
+app.use('/products', products);
+app.use('/orders', orders);
+app.use('/articles', articles);
 
 const PORT = process.env.PORT || 5000;
 

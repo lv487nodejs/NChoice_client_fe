@@ -24,7 +24,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const product = 'Product create OK';
-        res.send(product);
+        console.log(product);
     } catch (err) {
         return console.log(err);
     }
@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
 router.patch('/:id', async (req, res) => {
     try {
         const product = 'Product patch OK';
-        res.send(product);
+        console.log(product);
     } catch (err) {
         return console.log(err);
     }
@@ -42,7 +42,7 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const product = 'Product delete OK';
-        res.send(product);
+        console.log(product);
     } catch (err) {
         return console.log(err);
     }
