@@ -78,7 +78,14 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        return res.send('Products get OK');
+        async (req, res) => {
+            user = new UserModel({
+                firstName,
+                lastName,
+                email,
+                password,
+            });
+        }
     } catch (err) {
         return console.log(err);
     }
