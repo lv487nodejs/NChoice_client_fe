@@ -5,30 +5,42 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        return res.send('Products get OK');
+        return res.send('Articles get OK');
+    } catch (err) {
+        return console.log(err);
+    }
+});
+
+router.get('/:id', async (req, res) => {
+    try {
+        return res.send('Single article get OK');
     } catch (err) {
         return console.log(err);
     }
 });
 
 router.post('/', async (req, res) => {
-    const { name } = req.body;
     try {
-        let product = await ProductModel.findOne({ name });
-        if (product) {
-            return res.status(400).json({ errors: [{ msg: 'Cloth item already exists' }] });
-        }
-
-        product = new ProductModel(req.body);
-
-        await product.save();
-        res.json(product);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error');
+        return res.send('Article POST OK');
+    } catch (err) {
+        return console.log(err);
     }
 });
 
+router.patch('/:id', async (req, res) => {
+    try {
+        return res.send('Article PATCH OK');
+    } catch (err) {
+        return console.log(err);
+    }
+});
 
+router.delete('/:id', async (req, res) => {
+    try {
+        return res.send('Article DELET OK');
+    } catch (err) {
+        return console.log(err);
+    }
+});
 
 module.exports = router;
