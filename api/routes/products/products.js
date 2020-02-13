@@ -8,7 +8,11 @@ router.get('/', async (req, res) => {
     if (query) {
         try {
             const products = await ProductModel.find(query);
-            res.json(products);
+            if (products.length) {
+                res.json(products);
+            } else {
+                res.status(500).json({ message: `Bad query:`, query });
+            }
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
