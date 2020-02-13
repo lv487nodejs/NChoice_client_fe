@@ -4,11 +4,21 @@ const ProductModel = require('../../models/Product');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    try {
-        const products = await ProductModel.find();
-        res.json(products);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    const { query } = req;
+    if (query) {
+        try {
+            const products = await ProductModel.find(query);
+            res.json(products);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    } else {
+        try {
+            const products = await ProductModel.find();
+            res.json(products);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
     }
 });
 
