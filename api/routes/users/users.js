@@ -90,17 +90,33 @@ router.post('/', async (req, res) => {
         if (user) {
             return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
         }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         user = new UserModel({
             firstName,
             lastName,
             email,
-            password,
+            password: hashedPassword,
         });
         await user.save();
 
         return res.json({ msg: 'User saved', user });
     } catch (err) {
         return console.log(err);
+    }
+});
+
+router.post('/login', async (req, res) => {
+    try {
+        const user = await UserModel.findOne({ email: req.body.email });
+        if (await bcrypt.compare(req.body.password, user.password)) {
+            res.send('Success');
+        } else {
+            res.send('Not allowed');
+        }
+    } catch (err) {
+        req.status(500).send();
     }
 });
 
