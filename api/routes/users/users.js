@@ -74,22 +74,9 @@ router.get('/:id', async (req, res) => {
     } catch (err) {
         return console.log(err);
     }
-})
-    .post('/', async (req, res) => {
-    try {
-        return res.send('Products get OK');
-    } catch (err) {
-        return console.log(err);
-    }
-})
-    .patch('/', async (req, res) => {
-    try {
-        return res.send('Products get OK');
-    } catch (err) {
-        return console.log(err);
-    }
-})
-    .delete('/', async (req, res) => {
+});
+
+router.post('/', async (req, res) => {
     try {
         return res.send('Products get OK');
     } catch (err) {
@@ -97,5 +84,20 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.patch('/', async (req, res) => {
+    try {
+        return res.send('Products get OK');
+    } catch (err) {
+        return console.log(err);
+    }
+});
+
+router.delete('/', async (req, res) => {
+    try {
+        return res.send('Products get OK');
+    } catch (err) {
+        return console.log(err);
+    }
+});
 
 module.exports = router;
