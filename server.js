@@ -1,5 +1,6 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const morgan = require('morgan');
 
 const auth = require('./api/middleware/auth');
 
@@ -12,6 +13,7 @@ const app = express();
 
 connectDB();
 
+app.use(morgan('dev'));
 app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('API Running'));

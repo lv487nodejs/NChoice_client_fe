@@ -16,7 +16,8 @@
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.8.12"
+    "mongoose": "^5.8.12",
+    "morgan": "^1.9.1"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
