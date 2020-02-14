@@ -149,7 +149,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const user = await UserModel.findById(id);
         if (!user) {
-            return res.status(404).send('Usere dont exist');
+            return res.status(404).send('User dont exist');
         }
         user.remove();
         return res.send('User deleted');

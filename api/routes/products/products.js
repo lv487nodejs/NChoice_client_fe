@@ -44,10 +44,10 @@ router.post('/', async (req, res) => {
 });
 
 router.patch('/:id', getProduct, async (req, res) => {
-    if (req.body.name != null) {
+    if (req.body.name) {
         res.product.name = req.body.name;
     }
-    if (req.body.brand != null) {
+    if (req.body.brand) {
         res.product.brand = req.body.brand;
     }
     try {
