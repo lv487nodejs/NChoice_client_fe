@@ -1,5 +1,5 @@
 const express = require('express');
-const ProductModel = require('../../models/Product');
+const Products = require('../../models/Product');
 
 const router = express.Router();
 
@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
     const { query } = req;
     if (query) {
         try {
-            const products = await ProductModel.find(query);
+            const products = await Products.find(query);
             if (products.length) {
                 res.json(products);
             } else {
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
         }
     } else {
         try {
-            const products = await ProductModel.find();
+            const products = await Products.find();
             res.json(products);
         } catch (err) {
             res.status(500).json({ message: err.message });
@@ -30,12 +30,17 @@ router.get('/:id', getProduct, (req, res) => {
     res.json(res.product);
 });
 
+
 router.post('/', async (req, res) => {
-    const product = new ProductModel({
-        name: req.body.name,
-        brand: req.body.brand,
-    });
     try {
+        const product = new Products({
+            brand: req.body.brand,
+            title: req.body.title,
+            description: req.body.description,
+            categories: req.body.categories,
+            catalogs: req.body.catalogs,
+            variants: req.body.variants,
+        });
         const newProduct = await product.save();
         res.status(201).json(newProduct);
     } catch (err) {
@@ -70,7 +75,7 @@ router.delete('/:id', getProduct, async (req, res) => {
 async function getProduct(req, res, next) {
     let product;
     try {
-        product = await ProductModel.findById(req.params.id);
+        product = await Products.findById(req.params.id);
         if (product == null) {
             return res.status(404).json({ message: 'Cannot find subscriber' });
         }
@@ -87,12 +92,12 @@ async function getProduct(req, res, next) {
 // router.post('/', async (req, res) => {
 //     const { name } = req.body;
 //     try {
-//         let product = await ProductModel.findOne({ name });
+//         let product = await Products.findOne({ name });
 //         if (product) {
 //             return res.status(400).json({ errors: [{ msg: 'Cloth item already exists' }] });
 //         }
 
-//         product = new ProductModel(req.body);
+//         product = new Products(req.body);
 
 //         await product.save();
 //         res.json(product);
