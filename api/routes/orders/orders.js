@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        const orders = 'Orders get OK';
+        const orders = await OrderModel.find()
         res.send(orders);
     } catch (err) {
         return console.log(err);
@@ -13,8 +13,9 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
+    const { id } = req.params.id
     try {
-        const order = 'order get OK';
+        const order = await OrderModel.findById(id)
         res.send(order);
     } catch (err) {
         return console.log(err);

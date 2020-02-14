@@ -5,14 +5,21 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        return res.send('Articles get OK');
+        const article = await ArticleModel.find();
+
+        return res.send(article);
     } catch (err) {
         return console.log(err);
     }
 });
 
 router.get('/:id', async (req, res) => {
+    const { id } = req.params.id;
     try {
+        const article = await ArticleModel.findById(id);
+        if (!article) {
+            res.status(404).json({ msg: 'article does not exist' });
+        }
         return res.send('Single article get OK');
     } catch (err) {
         return console.log(err);
@@ -20,6 +27,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+    
     try {
         return res.send('Article POST OK');
     } catch (err) {
