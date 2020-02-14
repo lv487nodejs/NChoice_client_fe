@@ -23,7 +23,10 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const order = 'Order create OK';
+        const order = new OrderModel({
+            name: req.body.name
+        });
+        order.save();
         res.send(order);
     } catch (err) {
         return console.log(err);

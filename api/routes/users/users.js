@@ -77,15 +77,22 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+    const { firstName, lastName, email, password } = req.body;
+
     try {
-        async (req, res) => {
-            user = new UserModel({
-                firstName,
-                lastName,
-                email,
-                password,
-            });
+        let user = await UserModel.findOne({ email });
+        if (user) {
+            return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
         }
+        user = new UserModel({
+            firstName,
+            lastName,
+            email,
+            password,
+        });
+        await user.save();
+
+        return res.json({ msg: 'User saved', user });
     } catch (err) {
         return console.log(err);
     }
