@@ -62,15 +62,21 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        return res.send('Products get OK');
+        const user = await UserModel.find();
+        return res.json(user);
     } catch (err) {
         return console.log(err);
     }
 });
 
 router.get('/:id', async (req, res) => {
+    const { id } = req.params;
     try {
-        return res.send('Products get OK');
+        const user = await UserModel.findById(id);
+        if (!user) {
+            return res.status(404).send('Usere dont exist');
+        }
+        return res.json(user);
     } catch (err) {
         return console.log(err);
     }
@@ -84,11 +90,14 @@ router.post('/', async (req, res) => {
         if (user) {
             return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
         }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         user = new UserModel({
             firstName,
             lastName,
             email,
-            password,
+            password: hashedPassword,
         });
         await user.save();
 
@@ -98,17 +107,52 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.patch('/', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
-        return res.send('Products get OK');
+        const user = await UserModel.findOne({ email: req.body.email });
+        if (await bcrypt.compare(req.body.password, user.password)) {
+            res.send('Success');
+        } else {
+            res.send('Not allowed');
+        }
+    } catch (err) {
+        req.status(500).send();
+    }
+});
+
+router.patch('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { firstName, lastName, email, password } = req.body;
+    try {
+        const userToUpdate = await UserModel.findById(id);
+        if (firstName) {
+            userToUpdate.firstName = firstName;
+        }
+        if (lastName) {
+            userToUpdate.lastName = lastName;
+        }
+        if (email) {
+            userToUpdate.email = email;
+        }
+        if (password) {
+            userToUpdate.password = password;
+        }
+        userToUpdate.save();
+        return res.json(userToUpdate);
     } catch (err) {
         return console.log(err);
     }
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
     try {
-        return res.send('Products get OK');
+        const user = await UserModel.findById(id);
+        if (!user) {
+            return res.status(404).send('Usere dont exist');
+        }
+        user.remove();
+        return res.send('User deleted');
     } catch (err) {
         return console.log(err);
     }

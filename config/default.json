@@ -1,4 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://maryan123:Rp079vlmarian@cluster0-u9vlq.mongodb.net/test?retryWrites=true&w=majority",
-    "jwtSecret": "mysecret123"
-  }
+  "mongoURI": "mongodb+srv://Markiyan:19890605@markiyan-ofiqt.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "mysecret123"
+}

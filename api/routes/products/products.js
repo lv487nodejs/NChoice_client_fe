@@ -4,21 +4,30 @@ const ProductModel = require('../../models/Product');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    try {
-        const products = await ProductModel.find();
-        res.json(products);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    const { query } = req;
+    if (query) {
+        try {
+            const products = await ProductModel.find(query);
+            if (products.length) {
+                res.json(products);
+            } else {
+                res.status(500).json({ message: `Bad query:`, query });
+            }
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    } else {
+        try {
+            const products = await ProductModel.find();
+            res.json(products);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
     }
 });
 
-router.get('/:id', async (req, res) => {
-    try {
-        const product = 'Product get OK';
-        res.send(product);
-    } catch (err) {
-        return console.log(err);
-    }
+router.get('/:id', getProduct, (req, res) => {
+    res.json(res.product);
 });
 
 router.post('/', async (req, res) => {
@@ -34,23 +43,44 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', getProduct, async (req, res) => {
+    if (req.body.name != null) {
+        res.product.name = req.body.name;
+    }
+    if (req.body.brand != null) {
+        res.product.brand = req.body.brand;
+    }
     try {
-        const product = 'Product patch OK';
-        console.log(product);
+        const updatedProduct = await res.product.save();
+        res.json(updatedProduct);
     } catch (err) {
-        return console.log(err);
+        res.status(400).json({ message: err.message });
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', getProduct, async (req, res) => {
     try {
-        const product = 'Product delete OK';
-        console.log(product);
+        await res.product.remove();
+        res.json({ message: 'Deleted Product' });
     } catch (err) {
-        return console.log(err);
+        res.status(500).json({ message: err.message });
     }
 });
+
+async function getProduct(req, res, next) {
+    let product;
+    try {
+        product = await ProductModel.findById(req.params.id);
+        if (product == null) {
+            return res.status(404).json({ message: 'Cannot find subscriber' });
+        }
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+
+    res.product = product;
+    next();
+}
 
 // //////////////////////
 
