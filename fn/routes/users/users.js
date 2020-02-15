@@ -1,12 +1,12 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const UserModel = require('../../models/User');
+const Users = require('../../models/User');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        const user = await UserModel.find();
+        const user = await Users.find();
         res.status(200).send(user);
     } catch (err) {
         res.status(500).send({ message: err.message });
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const user = await UserModel.findById(id);
+        const user = await Users.findById(id);
         if (!user) {
             throw { message: 'User doesnt exist' };
         }
@@ -30,14 +30,14 @@ router.post('/', async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
 
     try {
-        let user = await UserModel.findOne({ email });
+        let user = await Users.findOne({ email });
         if (user) {
             throw { message: 'User already exists' };
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        user = new UserModel({
+        user = new Users({
             firstName,
             lastName,
             email,
@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        const user = await UserModel.findOne({ email: req.body.email });
+        const user = await Users.findOne({ email: req.body.email });
         if (await bcrypt.compare(req.body.password, user.password)) {
             res.status(200).send('Success');
         } else {
