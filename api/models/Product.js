@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const Sizes = new Schema({
+const Propetries = new Schema({
     size: { type: String, required: true },
     available: { type: Number, required: true, min: 0, max: 100 },
     sku: {
@@ -15,36 +15,42 @@ const Sizes = new Schema({
 });
 
 const Images = new Schema({
-    url: { type: String, default: '/image/img.jpg' },
+    url: String,
 });
 
-const Variants = new Schema({
-    color: String,
-    sizes: [Sizes],
+const Category = new Schema({
+    name: { type: String, required: true, unique: true },
+    images: [Images],
 });
 
-const Categories = new Schema({
-    name: String,
+const Catalog = new Schema({
+    name: { type: String, required: true, unique: true },
+    images: [Images],
 });
 
-const Catalogs = new Schema({
-    name: String,
-});
-
-const Brands = new Schema({
-    name: String,
+const Brand = new Schema({
+    name: { type: String, required: true, unique: true },
+    images: [Images],
 });
 
 const Product = new Schema({
-    brand: [Brands],
+    catalogs: { type: Schema.Types.ObjectId, ref: 'Catalog' },
+    categories: { type: Schema.Types.ObjectId, ref: 'Category' },
+    brand: { type: Schema.Types.ObjectId, ref: 'Brand' },
     title: { type: String, required: true },
     description: { type: String, required: true },
+    color: String,
     images: [Images],
-    categories: [Categories],
-    catalogs: [Catalogs],
-    variants: [Variants],
+    propetries: [Propetries],
     modified: { type: Date, default: Date.now },
 });
 
-const Products = mongoose.model('product', Product);
+const Categories = mongoose.model('Category', Category);
+const Catalogs = mongoose.model('Catalog', Catalog);
+const Brands = mongoose.model('Brand', Brand);
+const Products = mongoose.model('Product', Product);
+
+module.exports = Categories;
+module.exports = Catalogs;
+module.exports = Brands;
 module.exports = Products;

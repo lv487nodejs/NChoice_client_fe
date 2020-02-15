@@ -27,7 +27,6 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    
     try {
         return res.send('Article POST OK');
     } catch (err) {

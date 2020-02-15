@@ -30,7 +30,6 @@ router.get('/:id', getProduct, (req, res) => {
     res.json(res.product);
 });
 
-
 router.post('/', async (req, res) => {
     try {
         const product = new Products({

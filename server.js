@@ -6,6 +6,9 @@ const auth = require('./api/middleware/auth');
 
 const users = require('./api/routes/users/users');
 const products = require('./api/routes/products/products');
+const catalogs = require('./api/routes/products/catalogs');
+const categories = require('./api/routes/products/categories');
+const brands = require('./api/routes/products/brands');
 const orders = require('./api/routes/orders/orders');
 const articles = require('./api/routes/articles/articles');
 
@@ -16,10 +19,8 @@ connectDB();
 app.use(morgan('dev'));
 app.use(morgan('common'));
 app.use(morgan('short'));
-
-// here custom token is created. instead of "body" you can use any object from "req"
 morgan.token('body', (req, res) => console.log(JSON.stringify(req.body)));
-app.use(morgan(' :method :url  :body :response-time '));
+app.use(morgan(' :method :url  :response-time '));
 app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('API Running'));
@@ -28,6 +29,9 @@ app.use('/auth', auth);
 
 app.use('/users', users);
 app.use('/products', products);
+app.use('/catalogs', catalogs);
+app.use('/categories', categories);
+app.use('/brands', brands);
 app.use('/orders', orders);
 app.use('/articles', articles);
 
