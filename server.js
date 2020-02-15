@@ -2,11 +2,11 @@ const express = require('express');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
 
-const auth = require('./api/middleware/auth');
+const auth = require('./middleware/auth');
 
-const users = require('./api/routes/users/users');
-const products = require('./api/routes/products/products');
-const catalogs = require('./api/routes/products/catalogs');
+const users = require('./routes/users/users');
+const products = require('./routes/products/products');
+const catalogs = require('./routes/products/catalogs');
 
 const app = express();
 
