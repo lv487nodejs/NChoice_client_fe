@@ -27,7 +27,6 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-    article: { type: mongoose.Types.ObjectId, ref: 'Article' },
 });
 
 const UserModel = mongoose.model('user', UserSchema);

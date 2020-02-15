@@ -7,10 +7,6 @@ const auth = require('./api/middleware/auth');
 const users = require('./api/routes/users/users');
 const products = require('./api/routes/products/products');
 const catalogs = require('./api/routes/products/catalogs');
-const categories = require('./api/routes/products/categories');
-const brands = require('./api/routes/products/brands');
-const orders = require('./api/routes/orders/orders');
-const articles = require('./api/routes/articles/articles');
 
 const app = express();
 
@@ -30,10 +26,6 @@ app.use('/auth', auth);
 app.use('/users', users);
 app.use('/products', products);
 app.use('/catalogs', catalogs);
-app.use('/categories', categories);
-app.use('/brands', brands);
-app.use('/orders', orders);
-app.use('/articles', articles);
 
 const PORT = process.env.PORT || 5000;
 

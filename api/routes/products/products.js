@@ -1,109 +1,70 @@
 const express = require('express');
-const Products = require('../../models/Product');
+const ProductsModels = require('../../models/Product');
+
+const { Products, Catalogs } = ProductsModels;
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
-    if (query) {
-        try {
-            const products = await Products.find(query);
-            if (products.length) {
-                res.json(products);
-            } else {
-                res.status(500).json({ message: `Bad query:`, query });
-            }
-        } catch (err) {
-            res.status(500).json({ message: err.message });
-        }
-    } else {
-        try {
+    try {
+        const productsFiltered = await Products.find(query);
+        if (productsFiltered.length) {
+            res.status(200).send(productsFiltered);
+        } else {
             const products = await Products.find();
-            res.json(products);
-        } catch (err) {
-            res.status(500).json({ message: err.message });
+            res.status(200).send(products);
         }
+    } catch (err) {
+        res.status(500).send({ message: err.message });
     }
 });
 
 router.get('/:id', getProduct, (req, res) => {
-    res.json(res.product);
-});
-
-router.post('/', async (req, res) => {
-    try {
-        const product = new Products({
-            brand: req.body.brand,
-            title: req.body.title,
-            description: req.body.description,
-            categories: req.body.categories,
-            catalogs: req.body.catalogs,
-            variants: req.body.variants,
-        });
-        const newProduct = await product.save();
-        res.status(201).json(newProduct);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
-
-router.patch('/:id', getProduct, async (req, res) => {
-    if (req.body.name) {
-        res.product.name = req.body.name;
-    }
-    if (req.body.brand) {
-        res.product.brand = req.body.brand;
-    }
-    try {
-        const updatedProduct = await res.product.save();
-        res.json(updatedProduct);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
-
-router.delete('/:id', getProduct, async (req, res) => {
-    try {
-        await res.product.remove();
-        res.json({ message: 'Deleted Product' });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
+    res.status(200).send(res.product);
 });
 
 async function getProduct(req, res, next) {
+    const { id } = req.params;
     let product;
     try {
-        product = await Products.findById(req.params.id);
-        if (product == null) {
-            return res.status(404).json({ message: 'Cannot find subscriber' });
+        product = await Products.findById(id);
+        if (product) {
+            throw { message: 'Can not find product' };
         }
     } catch (err) {
-        return res.status(500).json({ message: err.message });
+        return res.status(500).send({ message: err.message });
     }
 
     res.product = product;
     next();
 }
 
-// //////////////////////
+router.post('/', async (req, res) => {
+    try {
+        const catalogId = req.body.catalog;
 
-// router.post('/', async (req, res) => {
-//     const { name } = req.body;
-//     try {
-//         let product = await Products.findOne({ name });
-//         if (product) {
-//             return res.status(400).json({ errors: [{ msg: 'Cloth item already exists' }] });
-//         }
+        const catalog = await Catalogs.findOne(catalogId);
+        if (!catalog) throw { message: 'Bad catalog name' };
 
-//         product = new Products(req.body);
+        const product = new Products({
+            catalog,
+            category: req.body.category,
+            brand: req.body.brand,
+            title: req.body.title,
+            description: req.body.description,
+            color: req.body.color,
+            images: req.body.images,
+            propetries: req.body.propetries,
+        });
 
-//         await product.save();
-//         res.json(product);
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).send('Server error');
-//     }
-// });
+        const newProduct = await product.save();
+        catalog.products.push(product);
+        await catalog.save();
+        res.status(201).send(newProduct);
+    } catch (err) {
+        res.status(400).send({ message: err.message });
+    }
+});
 
 module.exports = router;

@@ -2,55 +2,46 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const Propetries = new Schema({
-    size: { type: String, required: true },
+const ImagesModel = new Schema({
+    url: String,
+});
+
+const CatalogModel = new Schema({
+    name: { type: String, required: true, unique: true },
+    images: [ImagesModel],
+    products: { type: Schema.Types.ObjectId, ref: 'product' },
+});
+
+const PropetriesModel = new Schema({
+    size: {
+        type: [Number, String],
+        enum: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 'XS', 'S', 'M', 'L', 'XL', 'XXL'],
+        required: true,
+    },
     available: { type: Number, required: true, min: 0, max: 100 },
     sku: {
         type: String,
         required: true,
         validate: [/[a-zA-Z0-9]/, 'Product sku should have letters and numbers'],
+        unique: true,
     },
-    mrsp: { type: Number, required: true },
+    mrsp: { type: Number, min: 0 },
     price: { type: Number, required: true, min: 0 },
 });
 
-const Images = new Schema({
-    url: String,
-});
-
-const Category = new Schema({
-    name: { type: String, required: true, unique: true },
-    images: [Images],
-});
-
-const Catalog = new Schema({
-    name: { type: String, required: true, unique: true },
-    images: [Images],
-});
-
-const Brand = new Schema({
-    name: { type: String, required: true, unique: true },
-    images: [Images],
-});
-
-const Product = new Schema({
-    catalogs: { type: Schema.Types.ObjectId, ref: 'Catalog' },
-    categories: { type: Schema.Types.ObjectId, ref: 'Category' },
-    brand: { type: Schema.Types.ObjectId, ref: 'Brand' },
+const ProductModel = new Schema({
+    catalog: { type: Schema.Types.ObjectId, ref: 'catalog' },
+    category: { type: String, enum: ['Dresses', 'Sweaters', 'Jeans', 'T-Shirts', 'Shoes', 'Hoodies'], required: true },
+    brand: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
-    color: String,
-    images: [Images],
-    propetries: [Propetries],
+    color: { type: String, enum: ['Red', 'Black', 'Blue', 'White', 'Green', 'Yellow'], required: true },
+    images: [ImagesModel],
+    propetries: [PropetriesModel],
     modified: { type: Date, default: Date.now },
 });
 
-const Categories = mongoose.model('Category', Category);
-const Catalogs = mongoose.model('Catalog', Catalog);
-const Brands = mongoose.model('Brand', Brand);
-const Products = mongoose.model('Product', Product);
+const Catalogs = mongoose.model('catalog', CatalogModel);
+const Products = mongoose.model('product', ProductModel);
 
-module.exports = Categories;
-module.exports = Catalogs;
-module.exports = Brands;
-module.exports = Products;
+module.exports = { Products, Catalogs };
