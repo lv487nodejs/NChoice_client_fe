@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', getProduct, (req, res) => {
-    console.log(res.product)
+    console.log(res.product);
     res.status(200).send(res.product);
 });
 

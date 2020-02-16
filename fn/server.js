@@ -2,8 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
 
-const auth = require('./middleware/auth');
-
+const auth = require('./routes/users/auth');
 const users = require('./routes/users/users');
 const products = require('./routes/products/products');
 const catalogs = require('./routes/products/catalogs');
@@ -22,7 +21,6 @@ app.use(express.json({ extended: false }));
 app.get('/', (req, res) => res.send('API Running'));
 
 app.use('/auth', auth);
-
 app.use('/users', users);
 app.use('/products', products);
 app.use('/catalogs', catalogs);

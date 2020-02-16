@@ -35,8 +35,8 @@ router.get('/:name', async (req, res) => {
         if (!catalog) {
             throw String('Can not find catalog with such an ID');
         }
-        console.log(catalog)
-        const { products } = catalog
+        console.log(catalog);
+        const { products } = catalog;
         res.status(200).send(products);
     } catch (err) {
         res.status(400).send(err);
