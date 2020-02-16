@@ -1,11 +1,12 @@
 const express = require('express');
 const ProductModels = require('../../models/Product');
+const { catalogValidationRules, validate } = require('../../middleware/validator');
 
 const { Catalogs } = ProductModels;
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', catalogValidationRules(), validate, async (req, res) => {
     try {
         const newCatalog = new Catalogs({
             name: req.body.name,

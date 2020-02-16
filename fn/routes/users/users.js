@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const Users = require('../../models/User');
+const { userValidationRules, validate } = require('../../middleware/validator');
 
 const router = express.Router();
 
@@ -26,7 +27,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', userValidationRules(), validate, async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
 
     try {
@@ -43,8 +44,7 @@ router.post('/', async (req, res) => {
             email,
             password: hashedPassword,
         });
-        await user.status(200).save();
-
+        await user.save();
         res.status(200).send({ message: 'User saved', user });
     } catch (err) {
         res.status(500).send({ message: err.message });
@@ -52,9 +52,16 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
+    const { password, email } = req.body;
     try {
-        const user = await Users.findOne({ email: req.body.email });
-        if (await bcrypt.compare(req.body.password, user.password)) {
+        const user = await Users.findOne({ email });
+        if (!user) {
+            return res.status(400).send({ errors: [{ msg: 'Invalid credentials' }] });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (isMatch) {
             res.status(200).send('Success');
         } else {
             res.status(200).send('Not allowed');

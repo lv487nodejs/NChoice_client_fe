@@ -1,5 +1,6 @@
 const express = require('express');
 const ProductsModels = require('../../models/Product');
+const { productValidationRules, validate } = require('../../middleware/validator');
 
 const { Products, Catalogs } = ProductsModels;
 
@@ -41,10 +42,9 @@ async function getProduct(req, res, next) {
     next();
 }
 
-router.post('/', async (req, res) => {
+router.post('/', productValidationRules(), validate, async (req, res) => {
     try {
         const catalogId = req.body.catalog;
-
         const catalog = await Catalogs.findOne(catalogId);
         if (!catalog) throw { message: 'Bad catalog name' };
 
