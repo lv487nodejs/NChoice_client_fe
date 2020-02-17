@@ -5,12 +5,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const Users = require('../../models/User');
+const { userLoginValidationRules, validate } = require('../../middleware/validator');
 
 let refreshTokens = [];
 
 const router = express.Router();
 
-router.post('/login', async (req, res) => {
+router.post('/login', userLoginValidationRules(), validate, async (req, res) => {
     const { password, email } = req.body;
     try {
         const user = await Users.findOne({ email });
