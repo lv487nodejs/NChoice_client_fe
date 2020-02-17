@@ -44,8 +44,8 @@ async function getProduct(req, res, next) {
 
 router.post('/', productValidationRules(), validate, async (req, res) => {
     try {
-        const catalogId = req.body.catalog;
-        const catalog = await Catalogs.findOne(catalogId);
+        const catalogName = req.body.catalog;
+        const catalog = await Catalogs.findOne(catalogName);
         if (!catalog) throw { message: 'Bad catalog name' };
 
         const product = new Products({

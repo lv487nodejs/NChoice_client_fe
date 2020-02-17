@@ -1,12 +1,13 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const tokenValidation = require('../../middleware/auth');
 
 const Users = require('../../models/User');
 const { userValidationRules, validate } = require('../../middleware/validator');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', tokenValidation, async (req, res) => {
     try {
         const user = await Users.find();
         res.status(200).send(user);

@@ -27,7 +27,7 @@ const propetriesValidationRules = () => [
         .isString(),
     body('price', 'Price is required')
         .notEmpty()
-        .isNumeric({ min: 1, max }),
+        .isNumeric({ min: 1, max: 10000 }),
 ];
 
 const productValidationRules = () => [

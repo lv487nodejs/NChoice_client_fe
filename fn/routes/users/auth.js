@@ -50,7 +50,7 @@ router.delete('/logout', async (req, res) => {
     try {
         refreshTokens = refreshTokens.filter(token => token !== req.body.token);
         res.sendStatus(204);
-    } catch {
+    } catch (err) {
         req.status(500).send(err.message);
     }
 });
