@@ -11,6 +11,11 @@ const userValidationRules = () => [
     body('password').isLength({ min: 6 }),
 ];
 
+const userLoginValidationRules = () => [
+    body('email', 'Email is required').isEmail(),
+    body('password').isLength({ min: 6 }),
+];
+
 const catalogValidationRules = () => [
     body('name', 'name is required')
         .notEmpty()
@@ -61,5 +66,6 @@ module.exports = {
     catalogValidationRules,
     propetriesValidationRules,
     productValidationRules,
+    userLoginValidationRules,
     validate,
 };
