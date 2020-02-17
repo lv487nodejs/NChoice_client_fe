@@ -9,28 +9,24 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
-
-    console.log(query)
-
-    const catalog = await Catalogs.findOne(query);
-    const category = await Categories.findOne(query);
-    const brand = await Brands.findOne(query);
-    const color = await Colors.findOne(query);
-    const filter = {};
-    if (catalog) filter.catalog = catalog.id;
-    if (category) filter.category = category.id;
-    if (brand) filter.brand = brand.id;
-    if (color) filter.color = color.id;
-    console.log(filter)
+    const { catalog, category, color, brand } = query;
+    // const filter = {};
+    // if (catalog) filter.catalog = { catalog };
+    // if (category) filter.category = { category };
+    // if (brand) filter.brand = { brand };
+    // if (color) filter.color = { color };
 
     try {
-        const productsFiltered = await Products.find(filter);
-        if (productsFiltered.length) {
-            res.status(200).send(productsFiltered);
-        } else {
-            const products = await Products.find().populate('catalog');
-            res.status(200).send(products);
+        const products = await Products.find()
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
+        if (!products) {
+            return res.status(404).send({ message: 'Products not found ' });
         }
+
+        res.status(200).send(products);
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
