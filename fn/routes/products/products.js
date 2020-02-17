@@ -10,14 +10,27 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     const { query } = req;
     const { catalog, category, color, brand } = query;
-    // const filter = {};
-    // if (catalog) filter.catalog = { catalog };
-    // if (category) filter.category = { category };
-    // if (brand) filter.brand = { brand };
-    // if (color) filter.color = { color };
+    const filter = {};
+
+    if (catalog) {
+        const catalogItem = await Catalogs.find({ catalog });
+        filter.catalog = catalogItem[0].id;
+    }
+    if (category) {
+        const categotyItem = await Categories.find({ category });
+        filter.category = categotyItem[0].id;
+    }
+    if (brand) {
+        const brandItem = await Brands.find({ brand });
+        filter.brand = brandItem[0].id;
+    }
+    if (color) {
+        const colorItem = await Colors.find({ color });
+        filter.color = colorItem[0].id;
+    }
 
     try {
-        const products = await Products.find()
+        const products = await Products.find(filter)
             .populate('catalog')
             .populate('category')
             .populate('color')
