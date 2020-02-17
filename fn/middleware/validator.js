@@ -17,7 +17,7 @@ const userLoginValidationRules = () => [
 ];
 
 const catalogValidationRules = () => [
-    body('name', 'name is required')
+    body('catalog', 'catalog name is required')
         .notEmpty()
         .isString(),
 ];

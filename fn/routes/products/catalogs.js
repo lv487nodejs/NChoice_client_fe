@@ -1,15 +1,15 @@
 const express = require('express');
-const ProductModels = require('../../models/Product');
+const ProductPropetries = require('../../models/ProductPropetries');
 const { catalogValidationRules, validate } = require('../../middleware/validator');
 
-const { Catalogs } = ProductModels;
+const { Catalogs } = ProductPropetries;
 
 const router = express.Router();
 
-router.post('/', catalogValidationRules(), validate, async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const newCatalog = new Catalogs({
-            name: req.body.name,
+            catalog: req.body.catalog,
             images: req.body.images,
         });
         await newCatalog.save();
