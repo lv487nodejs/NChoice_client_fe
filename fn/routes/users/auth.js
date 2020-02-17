@@ -37,6 +37,7 @@ router.post('/login', userLoginValidationRules(), validate, async (req, res) => 
 });
 
 router.post('/token', (req, res) => {
+    console.log(req.body.token);
     const refreshToken = req.body.token;
     if (refreshToken == null) return res.sendStatus(401);
     if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
@@ -57,7 +58,7 @@ router.delete('/logout', async (req, res) => {
 });
 
 function generateAccessToken(userName) {
-    return jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
+    return jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
 }
 
 module.exports = router;
