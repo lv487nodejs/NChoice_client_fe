@@ -1,16 +1,17 @@
 const express = require('express');
-const ProductModels = require('../../models/Product');
+const ProductPropetries = require('../../models/ProductPropetries');
 const { catalogValidationRules, validate } = require('../../middleware/validator');
 
-const { Catalogs } = ProductModels;
+const { Catalogs } = ProductPropetries;
 
 const router = express.Router();
 
-router.post('/', catalogValidationRules(), validate, async (req, res) => {
+router.post('/', async (req, res) => {
+    const { catalog, images } = req.body;
     try {
         const newCatalog = new Catalogs({
-            name: req.body.name,
-            images: req.body.images,
+            catalog,
+            images,
         });
         await newCatalog.save();
         res.status(200).send(newCatalog);
@@ -20,24 +21,32 @@ router.post('/', catalogValidationRules(), validate, async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
+    const { catalog } = req.query;
+    let catalogs;
     try {
-        const catalogs = await Catalogs.find();
-        res.send(catalogs);
+        if (catalog) {
+            catalogs = await Catalogs.find({ catalog }).populate('categories');
+        } else {
+            catalogs = await Catalogs.find().populate('categories');
+        }
+
+        if (!catalogs) {
+            throw { message: 'Catalog not found' };
+        }
+        res.status(200).send(catalogs);
     } catch (err) {
         res.status(400).send(err);
     }
 });
 
-router.get('/:name', async (req, res) => {
-    const name = req.params;
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
     try {
-        const catalog = await Catalogs.findOne(name).populate('products');
+        const catalog = await Catalogs.findById(id);
         if (!catalog) {
-            throw String('Can not find catalog with such an ID');
+            throw { message: 'Can not find catalog with such an ID' };
         }
-        console.log(catalog);
-        const { products } = catalog;
-        res.status(200).send(products);
+        res.status(200).send(catalog);
     } catch (err) {
         res.status(400).send(err);
     }
