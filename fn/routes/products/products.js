@@ -19,53 +19,15 @@ router.get('/', getQueries, async (req, res) => {
         .populate('category')
         .populate('color')
         .populate('brand');
+
         if (!products) {
             throw { message: 'Products not found ' };
         }
-        
         res.status(200).send(products);
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
 });
-
-
-
-async function getQueries(req, res, next) {
-    const { query } = req;
-    const { catalog, category, color, brand } = query;
-    const filter = {};
-
-    // { brand: { $in: ["5e4c12c425ec557ee400db6a", "5e4bcedcb133d51b9042ac82"] } }
-    
-    try {
-        if (catalog) {
-            const catalogItems = await Catalogs.find({ catalog: { $in: catalog } }); 
-            catalogItems.forEach((value, i, array) => array[i] = value.id);
-            filter.catalog = { $in: catalogItems };
-        }
-        if (category) {
-            const categoryItems = await Categories.find({ category: { $in: category } }); 
-            categoryItems.forEach((value, i, array) => array[i] = value.id);
-            filter.category = { $in: categoryItems };
-        }
-        if (brand) {
-            const brandItems = await Brands.find({ brand: { $in: brand } }); 
-            brandItems.forEach((value, i, array) => array[i] = value.id);
-            filter.brand = { $in: brandItems };
-        }
-        if (color) {
-            const colorFilter = await Colors.find({ color: { $in: color } }); 
-            colorFilter.forEach((value, i, array) => array[i] = value.id);
-            filter.color = { $in: colorFilter };
-        }
-    } catch (err) {
-        res.status(500).send({ message: err.message });
-    }
-    console.log(filter)
-    res.filter = filter;
-    next();
-}
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
@@ -137,5 +99,39 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
         res.status(400).send({ message: err.message });
     }
 });
+
+async function getQueries(req, res, next) {
+    const { query } = req;
+    const { catalog, category, color, brand } = query;
+    const filter = {};
+    
+    try {
+        if (catalog) {
+            const catalogItems = await Catalogs.find({ catalog: { $in: catalog } }); 
+            catalogItems.forEach((value, i, array) => array[i] = value.id);
+            filter.catalog = { $in: catalogItems };
+        }
+        if (category) {
+            const categoryItems = await Categories.find({ category: { $in: category } }); 
+            categoryItems.forEach((value, i, array) => array[i] = value.id);
+            filter.category = { $in: categoryItems };
+        }
+        if (brand) {
+            const brandItems = await Brands.find({ brand: { $in: brand } }); 
+            brandItems.forEach((value, i, array) => array[i] = value.id);
+            filter.brand = { $in: brandItems };
+        }
+        if (color) {
+            const colorFilter = await Colors.find({ color: { $in: color } }); 
+            colorFilter.forEach((value, i, array) => array[i] = value.id);
+            filter.color = { $in: colorFilter };
+        }
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+    console.log(filter)
+    res.filter = filter;
+    next();
+}
 
 module.exports = router;
