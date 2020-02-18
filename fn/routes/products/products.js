@@ -69,6 +69,15 @@ router.post('/', async (req, res) => {
                 category: requestedCategory.category,
             });
             category = await category.save();
+            catalog.categories.push(category);
+            await catalog.save();
+        }
+
+        const condition = catalog.categories.findIndex(valueId => valueId === category.id);
+
+        if (condition < 0) {
+            catalog.categories.push(category);
+            await catalog.save();
         }
 
         const requestedBrand = req.body.brand;
