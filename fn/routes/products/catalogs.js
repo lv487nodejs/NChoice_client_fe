@@ -20,24 +20,32 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
+    const { catalog } = req.query;
+    let catalogs;
     try {
-        const catalogs = await Catalogs.find();
+        if (catalog) {
+            catalogs = await Catalogs.find({ catalog });
+        } else {
+            catalogs = await Catalogs.find();
+        }
+
+        if (!catalogs) {
+            return res.status(404).send('Catalog not found')
+        }
         res.send(catalogs);
     } catch (err) {
         res.status(400).send(err);
     }
 });
 
-router.get('/:name', async (req, res) => {
-    const name = req.params;
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
     try {
-        const catalog = await Catalogs.findOne(name).populate('products');
+        const catalog = await Catalogs.findById(id);
         if (!catalog) {
-            throw String('Can not find catalog with such an ID');
+            return res.status(404).send('Can not find catalog with such an ID');
         }
-        console.log(catalog);
-        const { products } = catalog;
-        res.status(200).send(products);
+        res.status(200).send(catalog);
     } catch (err) {
         res.status(400).send(err);
     }
