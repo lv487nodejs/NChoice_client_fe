@@ -1,8 +1,7 @@
 const express = require('express');
-const ProductPropetries = require('../../models/ProductPropetries');
 const { brandValidationRules, validate } = require('../../middleware/validator');
 
-const { Brands } = ProductPropetries;
+const Brands = require('../../models/Brand');
 
 const router = express.Router();
 

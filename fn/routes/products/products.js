@@ -10,7 +10,26 @@ const { productValidationRules, validate } = require('../../middleware/validator
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', getQueries, async (req, res) => {
+    const { filter } = res;
+
+    try {
+        const products = await Products.find(filter)
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
+        if (!products) {
+            throw { message: 'Products not found ' };
+        }
+
+        res.status(200).send(products);
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+});
+
+async function getQueries(req, res, next) {
     const { query } = req;
     const { catalog, category, color, brand } = query;
     const filter = {};
@@ -32,21 +51,13 @@ router.get('/', async (req, res) => {
             const colorItem = await Colors.find({ color });
             filter.color = colorItem[0].id;
         }
-
-        const products = await Products.find(filter)
-            .populate('catalog')
-            .populate('category')
-            .populate('color')
-            .populate('brand');
-        if (!products) {
-            throw { message: 'Products not found ' };
-        }
-
-        res.status(200).send(products);
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
-});
+
+    res.filter = filter;
+    next();
+}
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;

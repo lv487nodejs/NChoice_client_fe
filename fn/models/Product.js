@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const { PropetriesSchema } = require('./ProductPropetries')
+const PropetriesSchema = require('./ProductPropetries');
 
 const ProductSchema = new Schema({
     catalog: { type: Schema.Types.ObjectId, ref: 'catalog' },

@@ -1,8 +1,6 @@
 const express = require('express');
-const ProductPropetries = require('../../models/ProductPropetries');
+const Catalogs = require('../../models/Catalog');
 const { catalogValidationRules, validate } = require('../../middleware/validator');
-
-const { Catalogs } = ProductPropetries;
 
 const router = express.Router();
 

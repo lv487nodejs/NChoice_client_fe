@@ -1,8 +1,6 @@
 const express = require('express');
-const ProductPropetries = require('../../models/ProductPropetries');
+const Categories = require('../../models/Category');
 const { categoryValidationRules, validate } = require('../../middleware/validator');
-
-const { Categories } = ProductPropetries;
 
 const router = express.Router();
 
