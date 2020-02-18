@@ -4,6 +4,7 @@ const connectDB = require('./config/db');
 
 const auth = require('./routes/users/auth');
 const users = require('./routes/users/users');
+
 const products = require('./routes/products/products');
 const catalogs = require('./routes/products/catalogs');
 const categories = require('./routes/products/categories');
