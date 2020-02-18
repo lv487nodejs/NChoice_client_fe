@@ -5,7 +5,7 @@ const db = process.env.MONGO_URL;
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(db, {
+        await mongoose.connect('mongodb+srv://lv487nodejs:nodejslv487@cluster0-ltcgb.mongodb.net/test?retryWrites=true&w=majority', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
@@ -13,7 +13,7 @@ const connectDB = async () => {
         });
         console.log('MongoDB Connected...');
     } catch (err) {
-        console.error(err.massage);
+        console.error(err);
         process.exit(1);
     }
 };
