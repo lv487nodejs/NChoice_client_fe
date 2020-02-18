@@ -1,7 +1,10 @@
 import React from 'react';
 import './filter.css';
+import { connect } from 'react-redux';
+import { filterBrand } from '../../actions';
 
-const Filter = () => {
+const Filter = props => {
+    console.log('props',props);
     return (
         <div className="row">
             <div style={{ marginTop: '0.8rem' }}>
@@ -12,25 +15,53 @@ const Filter = () => {
                             <i className="material-icons plus-button">add</i>
                         </p>
                         <label>
-                            <input type="checkbox" />
-                            <span>case1</span>
+                            <input
+                                type="checkbox"
+                                value="Armani"
+                                onClick={e => {
+                                    if (e.target.checked) {
+                                        props.filterBrand(e.target.value);
+                                    }
+                                }}
+                            />
+                            <span>Armani</span>
                         </label>
                         <label>
-                            <input type="checkbox" />
-                            <span>case2</span>
+                            <input
+                                type="checkbox"
+                                value="Gucci"
+                                onClick={e => {
+                                    if (e.target.checked) {
+                                        props.filterBrand(e.target.value);
+                                    }
+                                }}
+                            />
+                            <span>Gucci</span>
                         </label>
                         <label>
-                            <input type="checkbox" />
-                            <span>case3</span>
+                            <input
+                                type="checkbox"
+                                value="Prada"
+                                onClick={e => {
+                                    if (e.target.checked) {
+                                        props.filterBrand(e.target.value);
+                                    }
+                                }}
+                            />
+                            <span>Prada</span>
                         </label>
                         <label>
-                            <input type="checkbox" />
-                            <span>case4</span>
+                            <input
+                                type="checkbox" value="Versace"
+                                onClick={e => {
+                                    if (e.target.checked) {
+                                        props.filterBrand(e.target.value);
+                                    }
+                                }}
+                            />
+                            <span>Versace</span>
                         </label>
-                        <label>
-                            <input type="checkbox" />
-                            <span>case5</span>
-                        </label>
+            
                     </div>
                     <div className="col s12 filter-item">
                         <p>
@@ -87,4 +118,11 @@ const Filter = () => {
         </div>
     );
 };
-export default Filter;
+const mapStateToProps = state => ({
+    filtered: state.filtered,
+});
+const mapDispatchToProps = dispatch => ({
+    filterBrand: brand => dispatch(filterBrand(brand)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);
