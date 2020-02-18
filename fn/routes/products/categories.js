@@ -6,7 +6,7 @@ const { Categories } = ProductPropetries;
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', categoryValidationRules(), validate, async (req, res) => {
     const { category, images } = req.body;
     try {
         const newCategory = new Categories({

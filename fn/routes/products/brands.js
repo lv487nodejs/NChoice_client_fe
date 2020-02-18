@@ -1,12 +1,12 @@
 const express = require('express');
 const ProductPropetries = require('../../models/ProductPropetries');
-const { catalogValidationRules, validate } = require('../../middleware/validator');
+const { brandValidationRules, validate } = require('../../middleware/validator');
 
 const { Brands } = ProductPropetries;
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', brandValidationRules(), validate, async (req, res) => {
     const { brand, images } = req.body;
     try {
         const newBrand = new Brands({

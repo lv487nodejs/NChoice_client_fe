@@ -6,7 +6,7 @@ const { Catalogs } = ProductPropetries;
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', catalogValidationRules(), validate, async (req, res) => {
     const { catalog, images } = req.body;
     try {
         const newCatalog = new Catalogs({

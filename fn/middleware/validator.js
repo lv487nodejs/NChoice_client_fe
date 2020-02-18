@@ -1,15 +1,6 @@
 const { body, validationResult } = require('express-validator');
 
-const userValidationRules = () => [
-    body('firstName', 'Last name is required')
-        .notEmpty()
-        .isString(),
-    body('lastName', 'Last name is required')
-        .notEmpty()
-        .isString(),
-    body('email', 'Email is required').isEmail(),
-    body('password').isLength({ min: 6 }),
-];
+const userValidationRules = () => [body('email', 'Email is required').isEmail(), body('password').isLength({ min: 6 })];
 
 const userLoginValidationRules = () => [
     body('email', 'Email is required').isEmail(),
@@ -22,8 +13,28 @@ const catalogValidationRules = () => [
         .isString(),
 ];
 
+const categoryValidationRules = () => [
+    body('category', 'category name is required')
+        .notEmpty()
+        .isString(),
+];
+
+const brandValidationRules = () => [
+    body('brand', 'brand name is required')
+        .notEmpty()
+        .isString(),
+];
+
+const colorValidationRules = () => [
+    body('color', 'color name is required')
+        .notEmpty()
+        .isString(),
+];
+
 const propetriesValidationRules = () => [
-    body('size', 'Size is required').notEmpty(),
+    body('size', 'Size is required')
+        .notEmpty()
+        .isString(),
     body('available', 'Available is required')
         .notEmpty()
         .isNumeric(),
@@ -36,19 +47,10 @@ const propetriesValidationRules = () => [
 ];
 
 const productValidationRules = () => [
-    body('category', 'category is required')
-        .notEmpty()
-        .isString(),
-    body('brand', 'brand is required')
-        .notEmpty()
-        .isString(),
     body('title', 'title is required')
         .notEmpty()
         .isString(),
     body('description', 'description is required')
-        .notEmpty()
-        .isString(),
-    body('color', 'color is required')
         .notEmpty()
         .isString(),
 ];
@@ -67,5 +69,8 @@ module.exports = {
     propetriesValidationRules,
     productValidationRules,
     userLoginValidationRules,
+    brandValidationRules,
+    colorValidationRules,
+    categoryValidationRules,
     validate,
 };

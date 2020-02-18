@@ -1,12 +1,12 @@
 const express = require('express');
 const ProductPropetries = require('../../models/ProductPropetries');
-const { catalogValidationRules, validate } = require('../../middleware/validator');
+const { colorValidationRules, validate } = require('../../middleware/validator');
 
 const { Colors } = ProductPropetries;
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', colorValidationRules(), validate, async (req, res) => {
     const { color, images } = req.body;
     try {
         const newColor = new Colors({
