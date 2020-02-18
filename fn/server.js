@@ -6,6 +6,9 @@ const auth = require('./routes/users/auth');
 const users = require('./routes/users/users');
 const products = require('./routes/products/products');
 const catalogs = require('./routes/products/catalogs');
+const categories = require('./routes/products/categories');
+const brands = require('./routes/products/brands');
+const colors = require('./routes/products/colors');
 
 const app = express();
 
@@ -22,6 +25,9 @@ app.use('/auth', auth);
 app.use('/users', users);
 app.use('/products', products);
 app.use('/catalogs', catalogs);
+app.use('/categories', categories);
+app.use('/brands', brands);
+app.use('/colors', colors);
 
 const PORT = process.env.PORT || 5000;
 
