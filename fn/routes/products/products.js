@@ -15,46 +15,54 @@ router.get('/', getQueries, async (req, res) => {
 
     try {
         const products = await Products.find(filter)
-            .populate('catalog')
-            .populate('category')
-            .populate('color')
-            .populate('brand');
+        .populate('catalog')
+        .populate('category')
+        .populate('color')
+        .populate('brand');
         if (!products) {
             throw { message: 'Products not found ' };
         }
-
+        
         res.status(200).send(products);
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
 });
 
+
+
 async function getQueries(req, res, next) {
     const { query } = req;
     const { catalog, category, color, brand } = query;
     const filter = {};
 
+    // { brand: { $in: ["5e4c12c425ec557ee400db6a", "5e4bcedcb133d51b9042ac82"] } }
+    
     try {
         if (catalog) {
-            const catalogItem = await Catalogs.find({ catalog });
-            filter.catalog = catalogItem[0].id;
+            const catalogItems = await Catalogs.find({ catalog: { $in: catalog } }); 
+            catalogItems.forEach((value, i, array) => array[i] = value.id);
+            filter.catalog = { $in: catalogItems };
         }
         if (category) {
-            const categotyItem = await Categories.find({ category });
-            filter.category = categotyItem[0].id;
+            const categoryItems = await Categories.find({ category: { $in: category } }); 
+            categoryItems.forEach((value, i, array) => array[i] = value.id);
+            filter.category = { $in: categoryItems };
         }
         if (brand) {
-            const brandItem = await Brands.find({ brand });
-            filter.brand = brandItem[0].id;
+            const brandItems = await Brands.find({ brand: { $in: brand } }); 
+            brandItems.forEach((value, i, array) => array[i] = value.id);
+            filter.brand = { $in: brandItems };
         }
         if (color) {
-            const colorItem = await Colors.find({ color });
-            filter.color = colorItem[0].id;
+            const colorFilter = await Colors.find({ color: { $in: color } }); 
+            colorFilter.forEach((value, i, array) => array[i] = value.id);
+            filter.color = { $in: colorFilter };
         }
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
-
+    console.log(filter)
     res.filter = filter;
     next();
 }
