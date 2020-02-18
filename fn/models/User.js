@@ -5,11 +5,9 @@ const { Schema } = mongoose;
 const UserModel = new Schema({
     firstName: {
         type: String,
-        required: true,
     },
     lastName: {
         type: String,
-        required: true,
     },
     email: {
         type: String,
@@ -26,6 +24,9 @@ const UserModel = new Schema({
     date: {
         type: Date,
         default: Date.now,
+    },
+    token: {
+        type: String,
     },
 });
 
