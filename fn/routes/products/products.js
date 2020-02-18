@@ -1,9 +1,12 @@
 const express = require('express');
-const Products = require('../../models/Product');
-const ProductPropetries = require('../../models/ProductPropetries');
-const { productValidationRules, validate } = require('../../middleware/validator');
 
-const { Catalogs, Categories, Brands, Colors } = ProductPropetries;
+const Products = require('../../models/Product');
+const Catalogs = require('../../models/Catalog');
+const Categories = require('../../models/Category');
+const Brands = require('../../models/Brand');
+const Colors = require('../../models/Color');
+
+const { productValidationRules, validate } = require('../../middleware/validator');
 
 const router = express.Router();
 
