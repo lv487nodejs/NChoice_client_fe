@@ -25,9 +25,9 @@ router.get('/', async (req, res) => {
     let catalogs;
     try {
         if (catalog) {
-            catalogs = await Catalogs.find({ catalog });
+            catalogs = await Catalogs.find({ catalog }).populate('categories');
         } else {
-            catalogs = await Catalogs.find();
+            catalogs = await Catalogs.find().populate('categories');
         }
 
         if (!catalogs) {
