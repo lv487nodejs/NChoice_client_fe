@@ -6,12 +6,15 @@
   "scripts": {
     "start": "nodemon server.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run start\" \" npm run client\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "concurrently": "^5.1.0",
     "config": "^3.2.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
