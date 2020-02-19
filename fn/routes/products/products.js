@@ -10,54 +10,25 @@ const { productValidationRules, validate } = require('../../middleware/validator
 
 const router = express.Router();
 
-router.get('/', getQueries, async (req, res) => {
-    const { filter } = res;
+router.get('/', async (req, res) => {
+    const { query } = req;
 
     try {
+        const filter = await getQueries(query, res);
         const products = await Products.find(filter)
             .populate('catalog')
             .populate('category')
             .populate('color')
             .populate('brand');
+
         if (!products) {
             throw { message: 'Products not found ' };
         }
-
         res.status(200).send(products);
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
 });
-
-async function getQueries(req, res, next) {
-    const { query } = req;
-    const { catalog, category, color, brand } = query;
-    const filter = {};
-
-    try {
-        if (catalog) {
-            const catalogItem = await Catalogs.find({ catalog });
-            filter.catalog = catalogItem[0].id;
-        }
-        if (category) {
-            const categotyItem = await Categories.find({ category });
-            filter.category = categotyItem[0].id;
-        }
-        if (brand) {
-            const brandItem = await Brands.find({ brand });
-            filter.brand = brandItem[0].id;
-        }
-        if (color) {
-            const colorItem = await Colors.find({ color });
-            filter.color = colorItem[0].id;
-        }
-    } catch (err) {
-        res.status(500).send({ message: err.message });
-    }
-
-    res.filter = filter;
-    next();
-}
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
@@ -71,6 +42,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', productValidationRules(), validate, async (req, res) => {
+    const { title, description, images, propetries } = req.body;
     try {
         const requestedCatalog = req.body.catalog;
         const catalog = await Catalogs.findOne(requestedCatalog);
@@ -116,11 +88,11 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
             catalog,
             category,
             brand,
-            title: req.body.title,
-            description: req.body.description,
+            title,
+            description,
             color,
-            images: req.body.images,
-            propetries: req.body.propetries,
+            images,
+            propetries,
         });
 
         const newProduct = await product.save();
@@ -129,5 +101,37 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
         res.status(400).send({ message: err.message });
     }
 });
+
+async function getQueries(query, res) {
+    const { catalog, category, color, brand } = query;
+    const filter = {};
+
+    try {
+        if (catalog) {
+            const catalogItems = await Catalogs.find({ catalog: { $in: catalog } });
+            catalogItems.forEach((value, i, array) => (array[i] = value.id));
+            filter.catalog = { $in: catalogItems };
+        }
+        if (category) {
+            const categoryItems = await Categories.find({ category: { $in: category } });
+            categoryItems.forEach((value, i, array) => (array[i] = value.id));
+            filter.category = { $in: categoryItems };
+        }
+        if (brand) {
+            const brandItems = await Brands.find({ brand: { $in: brand } });
+            brandItems.forEach((value, i, array) => (array[i] = value.id));
+            filter.brand = { $in: brandItems };
+        }
+        if (color) {
+            const colorFilter = await Colors.find({ color: { $in: color } });
+            colorFilter.forEach((value, i, array) => (array[i] = value.id));
+            filter.color = { $in: colorFilter };
+        }
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+
+    return filter;
+}
 
 module.exports = router;

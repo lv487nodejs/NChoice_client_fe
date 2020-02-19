@@ -7,8 +7,6 @@ const jwt = require('jsonwebtoken');
 const Users = require('../../models/User');
 const { userLoginValidationRules, validate } = require('../../middleware/validator');
 
-let refreshTokens = [];
-
 const router = express.Router();
 
 router.post('/login', userLoginValidationRules(), validate, async (req, res) => {
@@ -29,30 +27,44 @@ router.post('/login', userLoginValidationRules(), validate, async (req, res) => 
         const accessToken = generateAccessToken(userName);
         const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
 
-        refreshTokens.push(refreshToken);
-        res.json({ accessToken, refreshToken });
+        user.tokens = [];
+        user.tokens.push(refreshToken);
+        await user.save();
+        res.send({ accessToken, refreshToken });
     } catch (err) {
         req.status(500).send(err.message);
     }
 });
 
-router.post('/token', (req, res) => {
+router.post('/token', async (req, res) => {
     const refreshToken = req.body.token;
-    if (refreshToken == null) return res.sendStatus(401);
-    if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403);
-        const accessToken = generateAccessToken({ name: user.name });
-        res.json({ accessToken });
-    });
+    const { email } = req.body;
+
+    try {
+        const user = await Users.findOne({ email });
+
+        if (refreshToken == null) return res.sendStatus(401);
+        if (!user.tokens.includes(refreshToken)) return res.sendStatus(403);
+
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, err => {
+            if (err) return res.sendStatus(403);
+            const accessToken = generateAccessToken({ name: email });
+            res.send({ accessToken });
+        });
+    } catch (error) {
+        res.send(error);
+    }
 });
 
 router.delete('/logout', async (req, res) => {
     try {
-        refreshTokens = refreshTokens.filter(token => token !== req.body.token);
+        const { email } = req.body;
+        const user = await Users.findOne({ email });
+        user.tokens = [];
+        await user.save();
         res.sendStatus(204);
     } catch (err) {
-        req.status(500).send(err.message);
+        res.status(500).send(err.message);
     }
 });
 
