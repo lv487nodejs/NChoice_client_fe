@@ -3,11 +3,12 @@ const bcrypt = require('bcryptjs');
 const tokenValidation = require('../../middleware/auth');
 
 const Users = require('../../models/User');
+
 const { userValidationRules, validate } = require('../../middleware/validator');
 
 const router = express.Router();
 
-router.get('/', tokenValidation, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const user = await Users.find();
         res.status(200).send(user);
@@ -35,7 +36,7 @@ router.post('/', userValidationRules(), validate, async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        user = new Users({
+        const user = new Users({
             firstName,
             lastName,
             email,

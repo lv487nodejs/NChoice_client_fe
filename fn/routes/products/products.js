@@ -10,15 +10,16 @@ const { productValidationRules, validate } = require('../../middleware/validator
 
 const router = express.Router();
 
-router.get('/', getQueries, async (req, res) => {
-    const { filter } = res;
+router.get('/', async (req, res) => {
+    const { query } = req;
 
     try {
+        const filter = await getQueries(query, res);
         const products = await Products.find(filter)
-        .populate('catalog')
-        .populate('category')
-        .populate('color')
-        .populate('brand');
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
 
         if (!products) {
             throw { message: 'Products not found ' };
@@ -100,38 +101,36 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
     }
 });
 
-async function getQueries(req, res, next) {
-    const { query } = req;
+async function getQueries(query, res) {
     const { catalog, category, color, brand } = query;
     const filter = {};
-    
+
     try {
         if (catalog) {
-            const catalogItems = await Catalogs.find({ catalog: { $in: catalog } }); 
-            catalogItems.forEach((value, i, array) => array[i] = value.id);
+            const catalogItems = await Catalogs.find({ catalog: { $in: catalog } });
+            catalogItems.forEach((value, i, array) => (array[i] = value.id));
             filter.catalog = { $in: catalogItems };
         }
         if (category) {
-            const categoryItems = await Categories.find({ category: { $in: category } }); 
-            categoryItems.forEach((value, i, array) => array[i] = value.id);
+            const categoryItems = await Categories.find({ category: { $in: category } });
+            categoryItems.forEach((value, i, array) => (array[i] = value.id));
             filter.category = { $in: categoryItems };
         }
         if (brand) {
-            const brandItems = await Brands.find({ brand: { $in: brand } }); 
-            brandItems.forEach((value, i, array) => array[i] = value.id);
+            const brandItems = await Brands.find({ brand: { $in: brand } });
+            brandItems.forEach((value, i, array) => (array[i] = value.id));
             filter.brand = { $in: brandItems };
         }
         if (color) {
-            const colorFilter = await Colors.find({ color: { $in: color } }); 
-            colorFilter.forEach((value, i, array) => array[i] = value.id);
+            const colorFilter = await Colors.find({ color: { $in: color } });
+            colorFilter.forEach((value, i, array) => (array[i] = value.id));
             filter.color = { $in: colorFilter };
         }
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
-    console.log(filter)
-    res.filter = filter;
-    next();
+
+    return filter;
 }
 
 module.exports = router;

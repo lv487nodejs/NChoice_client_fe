@@ -5,7 +5,7 @@ const db = process.env.MONGO_URL;
 
 const connectDB = async () => {
     try {
-        await mongoose.connect('mongodb+srv://lv487nodejs:nodejslv487@cluster0-ltcgb.mongodb.net/test?retryWrites=true&w=majority', {
+        await mongoose.connect(db, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
