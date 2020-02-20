@@ -11,24 +11,35 @@ function MainCategories() {
 
   return (
     <div>
-      {/*<ul>*/}
-        {/*<li>*/}
-          {/*<Link to='/women' className='change'> Women </Link>*/}
-        {/*</li>*/}
-        {/*<li>*/}
-          {/*<Link to='/men' className='change'> Men </Link>*/}
-        {/*</li>*/}
-        {/*<li>*/}
-          {/*<Link to='/children' className='change'> Children </Link>*/}
-        {/*</li>*/}
+      <div className='container center-block'>
+        <div className='row '>
 
-      {/*</ul>*/}
+          <div className='col l4  center '>
+            <div className='card card-content valign-wrapper'>
+              <Link to='/women'> Women </Link>
+            </div>
+          </div>
 
+          <div className='col l4   center'>
+            <div className='card card-content valign-wrapper'>
+              <Link to='/men'> Men </Link>
+            </div>
+          </div>
 
-      <Switch>
-        <Route
+          <div className='col l4  '>
+            <div className='card card-content valign-wrapper'>
+              <Link to='/children'> Children </Link>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      < Switch>
+        < Route
           path='/women'
-          render={(props) => <MainCategoryItems {...props} catalogName={'Women'}/>}
+          render={(props) => <MainCategoryItems {...props} catalogName={'Women'}/>
+          }
         />
 
         <Route
@@ -36,13 +47,14 @@ function MainCategories() {
           render={(props) => <MainCategoryItems {...props} catalogName={'Male'}/>}
         />
 
-        <Route
+        < Route
           path='/children'
-          render={(props) => <MainCategoryItems {...props} catalogName={'Kids'}/>}
+          render={(props) => <MainCategoryItems {...props} catalogName={'Kids'}/>
+          }
         />
       </Switch>
-
     </div>
+
   );
 }
 

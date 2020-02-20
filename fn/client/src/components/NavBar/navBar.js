@@ -1,7 +1,9 @@
 import React from "react";
+import './navBar.css'
 import Basket from '../Basket/basket';
 import Currency from '../Currency/currency';
 import Wishlist from '../Wishlist/wishlist';
+import logo from '../../logo.svg';
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,7 +17,7 @@ function NavBar() {
     <div>
       <nav>
         <div className="nav-wrapper">
-          <Link to='/' className='brand-logo center' > Logo </Link>
+          <Link to='/' className='brand-logo center' > <img src={logo} className='logo'/>  </Link>
 
           <ul className="right hide-on-med-and-down">
             <li>

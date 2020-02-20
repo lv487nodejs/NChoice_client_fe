@@ -19,7 +19,6 @@ function Header() {
             <li>
               <Link to='/children' className='change'> Children </Link>
             </li>
-
           </ul>
 
           <Link to='/' className='brand-logo center'> Logo </Link>
