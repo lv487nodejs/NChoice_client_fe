@@ -39,7 +39,7 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case 'FILTER_ADD_BRAND': {
             const idx = state.filtered.findIndex(item => item.brand === action.payload);
-            const newItem = state.productList.filter((item) => item.brand === action.payload)
+            const newItem = state.productList.filter(item => item.brand === action.payload);
             console.log(newItem);
 
             return {
@@ -61,8 +61,15 @@ const reducer = (state = initialState, action) => {
                 filtered: filterAddItems(state.filtered, newItem, idx),
             };
         }
-        case 'FILTER_REMOVE_CATEGORY':
+        case 'FILTER_REMOVE_CATEGORY': {
             return { ...state, filtered: filterRemoveItems(state.filtered, 'category', action.payload) };
+        }
+        case 'COMPOSE_FILTERED': {
+            return {
+                ...state,
+                filtered: [...state.filteredCategory, ...state.filteredBrand],
+            };
+        }
 
         default:
             return state;

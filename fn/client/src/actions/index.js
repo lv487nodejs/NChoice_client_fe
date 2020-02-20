@@ -16,4 +16,10 @@ const filterRemoveCategory = (category) => ({
     payload: category,
 });
 
-export { filterAddBrand, filterRemoveBrand, filterAddCategory, filterRemoveCategory };
+const composeFilters = () => {
+    return {
+        type: 'COMPOSE_FILTERED'
+    }
+}
+
+export { filterAddBrand, filterRemoveBrand, filterAddCategory, filterRemoveCategory, composeFilters };
