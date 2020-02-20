@@ -1,5 +1,5 @@
 const express = require('express');
-const { brandValidationRules, brandQueryRules, validate } = require('../../middleware/validator');
+const { brandValidationRules, validate } = require('../../middleware/validator');
 
 const Brands = require('../../models/Brand');
 
