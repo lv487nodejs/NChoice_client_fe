@@ -13,7 +13,7 @@ http://localhost:5000/users/
        
 }
 ```
-**Required:
+**Required:**
 
 email - type: string,  __@__.__ 
 
@@ -23,7 +23,7 @@ firstName - type: string
 
 lastName - type: string**
 
-**Not Required:
+**Not Required:**
 
 avatar - type: String
 
@@ -69,7 +69,7 @@ http://localhost:5000/brands
 	"images": ["test.img"]
 }
 ```
-Required:
+**Required:**
 brand:   String, unique, 
 Not Required
 images: [ Srtings ]
@@ -168,7 +168,7 @@ GET:
 
 or 
 
-** http://localhost:5000/catalogs/5e4c4d310fc75d48c83e1f79**
+** http://localhost:5000/catalogs/5e4c4d310fc75d48c83e1f79 **
 ```json
 [
     {
@@ -227,7 +227,7 @@ POST
 }
 ```
 
-Required
+**Required**
 catalog: women || men || kids, type Object, 
 
 category: (any existing category) , type Object, 
