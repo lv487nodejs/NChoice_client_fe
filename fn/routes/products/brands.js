@@ -1,5 +1,5 @@
 const express = require('express');
-const { brandValidationRules, validate } = require('../../middleware/validator');
+const { brandValidationRules, brandQueryRules, validate } = require('../../middleware/validator');
 
 const Brands = require('../../models/Brand');
 
@@ -23,13 +23,14 @@ router.get('/', async (req, res) => {
     const { brand } = req.query;
     let brands;
     try {
-        if (brand) {
+        // check if object query is not empty
+        if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
             brands = await Brands.find({ brand });
         } else {
             brands = await Brands.find();
         }
 
-        if (!brands) {
+        if (!brands || brands.length === 0) {
             throw { message: 'brand not found' };
         }
         res.status(200).send(brands);

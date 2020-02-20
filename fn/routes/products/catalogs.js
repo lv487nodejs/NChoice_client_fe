@@ -22,13 +22,14 @@ router.get('/', async (req, res) => {
     const { catalog } = req.query;
     let catalogs;
     try {
-        if (catalog) {
+        // check if object query is not empty
+        if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
             catalogs = await Catalogs.find({ catalog }).populate('categories');
         } else {
             catalogs = await Catalogs.find().populate('categories');
         }
 
-        if (!catalogs) {
+        if (!catalogs || catalogs.length === 0) {
             throw { message: 'Catalog not found' };
         }
         res.status(200).send(catalogs);

@@ -22,13 +22,14 @@ router.get('/', async (req, res) => {
     const { color } = req.query;
     let colors;
     try {
-        if (color) {
+        // check if object query is not empty
+        if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
             colors = await Colors.find({ color });
         } else {
             colors = await Colors.find();
         }
 
-        if (!colors) {
+        if (!colors || colors.length === 0) {
             throw { message: 'Color is not found' };
         }
         res.status(200).send(colors);
