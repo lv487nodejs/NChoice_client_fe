@@ -3,7 +3,7 @@
 ## User:
 POST:
 
-http://localhost:5000/users/
+**http://localhost:5000/users/**
 ```json
 {
     "email": "reekee@gmail.com",
@@ -46,7 +46,7 @@ date - type: Date, default: Date.now
 
 ## Auth:
 POST
-http://localhost:5000/auth/login/
+**http://localhost:5000/auth/login/**
 ```json
 {
 	"email": "reekee@gmail.com",
@@ -60,9 +60,9 @@ http://localhost:5000/auth/login/
 }
 ```
 
-## Brands 
+## Brands: 
 POST: 
-http://localhost:5000/brands
+**http://localhost:5000/brands**
 ```json
 {
 	"brand": "test",
@@ -87,7 +87,7 @@ response:
 ```
 
 GET:
-http://localhost:5000/brands
+**http://localhost:5000/brands**
 Response:
 ```json
 [
@@ -128,9 +128,9 @@ GET:
 }
 ```
 
-## CATALOG
+## Catalog:
 GET:
-** http://localhost:5000/catalogs**
+**http://localhost:5000/catalogs**
 ```json
 [
     {
@@ -168,7 +168,7 @@ GET:
 
 or 
 
-** http://localhost:5000/catalogs/5e4c4d310fc75d48c83e1f79 **
+**http://localhost:5000/catalogs/5e4c4d310fc75d48c83e1f79**
 ```json
 [
     {
@@ -184,7 +184,7 @@ or
 ```
 
 POST:
-** http://localhost:5000/catalogs/ **
+**http://localhost:5000/catalogs/**
 ```json
 {
 	"catalog": "test",
@@ -207,7 +207,7 @@ Response: 200 Ok
 
 ## Products:
 POST
-** http://localhost:5000/products **
+**http://localhost:5000/products**
 ```json
 {
     "catalog": {"catalog": "women"},
@@ -312,14 +312,14 @@ Response:
 }
 ```
 GET:
-** http://localhost:5000/products **
+**http://localhost:5000/products**
 
 Returns all products.
 
 GET: 
-** http://localhost:5000/products?catalog=men&category=sweaters&brand=hikee&color=black **
+**http://localhost:5000/products?catalog=men&category=sweaters&brand=hikee&color=black**
 
-** query can be filtered by catalog, category, brand, color.**
+**query can be filtered by catalog, category, brand, color.**
 
 RESPONSE:
 ```json
