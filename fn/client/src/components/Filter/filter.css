@@ -1,0 +1,20 @@
+.filter-item{
+    position:relative;
+    padding: 1rem; 
+    margin: 1rem 0;
+     display: flex;
+      flex-direction: column;
+    outline:1px solid black;
+    }
+.plus-button{ position: absolute;
+top: -1.5rem; right: 1rem;
+font-size: 3rem;
+  outline: 1px solid black
+}
+label{
+  cursor: pointer;
+}
+label:hover{
+  background-color: #f6f5f4;
+  
+}
