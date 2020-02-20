@@ -2,7 +2,7 @@
 ##User
 POST:
 
-### http://localhost:5000/users/
+http://localhost:5000/users/
 
 {
     "email": "reekee@gmail.com",
@@ -17,7 +17,7 @@ password - type: string, at least 6 symbols
 firstName - type: string
 lastName - type: string
 
-### not Required
+not Required
 avatar - type: String
 date - type: Date, default: Date.now **
 
@@ -37,7 +37,7 @@ date - type: Date, default: Date.now **
 
 ## Auth:
 POST
-### http://localhost:5000/auth/login/
+http://localhost:5000/auth/login/
 {
 	"email": "reekee@gmail.com",
 	"password": "12345678"
@@ -51,7 +51,7 @@ POST
 =====================================
 ## Brands 
 POST: 
-### http://localhost:5000/brands
+http://localhost:5000/brands
 
 {
 	"brand": "test",
@@ -74,7 +74,7 @@ response:
 
 
 GET:
-### http://localhost:5000/brands
+http://localhost:5000/brands
 
 [
     {
@@ -99,10 +99,10 @@ GET:
 
 
 GET:
-### http://localhost:5000/brands(/:id)
+**http://localhost:5000/brands(/:id)**
 **it works with query: http://localhost:5000/brands?brand=addic**
 
-### http://localhost:5000/brands/5e4c4d610501222b9928a28f 
+**http://localhost:5000/brands/5e4c4d610501222b9928a28f **
 
 
 {
@@ -115,7 +115,7 @@ GET:
 
 ## CATALOG
 GET:
-### http://localhost:5000/catalogs
+** http://localhost:5000/catalogs**
 
 [
     {
@@ -149,9 +149,9 @@ GET:
 
 
 GET:
-### http://localhost:5000/catalogs?catalog=men
+**http://localhost:5000/catalogs?catalog=men**
 or 
-### http://localhost:5000/catalogs/5e4c4d310fc75d48c83e1f79
+** http://localhost:5000/catalogs/5e4c4d310fc75d48c83e1f79**
 
 [
     {
@@ -167,7 +167,7 @@ or
 
 
 POST:
-### http://localhost:5000/catalogs/
+** http://localhost:5000/catalogs/ **
 
 {
 	"catalog": "test",
@@ -188,7 +188,7 @@ Response: 200 Ok
 
 ## Products:
 POST
-### http://localhost:5000/products
+** http://localhost:5000/products **
 
 {
     "catalog": {"catalog": "women"},
@@ -279,11 +279,11 @@ Response:
 }
 
 GET:
-### http://localhost:5000/products
+** http://localhost:5000/products **
 Returns all products.
 
 GET: 
-### http://localhost:5000/products?catalog=men&category=sweaters&brand=hikee&color=black
+** http://localhost:5000/products?catalog=men&category=sweaters&brand=hikee&color=black **
 ** query can be filtered by catalog, category, brand, color.**
 
 RESPONSE:
