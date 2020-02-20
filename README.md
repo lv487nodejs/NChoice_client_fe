@@ -3,7 +3,7 @@
 POST:
 
 http://localhost:5000/users/
-
+```json
 {
     "email": "reekee@gmail.com",
     "password": "12345678",
@@ -11,6 +11,7 @@ http://localhost:5000/users/
     "lastName": "Kulch"
        
 }
+```
 **Required:
 email - type: string,  __@__.__ 
 password - type: string, at least 6 symbols
@@ -20,7 +21,7 @@ lastName - type: string
 not Required
 avatar - type: String
 date - type: Date, default: Date.now **
-
+```json
 {
     "message": "User saved",
     "user": {
@@ -33,36 +34,43 @@ date - type: Date, default: Date.now **
         "__v": 0
     }
 }
+```
 
 
 ## Auth:
 POST
 http://localhost:5000/auth/login/
+```json
 {
 	"email": "reekee@gmail.com",
 	"password": "12345678"
 }
+```
+```json
 {
     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmVla2VlQGdtYWlsLmNvbSIsImlhdCI6MTU4MjA2MjU2MiwiZXhwIjoxNTgyMDYyNTc3fQ.PVyUwb0-lx68plUKGa2-CBvadpVCx2jL8PrkLeeOUYc",
     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmVla2VlQGdtYWlsLmNvbSIsImlhdCI6MTU4MjA2MjU2Mn0.NSPnzZcEsdgQOl8OP6xqKni8od--Mlx26_NSEmKKUUA"
 }
+```
 
 
 =====================================
 ## Brands 
 POST: 
 http://localhost:5000/brands
-
+```json
 {
 	"brand": "test",
 	"images": ["test.img"]
 }
+```
 Required:
 brand:   String, unique, 
 not Required
 images:  Array with Artings
 
-response: 
+response:
+```json
 {
     "images": [
         "test.img"
@@ -71,11 +79,12 @@ response:
     "brand": "test",
     "__v": 0
 }
-
+```
 
 GET:
 http://localhost:5000/brands
-
+Response:
+```json
 [
     {
         "images": [],
@@ -96,7 +105,7 @@ http://localhost:5000/brands
         "__v": 0
     }
 ]
-
+```
 
 GET:
 **http://localhost:5000/brands(/:id)**
@@ -104,19 +113,19 @@ GET:
 
 **http://localhost:5000/brands/5e4c4d610501222b9928a28f **
 
-
+```json
 {
     "images": [],
     "_id": "5e4c4d610501222b9928a28f",
     "brand": "Hikee",
     "__v": 0
 }
-
+```
 
 ## CATALOG
 GET:
 ** http://localhost:5000/catalogs**
-
+```json
 [
     {
         "images": [
@@ -146,13 +155,13 @@ GET:
         "__v": 0
     }
 ]
-
+```
 
 GET:
 **http://localhost:5000/catalogs?catalog=men**
 or 
 ** http://localhost:5000/catalogs/5e4c4d310fc75d48c83e1f79**
-
+```json
 [
     {
         "images": [
@@ -164,16 +173,18 @@ or
         "__v": 0
     }
 ]
-
+```
 
 POST:
 ** http://localhost:5000/catalogs/ **
-
+```json
 {
 	"catalog": "test",
 	"images": ["test.img"]
 }
+```
 Response: 200 Ok
+```json
 {
     "images": [
         "test.img"
@@ -183,13 +194,13 @@ Response: 200 Ok
     "catalog": "test",
     "__v": 0
 }
-
+```
 
 
 ## Products:
 POST
 ** http://localhost:5000/products **
-
+```json
 {
     "catalog": {"catalog": "women"},
     "category": {"category": "shoes"},
@@ -206,6 +217,8 @@ POST
         "price": 180
     }
 }
+```
+
 **Required
 catalog: women || men || kids, type Object, 
 category: (any existing category) , type Object, 
@@ -221,6 +234,7 @@ mrsp:  min: 0, type Number
 price: min: 0, type Number**
  
 Response:
+```json
 {
     "images": [
         "shoes.jpg"
@@ -277,7 +291,7 @@ Response:
     "modified": "2020-02-20T14:23:12.211Z",
     "__v": 0
 }
-
+```
 GET:
 ** http://localhost:5000/products **
 Returns all products.
@@ -287,6 +301,7 @@ GET:
 ** query can be filtered by catalog, category, brand, color.**
 
 RESPONSE:
+```json
 [
     {
         "images": [
@@ -338,4 +353,5 @@ RESPONSE:
         "__v": 0
     }
 ]
+```
 
