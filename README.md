@@ -219,7 +219,7 @@ POST
 }
 ```
 
-**Required
+Required
 catalog: women || men || kids, type Object, 
 category: (any existing category) , type Object, 
 brand: (any existing brand) , type Object, 
@@ -227,11 +227,12 @@ title:  type String,
 description: type String,
 color: type Object,
 images: [ `${product.category.category}_${product.catalog.catalog}.jpg`], type Array, by this example
+
 size:  '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', 'XS', 'S', 'M', 'L', 'XL', 'XXL' , type String
 available: min: 0, max: 100, type Number
 sku: unique,  type:String, a-zA-z0-9  
 mrsp:  min: 0, type Number
-price: min: 0, type Number**
+price: min: 0, type Number
  
 Response:
 ```json
