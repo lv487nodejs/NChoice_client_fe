@@ -14,14 +14,20 @@ http://localhost:5000/users/
 }
 ```
 **Required:
+
 email - type: string,  __@__.__ 
+
 password - type: string, at least 6 symbols
+
 firstName - type: string
+
 lastName - type: string**
 
-**not Required
+**Not Required:
+
 avatar - type: String
-date - type: Date, default: Date.now **
+
+date - type: Date, default: Date.now 
 ```json
 {
     "message": "User saved",
