@@ -1,7 +1,6 @@
 import React from 'react';
 import MainCategoryItems from '../MainCategoryItems/mainCategoryItems';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   Link
@@ -38,8 +37,7 @@ function MainCategories() {
       < Switch>
         < Route
           path='/women'
-          render={(props) => <MainCategoryItems {...props} catalogName={'Women'}/>
-          }
+          render={(props) => <MainCategoryItems {...props} catalogName={'Women'}/>}
         />
 
         <Route

@@ -5,7 +5,6 @@ import Currency from '../Currency/currency';
 import Wishlist from '../Wishlist/wishlist';
 import logo from '../../logo.svg';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   Link
@@ -17,7 +16,7 @@ function NavBar() {
     <div>
       <nav>
         <div className="nav-wrapper">
-          <Link to='/' className='brand-logo center' > <img src={logo} className='logo'/>  </Link>
+          <Link to='/' className='brand-logo center' > <img src={logo} className='logo' alt='Logo'/>  </Link>
 
           <ul className="right hide-on-med-and-down">
             <li>
