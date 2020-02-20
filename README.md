@@ -316,14 +316,19 @@ Response:
 GET:
 **http://localhost:5000/products**
 
-Returns all products.
+*Returns all products.*
 
 GET: 
 **http://localhost:5000/products?catalog=men&category=sweaters&brand=hikee&color=black**
 
+
+
 ***Query can be filtered by:*** **catalog, category, brand, color.**
 
-RESPONSE:
+
+
+
+Response:
 ```json
 [
     {
