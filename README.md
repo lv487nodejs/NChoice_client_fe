@@ -70,11 +70,14 @@ POST:
 }
 ```
 **Required:**
-brand:   String, unique, 
+
+brand:   String, unique,
+
 Not Required
+
 images: [ Srtings ]
 
-response:
+Response:
 ```json
 {
     "images": [
@@ -319,7 +322,7 @@ Returns all products.
 GET: 
 **http://localhost:5000/products?catalog=men&category=sweaters&brand=hikee&color=black**
 
-**query can be filtered by catalog, category, brand, color.**
+***Query can be filtered by:*** **catalog, category, brand, color.**
 
 RESPONSE:
 ```json
