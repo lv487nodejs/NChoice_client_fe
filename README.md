@@ -116,11 +116,10 @@ Response:
 ```
 
 GET:
-**http://localhost:5000/brands(/:id)**  
+**http://localhost:5000/brands/5e4c4d610501222b9928a28f **
 
 **it works with query: http://localhost:5000/brands?brand=addic**
 
-**http://localhost:5000/brands/5e4c4d610501222b9928a28f **
 
 ```json
 {
