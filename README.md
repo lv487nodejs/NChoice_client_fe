@@ -1,4 +1,5 @@
 # fn
+
 ##User
 POST:
 
@@ -16,9 +17,9 @@ http://localhost:5000/users/
 email - type: string,  __@__.__ 
 password - type: string, at least 6 symbols
 firstName - type: string
-lastName - type: string
+lastName - type: string**
 
-not Required
+**not Required
 avatar - type: String
 date - type: Date, default: Date.now **
 ```json
@@ -53,8 +54,6 @@ http://localhost:5000/auth/login/
 }
 ```
 
-
-=====================================
 ## Brands 
 POST: 
 http://localhost:5000/brands
@@ -66,8 +65,8 @@ http://localhost:5000/brands
 ```
 Required:
 brand:   String, unique, 
-not Required
-images:  Array with Artings
+Not Required
+images: [ Srtings ]
 
 response:
 ```json
@@ -108,7 +107,8 @@ Response:
 ```
 
 GET:
-**http://localhost:5000/brands(/:id)**
+**http://localhost:5000/brands(/:id)**  
+
 **it works with query: http://localhost:5000/brands?brand=addic**
 
 **http://localhost:5000/brands/5e4c4d610501222b9928a28f **
@@ -159,7 +159,9 @@ GET:
 
 GET:
 **http://localhost:5000/catalogs?catalog=men**
+
 or 
+
 ** http://localhost:5000/catalogs/5e4c4d310fc75d48c83e1f79**
 ```json
 [
@@ -221,17 +223,27 @@ POST
 
 Required
 catalog: women || men || kids, type Object, 
+
 category: (any existing category) , type Object, 
+
 brand: (any existing brand) , type Object, 
+
 title:  type String,
+
 description: type String,
+
 color: type Object,
+
 images: [ `${product.category.category}_${product.catalog.catalog}.jpg`], type Array, by this example
 
-size:  '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', 'XS', 'S', 'M', 'L', 'XL', 'XXL' , type String
+size:  '36'|| '37' || '38' || '39' || '40' || '41' || '42' || '43' || '44' || '45' || 'XS' || 'S' || 'M' || 'L' || 'XL' || 'XXL' , type String
+
 available: min: 0, max: 100, type Number
-sku: unique,  type:String, a-zA-z0-9  
+
+sku: unique,  type:String, a-zA-z0-9 
+
 mrsp:  min: 0, type Number
+
 price: min: 0, type Number
  
 Response:
@@ -295,10 +307,12 @@ Response:
 ```
 GET:
 ** http://localhost:5000/products **
+
 Returns all products.
 
 GET: 
 ** http://localhost:5000/products?catalog=men&category=sweaters&brand=hikee&color=black **
+
 ** query can be filtered by catalog, category, brand, color.**
 
 RESPONSE:
