@@ -70,26 +70,15 @@ const reducer = (state = initialState, action) => {
             };
         }
         case 'COMPOSE_FILTERED': {
-            function comparer(otherArray) {
-                return function(current) {
-                    return (
-                        otherArray.filter(function(other) {
-                            return other.value == current.value && other.display == current.display;
-                        }).length == 0
-                    );
-                };
-            }
-            const a = state.filteredBrand.filter(comparer(state.filteredCategory));
-            const b = state.filteredCategory.filter(comparer(state.filteredBrand));
-            console.log('a', a);
-            console.log('b', b);
+            state.filtered = [...state.filteredBrand, ...state.filteredCategory]
+            let unique = [...new Set(state.filtered)]
+            console.log('unigue', unique);
 
             return {
                 ...state,
-                filtered: [...a, ...b],
+                filtered: [...unique]
             };
         }
-
         default:
             return state;
     }
