@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 
-
 export const MainCategoryItems = (props) => {
   const [products, setProducts] = useState([]);
 
