@@ -31,6 +31,8 @@ const initialState = {
             price: 1146,
         },
     ],
+    filteredBrand: [],
+    filteredCategory: [],
     filtered: [],
 };
 
@@ -44,30 +46,47 @@ const reducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                filtered: filterAddItems(state.filtered, newItem, idx),
+                filteredBrand: filterAddItems(state.filteredBrand, newItem, idx),
             };
         }
         case 'FILTER_REMOVE_BRAND': {
-            return { ...state, filtered: filterRemoveItems(state.filtered, 'brand', action.payload) };
+            return { ...state, filteredBrand: filterRemoveItems(state.filteredBrand, 'brand', action.payload) };
         }
         case 'FILTER_ADD_CATEGORY': {
             const newItem = state.productList.filter(
                 item => item.category.toLowerCase() === action.payload.toLowerCase()
             );
-            const idx = state.filtered.findIndex(item => item.сategory === action.payload);
+            const idx = state.filteredCategory.findIndex(item => item.сategory === action.payload);
 
             return {
                 ...state,
-                filtered: filterAddItems(state.filtered, newItem, idx),
+                filteredCategory: filterAddItems(state.filteredCategory, newItem, idx),
             };
         }
         case 'FILTER_REMOVE_CATEGORY': {
-            return { ...state, filtered: filterRemoveItems(state.filtered, 'category', action.payload) };
-        }
-        case 'COMPOSE_FILTERED': {
             return {
                 ...state,
-                filtered: [...state.filteredCategory, ...state.filteredBrand],
+                filteredCategory: filterRemoveItems(state.filteredCategory, 'category', action.payload),
+            };
+        }
+        case 'COMPOSE_FILTERED': {
+            function comparer(otherArray) {
+                return function(current) {
+                    return (
+                        otherArray.filter(function(other) {
+                            return other.value == current.value && other.display == current.display;
+                        }).length == 0
+                    );
+                };
+            }
+            const a = state.filteredBrand.filter(comparer(state.filteredCategory));
+            const b = state.filteredCategory.filter(comparer(state.filteredBrand));
+            console.log('a', a);
+            console.log('b', b);
+
+            return {
+                ...state,
+                filtered: [...a, ...b],
             };
         }
 
