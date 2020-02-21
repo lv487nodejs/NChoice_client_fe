@@ -22,13 +22,14 @@ router.get('/', async (req, res) => {
     const { category } = req.query;
     let categories;
     try {
-        if (category) {
+        // check if object query is not empty
+        if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
             categories = await Categories.find({ category });
         } else {
             categories = await Categories.find();
         }
 
-        if (!categories) {
+        if (!categories || categories.length === 0) {
             throw { message: 'Category is not found' };
         }
         res.status(200).send(categories);
