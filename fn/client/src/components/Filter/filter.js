@@ -1,10 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { filterAddBrand, filterRemoveBrand, filterAddCategory, filterRemoveCategory } from '../../actions';
+import {
+    filterAddBrand,
+    filterRemoveBrand,
+    filterAddCategory,
+    filterRemoveCategory,
+    composeFilters,
+} from '../../actions';
 import './filter.css';
 
+
+
 const Filter = props => {
-    console.log(props);
+    const { filterAddBrand, filterAddCategory, filterRemoveBrand, filterRemoveCategory, composeFilters } = props;
     return (
         <div className="row">
             <div style={{ marginTop: '0.8rem' }}>
@@ -20,12 +28,14 @@ const Filter = props => {
                                 value="Armani"
                                 onClick={e => {
                                     if (e.target.checked) {
-                                        props.filterAddBrand(e.target.value);
+                                        filterAddBrand(e.target.value);
+                                        composeFilters();
                                     } else {
-                                        props.filterRemoveBrand(e.target.value);
+                                        filterRemoveBrand(e.target.value);
+                                        composeFilters();
                                     }
                                 }}
-                            />
+                                />
                             <span>Armani</span>
                         </label>
                         <label>
@@ -34,12 +44,14 @@ const Filter = props => {
                                 value="Versace"
                                 onClick={e => {
                                     if (e.target.checked) {
-                                        props.filterAddBrand(e.target.value);
+                                        filterAddBrand(e.target.value);
+                                        composeFilters();
                                     } else {
-                                        props.filterRemoveBrand(e.target.value);
+                                        filterRemoveBrand(e.target.value);
+                                        composeFilters();
                                     }
                                 }}
-                            />
+                                />
                             <span>Versace</span>
                         </label>
                         <label>
@@ -48,12 +60,14 @@ const Filter = props => {
                                 value="Gucci"
                                 onClick={e => {
                                     if (e.target.checked) {
-                                        props.filterAddBrand(e.target.value);
+                                        filterAddBrand(e.target.value);
+                                        composeFilters();
                                     } else {
-                                        props.filterRemoveBrand(e.target.value);
+                                        filterRemoveBrand(e.target.value);
+                                        composeFilters();
                                     }
                                 }}
-                            />
+                                />
                             <span>Gucci</span>
                         </label>
                         <label>
@@ -62,12 +76,14 @@ const Filter = props => {
                                 value="Prada"
                                 onClick={e => {
                                     if (e.target.checked) {
-                                        props.filterAddBrand(e.target.value);
+                                        filterAddBrand(e.target.value);
+                                        composeFilters();
                                     } else {
-                                        props.filterRemoveBrand(e.target.value);
+                                        filterRemoveBrand(e.target.value);
+                                        composeFilters();
                                     }
                                 }}
-                            />
+                                />
                             <span>Prada</span>
                         </label>
                     </div>
@@ -78,15 +94,18 @@ const Filter = props => {
                         <label>
                             <input
                                 type="checkbox"
+                                name="dresses"
                                 value="Dresses"
                                 onClick={e => {
                                     if (e.target.checked) {
-                                        props.filterAddCategory(e.target.value);
+                                        filterAddCategory(e.target.value);
+                                        composeFilters();
                                     } else {
-                                        props.filterRemoveCategory(e.target.value)
+                                        filterRemoveCategory(e.target.value);
+                                        composeFilters();
                                     }
                                 }}
-                            />
+                                />
                             <span>Dresses</span>
                         </label>
                         <label>
@@ -95,12 +114,14 @@ const Filter = props => {
                                 value="Jeans"
                                 onClick={e => {
                                     if (e.target.checked) {
-                                        props.filterAddCategory(e.target.value);
+                                        filterAddCategory(e.target.value);
+                                        composeFilters();
                                     } else {
-                                        props.filterRemoveCategory(e.target.value)
+                                        filterRemoveCategory(e.target.value);
+                                        composeFilters();
                                     }
                                 }}
-                            />
+                                />
                             <span>Jeans</span>
                         </label>
                         <label>
@@ -109,12 +130,14 @@ const Filter = props => {
                                 value="Shoes"
                                 onClick={e => {
                                     if (e.target.checked) {
-                                        props.filterAddCategory(e.target.value);
+                                        filterAddCategory(e.target.value);
+                                        composeFilters();
                                     } else {
-                                        props.filterRemoveCategory(e.target.value)
+                                        filterRemoveCategory(e.target.value);
+                                        composeFilters();
                                     }
                                 }}
-                            />
+                                />
                             <span>Shoes</span>
                         </label>
                         <label>
@@ -123,15 +146,17 @@ const Filter = props => {
                                 value="Sweaters"
                                 onClick={e => {
                                     if (e.target.checked) {
-                                        props.filterAddCategory(e.target.value);
+                                        filterAddCategory(e.target.value);
+                                        composeFilters();
                                     } else {
-                                        props.filterRemoveCategory(e.target.value)
+                                        filterRemoveCategory(e.target.value);
+                                        composeFilters();
                                     }
                                 }}
-                            />
+                                />
                             <span>Sweaters</span>
                         </label>
-                    </div>                 
+                    </div>
                 </fieldset>
             </div>
         </div>
@@ -145,6 +170,7 @@ const mapDispatchToProps = dispatch => ({
     filterRemoveBrand: brand => dispatch(filterRemoveBrand(brand)),
     filterAddCategory: category => dispatch(filterAddCategory(category)),
     filterRemoveCategory: category => dispatch(filterRemoveCategory(category)),
+    composeFilters: () => dispatch(composeFilters()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);
