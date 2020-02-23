@@ -1,11 +1,13 @@
 import React from 'react';
+import MainCategories from "../MainCategories/mainCategories";
 
 function Currency() {
   return (
     <div>
-      <h3>
+      <div>
         Currency
-      </h3>
+        <MainCategories/>
+      </div>
     </div>
   )
 }

@@ -32,7 +32,7 @@ function NavBar() {
         </div>
       </nav>
 
-      < Switch>
+
         < Route
           path='/currency'
           component={Currency}
@@ -50,7 +50,6 @@ function NavBar() {
         component={HomePageContainer}
         />
 
-      </Switch>
     </div>
 
   )

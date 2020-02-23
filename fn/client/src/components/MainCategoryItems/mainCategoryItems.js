@@ -19,8 +19,8 @@ export const MainCategoryItems = (props) => {
 
   return (
     <div>
-      {products.map((c, index) => (
-        <div key={index}>
+      {products.map((c) => (
+        <div key={c.id}>
           <div>
             <h3>
               {c.category}

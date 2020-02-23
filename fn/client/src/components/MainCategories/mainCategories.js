@@ -1,10 +1,5 @@
 import React from 'react';
-import MainCategoryItems from '../MainCategoryItems/mainCategoryItems';
-import {
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 function MainCategories() {
 
@@ -33,24 +28,21 @@ function MainCategories() {
 
         </div>
       </div>
+        {/*< Route*/}
+          {/*path='/women'*/}
+          {/*render={(props) => <MainCategoryItems {...props} catalogName={'Women'}/>}*/}
+        {/*/>*/}
 
-      < Switch>
-        < Route
-          path='/women'
-          render={(props) => <MainCategoryItems {...props} catalogName={'Women'}/>}
-        />
+        {/*<Route*/}
+          {/*path='/men'*/}
+          {/*render={(props) => <MainCategoryItems {...props} catalogName={'Male'}/>}*/}
+        {/*/>*/}
 
-        <Route
-          path='/men'
-          render={(props) => <MainCategoryItems {...props} catalogName={'Male'}/>}
-        />
-
-        < Route
-          path='/children'
-          render={(props) => <MainCategoryItems {...props} catalogName={'Kids'}/>
-          }
-        />
-      </Switch>
+        {/*< Route*/}
+          {/*path='/children'*/}
+          {/*render={(props) => <MainCategoryItems {...props} catalogName={'Kids'}/>*/}
+          {/*}*/}
+        {/*/>*/}
     </div>
 
   );
