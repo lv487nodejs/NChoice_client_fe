@@ -15,7 +15,7 @@ export const MainCategoryItems = props => {
                 props.productsFetchSuccess(response);
             })
             .catch(error => console.log(error));
-    }, [props, props.catalogName]);
+    }, [props.catalogName]);
 
     return (
         <div>
