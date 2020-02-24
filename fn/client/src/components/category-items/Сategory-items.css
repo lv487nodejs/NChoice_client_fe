@@ -11,6 +11,8 @@
 .categories ul {
     display: flex;
     justify-content: center;
+    margin: 0;
+    padding: 0;
 }
 
 .categories li {

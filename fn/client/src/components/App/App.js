@@ -1,34 +1,35 @@
 import React from 'react';
-import './App.css';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import './App.css';
 
-import Header from '../Header'
-import Catalogs from '../Catalogs'
-import Register from '../Register'
-import CatalogCategoriesItem from "../CatalogCategoriesItem"
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import Header from '../header';
+import Catalogs from '../catalogs';
+import Register from '../register';
+import CategoryItems from '../category-items';
 
 function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Header />
-        <Switch>
-          <Route path="/" exact component={Catalogs} />
-          <Route
-            path='/catalogs/:name'
-            exact
-            render={({ match }) => {
-              const { name } = match.params;
-              return <CatalogCategoriesItem catalogName={name} />
-            }}
-          />
-          <Route path="/register" exact component={Register}></Route>
-        </Switch>
-      </Router>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Router>
+                <Header />
+                <Switch>
+                    <Route path="/" exact component={Catalogs} />
+                    <Route
+                        path="/catalogs/:name"
+                        exact
+                        render={({ match }) => {
+                            const { name } = match.params;
+                            return <CategoryItems catalogName={name} />;
+                        }}
+                    />
+                    <Route path="/register" exact component={Register} />
+                </Switch>
+            </Router>
+        </div>
+    );
 }
 
 export default App;
