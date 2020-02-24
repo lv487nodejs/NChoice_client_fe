@@ -1,6 +1,9 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
+import Nav from 'react-bootstrap/Nav';
 
 import './CatalogCategoriesItem.css'
+import Categories from '../Categories'
 
 export const CatalogCategoriesItem = (props) => {
   const [products, setProducts] = useState([]);
@@ -21,13 +24,17 @@ export const CatalogCategoriesItem = (props) => {
   }, [props.catalogName]);
 
   return (
-    <ul className='categories'>
-      {products.map((c) => (
-            <li key={c.id}>
-              {c.category}
-            </li>
-      ))}
-    </ul>
+    <div className='categories'>
+      <Nav className="justify-content-center" activeKey="/home">
+        {products.map((c) => (
+          <Nav.Item>
+            <Nav.Link><Link to={c.category}>{c.category}</Link></Nav.Link>
+          </Nav.Item>
+        ))}
+      </Nav>
+      <Categories />
+      <Categories />
+    </div>
   );
 };
 

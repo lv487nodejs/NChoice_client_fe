@@ -1,4 +1,12 @@
 .categories {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+    width: 800px;
+    margin: 0 auto;
+}
+
+.categories ul {
     display: flex;
     justify-content: center;
 }
