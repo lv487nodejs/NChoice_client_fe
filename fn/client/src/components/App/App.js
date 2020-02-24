@@ -22,7 +22,7 @@ function App() {
                         exact
                         render={({ match }) => {
                             const { name } = match.params;
-                            return <CategoryItems catalogName={name} />;
+                            return <CategoryItems catalog={name} />;
                         }}
                     />
                     <Route path="/register" exact component={Register} />

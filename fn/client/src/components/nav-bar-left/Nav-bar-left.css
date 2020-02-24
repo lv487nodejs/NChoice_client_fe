@@ -1,0 +1,25 @@
+.nav-bar ul {
+    padding: 0;
+    margin: 0;
+}
+
+.nav-bar li {
+    display: inline-block;
+    margin:0;
+    padding:0;
+}
+
+.nav-bar a {
+    font-family: 'Oswald';
+    text-decoration: none;
+    font-size: 1.3rem;
+    color: white;
+    padding: .5rem 1rem;
+    transition: all 0.3s;
+    text-transform: uppercase;
+}
+
+.nav-bar a:hover {
+    color: black;
+    background-color: white;
+}

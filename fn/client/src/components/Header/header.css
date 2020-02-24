@@ -3,46 +3,15 @@
 .header {
     background-color: black;
     display: flex;
-    flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
     padding: 0rem 1.5rem;
     margin-bottom: 1rem;
+    box-shadow: 0 8px 6px -6px black;
 }
 
-.header img {
+.header .logo {
     padding: 1rem;
-    display: block;
     height: 6rem;
 }
 
-.nav-bar {
-    padding: 0;
-    margin: 0;
-}
-
-.nav-bar ul {
-    padding: 0;
-    margin: 0;
-}
-
-.nav-bar li {
-    display: inline-block;
-    margin:0;
-    padding:0;
-}
-
-.nav-bar a {
-    font-family: 'Oswald';
-    text-decoration: none;
-    font-size: 1.3rem;
-    color: white;
-    padding: .5rem 1rem;
-    transition: all 0.3s;
-    text-transform: uppercase;
-}
-
-.nav-bar a:hover {
-    color: black;
-    background-color: white;
-}
