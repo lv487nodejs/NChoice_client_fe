@@ -25,13 +25,11 @@ export const CatalogCategoriesItem = (props) => {
 
   return (
     <div className='categories'>
-      <Nav className="justify-content-center" activeKey="/home">
+      <ul>
         {products.map((c) => (
-          <Nav.Item>
-            <Nav.Link><Link to={c.category}>{c.category}</Link></Nav.Link>
-          </Nav.Item>
+            <li className='category-item'><Link to={c.category}>{c.category}</Link></li>
         ))}
-      </Nav>
+      </ul>
       <Categories />
       <Categories />
     </div>
