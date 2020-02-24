@@ -1,0 +1,9 @@
+.categories {
+    display: flex;
+    justify-content: center;
+}
+
+.categories li {
+    display: inline-block;
+    margin: 10px;
+}

@@ -1,0 +1,21 @@
+.header {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.header img {
+    display: block;
+    height: 60px;
+}
+
+ul {
+    padding: 0;
+}
+
+.left-bar li, .right-bar li {
+    display: inline-block;
+    margin: 10px;
+    
+}

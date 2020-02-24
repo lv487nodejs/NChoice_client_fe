@@ -1,0 +1,10 @@
+.catalogs {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.catalogs img {
+    display: block;
+    height: 70%;
+}
