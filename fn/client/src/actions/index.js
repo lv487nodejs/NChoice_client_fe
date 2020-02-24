@@ -16,6 +16,6 @@ const productsFetchData = (dispatch) => (url, method = null, body = {}) => {
   );
 };
 
-export {productsFetchData };
+export {productsFetchData,productsFetchSuccess };
 
 

@@ -1,6 +1,10 @@
-import { combineReducers } from 'redux'
-import {fetchProducts} from './fetchProducts'
-export default combineReducers({
-  fetchProducts
+// import { combineReducers } from 'redux'
+import { fetchCategories } from './fetchCategories';
+// export default combineReducers({
+//   fetchProducts
+// });
+const reducer = (state, action) => ({
+    ...state,
+    products: [...fetchCategories(state, action)],
 });
-
+export default reducer;

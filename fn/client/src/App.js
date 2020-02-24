@@ -13,9 +13,9 @@ class App extends Component {
         <NavBar/>
         <Switch>
           <Route exact path="/" component={HomePageContainer}/>
-          < Route
+          <Route
             path='/women'
-            render={(props) => < MainCategoryItems {...props} catalogName={'Women'}/>}
+            render={(props) => <MainCategoryItems {...props} catalogName={'Women'}/>}
           />
 
           <Route
@@ -23,7 +23,7 @@ class App extends Component {
             render={(props) => <MainCategoryItems {...props} catalogName={'Male'}/>}
           />
 
-          < Route
+          <Route
             path='/children'
             render={(props) => <MainCategoryItems {...props} catalogName={'Kids'}/>
             }
