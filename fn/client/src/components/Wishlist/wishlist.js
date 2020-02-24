@@ -5,6 +5,7 @@ function Wishlist() {
     <div>
       <h3>
         Wishlist
+
       </h3>
     </div>
   )

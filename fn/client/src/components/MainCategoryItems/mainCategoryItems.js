@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from "react";
+import {productsFetchData} from '../../actions/index'
+import { connect } from 'react-redux';
 
 export const MainCategoryItems = (props) => {
   const [products, setProducts] = useState([]);
@@ -32,5 +34,18 @@ export const MainCategoryItems = (props) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    fetchProducts: state.items,
+  };
+};
 
-export default MainCategoryItems;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    items: (url) => dispatch(productsFetchData(url))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainCategoryItems);
+
+
