@@ -24,4 +24,10 @@ export default class CatalogService {
         const catalogs = await this.getResource(`catalogs/?catalog=${catalogName}`);
         return catalogs;
     }
+
+    getCatalogCategories = async (catalogName) => {
+        const catalogs = await this.getResource(`catalogs/?catalog=${catalogName}`);
+        const { categories } = catalogs[0];
+        return categories
+    }
 }

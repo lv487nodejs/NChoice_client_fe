@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import CatalogService from '../../services/catalog'
+
 const NavCategories = ({ catalog }) => {
     const [products, setProducts] = useState([]);
+    
     useEffect(() => {
-        fetch(`https://stark-headland-06017.herokuapp.com/catalogs?catalog=${catalog}`, {
-            method: 'GET',
-        })
-            .then(res => res.json())
+        const catalogService = new CatalogService();
+        catalogService
+            .getCatalogCategories(catalog)
             .then(response => {
-                setProducts(response[0].categories);
+                setProducts(response);
             })
             .catch(error => error);
     }, [catalog]);
 
     return (
         <ul>
-            <li className="category-item">
+            <li key='all' className="category-item">
                 <Link to="/all">All Categories</Link>
             </li>
-            {products.map(c => (
-                <li className="category-item">
-                    <Link to={c.category}>{c.category}</Link>
+            {products.map(item => (
+                <li key={item.id} className="category-item">
+                    <Link to={item.category}>{item.category}</Link>
                 </li>
             ))}
         </ul>
