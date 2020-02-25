@@ -10,6 +10,7 @@ import Catalogs from '../catalogs';
 import Register from '../register';
 import CategoryItems from '../category-items';
 import ProductList from '../product-list';
+import Footer from '../footer'
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                     <Route path="/register" exact component={Register} />
                     <Route path="/productlist" exact component={ProductList} />
                 </Switch>
+                <Footer />
             </Router>
         </div>
     );
