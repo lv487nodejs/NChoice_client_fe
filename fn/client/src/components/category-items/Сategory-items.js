@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Сategory-items.css';
 import CategoryCarousel from '../category-carousel';
-import NavCategories from '../nav-categories';
+import NavCategories from '../categories-nav';
 
 const CategoryItems = ({ catalog }) => (
     <div className="categories">

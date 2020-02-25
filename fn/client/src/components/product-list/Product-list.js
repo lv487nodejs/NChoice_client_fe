@@ -5,13 +5,10 @@ import ProductListPosts from '../product-list-posts';
 import ProductListPaginator from '../product-list-paginator';
 import ProductListButtonPages from '../product-list-button-pages';
 
-
-
 function ProductList() {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(15);
-
 
   useEffect(() => {
     const fechPosts = async () => {
