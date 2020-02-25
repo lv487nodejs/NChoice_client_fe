@@ -26,7 +26,7 @@ export default class ProductService {
         let queryString = 'products/?';
         const { brand, color, category, catalog } = filter;
         if (brand) {
-            queryString = `${queryString}brand=${brand}`;
+            queryString = `${queryString}&brand=${brand}`;
         }
         if (color) {
             queryString = `${queryString}&color=${color}`;
