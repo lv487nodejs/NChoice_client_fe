@@ -142,6 +142,7 @@ const prepareProductsToSend = products => {
         const newProduct = {
             id: product.id,
             title: product.title,
+            images: product.images,
             description: product.description,
             propetries: product.propetries,
             modified: product.modified,
