@@ -5,39 +5,37 @@ import ProductListPosts from '../product-list-posts';
 import ProductListPaginator from '../product-list-paginator';
 import ProductListButtonPages from '../product-list-button-pages';
 
-
-
 function ProductList() {
-  const [posts, setPosts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(15);
+    const [posts, setPosts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage, setPostsPerPage] = useState(15);
 
+    useEffect(() => {
+            axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(res => setPosts(res.data));
+    }, []);
 
-  useEffect(() => {
-    const fechPosts = async () => {
-      const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
-      setPosts(res.data);
-    }
-    fechPosts()
-  }, []);
+    // Get current posts
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  //Get current posts
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+    // Change view
+    const paginateMethod = value => setCurrentPage(value);
+    const changeItemsMethod = number => setPostsPerPage(number);
+    const changePagination = () => setCurrentPage(1);
 
-  //Change view
-  const paginateMethod = (value) => setCurrentPage(value);
-  const changeItemsMethod = (number) => setPostsPerPage(number);
-  const changePagination = () => setCurrentPage(1)
-
-  return (
-    <section className='left-side'>
-      <ProductListButtonPages changeItems={changeItemsMethod} changeCurrentPage={changePagination} className="buttonsGroup"/>
-      <ProductListPosts posts={currentPosts} />
-      <ProductListPaginator postPerPage={postsPerPage} totalPosts={posts.length} paginate={paginateMethod} />
-    </section>
-  );
+    return (
+        <section className="left-side">
+            <ProductListButtonPages
+                changeItems={changeItemsMethod}
+                changeCurrentPage={changePagination}
+                className="buttonsGroup"
+            />
+            <ProductListPosts posts={currentPosts} />
+            <ProductListPaginator postPerPage={postsPerPage} totalPosts={posts.length} paginate={paginateMethod} />
+        </section>
+    );
 }
 
 export default ProductList;
