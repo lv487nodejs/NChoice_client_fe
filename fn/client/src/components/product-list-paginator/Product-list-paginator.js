@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './Product-list-paginator.css'
+
 export default function ProductListPaginator({ postPerPage, totalPosts, paginate, currentPage }) {
     const pageNumbers = [];
     const pagesCount = Math.ceil(totalPosts / postPerPage);
@@ -10,9 +12,7 @@ export default function ProductListPaginator({ postPerPage, totalPosts, paginate
         <nav>
             <ul className='pagination'>
                 {pageNumbers.map(number => (
-                    <li key={number} className="page-item page-link" onClick={() => paginate(number)}>
-                        {number}
-                    </li>
+                    <li key={number} className="page-item page-link" onClick={() => paginate(number)}>{number}</li>
                 ))}
             </ul>
         </nav>
