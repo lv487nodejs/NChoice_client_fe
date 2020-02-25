@@ -19,7 +19,7 @@ const NavCategories = ({ catalog }) => {
     return (
         <ul>
             <li key='all' className="category-item">
-                <Link to="/all">All Categories</Link>
+                <Link to="/productlist">All Categories</Link>
             </li>
             {products.map(item => (
                 <li key={item.id} className="category-item">
