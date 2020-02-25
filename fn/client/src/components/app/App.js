@@ -6,7 +6,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from '../header1';
-import Catalogs from '../catalogs1';
+import Catalogs from '../catalogs';
 import Register from '../register1';
 import CategoryItems from '../category-items';
 
