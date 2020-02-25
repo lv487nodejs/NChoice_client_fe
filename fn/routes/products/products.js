@@ -108,22 +108,22 @@ async function getQueries(query, res) {
 
     try {
         if (catalog) {
-            const catalogItems = await Catalogs.find({ catalog: { $in: catalog } });
+            const catalogItems = await Catalogs.find({ catalog: { $in: catalog.split(',') } });
             catalogItems.forEach((value, i, array) => (array[i] = value.id));
             filter.catalog = { $in: catalogItems };
         }
         if (category) {
-            const categoryItems = await Categories.find({ category: { $in: category } });
+            const categoryItems = await Categories.find({ category: { $in: category.split(',') } });
             categoryItems.forEach((value, i, array) => (array[i] = value.id));
             filter.category = { $in: categoryItems };
         }
         if (brand) {
-            const brandItems = await Brands.find({ brand: { $in: brand } });
+            const brandItems = await Brands.find({ brand: { $in: brand.split(',') } });
             brandItems.forEach((value, i, array) => (array[i] = value.id));
             filter.brand = { $in: brandItems };
         }
         if (color) {
-            const colorFilter = await Colors.find({ color: { $in: color } });
+            const colorFilter = await Colors.find({ color: { $in: color.split(',') } });
             colorFilter.forEach((value, i, array) => (array[i] = value.id));
             filter.color = { $in: colorFilter };
         }
