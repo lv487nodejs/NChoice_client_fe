@@ -2,10 +2,6 @@ import React from 'react';
 
 import CategoryItems from '../components/category-items';
 
-const CategoriesPageContainer = ({catalog}) => {
-    return (
-        <CategoryItems catalog={catalog}/>
-    )
-}
+const CategoriesPageContainer = ({ catalog }) => <CategoryItems catalog={catalog} />;
 
-export default CategoriesPageContainer
+export default CategoriesPageContainer;

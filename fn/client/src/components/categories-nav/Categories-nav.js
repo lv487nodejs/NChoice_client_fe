@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import CatalogService from '../../services/catalog'
+import CatalogService from '../../services/catalog';
 
 const NavCategories = ({ catalog }) => {
     const [products, setProducts] = useState([]);
-    
+
     useEffect(() => {
         const catalogService = new CatalogService();
         catalogService
@@ -18,7 +18,7 @@ const NavCategories = ({ catalog }) => {
 
     return (
         <ul>
-            <li key='all' className="category-item">
+            <li key="all" className="category-item">
                 <Link to="/productlist">All Categories</Link>
             </li>
             {products.map(item => (

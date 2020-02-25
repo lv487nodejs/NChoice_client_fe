@@ -2,10 +2,6 @@ import React from 'react';
 
 import ProductList from '../components/product-list';
 
-const ProductListPageContainer = () => {
-    return (
-        <ProductList />
-    )
-}
+const ProductListPageContainer = () => <ProductList />;
 
-export default ProductListPageContainer
+export default ProductListPageContainer;
