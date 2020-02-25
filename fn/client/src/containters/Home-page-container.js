@@ -2,10 +2,6 @@ import React from 'react';
 
 import Catalogs from '../components/catalogs';
 
-const HomePageContainer = () => {
-    return (
-        <Catalogs />
-    )
-}
+const HomePageContainer = () => <Catalogs />;
 
-export default HomePageContainer
+export default HomePageContainer;
