@@ -24,7 +24,10 @@ router.get('/', async (req, res) => {
         if (!products) {
             throw { message: 'Products not found ' };
         }
-        res.status(200).send(products);
+
+        const productsToSend = prepareProductsToSend(products);
+
+        res.status(200).send(productsToSend);
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
@@ -102,7 +105,7 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
     }
 });
 
-async function getQueries(query, res) {
+const getQueries = async (query, res) => {
     const { catalog, category, color, brand } = query;
     const filter = {};
 
@@ -132,6 +135,23 @@ async function getQueries(query, res) {
     }
 
     return filter;
-}
+};
+
+const prepareProductsToSend = products => {
+    const productsToSend = products.map(product => {
+        const newProduct = {
+            id: product.id,
+            title: product.title,
+            propetries: product.propetries,
+            modified: product.modified,
+            catalog: product.catalog.catalog,
+            category: product.category.category,
+            color: product.color.color,
+            brand: product.brand.brand,
+        };
+        return newProduct;
+    });
+    return productsToSend;
+};
 
 module.exports = router;
