@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     const { query } = req;
 
     try {
-        const filter = await getQueries(query, res);
+        const filter = await getFilters(query);
         const products = await Products.find(filter)
             .populate('catalog')
             .populate('category')
@@ -105,7 +105,7 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
     }
 });
 
-const getQueries = async (query, res) => {
+const getFilters = async query => {
     const { catalog, category, color, brand } = query;
     const filter = {};
 
@@ -131,7 +131,7 @@ const getQueries = async (query, res) => {
             filter.color = { $in: colorFilter };
         }
     } catch (err) {
-        res.status(500).send({ message: err.message });
+        throw { message: err.message };
     }
 
     return filter;
