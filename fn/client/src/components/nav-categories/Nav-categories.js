@@ -22,7 +22,9 @@ const NavCategories = ({ catalog }) => {
                 <Link to="/all">All Categories</Link>
             </li>
             {products.map(item => (
-                <li key={item.id} className="category-item">
+                
+                
+                <li key={item._id} className="category-item">
                     <Link to={item.category}>{item.category}</Link>
                 </li>
             ))}

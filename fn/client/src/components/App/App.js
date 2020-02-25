@@ -1,18 +1,19 @@
 import React from 'react';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Header from '../header';
-import Catalogs from '../catalogs';
-import Register from '../register';
+import Header from '../Header';
+import Catalogs from '../Catalogs';
+import Register from '../Register';
 import CategoryItems from '../category-items';
+import PlpContainer from '../../containers';
 
 function App() {
     return (
         <div className="App">
+
             <Router>
                 <Header />
                 <Switch>
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/register" exact component={Register} />
                 </Switch>
             </Router>
+            <PlpContainer />
         </div>
     );
 }
