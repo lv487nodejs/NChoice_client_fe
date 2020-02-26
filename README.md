@@ -257,61 +257,50 @@ price: min: 0, type Number
 Response:
 ```json
 {
-    "images": [
-        "shoes.jpg"
-    ],
-    "_id": "5e4e965072079f05d682f78e",
-    "catalog": {
+        "id": "5e53ddc92d9ca328e8e0712e",
+        "title": "shoes cassics zu kakceno ticif.",
         "images": [
-            "catalogwomen.jpg"
+            "shoes_men.jpg"
         ],
-        "categories": [
+        "description": "Te ilfotha to sil onemer sada wembefca hizojre meruhe tuca cowcijfof lutpupah jopil daupivin ipoomo kat. Movi saditim ek vofezit let sudkupa ufiwilu bi perjevo af lu ziide pa fig. Ahni fiwe jewuba ajenum bep podoci pemiw ta we ekihin evotier kaer ne. Vahdefo tajidev hawopar fu ane awiduhew wi ligitu wip dafa pamir tusfeh hulteri peb. Si ja idvu sakaga nevtalar ta aduf voshovdun zoebidi tigren arahugef vozej. Epti ula gadhu salroh diolu mochoza gacrati lev umgog ucirdip bame subdorto rik nagido bivburhu. Felohhi gistic ohahap ebo cuh izuodcip nihcuf nakunke eztocit lokow de wuhjanav nelepebe nikelug joepo je.",
+        "propetries": [
             {
-                "images": [],
-                "_id": "5e4c552158a955341f476b0b",
-                "category": "shoes",
-                "__v": 0
+                "size": [
+                    "37"
+                ],
+                "_id": "5e53ddc92d9ca328e8e0712f",
+                "available": 4,
+                "sku": "9WJ5CB88",
+                "mrsp": 503,
+                "price": 402
+            },
+            {
+                "size": [
+                    "41"
+                ],
+                "_id": "5e53ddc92d9ca328e8e07130",
+                "available": 4,
+                "sku": "XWZ2C25D",
+                "mrsp": 503,
+                "price": 402
+            },
+            {
+                "size": [
+                    "44"
+                ],
+                "_id": "5e53ddc92d9ca328e8e07131",
+                "available": 4,
+                "sku": "WBWA6USH",
+                "mrsp": 503,
+                "price": 402
             }
         ],
-        "_id": "5e4c4d350fc75d48c83e1f7a",
-        "catalog": "women",
-        "__v": 1
-    },
-    "category": {
-        "images": [],
-        "_id": "5e4c552158a955341f476b0b",
+        "modified": "2020-02-24T14:29:29.027Z",
+        "catalog": "men",
         "category": "shoes",
-        "__v": 0
-    },
-    "brand": {
-        "images": [],
-        "_id": "5e4c552258a955341f476b0f",
-        "brand": "zori",
-        "__v": 0
-    },
-    "title": "daleki",
-    "description": "daleki zori vasylia",
-    "color": {
-        "images": [],
-        "_id": "5e4c54ef58a955341f476afc",
         "color": "red",
-        "__v": 0
+        "brand": "cassics"
     },
-    "propetries": [
-        {
-            "size": [
-                "38"
-            ],
-            "_id": "5e4e965072079f05d682f78f",
-            "available": 25,
-            "sku": "JD790J2S",
-            "mrsp": 213,
-            "price": 180
-        }
-    ],
-    "modified": "2020-02-20T14:23:12.211Z",
-    "__v": 0
-}
 ```
 GET:
 **http://localhost:5000/products**
