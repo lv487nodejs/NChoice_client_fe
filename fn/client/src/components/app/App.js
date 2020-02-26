@@ -1,10 +1,10 @@
 import React from 'react';
-
 import './App.css';
+import withStoreService from '../hoc'
 
 import Routes from '../routes';
 
-function App() {
+const App = () => {
     return (
         <div className="App">
             <Routes />
