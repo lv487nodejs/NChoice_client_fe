@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class ProductService {
+export default class StoreService {
     _apiBase = 'https://stark-headland-06017.herokuapp.com/';
 
     getResource = async url => {
