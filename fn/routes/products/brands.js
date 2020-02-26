@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
     try {
         // check if object query is not empty
         if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
-            brands = await Brands.find({ brand });
+            brands = await Brands.find({ brand: { $in: brand.split(',') } });
         } else {
             brands = await Brands.find();
         }
