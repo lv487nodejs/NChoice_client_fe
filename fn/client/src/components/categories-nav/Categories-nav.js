@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import CatalogService from '../../services/catalog';
+import StoreService from '../../services';
 
 const NavCategories = ({ catalog }) => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        const catalogService = new CatalogService();
-        catalogService
+        const storeService = new StoreService();
+        storeService
             .getCatalogCategories(catalog)
             .then(response => {
                 setProducts(response);
