@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+
 import './Product-list.css';
 import ProductListPosts from '../product-list-posts';
 import ProductListPaginator from '../product-list-paginator';
 import ProductListButtonPages from '../product-list-button-pages';
 
-const ProductList = () => {
-    const [posts, setPosts] = useState([]);
+import { productsLoaded } from '../../actions';
+import withStoreService from '../hoc';
+
+const ProductList = ( { storeService, productsLoaded, products} ) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
 
     useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/posts').then(res => setPosts(res.data));
+        storeService.getAllProducts()
+            .then(res => productsLoaded(res))
     }, []);
 
     // Get current posts
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPosts = products.products.slice(indexOfFirstPost, indexOfLastPost);
 
     // Change view
     const paginateMethod = value => setCurrentPage(value);
@@ -31,10 +35,13 @@ const ProductList = () => {
                 changeCurrentPage={changePagination}
                 className="buttonsGroup"
             />
-            <ProductListPosts posts={currentPosts} />
-            <ProductListPaginator postPerPage={postsPerPage} totalPosts={posts.length} paginate={paginateMethod} />
+            <ProductListPosts products={currentPosts} />
+            <ProductListPaginator postPerPage={postsPerPage} totalPosts={products.products.length} paginate={paginateMethod} />
         </section>
     );
 };
 
-export default ProductList;
+const mapStateToProps = ({ products }) => ({ products });
+const mapDispatchToProps = { productsLoaded };
+
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));

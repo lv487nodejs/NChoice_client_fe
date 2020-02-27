@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { categoriesLoaded } from '../../actions/Categories-actions';
+import { categoriesLoaded } from '../../actions';
 import CategoriesNavItem from '../categories-nav-item';
 import withStoreService from '../hoc';
 
@@ -17,7 +17,7 @@ const CategoriesNav = ({ storeService, categoriesLoaded, categories, catalog }) 
             <li key="all" className="category-item">
                 <Link to="/productlist">All Categories</Link>
             </li>
-            {categories.map(category => (
+            {categories.categories.map(category => (
                 <li key={category.category} className="category-item">
                     <CategoriesNavItem name={category.category} />
                 </li>

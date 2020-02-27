@@ -3,7 +3,8 @@ const initialState = {
     catalog: {},
 };
 
-const categoriesReducer = (state = initialState, action) => {
+const categories = (state = initialState, action) => {
+    console.log(action.type)
     switch (action.type) {
         case 'CATEGORIES_LOADED':
             return {
@@ -15,4 +16,4 @@ const categoriesReducer = (state = initialState, action) => {
     }
 };
 
-export default categoriesReducer;
+export default categories;
