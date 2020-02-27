@@ -15,8 +15,6 @@ const PropetriesSchema = new Schema({
         validate: [/[a-zA-Z0-9]/, 'Product sku should have letters and numbers'],
         unique: true,
     },
-    mrsp: { type: Number, min: 0 },
-    price: { type: Number, required: true, min: 0 },
 });
 
 module.exports = PropetriesSchema;

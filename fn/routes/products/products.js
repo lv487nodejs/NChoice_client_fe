@@ -45,7 +45,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', productValidationRules(), validate, async (req, res) => {
-    const { title, description, images, propetries } = req.body;
+    const { title, description, images, propetries, price, msrp } = req.body;
     try {
         const requestedCatalog = req.body.catalog;
         const catalog = await Catalogs.findOne(requestedCatalog);
@@ -94,6 +94,8 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
             title,
             description,
             color,
+            price,
+            msrp,
             images,
             propetries,
         });
@@ -150,6 +152,8 @@ const prepareProductsToSend = products => {
             category: product.category.category,
             color: product.color.color,
             brand: product.brand.brand,
+            price: product.price,
+            msrp: product.mrsp,
         };
         return newProduct;
     });
