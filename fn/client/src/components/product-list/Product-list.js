@@ -9,7 +9,7 @@ import ProductListButtonPages from '../product-list-button-pages';
 import { productsLoaded } from '../../actions';
 import withStoreService from '../hoc';
 
-const ProductList = ( { storeService, productsLoaded, products} ) => {
+const ProductList = ({ storeService, productsLoaded, products }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
 

@@ -9,8 +9,8 @@ import withStoreService from '../hoc';
 const CategoriesNav = ({ storeService, categoriesLoaded, categories, catalog }) => {
     useEffect(() => {
         storeService.getCatalogCategories(catalog)
-        .then(res => categoriesLoaded(res));
-    },[catalog]);
+            .then(res => categoriesLoaded(res));
+    }, [catalog]);
 
     return (
         <ul>
