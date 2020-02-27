@@ -1,2 +1,3 @@
-import withStoreService from './With-store-service'
-export default withStoreService
+import withStoreService from './With-store-service';
+
+export default withStoreService;

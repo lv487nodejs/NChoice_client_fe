@@ -5,14 +5,13 @@ import ProductListPosts from '../product-list-posts';
 import ProductListPaginator from '../product-list-paginator';
 import ProductListButtonPages from '../product-list-button-pages';
 
-function ProductList() {
+const ProductList = () => {
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
 
     useEffect(() => {
-            axios.get('https://jsonplaceholder.typicode.com/posts')
-            .then(res => setPosts(res.data));
+        axios.get('https://jsonplaceholder.typicode.com/posts').then(res => setPosts(res.data));
     }, []);
 
     // Get current posts
@@ -36,6 +35,6 @@ function ProductList() {
             <ProductListPaginator postPerPage={postsPerPage} totalPosts={posts.length} paginate={paginateMethod} />
         </section>
     );
-}
+};
 
 export default ProductList;

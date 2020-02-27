@@ -1,5 +1,5 @@
 import React from 'react';
-import './Catalogs.css';
+import './Catalogs-list.css';
 
 import { Link } from 'react-router-dom';
 

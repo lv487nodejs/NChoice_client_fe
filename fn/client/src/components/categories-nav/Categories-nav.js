@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import StoreService from '../../services';
+import { categoriesLoaded } from '../../actions/Categories-actions';
+import CategoriesNavItem from '../categories-nav-item';
+import withStoreService from '../hoc';
 
-const NavCategories = ({ catalog }) => {
-    const [products, setProducts] = useState([]);
-
+const CategoriesNav = ({ storeService, categoriesLoaded, categories, catalog }) => {
     useEffect(() => {
-        const storeService = new StoreService();
-        storeService
-            .getCatalogCategories(catalog)
-            .then(response => {
-                setProducts(response);
-            })
-            .catch(error => error);
-    }, [catalog]);
+        storeService.getCatalogCategories(catalog).then(res => categoriesLoaded(res));
+    });
 
     return (
         <ul>
             <li key="all" className="category-item">
                 <Link to="/productlist">All Categories</Link>
             </li>
-            {products.map(item => (
-                <li key={item.id} className="category-item">
-                    <Link to={item.category}>{item.category}</Link>
+            {categories.map(category => (
+                <li key={category.category} className="category-item">
+                    <CategoriesNavItem name={category.category} />
                 </li>
             ))}
+            )}
         </ul>
     );
 };
 
-export default NavCategories;
+const mapStateToProps = ({ categories }) => ({ categories });
+
+const mapDispatchToProps = { categoriesLoaded };
+
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(CategoriesNav));

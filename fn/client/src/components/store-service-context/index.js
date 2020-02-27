@@ -1,6 +1,3 @@
 import { StoreServiceConsumer, StoreServiceProvider } from './Store-service-context';
 
-export {
-    StoreServiceConsumer,
-    StoreServiceProvider
-} 
+export { StoreServiceConsumer, StoreServiceProvider };

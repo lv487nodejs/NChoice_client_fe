@@ -1,11 +1,5 @@
 import React from 'react';
 
-const {
-    Provider: StoreServiceProvider,
-    Consumer: StoreServiceConsumer
-} = React.createContext()
+const { Provider: StoreServiceProvider, Consumer: StoreServiceConsumer } = React.createContext();
 
-export {
-    StoreServiceConsumer,
-    StoreServiceProvider
-}
+export { StoreServiceConsumer, StoreServiceProvider };

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
-import './Category-carousel.css';
+import './Categories-carousel.css';
 
-const CategoryCarousel = ({ image }) => (
+const CategoriesCarousel = ({ image }) => (
     <Carousel>
         <Carousel.Item>
             <img className="d-block w-100" src={`/images/categories/${image}`} alt="First slide" />
@@ -16,4 +16,4 @@ const CategoryCarousel = ({ image }) => (
     </Carousel>
 );
 
-export default CategoryCarousel;
+export default CategoriesCarousel;

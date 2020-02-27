@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Nav-bar-left.css';
+import './App-header-nav-left.css';
 
-const NavBarLeft = () => (
+const AppHeaderNavLeft = () => (
     <nav className="nav-bar">
         <ul>
             <li key="1">
@@ -18,4 +18,4 @@ const NavBarLeft = () => (
     </nav>
 );
 
-export default NavBarLeft;
+export default AppHeaderNavLeft;

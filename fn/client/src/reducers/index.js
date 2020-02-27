@@ -1,2 +1,3 @@
-import Catalogs from './Catalog-reducer'
-export default Catalogs
+import categoriesReducer from './Categories-reducer';
+
+export default categoriesReducer;

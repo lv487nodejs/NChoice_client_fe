@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './Nav-bar-right.css';
+import './App-header-nav-right.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faDollarSign, faUser } from '@fortawesome/free-solid-svg-icons';
 
-const NavBarRight = () => (
+const AppHeaderNavRight = () => (
     <nav className="nav-bar">
         <ul>
             <li key="4">
@@ -28,4 +28,4 @@ const NavBarRight = () => (
     </nav>
 );
 
-export default NavBarRight;
+export default AppHeaderNavRight;

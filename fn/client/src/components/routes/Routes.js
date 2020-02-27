@@ -4,13 +4,13 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { HomePageContainer, CategoriesPageContainer, ProductListPageContainer } from '../../containters';
 
-import Header from '../header';
+import AppHeader from '../app-header';
 import Register from '../register';
-import Footer from '../footer';
+import AppFooter from '../app-footer';
 
 const Routes = () => (
     <Router>
-        <Header />
+        <AppHeader />
         <Switch>
             <Route path="/" exact component={HomePageContainer} />
             <Route
@@ -24,7 +24,7 @@ const Routes = () => (
             <Route path="/register" exact component={Register} />
             <Route path="/productlist" exact component={ProductListPageContainer} />
         </Switch>
-        <Footer />
+        <AppFooter />
     </Router>
 );
 

@@ -1,3 +1,3 @@
-import NavCategories from './Categories-nav';
+import CategoriesNav from './Categories-nav';
 
-export default NavCategories;
+export default CategoriesNav;
