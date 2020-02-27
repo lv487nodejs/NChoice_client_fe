@@ -38,7 +38,8 @@ const ProductList = ({ storeService, productsLoaded, products }) => {
             <ProductSort />
         </div>
 
-        <div className="filters"> Filters</div><div className="list" >
+        <div className="filters"> Filters</div>
+        <div className="list">
             <ProductListButtonPages changeItems={changeItemsMethod}
                 changeCurrentPage={changePagination}
                 className="buttonsGroup productListButtons " />
