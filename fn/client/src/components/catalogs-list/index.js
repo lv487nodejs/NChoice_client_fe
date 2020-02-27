@@ -1,3 +1,3 @@
-import Catalogs from './Catalogs-list';
+import CatalogsList from './Catalogs-list';
 
-export default Catalogs;
+export default CatalogsList;

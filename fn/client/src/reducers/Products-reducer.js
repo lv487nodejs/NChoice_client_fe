@@ -1,18 +1,26 @@
 const initialState = {
-    products: [{name: 1}],
+    products: [],
     product: {},
+    loading: true
 };
 
-const products = (state = initialState, action) => {
+const productsList = (state = initialState, action) => {
     switch (action.type) {
+        case 'PRODUCTS_REQUESTED':
+            return {
+                products: state.products,
+                product: state.product,
+                loading: true,
+            };
         case 'PRODUCTS_LOADED':
             return {
                 products: action.payload,
+                product: state.product,
+                loading: false,
             };
-
         default:
             return state;
     }
 };
 
-export default products;
+export default productsList;

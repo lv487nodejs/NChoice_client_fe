@@ -1,11 +1,11 @@
-import categories from './Categories-reducer';
-import products from './Products-reducer';
-import catalogs from './Catalog-reducer'
+import categoriesList from './Categories-reducer';
+import productsList from './Products-reducer';
+import catalogsList from './Catalog-reducer'
 
 import { combineReducers } from 'redux';
 
 export default combineReducers({
-    products,
-    categories,
-    catalogs,
+    productsList,
+    categoriesList,
+    catalogsList,
 })

@@ -4,9 +4,9 @@ import { Button, Card } from 'react-bootstrap';
 
 import './Product-list-item.css';
 
-function ProductListItem({ title, description, keyID, images }) {
+function ProductListItem({ title, description, id, images }) {
     return (
-        <Card style={{ width: '18rem' }} key={keyID} className="productCart">
+        <Card style={{ width: '18rem' }} key={id} className="productCart">
             <Card.Img variant="top" src={`/images/categories/${images}`} />
             <Card.Body>
                 <Card.Title>{title}</Card.Title>

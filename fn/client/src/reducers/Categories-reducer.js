@@ -1,13 +1,22 @@
 const initialState = {
     categories: [],
     category: {},
+    loading: true,
 };
 
-const categories = (state = initialState, action) => {
+const categoriesList = (state = initialState, action) => {
     switch (action.type) {
+        case 'CATEGORIES_REQUESTED':
+            return {
+                categories: state.categories,
+                category: state.category,
+                loading: true,
+            };
         case 'CATEGORIES_LOADED':
             return {
                 categories: action.payload,
+                category: state.category,
+                loading: false,
             };
 
         default:
@@ -15,4 +24,4 @@ const categories = (state = initialState, action) => {
     }
 };
 
-export default categories;
+export default categoriesList;
