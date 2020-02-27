@@ -8,8 +8,9 @@ import withStoreService from '../hoc';
 
 const CategoriesNav = ({ storeService, categoriesLoaded, categories, catalog }) => {
     useEffect(() => {
-        storeService.getCatalogCategories(catalog).then(res => categoriesLoaded(res));
-    });
+        storeService.getCatalogCategories(catalog)
+        .then(res => categoriesLoaded(res));
+    },[catalog]);
 
     return (
         <ul>
@@ -21,13 +22,11 @@ const CategoriesNav = ({ storeService, categoriesLoaded, categories, catalog }) 
                     <CategoriesNavItem name={category.category} />
                 </li>
             ))}
-            )}
         </ul>
     );
 };
 
 const mapStateToProps = ({ categories }) => ({ categories });
-
 const mapDispatchToProps = { categoriesLoaded };
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(CategoriesNav));
