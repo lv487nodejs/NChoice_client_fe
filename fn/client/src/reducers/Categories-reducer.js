@@ -1,10 +1,9 @@
 const initialState = {
     categories: [],
-    catalog: {},
+    category: {},
 };
 
 const categories = (state = initialState, action) => {
-    console.log(action.type)
     switch (action.type) {
         case 'CATEGORIES_LOADED':
             return {
