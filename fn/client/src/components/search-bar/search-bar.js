@@ -43,7 +43,7 @@ function SearchBar() {
                 <Form>
                     <Row>
                         <Col sm={2}>
-                            <Form.Control placeholder="write product..." value={search} onChange={updateSearch.bind(this)} />
+                            <Form.Control placeholder="Search..." value={search} onChange={updateSearch.bind(this)} />
                         </Col>
                     </Row>
                 </Form>

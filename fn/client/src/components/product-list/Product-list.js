@@ -7,8 +7,9 @@ import ProductListButtonPages from '../product-list-button-pages';
 import SearchBar from '../search-bar/search-bar';
 import { productsLoaded } from '../../actions';
 import withStoreService from '../hoc';
+import ProductSort from '../product-sort'
 
-const ProductList = ( { storeService, productsLoaded, products} ) => {
+const ProductList = ({ storeService, productsLoaded, products }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
 
@@ -27,32 +28,28 @@ const ProductList = ( { storeService, productsLoaded, products} ) => {
     const changeItemsMethod = number => setPostsPerPage(number);
     const changePagination = () => setCurrentPage(1);
 
-    return (
-        <div className="productListPage">
+    return (<div className="productListPage">
 
-            <div className="productCategory"><span>Sweaters</span></div>
+        <div className="productCategory"> <span> All categories </span></div >
 
-            <div className="sortField">
-                <SearchBar className="searchField" />
-                <div className="sortByPriceField">Sort by price</div>
-                <div className="sortByRatingField">Sort by raiting</div>
-            </div>
+        <div className="sortField" >
+            <SearchBar className="searchField" />
+            <ProductSort />
+            <ProductSort />
+        </div>
 
-            <div className="filters">Filters</div>
-            <div className="list">
-                <ProductListButtonPages
-                    changeItems={changeItemsMethod}
-                    changeCurrentPage={changePagination}
-                    className="buttonsGroup productListButtons "
-                />
-                <ProductListPosts products={currentPosts} className="productList" />
-                <ProductListPaginator 
-                postPerPage={postsPerPage}
+        <div className="filters"> Filters</div><div className="list" >
+            <ProductListButtonPages changeItems={changeItemsMethod}
+                changeCurrentPage={changePagination}
+                className="buttonsGroup productListButtons " />
+            <ProductListPosts products={currentPosts}
+                className="productList" />
+            <ProductListPaginator postPerPage={postsPerPage}
                 totalPosts={products.products.length}
                 paginate={paginateMethod}
                 className="paginator" />
-            </div>
         </div>
+    </div>
     );
 };
 
