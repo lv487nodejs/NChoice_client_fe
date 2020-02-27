@@ -8,7 +8,4 @@ const catalogLoaded = newCatalog => ({
     payload: newCatalog,
 });
 
-export { 
-    catalogsLoaded,
-    catalogLoaded
- };
+export { catalogsLoaded, catalogLoaded };

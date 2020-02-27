@@ -1,31 +1,28 @@
 import React, { useEffect } from 'react';
 import './App-header-nav-left.css';
 
+import { connect } from 'react-redux';
 import { catalogsLoaded } from '../../actions';
 import withStoreService from '../hoc';
-import { connect } from 'react-redux';
 import AppHeaderNavLeftItem from '../app-header-nav-left-item';
 
-const AppHeaderNavLeft = ({ storeService, catalogs }) => {
+const AppHeaderNavLeft = ({ storeService, catalogsLoaded, catalogs }) => {
     useEffect(() => {
-        storeService.getAllCatalogs()
-            .then(res => {
-                return catalogsLoaded(res)});
-    }, []);
+        storeService.getAllCatalogs().then(res => catalogsLoaded(res));
+        console.log(catalogs);
+    });
 
     return (
         <nav className="nav-bar">
             <ul>
-                {catalogs.catalogs.map(catalog => {
-                    return (
-                        <li key={catalog.id}>
-                            <AppHeaderNavLeftItem catalog={catalog.catalog} />
-                        </li>
-                    )
-                })}
+                {catalogs.catalogs.map(catalog => (
+                    <li key={catalog.id}>
+                        <AppHeaderNavLeftItem catalog={catalog.catalog} />
+                    </li>
+                ))}
             </ul>
         </nav>
-    )
+    );
 };
 
 const mapStateToProps = ({ catalogs }) => ({ catalogs });
