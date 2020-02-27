@@ -41,10 +41,7 @@ router.post('/', async (req, res) => {
                     category = new Categories({
                         category: requestedCategory.category,
                     });
-                    if (category.category === 'dresses' && catalog.catalog === 'men') {
-                        category.category = 'hoodies';
-                        category.id = '5e53dc332dba6739dcc33c6b';
-                    }
+
                     category = await category.save();
                     catalog.categories.push(category);
                     await catalog.save();
@@ -53,8 +50,7 @@ router.post('/', async (req, res) => {
                 const condition = catalog.categories.findIndex(valueId => valueId.toString() === category.id);
 
                 if (category.category === 'dresses' && catalog.catalog === 'men') {
-                    category.category = 'hoodies';
-                    category.id = '5e53dc332dba6739dcc33c6b';
+                return
                 }
 
                 if (condition < 0) {
@@ -102,23 +98,17 @@ router.post('/', async (req, res) => {
                     {
                         size: requestedCategory.category === 'shoes' ? sizeShoes1 : sizeWear1,
                         available: chance.integer({ min: 1, max: 10 }),
-                        sku: chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }),
-                        mrsp: mrspR,
-                        price: priceR,
+                        sku: chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true })
                     },
                     {
                         size: requestedCategory.category === 'shoes' ? sizeShoes2 : sizeWear2,
                         available: chance.integer({ min: 1, max: 10 }),
-                        sku: chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }),
-                        mrsp: mrspR,
-                        price: priceR,
+                        sku: chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true })
                     },
                     {
                         size: requestedCategory.category === 'shoes' ? sizeShoes3 : sizeWear3,
                         available: chance.integer({ min: 1, max: 10 }),
-                        sku: chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }),
-                        mrsp: mrspR,
-                        price: priceR,
+                        sku: chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true })
                     },
                 ];
 
@@ -133,6 +123,8 @@ router.post('/', async (req, res) => {
                     description:  chance.pick([lorem, sed, vero], 1),
                     color,
                     images: [],
+                    mrsp: mrspR,
+                    price: priceR,
                     propetries: props,
                 });
 
