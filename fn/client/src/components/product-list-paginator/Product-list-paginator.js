@@ -5,7 +5,7 @@ import './Product-list-paginator.css';
 export default function ProductListPaginator({ postPerPage, totalPosts, paginate, currentPage }) {
     const pageNumbers = [];
     const pagesCount = Math.ceil(totalPosts / postPerPage);
-    for (let i = 1; i <= pagesCount; i++) {
+    for (let i = 1; i <= pagesCount; i=i+1) {
         pageNumbers.push(i);
     }
     return (
