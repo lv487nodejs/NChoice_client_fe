@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
+import './Product-list-button-pages.css';
 
 export default function ProductListButtonPages({ changeItems, changeCurrentPage }) {
     const itemsPerPage = [15, 30, 60];

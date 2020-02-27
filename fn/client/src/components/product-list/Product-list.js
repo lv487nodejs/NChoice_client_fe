@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-
 import './Product-list.css';
 import ProductListPosts from '../product-list-posts';
 import ProductListPaginator from '../product-list-paginator';
 import ProductListButtonPages from '../product-list-button-pages';
-
+import SearchBar from '../search-bar/search-bar';
 import { productsLoaded } from '../../actions';
 import withStoreService from '../hoc';
 
@@ -29,15 +28,31 @@ const ProductList = ( { storeService, productsLoaded, products} ) => {
     const changePagination = () => setCurrentPage(1);
 
     return (
-        <section className="left-side">
-            <ProductListButtonPages
-                changeItems={changeItemsMethod}
-                changeCurrentPage={changePagination}
-                className="buttonsGroup"
-            />
-            <ProductListPosts products={currentPosts} />
-            <ProductListPaginator postPerPage={postsPerPage} totalPosts={products.products.length} paginate={paginateMethod} />
-        </section>
+        <div className="productListPage">
+
+            <div className="productCategory"><span>Sweaters</span></div>
+
+            <div className="sortField">
+                <SearchBar className="searchField" />
+                <div className="sortByPriceField">Sort by price</div>
+                <div className="sortByRatingField">Sort by raiting</div>
+            </div>
+
+            <div className="filters">Filters</div>
+            <div className="list">
+                <ProductListButtonPages
+                    changeItems={changeItemsMethod}
+                    changeCurrentPage={changePagination}
+                    className="buttonsGroup productListButtons "
+                />
+                <ProductListPosts products={currentPosts} className="productList" />
+                <ProductListPaginator 
+                postPerPage={postsPerPage}
+                totalPosts={products.products.length}
+                paginate={paginateMethod}
+                className="paginator" />
+            </div>
+        </div>
     );
 };
 
