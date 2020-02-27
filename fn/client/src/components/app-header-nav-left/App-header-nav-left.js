@@ -9,14 +9,13 @@ import AppHeaderNavLeftItem from '../app-header-nav-left-item';
 const AppHeaderNavLeft = ({ storeService, catalogsLoaded, catalogs }) => {
     useEffect(() => {
         storeService.getAllCatalogs().then(res => catalogsLoaded(res));
-        console.log(catalogs);
-    });
+    }, []);
 
     return (
         <nav className="nav-bar">
             <ul>
                 {catalogs.catalogs.map(catalog => (
-                    <li key={catalog.id}>
+                    <li key={catalog._id}>
                         <AppHeaderNavLeftItem catalog={catalog.catalog} />
                     </li>
                 ))}
