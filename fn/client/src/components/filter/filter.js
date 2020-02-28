@@ -29,6 +29,8 @@ const Filter = ({
     filterRemoveColor,
     composeFilters,
     brand,
+    category,
+    color,
     fetchSuccessBrands,
     fetchSuccessCategories,
     fetchSuccessColors,
@@ -58,7 +60,6 @@ const Filter = ({
             .catch(err => console.log(err));
     }, [storeService]);
 
-    // problem here
     useEffect(() => {
         storeService.getCatalogByFilter({ brand }).then(res => {
             fetchSuccessBrands(res);
@@ -66,24 +67,18 @@ const Filter = ({
         });
     }, [brand, composeReceivedData, fetchSuccessBrands, storeService]);
 
-    // // problem here
-    // useEffect(
-    //     () =>
-    //         storeService.getCatalogByFilter(categories).then(res => {
-    //             fetchSuccessCategories(res);
-    //             composeReceivedData();
-    //         }),
-    //     []
-    // );
-    // // problem here
-    // useEffect(
-    //     () =>
-    //         storeService.getCatalogByFilter(colors).then(res => {
-    //             fetchSuccessColors(res);
-    //             composeReceivedData();
-    //         }),
-    //     []
-    // );
+    useEffect(() => {
+        storeService.getCatalogByFilter({ category }).then(res => {
+            fetchSuccessCategories(res);
+            composeReceivedData();
+        });
+    }, [category, composeReceivedData, fetchSuccessCategories, storeService]);
+    useEffect(() => {
+        storeService.getCatalogByFilter({ color }).then(res => {
+            fetchSuccessColors(res);
+            composeReceivedData();
+        });
+    }, [color, composeReceivedData, fetchSuccessColors, storeService]);
 
     const filterAddBrandHandler = (e, item) => {
         if (e.target.checked) {

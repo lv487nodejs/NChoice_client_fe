@@ -1,6 +1,7 @@
 const filterRemoveItems = (arrToFilter = [], filterItem) => arrToFilter.filter(item => item !== filterItem);
 const instate = {
     brand: [],
+    products: [],
     category: [],
     color: [],
     receivedBrands: [],
@@ -10,22 +11,8 @@ const instate = {
 
 const filter = (state = instate, action) => {
     console.log(state);
-    // console.log(state);
 
-    // if (state === undefined) {
-    //     state = {
-    //         products: [],
-    //         brand: [],
-    //         color: [],
-    //         category: [],
-    //         posts: [],
-    //         currentPage: [],
-    //         postPerPage: [],
-    //         receivedBrands: [],
-    //         receivedCategories: [],
-    //         receivedColors: [],
-    //     };
-    // }
+
     switch (action.type) {
         case 'FILTER_ADD_BRAND': {
             return {
@@ -43,7 +30,6 @@ const filter = (state = instate, action) => {
             return { ...state, category: [...state.category, action.payload] };
         }
         case 'FILTER_REMOVE_CATEGORY': {
-            console.log(action.payload);
 
             return {
                 ...state,
@@ -51,7 +37,6 @@ const filter = (state = instate, action) => {
             };
         }
         case 'FILTER_ADD_COLOR': {
-            console.log(state);
             return { ...state, color: [...state.color, action.payload] };
         }
         case 'FILTER_REMOVE_COLOR': {
@@ -81,13 +66,13 @@ const filter = (state = instate, action) => {
             };
         }
         case 'COMPOSE_RECEIVED_DATA': {
-            const productsUnique = [
-                ...new Set(state.receivedBrands, ...state.receivedCategories, ...state.receivedColors),
-            ];
 
+            let array3 = state.receivedBrands.concat(state.receivedCategories).concat(state.receivedColors)
+
+            const unq = [...new Set(array3)]
             return {
                 ...state,
-                products: [...productsUnique],
+                products: [...unq],
             };
         }
         default:
