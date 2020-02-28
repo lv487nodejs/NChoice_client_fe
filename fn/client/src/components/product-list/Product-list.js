@@ -34,8 +34,8 @@ const ProductList = ({ storeService, productsLoaded, products }) => {
 
         <div className="sortField" >
             <SearchBar className="searchField" />
-            <ProductSort />
-            <ProductSort />
+            <ProductSort arrayToSort={currentPosts}/>
+            <ProductSort arrayToSort={currentPosts}/>
         </div>
 
         <div className="filters"> Filters</div>
