@@ -53,6 +53,12 @@ const filter = (state, action) => {
         case 'FETCH_SUCCESS_BRANDS': {
             return { ...state, receivedBrands: action.payload };
         }
+        case 'FETCH_SUCCESS_CATEGORIES': {
+            return { ...state, receivedCategories: action.payload };
+        }
+        case 'FETCH_SUCCESS_COLORS': {
+            return { ...state, receivedColors: action.payload };
+        }
         case 'COMPOSE_FILTERS': {
             const brands = [...new Set(state.brands)];
             const colors = [...new Set(state.colors)];
