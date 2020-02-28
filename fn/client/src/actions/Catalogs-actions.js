@@ -3,9 +3,17 @@ const catalogsLoaded = newCatalogs => ({
     payload: newCatalogs,
 });
 
+const catalogsRequested = () => ({
+    type: 'CATALOGS_REQUESTED',
+});
+
 const catalogLoaded = newCatalog => ({
     type: 'CATALOG_LOADED',
     payload: newCatalog,
 });
 
-export { catalogsLoaded, catalogLoaded };
+export { 
+    catalogsLoaded,
+    catalogLoaded,
+    catalogsRequested
+    };
