@@ -9,7 +9,7 @@
 
 .filter-group{
   outline: 1px solid black;
-  position: relative;
+  margin: 2rem;
 }
 .filter-group span{
   padding: 2rem 1rem; 

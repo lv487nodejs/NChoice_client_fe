@@ -1,14 +1,47 @@
+
+  .posts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+    justify-items: center;
+  }
   .productCart {
     position: relative;
+    grid-gap: 20px;
+  
+  }
+  .productName{
+    font-family: 'Oswald';
   }
   .cardPrice {
-    width: 70px;
-    height: 30px;
-    background-color: rgb(172, 59, 59);
     display: flex;
-    position: absolute;
-    top: 0;
-    right: 0;
     justify-content: center;
     align-items: center;
+    font-size: 35px;
+    margin: 0;
+    color: rgb(168, 21, 21);
+    font-family: 'Oswald';
+  }
+  
+  .productCart:hover {
+    box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.1);
+  }
+  .bottomElements {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+  }
+  .description {
+    height: 6vh;
+    overflow: hidden;
+  }
+  .heart,
+  .cart {
+    width: 1em;
+    font-size: 2rem;
+  }
+  .heart:hover {
+    color: rgb(168, 21, 21);
   }

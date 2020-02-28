@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-
 import './Product-list.css';
 import ProductListPosts from '../product-list-posts';
 import ProductListPaginator from '../product-list-paginator';
 import ProductListButtonPages from '../product-list-button-pages';
+import Filter from '../filter'
 
+import SearchBar from '../search-bar/search-bar';
 import { productsLoaded, productsRequested } from '../../actions';
 import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
+import ProductSort from '../product-sort'
 
 const ProductList = ({ storeService, productsLoaded, productsRequested, products, loading }) => {
+
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
 
@@ -29,20 +32,32 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, products
     const changeItemsMethod = number => setPostsPerPage(number);
     const changePagination = () => setCurrentPage(1);
 
-    if (loading) {
-        return <LoadingSpinner />;
-    }
 
-    return (
-        <section className="left-side">
-            <ProductListButtonPages
-                changeItems={changeItemsMethod}
+
+if (loading) {
+    return <LoadingSpinner />;
+}
+    return (<div className="productListPage">
+
+        <div className="sortField" >
+            <SearchBar className="searchField" />
+            <ProductSort arrayToSort={currentPosts}/>
+            <ProductSort arrayToSort={currentPosts}/>
+        </div>
+
+        <div className="filters"> <Filter /></div>
+        <div className="list">
+            <ProductListButtonPages changeItems={changeItemsMethod}
                 changeCurrentPage={changePagination}
-                className="buttonsGroup"
-            />
-            <ProductListPosts products={currentPosts} />
-            <ProductListPaginator postPerPage={postsPerPage} totalPosts={products.length} paginate={paginateMethod} />
-        </section>
+                className="buttonsGroup productListButtons " />
+            <ProductListPosts products={currentPosts}
+                className="productList" />
+            <ProductListPaginator postPerPage={postsPerPage}
+                totalPosts={products.length}
+                paginate={paginateMethod}
+                className="paginator" />
+        </div>
+    </div>
     );
 };
 

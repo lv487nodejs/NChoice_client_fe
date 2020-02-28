@@ -1,5 +1,6 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
 import { productsLoaded, productsRequested } from './Products-actions';
+import { catalogsLoaded, catalogsRequested } from './Catalogs-actions'
 import {
     filterAddBrand,
     filterAddCategory,
@@ -16,6 +17,8 @@ import {
 export {
     categoriesRequested,
     categoriesLoaded,
+    catalogsLoaded,
+    catalogsRequested,
     productsRequested,
     productsLoaded,
     filterAddBrand,
