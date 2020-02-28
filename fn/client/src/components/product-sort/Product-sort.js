@@ -13,7 +13,7 @@ const ProductSort = ({ arrayToSort }) => {
   return (
     <Button
       variant="primary"
-      onClick={() => console.log(sortByPrice(arrayToSort))}
+      // onClick={() => console.log(sortByPrice(arrayToSort))}
     >
       Sort by price
     </Button>
