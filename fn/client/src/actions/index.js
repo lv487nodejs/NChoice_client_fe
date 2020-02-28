@@ -16,6 +16,20 @@ import {
     composeReceivedData,
 } from './Filter-actions';
 
+import {
+    filterAddBrand,
+    filterAddCategory,
+    filterAddColor,
+    filterRemoveCategory,
+    filterRemoveColor,
+    filterRemoveBrand,
+    composeFilters,
+    fetchSuccessBrands,
+    fetchSuccessCategories,
+    fetchSuccessColors,
+    composeReceivedData,
+} from './Filter-actions';
+
 export {
     categoriesRequested,
     categoriesLoaded,
@@ -23,7 +37,7 @@ export {
     catalogsRequested,
     productsRequested,
     productsLoaded,
-    filterAddBrand,
+      filterAddBrand,
     filterAddCategory,
     filterAddColor,
     filterRemoveBrand,
