@@ -4,6 +4,8 @@ const initialState = {
 };
 
 const categories = (state = initialState, action) => {
+    console.log(state);
+    
     console.log(action.type)
     switch (action.type) {
         case 'CATEGORIES_LOADED':

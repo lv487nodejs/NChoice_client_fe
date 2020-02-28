@@ -9,14 +9,13 @@ import ProductListButtonPages from '../product-list-button-pages';
 import { productsLoaded } from '../../actions';
 import withStoreService from '../hoc';
 
-const ProductList = ( { storeService, productsLoaded, products} ) => {
+const ProductList = ({ storeService, productsLoaded, products }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
 
     useEffect(() => {
-        storeService.getAllProducts()
-            .then(res => productsLoaded(res))
-    }, []);
+        storeService.getAllProducts().then(res => productsLoaded(res));
+    }, [productsLoaded, storeService]);
 
     // Get current posts
     const indexOfLastPost = currentPage * postsPerPage;
@@ -36,7 +35,11 @@ const ProductList = ( { storeService, productsLoaded, products} ) => {
                 className="buttonsGroup"
             />
             <ProductListPosts products={currentPosts} />
-            <ProductListPaginator postPerPage={postsPerPage} totalPosts={products.products.length} paginate={paginateMethod} />
+            <ProductListPaginator
+                postPerPage={postsPerPage}
+                totalPosts={products.products.length}
+                paginate={paginateMethod}
+            />
         </section>
     );
 };

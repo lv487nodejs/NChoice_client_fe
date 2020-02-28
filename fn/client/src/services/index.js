@@ -61,4 +61,19 @@ export default class StoreService {
         const { categories } = catalogs[0];
         return categories;
     };
+
+    getAllBrands = async () => {
+        const brands = await this.getResource('brands');
+        return brands;
+    };
+
+    getAllCategories = async () => {
+        const categories = await this.getResource('categories');
+        return categories;
+    };
+
+    getAllColors = async () => {
+        const colors = await this.getResource('colors');
+        return colors;
+    };
 }
