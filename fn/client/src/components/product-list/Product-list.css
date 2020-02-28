@@ -1,38 +1,55 @@
-.productListPage {
+.product-list-page {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 3fr;
     grid-gap: 1em;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "options options"
+        "filters productlist"
+        "pages pages";
+}
+.product-list-container {
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
+.product-list-page {
+
+}
+
+.products-options {
+    grid-area: options;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+
+}
+
+.filters {
+    grid-area: filters;
+}
+
+.products-items {
+    margin: 30px 0;
+    grid-gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+}
+.search-field {
+    margin-left: auto;
+}
 .productListPage>div.productCategory {
     background-color: rgb(36, 32, 41);
-    grid-column: 1/4;
     text-align: center;
     align-items: center;
     color:white;
     font-size:3vh;
 }
 
-.productListPage>div.sortField {
-    grid-column: 1/4;
-    align-items: center;
-    margin-right: 8px;
-}
 
-.sortField {
-    display: grid;
-    grid-template-columns: 80% 10% 10%;
-}
-
-.productListPage>div.list {
-    display: grid;
-    grid-gap: 1rem;
-}
 
 .list>div.productListButtons {
     background-color: rgb(184, 109, 158);
-    grid-row: 1;
-    grid-gap: 1rem;
 }
 
 .list>div.productList {
@@ -41,6 +58,4 @@
 
 .list>div.paginator {
     background-color: rgb(175, 115, 127);
-    display: grid;
-    justify-items: center;
 }

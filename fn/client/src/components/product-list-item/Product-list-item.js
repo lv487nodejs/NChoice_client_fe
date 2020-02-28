@@ -5,15 +5,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import './Product-list-item.css';
 
-function ProductListItem({ title, description, keyID }) {
+import './Product-list-item.css'
+
+function ProductListItem({ title, description, id, images }) {
+    let randPrice = Math.floor(Math.random()*1000)
     return (
-        <Card style={{ width: '20rem' }} key={keyID} className="productCart">
-            <Card.Img variant="top" src="/images/hoody.jpg" className="cardsImage" />
+        <Card key={id} className="productCart">
+            <div className="image-container">
+            <Card.Img variant="top" src={`/images/products/${images}`} className="cardsImage" />
+            </div>
             <Card.Body>
                 <Card.Title className="productName">{title}</Card.Title>
                 <Card.Text className="description">{description}</Card.Text>
                 <Card.Body className="bottomElements">
-                    <Card.Text className="cardPrice">100 $ </Card.Text>
+    <Card.Text className="cardPrice">{`${randPrice} $`}</Card.Text>
                     <FontAwesomeIcon icon={faHeart} className="heart" />
                     <FontAwesomeIcon icon={faShoppingCart} className="cart" />
                 </Card.Body>

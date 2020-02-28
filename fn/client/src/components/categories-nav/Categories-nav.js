@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import './Categories-nav.css'
+
 import { categoriesLoaded, categoriesRequested } from '../../actions';
 import CategoriesNavItem from '../categories-nav-item';
 import withStoreService from '../hoc';
@@ -18,7 +20,7 @@ const CategoriesNav = ({ storeService, categoriesLoaded, categoriesRequested, ca
     }
 
     return (
-        <ul>
+        <ul className='categories-nav'>
             <li key="all" className="category-item">
                 <Link to="/productlist">All Categories</Link>
             </li>

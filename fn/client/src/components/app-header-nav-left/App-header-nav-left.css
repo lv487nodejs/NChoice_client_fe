@@ -23,3 +23,32 @@
     color: black;
     background-color: white;
 }
+
+.nav-item {
+    position: relative;
+}
+
+
+
+.nav-bar .nav-item .drop-down-container .drop-down {
+    display: block;
+    width: 30rem;
+    position: absolute;
+    color: black;
+    top: 38px;
+    z-index: 1000;
+}
+
+
+
+.nav-bar .nav-item .drop-down-container .drop-down a {
+    color: black;
+    background-color: white;
+    padding-left: .3rem;
+    transition: all 0.3s;
+}
+
+.nav-bar .nav-item .drop-down-container .drop-down a:hover {
+    color: white;
+    background-color: black;
+}

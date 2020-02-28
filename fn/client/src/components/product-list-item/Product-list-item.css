@@ -1,4 +1,6 @@
 
+
+  
   .posts {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -8,16 +10,21 @@
   .productCart {
     position: relative;
     grid-gap: 20px;
-  
+    max-width: 17rem;  
   }
+
+  .productCart .image-container {
+    display: block;
+    height: 300px;
+    overflow: hidden;
+  }
+
   .productName{
     font-family: 'Oswald';
+    text-transform: uppercase;
   }
   .cardPrice {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 35px;
+    font-size: 1.5rem;
     margin: 0;
     color: rgb(168, 21, 21);
     font-family: 'Oswald';
@@ -29,18 +36,18 @@
   .bottomElements {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     padding: 0;
+    justify-self: end;
   }
   .description {
-    height: 6vh;
+    height: 10vh;
     overflow: hidden;
   }
   .heart,
   .cart {
-    width: 1em;
-    font-size: 2rem;
+    font-size: 1.4rem;
   }
   .heart:hover {
     color: rgb(168, 21, 21);

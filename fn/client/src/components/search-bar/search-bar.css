@@ -1,4 +1,9 @@
 .row {
   margin-left: 0;
+
   font-family: "Oswald";
+}
+
+.search-bar {
+  width: 200px;
 }

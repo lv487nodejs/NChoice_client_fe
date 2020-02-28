@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './search-bar.css';
 
-import { Form, Row, Col } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const products = [
@@ -38,23 +38,9 @@ function SearchBar() {
         return product.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
     });
     return (
-        <div>
-            <>
-                <Form>
-                    <Row>
-                        <Col sm={2}>
-                            <Form.Control placeholder="Search..." value={search} onChange={updateSearch.bind(this)} />
-                        </Col>
-                    </Row>
-                </Form>
-            </>
-
-            {/* <div className="wrapper">
-                {filterProducts.map((item) =>
-                    <div className="productItem" key={item.id}> {item.name}</div>)
-                }
-            </div> */}
-        </div>
+        <Form>
+            <Form.Control className="search-bar" placeholder="Search..." value={search} onChange={updateSearch.bind(this)} />
+        </Form>
     );
 }
 

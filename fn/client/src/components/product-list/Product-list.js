@@ -44,29 +44,26 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, products
     }
     return (
         <div className="productListPage">
-            <div className="sortField">
-                <SearchBar className="searchField" />
-                <ProductSort arrayToSort={currentPosts} />
-                <ProductSort arrayToSort={currentPosts} />
+            <div className="products-options">
+                    <SearchBar />
+                    <ProductSort arrayToSort={currentPosts} />
+                    <ProductSort arrayToSort={currentPosts} />
+                    <ProductListButtonPages
+                        changeItems={changeItemsMethod}
+                        changeCurrentPage={changePagination}
+                        className="buttonsGroup productListButtons "
+                    />
             </div>
-
             <div className="filters">
                 {/* <Filter /> */}
             </div>
-            <div className="list">
-                <ProductListButtonPages
-                    changeItems={changeItemsMethod}
-                    changeCurrentPage={changePagination}
-                    className="buttonsGroup productListButtons "
-                />
-                <ProductListPosts products={currentPosts} className="productList" />
-                <ProductListPaginator
-                    postPerPage={postsPerPage}
-                    totalPosts={products.length}
-                    paginate={paginateMethod}
-                    className="paginator"
-                />
-            </div>
+            <ProductListPosts products={currentPosts} />
+            <ProductListPaginator
+                        postPerPage={postsPerPage}
+                        totalPosts={products.length}
+                        paginate={paginateMethod}
+                        className="paginator"
+                    />
         </div>
     );
 };

@@ -3,9 +3,9 @@ import ProductsListItem from '../product-list-item';
 import './Product-list-posts.css';
 
 const ProductListPosts = ({ products }) => (
-    <div className="posts">
+    <div className="products-items">
         {products.map(({ id, title, description, images }) => (
-            <ProductsListItem key={id} keyID={id} title={title} description={description} images={images} />
+            <ProductsListItem key={id} title={title} description={description} images={images} />
         ))}
     </div>
 );
