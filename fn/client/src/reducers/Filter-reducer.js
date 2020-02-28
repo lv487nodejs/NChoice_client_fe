@@ -1,22 +1,31 @@
 const filterRemoveItems = (arrToFilter = [], filterItem) => arrToFilter.filter(item => item !== filterItem);
+const instate = {
+    brand: [],
+    category: [],
+    color: [],
+    receivedBrands: [],
+    receivedCategories: [],
+    receivedColors: [],
+};
 
-const filter = (state, action) => {
+const filter = (state = instate, action) => {
     console.log(state);
+    // console.log(state);
 
-    if (state === undefined) {
-        state = {
-            products: [],
-            brand: [],
-            color: [],
-            category: [],
-            posts: [],
-            currentPage: [],
-            postPerPage: [],
-            receivedBrands: [],
-            receivedCategories: [],
-            receivedColors: [],
-        };
-    }
+    // if (state === undefined) {
+    //     state = {
+    //         products: [],
+    //         brand: [],
+    //         color: [],
+    //         category: [],
+    //         posts: [],
+    //         currentPage: [],
+    //         postPerPage: [],
+    //         receivedBrands: [],
+    //         receivedCategories: [],
+    //         receivedColors: [],
+    //     };
+    // }
     switch (action.type) {
         case 'FILTER_ADD_BRAND': {
             return {

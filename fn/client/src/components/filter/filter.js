@@ -18,7 +18,6 @@ import FilterItem from '../filterItem';
 import withStoreService from '../hoc';
 
 import './filter.css';
-import products from '../../reducers/Products-reducer';
 
 const Filter = ({
     storeService,
@@ -30,7 +29,6 @@ const Filter = ({
     filterRemoveColor,
     composeFilters,
     brand,
-
     fetchSuccessBrands,
     fetchSuccessCategories,
     fetchSuccessColors,
@@ -39,7 +37,6 @@ const Filter = ({
     const [getBrands, setBrands] = useState([]);
     const [getCategories, setCategories] = useState([]);
     const [getColors, setColors] = useState([]);
-   
 
     useEffect(() => {
         storeService
@@ -62,14 +59,12 @@ const Filter = ({
     }, [storeService]);
 
     // problem here
-    useEffect(
-        () =>
-            storeService.getCatalogByFilter(brand).then(res => {
-                fetchSuccessBrands(res);
-                composeReceivedData();
-            }),
-        [storeService,brand]
-    );
+    useEffect(() => {
+        storeService.getCatalogByFilter({ brand }).then(res => {
+            fetchSuccessBrands(res);
+            composeReceivedData();
+        });
+    }, [brand, composeReceivedData, fetchSuccessBrands, storeService]);
 
     // // problem here
     // useEffect(
@@ -129,9 +124,12 @@ const Filter = ({
         </div>
     );
 };
-const mapStateToProps = ({ filter: { brand} }) => ({
-    brand
+const mapStateToProps = ({ filter: { brand, category, color } }) => ({
+    brand,
+    category,
+    color,
 });
+
 const mapDispatchToProps = dispatch => ({
     filterAddBrand: brand => dispatch(filterAddBrand(brand)),
     filterAddColor: color => dispatch(filterAddColor(color)),
