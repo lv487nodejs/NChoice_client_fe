@@ -1,19 +1,10 @@
-
 const initialState = {
     products: [{ name: 1 }],
     product: {},
     loading: true,
-    brand: [],
-    category: [],
-    color: [],
-    receivedBrands: [],
-    receivedCategories: [],
-    receivedColors: [],
 };
 
-
-const products = (state = initialState, action) => {    
-
+const productsList = (state = initialState, action) => {
     switch (action.type) {
         case 'PRODUCTS_REQUESTED':
             return {
@@ -27,6 +18,7 @@ const products = (state = initialState, action) => {
                 product: state.product,
                 loading: false,
             };
+
         default:
             return state;
     }

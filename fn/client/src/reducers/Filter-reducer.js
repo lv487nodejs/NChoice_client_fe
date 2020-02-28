@@ -10,26 +10,6 @@ const instate = {
 };
 
 const filter = (state = instate, action) => {
-    console.log(state);
-
-<<<<<<< HEAD
-
-=======
-    if (state === undefined) {
-        state = {
-            products: [],
-            brands: [],
-            colors: [],
-            category: [],
-            posts: [],
-            currentPage: [],
-            postPerPage: [],
-            receivedBrands: [],
-            receivedCategories: [],
-            receivedColors: [],
-        };
-    }
->>>>>>> af1c8b39e8f8f089175e5845a50955a5a0a2da31
     switch (action.type) {
         case 'FILTER_ADD_BRAND': {
             return {
@@ -83,11 +63,7 @@ const filter = (state = instate, action) => {
             };
         }
         case 'COMPOSE_RECEIVED_DATA': {
-<<<<<<< HEAD
    const productsUnique = [
-=======
-            const productsUnique = [
->>>>>>> af1c8b39e8f8f089175e5845a50955a5a0a2da31
                 ...new Set(state.receivedBrands, ...state.receivedCategories, ...state.receivedColors),
             ];
 

@@ -82,7 +82,6 @@ const Filter = ({
 
     const filterAddBrandHandler = (e, item) => {
         if (e.target.checked) {
-            console.log(item);
             filterAddBrand(item);
         } else {
             filterRemoveBrand(item);
@@ -91,7 +90,6 @@ const Filter = ({
     };
     const filterAddCategoryHandler = (e, item) => {
         if (e.target.checked) {
-            console.log(item);
             filterAddCategory(item);
         } else {
             filterRemoveCategory(item);
@@ -100,7 +98,6 @@ const Filter = ({
     };
     const filterAddColorHandler = (e, item) => {
         if (e.target.checked) {
-            console.log(item);
             filterAddColor(item);
         } else {
             filterRemoveColor(item);
@@ -119,7 +116,7 @@ const Filter = ({
         </div>
     );
 };
-const mapStateToProps = ({ productsList: { brand, category, color } }) => ({
+const mapStateToProps = ({ filter: { brand, category, color } }) => ({
     brand,
     category,
     color,
