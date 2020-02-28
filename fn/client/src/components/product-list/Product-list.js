@@ -16,9 +16,14 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, products
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
 
+
+
     useEffect(() => {
         productsRequested();
         storeService.getAllProducts().then(res => productsLoaded(res));
+        if(sessionStorage.getItem("postPerPage") !== null){
+            setPostsPerPage(sessionStorage.getItem("postPerPage"))
+        }
     }, [productsLoaded, productsRequested, storeService]);
 
     // Get current posts
@@ -28,7 +33,10 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, products
 
     // Change view
     const paginateMethod = value => setCurrentPage(value);
-    const changeItemsMethod = number => setPostsPerPage(number);
+    const changeItemsMethod = number => {
+        setPostsPerPage(number);
+        sessionStorage.setItem("postPerPage", number);
+    };
     const changePagination = () => setCurrentPage(1);
 
     if (loading) {
