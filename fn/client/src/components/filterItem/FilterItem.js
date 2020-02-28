@@ -2,13 +2,13 @@ import React from 'react';
 import './FilterItem.css';
 
 export const FilterItem = props => {
-    const { items = [], type, func } = props;
-    console.log(type);
+    const { items = [], type, handler  } = props;
+    console.log(props);
 
     const elements = items.map(item => (
         <li key={item[type]}>
             <label className="filter-list-item">
-                <input type="checkbox" value={item[type]} onClick={e => func(e, e.target.value)} />
+                <input type="checkbox" value={item[type]} onClick={e => handler(e, e.target.value)} />
                 {item[type]}
             </label>
         </li>

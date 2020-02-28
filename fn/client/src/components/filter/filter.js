@@ -18,6 +18,7 @@ import FilterItem from '../filterItem';
 import withStoreService from '../hoc';
 
 import './filter.css';
+import products from '../../reducers/Products-reducer';
 
 const Filter = ({
     storeService,
@@ -28,17 +29,17 @@ const Filter = ({
     filterRemoveCategory,
     filterRemoveColor,
     composeFilters,
-    state,
+    brand,
+
     fetchSuccessBrands,
     fetchSuccessCategories,
     fetchSuccessColors,
     composeReceivedData,
 }) => {
-
-    const [brands, setBrands] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [colors, setColors] = useState([]);
-    console.log(state);
+    const [getBrands, setBrands] = useState([]);
+    const [getCategories, setCategories] = useState([]);
+    const [getColors, setColors] = useState([]);
+   
 
     useEffect(() => {
         storeService
@@ -60,39 +61,34 @@ const Filter = ({
             .catch(err => console.log(err));
     }, [storeService]);
 
-    console.log(state.filter.brands);
     // problem here
     useEffect(
         () =>
-            storeService.getCatalogByFilter({ brand: state.filter.brands }).then(res => {
-                fetchSuccessBrands(res)
-                composeReceivedData()
-            }
-            ),
-        [composeReceivedData, fetchSuccessBrands]
+            storeService.getCatalogByFilter(brand).then(res => {
+                fetchSuccessBrands(res);
+                composeReceivedData();
+            }),
+        [storeService,brand]
     );
-    console.log(state.filter.category);
 
-    // problem here
-    useEffect(
-        () =>
-            storeService.getCatalogByFilter({ category: state.filter.category }).then(res => {
-                fetchSuccessCategories(res)
-                composeReceivedData()
-            }
-            ),
-        []
-    );
-    // problem here
-    useEffect(
-        () =>
-            storeService.getCatalogByFilter({ color: state.filter.color }).then(res => {
-                fetchSuccessColors(res)
-                composeReceivedData()
-            }
-            ),
-        []
-    );
+    // // problem here
+    // useEffect(
+    //     () =>
+    //         storeService.getCatalogByFilter(categories).then(res => {
+    //             fetchSuccessCategories(res);
+    //             composeReceivedData();
+    //         }),
+    //     []
+    // );
+    // // problem here
+    // useEffect(
+    //     () =>
+    //         storeService.getCatalogByFilter(colors).then(res => {
+    //             fetchSuccessColors(res);
+    //             composeReceivedData();
+    //         }),
+    //     []
+    // );
 
     const filterAddBrandHandler = (e, item) => {
         if (e.target.checked) {
@@ -126,15 +122,15 @@ const Filter = ({
         <div className="row">
             <div className="filter-group">
                 <span>filter</span>
-                <FilterItem items={brands} type="brand" func={filterAddBrandHandler} />
-                <FilterItem items={categories} type="category" func={filterAddCategoryHandler} />
-                <FilterItem items={colors} type="color" func={filterAddColorHandler} />
+                <FilterItem items={getBrands} type="brand" handler={filterAddBrandHandler} />
+                <FilterItem items={getCategories} type="category" handler={filterAddCategoryHandler} />
+                <FilterItem items={getColors} type="color" handler={filterAddColorHandler} />
             </div>
         </div>
     );
 };
-const mapStateToProps = state => ({
-    state,
+const mapStateToProps = ({ filter: { brand} }) => ({
+    brand
 });
 const mapDispatchToProps = dispatch => ({
     filterAddBrand: brand => dispatch(filterAddBrand(brand)),

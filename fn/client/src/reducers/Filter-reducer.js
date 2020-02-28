@@ -6,8 +6,8 @@ const filter = (state, action) => {
     if (state === undefined) {
         state = {
             products: [],
-            brands: [],
-            colors: [],
+            brand: [],
+            color: [],
             category: [],
             posts: [],
             currentPage: [],
@@ -21,13 +21,13 @@ const filter = (state, action) => {
         case 'FILTER_ADD_BRAND': {
             return {
                 ...state,
-                brands: [...state.brands, action.payload],
+                brand: [...state.brand, action.payload],
             };
         }
         case 'FILTER_REMOVE_BRAND': {
             return {
                 ...state,
-                brands: filterRemoveItems(state.brands, action.payload),
+                brand: filterRemoveItems(state.brand, action.payload),
             };
         }
         case 'FILTER_ADD_CATEGORY': {
@@ -43,12 +43,12 @@ const filter = (state, action) => {
         }
         case 'FILTER_ADD_COLOR': {
             console.log(state);
-            return { ...state, colors: [...state.colors, action.payload] };
+            return { ...state, color: [...state.color, action.payload] };
         }
         case 'FILTER_REMOVE_COLOR': {
             return {
                 ...state,
-                colors: filterRemoveItems(state.colors, action.payload),
+                color: filterRemoveItems(state.color, action.payload),
             };
         }
         case 'FETCH_SUCCESS_BRANDS': {
@@ -61,13 +61,13 @@ const filter = (state, action) => {
             return { ...state, receivedColors: action.payload };
         }
         case 'COMPOSE_FILTERS': {
-            const brands = [...new Set(state.brands)];
-            const colors = [...new Set(state.colors)];
+            const brand = [...new Set(state.brand)];
+            const color = [...new Set(state.color)];
             const category = [...new Set(state.category)];
             return {
                 ...state,
-                colors: [...colors],
-                brands: [...brands],
+                color: [...color],
+                brand: [...brand],
                 category: [...category],
             };
         }
