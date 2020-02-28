@@ -1,2 +1,3 @@
-import AppHeaderNavLeftItem from './App-header-nav-left-item'
-export default AppHeaderNavLeftItem
+import AppHeaderNavLeftItem from './App-header-nav-left-item';
+
+export default AppHeaderNavLeftItem;

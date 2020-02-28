@@ -23,7 +23,7 @@ const catalogsList = (state = initialState, action) => {
                 catalogs: state.catalogs,
                 catalog: action.payload,
                 loading: false,
-            }
+            };
         default:
             return state;
     }

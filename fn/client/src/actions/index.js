@@ -1,17 +1,7 @@
-import { 
-    categoriesLoaded,
-    categoriesRequested, 
-} from "./Categories-actions";
-import { 
-    productsLoaded,
-    productsRequested, 
-} from "./Products-actions";
+import { categoriesLoaded, categoriesRequested } from './Categories-actions';
+import { productsLoaded, productsRequested } from './Products-actions';
 
-import { 
-    catalogLoaded,
-    catalogsLoaded,
-    catalogsRequested,
- } from "./Catalogs-actions"
+import { catalogLoaded, catalogsLoaded, catalogsRequested } from './Catalogs-actions';
 
 export {
     categoriesLoaded,
@@ -21,4 +11,4 @@ export {
     catalogLoaded,
     catalogsLoaded,
     catalogsRequested,
-}
+};

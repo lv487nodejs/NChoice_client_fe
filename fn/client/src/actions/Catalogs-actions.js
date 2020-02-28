@@ -12,8 +12,4 @@ const catalogLoaded = newCatalog => ({
     payload: newCatalog,
 });
 
-export { 
-    catalogsLoaded,
-    catalogLoaded,
-    catalogsRequested
-    };
+export { catalogsLoaded, catalogLoaded, catalogsRequested };

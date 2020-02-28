@@ -9,13 +9,12 @@ import LoadingSpinner from '../Loading-spinner';
 
 const CategoriesNav = ({ storeService, categoriesLoaded, categoriesRequested, categories, catalog, loading }) => {
     useEffect(() => {
-        categoriesRequested()
-        storeService.getCatalogCategories(catalog)
-            .then(res => categoriesLoaded(res));
-    }, [catalog]);
+        categoriesRequested();
+        storeService.getCatalogCategories(catalog).then(res => categoriesLoaded(res));
+    }, [catalog, categoriesLoaded, categoriesRequested, storeService]);
 
     if (loading) {
-        return <LoadingSpinner />
+        return <LoadingSpinner />;
     }
 
     return (

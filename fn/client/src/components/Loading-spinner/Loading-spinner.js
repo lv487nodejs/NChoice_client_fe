@@ -1,13 +1,11 @@
 import React from 'react';
-import Spinner from 'react-bootstrap/Spinner'
-import './Loading-spinner.css'
+import Spinner from 'react-bootstrap/Spinner';
+import './Loading-spinner.css';
 
-const LoadingSpinner = () => {
-    return (
+const LoadingSpinner = () => (
     <div className="loading-spinner-container">
-        <Spinner className='loading-spinner' animation="grow" />
+        <Spinner className="loading-spinner" animation="grow" />
     </div>
-    )
-}
+);
 
-export default LoadingSpinner
+export default LoadingSpinner;

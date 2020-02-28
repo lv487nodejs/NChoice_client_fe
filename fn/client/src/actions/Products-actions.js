@@ -7,7 +7,4 @@ const productsRequested = () => ({
     type: 'PRODUCTS_REQUESTED',
 });
 
-export { 
-    productsLoaded,
-    productsRequested
- };
+export { productsLoaded, productsRequested };

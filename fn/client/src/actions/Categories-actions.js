@@ -7,8 +7,4 @@ const categoriesRequested = () => ({
     type: 'CATEGORIES_REQUESTED',
 });
 
-
-export { 
-    categoriesLoaded,
-    categoriesRequested
- };
+export { categoriesLoaded, categoriesRequested };

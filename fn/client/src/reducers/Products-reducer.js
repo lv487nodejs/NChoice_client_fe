@@ -1,7 +1,7 @@
 const initialState = {
     products: [],
     product: {},
-    loading: true
+    loading: true,
 };
 
 const productsList = (state = initialState, action) => {

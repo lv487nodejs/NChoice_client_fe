@@ -7,26 +7,26 @@ import withStoreService from '../hoc';
 import CatalogsListItem from '../catalogs-list-item/Catalogs-list-item';
 import LoadingSpinner from '../Loading-spinner';
 
-
-const CatalogsList = ( { storeService, catalogsLoaded, catalogsRequested, catalogs, loading } ) => {
-    
+const CatalogsList = ({ storeService, catalogsLoaded, catalogsRequested, catalogs, loading }) => {
     useEffect(() => {
-        catalogsRequested()
-        storeService.getAllCatalogs()
+        catalogsRequested();
+        storeService
+            .getAllCatalogs()
             .then(res => catalogsLoaded(res))
             .then(res => console.log(res));
-    }, []);
-
+    }, [catalogsLoaded, catalogsRequested, storeService]);
 
     if (loading) {
-        return <LoadingSpinner />
+        return <LoadingSpinner />;
     }
 
     return (
-    <div className="catalogs">
-        {catalogs.map(catalog => <CatalogsListItem catalog={catalog.catalog} />)}
-    </div>
-    )
+        <div className="catalogs">
+            {catalogs.map(catalog => (
+                <CatalogsListItem catalog={catalog.catalog} />
+            ))}
+        </div>
+    );
 };
 
 const mapStateToProps = ({ catalogsList: { catalogs, loading } }) => ({ catalogs, loading });
