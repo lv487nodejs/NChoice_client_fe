@@ -1,7 +1,14 @@
 import React from 'react';
 
 import ProductList from '../components/product-list';
-
-const ProductListPageContainer = () => <ProductList />;
+import Filter from '../components/filter'
+const ProductListPageContainer = () => {
+    return (
+        <div>
+            <Filter />
+            <ProductList />
+        </div>
+    )
+}
 
 export default ProductListPageContainer;
