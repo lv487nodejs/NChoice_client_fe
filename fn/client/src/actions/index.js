@@ -1,6 +1,7 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
 import { productsLoaded, productsRequested } from './Products-actions';
-import { catalogsLoaded, catalogsRequested } from './Catalogs-actions'
+import { catalogsLoaded, catalogsRequested } from './Catalogs-actions';
+
 import {
     filterAddBrand,
     filterAddCategory,
@@ -12,6 +13,7 @@ import {
     fetchSuccessBrands,
     fetchSuccessCategories,
     fetchSuccessColors,
+    composeReceivedData,
 } from './Filter-actions';
 
 export {
@@ -31,4 +33,5 @@ export {
     fetchSuccessBrands,
     fetchSuccessCategories,
     fetchSuccessColors,
+    composeReceivedData,
 };

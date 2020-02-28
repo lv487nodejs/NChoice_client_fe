@@ -17,7 +17,7 @@ const AppHeaderNavRight = () => (
             </li>
             <li key="5">
                 <Link>
-                    <Currency/>
+                    <Currency />
                 </Link>
             </li>
             <li key="6">

@@ -59,26 +59,23 @@ const Filter = ({
     console.log(state.filter.brands);
     // problem here
     useEffect(
-        () =>
-            storeService.getCatalogByFilter({ brand: state.filter.brands }).then(res => fetchSuccessBrands(res)
-            ),
-        []
+        () => storeService.getCatalogByFilter({ brand: state.filter.brands }).then(res => fetchSuccessBrands(res)),
+        [fetchSuccessBrands, state.filter.brands, storeService]
     );
     console.log(state.filter.category);
 
     // problem here
     useEffect(
         () =>
-            storeService.getCatalogByFilter({ category: state.filter.category }).then(res => fetchSuccessCategories(res)
-            ),
-        []
+            storeService
+                .getCatalogByFilter({ category: state.filter.category })
+                .then(res => fetchSuccessCategories(res)),
+        [fetchSuccessCategories, state.filter.category, storeService]
     );
     // problem here
     useEffect(
-        () =>
-            storeService.getCatalogByFilter({ color: state.filter.color }).then(res => fetchSuccessColors(res)
-            ),
-        []
+        () => storeService.getCatalogByFilter({ color: state.filter.color }).then(res => fetchSuccessColors(res)),
+        [fetchSuccessColors, state.filter.color, storeService]
     );
 
     const filterAddBrandHandler = (e, item) => {

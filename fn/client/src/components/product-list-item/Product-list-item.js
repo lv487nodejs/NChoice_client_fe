@@ -11,9 +11,7 @@ function ProductListItem({ title, description, keyID }) {
             <Card.Img variant="top" src="/images/hoody.jpg" className="cardsImage" />
             <Card.Body>
                 <Card.Title className="productName">{title}</Card.Title>
-                <Card.Text className="description">
-                    {description}
-                </Card.Text>
+                <Card.Text className="description">{description}</Card.Text>
                 <Card.Body className="bottomElements">
                     <Card.Text className="cardPrice">100 $ </Card.Text>
                     <FontAwesomeIcon icon={faHeart} className="heart" />
@@ -23,6 +21,5 @@ function ProductListItem({ title, description, keyID }) {
         </Card>
     );
 }
-
 
 export default ProductListItem;
