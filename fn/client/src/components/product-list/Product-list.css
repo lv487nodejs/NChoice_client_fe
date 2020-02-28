@@ -1,7 +1,46 @@
-.left-side {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 1rem;
-  width: 1000px;
-  margin: 0 auto;
+.productListPage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
+}
+
+.productListPage>div.productCategory {
+    background-color: rgb(36, 32, 41);
+    grid-column: 1/4;
+    text-align: center;
+    align-items: center;
+    color:white;
+    font-size:3vh;
+}
+
+.productListPage>div.sortField {
+    grid-column: 1/4;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.sortField {
+    display: grid;
+    grid-template-columns: 80% 10% 10%;
+}
+
+.productListPage>div.list {
+    display: grid;
+    grid-gap: 1rem;
+}
+
+.list>div.productListButtons {
+    background-color: rgb(184, 109, 158);
+    grid-row: 1;
+    grid-gap: 1rem;
+}
+
+.list>div.productList {
+    background-color: rgb(109, 179, 184);
+}
+
+.list>div.paginator {
+    background-color: rgb(175, 115, 127);
+    display: grid;
+    justify-items: center;
 }

@@ -3,4 +3,8 @@ const categoriesLoaded = newCategories => ({
     payload: newCategories,
 });
 
-export { categoriesLoaded };
+const categoriesRequested = () => ({
+    type: 'CATEGORIES_REQUESTED',
+});
+
+export { categoriesLoaded, categoriesRequested };

@@ -1,20 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Catalogs-list.css';
 
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { catalogsLoaded, catalogsRequested } from '../../actions';
+import withStoreService from '../hoc';
+import CatalogsListItem from '../catalogs-list-item/Catalogs-list-item';
+import LoadingSpinner from '../Loading-spinner';
 
-const Catalogs = () => (
-    <div className="catalogs">
-        <Link to="/catalogs/men">
-            <img src="/images/catalogs/men.jpg" alt="Men categories" />
-        </Link>
-        <Link to="/catalogs/women">
-            <img src="/images/catalogs/women.jpg" alt="Women categories" />
-        </Link>
-        <Link to="/catalogs/kids">
-            <img src="/images/catalogs/kid.jpg" alt="Kids categories" />
-        </Link>
-    </div>
-);
+const CatalogsList = ({ storeService, catalogsLoaded, catalogsRequested, catalogs, loading }) => {
+    useEffect(() => {
+        catalogsRequested();
+        storeService
+            .getAllCatalogs()
+            .then(res => catalogsLoaded(res))
+            .then(res => console.log(res));
+    }, [catalogsLoaded, catalogsRequested, storeService]);
 
-export default Catalogs;
+    if (loading) {
+        return <LoadingSpinner />;
+    }
+
+    return (
+        <div className="catalogs">
+            {catalogs.map(catalog => (
+                <CatalogsListItem catalog={catalog.catalog} />
+            ))}
+        </div>
+    );
+};
+
+const mapStateToProps = ({ catalogsList: { catalogs, loading } }) => ({ catalogs, loading });
+const mapDispatchToProps = { catalogsLoaded, catalogsRequested };
+
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(CatalogsList));

@@ -3,4 +3,8 @@ const productsLoaded = newProducts => ({
     payload: newProducts,
 });
 
-export { productsLoaded };
+const productsRequested = () => ({
+    type: 'PRODUCTS_REQUESTED',
+});
+
+export { productsLoaded, productsRequested };

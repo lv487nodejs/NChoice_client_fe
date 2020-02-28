@@ -1,5 +1,8 @@
-import { categoriesLoaded } from './Categories-actions';
-import { productsLoaded } from './Products-actions';
+import { categoriesLoaded, categoriesRequested } from './Categories-actions';
+import { productsLoaded, productsRequested } from './Products-actions';
+import { catalogsLoaded, catalogsRequested } from './Catalogs-actions';
+
+
 import {
     filterAddBrand,
     filterAddCategory,
@@ -15,9 +18,13 @@ import {
 } from './Filter-actions';
 
 export {
+    categoriesRequested,
     categoriesLoaded,
+    catalogsLoaded,
+    catalogsRequested,
+    productsRequested,
     productsLoaded,
-    filterAddBrand,
+      filterAddBrand,
     filterAddCategory,
     filterAddColor,
     filterRemoveBrand,

@@ -10,6 +10,7 @@ const catalogs = require('./routes/products/catalogs');
 const categories = require('./routes/products/categories');
 const brands = require('./routes/products/brands');
 const colors = require('./routes/products/colors');
+const generator = require('./routes/products/generator');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/catalogs', catalogs);
 app.use('/categories', categories);
 app.use('/brands', brands);
 app.use('/colors', colors);
+app.use('/generator', generator);
 
 const PORT = process.env.PORT || 5000;
 

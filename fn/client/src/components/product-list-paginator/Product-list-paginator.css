@@ -1,4 +1,10 @@
 .page-item {
     cursor: pointer;
-    align-self: center;
-}
+    /* align-self: center; */
+    font-family: "Oswald";
+  }
+  nav {
+    display: grid;
+    justify-items: center;
+  }
+  

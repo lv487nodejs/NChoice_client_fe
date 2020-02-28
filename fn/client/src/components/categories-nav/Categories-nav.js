@@ -2,22 +2,27 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { categoriesLoaded } from '../../actions';
+import { categoriesLoaded, categoriesRequested } from '../../actions';
 import CategoriesNavItem from '../categories-nav-item';
 import withStoreService from '../hoc';
+import LoadingSpinner from '../Loading-spinner';
 
-const CategoriesNav = ({ storeService, categoriesLoaded, categories, catalog }) => {
+const CategoriesNav = ({ storeService, categoriesLoaded, categoriesRequested, categories, catalog, loading }) => {
     useEffect(() => {
-        storeService.getCatalogCategories(catalog)
-        .then(res => categoriesLoaded(res));
-    },[catalog]);
+        categoriesRequested();
+        storeService.getCatalogCategories(catalog).then(res => categoriesLoaded(res));
+    }, [catalog, categoriesLoaded, categoriesRequested, storeService]);
+
+    if (loading) {
+        return <LoadingSpinner />;
+    }
 
     return (
         <ul>
             <li key="all" className="category-item">
                 <Link to="/productlist">All Categories</Link>
             </li>
-            {categories.categories.map(category => (
+            {categories.map(category => (
                 <li key={category.category} className="category-item">
                     <CategoriesNavItem name={category.category} />
                 </li>
@@ -26,7 +31,7 @@ const CategoriesNav = ({ storeService, categoriesLoaded, categories, catalog }) 
     );
 };
 
-const mapStateToProps = ({ categories }) => ({ categories });
-const mapDispatchToProps = { categoriesLoaded };
+const mapStateToProps = ({ categoriesList: { categories, loading } }) => ({ categories, loading });
+const mapDispatchToProps = { categoriesLoaded, categoriesRequested };
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(CategoriesNav));

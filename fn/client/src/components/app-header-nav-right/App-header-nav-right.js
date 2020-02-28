@@ -5,6 +5,7 @@ import './App-header-nav-right.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faDollarSign, faUser } from '@fortawesome/free-solid-svg-icons';
+import Currency from '../currency';
 
 const AppHeaderNavRight = () => (
     <nav className="nav-bar">
@@ -15,8 +16,8 @@ const AppHeaderNavRight = () => (
                 </Link>
             </li>
             <li key="5">
-                <Link to="/currency">
-                    <FontAwesomeIcon icon={faDollarSign} />
+                <Link>
+                    <Currency />
                 </Link>
             </li>
             <li key="6">

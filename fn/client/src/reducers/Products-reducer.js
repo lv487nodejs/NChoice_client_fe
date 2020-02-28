@@ -27,10 +27,9 @@ const products = (state = initialState, action) => {
                 product: state.product,
                 loading: false,
             };
-
         default:
             return state;
     }
 };
 
-export default products;
+export default productsList;

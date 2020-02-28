@@ -119,7 +119,7 @@ const Filter = ({
         </div>
     );
 };
-const mapStateToProps = ({ filter: { brand, category, color } }) => ({
+const mapStateToProps = ({ productsList: { brand, category, color } }) => ({
     brand,
     category,
     color,
