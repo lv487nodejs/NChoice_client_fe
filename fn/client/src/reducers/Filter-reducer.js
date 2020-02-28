@@ -66,13 +66,13 @@ const filter = (state = instate, action) => {
             };
         }
         case 'COMPOSE_RECEIVED_DATA': {
+   const productsUnique = [
+                ...new Set(state.receivedBrands, ...state.receivedCategories, ...state.receivedColors),
+            ];
 
-            let array3 = state.receivedBrands.concat(state.receivedCategories).concat(state.receivedColors)
-
-            const unq = [...new Set(array3)]
             return {
                 ...state,
-                products: [...unq],
+                products: [...productsUnique],
             };
         }
         default:

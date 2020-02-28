@@ -7,7 +7,7 @@ export const FilterItem = props => {
 
     const elements = items.map(item => (
         <li key={item[type]}>
-            <label className="filter-list-item">
+            <label className="list-group-item">
                 <input type="checkbox" value={item[type]} onClick={e => handler(e, e.target.value)} />
                 {item[type]}
             </label>
