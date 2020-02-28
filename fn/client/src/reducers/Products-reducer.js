@@ -1,5 +1,5 @@
 const initialState = {
-    products: [],
+    products: [{ name: 1 }],
     product: {},
     loading: true,
 };
@@ -18,6 +18,7 @@ const productsList = (state = initialState, action) => {
                 product: state.product,
                 loading: false,
             };
+
         default:
             return state;
     }

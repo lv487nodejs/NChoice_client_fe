@@ -11,6 +11,7 @@ import {
     fetchSuccessBrands,
     fetchSuccessCategories,
     fetchSuccessColors,
+    composeReceivedData,
 } from '../../actions';
 
 import FilterItem from '../filterItem';
@@ -27,14 +28,17 @@ const Filter = ({
     filterRemoveCategory,
     filterRemoveColor,
     composeFilters,
-    state,
+    brand,
+    category,
+    color,
     fetchSuccessBrands,
     fetchSuccessCategories,
     fetchSuccessColors,
+    composeReceivedData,
 }) => {
-    const [brands, setBrands] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [colors, setColors] = useState([]);
+    const [getBrands, setBrands] = useState([]);
+    const [getCategories, setCategories] = useState([]);
+    const [getColors, setColors] = useState([]);
 
     useEffect(() => {
         storeService
@@ -56,31 +60,28 @@ const Filter = ({
             .catch(err => console.log(err));
     }, [storeService]);
 
-    console.log(state.filter.brands);
-    // problem here
-    useEffect(
-        () => storeService.getCatalogByFilter({ brand: state.filter.brands }).then(res => fetchSuccessBrands(res)),
-        [fetchSuccessBrands, state.filter.brands, storeService]
-    );
-    console.log(state.filter.category);
+    useEffect(() => {
+        storeService.getCatalogByFilter({ brand }).then(res => {
+            fetchSuccessBrands(res);
+            composeReceivedData();
+        });
+    }, [brand, composeReceivedData, fetchSuccessBrands, storeService]);
 
-    // problem here
-    useEffect(
-        () =>
-            storeService
-                .getCatalogByFilter({ category: state.filter.category })
-                .then(res => fetchSuccessCategories(res)),
-        [fetchSuccessCategories, state.filter.category, storeService]
-    );
-    // problem here
-    useEffect(
-        () => storeService.getCatalogByFilter({ color: state.filter.color }).then(res => fetchSuccessColors(res)),
-        [fetchSuccessColors, state.filter.color, storeService]
-    );
+    useEffect(() => {
+        storeService.getCatalogByFilter({ category }).then(res => {
+            fetchSuccessCategories(res);
+            composeReceivedData();
+        });
+    }, [category, composeReceivedData, fetchSuccessCategories, storeService]);
+    useEffect(() => {
+        storeService.getCatalogByFilter({ color }).then(res => {
+            fetchSuccessColors(res);
+            composeReceivedData();
+        });
+    }, [color, composeReceivedData, fetchSuccessColors, storeService]);
 
     const filterAddBrandHandler = (e, item) => {
         if (e.target.checked) {
-            console.log(item);
             filterAddBrand(item);
         } else {
             filterRemoveBrand(item);
@@ -89,7 +90,6 @@ const Filter = ({
     };
     const filterAddCategoryHandler = (e, item) => {
         if (e.target.checked) {
-            console.log(item);
             filterAddCategory(item);
         } else {
             filterRemoveCategory(item);
@@ -98,7 +98,6 @@ const Filter = ({
     };
     const filterAddColorHandler = (e, item) => {
         if (e.target.checked) {
-            console.log(item);
             filterAddColor(item);
         } else {
             filterRemoveColor(item);
@@ -110,16 +109,19 @@ const Filter = ({
         <div className="row">
             <div className="filter-group">
                 <span>filter</span>
-                <FilterItem items={brands} type="brand" func={filterAddBrandHandler} />
-                <FilterItem items={categories} type="category" func={filterAddCategoryHandler} />
-                <FilterItem items={colors} type="color" func={filterAddColorHandler} />
+                <FilterItem items={getBrands} type="brand" handler={filterAddBrandHandler} />
+                <FilterItem items={getCategories} type="category" handler={filterAddCategoryHandler} />
+                <FilterItem items={getColors} type="color" handler={filterAddColorHandler} />
             </div>
         </div>
     );
 };
-const mapStateToProps = state => ({
-    state,
+const mapStateToProps = ({ filter: { brand, category, color } }) => ({
+    brand,
+    category,
+    color,
 });
+
 const mapDispatchToProps = dispatch => ({
     filterAddBrand: brand => dispatch(filterAddBrand(brand)),
     filterAddColor: color => dispatch(filterAddColor(color)),
@@ -128,6 +130,7 @@ const mapDispatchToProps = dispatch => ({
     filterRemoveCategory: category => dispatch(filterRemoveCategory(category)),
     filterRemoveColor: category => dispatch(filterRemoveColor(category)),
     composeFilters: () => dispatch(composeFilters()),
+    composeReceivedData: () => dispatch(composeReceivedData()),
     fetchSuccessBrands: brands => dispatch(fetchSuccessBrands(brands)),
     fetchSuccessColors: colors => dispatch(fetchSuccessColors(colors)),
     fetchSuccessCategories: categories => dispatch(fetchSuccessCategories(categories)),
