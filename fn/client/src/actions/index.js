@@ -11,6 +11,7 @@ import {
     fetchSuccessBrands,
     fetchSuccessCategories,
     fetchSuccessColors,
+    composeReceivedData,
 } from './Filter-actions';
 
 export {
@@ -26,4 +27,5 @@ export {
     fetchSuccessBrands,
     fetchSuccessCategories,
     fetchSuccessColors,
+    composeReceivedData,
 };

@@ -5,6 +5,7 @@ const filter = (state, action) => {
 
     if (state === undefined) {
         state = {
+            products: [],
             brands: [],
             colors: [],
             category: [],
@@ -68,6 +69,16 @@ const filter = (state, action) => {
                 colors: [...colors],
                 brands: [...brands],
                 category: [...category],
+            };
+        }
+        case 'COMPOSE_RECEIVED_DATA': {
+            const productsUnique = [
+                ...new Set(state.receivedBrands, ...state.receivedCategories, ...state.receivedColors),
+            ];
+
+            return {
+                ...state,
+                products: [...productsUnique],
             };
         }
         default:

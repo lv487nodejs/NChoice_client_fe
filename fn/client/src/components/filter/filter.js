@@ -11,6 +11,7 @@ import {
     fetchSuccessBrands,
     fetchSuccessCategories,
     fetchSuccessColors,
+    composeReceivedData,
 } from '../../actions';
 
 import FilterItem from '../filterItem';
@@ -31,10 +32,13 @@ const Filter = ({
     fetchSuccessBrands,
     fetchSuccessCategories,
     fetchSuccessColors,
+    composeReceivedData,
 }) => {
+
     const [brands, setBrands] = useState([]);
     const [categories, setCategories] = useState([]);
     const [colors, setColors] = useState([]);
+    console.log(state);
 
     useEffect(() => {
         storeService
@@ -60,23 +64,32 @@ const Filter = ({
     // problem here
     useEffect(
         () =>
-            storeService.getCatalogByFilter({ brand: state.filter.brands }).then(res => fetchSuccessBrands(res)
+            storeService.getCatalogByFilter({ brand: state.filter.brands }).then(res => {
+                fetchSuccessBrands(res)
+                composeReceivedData()
+            }
             ),
-        []
+        [composeReceivedData, fetchSuccessBrands]
     );
     console.log(state.filter.category);
 
     // problem here
     useEffect(
         () =>
-            storeService.getCatalogByFilter({ category: state.filter.category }).then(res => fetchSuccessCategories(res)
+            storeService.getCatalogByFilter({ category: state.filter.category }).then(res => {
+                fetchSuccessCategories(res)
+                composeReceivedData()
+            }
             ),
         []
     );
     // problem here
     useEffect(
         () =>
-            storeService.getCatalogByFilter({ color: state.filter.color }).then(res => fetchSuccessColors(res)
+            storeService.getCatalogByFilter({ color: state.filter.color }).then(res => {
+                fetchSuccessColors(res)
+                composeReceivedData()
+            }
             ),
         []
     );
@@ -131,6 +144,7 @@ const mapDispatchToProps = dispatch => ({
     filterRemoveCategory: category => dispatch(filterRemoveCategory(category)),
     filterRemoveColor: category => dispatch(filterRemoveColor(category)),
     composeFilters: () => dispatch(composeFilters()),
+    composeReceivedData: () => dispatch(composeReceivedData()),
     fetchSuccessBrands: brands => dispatch(fetchSuccessBrands(brands)),
     fetchSuccessColors: colors => dispatch(fetchSuccessColors(colors)),
     fetchSuccessCategories: categories => dispatch(fetchSuccessCategories(categories)),

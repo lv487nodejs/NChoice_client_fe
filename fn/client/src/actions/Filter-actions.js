@@ -32,6 +32,9 @@ const fetchSuccessColors = colors => ({ type: 'FETCH_SUCCESS_COLORS', payload: c
 const composeFilters = () => ({
     type: 'COMPOSE_FILTERS',
 });
+const composeReceivedData = () => ({
+    type: 'COMPOSE_RECEIVED_DATA',
+});
 
 export {
     filterAddBrand,
@@ -44,4 +47,5 @@ export {
     fetchSuccessBrands,
     fetchSuccessCategories,
     fetchSuccessColors,
+    composeReceivedData,
 };
