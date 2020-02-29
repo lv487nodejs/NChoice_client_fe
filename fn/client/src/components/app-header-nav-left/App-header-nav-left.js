@@ -16,7 +16,6 @@ const AppHeaderNavLeft = ({ storeService, catalogsLoaded, catalogsRequested, cat
         storeService
             .getAllCatalogs()
             .then(res => catalogsLoaded(res))
-            .then(res => console.log(res));
     }, [catalogsLoaded, catalogsRequested, storeService]);
 
   const onEnter = (e, catalog) => {

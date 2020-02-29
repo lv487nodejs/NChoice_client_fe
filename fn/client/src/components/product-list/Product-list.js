@@ -43,7 +43,7 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, products
         return <LoadingSpinner />;
     }
     return (
-        <div className="productListPage">
+        <div className="product-list-page">
             <div className="products-options">
                     <SearchBar />
                     <ProductSort arrayToSort={currentPosts} />
@@ -55,7 +55,7 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, products
                     />
             </div>
             <div className="filters">
-                {/* <Filter /> */}
+                <Filter />
             </div>
             <ProductListPosts products={currentPosts} />
             <ProductListPaginator

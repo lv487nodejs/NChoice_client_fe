@@ -2,8 +2,8 @@
     position:relative;
     padding: 1rem; 
     margin: 1rem 0;
-     display: flex;
-      flex-direction: column;
+    display: flex;
+    flex-direction: column;
     outline:1px solid black;
     width: 15vw;
     }

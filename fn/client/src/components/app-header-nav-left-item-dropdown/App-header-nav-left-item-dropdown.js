@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 const AppHeaderNavLeftItemDropDown = ( {catalog} ) => {
 
 const items = catalog.categories.map(category => (
-    <Nav.Link>{category.category}</Nav.Link>
+    <Nav.Link key={category._id}>{category.category}</Nav.Link>
 ))
 
 return (
     <Nav defaultActiveKey="/home" className="flex-column drop-down">
-        <Nav.Link><Link to={`/catalogs/${catalog.catalog}`}>All categories</Link></Nav.Link>
+        <Nav.Link><Link key="allproducts" to={`/productlist`}>All categories</Link></Nav.Link>
         {items}
     </Nav>
     )}

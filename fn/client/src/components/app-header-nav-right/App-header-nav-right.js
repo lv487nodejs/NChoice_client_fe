@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './App-header-nav-right.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faDollarSign, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faUser } from '@fortawesome/free-solid-svg-icons';
 import Currency from '../currency';
 
 const AppHeaderNavRight = () => (
@@ -16,9 +16,7 @@ const AppHeaderNavRight = () => (
                 </Link>
             </li>
             <li key="5">
-                <Link>
-                    <Currency />
-                </Link>
+                <span className="currency-button"><Currency /></span>
             </li>
             <li key="6">
                 <Link to="/register">

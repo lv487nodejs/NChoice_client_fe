@@ -12,8 +12,7 @@ const CatalogsList = ({ storeService, catalogsLoaded, catalogsRequested, catalog
         catalogsRequested();
         storeService
             .getAllCatalogs()
-            .then(res => catalogsLoaded(res))
-            .then(res => console.log(res));
+            .then(res => catalogsLoaded(res));
     }, [catalogsLoaded, catalogsRequested, storeService]);
 
     if (loading) {

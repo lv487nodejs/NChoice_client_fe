@@ -106,14 +106,12 @@ const Filter = ({
     };
 
     return (
-        <div className="row">
             <div className="filter-group">
-                <span>filter</span>
+                <span>Filter</span>
                 <FilterItem items={getBrands} type="brand" handler={filterAddBrandHandler} />
                 <FilterItem items={getCategories} type="category" handler={filterAddCategoryHandler} />
                 <FilterItem items={getColors} type="color" handler={filterAddColorHandler} />
             </div>
-        </div>
     );
 };
 const mapStateToProps = ({ filter: { brand, category, color } }) => ({
