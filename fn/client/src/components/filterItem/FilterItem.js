@@ -16,6 +16,7 @@ export const FilterItem = props => {
             <p>
                 <i className="btn btn-outline-primary plus-button">+</i>
             </p>
+    <p className="filter-name">{type}</p>
             <ul>{elements}</ul>
         </div>
     );

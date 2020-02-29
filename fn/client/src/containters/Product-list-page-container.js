@@ -2,9 +2,9 @@ import React from 'react';
 import './Product-list-page-container.css';
 import ProductList from '../components/product-list';
 
-const ProductListPageContainer = () => (
+const ProductListPageContainer = ({catalog}) => (
     <div className="product-list-container">
-        <ProductList />
+        <ProductList catalog={catalog}/>
     </div>
 );
 
