@@ -257,61 +257,50 @@ price: min: 0, type Number
 Response:
 ```json
 {
-    "images": [
-        "shoes.jpg"
-    ],
-    "_id": "5e4e965072079f05d682f78e",
-    "catalog": {
+        "id": "5e53ddc92d9ca328e8e0712e",
+        "title": "shoes cassics zu kakceno ticif.",
         "images": [
-            "catalogwomen.jpg"
+            "shoes_men.jpg"
         ],
-        "categories": [
+        "description": "Te ilfotha to sil onemer sada wembefca hizojre meruhe tuca cowcijfof lutpupah jopil daupivin ipoomo kat. Movi saditim ek vofezit let sudkupa ufiwilu bi perjevo af lu ziide pa fig. Ahni fiwe jewuba ajenum bep podoci pemiw ta we ekihin evotier kaer ne. Vahdefo tajidev hawopar fu ane awiduhew wi ligitu wip dafa pamir tusfeh hulteri peb. Si ja idvu sakaga nevtalar ta aduf voshovdun zoebidi tigren arahugef vozej. Epti ula gadhu salroh diolu mochoza gacrati lev umgog ucirdip bame subdorto rik nagido bivburhu. Felohhi gistic ohahap ebo cuh izuodcip nihcuf nakunke eztocit lokow de wuhjanav nelepebe nikelug joepo je.",
+        "propetries": [
             {
-                "images": [],
-                "_id": "5e4c552158a955341f476b0b",
-                "category": "shoes",
-                "__v": 0
+                "size": [
+                    "37"
+                ],
+                "_id": "5e53ddc92d9ca328e8e0712f",
+                "available": 4,
+                "sku": "9WJ5CB88",
+                "mrsp": 503,
+                "price": 402
+            },
+            {
+                "size": [
+                    "41"
+                ],
+                "_id": "5e53ddc92d9ca328e8e07130",
+                "available": 4,
+                "sku": "XWZ2C25D",
+                "mrsp": 503,
+                "price": 402
+            },
+            {
+                "size": [
+                    "44"
+                ],
+                "_id": "5e53ddc92d9ca328e8e07131",
+                "available": 4,
+                "sku": "WBWA6USH",
+                "mrsp": 503,
+                "price": 402
             }
         ],
-        "_id": "5e4c4d350fc75d48c83e1f7a",
-        "catalog": "women",
-        "__v": 1
-    },
-    "category": {
-        "images": [],
-        "_id": "5e4c552158a955341f476b0b",
+        "modified": "2020-02-24T14:29:29.027Z",
+        "catalog": "men",
         "category": "shoes",
-        "__v": 0
-    },
-    "brand": {
-        "images": [],
-        "_id": "5e4c552258a955341f476b0f",
-        "brand": "zori",
-        "__v": 0
-    },
-    "title": "daleki",
-    "description": "daleki zori vasylia",
-    "color": {
-        "images": [],
-        "_id": "5e4c54ef58a955341f476afc",
         "color": "red",
-        "__v": 0
+        "brand": "cassics"
     },
-    "propetries": [
-        {
-            "size": [
-                "38"
-            ],
-            "_id": "5e4e965072079f05d682f78f",
-            "available": 25,
-            "sku": "JD790J2S",
-            "mrsp": 213,
-            "price": 180
-        }
-    ],
-    "modified": "2020-02-20T14:23:12.211Z",
-    "__v": 0
-}
 ```
 GET:
 **http://localhost:5000/products**
@@ -330,56 +319,50 @@ GET:
 
 Response:
 ```json
-[
-    {
+{
+        "id": "5e53ddc92d9ca328e8e0712e",
+        "title": "shoes cassics zu kakceno ticif.",
         "images": [
-            "blank_sweaters_men.jpg"
+            "shoes_men.jpg"
         ],
-        "_id": "5e4c53043ab1ae31bc2f7a90",
-        "catalog": {
-            "images": [
-                "catalogmen.jpg"
-            ],
-            "categories": [],
-            "_id": "5e4c4d310fc75d48c83e1f79",
-            "catalog": "men",
-            "__v": 0
-        },
-        "category": {
-            "images": [],
-            "_id": "5e4c4d6a0501222b9928a298",
-            "category": "sweaters",
-            "__v": 0
-        },
-        "brand": {
-            "images": [],
-            "_id": "5e4c4d610501222b9928a28f",
-            "brand": "hikee",
-            "__v": 0
-        },
-        "title": "Sweaters Hikee Biw fanisjet zileize.",
-        "description": "Nu wisuf estonjid neksuzzi deco tokwolor ami ice putibwi laovutoc harporzo di laje. Og vo rosewo lelilda founi web ri okruke bosisow eli wa gowtenac he adaoz mupvabo escelcu sobec homal. Ih orujec cas agasemnaz fucgit renehaten kosuvdak luhhol korsir bud hihuhe siker ziam wegej sifhi. Keaji zoffedun jassad gedco midobwir wari wiclo lat limahewi vitmo selred ug. Ferarnog duilbut ba dinkuban nice ifoaf zus pukip urusuduj milse tij lin pugifgir piac. Pitij ge evoepolu sot su am lulvod nuwkazi tohgac sopuwzep piwdavu fate se.",
-        "color": {
-            "images": [],
-            "_id": "5e4c4d680501222b9928a295",
-            "color": "black",
-            "__v": 0
-        },
+        "description": "Te ilfotha to sil onemer sada wembefca hizojre meruhe tuca cowcijfof lutpupah jopil daupivin ipoomo kat. Movi saditim ek vofezit let sudkupa ufiwilu bi perjevo af lu ziide pa fig. Ahni fiwe jewuba ajenum bep podoci pemiw ta we ekihin evotier kaer ne. Vahdefo tajidev hawopar fu ane awiduhew wi ligitu wip dafa pamir tusfeh hulteri peb. Si ja idvu sakaga nevtalar ta aduf voshovdun zoebidi tigren arahugef vozej. Epti ula gadhu salroh diolu mochoza gacrati lev umgog ucirdip bame subdorto rik nagido bivburhu. Felohhi gistic ohahap ebo cuh izuodcip nihcuf nakunke eztocit lokow de wuhjanav nelepebe nikelug joepo je.",
         "propetries": [
             {
                 "size": [
-                    "45"
+                    "37"
                 ],
-                "_id": "5e4c53043ab1ae31bc2f7a91",
-                "available": 7,
-                "sku": "CNNYNQQQ",
-                "mrsp": 955,
-                "price": 573
+                "_id": "5e53ddc92d9ca328e8e0712f",
+                "available": 4,
+                "sku": "9WJ5CB88",
+                "mrsp": 503,
+                "price": 402
+            },
+            {
+                "size": [
+                    "41"
+                ],
+                "_id": "5e53ddc92d9ca328e8e07130",
+                "available": 4,
+                "sku": "XWZ2C25D",
+                "mrsp": 503,
+                "price": 402
+            },
+            {
+                "size": [
+                    "44"
+                ],
+                "_id": "5e53ddc92d9ca328e8e07131",
+                "available": 4,
+                "sku": "WBWA6USH",
+                "mrsp": 503,
+                "price": 402
             }
         ],
-        "modified": "2020-02-18T21:11:32.688Z",
-        "__v": 0
-    }
-]
+        "modified": "2020-02-24T14:29:29.027Z",
+        "catalog": "men",
+        "category": "shoes",
+        "color": "red",
+        "brand": "cassics"
+    },
 ```
 

@@ -4,8 +4,9 @@
     right: 1rem;
     background-color: white;
 }
-.filter-item{
-    margin-top: 2rem;
+.list-group-item input{
+margin-right: 1rem;
+
 }
 
 label{

@@ -8,5 +8,5 @@ export default combineReducers({
     productsList,
     categoriesList,
     catalogsList,
-    filter
+    filter,
 });
