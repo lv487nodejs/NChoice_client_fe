@@ -8,7 +8,7 @@ const sortByPrice = function(arrayToSortByPrice) {
 };
 
 const ProductSort = ({ arrayToSort }) => (
-    <Button variant="primary" onClick={() => console.log(sortByPrice(arrayToSort))}>
+    <Button variant="dark" onClick={() => console.log(sortByPrice(arrayToSort))}>
         Sort by price
     </Button>
 );
