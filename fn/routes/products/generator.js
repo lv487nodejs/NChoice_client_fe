@@ -45,6 +45,9 @@ router.post('/', async (req, res) => {
                         category: requestedCategory.category,
                     });
 
+                    if (category.category === 'dresses' && catalog.catalog === 'men') {
+                        return;
+                    }
                     category = await category.save();
                     catalog.categories.push(category);
                     await catalog.save();
