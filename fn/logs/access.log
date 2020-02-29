@@ -1,0 +1,4 @@
+::1 - - [29/Feb/2020:12:45:48 +0000] "GET /products HTTP/1.1" 200 256163 "-" "PostmanRuntime/7.22.0"
+::1 - - [29/Feb/2020:12:46:55 +0000] "GET /products HTTP/1.1" 200 256163 "-" "PostmanRuntime/7.22.0"
+::1 - - [29/Feb/2020:12:49:22 +0000] "GET /products/1 HTTP/1.1" 500 91 "-" "PostmanRuntime/7.22.0"
+::1 - - [29/Feb/2020:12:53:22 +0000] "GET /products HTTP/1.1" 200 256163 "-" "PostmanRuntime/7.22.0"
