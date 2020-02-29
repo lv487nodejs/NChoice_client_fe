@@ -8,6 +8,9 @@
 margin-right: 1rem;
 
 }
+.filter-name {
+  text-transform: uppercase;
+}
 
 label{
     padding: 1rem 1rem;

@@ -12,7 +12,7 @@ const items = catalog.categories.map(category => (
 
 return (
     <Nav defaultActiveKey="/home" className="flex-column drop-down">
-        <Nav.Link><Link key="allproducts" to={`/productlist`}>All categories</Link></Nav.Link>
+        <Link to={`/productlist/${catalog.catalog}`} className="nav-link" role="button">All Categories</Link>
         {items}
     </Nav>
     )}

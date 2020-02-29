@@ -7,11 +7,7 @@ import {
     filterRemoveColor,
     filterRemoveCategory,
     filterRemoveBrand,
-    composeFilters,
-    fetchSuccessBrands,
-    fetchSuccessCategories,
-    fetchSuccessColors,
-    composeReceivedData,
+    productsLoaded
 } from '../../actions';
 
 import FilterItem from '../filterItem';
@@ -27,14 +23,11 @@ const Filter = ({
     filterRemoveBrand,
     filterRemoveCategory,
     filterRemoveColor,
-    composeFilters,
     brand,
     category,
     color,
-    fetchSuccessBrands,
-    fetchSuccessCategories,
-    fetchSuccessColors,
-    composeReceivedData,
+    catalog,
+    productsLoaded,
 }) => {
     const [getBrands, setBrands] = useState([]);
     const [getCategories, setCategories] = useState([]);
@@ -61,24 +54,10 @@ const Filter = ({
     }, [storeService]);
 
     useEffect(() => {
-        storeService.getCatalogByFilter({ brand }).then(res => {
-            fetchSuccessBrands(res);
-            composeReceivedData();
+        storeService.getCatalogByFilter({ catalog, brand, color, category }).then(res => { 
+            productsLoaded(res);
         });
-    }, [brand, composeReceivedData, fetchSuccessBrands, storeService]);
-
-    useEffect(() => {
-        storeService.getCatalogByFilter({ category }).then(res => {
-            fetchSuccessCategories(res);
-            composeReceivedData();
-        });
-    }, [category, composeReceivedData, fetchSuccessCategories, storeService]);
-    useEffect(() => {
-        storeService.getCatalogByFilter({ color }).then(res => {
-            fetchSuccessColors(res);
-            composeReceivedData();
-        });
-    }, [color, composeReceivedData, fetchSuccessColors, storeService]);
+    }, [brand, category, catalog, color, storeService, productsLoaded]);
 
     const filterAddBrandHandler = (e, item) => {
         if (e.target.checked) {
@@ -86,7 +65,6 @@ const Filter = ({
         } else {
             filterRemoveBrand(item);
         }
-        composeFilters();
     };
     const filterAddCategoryHandler = (e, item) => {
         if (e.target.checked) {
@@ -94,7 +72,6 @@ const Filter = ({
         } else {
             filterRemoveCategory(item);
         }
-        composeFilters();
     };
     const filterAddColorHandler = (e, item) => {
         if (e.target.checked) {
@@ -102,7 +79,6 @@ const Filter = ({
         } else {
             filterRemoveColor(item);
         }
-        composeFilters();
     };
 
     return (
@@ -114,10 +90,11 @@ const Filter = ({
             </div>
     );
 };
-const mapStateToProps = ({ filter: { brand, category, color } }) => ({
+const mapStateToProps = ({ filter: { brand, category, color }, catalogsList: { catalog } }) => ({
     brand,
     category,
     color,
+    catalog,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -127,11 +104,7 @@ const mapDispatchToProps = dispatch => ({
     filterRemoveBrand: brand => dispatch(filterRemoveBrand(brand)),
     filterRemoveCategory: category => dispatch(filterRemoveCategory(category)),
     filterRemoveColor: category => dispatch(filterRemoveColor(category)),
-    composeFilters: () => dispatch(composeFilters()),
-    composeReceivedData: () => dispatch(composeReceivedData()),
-    fetchSuccessBrands: brands => dispatch(fetchSuccessBrands(brands)),
-    fetchSuccessColors: colors => dispatch(fetchSuccessColors(colors)),
-    fetchSuccessCategories: categories => dispatch(fetchSuccessCategories(categories)),
+    productsLoaded: products => dispatch(productsLoaded(products)),
 });
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Filter));

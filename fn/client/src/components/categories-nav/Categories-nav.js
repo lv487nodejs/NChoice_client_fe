@@ -22,7 +22,7 @@ const CategoriesNav = ({ storeService, categoriesLoaded, categoriesRequested, ca
     return (
         <ul className='categories-nav'>
             <li key="all" className="category-item">
-                <Link to="/productlist">All Categories</Link>
+                <Link to={`/productlist/${catalog}`} >All Categories</Link>
             </li>
             {categories.map(category => (
                 <li key={category.category} className="category-item">

@@ -22,7 +22,7 @@ const CatalogsList = ({ storeService, catalogsLoaded, catalogsRequested, catalog
     return (
         <div className="catalogs">
             {catalogs.map(catalog => (
-                <CatalogsListItem catalog={catalog.catalog} />
+                <CatalogsListItem key={catalog._id} catalog={catalog.catalog} />
             ))}
         </div>
     );

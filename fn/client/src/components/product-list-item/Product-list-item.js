@@ -7,8 +7,7 @@ import './Product-list-item.css';
 
 import './Product-list-item.css'
 
-function ProductListItem({ title, description, id, images }) {
-    let randPrice = Math.floor(Math.random()*1000)
+function ProductListItem({ title, description, id, images, price, msrp }) {
     return (
         <Card key={id} className="productCart">
             <div className="image-container">
@@ -18,7 +17,8 @@ function ProductListItem({ title, description, id, images }) {
                 <Card.Title className="productName">{title}</Card.Title>
                 <Card.Text className="description">{description}</Card.Text>
                 <Card.Body className="bottomElements">
-    <Card.Text className="cardPrice">{`${randPrice} $`}</Card.Text>
+                <Card.Text className="cardPrice">{`${price} $`}</Card.Text>
+                <Card.Text className="cardPrice msrp-price">{`${msrp} $`}</Card.Text>
                     <FontAwesomeIcon icon={faHeart} className="heart" />
                     <FontAwesomeIcon icon={faShoppingCart} className="cart" />
                 </Card.Body>

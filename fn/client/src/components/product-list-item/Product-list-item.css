@@ -1,5 +1,7 @@
 
-
+  .msrp-price {
+    text-decoration: line-through;
+  }
   
   .posts {
     display: grid;
@@ -10,7 +12,8 @@
   .productCart {
     position: relative;
     grid-gap: 20px;
-    max-width: 17rem;  
+    max-width: 17rem;
+    cursor: pointer;  
   }
 
   .productCart .image-container {
@@ -47,8 +50,14 @@
   }
   .heart,
   .cart {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    margin: .3rem
   }
+
   .heart:hover {
     color: rgb(168, 21, 21);
+  }
+
+  .cart:hover {
+    color: green;
   }

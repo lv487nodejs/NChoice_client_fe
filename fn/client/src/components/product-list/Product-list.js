@@ -7,24 +7,25 @@ import ProductListButtonPages from '../product-list-button-pages';
 import Filter from '../filter';
 
 import SearchBar from '../search-bar/search-bar';
-import { productsLoaded, productsRequested } from '../../actions';
+import { productsLoaded, productsRequested, catalogLoaded } from '../../actions';
 import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
 import ProductSort from '../product-sort';
 
-const ProductList = ({ storeService, productsLoaded, productsRequested, products, loading }) => {
+const ProductList = ({ storeService, productsLoaded, productsRequested, catalogLoaded, products, loading, catalog }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
 
 
 
     useEffect(() => {
+        catalogLoaded(catalog);
         productsRequested();
-        storeService.getAllProducts().then(res => productsLoaded(res));
+        storeService.getCatalogByFilter({catalog: catalog}).then(res => productsLoaded(res));
         if(sessionStorage.getItem("postPerPage") !== null){
             setPostsPerPage(sessionStorage.getItem("postPerPage"))
         }
-    }, [productsLoaded, productsRequested, storeService]);
+    }, [productsLoaded, productsRequested, storeService, catalog, catalogLoaded]);
 
     // Get current posts
     const indexOfLastPost = currentPage * postsPerPage;
@@ -42,7 +43,9 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, products
     if (loading) {
         return <LoadingSpinner />;
     }
+
     return (
+        
         <div className="product-list-page">
             <div className="products-options">
                     <SearchBar />
@@ -69,6 +72,6 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, products
 };
 
 const mapStateToProps = ({ productsList: { products, loading } }) => ({ products, loading });
-const mapDispatchToProps = { productsLoaded, productsRequested };
+const mapDispatchToProps = { productsLoaded, productsRequested, catalogLoaded };
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));

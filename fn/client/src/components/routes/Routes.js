@@ -22,7 +22,13 @@ const Routes = () => (
                 }}
             />
             <Route path="/register" exact component={Register} />
-            <Route path="/productlist" exact component={ProductListPageContainer} />
+            <Route path={`/productlist/:name`}
+                    exact
+                    render={({ match }) => {
+                        const { name } = match.params;
+                        return <ProductListPageContainer catalog={name}/>
+                    }}
+                     />
         </Switch>
         <AppFooter />
     </Router>
