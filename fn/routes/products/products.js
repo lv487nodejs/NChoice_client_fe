@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
-
+    console.log(query);
     try {
         const filter = await getFilters(query);
         const products = await Products.find(filter)
@@ -53,39 +53,15 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
 
         const requestedCategory = req.body.category;
         let category = await Categories.findOne(requestedCategory);
-        if (!category) {
-            category = new Categories({
-                category: requestedCategory.category,
-            });
-            category = await category.save();
-            catalog.categories.push(category);
-            await catalog.save();
-        }
-
-        const condition = catalog.categories.findIndex(valueId => valueId === category.id);
-
-        if (condition < 0) {
-            catalog.categories.push(category);
-            await catalog.save();
-        }
+        if (!category)  throw { message: 'Bad category name' };
 
         const requestedBrand = req.body.brand;
         let brand = await Brands.findOne(requestedBrand);
-        if (!brand) {
-            brand = new Brands({
-                brand: requestedBrand.brand,
-            });
-            brand = await brand.save();
-        }
+        if (!brand)  throw { message: 'Bad brand name' };
 
         const requestedColor = req.body.color;
         let color = await Colors.findOne(requestedColor);
-        if (!color) {
-            color = new Colors({
-                color: requestedColor.color,
-            });
-            color = await color.save();
-        }
+        if (!color)  throw { message: 'Bad color name' };
 
         const product = new Products({
             catalog,
