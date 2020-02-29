@@ -46,6 +46,7 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
 
     return (
         <div>
+            <h2 className="catalog-top-name">{catalog} Catalog</h2>
             <div className="product-list-page">
                 <div className="products-options">
                     <SearchBar />
