@@ -11,12 +11,12 @@ const Colors = require('../../models/Color');
 
 const router = express.Router();
 
-const sizeShoes1 = chance.pick(['36', '37', '38'], 1);
-const sizeShoes2 = chance.pick(['39', '40', '41'], 1);
-const sizeShoes3 = chance.pick(['42', '43', '44', '45'], 1);
-const sizeWear1 = chance.pick(['XS', 'S'], 1);
-const sizeWear2 = chance.pick(['L', 'M'], 1);
-const sizeWear3 = chance.pick(['XL', 'XXL'], 1);
+const sizeShoesSmall = chance.pick(['36', '37', '38'], 1);
+const sizeShoesMedium = chance.pick(['39', '40', '41'], 1);
+const sizeShoesBig = chance.pick(['42', '43', '44', '45'], 1);
+const sizeWearSmall = chance.pick(['XS', 'S'], 1);
+const sizeWearMedium = chance.pick(['L', 'M'], 1);
+const sizeWearBig = chance.pick(['XL', 'XXL'], 1);
 
 router.post('/', async (req, res) => {
     try {
@@ -102,17 +102,17 @@ router.post('/', async (req, res) => {
 
                 const props = [
                     {
-                        size: requestedCategory.category === 'shoes' ? sizeShoes1 : sizeWear1,
+                        size: requestedCategory.category === 'shoes' ? sizeShoesSmall : sizeWearSmall,
                         available: chance.integer({ min: 1, max: 10 }),
                         sku: chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }),
                     },
                     {
-                        size: requestedCategory.category === 'shoes' ? sizeShoes2 : sizeWear2,
+                        size: requestedCategory.category === 'shoes' ? sizeShoesMedium : sizeWearMedium,
                         available: chance.integer({ min: 1, max: 10 }),
                         sku: chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }),
                     },
                     {
-                        size: requestedCategory.category === 'shoes' ? sizeShoes3 : sizeWear3,
+                        size: requestedCategory.category === 'shoes' ? sizeShoesBig : sizeWearBig,
                         available: chance.integer({ min: 1, max: 10 }),
                         sku: chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }),
                     },
@@ -128,19 +128,12 @@ router.post('/', async (req, res) => {
                     title: gentitle,
                     description: chance.pick([lorem, sed, vero], 1),
                     color,
-                    images: [],
+                    images: [`${product.category.category}_${product.catalog.catalog}.jpg`],
                     mrsp: mrspR,
                     price: priceR,
                     propetries: props,
                 });
 
-                if (product.catalog.catalog === 'women') {
-                    product.images = [`${product.category.category}_${product.catalog.catalog}.jpg`];
-                } else if (product.catalog.catalog === 'men') {
-                    product.images = [`${product.category.category}_${product.catalog.catalog}.jpg`];
-                } else {
-                    product.images = [`${product.category.category}_${product.catalog.catalog}.jpg`];
-                }
 
                 await product.save();
                 res.status(201).send(product);
