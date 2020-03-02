@@ -1,5 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 const tokenValidation = require('../../middleware/auth');
 
 const Users = require('../../models/User');
@@ -30,7 +32,7 @@ router.get('/:id', tokenValidation, async (req, res) => {
     }
 });
 
-router.post('/', userValidationRules(), validate, async (req, res) => {
+router.post('/register', userValidationRules(), validate, async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
 
     try {
@@ -42,11 +44,22 @@ router.post('/', userValidationRules(), validate, async (req, res) => {
             email,
             password: hashedPassword,
         });
+
+        const userName = { name: user.email };
+        const accessToken = generateAccessToken(userName);
+        const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
+
+        user.tokens = [];
+        user.tokens.push(refreshToken);
         await user.save();
-        res.status(200).send({ message: 'User saved', user });
+        res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
 });
+
+const generateAccessToken = (userName) => {
+    return jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
+}
 
 module.exports = router;
