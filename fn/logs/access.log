@@ -403,3 +403,8 @@
 ::1 - - [02/Mar/2020:09:28:26 +0000] "GET /categories HTTP/1.1" 304 - "http://localhost:3000/productlist/men" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
 ::1 - - [02/Mar/2020:09:28:26 +0000] "GET /colors HTTP/1.1" 304 - "http://localhost:3000/productlist/men" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
 ::1 - - [02/Mar/2020:09:28:26 +0000] "GET /products/?&brand=&color=&category=&catalog=men HTTP/1.1" 304 - "http://localhost:3000/productlist/men" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+::1 - - [02/Mar/2020:11:43:59 +0000] "GET /register HTTP/1.1" 404 147 "-" "PostmanRuntime/7.22.0"
+::1 - - [02/Mar/2020:11:44:07 +0000] "POST /register HTTP/1.1" 404 148 "-" "PostmanRuntime/7.22.0"
+::1 - - [02/Mar/2020:11:44:27 +0000] "POST /users/register HTTP/1.1" 500 48 "-" "PostmanRuntime/7.22.0"
+::1 - - [02/Mar/2020:11:45:45 +0000] "POST /users/register HTTP/1.1" 500 32 "-" "PostmanRuntime/7.22.0"
+::1 - - [02/Mar/2020:11:46:03 +0000] "POST /users/register HTTP/1.1" 200 704 "-" "PostmanRuntime/7.22.0"
