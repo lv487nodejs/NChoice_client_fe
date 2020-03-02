@@ -1,4 +1,4 @@
-node_modules
+fn/logs/
+node_modules/
 .vscode
 request.rest
-logs
