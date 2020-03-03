@@ -10,6 +10,7 @@ import {
     filterRemoveCategory,
     filterRemoveColor,
     filterRemoveBrand,
+
 } from './Filter-actions';
 
 export {
@@ -27,4 +28,5 @@ export {
     filterRemoveBrand,
     filterRemoveCategory,
     filterRemoveColor,
+
 };
