@@ -51,4 +51,40 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, images } = req.body;
+    try {
+        const colorToUpdate = await Colors.findById(id);
+        if (!colorToUpdate) throw { message: 'Color not found!' }
+
+        if (name) {
+            colorToUpdate.color = name;
+        }
+
+        if (Array.isArray(images) && images.length) {
+            colorToUpdate.images.push(...images);
+        }
+
+        await colorToUpdate.save();
+        res.status(200).send(colorToUpdate);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await Colors.findByIdAndDelete({ _id: id });
+        if (!response) {
+            return res.status(404).send('Color does not exist!');
+        }
+        res.status(200).send(`Color ${response.color} successfully deleted!`);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
 module.exports = router;

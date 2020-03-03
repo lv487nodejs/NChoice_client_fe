@@ -41,9 +41,6 @@ const propetriesValidationRules = () => [
     body('sku', 'sku is required')
         .notEmpty()
         .isString(),
-    body('price', 'Price is required')
-        .notEmpty()
-        .isNumeric({ min: 1, max: 10000 }),
 ];
 
 const productValidationRules = () => [
@@ -53,6 +50,9 @@ const productValidationRules = () => [
     body('description', 'description is required')
         .notEmpty()
         .isString(),
+    body('price', 'Price is required')
+        .notEmpty()
+        .isNumeric({ min: 1, max: 10000 }),
 ];
 
 const validate = (req, res, next) => {
