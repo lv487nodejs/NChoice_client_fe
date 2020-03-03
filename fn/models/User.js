@@ -16,7 +16,13 @@ const UserModel = new Schema({
     },
     password: {
         type: String,
+        minlength: 6,
         required: true,
+    },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user',
     },
     avatar: {
         type: String,

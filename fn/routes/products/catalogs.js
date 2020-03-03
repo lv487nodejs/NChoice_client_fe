@@ -5,10 +5,11 @@ const { catalogValidationRules, validate } = require('../../middleware/validator
 const router = express.Router();
 
 router.post('/', catalogValidationRules(), validate, async (req, res) => {
-    const { catalog, images } = req.body;
+    const { catalog, images, categories } = req.body;
     try {
         const newCatalog = new Catalogs({
             catalog,
+            categories,
             images,
         });
         await newCatalog.save();
@@ -53,13 +54,17 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { name, images } = req.body;
+    const { name, images, categories } = req.body;
     try {
         const catalogToUpdate = await Catalogs.findById(id);
         if (!catalogToUpdate) throw { message: 'Catalog not found!' }
 
         if (name) {
             catalogToUpdate.catalog = name;
+        }
+
+        if (Array.isArray(categories) && categories.length) {
+            catalogToUpdate.categories.push(...categories);
         }
 
         if (Array.isArray(images) && images.length) {

@@ -33,7 +33,7 @@ router.get('/:id', tokenValidation, async (req, res) => {
 });
 
 router.post('/register', userValidationRules(), validate, async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -42,6 +42,7 @@ router.post('/register', userValidationRules(), validate, async (req, res) => {
             firstName,
             lastName,
             email,
+            role,
             password: hashedPassword,
         });
 
