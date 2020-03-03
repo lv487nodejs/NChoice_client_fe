@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+
+.categories {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.categories ul {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.categories li {
+    display: inline-block;
+}
+
+.category-item a {
+    font-family: 'Oswald';
+    text-decoration: none;
+    font-size: 1rem;
+    color: black;
+    padding: 0.5rem 1rem;
+    text-transform: uppercase;
+    transition: all 0.5s;
+}
+
+.category-item:hover a {
+    color: white;
+    background-color: black;
+}

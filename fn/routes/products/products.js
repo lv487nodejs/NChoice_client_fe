@@ -12,9 +12,9 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
-
     try {
-        const filter = await getQueries(query, res);
+        const filter = await getFilters(query);
+
         const products = await Products.find(filter)
             .populate('catalog')
             .populate('category')
@@ -24,7 +24,10 @@ router.get('/', async (req, res) => {
         if (!products) {
             throw { message: 'Products not found ' };
         }
-        res.status(200).send(products);
+
+        const productsToSend = prepareProductsToSend(products);
+
+        res.status(200).send(productsToSend);
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
@@ -42,7 +45,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', productValidationRules(), validate, async (req, res) => {
-    const { title, description, images, propetries } = req.body;
+    const { title, description, images, propetries, price, mrsp } = req.body;
     try {
         const requestedCatalog = req.body.catalog;
         const catalog = await Catalogs.findOne(requestedCatalog);
@@ -50,39 +53,15 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
 
         const requestedCategory = req.body.category;
         let category = await Categories.findOne(requestedCategory);
-        if (!category) {
-            category = new Categories({
-                category: requestedCategory.category,
-            });
-            category = await category.save();
-            catalog.categories.push(category);
-            await catalog.save();
-        }
-
-        const condition = catalog.categories.findIndex(valueId => valueId === category.id);
-
-        if (condition < 0) {
-            catalog.categories.push(category);
-            await catalog.save();
-        }
+        if (!category) throw { message: 'Bad category name' };
 
         const requestedBrand = req.body.brand;
         let brand = await Brands.findOne(requestedBrand);
-        if (!brand) {
-            brand = new Brands({
-                brand: requestedBrand.brand,
-            });
-            brand = await brand.save();
-        }
+        if (!brand) throw { message: 'Bad brand name' };
 
         const requestedColor = req.body.color;
         let color = await Colors.findOne(requestedColor);
-        if (!color) {
-            color = new Colors({
-                color: requestedColor.color,
-            });
-            color = await color.save();
-        }
+        if (!color) throw { message: 'Bad color name' };
 
         const product = new Products({
             catalog,
@@ -91,6 +70,8 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
             title,
             description,
             color,
+            price,
+            mrsp,
             images,
             propetries,
         });
@@ -102,36 +83,108 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
     }
 });
 
-async function getQueries(query, res) {
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { catalogId, brandId, categoryId, colorId, images, title, description, mrsp, price, propetries } = req.body;
+
+    const productToUpdate = await Products.findById(id);
+    if (!productToUpdate) {
+        return res.status(404).send('Product not found!');
+    }
+
+    if (catalogId) productToUpdate.catalog = catalogId;
+
+    if (brandId) productToUpdate.brand = brandId;
+
+    if (categoryId) productToUpdate.category = categoryId;
+
+    if (colorId) productToUpdate.color = colorId;
+
+    if (title) productToUpdate.title = title;
+
+    if (description) productToUpdate.description = description;
+
+    if (mrsp) productToUpdate.mrsp = mrsp;
+
+    if (price) productToUpdate.price = price;
+
+    if (Array.isArray(images) && images.length) {
+        productToUpdate.images.push(...images);
+    }
+
+    if (Array.isArray(propetries) && images.propetries) {
+        productToUpdate.propetries.push(...propetries);
+    }
+
+
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await Products.findByIdAndDelete({ _id: id });
+        if (!response) {
+            return res.status(404).send('Product does not exist!');
+        }
+        res.status(200).send(`Product ${response.title} successfully deleted!`);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+const getFilters = async query => {
     const { catalog, category, color, brand } = query;
     const filter = {};
 
     try {
         if (catalog) {
-            const catalogItems = await Catalogs.find({ catalog: { $in: catalog } });
+            const catalogItems = await Catalogs.find({ catalog: { $in: catalog.split(',') } });
             catalogItems.forEach((value, i, array) => (array[i] = value.id));
             filter.catalog = { $in: catalogItems };
         }
         if (category) {
-            const categoryItems = await Categories.find({ category: { $in: category } });
+            const categoryItems = await Categories.find({ category: { $in: category.split(',') } });
             categoryItems.forEach((value, i, array) => (array[i] = value.id));
             filter.category = { $in: categoryItems };
         }
         if (brand) {
-            const brandItems = await Brands.find({ brand: { $in: brand } });
+            const brandItems = await Brands.find({ brand: { $in: brand.split(',') } });
             brandItems.forEach((value, i, array) => (array[i] = value.id));
             filter.brand = { $in: brandItems };
         }
         if (color) {
-            const colorFilter = await Colors.find({ color: { $in: color } });
+            const colorFilter = await Colors.find({ color: { $in: color.split(',') } });
             colorFilter.forEach((value, i, array) => (array[i] = value.id));
             filter.color = { $in: colorFilter };
         }
     } catch (err) {
-        res.status(500).send({ message: err.message });
+        throw { message: err.message };
     }
 
     return filter;
-}
+};
+
+const prepareProductsToSend = products => {
+
+    const productsToSend = products.map(product => {
+        const newProduct = {
+            id: product.id,
+            title: product.title,
+            images: product.images,
+            description: product.description,
+            propetries: product.propetries,
+            modified: product.modified,
+            price: product.price,
+            msrp: product.mrsp,
+        };
+
+        if (product.brand) newProduct.brand = product.brand.brand;
+        if (product.catalog) newProduct.catalog = product.catalog.catalog;
+        if (product.category) newProduct.category = product.category.category;
+        if (product.color) newProduct.color = product.color.color;
+        return newProduct;
+    });
+    return productsToSend;
+};
 
 module.exports = router;
