@@ -1,17 +1,22 @@
 import React from 'react';
 
-import { Toolbar, AppBar, Typography, IconButton } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { Toolbar, AppBar, Typography } from '@material-ui/core';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
-const NavBar = () => (
-    <AppBar>
-        <Toolbar>
-            <IconButton>
-                <MenuIcon />
-            </IconButton>
-            <Typography>Admin Panel</Typography>
-        </Toolbar>
-    </AppBar>
-);
+import { useStyles } from './Styles';
+import { PAGE_TITLE } from '../../config';
+
+const NavBar = () => {
+    const classes = useStyles();
+
+    return (
+        <AppBar className={classes.appBar}>
+            <Toolbar>
+                <Typography>{PAGE_TITLE}</Typography>
+                <AccountBoxIcon />
+            </Toolbar>
+        </AppBar>
+    );
+};
 
 export default NavBar;

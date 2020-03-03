@@ -1,19 +1,20 @@
 import React from 'react';
 
-import { Container } from '@material-ui/core';
 import NavBar from '../nav-bar';
 import NavMenu from '../nav-menu';
 import Footer from '../app-footer';
 
 import MainPageContainer from '../../container';
 
+import './App.css';
+
 const App = () => (
-    <Container>
+    <div className="app">
         <NavBar />
         <NavMenu />
         <MainPageContainer />
         <Footer />
-    </Container>
+    </div>
 );
 
 export default App;
