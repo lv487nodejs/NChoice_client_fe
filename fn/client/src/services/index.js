@@ -22,7 +22,7 @@ export default class StoreService {
         return catalogs;
     };
 
-    getProductByFilter = async filter => {
+    getProductsByFilter = async filter => {
         let queryString = 'products/?';
         const { brand, color, category, catalog } = filter;
         if (brand) {

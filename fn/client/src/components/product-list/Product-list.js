@@ -21,7 +21,7 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
     useEffect(() => {
         productsRequested();
         catalogLoaded(catalog);
-        storeService.getCatalogByFilter({ catalog: catalog }).then(res => productsLoaded(res));
+        storeService.getProductsByFilter({ catalog: catalog }).then(res => productsLoaded(res));
         if (sessionStorage.getItem("postPerPage") !== null) {
             setPostsPerPage(sessionStorage.getItem("postPerPage"))
         }

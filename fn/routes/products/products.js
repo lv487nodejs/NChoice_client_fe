@@ -12,9 +12,9 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
-    console.log(query);
     try {
         const filter = await getFilters(query);
+
         const products = await Products.find(filter)
             .populate('catalog')
             .populate('category')
@@ -53,15 +53,15 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
 
         const requestedCategory = req.body.category;
         let category = await Categories.findOne(requestedCategory);
-        if (!category)  throw { message: 'Bad category name' };
+        if (!category) throw { message: 'Bad category name' };
 
         const requestedBrand = req.body.brand;
         let brand = await Brands.findOne(requestedBrand);
-        if (!brand)  throw { message: 'Bad brand name' };
+        if (!brand) throw { message: 'Bad brand name' };
 
         const requestedColor = req.body.color;
         let color = await Colors.findOne(requestedColor);
-        if (!color)  throw { message: 'Bad color name' };
+        if (!color) throw { message: 'Bad color name' };
 
         const product = new Products({
             catalog,
@@ -116,6 +116,7 @@ const getFilters = async query => {
 };
 
 const prepareProductsToSend = products => {
+
     const productsToSend = products.map(product => {
         const newProduct = {
             id: product.id,
@@ -124,13 +125,14 @@ const prepareProductsToSend = products => {
             description: product.description,
             propetries: product.propetries,
             modified: product.modified,
-            catalog: product.catalog.catalog,
-            category: product.category.category,
-            color: product.color.color,
-            brand: product.brand.brand,
             price: product.price,
             msrp: product.mrsp,
         };
+
+        if (product.brand) newProduct.brand = product.brand.brand;
+        if (product.catalog) newProduct.catalog = product.catalog.catalog;
+        if (product.category) newProduct.category = product.category.category;
+        if (product.color) newProduct.color = product.color.color;
         return newProduct;
     });
     return productsToSend;
