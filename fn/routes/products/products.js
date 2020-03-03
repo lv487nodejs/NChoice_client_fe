@@ -45,7 +45,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', productValidationRules(), validate, async (req, res) => {
-    const { title, description, images, propetries, price, msrp } = req.body;
+    const { title, description, images, propetries, price, mrsp } = req.body;
     try {
         const requestedCatalog = req.body.catalog;
         const catalog = await Catalogs.findOne(requestedCatalog);
@@ -71,7 +71,7 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
             description,
             color,
             price,
-            msrp,
+            mrsp,
             images,
             propetries,
         });
@@ -80,6 +80,55 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
         res.status(201).send(newProduct);
     } catch (err) {
         res.status(400).send({ message: err.message });
+    }
+});
+
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { catalogId, brandId, categoryId, colorId, images, title, description, mrsp, price, propetries } = req.body;
+
+    const productToUpdate = await Products.findById(id);
+    if (!productToUpdate) {
+        return res.status(404).send('Product not found!');
+    }
+
+    if (catalogId) productToUpdate.catalog = catalogId;
+
+    if (brandId) productToUpdate.brand = brandId;
+
+    if (categoryId) productToUpdate.category = categoryId;
+
+    if (colorId) productToUpdate.color = colorId;
+
+    if (title) productToUpdate.title = title;
+
+    if (description) productToUpdate.description = description;
+
+    if (mrsp) productToUpdate.mrsp = mrsp;
+
+    if (price) productToUpdate.price = price;
+
+    if (Array.isArray(images) && images.length) {
+        productToUpdate.images.push(...images);
+    }
+
+    if (Array.isArray(propetries) && images.propetries) {
+        productToUpdate.propetries.push(...propetries);
+    }
+
+
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await Products.findByIdAndDelete({ _id: id });
+        if (!response) {
+            return res.status(404).send('Product does not exist!');
+        }
+        res.status(200).send(`Product ${response.title} successfully deleted!`);
+    } catch (err) {
+        res.status(400).send(err);
     }
 });
 
