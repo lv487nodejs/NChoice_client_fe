@@ -12,31 +12,29 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
-    let { currentpage, postsperpage } = query;
-    currentpage = currentpage || 0;
-    postsperpage = postsperpage ||0;
-    console.log(query);
-    
+    let { currentpage, postsperpage, sort } = query;
+    currentpage = currentpage || 1;
+    postsperpage = postsperpage || 15;
+
     const skip = currentpage * postsperpage;
-    console.log(currentpage, postsperpage, skip);
-    
+
     try {
         const filter = await getFilters(query);
 
         const products = await Products.find(filter)
-        .populate('catalog')
-        .populate('category')
-        .populate('color')
-        .populate('brand')
-        .skip(skip)
-        .limit(postsperpage)
+        .sort({ price: +sort })
+            .skip(+skip)
+            .limit(+postsperpage)
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
 
         if (!products) {
             throw { message: 'Products not found ' };
         }
 
         const productsToSend = prepareProductsToSend(products);
-console.log(productsToSend);
 
         res.status(200).send(productsToSend);
     } catch (err) {
