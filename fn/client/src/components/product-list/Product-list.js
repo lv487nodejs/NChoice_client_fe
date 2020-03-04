@@ -54,13 +54,10 @@ const ProductList = ({
     // Get current posts
     // const indexOfLastPost = currentPage * postsPerPage;
     // const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  
-    
-    //const currentPosts = products.slice(indexOfFirstPost, indexOfLastPost);
+
+    // const currentPosts = products.slice(indexOfFirstPost, indexOfLastPost);
     const currentPosts = products;
 
-    
-    
     // Change view
     const paginateMethod = value => setCurrentPage(value);
     const changeItemsMethod = number => {
