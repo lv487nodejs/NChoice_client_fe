@@ -12,31 +12,62 @@ import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
 import ProductSort from '../product-sort';
 
-const ProductList = ({ storeService, productsLoaded, productsRequested, catalogLoaded, products, loading, catalog }) => {
+const ProductList = ({
+    storeService,
+    productsLoaded,
+    productsRequested,
+    catalogLoaded,
+    products,
+    loading,
+    catalog,
+    brand,
+    category,
+    color,
+}) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
-
-
 
     useEffect(() => {
         productsRequested();
         catalogLoaded(catalog);
-        storeService.getProductsByFilter({ catalog: catalog }).then(res => productsLoaded(res));
-        if (sessionStorage.getItem("postPerPage") !== null) {
-            setPostsPerPage(sessionStorage.getItem("postPerPage"))
+        storeService.getProductsByFilter({ catalog, brand, category, color, currentPage, postsPerPage }).then(res => {
+            console.log(res);
+
+            productsLoaded(res);
+        });
+        if (sessionStorage.getItem('postPerPage') !== null) {
+            setPostsPerPage(sessionStorage.getItem('postPerPage'));
         }
-    }, [productsLoaded, productsRequested, storeService, catalog, catalogLoaded]);
+    }, [
+        productsLoaded,
+        productsRequested,
+        storeService,
+        catalog,
+        catalogLoaded,
+        brand,
+        category,
+        color,
+        currentPage,
+        postsPerPage,
+    ]);
 
     // Get current posts
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = products.slice(indexOfFirstPost, indexOfLastPost);
+    let currentPosts = null;
+    if (products.length <= postsPerPage) {
+        currentPosts = products;
+    }else{
+        currentPosts = products.slice(indexOfFirstPost, indexOfLastPost);
 
+    }
+    // const currentPosts = products;
+    
     // Change view
     const paginateMethod = value => setCurrentPage(value);
     const changeItemsMethod = number => {
         setPostsPerPage(number);
-        sessionStorage.setItem("postPerPage", number);
+        sessionStorage.setItem('postPerPage', number);
     };
     const changePagination = () => setCurrentPage(1);
 
@@ -73,7 +104,11 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
     );
 };
 
-const mapStateToProps = ({ productsList: { products, loading } }) => ({ products, loading });
+const mapStateToProps = ({
+    productsList: { products, loading },
+    filter: { brand, color, category },
+    catalogsList: { catalog },
+}) => ({ products, loading, brand, color, category, catalog });
 const mapDispatchToProps = { productsLoaded, productsRequested, catalogLoaded };
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));

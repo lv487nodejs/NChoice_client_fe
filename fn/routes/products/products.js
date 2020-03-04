@@ -12,20 +12,31 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
+    let { currentpage, postsperpage } = query;
+    currentpage = currentpage || 0;
+    postsperpage = postsperpage ||0;
+    console.log(query);
+    
+    const skip = currentpage * postsperpage;
+    console.log(currentpage, postsperpage, skip);
+    
     try {
         const filter = await getFilters(query);
 
         const products = await Products.find(filter)
-            .populate('catalog')
-            .populate('category')
-            .populate('color')
-            .populate('brand');
+        .populate('catalog')
+        .populate('category')
+        .populate('color')
+        .populate('brand');
+        // .skip(skip)
+        // .limit(postsperpage)
 
         if (!products) {
             throw { message: 'Products not found ' };
         }
 
         const productsToSend = prepareProductsToSend(products);
+console.log(productsToSend);
 
         res.status(200).send(productsToSend);
     } catch (err) {
@@ -52,15 +63,15 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
         if (!catalog) throw { message: 'Bad catalog name' };
 
         const requestedCategory = req.body.category;
-        let category = await Categories.findOne(requestedCategory);
+        const category = await Categories.findOne(requestedCategory);
         if (!category) throw { message: 'Bad category name' };
 
         const requestedBrand = req.body.brand;
-        let brand = await Brands.findOne(requestedBrand);
+        const brand = await Brands.findOne(requestedBrand);
         if (!brand) throw { message: 'Bad brand name' };
 
         const requestedColor = req.body.color;
-        let color = await Colors.findOne(requestedColor);
+        const color = await Colors.findOne(requestedColor);
         if (!color) throw { message: 'Bad color name' };
 
         const product = new Products({
@@ -77,6 +88,7 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
         });
 
         const newProduct = await product.save();
+
         res.status(201).send(newProduct);
     } catch (err) {
         res.status(400).send({ message: err.message });
@@ -115,8 +127,6 @@ router.put('/:id', async (req, res) => {
     if (Array.isArray(propetries) && images.propetries) {
         productToUpdate.propetries.push(...propetries);
     }
-
-
 });
 
 router.delete('/:id', async (req, res) => {
@@ -165,7 +175,6 @@ const getFilters = async query => {
 };
 
 const prepareProductsToSend = products => {
-
     const productsToSend = products.map(product => {
         const newProduct = {
             id: product.id,
