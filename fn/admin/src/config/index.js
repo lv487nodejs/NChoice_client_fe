@@ -7,3 +7,4 @@ export const MENU_CATEGORIES = [
     ['Brands', '/brands'],
     ['Users', '/users'],
 ];
+export const SERVER_URL = 'https://stark-headland-06017.herokuapp.com/';
