@@ -19,7 +19,6 @@ const AppRouter = () => (
             <Route path={pathToProducts} exact component={ProductsPageContainer} />
             <Route path={pathToUsers} exact component={UsersPageContainer} />
         </Switch>
-        <Footer />
     </Router>
 );
 
