@@ -3,12 +3,12 @@ import { useStyles } from './User-details-page-container-styles';
 
 import UserDetails from '../../components/user-details';
 
-const UserDetailsPageContainer = () => {
+const UserDetailsPageContainer = props => {
     const classes = useStyles();
-
+    const { id } = props.match.params;
     return (
         <div className={classes.content}>
-            <UserDetails />
+            <UserDetails userId={id} />
         </div>
     );
 };

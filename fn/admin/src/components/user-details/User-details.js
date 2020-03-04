@@ -1,5 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 
-const UserDetails = () => <p>User details</p>;
+import wrapWithAdminService from '../wrappers';
+import { userLoaded } from '../../actions';
 
-export default UserDetails;
+const UserDetails = props => {
+    const { adminService, user, userLoaded, userId } = props;
+
+    useEffect(() => {
+        adminService.getUserById(userId).then(res => userLoaded(res));
+    }, [adminService, userLoaded]);
+
+    return <p> {user.email} </p>;
+};
+
+const mapStateToProps = ({ userDetails: { user } }) => ({ user });
+const mapDispatchToProps = { userLoaded };
+
+export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(UserDetails));
