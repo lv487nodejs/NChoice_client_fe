@@ -4,9 +4,12 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 const UserListItem = props => {
-    const { email, lastName, firstName, role } = props;
+    const { email, id, lastName, firstName, role } = props;
+    const clickHandler = () => {
+        console.log(id);
+    };
     return (
-        <TableRow>
+        <TableRow onClick={clickHandler} id={id}>
             <TableCell align="left">{firstName}</TableCell>
             <TableCell align="left">{lastName}</TableCell>
             <TableCell align="left">{email}</TableCell>
