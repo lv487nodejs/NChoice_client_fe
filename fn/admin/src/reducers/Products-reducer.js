@@ -1,5 +1,5 @@
 const initialState = {
-    products: [{name: 1}],
+    products: [{ name: 1 }],
     product: {},
     currency: 1,
     loading: true,

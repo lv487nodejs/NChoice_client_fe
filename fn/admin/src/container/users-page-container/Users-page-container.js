@@ -9,7 +9,7 @@ const UsersPageContainer = () => {
 
     return (
         <Typography className={classes.usersPageContainer}>
-            <UserList />
+            <UserList key="user" />
         </Typography>
     );
 };

@@ -76,4 +76,14 @@ export default class AdminService {
         const colors = await this.getResource('colors');
         return colors;
     };
+
+    getAllUsers = async () => {
+        const colors = await this.getResource('users');
+        return colors;
+    };
+
+    getUserById = async id => {
+        const colors = await this.getResource(`users/${id}`);
+        return colors;
+    };
 }
