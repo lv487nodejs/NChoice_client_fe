@@ -1,12 +1,13 @@
 import React from 'react';
-
+import { withRouter } from 'react-router-dom';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 const UserListItem = props => {
     const { email, id, lastName, firstName, role } = props;
+
     const clickHandler = () => {
-        console.log(id);
+        props.history.push(`/user/${id}`);
     };
     return (
         <TableRow onClick={clickHandler} id={id}>
@@ -18,4 +19,4 @@ const UserListItem = props => {
     );
 };
 
-export default UserListItem;
+export default withRouter(UserListItem);
