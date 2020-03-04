@@ -22,6 +22,7 @@ const ProductList = ({ adminService, products, productsLoaded }) => {
 
     const tableHead = (
         <TableRow>
+            <TableCell>Actions</TableCell>
             <TableCell>Title</TableCell>
             <TableCell>Category</TableCell>
             <TableCell>Brand</TableCell>
@@ -43,7 +44,7 @@ const ProductList = ({ adminService, products, productsLoaded }) => {
 
     return (
         <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
+            <Table className={classes.table} stickyHeader aria-label="sticky table">
                 <TableHead>{tableHead}</TableHead>
                 <TableBody>{productItems}</TableBody>
             </Table>

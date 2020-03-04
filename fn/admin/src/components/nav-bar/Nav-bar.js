@@ -12,7 +12,7 @@ const NavBar = () => {
     return (
         <AppBar className={classes.appBar}>
             <Toolbar>
-                <Typography className={classes.title}>{PAGE_TITLE}</Typography>
+                <Typography variant="h5" className={classes.title}>{PAGE_TITLE}</Typography>
                 <AccountCircle />
             </Toolbar>
         </AppBar>
