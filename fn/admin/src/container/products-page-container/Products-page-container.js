@@ -6,7 +6,7 @@ const ProductsPageContainer = () => {
     const classes = useStyles();
 
     return (
-        <div className={classes.productsPageContainer}>
+        <div className={classes.content}>
             <ProductList />
         </div>
     );

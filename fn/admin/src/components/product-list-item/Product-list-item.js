@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import wrapWithAdminService from '../wrappers';
 import { productsLoaded } from '../../actions';
 
-const ProductList = ({ adminService, products, productsLoaded }) => {
+const ProductList = ({ adminService, products }) => {
     useEffect(() => {
         adminService.getAllProducts().then(res => productsLoaded(res));
-    }, [adminService, productsLoaded]);
+    }, [adminService]);
     console.log(products);
 
     return (

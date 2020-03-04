@@ -1,11 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-import { DRAWER_WIDTH } from '../../config';
-
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles(theme => ({
     appBar: {
-        width: `calc(100% - ${DRAWER_WIDTH}px)`,
-        marginLeft: DRAWER_WIDTH,
-        position: 'static',
+        position: 'fixed',
+        zIndex: theme.zIndex.drawer + 1,
     },
 }));
