@@ -1,3 +1,4 @@
-import MainPageContainer from './Main-page-container';
+import ProductsPageContainer from './products-page-container';
+import StatsPageContainer from './stats-page-container';
 
-export default MainPageContainer;
+export { ProductsPageContainer, StatsPageContainer };

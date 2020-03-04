@@ -1,20 +1,26 @@
 import React from 'react';
+import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core';
 
-import NavBar from '../nav-bar';
-import NavMenu from '../nav-menu';
-import Footer from '../app-footer';
+import { useStyles } from './App-styles';
+import AppRouter from '../app-router';
 
-import MainPageContainer from '../../container';
+const theme = createMuiTheme({
+    palette: {
+        type: 'dark',
+    },
+});
 
-import './App.css';
+const App = () => {
+    const classes = useStyles();
 
-const App = () => (
-    <div className="app">
-        <NavBar />
-        <NavMenu />
-        <MainPageContainer />
-        <Footer />
-    </div>
-);
+    return (
+        <ThemeProvider theme={theme}>
+            <div className={classes.root}>
+                <AppRouter />
+            </div>
+        </ThemeProvider>
+    );
+};
 
 export default App;
