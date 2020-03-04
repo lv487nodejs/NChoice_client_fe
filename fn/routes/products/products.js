@@ -27,9 +27,9 @@ router.get('/', async (req, res) => {
         .populate('catalog')
         .populate('category')
         .populate('color')
-        .populate('brand');
-        // .skip(skip)
-        // .limit(postsperpage)
+        .populate('brand')
+        .skip(skip)
+        .limit(postsperpage)
 
         if (!products) {
             throw { message: 'Products not found ' };
