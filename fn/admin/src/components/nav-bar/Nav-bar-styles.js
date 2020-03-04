@@ -5,4 +5,7 @@ export const useStyles = makeStyles(theme => ({
         position: 'fixed',
         zIndex: theme.zIndex.drawer + 1,
     },
+    title: {
+        flexGrow: 1,
+    },
 }));

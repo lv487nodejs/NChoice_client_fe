@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Toolbar, AppBar, Typography } from '@material-ui/core';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import { useStyles } from './Nav-bar-styles';
 import { PAGE_TITLE } from '../../config';
@@ -12,8 +12,8 @@ const NavBar = () => {
     return (
         <AppBar className={classes.appBar}>
             <Toolbar>
-                <Typography>{PAGE_TITLE}</Typography>
-                <AccountBoxIcon />
+                <Typography className={classes.title}>{PAGE_TITLE}</Typography>
+                <AccountCircle />
             </Toolbar>
         </AppBar>
     );

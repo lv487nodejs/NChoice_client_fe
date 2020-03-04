@@ -4,7 +4,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 const UserListItem = props => {
-    const { email, id, lastName, firstName, role } = props;
+    const { email, lastName, firstName, role } = props;
     return (
         <TableRow>
             <TableCell align="left">{firstName}</TableCell>

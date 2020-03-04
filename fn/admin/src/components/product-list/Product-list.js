@@ -12,39 +12,40 @@ import Paper from '@material-ui/core/Paper';
 import wrapWithAdminService from '../wrappers';
 import { productsLoaded } from '../../actions';
 import useStyles from './Product-list-style';
+import ProductListItem from '../product-list-item';
 
 const ProductList = ({ adminService, products, productsLoaded }) => {
     const classes = useStyles();
     useEffect(() => {
         adminService.getAllProducts().then(res => productsLoaded(res));
     }, [adminService, productsLoaded]);
-    console.log(products);
+
+    const tableHead = (
+        <TableRow>
+            <TableCell>Title</TableCell>
+            <TableCell>Category</TableCell>
+            <TableCell>Brand</TableCell>
+            <TableCell>Mrsp</TableCell>
+            <TableCell>Price</TableCell>
+        </TableRow>
+    );
+
+    const productItems = products.map(product => (
+        <ProductListItem
+            id={product.id}
+            category={product.category}
+            brand={product.brand}
+            title={product.title}
+            msrp={product.msrp}
+            price={product.price}
+        />
+    ));
 
     return (
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Title</TableCell>
-                        <TableCell align="right">Category</TableCell>
-                        <TableCell align="right">Brand</TableCell>
-                        <TableCell align="right">Mrsp</TableCell>
-                        <TableCell align="right">Price</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {products.map(product => (
-                        <TableRow key={product.catalog}>
-                            <TableCell component="th" scope="row">
-                                {product.title}
-                            </TableCell>
-                            <TableCell align="right">{product.category}</TableCell>
-                            <TableCell align="right">{product.brand}</TableCell>
-                            <TableCell align="right">{product.msrp}</TableCell>
-                            <TableCell align="right">{product.price}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
+                <TableHead>{tableHead}</TableHead>
+                <TableBody>{productItems}</TableBody>
             </Table>
         </TableContainer>
     );

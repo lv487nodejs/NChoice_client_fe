@@ -5,7 +5,6 @@ import { StatsPageContainer, ProductsPageContainer, UsersPageContainer } from '.
 
 import NavBar from '../nav-bar';
 import NavMenu from '../nav-menu';
-import Footer from '../app-footer';
 
 const pathToProducts = '/products';
 const pathToUsers = '/users';

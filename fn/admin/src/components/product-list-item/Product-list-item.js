@@ -1,25 +1,15 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
-import wrapWithAdminService from '../wrappers';
-import { productsLoaded } from '../../actions';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 
-const ProductList = ({ adminService, products }) => {
-    useEffect(() => {
-        adminService.getAllProducts().then(res => productsLoaded(res));
-    }, [adminService]);
-    console.log(products);
-
-    return (
-        <div>
-            {products.map(product => (
-                <p>{product.title}</p>
-            ))}
-        </div>
-    );
-};
-
-const mapStateToProps = ({ productsList: { products } }) => ({ products });
-const mapDispatchToProps = { productsLoaded };
-
-export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));
+const ProductListItem = ({ id, category, brand, title, msrp, price }) => (
+    <TableRow key={id}>
+        <TableCell>{title}</TableCell>
+        <TableCell>{category}</TableCell>
+        <TableCell>{brand}</TableCell>
+        <TableCell>{msrp}</TableCell>
+        <TableCell>{price}</TableCell>
+    </TableRow>
+);
+export default ProductListItem;
