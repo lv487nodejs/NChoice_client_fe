@@ -1,10 +1,11 @@
 import React from 'react';
-import { Container } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import { useStyles } from './Products-page-container-styles';
 
-const ProductsPageContainer = () => (
-    <Container>
-        <h2>ProductsPageContainer</h2>
-    </Container>
-);
+const ProductsPageContainer = () => {
+    const classes = useStyles();
+
+    return <Typography className={classes.productsPageContainer}>ProductsPageContainer</Typography>;
+};
 
 export default ProductsPageContainer;
