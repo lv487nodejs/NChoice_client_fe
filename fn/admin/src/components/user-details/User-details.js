@@ -3,9 +3,15 @@ import { connect } from 'react-redux';
 
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Button, InputLabel, Select } from '@material-ui/core';
 import wrapWithAdminService from '../wrappers';
-import { userLoaded, userEdit, userRequested } from '../../actions';
+import {
+    userLoaded,
+    userEdit,
+    userRequested,
+    userSave,
+    userSetRole,
+} from '../../actions';
 import LoadingBar from '../loading-bar';
 
 const useStyles = makeStyles(theme => ({
@@ -29,49 +35,109 @@ const UserDetails = ({
     userId,
     loading,
     userRequested,
+    userSave,
+    userSetRole,
 }) => {
-
     const classes = useStyles();
+
     useEffect(() => {
         userRequested();
         adminService.getUserById(userId).then(res => userLoaded(res));
-    }, [adminService, userLoaded, userId]);
+    }, [
+        adminService,
+        userLoaded,
+        userId,
+        userRequested,
+        userSave,
+        userSetRole,
+    ]);
 
-    const clickHandler = () => userEdit(disableEdit);
+    const clickEditHandler = () => userEdit(disableEdit);
+
+    const changeHandler = e => userSetRole(e.target.value);
+
+    const submitHandler = async e => {
+        e.preventDefault();
+        userEdit(disableEdit);
+        const userToSend = {
+            id: user._id,
+            firstName: e.target.firstName.value,
+            email: e.target.email.value,
+            lastName: e.target.lastName.value,
+            role: e.target.role.value,
+        };
+        const updatedUser = await adminService.putUser(userToSend);
+        console.log(updatedUser);
+        // return userSave(updatedUser);
+    };
 
     if (loading) {
         return <LoadingBar />;
     }
 
-    return (
-        <form className={classes.root}>
+    const inputFields = (
+        <div>
             <TextField
-                id="standard-read-only-input"
+                id="email"
                 label="Email"
                 defaultValue={user.email}
-                InputProps={{
-                    readOnly: disableEdit,
-                }}
+                disabled={disableEdit}
             />
             <TextField
-                id="standard-read-only-input"
+                id="lastName"
                 label="Last Name"
                 defaultValue={user.lastName}
-                InputProps={{
-                    readOnly: disableEdit,
-                }}
+                disabled={disableEdit}
             />
             <TextField
-                id="standard-read-only-input"
+                id="firstName"
                 label="First Name"
+                disabled={disableEdit}
                 defaultValue={user.firstName}
-                InputProps={{
-                    readOnly: disableEdit,
-                }}
             />
-            <Button onClick={clickHandler} variant="contained">
+            <InputLabel id="label">Role</InputLabel>
+            <Select
+                id="role"
+                labelId="label"
+                value={user.role}
+                disabled={disableEdit}
+                onChange={changeHandler}
+                inputProps={{
+                    name: 'role',
+                    id: 'role',
+                }}
+            >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </Select>
+        </div>
+    );
+
+    const buttons = (
+        <div>
+            <Button
+                type="submit"
+                color="secondary"
+                variant="contained"
+                disabled={disableEdit}
+            >
+                Save
+            </Button>
+            <Button
+                color="primary"
+                onClick={clickEditHandler}
+                variant="contained"
+                disabled={!disableEdit}
+            >
                 Edit
             </Button>
+        </div>
+    );
+
+    return (
+        <form onSubmit={submitHandler} className={classes.root}>
+            {inputFields}
+            {buttons}
         </form>
     );
 };
@@ -81,7 +147,13 @@ const mapStateToProps = ({ usersList: { user, disableEdit, loading } }) => ({
     disableEdit,
     loading,
 });
-const mapDispatchToProps = { userLoaded, userEdit, userRequested };
+const mapDispatchToProps = {
+    userLoaded,
+    userEdit,
+    userRequested,
+    userSave,
+    userSetRole,
+};
 
 export default wrapWithAdminService()(
     connect(mapStateToProps, mapDispatchToProps)(UserDetails)

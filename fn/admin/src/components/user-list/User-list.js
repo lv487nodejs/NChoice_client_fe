@@ -14,9 +14,10 @@ import { useStyles } from './User-list-styles';
 
 import { usersLoaded } from '../../actions';
 import wrapWithAdminService from '../wrappers';
+import LoadingBar from '../loading-bar';
 
 const UserList = props => {
-    const { adminService, users, usersLoaded } = props;
+    const { adminService, users, usersLoaded, loading } = props;
 
     const classes = useStyles();
 
@@ -34,6 +35,10 @@ const UserList = props => {
             role={user.role}
         />
     ));
+
+    if (loading) {
+        return <LoadingBar />;
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -53,7 +58,10 @@ const UserList = props => {
     );
 };
 
-const mapStateToProps = ({ usersList: { users } }) => ({ users });
+const mapStateToProps = ({ usersList: { users, loading } }) => ({
+    users,
+    loading,
+});
 const mapDispatchToProps = { usersLoaded };
 
 export default wrapWithAdminService()(

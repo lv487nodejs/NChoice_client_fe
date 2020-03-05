@@ -5,8 +5,29 @@ import { SERVER_URL } from '../config';
 export default class AdminService {
     getResource = async url => {
         try {
-            const catalogs = await axios.get(`${SERVER_URL}${url}`);
-            return catalogs.data;
+            const response = await axios.get(`${SERVER_URL}${url}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    postData = async (url, dataToSend) => {
+        try {
+            const response = await axios.post(
+                `${SERVER_URL}${url}`,
+                dataToSend
+            );
+            return response.data;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    putData = async (url, dataToSend) => {
+        try {
+            const response = await axios.put(`${SERVER_URL}${url}`, dataToSend);
+            return response.data;
         } catch (error) {
             console.error(error);
         }
@@ -52,12 +73,16 @@ export default class AdminService {
     };
 
     getCatalogByName = async catalogName => {
-        const catalogs = await this.getResource(`catalogs/?catalog=${catalogName}`);
+        const catalogs = await this.getResource(
+            `catalogs/?catalog=${catalogName}`
+        );
         return catalogs;
     };
 
     getCatalogCategories = async catalogName => {
-        const catalogs = await this.getResource(`catalogs/?catalog=${catalogName}`);
+        const catalogs = await this.getResource(
+            `catalogs/?catalog=${catalogName}`
+        );
         const { categories } = catalogs[0];
         return categories;
     };
@@ -85,5 +110,11 @@ export default class AdminService {
     getUserById = async id => {
         const colors = await this.getResource(`users/${id}`);
         return colors;
+    };
+
+    putUser = async user => {
+        console.log(user);
+        const res = await this.putData(`users/${user.id}`, user);
+        return res;
     };
 }

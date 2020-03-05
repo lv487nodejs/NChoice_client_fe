@@ -16,6 +16,8 @@ import {
     userEdit,
     userLoaded,
     userRequested,
+    userSave,
+    userSetRole,
 } from './Users-actions';
 
 import {
@@ -48,4 +50,6 @@ export {
     userLoaded,
     userRequested,
     userEdit,
+    userSave,
+    userSetRole,
 };

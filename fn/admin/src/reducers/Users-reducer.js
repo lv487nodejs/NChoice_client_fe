@@ -37,6 +37,19 @@ const usersList = (state = initialState, action) => {
                 ...state,
                 disableEdit: !action.payload,
             };
+        case 'USER_SAVE':
+            return {
+                ...state,
+                user: action.payload,
+            };
+
+        case 'USER_SET_ROLE':
+            return {
+                ...state,
+                user: {
+                    role: action.payload,
+                },
+            };
         default:
             return state;
     }

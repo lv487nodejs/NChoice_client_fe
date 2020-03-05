@@ -21,4 +21,22 @@ const userEdit = userEditDisable => ({
     payload: userEditDisable,
 });
 
-export { usersLoaded, usersRequested, userLoaded, userRequested, userEdit };
+const userSave = userData => ({
+    type: 'USER_SAVE',
+    payload: userData,
+});
+
+const userSetRole = role => ({
+    type: 'USER_SET_ROLE',
+    payload: role,
+});
+
+export {
+    usersLoaded,
+    usersRequested,
+    userLoaded,
+    userRequested,
+    userEdit,
+    userSave,
+    userSetRole,
+};
