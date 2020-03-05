@@ -23,10 +23,22 @@ const AppRouter = () => (
         <NavMenu />
         <Switch>
             <Route path="/" exact component={StatsPageContainer} />
-            <Route path={pathToProducts} exact component={ProductsPageContainer} />
+            <Route
+                path={pathToProducts}
+                exact
+                component={ProductsPageContainer}
+            />
             <Route path={pathToUsers} exact component={UsersPageContainer} />
-            <Route path={pathToUserDetails} exact component={UserDetailsPageContainer} />
-            <Route path={pathToProductDetails} exact component={ProductPageContainer} />
+            <Route
+                path={pathToUserDetails}
+                exact
+                component={UserDetailsPageContainer}
+            />
+            <Route
+                path={pathToProductDetails}
+                exact
+                component={ProductPageContainer}
+            />
         </Switch>
     </Router>
 );

@@ -30,7 +30,6 @@ const UserDetails = ({
     loading,
     userRequested,
 }) => {
-
     const classes = useStyles();
     useEffect(() => {
         userRequested();

@@ -8,7 +8,11 @@ const EditButton = props => {
 
     return (
         <Tooltip title="Edit">
-            <IconButton aria-label="edit" onClick={eventHandler}>
+            <IconButton
+                aria-label="edit"
+                onClick={eventHandler}
+                color="warning"
+            >
                 <EditIcon />
             </IconButton>
         </Tooltip>
@@ -16,4 +20,3 @@ const EditButton = props => {
 };
 
 export default EditButton;
-

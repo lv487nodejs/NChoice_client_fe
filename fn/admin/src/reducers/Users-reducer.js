@@ -11,6 +11,7 @@ const usersList = (state = initialState, action) => {
             return {
                 ...state,
                 loading: true,
+                disableEdit: true,
             };
 
         case 'USERS_LOADED':
@@ -18,11 +19,13 @@ const usersList = (state = initialState, action) => {
                 ...state,
                 users: action.payload,
                 loading: false,
+                disableEdit: true,
             };
         case 'USER_REQUESTED':
             return {
                 ...state,
                 loading: true,
+                disableEdit: true,
             };
 
         case 'USER_LOADED':
@@ -30,6 +33,7 @@ const usersList = (state = initialState, action) => {
                 ...state,
                 user: action.payload,
                 loading: false,
+                disableEdit: true,
             };
 
         case 'USER_EDIT':

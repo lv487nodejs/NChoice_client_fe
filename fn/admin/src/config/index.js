@@ -7,4 +7,22 @@ export const MENU_CATEGORIES = [
     ['Brands', '/brands'],
     ['Users', '/users'],
 ];
+export const productsTableHead = [
+    'Image',
+    'Catalog',
+    'Category',
+    'Brand',
+    'Title',
+    'Price',
+    'Mrsp',
+    'Actions',
+];
+export const usersTableHead = [
+    'Avatar',
+    'First Name',
+    'Last Name',
+    'Email',
+    'Role',
+    'Actions',
+];
 export const SERVER_URL = 'https://stark-headland-06017.herokuapp.com/';

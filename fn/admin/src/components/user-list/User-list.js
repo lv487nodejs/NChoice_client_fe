@@ -1,61 +1,61 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import UserListItem from '../user-list-item';
-
-import { useStyles } from './User-list-styles';
-
-import { usersLoaded } from '../../actions';
+import { withRouter } from 'react-router-dom';
 import wrapWithAdminService from '../wrappers';
 
-const UserList = props => {
-    const { adminService, users, usersLoaded } = props;
+import { usersLoaded, usersRequested } from '../../actions';
+import { usersTableHead } from '../../config';
 
-    const classes = useStyles();
+import LoadingBar from '../loading-bar';
+import TableContainerRow from '../table-container-row';
+import TableContainerGenerator from '../table-container-generator/Table-container-generator';
 
+const UserList = ({
+    adminService,
+    users,
+    usersLoaded,
+    usersRequested,
+    history,
+    loading,
+}) => {
     useEffect(() => {
+        usersRequested();
         adminService.getAllUsers().then(res => usersLoaded(res));
-    }, [adminService, usersLoaded]);
+    }, [adminService, usersRequested, usersLoaded]);
 
     const userItems = users.map(user => (
-        <UserListItem
-            key={user._id}
+        <TableContainerRow
             id={user._id}
             email={user.email}
             firstName={user.firstName}
             lastName={user.lastName}
             role={user.role}
+            editHandler={() => {
+                history.push(`/user/${user._id}`);
+            }}
+            deleteHandler={() => {
+                console.log(user._id);
+            }}
         />
     ));
 
+    if (loading) {
+        return <LoadingBar />;
+    }
     return (
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="left">First Name</TableCell>
-                        <TableCell align="left">Last Name</TableCell>
-                        <TableCell align="left">Email</TableCell>
-                        <TableCell align="left">Role</TableCell>
-                        <TableCell align="left">Actions</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>{userItems}</TableBody>
-            </Table>
-        </TableContainer>
+        <TableContainerGenerator
+            tableTitles={usersTableHead}
+            tableItems={userItems}
+        />
     );
 };
 
-const mapStateToProps = ({ usersList: { users } }) => ({ users });
-const mapDispatchToProps = { usersLoaded };
+const mapStateToProps = ({ usersList: { users, loading } }) => ({
+    users,
+    loading,
+});
+const mapDispatchToProps = { usersLoaded, usersRequested };
 
 export default wrapWithAdminService()(
-    connect(mapStateToProps, mapDispatchToProps)(UserList)
+    connect(mapStateToProps, mapDispatchToProps)(withRouter(UserList))
 );
