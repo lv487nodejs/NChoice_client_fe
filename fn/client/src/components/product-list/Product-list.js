@@ -96,8 +96,7 @@ const ProductList = ({
 const mapStateToProps = ({
     productsList: { products, loading, currentPage, postsPerPage },
     filter: { brand, color, category },
-    catalogsList: { catalog },
-}) => ({ products, loading, brand, color, category, catalog, currentPage, postsPerPage });
+}) => ({ products, loading, brand, color, category, currentPage, postsPerPage });
 
 const mapDispatchToProps = {
     productsLoaded,
