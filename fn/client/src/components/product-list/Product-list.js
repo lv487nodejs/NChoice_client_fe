@@ -35,7 +35,6 @@ const ProductList = ({
     addPostsPerPage,
     postsPerPage,
     currentPage,
-    pagesCount,
 }) => {
     useEffect(() => {
         productsRequested();
@@ -93,16 +92,16 @@ const ProductList = ({
                 </div>
                 <ProductListPosts products={products} />
             </div>
-            <ProductListPaginator pagesCount={pagesCount} paginate={paginateMethod} className="paginator" />
+            <ProductListPaginator paginate={paginateMethod} className="paginator" />
         </div>
     );
 };
 
 const mapStateToProps = ({
-    productsList: { products, loading, currentPage, postsPerPage, pagesCount },
+    productsList: { products, loading, currentPage, postsPerPage },
     filter: { brand, color, category },
     catalogsList: { catalog },
-}) => ({ products, loading, brand, color, category, catalog, currentPage, postsPerPage, pagesCount });
+}) => ({ products, loading, brand, color, category, catalog, currentPage, postsPerPage });
 
 const mapDispatchToProps = {
     productsLoaded,

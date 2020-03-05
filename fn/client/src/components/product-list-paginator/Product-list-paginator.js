@@ -1,10 +1,12 @@
 import React from 'react';
 
 import './Product-list-paginator.css';
+import { connect } from 'react-redux';
 
-export default function ProductListPaginator({  pagesCount, paginate, currentPage }) {    
-    const pageNumbers = [];  
-    
+function ProductListPaginator({ pagesCount, paginate, currentPage }) {
+    const pageNumbers = [];
+console.log(pagesCount);
+
     for (let i = 1; i <= pagesCount; i += 1) {
         pageNumbers.push(i);
     }
@@ -12,7 +14,11 @@ export default function ProductListPaginator({  pagesCount, paginate, currentPag
         <nav>
             <ul className="pagination">
                 {pageNumbers.map(number => (
-                    <li key={number} className="list-group-item-dark page-item page-link" onClick={() => paginate(number)}>
+                    <li
+                        key={number}
+                        className="list-group-item-dark page-item page-link"
+                        onClick={() => paginate(number)}
+                    >
                         {number}
                     </li>
                 ))}
@@ -20,3 +26,7 @@ export default function ProductListPaginator({  pagesCount, paginate, currentPag
         </nav>
     );
 }
+const mapStateToProps = ({ productsList:{ pagesCount }}) => {
+    return { pagesCount }
+}
+export default connect(mapStateToProps)(ProductListPaginator)
