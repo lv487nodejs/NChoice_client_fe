@@ -60,7 +60,7 @@ const Filter = ({
     useEffect(() => {
         storeService.getProductsByFilter({ catalog, brand, color, category, currentPage, postsPerPage }).then(res => {
             productsLoaded(res.products);
-            addPagesCount(res.pagescount);
+            addPagesCount(res.pagesCount);
         });
     }, [brand, category, catalog, color, storeService, productsLoaded, currentPage, postsPerPage, addPagesCount]);
 
