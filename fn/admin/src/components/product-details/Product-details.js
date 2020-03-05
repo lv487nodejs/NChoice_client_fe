@@ -9,7 +9,7 @@ const ProductDetails = props => {
     console.log(productId, 'here');
     useEffect(() => {
         adminService.getProductById(productId).then(res => productLoaded(res));
-    }, [adminService, productLoaded]);
+    }, [adminService, productLoaded, productId]);
 
     return <p> {product.title} </p>;
 };
