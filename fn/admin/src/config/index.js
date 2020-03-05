@@ -7,9 +7,6 @@ export const MENU_CATEGORIES = [
     ['Brands', '/brands'],
     ['Users', '/users'],
 ];
-<<<<<<< HEAD
-export const SERVER_URL = 'http://localhost:5000/';
-=======
 export const productsTableHead = [
     'Image',
     'Catalog',
@@ -29,4 +26,3 @@ export const usersTableHead = [
     'Actions',
 ];
 export const SERVER_URL = 'https://stark-headland-06017.herokuapp.com/';
->>>>>>> f02641d38ea9bbb64e4028067a6b4f4c28a90280
