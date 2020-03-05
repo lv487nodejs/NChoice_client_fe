@@ -27,19 +27,18 @@ const ProductList = ({
     products,
     loading,
     catalog,
-    brand,
-    category,
-    color,
     addCurrentPage,
     addPagesCount,
     addPostsPerPage,
     postsPerPage,
     currentPage,
 }) => {
+    console.log(products);
+
     useEffect(() => {
         productsRequested();
         catalogLoaded(catalog);
-        storeService.getProductsByFilter({ catalog, brand, category, color, currentPage, postsPerPage }).then(res => {
+        storeService.getProductsByFilter({ catalog, postsPerPage, currentPage }).then(res => {
             productsLoaded(res.products);
             addPagesCount(res.pagesCount);
         });
@@ -52,13 +51,10 @@ const ProductList = ({
         storeService,
         catalog,
         catalogLoaded,
-        brand,
-        category,
-        color,
-        currentPage,
-        postsPerPage,
         addPostsPerPage,
         addPagesCount,
+        postsPerPage,
+        currentPage,
     ]);
 
     // Change view

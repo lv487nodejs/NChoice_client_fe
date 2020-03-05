@@ -10,6 +10,8 @@ const instate = {
 };
 
 const filter = (state = instate, action) => {
+    console.log(state);
+    
     switch (action.type) {
         case 'FILTER_ADD_BRAND': {
             return {
