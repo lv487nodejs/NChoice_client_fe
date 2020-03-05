@@ -9,7 +9,7 @@ const UserDetails = props => {
 
     useEffect(() => {
         adminService.getUserById(userId).then(res => userLoaded(res));
-    }, [adminService, userLoaded]);
+    }, [adminService, userLoaded, userId]);
 
     return <p> {user.email} </p>;
 };
