@@ -2,7 +2,7 @@ import { categoriesLoaded, categoriesRequested } from './Categories-actions';
 import { productsLoaded, productLoaded, productsRequested, currencyChange } from './Products-actions';
 import { catalogsLoaded, catalogsRequested, catalogLoaded } from './Catalogs-actions';
 import { usersLoaded, usersRequested } from './Users-actions';
-import { userLoaded, userRequested } from './User-detail-actions';
+import { userLoaded, userRequested, userEdit } from './User-detail-actions';
 
 import {
     filterAddBrand,
@@ -33,4 +33,5 @@ export {
     usersRequested,
     userLoaded,
     userRequested,
+    userEdit,
 };

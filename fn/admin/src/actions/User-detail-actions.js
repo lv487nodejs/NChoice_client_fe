@@ -1,10 +1,15 @@
-const userLoaded = newProducts => ({
+const userLoaded = userDetails => ({
     type: 'USER_LOADED',
-    payload: newProducts,
+    payload: userDetails,
 });
 
 const userRequested = () => ({
     type: 'USER_REQUESTED',
 });
 
-export { userLoaded, userRequested };
+const userEdit = userEditDisable => ({
+    type: 'USER_EDIT',
+    payload: userEditDisable,
+});
+
+export { userLoaded, userRequested, userEdit };
