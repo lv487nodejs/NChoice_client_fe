@@ -5,7 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import wrapWithAdminService from '../wrappers';
-import { userLoaded, userEdit } from '../../actions';
+import { userLoaded, userEdit, userRequested } from '../../actions';
+import LoadingBar from '../loading-bar';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,21 +20,30 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const UserDetails = props => {
-    const {
-        adminService,
-        user,
-        userLoaded,
-        userEdit,
-        disableEdit,
-        userId,
-    } = props;
+const UserDetails = ({
+    adminService,
+    user,
+    userLoaded,
+    userEdit,
+    disableEdit,
+    userId,
+    loading,
+    userRequested,
+}) => {
+    const { email, firstName, lastName, role, date } = user;
 
     const classes = useStyles();
     useEffect(() => {
+        userRequested();
         adminService.getUserById(userId).then(res => userLoaded(res));
-    }, [adminService, userLoaded, userEdit, userId, TextField]);
+    }, [adminService, userLoaded, userEdit, userId, disableEdit]);
+
     const clickHandler = () => userEdit(disableEdit);
+
+    if (loading) {
+        return <LoadingBar />;
+    }
+
     return (
         <form className={classes.root}>
             <TextField
@@ -67,11 +77,12 @@ const UserDetails = props => {
     );
 };
 
-const mapStateToProps = ({ userDetails: { user, disableEdit } }) => ({
+const mapStateToProps = ({ usersList: { user, disableEdit, loading } }) => ({
     user,
     disableEdit,
+    loading,
 });
-const mapDispatchToProps = { userLoaded, userEdit };
+const mapDispatchToProps = { userLoaded, userEdit, userRequested };
 
 export default wrapWithAdminService()(
     connect(mapStateToProps, mapDispatchToProps)(UserDetails)
