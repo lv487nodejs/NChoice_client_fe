@@ -8,7 +8,11 @@ const DeleteButton = props => {
 
     return (
         <Tooltip title="Delete">
-            <IconButton aria-label="delete" onClick={eventHandler}>
+            <IconButton
+                aria-label="delete"
+                onClick={eventHandler}
+                color="secondary"
+            >
                 <DeleteIcon />
             </IconButton>
         </Tooltip>
@@ -16,4 +20,3 @@ const DeleteButton = props => {
 };
 
 export default DeleteButton;
-
