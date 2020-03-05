@@ -1,5 +1,5 @@
 const initialState = {
-    products: [{ name: 1 }],
+    products: [],
     product: {},
     currency: 1,
     loading: true,
@@ -9,14 +9,22 @@ const productsList = (state = initialState, action) => {
     switch (action.type) {
         case 'PRODUCTS_REQUESTED':
             return {
-                ...state,
+                products: state.products,
+                product: state.product,
                 loading: true,
             };
 
         case 'PRODUCTS_LOADED':
             return {
-                ...state,
                 products: action.payload,
+                product: state.product,
+                loading: false,
+            };
+
+        case 'PRODUCT_LOADED':
+            return {
+                products: state.products,
+                product: action.payload,
                 loading: false,
             };
 

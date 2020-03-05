@@ -1,15 +1,35 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
+import { TableCell } from '@material-ui/core';
 
-const ProductListItem = ({ id, category, brand, title, msrp, price }) => (
-    <TableRow key={id}>
-        <TableCell>{title}</TableCell>
-        <TableCell>{category}</TableCell>
-        <TableCell>{brand}</TableCell>
-        <TableCell>{msrp}</TableCell>
-        <TableCell>{price}</TableCell>
-    </TableRow>
-);
-export default ProductListItem;
+import { TableRows } from '../tables';
+
+const ProductListItem = ({
+    id,
+    category,
+    brand,
+    title,
+    msrp,
+    price,
+    history,
+}) => {
+    const productPropetries = [category, brand, title, msrp, price];
+
+    const editHandler = () => {
+        history.push(`/product/${id}`);
+    };
+
+    const productCells = productPropetries.map(propetry => (
+        <TableCell>{propetry}</TableCell>
+    ));
+
+    return (
+        <TableRows
+            id={id}
+            tableCells={productCells}
+            editHandler={editHandler}
+        />
+    );
+};
+export default withRouter(ProductListItem);
