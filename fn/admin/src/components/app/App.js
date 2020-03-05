@@ -7,13 +7,13 @@ import AppRouter from '../app-router';
 
 const theme = createMuiTheme({
     palette: {
+        warning: {
+            main: '#ffb74d',
+        },
         secondary: {
             main: '#e57373',
         },
         primary: indigo,
-        warning: {
-            main: '#ffb74d',
-        },
         type: 'dark',
     },
 });

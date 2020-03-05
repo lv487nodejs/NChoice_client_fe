@@ -29,6 +29,8 @@ import {
     filterRemoveBrand,
 } from './Filter-actions';
 
+import { themeDark, themeLight } from './Theme-actions';
+
 export {
     categoriesRequested,
     categoriesLoaded,
@@ -52,4 +54,6 @@ export {
     userEdit,
     userSave,
     userSetRole,
+    themeDark,
+    themeLight,
 };

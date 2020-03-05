@@ -11,7 +11,7 @@ const EditButton = props => {
             <IconButton
                 aria-label="edit"
                 onClick={eventHandler}
-                color="warning"
+                color="primary"
             >
                 <EditIcon />
             </IconButton>
