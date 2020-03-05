@@ -6,11 +6,11 @@ import { DeleteButton, EditButton } from '../../buttons';
 
 const TableRows = ({ id, tableCells, editHandler }) => (
     <TableRow key={id}>
+        {tableCells}
         <TableCell>
             <DeleteButton />
             <EditButton eventHandler={editHandler} />
         </TableCell>
-        {tableCells}
     </TableRow>
 );
 

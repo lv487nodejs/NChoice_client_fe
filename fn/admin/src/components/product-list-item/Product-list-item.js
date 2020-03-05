@@ -7,6 +7,7 @@ import { TableRows } from '../tables';
 
 const ProductListItem = ({
     id,
+    catalog,
     category,
     brand,
     title,
@@ -14,7 +15,7 @@ const ProductListItem = ({
     price,
     history,
 }) => {
-    const productPropetries = [category, brand, title, msrp, price];
+    const productPropetries = [catalog, category, brand, title, price, msrp];
 
     const editHandler = () => {
         history.push(`/product/${id}`);
