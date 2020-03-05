@@ -1,5 +1,7 @@
 const initialState = {
     users: [],
+    user: {},
+    disableEdit: true,
     loading: true,
 };
 
@@ -16,6 +18,24 @@ const usersList = (state = initialState, action) => {
                 ...state,
                 users: action.payload,
                 loading: false,
+            };
+        case 'USER_REQUESTED':
+            return {
+                ...state,
+                loading: true,
+            };
+
+        case 'USER_LOADED':
+            return {
+                ...state,
+                user: action.payload,
+                loading: false,
+            };
+
+        case 'USER_EDIT':
+            return {
+                ...state,
+                disableEdit: !action.payload,
             };
         default:
             return state;

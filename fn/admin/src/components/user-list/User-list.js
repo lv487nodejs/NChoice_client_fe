@@ -44,6 +44,7 @@ const UserList = props => {
                         <TableCell align="left">Last Name</TableCell>
                         <TableCell align="left">Email</TableCell>
                         <TableCell align="left">Role</TableCell>
+                        <TableCell align="left">Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>{userItems}</TableBody>
@@ -55,4 +56,6 @@ const UserList = props => {
 const mapStateToProps = ({ usersList: { users } }) => ({ users });
 const mapDispatchToProps = { usersLoaded };
 
-export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(UserList));
+export default wrapWithAdminService()(
+    connect(mapStateToProps, mapDispatchToProps)(UserList)
+);

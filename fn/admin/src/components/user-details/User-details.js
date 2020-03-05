@@ -19,14 +19,20 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const UserDetails = props => {
-    const { adminService, user, userLoaded, userEdit, disableEdit, userId } = props;
+const UserDetails = ({
+    adminService,
+    user,
+    userLoaded,
+    userEdit,
+    disableEdit,
+    userId,
+}) => {
     const { email, firstName, lastName, role, date } = user;
 
     const classes = useStyles();
     useEffect(() => {
         adminService.getUserById(userId).then(res => userLoaded(res));
-    }, [adminService, userLoaded, userEdit, userId]);
+    }, [adminService, userLoaded, userEdit, userId, disableEdit]);
 
     const clickHandler = () => userEdit(disableEdit);
     return (
@@ -62,7 +68,12 @@ const UserDetails = props => {
     );
 };
 
-const mapStateToProps = ({ userDetails: { user, disableEdit } }) => ({ user, disableEdit });
+const mapStateToProps = ({ usersList: { user, disableEdit } }) => ({
+    user,
+    disableEdit,
+});
 const mapDispatchToProps = { userLoaded, userEdit };
 
-export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(UserDetails));
+export default wrapWithAdminService()(
+    connect(mapStateToProps, mapDispatchToProps)(UserDetails)
+);
