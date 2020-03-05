@@ -46,8 +46,6 @@ export default class StoreService {
         if (sort) {
             queryString = `${queryString}&sort=${sort}`;
         }
-        console.log(queryString);
-        
         const catalogs = await this.getResource(queryString);
         return catalogs;
     };

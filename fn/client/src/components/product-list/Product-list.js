@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import './Product-list.css';
 import ProductListPosts from '../product-list-posts';
@@ -7,7 +7,14 @@ import ProductListButtonPages from '../product-list-button-pages';
 import Filter from '../filter';
 
 import SearchBar from '../search-bar/search-bar';
-import { productsLoaded, productsRequested, catalogLoaded } from '../../actions';
+import {
+    productsLoaded,
+    productsRequested,
+    catalogLoaded,
+    addCurrentPage,
+    addPagesCount,
+    addPostsPerPage,
+} from '../../actions';
 import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
 import ProductSort from '../product-sort';
@@ -23,20 +30,22 @@ const ProductList = ({
     brand,
     category,
     color,
+    addCurrentPage,
+    addPagesCount,
+    addPostsPerPage,
+    postsPerPage,
+    currentPage,
+    pagesCount,
 }) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage, setPostsPerPage] = useState(15);
-
     useEffect(() => {
         productsRequested();
         catalogLoaded(catalog);
         storeService.getProductsByFilter({ catalog, brand, category, color, currentPage, postsPerPage }).then(res => {
-            console.log(res);
-
-            productsLoaded(res);
+            productsLoaded(res.products);
+            addPagesCount(res.pagesCount);
         });
         if (sessionStorage.getItem('postPerPage') !== null) {
-            setPostsPerPage(sessionStorage.getItem('postPerPage'));
+            addPostsPerPage(sessionStorage.getItem('postPerPage'));
         }
     }, [
         productsLoaded,
@@ -49,22 +58,17 @@ const ProductList = ({
         color,
         currentPage,
         postsPerPage,
+        addPostsPerPage,
+        addPagesCount,
     ]);
 
-    // Get current posts
-    // const indexOfLastPost = currentPage * postsPerPage;
-    // const indexOfFirstPost = indexOfLastPost - postsPerPage;
-
-    // const currentPosts = products.slice(indexOfFirstPost, indexOfLastPost);
-    const currentPosts = products;
-
     // Change view
-    const paginateMethod = value => setCurrentPage(value);
+    const paginateMethod = value => addCurrentPage(value);
     const changeItemsMethod = number => {
-        setPostsPerPage(number);
+        addPostsPerPage(number);
         sessionStorage.setItem('postPerPage', number);
     };
-    const changePagination = () => setCurrentPage(1);
+    const changePagination = () => addCurrentPage(1);
 
     if (loading) {
         return <LoadingSpinner />;
@@ -76,8 +80,8 @@ const ProductList = ({
             <div className="product-list-page">
                 <div className="products-options">
                     <SearchBar />
-                    <ProductSort arrayToSort={currentPosts} />
-                    <ProductSort arrayToSort={currentPosts} />
+                    <ProductSort />
+                    <ProductSort />
                     <ProductListButtonPages
                         changeItems={changeItemsMethod}
                         changeCurrentPage={changePagination}
@@ -87,23 +91,26 @@ const ProductList = ({
                 <div className="filters">
                     <Filter />
                 </div>
-                <ProductListPosts products={currentPosts} />
+                <ProductListPosts products={products} />
             </div>
-            <ProductListPaginator
-                postPerPage={postsPerPage}
-                totalPosts={products.length}
-                paginate={paginateMethod}
-                className="paginator"
-            />
+            <ProductListPaginator pagesCount={pagesCount} paginate={paginateMethod} className="paginator" />
         </div>
     );
 };
 
 const mapStateToProps = ({
-    productsList: { products, loading },
+    productsList: { products, loading, currentPage, postsPerPage, pagesCount },
     filter: { brand, color, category },
     catalogsList: { catalog },
-}) => ({ products, loading, brand, color, category, catalog });
-const mapDispatchToProps = { productsLoaded, productsRequested, catalogLoaded };
+}) => ({ products, loading, brand, color, category, catalog, currentPage, postsPerPage, pagesCount });
+
+const mapDispatchToProps = {
+    productsLoaded,
+    productsRequested,
+    catalogLoaded,
+    addCurrentPage,
+    addPagesCount,
+    addPostsPerPage,
+};
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));

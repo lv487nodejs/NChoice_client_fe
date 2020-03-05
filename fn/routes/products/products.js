@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
         const filter = await getFilters(query);
 
         const products = await Products.find(filter)
-        .sort({ price: +sort })
+            .sort({ price: +sort })
             .skip(+skip)
             .limit(+postsperpage)
             .populate('catalog')
@@ -36,7 +36,21 @@ router.get('/', async (req, res) => {
 
         const productsToSend = prepareProductsToSend(products);
 
-        res.status(200).send(productsToSend);
+        const founProductsNumber = await Products.find(filter)
+            .count()
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
+          
+
+        if (!founProductsNumber) {
+            throw { message: 'Products not found ' };
+        }
+        
+        const pagesCount =Math.ceil(founProductsNumber / postsperpage);
+
+        res.status(200).send({ products: productsToSend, pagesCount });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
