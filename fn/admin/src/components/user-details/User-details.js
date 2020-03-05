@@ -30,13 +30,12 @@ const UserDetails = ({
     loading,
     userRequested,
 }) => {
-    const { email, firstName, lastName, role, date } = user;
 
     const classes = useStyles();
     useEffect(() => {
         userRequested();
         adminService.getUserById(userId).then(res => userLoaded(res));
-    }, [adminService, userLoaded, userEdit, userId, disableEdit]);
+    }, [adminService, userLoaded, userId]);
 
     const clickHandler = () => userEdit(disableEdit);
 
