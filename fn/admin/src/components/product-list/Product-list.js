@@ -44,7 +44,11 @@ const ProductList = ({ adminService, products, productsLoaded }) => {
 
     return (
         <TableContainer component={Paper}>
-            <Table className={classes.table} stickyHeader aria-label="sticky table">
+            <Table
+                className={classes.table}
+                stickyHeader
+                aria-label="sticky table"
+            >
                 <TableHead>{tableHead}</TableHead>
                 <TableBody>{productItems}</TableBody>
             </Table>
@@ -55,4 +59,6 @@ const ProductList = ({ adminService, products, productsLoaded }) => {
 const mapStateToProps = ({ productsList: { products } }) => ({ products });
 const mapDispatchToProps = { productsLoaded };
 
-export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));
+export default wrapWithAdminService()(
+    connect(mapStateToProps, mapDispatchToProps)(ProductList)
+);
