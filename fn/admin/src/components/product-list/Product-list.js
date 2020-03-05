@@ -10,9 +10,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import wrapWithAdminService from '../wrappers';
-import { productsLoaded } from '../../actions';
+import { productsLoaded, productsRequested } from '../../actions';
 import useStyles from './Product-list-style';
 import ProductListItem from '../product-list-item';
+import LoadingBar from '../loading-bar';
 
 const headTitles = [
     'Catalog',
@@ -24,11 +25,13 @@ const headTitles = [
     'Actions',
 ];
 
-const ProductList = ({ adminService, products, productsLoaded }) => {
+const ProductList = ({ adminService, products, productsLoaded, productsRequested, loading }) => {
     const classes = useStyles();
+
     useEffect(() => {
+        productsRequested();
         adminService.getAllProducts().then(res => productsLoaded(res));
-    }, [adminService, productsLoaded]);
+    }, [adminService, productsLoaded, productsRequested]);
 
     const tableHead = headTitles.map(title => <TableCell>{title}</TableCell>);
 
@@ -43,6 +46,10 @@ const ProductList = ({ adminService, products, productsLoaded }) => {
             price={product.price}
         />
     ));
+
+    if (loading) {
+        return <LoadingBar />;
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -60,8 +67,11 @@ const ProductList = ({ adminService, products, productsLoaded }) => {
     );
 };
 
-const mapStateToProps = ({ productsList: { products } }) => ({ products });
-const mapDispatchToProps = { productsLoaded };
+const mapStateToProps = ({ productsList: { products, loading } }) => ({
+    products,
+    loading,
+});
+const mapDispatchToProps = { productsLoaded, productsRequested };
 
 export default wrapWithAdminService()(
     connect(mapStateToProps, mapDispatchToProps)(ProductList)
