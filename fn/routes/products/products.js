@@ -14,8 +14,10 @@ router.get('/', async (req, res) => {
     const { query } = req;
     try {
         const filter = await getFilters(query);
+        const projection = await getProjection(query);
+        const sort = await getSort(query);
 
-        const products = await Products.find(filter)
+        const products = await Products.find(filter, projection).sort(sort)
             .populate('catalog')
             .populate('category')
             .populate('color')
@@ -133,7 +135,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 const getFilters = async query => {
-    const { catalog, category, color, brand } = query;
+    const { catalog, category, color, brand, searchTerm } = query;
     const filter = {};
 
     try {
@@ -157,12 +159,40 @@ const getFilters = async query => {
             colorFilter.forEach((value, i, array) => (array[i] = value.id));
             filter.color = { $in: colorFilter };
         }
+        if (isNotBlank(searchTerm)) {
+          filter.$text = { $search: searchTerm.trim() };
+        }
     } catch (err) {
         throw { message: err.message };
     }
 
     return filter;
 };
+
+const getProjection = async query => {
+  const { searchTerm } = query;
+  const projection = {};
+
+    if (isNotBlank(searchTerm)) {
+
+      // how much each product is relevant to searchTerm
+      projection.score = { $meta: "textScore" }
+    }
+    return projection;
+};
+
+const getSort = async query => {
+  const { searchTerm } = query;
+  const sort = {};
+
+  if (isNotBlank(searchTerm)) {
+
+      // sort by relevance
+      sort.score = { $meta: "textScore" };
+  }
+  return sort;
+};
+
 
 const prepareProductsToSend = products => {
 
@@ -186,5 +216,7 @@ const prepareProductsToSend = products => {
     });
     return productsToSend;
 };
+
+const isNotBlank = str => !(!str || 0 === str.trim().length);
 
 module.exports = router;

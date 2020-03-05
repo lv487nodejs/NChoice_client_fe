@@ -18,6 +18,11 @@ const ProductSchema = new Schema({
     modified: { type: Date, default: Date.now },
 });
 
+ProductSchema.index(
+  { "title": "text", "description": "text" },
+  { "weights": {  "title": 5 } }
+);
+
 const Products = mongoose.model('product', ProductSchema);
 
 module.exports = Products;
