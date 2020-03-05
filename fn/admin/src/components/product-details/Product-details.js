@@ -6,7 +6,7 @@ import { productLoaded } from '../../actions';
 
 const ProductDetails = props => {
     const { adminService, product, productLoaded, productId } = props;
-
+    console.log(productId, 'here');
     useEffect(() => {
         adminService.getProductById(productId).then(res => productLoaded(res));
     }, [adminService, productLoaded]);
@@ -17,4 +17,6 @@ const ProductDetails = props => {
 const mapStateToProps = ({ productsList: { product } }) => ({ product });
 const mapDispatchToProps = { productLoaded };
 
-export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(ProductDetails));
+export default wrapWithAdminService()(
+    connect(mapStateToProps, mapDispatchToProps)(ProductDetails)
+);

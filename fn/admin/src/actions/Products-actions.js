@@ -4,7 +4,7 @@ const productsLoaded = newProducts => ({
 });
 
 const productLoaded = newProduct => ({
-    type: 'PRODUCTS_LOADED',
+    type: 'PRODUCT_LOADED',
     payload: newProduct,
 });
 
