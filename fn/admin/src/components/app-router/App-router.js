@@ -7,6 +7,7 @@ import {
     ProductPageContainer,
     UsersPageContainer,
     UserDetailsPageContainer,
+    BrandsPageContainer,
 } from '../../container';
 
 import NavBar from '../nav-bar';
@@ -15,6 +16,7 @@ import ProductPage from '../product-page/Product-page';
 
 const pathToProducts = '/products';
 const pathToUsers = '/users';
+const pathToBrands = '/brands';
 const pathToUserDetails = '/user/:id';
 const pathToProductDetails = '/product/:id';
 
@@ -40,6 +42,7 @@ const AppRouter = () => (
                 exact
                 component={ProductPageContainer}
             />
+            <Route path={pathToBrands} exact component={BrandsPageContainer} />
             <Route path="/prodtest" exact component={ProductPage} />
         </Switch>
     </Router>

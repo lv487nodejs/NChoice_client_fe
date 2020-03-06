@@ -1,4 +1,5 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
+import { brandsLoaded, brandLoaded, brandsRequested } from './Brand-actions';
 import {
     productsLoaded,
     productLoaded,
@@ -37,6 +38,9 @@ export {
     catalogLoaded,
     catalogsLoaded,
     catalogsRequested,
+    brandsLoaded,
+    brandLoaded,
+    brandsRequested,
     productsRequested,
     productsLoaded,
     productLoaded,

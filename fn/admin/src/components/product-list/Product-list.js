@@ -9,7 +9,7 @@ import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
 
-import { productsTableHead } from '../../config';
+import { PRODUCTS_TABLE_HEAD } from '../../config';
 
 const ProductList = ({
     adminService,
@@ -47,7 +47,7 @@ const ProductList = ({
     }
     return (
         <TableContainerGenerator
-            tableTitles={productsTableHead}
+            tableTitles={PRODUCTS_TABLE_HEAD}
             tableItems={productItems}
         />
     );

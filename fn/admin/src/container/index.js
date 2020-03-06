@@ -3,6 +3,7 @@ import ProductPageContainer from './product-details-page-container';
 import StatsPageContainer from './stats-page-container';
 import UsersPageContainer from './users-page-container';
 import UserDetailsPageContainer from './user-details-page-container';
+import BrandsPageContainer from './brand-page-container'
 
 export {
     ProductsPageContainer,
@@ -10,4 +11,5 @@ export {
     StatsPageContainer,
     UsersPageContainer,
     UserDetailsPageContainer,
+    BrandsPageContainer,
 };
