@@ -10,8 +10,6 @@ const instate = {
 };
 
 const filter = (state = instate, action) => {
-    console.log(state);
-    
     switch (action.type) {
         case 'FILTER_ADD_BRAND': {
             return {
@@ -29,7 +27,6 @@ const filter = (state = instate, action) => {
             return { ...state, category: [...state.category, action.payload] };
         }
         case 'FILTER_REMOVE_CATEGORY': {
-
             return {
                 ...state,
                 category: filterRemoveItems(state.category, action.payload),
@@ -65,7 +62,7 @@ const filter = (state = instate, action) => {
             };
         }
         case 'COMPOSE_RECEIVED_DATA': {
-   const productsUnique = [
+            const productsUnique = [
                 ...new Set(state.receivedBrands, ...state.receivedCategories, ...state.receivedColors),
             ];
 

@@ -18,6 +18,8 @@ import {
     filterRemoveBrand,
 } from './Filter-actions';
 
+import { productAddedToCart, productRemovedFromCart, allproductsRemovedFromCart } from './Cart-actions';
+
 export {
     categoriesRequested,
     categoriesLoaded,
@@ -36,4 +38,7 @@ export {
     addCurrentPage,
     addPostsPerPage,
     addPagesCount,
+    productAddedToCart,
+    productRemovedFromCart,
+    allproductsRemovedFromCart,
 };

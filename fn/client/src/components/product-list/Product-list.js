@@ -5,6 +5,7 @@ import ProductListPosts from '../product-list-posts';
 import ProductListPaginator from '../product-list-paginator';
 import ProductListButtonPages from '../product-list-button-pages';
 import Filter from '../filter';
+import CartTable from '../cart-table';
 
 import SearchBar from '../search-bar/search-bar';
 import {
@@ -88,6 +89,7 @@ const ProductList = ({
                 </div>
                 <ProductListPosts products={products} />
             </div>
+            <CartTable />
             <ProductListPaginator paginate={paginateMethod} className="paginator" />
         </div>
     );
