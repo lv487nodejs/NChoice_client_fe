@@ -7,7 +7,6 @@ import LoadingBar from '../loading-bar';
 import { usersLoaded, usersRequested } from '../../actions';
 import { usersTableHead } from '../../config';
 
-import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
 
@@ -55,6 +54,7 @@ const mapStateToProps = ({ usersList: { users, loading } }) => ({
     users,
     loading,
 });
+
 const mapDispatchToProps = { usersLoaded, usersRequested };
 
 export default wrapWithAdminService()(
