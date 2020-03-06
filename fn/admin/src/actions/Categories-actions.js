@@ -7,4 +7,9 @@ const categoriesRequested = () => ({
     type: 'CATEGORIES_REQUESTED',
 });
 
-export { categoriesLoaded, categoriesRequested };
+const categoryLoaded = newCategory => ({
+    type: 'CATEGORY_LOADED',
+    payload: newCategory,
+});
+
+export { categoriesLoaded, categoriesRequested, categoryLoaded };

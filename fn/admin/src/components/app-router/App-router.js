@@ -8,6 +8,7 @@ import {
     UsersPageContainer,
     UserDetailsPageContainer,
     BrandsPageContainer,
+    CategoriesPageContainer,
 } from '../../container';
 
 import NavBar from '../nav-bar';
@@ -17,6 +18,7 @@ import ProductPage from '../product-page/Product-page';
 const pathToProducts = '/products';
 const pathToUsers = '/users';
 const pathToBrands = '/brands';
+const pathToCategories = '/categories';
 const pathToUserDetails = '/user/:id';
 const pathToProductDetails = '/product/:id';
 
@@ -43,6 +45,11 @@ const AppRouter = () => (
                 component={ProductPageContainer}
             />
             <Route path={pathToBrands} exact component={BrandsPageContainer} />
+            <Route
+                path={pathToCategories}
+                exact
+                component={CategoriesPageContainer}
+            />
             <Route path="/prodtest" exact component={ProductPage} />
         </Switch>
     </Router>

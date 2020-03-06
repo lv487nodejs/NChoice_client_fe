@@ -24,8 +24,9 @@ const ProductList = ({
         adminService.getAllProducts().then(res => productsLoaded(res));
     }, [adminService, productsLoaded, productsRequested]);
 
-    const productItems = products.map(product => (
+    const productItems = products.map((product, index) => (
         <TableContainerRow
+            key={index}
             id={product.id}
             catalog={product.catalog}
             category={product.category}

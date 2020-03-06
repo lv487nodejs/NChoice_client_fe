@@ -6,8 +6,8 @@ import { DeleteButton, EditButton } from '../buttons';
 
 const TableContainerRow = ({ id, editHandler, deleteHandler, ...rest }) => {
     const propetries = { ...rest };
-    const tableCells = Object.values(propetries).map(propetry => (
-        <TableCell>{propetry}</TableCell>
+    const tableCells = Object.values(propetries).map((propetry, index) => (
+        <TableCell key={index}>{propetry}</TableCell>
     ));
 
     return (

@@ -8,17 +8,21 @@ const categoriesList = (state = initialState, action) => {
     switch (action.type) {
         case 'CATEGORIES_REQUESTED':
             return {
-                categories: state.categories,
-                category: state.category,
+                ...state,
                 loading: true,
             };
         case 'CATEGORIES_LOADED':
             return {
+                ...state,
                 categories: action.payload,
-                category: state.category,
                 loading: false,
             };
-
+        case 'CATEGORY_LOADED':
+            return {
+                ...state,
+                category: action.payload,
+                loading: false,
+            };
         default:
             return state;
     }

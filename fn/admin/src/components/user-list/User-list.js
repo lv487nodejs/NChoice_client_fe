@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import wrapWithAdminService from '../wrappers';
+import LoadingBar from '../loading-bar';
 
 import { usersLoaded, usersRequested } from '../../actions';
 import { USERS_TABLE_HEAD } from '../../config';
 
-import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
 
@@ -23,8 +23,9 @@ const UserList = ({
         adminService.getAllUsers().then(res => usersLoaded(res));
     }, [adminService, usersRequested, usersLoaded]);
 
-    const userItems = users.map(user => (
+    const userItems = users.map((user, index) => (
         <TableContainerRow
+            key={index}
             id={user._id}
             email={user.email}
             firstName={user.firstName}
@@ -54,6 +55,7 @@ const mapStateToProps = ({ usersList: { users, loading } }) => ({
     users,
     loading,
 });
+
 const mapDispatchToProps = { usersLoaded, usersRequested };
 
 export default wrapWithAdminService()(
