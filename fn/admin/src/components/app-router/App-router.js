@@ -11,6 +11,7 @@ import {
 
 import NavBar from '../nav-bar';
 import NavMenu from '../nav-menu';
+import ProductPage from '../product-page/Product-page';
 
 const pathToProducts = '/products';
 const pathToUsers = '/users';
@@ -39,6 +40,7 @@ const AppRouter = () => (
                 exact
                 component={ProductPageContainer}
             />
+            <Route path="/prodtest" exact component={ProductPage} />
         </Switch>
     </Router>
 );
