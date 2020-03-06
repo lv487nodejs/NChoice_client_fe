@@ -15,7 +15,7 @@ import {
     addCurrentPage,
     addPagesCount,
     addPostsPerPage,
-    addSort,
+    addSort
 } from '../../actions';
 import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
@@ -30,10 +30,7 @@ const ProductList = ({
     loading,
     catalog,
     addCurrentPage,
-    addPagesCount,
     addPostsPerPage,
-    postsPerPage,
-    currentPage,
     addSort,
 }) => {
     console.log(products);
@@ -87,9 +84,8 @@ const ProductList = ({
 };
 
 const mapStateToProps = ({
-    productsList: { products, loading, currentPage, postsPerPage },
-    filter: { brand, color, category },
-}) => ({ products, loading, brand, color, category, currentPage, postsPerPage });
+    productsList: { products, loading},
+}) => ({ products, loading});
 
 const mapDispatchToProps = {
     productsLoaded,
