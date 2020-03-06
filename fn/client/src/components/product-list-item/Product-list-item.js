@@ -7,7 +7,7 @@ import './Product-list-item.css';
 import { connect } from 'react-redux';
 import { productAddedToCart } from '../../actions';
 
-function ProductListItem({ title, description, id, images, price, msrp, currency, addToCart }) {
+function ProductListItem({ title, description,key, id, images, price, msrp, currency, addToCart }) {
     const [priceWithRate, setPriceWithRate] = useState();
     const [msrpWithRate, setMsrpWithRate] = useState();
     const [currencyIcon, setCurrencyIcon] = useState();
@@ -21,7 +21,7 @@ function ProductListItem({ title, description, id, images, price, msrp, currency
 
     console.log('id', id);
     return (
-        <Card key={id} className="productCart">
+        <Card key={key} className="productCart">
             <div className="image-container">
                 <Card.Img variant="top" src={`/images/products/${images}`} className="cardsImage" />
             </div>
@@ -32,7 +32,7 @@ function ProductListItem({ title, description, id, images, price, msrp, currency
                     <Card.Text className="cardPrice">{`${priceWithRate} ${currencyIcon}`}</Card.Text>
                     <Card.Text className="cardPrice msrp-price">{`${msrpWithRate} ${currencyIcon}`}</Card.Text>
                     <FontAwesomeIcon icon={faHeart} className="heart" />
-                    <FontAwesomeIcon icon={faShoppingCart} className="cart" onClick={()=>addToCart("5e5a80b3df94e157582e02a8")} />
+                    <FontAwesomeIcon icon={faShoppingCart} className="cart" onClick={()=>addToCart(id)} />
                 </Card.Body>
             </Card.Body>
         </Card>
