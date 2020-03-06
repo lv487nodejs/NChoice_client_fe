@@ -6,6 +6,7 @@ import {
     addCurrentPage,
     addPostsPerPage,
     addPagesCount,
+    addSort,
 } from './Products-actions';
 import { catalogsLoaded, catalogsRequested, catalogLoaded } from './Catalogs-actions';
 
@@ -41,4 +42,5 @@ export {
     productAddedToCart,
     productRemovedFromCart,
     allproductsRemovedFromCart,
+    addSort,
 };

@@ -2,14 +2,9 @@ import React from 'react';
 import './Product-sort.css';
 import Button from 'react-bootstrap/Button';
 
-const sortByPrice = function(arrayToSortByPrice) {
-    console.log(arrayToSortByPrice[0].propetries[0].price);
-    return arrayToSortByPrice.sort((a, b) => a.propetries[0].price - b.propetries[0].price);
-};
-
-const ProductSort = ({ arrayToSort }) => (
-    <Button variant="dark" onClick={() => console.log(sortByPrice(arrayToSort))}>
-        Sort by price
+const ProductSort = ({ value, addSort, sortBy }) => (
+    <Button variant="dark" onClick={() => addSort(value)}>
+        Sort by price {sortBy}
     </Button>
 );
 export default ProductSort;

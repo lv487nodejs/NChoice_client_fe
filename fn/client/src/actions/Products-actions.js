@@ -14,5 +14,6 @@ const currencyChange = newCurrency => ({
 const addCurrentPage = value => ({ type: 'ADD_CURRENT_PAGE', payload: value });
 const addPostsPerPage = value => ({ type: 'ADD_POSTS_PER_PAGE', payload: value });
 const addPagesCount = value => ({ type: 'ADD_PAGES_COUNT', payload: value });
+const addSort = value =>({type:'ADD_SORT',payload:value})
 
-export { productsLoaded, productsRequested, currencyChange,addCurrentPage, addPagesCount, addPostsPerPage };
+export { productsLoaded, productsRequested, currencyChange,addCurrentPage, addPagesCount, addPostsPerPage, addSort };

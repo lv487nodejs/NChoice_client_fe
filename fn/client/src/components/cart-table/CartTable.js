@@ -5,7 +5,7 @@ import { productAddedToCart, productRemovedFromCart, allproductsRemovedFromCart 
 
 const CartTable = ({ items, total, onIncrease, onDecrease, onDelete }) => {
     console.log('carttable', items);
-    useEffect(() => {}, [items]);
+    useEffect(() => { }, [items]);
     return (
         <div className="cart-table">
             <h2>Your Order</h2>
@@ -46,7 +46,7 @@ const CartTable = ({ items, total, onIncrease, onDecrease, onDelete }) => {
         </div>
     );
 };
-const mapStateToProps = ({ productsList: {cartItems,orderTotal } }) => ({
+const mapStateToProps = ({ productsList: { cartItems, orderTotal } }) => ({
     items: cartItems,
     total: orderTotal,
 });

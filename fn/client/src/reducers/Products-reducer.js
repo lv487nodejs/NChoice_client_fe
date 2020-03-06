@@ -6,14 +6,15 @@ const initialState = {
     currentPage: 1,
     postsPerPage: 15,
     pagesCount: 1,
-    cart:{
+    sort: 0,
+    cart: {
         cartItems: [],
         orderTotal: 0,
         countTotal: 0,
     },
-    cartItems:[],
-    orderTotal:0,
-    countTotal:0,
+    cartItems: [],
+    orderTotal: 0,
+    countTotal: 0,
 };
 // =====cart
 const updateCartItems = (cartItems, item, idx) => {
@@ -27,13 +28,7 @@ const updateCartItems = (cartItems, item, idx) => {
     return [...cartItems.slice(0, idx), item, ...cartItems.slice(idx + 1)];
 };
 const updateCartItem = (product, item = {}, quantity = 1) => {
-    const {
-        id = product.id,
-        title = product.title,
-        count = 0,
-        price = +product.price,
-        total = 0,
-    } = item;
+    const { id = product.id, title = product.title, count = 0, price = +product.price, total = 0 } = item;
 
     return {
         id,
@@ -45,7 +40,7 @@ const updateCartItem = (product, item = {}, quantity = 1) => {
 };
 const updateOrder = (state, action, quantity) => {
     console.log(state);
-    
+
     const product = state.products.find(item => item.id === action.payload);
     const itemIndex = state.cartItems.findIndex(item => item.id === action.payload);
     const item = state.cartItems[itemIndex];
@@ -54,13 +49,15 @@ const updateOrder = (state, action, quantity) => {
 
     return {
         ...state,
-      cartItems:updateCartItems(state.cartItems, stNewItem, itemIndex),
+        cartItems: updateCartItems(state.cartItems, stNewItem, itemIndex),
         orderTotal: state.orderTotal + quantity * product.price,
         countTotal: state.countTotal + quantity * product.count,
     };
 };
 
 const productsList = (state = initialState, action) => {
+    console.log(state);
+    
     switch (action.type) {
         case 'PRODUCTS_REQUESTED':
             return {
@@ -100,21 +97,27 @@ const productsList = (state = initialState, action) => {
                 pagesCount: action.payload,
             };
         }
-// cart reducer
-case 'ALL_PRODUCTS_REMOVED_FROM_CART':
-    const removedItem = state.cartItems.find(item => item.id === action.payload);
-    console.log(removedItem.count);
+        // cart reducer
+        case 'ALL_PRODUCTS_REMOVED_FROM_CART':
+            const removedItem = state.cartItems.find(item => item.id === action.payload);
+            console.log(removedItem.count);
 
-    const newCartItems = state.cartItems.filter(item => item.id !== action.payload);
-    console.log(' ============================');
-    console.log(newCartItems);
+            const newCartItems = state.cartItems.filter(item => item.id !== action.payload);
+            console.log(' ============================');
+            console.log(newCartItems);
 
-    return updateOrder(state, action, -removedItem.count);
+            return updateOrder(state, action, -removedItem.count);
 
-case 'PRODUCT_ADDED_TO_CART':
-    return updateOrder(state, action, 1);
-case 'PRODUCT_REMOVED_FROM_CART':
-    return updateOrder(state, action, -1);
+        case 'PRODUCT_ADDED_TO_CART':
+            return updateOrder(state, action, 1);
+        case 'PRODUCT_REMOVED_FROM_CART':
+            return updateOrder(state, action, -1);
+        case 'ADD_SORT': {
+            return {
+                ...state,
+                sort: action.payload,
+            };
+        }
         default:
             return state;
     }

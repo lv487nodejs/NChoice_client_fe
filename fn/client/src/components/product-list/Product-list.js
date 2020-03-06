@@ -15,6 +15,7 @@ import {
     addCurrentPage,
     addPagesCount,
     addPostsPerPage,
+    addSort,
 } from '../../actions';
 import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
@@ -33,6 +34,7 @@ const ProductList = ({
     addPostsPerPage,
     postsPerPage,
     currentPage,
+    addSort,
 }) => {
     console.log(products);
 
@@ -76,8 +78,8 @@ const ProductList = ({
             <div className="product-list-page">
                 <div className="products-options">
                     <SearchBar />
-                    <ProductSort />
-                    <ProductSort />
+                    <ProductSort value={1} sortBy={'asc'} addSort={addSort} />
+                    <ProductSort value={-1} sortBy={'desc'}  addSort={addSort}/>
                     <ProductListButtonPages
                         changeItems={changeItemsMethod}
                         changeCurrentPage={changePagination}
@@ -107,6 +109,7 @@ const mapDispatchToProps = {
     addCurrentPage,
     addPagesCount,
     addPostsPerPage,
+    addSort,
 };
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));
