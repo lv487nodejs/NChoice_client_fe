@@ -1,20 +1,20 @@
-const productsLoaded = newProducts => ({
-    type: 'PRODUCTS_LOADED',
-    payload: newProducts,
-});
-
-const productLoaded = newProduct => ({
-    type: 'PRODUCT_LOADED',
+const setProduct = newProduct => ({
+    type: 'SET_PRODUCT',
     payload: newProduct,
 });
 
-const productsRequested = () => ({
-    type: 'PRODUCTS_REQUESTED',
+const setProducts = newProducts => ({
+    type: 'SET_PRODUCTS',
+    payload: newProducts,
 });
 
-const currencyChange = newCurrency => ({
-    type: 'CURRENCY_CHANGE',
-    payload: newCurrency,
+const setProductPropetries = newPropetries => ({
+    type: 'SET_PRODUCTS_PROPETRIES',
+    payload: newPropetries,
 });
 
-export { productLoaded, productsLoaded, productsRequested, currencyChange };
+const productLoadingStatus = () => ({
+    type: 'LOADING_STATUS',
+});
+
+export { setProduct, setProducts, setProductPropetries, productLoadingStatus };

@@ -1,10 +1,10 @@
 const initialState = {
-    categories: [],
-    category: {},
+    catalogs: [],
+    catalog: '',
     loading: true,
 };
 
-const categoriesState = (state = initialState, action) => {
+const catalogsState = (state = initialState, action) => {
     switch (action.type) {
         case 'LOADING_STATUS':
             return {
@@ -12,17 +12,17 @@ const categoriesState = (state = initialState, action) => {
                 loading: true,
             };
 
-        case 'SET_CATEGORY':
+        case 'GET_CATALOG':
             return {
                 ...state,
-                category: action.payload,
+                catalog: action.payload,
                 loading: false,
             };
 
-        case 'SET_CATEGORIES':
+        case 'GET_CATALOGS':
             return {
                 ...state,
-                categories: action.payload,
+                catalogs: action.payload,
                 loading: false,
             };
 
@@ -31,4 +31,4 @@ const categoriesState = (state = initialState, action) => {
     }
 };
 
-export default categoriesState;
+export default catalogsState;

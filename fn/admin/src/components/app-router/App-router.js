@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
     StatsPageContainer,
     ProductsPageContainer,
-    ProductPageContainer,
+    // ProductPageContainer,
     UsersPageContainer,
     UserDetailsPageContainer,
     BrandsPageContainer,
@@ -20,7 +20,7 @@ const pathToUsers = '/users';
 const pathToBrands = '/brands';
 const pathToCategories = '/categories';
 const pathToUserDetails = '/user/:id';
-const pathToProductDetails = '/product/:id';
+// const pathToProductDetails = '/product/:id';
 
 const AppRouter = () => (
     <Router>
@@ -39,18 +39,13 @@ const AppRouter = () => (
                 exact
                 component={UserDetailsPageContainer}
             />
-            <Route
-                path={pathToProductDetails}
-                exact
-                component={ProductPageContainer}
-            />
+            <Route path="/product/:id" exact component={ProductPage} />
             <Route path={pathToBrands} exact component={BrandsPageContainer} />
             <Route
                 path={pathToCategories}
                 exact
                 component={CategoriesPageContainer}
             />
-            <Route path="/prodtest" exact component={ProductPage} />
         </Switch>
     </Router>
 );

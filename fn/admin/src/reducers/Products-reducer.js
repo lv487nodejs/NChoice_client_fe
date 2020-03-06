@@ -1,37 +1,36 @@
 const initialState = {
     products: [],
     product: {},
-    currency: 1,
+    productPropetries: [],
     loading: true,
 };
 
-const productsList = (state = initialState, action) => {
+const productsState = (state = initialState, action) => {
     switch (action.type) {
-        case 'PRODUCTS_REQUESTED':
+        case 'LOADING_STATUS':
             return {
-                products: state.products,
-                product: state.product,
+                ...state,
                 loading: true,
             };
 
-        case 'PRODUCTS_LOADED':
+        case 'SET_PRODUCT':
             return {
-                products: action.payload,
-                product: state.product,
-                loading: false,
-            };
-
-        case 'PRODUCT_LOADED':
-            return {
-                products: state.products,
+                ...state,
                 product: action.payload,
                 loading: false,
             };
 
-        case 'CURRENCY_CHANGE':
+        case 'SET_PRODUCTS':
             return {
                 ...state,
-                currency: action.payload,
+                products: action.payload,
+                loading: false,
+            };
+
+        case 'SET_PRODUCTS_PROPETRIES':
+            return {
+                ...state,
+                productPropetries: action.payload,
                 loading: false,
             };
 
@@ -40,4 +39,4 @@ const productsList = (state = initialState, action) => {
     }
 };
 
-export default productsList;
+export default productsState;

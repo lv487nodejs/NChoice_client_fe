@@ -9,7 +9,7 @@ const TableContainerGenerator = ({ tableTitles, tableItems }) => {
     const classes = useStyles();
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer className={classes.container} component={Paper}>
             <Table
                 className={classes.table}
                 stickyHeader

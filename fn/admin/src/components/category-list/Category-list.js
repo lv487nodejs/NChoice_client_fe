@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import wrapWithAdminService from '../wrappers';
 
-import { categoriesLoaded, categoriesRequested } from '../../actions';
+import { setCategories, categoryLoadingStatus } from '../../actions';
 
 import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
@@ -14,15 +14,15 @@ import { CATEGORIES_TABLE_HEAD } from '../../config';
 const CategoryList = ({
     adminService,
     categories,
-    categoriesLoaded,
-    categoriesRequested,
+    setCategories,
+    categoryLoadingStatus,
     loading,
     history,
 }) => {
     useEffect(() => {
-        categoriesRequested();
-        adminService.getAllCategories().then(res => categoriesLoaded(res));
-    }, [adminService, categoriesLoaded, categoriesRequested]);
+        categoryLoadingStatus();
+        adminService.getAllCategories().then(res => setCategories(res));
+    }, [adminService, setCategories, categoryLoadingStatus]);
 
     const categoryItems = categories.map((category, index) => (
         <TableContainerRow
@@ -49,11 +49,11 @@ const CategoryList = ({
     );
 };
 
-const mapStateToProps = ({ categoriesList: { categories, loading } }) => ({
+const mapStateToProps = ({ categoriesState: { categories, loading } }) => ({
     categories,
     loading,
 });
-const mapDispatchToProps = { categoriesLoaded, categoriesRequested };
+const mapDispatchToProps = { setCategories, categoryLoadingStatus };
 
 export default wrapWithAdminService()(
     connect(mapStateToProps, mapDispatchToProps)(withRouter(CategoryList))

@@ -1,3 +1,3 @@
-import ProductPageStyle from './Product-page-style';
+import ProductPropetriesPage from './Product-propetries-page';
 
-export default ProductPageStyle;
+export default ProductPropetriesPage;

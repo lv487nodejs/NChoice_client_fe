@@ -13,9 +13,10 @@ export const useStyles = makeStyles(theme => ({
     img: {
         display: 'block',
         margin: 'auto',
-        maxWidth: 50,
     },
     textField: {
         margin: 10,
+        disabledColor: 'black',
     },
+    disabled: {},
 }));
