@@ -1,4 +1,8 @@
-import { categoriesLoaded, categoriesRequested } from './Categories-actions';
+import {
+    categoriesLoaded,
+    categoriesRequested,
+    categoryLoaded,
+} from './Categories-actions';
 import { brandsLoaded, brandLoaded, brandsRequested } from './Brand-actions';
 import {
     productsLoaded,
@@ -60,4 +64,5 @@ export {
     userSetRole,
     themeDark,
     themeLight,
+    categoryLoaded,
 };
