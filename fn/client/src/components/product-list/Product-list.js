@@ -41,24 +41,13 @@ const ProductList = ({
     useEffect(() => {
         productsRequested();
         catalogLoaded(catalog);
-        storeService.getProductsByFilter({ catalog, postsPerPage, currentPage }).then(res => {
+        storeService.getProductsByFilter({ catalog }).then(res => {
             productsLoaded(res.products);
-            addPagesCount(res.pagesCount);
         });
         if (sessionStorage.getItem('postPerPage') !== null) {
             addPostsPerPage(sessionStorage.getItem('postPerPage'));
         }
-    }, [
-        productsLoaded,
-        productsRequested,
-        storeService,
-        catalog,
-        catalogLoaded,
-        addPostsPerPage,
-        addPagesCount,
-        postsPerPage,
-        currentPage,
-    ]);
+    }, [productsLoaded, productsRequested, storeService, catalog, catalogLoaded, addPostsPerPage]);
 
     // Change view
     const paginateMethod = value => addCurrentPage(value);
@@ -78,8 +67,8 @@ const ProductList = ({
             <div className="product-list-page">
                 <div className="products-options">
                     <SearchBar />
-                    <ProductSort value={1} sortBy={'asc'} addSort={addSort} />
-                    <ProductSort value={-1} sortBy={'desc'}  addSort={addSort}/>
+                    <ProductSort value={1} sortBy="asc" addSort={addSort} />
+                    <ProductSort value={-1} sortBy="desc" addSort={addSort} />
                     <ProductListButtonPages
                         changeItems={changeItemsMethod}
                         changeCurrentPage={changePagination}

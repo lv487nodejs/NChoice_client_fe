@@ -7,11 +7,6 @@ const initialState = {
     postsPerPage: 15,
     pagesCount: 1,
     sort: 0,
-    cart: {
-        cartItems: [],
-        orderTotal: 0,
-        countTotal: 0,
-    },
     cartItems: [],
     orderTotal: 0,
     countTotal: 0,
@@ -57,7 +52,7 @@ const updateOrder = (state, action, quantity) => {
 
 const productsList = (state = initialState, action) => {
     console.log(state);
-    
+
     switch (action.type) {
         case 'PRODUCTS_REQUESTED':
             return {
