@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import wrapWithAdminService from '../wrappers';
+import LoadingBar from '../loading-bar';
 
 import { usersLoaded, usersRequested } from '../../actions';
 import { usersTableHead } from '../../config';
