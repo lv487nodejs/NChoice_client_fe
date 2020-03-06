@@ -23,8 +23,9 @@ const UserList = ({
         adminService.getAllUsers().then(res => usersLoaded(res));
     }, [adminService, usersRequested, usersLoaded]);
 
-    const userItems = users.map(user => (
+    const userItems = users.map((user, index) => (
         <TableContainerRow
+            key={index}
             id={user._id}
             email={user.email}
             firstName={user.firstName}

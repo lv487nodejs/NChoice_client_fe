@@ -66,8 +66,8 @@ const UserDetails = ({
             lastName: e.target.lastName.value,
             role: e.target.role.value,
         };
-        const updatedUser = await adminService.putUser(userToSend);
-        console.log(updatedUser);
+        // const updatedUser = await adminService.putUser(userToSend);
+        console.log(userToSend);
         // return userSave(updatedUser);
     };
 

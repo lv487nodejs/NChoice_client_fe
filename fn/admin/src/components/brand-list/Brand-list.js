@@ -24,8 +24,9 @@ const BrandList = ({
         adminService.getAllBrands().then(res => brandsLoaded(res));
     }, [adminService, brandsLoaded, brandsRequested]);
 
-    const brandItems = brands.map(brand => (
+    const brandItems = brands.map((brand, index) => (
         <TableContainerRow
+            key={index}
             id={brand.id}
             brand={brand.brand}
             editHandler={() => {
