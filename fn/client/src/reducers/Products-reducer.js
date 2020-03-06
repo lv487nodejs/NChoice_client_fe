@@ -20,6 +20,13 @@ const productsList = (state = initialState, action) => {
                 loading: false,
             };
 
+        case 'PRODUCT_LOADED':
+            return {
+                ...state,
+                product: action.payload,
+                loading: false,
+            };
+
         case 'CURRENCY_CHANGE':
             return {
                 ...state,

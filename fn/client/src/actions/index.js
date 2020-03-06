@@ -1,7 +1,6 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
-import { productsLoaded, productsRequested, currencyChange } from './Products-actions';
+import { productsLoaded, productLoaded, productsRequested, currencyChange } from './Products-actions';
 import { catalogsLoaded, catalogsRequested, catalogLoaded } from './Catalogs-actions';
-
 
 import {
     filterAddBrand,
@@ -10,7 +9,6 @@ import {
     filterRemoveCategory,
     filterRemoveColor,
     filterRemoveBrand,
-
 } from './Filter-actions';
 
 export {
@@ -28,5 +26,5 @@ export {
     filterRemoveBrand,
     filterRemoveCategory,
     filterRemoveColor,
-
+    productLoaded,
 };

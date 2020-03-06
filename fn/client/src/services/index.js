@@ -13,13 +13,14 @@ export default class StoreService {
     };
 
     getAllProducts = async () => {
-        const catalogs = await this.getResource('products');
-        return catalogs;
+        const products = await this.getResource('products');
+        return products;
     };
 
     getProductById = async id => {
-        const catalogs = await this.getResource(`products/${id}`);
-        return catalogs;
+        
+        const products = await this.getResource(`products/${id}`);
+        return products;
     };
 
     getProductsByFilter = async filter => {

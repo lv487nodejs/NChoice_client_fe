@@ -43,7 +43,6 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
     if (loading) {
         return <LoadingSpinner />;
     }
-
     return (
         <div>
             <h2 className="catalog-top-name">{catalog} Catalog</h2>
