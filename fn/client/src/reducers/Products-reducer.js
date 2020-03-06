@@ -12,6 +12,8 @@ const initialState = {
         countTotal: 0,
     },
     cartItems:[],
+    orderTotal:0,
+    countTotal:0,
 };
 // =====cart
 const updateCartItems = (cartItems, item, idx) => {
