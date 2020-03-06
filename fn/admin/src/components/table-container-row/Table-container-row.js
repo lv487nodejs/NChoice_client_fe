@@ -11,7 +11,7 @@ const TableContainerRow = ({ id, editHandler, deleteHandler, ...rest }) => {
     ));
 
     return (
-        <TableRow key={id}>
+        <TableRow key={id} hover>
             <TableCell>
                 <Avatar>
                     <ImageIcon />

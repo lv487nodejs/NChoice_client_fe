@@ -1,13 +1,19 @@
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+import CategoryIcon from '@material-ui/icons/Category';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
+
 export const DRAWER_WIDTH = 240;
 export const PAGE_TITLE = 'FN Admin Panel';
 export const MENU_CATEGORIES = [
-    ['Statistics', '/'],
-    ['Products', '/products'],
-    ['Categories', '/categories'],
-    ['Brands', '/brands'],
-    ['Users', '/users'],
+    ['Statistics', '/', AssessmentIcon],
+    ['Products', '/products', ShoppingBasketIcon],
+    ['Categories', '/categories', CategoryIcon],
+    ['Brands', '/brands', CollectionsBookmarkIcon],
+    ['Users', '/users', PeopleAltIcon],
 ];
-export const productsTableHead = [
+export const PRODUCTS_TABLE_HEAD = [
     'Image',
     'Catalog',
     'Category',
@@ -17,7 +23,7 @@ export const productsTableHead = [
     'Mrsp',
     'Actions',
 ];
-export const usersTableHead = [
+export const USERS_TABLE_HEAD = [
     'Avatar',
     'First Name',
     'Last Name',
@@ -25,4 +31,5 @@ export const usersTableHead = [
     'Role',
     'Actions',
 ];
+export const BRANDS_TABLE_HEAD = ['Avatar', 'Brand', 'Actions'];
 export const SERVER_URL = 'https://stark-headland-06017.herokuapp.com/';

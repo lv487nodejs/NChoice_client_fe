@@ -5,7 +5,7 @@ import wrapWithAdminService from '../wrappers';
 import LoadingBar from '../loading-bar';
 
 import { usersLoaded, usersRequested } from '../../actions';
-import { usersTableHead } from '../../config';
+import { USERS_TABLE_HEAD } from '../../config';
 
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
@@ -44,7 +44,7 @@ const UserList = ({
     }
     return (
         <TableContainerGenerator
-            tableTitles={usersTableHead}
+            tableTitles={USERS_TABLE_HEAD}
             tableItems={userItems}
         />
     );
