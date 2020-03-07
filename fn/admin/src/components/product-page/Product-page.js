@@ -1,17 +1,21 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Paper } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+
+import wrapWithAdminService from '../wrappers';
+
 import { useStyles } from './Product-page-style';
 import ProductPropetriesPage from '../product-propetries-container';
 import ProductContainerDetails from '../product-details-container/Product-container-details';
 
-import wrapWithAdminService from '../wrappers';
 import {
     setProduct,
     productLoadingStatus,
     setProductPropetries,
 } from '../../actions';
+
 import LoadingBar from '../loading-bar';
+import ProductImageContainer from '../product-image-container';
 
 const ProductPage = ({
     adminService,
@@ -59,6 +63,7 @@ const ProductPage = ({
             description={product.description}
         />
     );
+
     if (loading) {
         return <LoadingBar />;
     }
@@ -69,55 +74,7 @@ const ProductPage = ({
             className={classes.content}
             alignItems="center"
         >
-            <Grid item xs={4}>
-                <Paper elevation={3} className={classes.paper}>
-                    <Grid
-                        container
-                        direction="column"
-                        justify="center"
-                        alignItems="center"
-                    >
-                        <Grid item xs={8}>
-                            <img
-                                className={classes.img}
-                                src={photo}
-                                width="200px"
-                                alt="here is"
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            xs={6}
-                            container
-                            direction="row"
-                            justify="center"
-                            alignItems="center"
-                        >
-                            <Grid item xs>
-                                <img
-                                    className={classes.img}
-                                    src={photo}
-                                    alt="here is"
-                                />
-                            </Grid>
-                            <Grid item xs>
-                                <img
-                                    className={classes.img}
-                                    src={photo}
-                                    alt="here is"
-                                />
-                            </Grid>
-                            <Grid item xs>
-                                <img
-                                    className={classes.img}
-                                    src={photo}
-                                    alt="here is"
-                                />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Paper>
-            </Grid>
+            <ProductImageContainer imageURL={photo} />
             {productDetails}
             {productPropetriesPages}
         </Grid>
