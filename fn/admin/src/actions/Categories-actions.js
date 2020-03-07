@@ -1,15 +1,20 @@
-const categoriesLoaded = newCategories => ({
-    type: 'CATEGORIES_LOADED',
+const categoriesSet = newCategories => ({
+    type: 'CATEGORIES_SET',
     payload: newCategories,
 });
 
-const categoriesRequested = () => ({
-    type: 'CATEGORIES_REQUESTED',
+const categoriesStartLoading = () => ({
+    type: 'START_LOADING',
 });
 
-const categoryLoaded = newCategory => ({
-    type: 'CATEGORY_LOADED',
+const categorySet = newCategory => ({
+    type: 'CATEGORY_SET',
     payload: newCategory,
 });
 
-export { categoriesLoaded, categoriesRequested, categoryLoaded };
+const successSet = success => ({
+    type: 'SUCCESS_CHANGE',
+    payload: success,
+});
+
+export { categoriesSet, categoriesStartLoading, categorySet, successSet };

@@ -1,7 +1,8 @@
 import {
-    categoriesLoaded,
-    categoriesRequested,
-    categoryLoaded,
+    categoriesSet,
+    categoriesStartLoading,
+    categorySet,
+    successSet,
 } from './Categories-actions';
 import { brandsLoaded, brandLoaded, brandsRequested } from './Brand-actions';
 import {
@@ -37,8 +38,10 @@ import {
 import { themeDark, themeLight } from './Theme-actions';
 
 export {
-    categoriesRequested,
-    categoriesLoaded,
+    categoriesSet,
+    categoriesStartLoading,
+    categorySet,
+    successSet,
     catalogLoaded,
     catalogsLoaded,
     catalogsRequested,
@@ -64,5 +67,4 @@ export {
     userSetRole,
     themeDark,
     themeLight,
-    categoryLoaded,
 };
