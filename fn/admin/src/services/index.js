@@ -39,8 +39,14 @@ export default class AdminService {
     };
 
     getProductById = async id => {
-        const catalogs = await this.getResource(`products/${id}`);
-        return catalogs;
+        const product = await this.getResource(`products/${id}`);
+        return product[0];
+    };
+
+    getProductPropetries = async id => {
+        const product = await this.getResource(`products/${id}`);
+        const { propetries } = product[0];
+        return propetries;
     };
 
     getProductsByFilter = async filter => {

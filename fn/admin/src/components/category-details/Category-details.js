@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { TextField, Button } from '@material-ui/core';
 
-import { categoriesStartLoading, categorySet, successSet } from '../../actions';
+import { categoryLoadingStatus, setCategory } from '../../actions';
 import wrapWithAdminService from '../wrappers';
 import LoadingBar from '../loading-bar';
 import SnackbarItem from '../snackbar-item';
@@ -10,9 +10,8 @@ import SnackbarItem from '../snackbar-item';
 const CategoryDetails = props => {
     const {
         categoryId,
-        categorySet,
-        categoriesStartLoading,
-        successSet,
+        setCategory,
+        categoryLoadingStatus,
         success,
         category,
         loading,
@@ -20,28 +19,20 @@ const CategoryDetails = props => {
     } = props;
 
     useEffect(() => {
-        categoriesStartLoading();
-        successSet(success);
-        adminService.getCategoryById(categoryId).then(res => categorySet(res));
-    }, [
-        categorySet,
-        categoriesStartLoading,
-        categoryId,
-        adminService,
-        successSet,
-    ]);
+        categoryLoadingStatus();
+        adminService.getCategoryById(categoryId).then(res => setCategory(res));
+    }, [setCategory, categoryLoadingStatus, categoryId, adminService]);
 
     const submitHandler = async e => {
         e.preventDefault();
-        categoriesStartLoading();
+        categoryLoadingStatus();
         const categoryToSend = {
             id: category._id,
             name: e.target.categoryName.value,
         };
         const res = await adminService.putCategory(categoryToSend);
         if (res.status === 200) {
-            categorySet(res.data);
-            successSet(success);
+            setCategory(res.data);
             return <SnackbarItem open={success} />;
         }
     };
@@ -63,17 +54,13 @@ const CategoryDetails = props => {
     );
 };
 
-const mapStateToProps = ({
-    categoriesList: { category, loading, success },
-}) => ({
+const mapStateToProps = ({ categoriesState: { category, loading } }) => ({
     category,
     loading,
-    success,
 });
 const mapDispatchToProps = {
-    categoriesStartLoading,
-    categorySet,
-    successSet,
+    categoryLoadingStatus,
+    setCategory,
 };
 
 export default wrapWithAdminService()(

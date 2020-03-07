@@ -1,15 +1,15 @@
-const catalogsLoaded = newCatalogs => ({
-    type: 'CATALOGS_LOADED',
-    payload: newCatalogs,
-});
-
-const catalogsRequested = () => ({
-    type: 'CATALOGS_REQUESTED',
-});
-
-const catalogLoaded = newCatalog => ({
-    type: 'CATALOG_LOADED',
+const setCatalog = newCatalog => ({
+    type: 'SET_CATALOG',
     payload: newCatalog,
 });
 
-export { catalogsLoaded, catalogLoaded, catalogsRequested };
+const setCatalogs = newCatalogs => ({
+    type: 'SET_CATALOGS',
+    payload: newCatalogs,
+});
+
+const catalogLoadingStatus = () => ({
+    type: 'LOADING_STATUS',
+});
+
+export { setCatalog, setCatalogs, catalogLoadingStatus };

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import wrapWithAdminService from '../wrappers';
 
-import { brandsLoaded, brandsRequested } from '../../actions';
+import { setBrands, brandLoadingStatus } from '../../actions';
 
 import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
@@ -14,15 +14,15 @@ import { BRANDS_TABLE_HEAD } from '../../config';
 const BrandList = ({
     adminService,
     brands,
-    brandsLoaded,
-    brandsRequested,
+    setBrands,
+    brandLoadingStatus,
     loading,
     history,
 }) => {
     useEffect(() => {
-        brandsRequested();
-        adminService.getAllBrands().then(res => brandsLoaded(res));
-    }, [adminService, brandsLoaded, brandsRequested]);
+        brandLoadingStatus();
+        adminService.getAllBrands().then(res => setBrands(res));
+    }, [adminService, setBrands, brandLoadingStatus]);
 
     const brandItems = brands.map((brand, index) => (
         <TableContainerRow
@@ -49,11 +49,11 @@ const BrandList = ({
     );
 };
 
-const mapStateToProps = ({ brandsList: { brands, loading } }) => ({
+const mapStateToProps = ({ brandsState: { brands, loading } }) => ({
     brands,
     loading,
 });
-const mapDispatchToProps = { brandsLoaded, brandsRequested };
+const mapDispatchToProps = { setBrands, brandLoadingStatus };
 
 export default wrapWithAdminService()(
     connect(mapStateToProps, mapDispatchToProps)(withRouter(BrandList))

@@ -5,7 +5,7 @@ const initialState = {
     loading: true,
 };
 
-const usersList = (state = initialState, action) => {
+const usersState = (state = initialState, action) => {
     switch (action.type) {
         case 'USERS_REQUESTED':
             return {
@@ -59,4 +59,4 @@ const usersList = (state = initialState, action) => {
     }
 };
 
-export default usersList;
+export default usersState;

@@ -1,15 +1,15 @@
-const brandsLoaded = newBrands => ({
-    type: 'BRANDS_LOADED',
-    payload: newBrands,
-});
-
-const brandsRequested = () => ({
-    type: 'BRANDS_REQUESTED',
-});
-
-const brandLoaded = newBrand => ({
-    type: 'BRAND_LOADED',
+const setBrand = newBrand => ({
+    type: 'SET_BRAND',
     payload: newBrand,
 });
 
-export { brandsLoaded, brandLoaded, brandsRequested };
+const setBrands = newBrands => ({
+    type: 'SET_BRANDS',
+    payload: newBrands,
+});
+
+const brandLoadingStatus = () => ({
+    type: 'LOADING_STATUS',
+});
+
+export { setBrand, setBrands, brandLoadingStatus };

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
     StatsPageContainer,
     ProductsPageContainer,
-    ProductPageContainer,
+    // ProductPageContainer,
     UsersPageContainer,
     UserDetailsPageContainer,
     BrandsPageContainer,
@@ -41,11 +41,7 @@ const AppRouter = () => (
                 exact
                 component={UserDetailsPageContainer}
             />
-            <Route
-                path={pathToProductDetails}
-                exact
-                component={ProductPageContainer}
-            />
+            <Route path="/product/:id" exact component={ProductPage} />
             <Route path={pathToBrands} exact component={BrandsPageContainer} />
             <Route
                 path={pathToCategories}

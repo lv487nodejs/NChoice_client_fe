@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import wrapWithAdminService from '../wrappers';
 
-import { productsLoaded, productsRequested } from '../../actions';
+import { setProducts, productLoadingStatus } from '../../actions';
 
 import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
@@ -14,15 +14,15 @@ import { PRODUCTS_TABLE_HEAD } from '../../config';
 const ProductList = ({
     adminService,
     products,
-    productsLoaded,
-    productsRequested,
+    setProducts,
+    productLoadingStatus,
     loading,
     history,
 }) => {
     useEffect(() => {
-        productsRequested();
-        adminService.getAllProducts().then(res => productsLoaded(res));
-    }, [adminService, productsLoaded, productsRequested]);
+        productLoadingStatus();
+        adminService.getAllProducts().then(res => setProducts(res));
+    }, [adminService, setProducts, productLoadingStatus]);
 
     const productItems = products.map((product, index) => (
         <TableContainerRow
@@ -54,11 +54,11 @@ const ProductList = ({
     );
 };
 
-const mapStateToProps = ({ productsList: { products, loading } }) => ({
+const mapStateToProps = ({ productsState: { products, loading } }) => ({
     products,
     loading,
 });
-const mapDispatchToProps = { productsLoaded, productsRequested };
+const mapDispatchToProps = { setProducts, productLoadingStatus };
 
 export default wrapWithAdminService()(
     connect(mapStateToProps, mapDispatchToProps)(withRouter(ProductList))

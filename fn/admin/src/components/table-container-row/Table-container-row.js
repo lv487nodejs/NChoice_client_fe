@@ -7,18 +7,20 @@ import { DeleteButton, EditButton } from '../buttons';
 const TableContainerRow = ({ id, editHandler, deleteHandler, ...rest }) => {
     const propetries = { ...rest };
     const tableCells = Object.values(propetries).map((propetry, index) => (
-        <TableCell key={index}>{propetry}</TableCell>
+        <TableCell padding="default" key={index}>
+            {propetry}
+        </TableCell>
     ));
 
     return (
         <TableRow key={id} hover>
-            <TableCell>
+            <TableCell padding="default">
                 <Avatar>
                     <ImageIcon />
                 </Avatar>
             </TableCell>
             {tableCells}
-            <TableCell>
+            <TableCell padding="default">
                 <DeleteButton eventHandler={deleteHandler} />
                 <EditButton eventHandler={editHandler} />
             </TableCell>
