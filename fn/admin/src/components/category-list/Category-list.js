@@ -30,7 +30,7 @@ const CategoryList = ({
             id={category.id}
             category={category.category}
             editHandler={() => {
-                history.push(`/category/${category.id}`);
+                history.push(`/category/${category._id}`);
             }}
             deleteHandler={() => {
                 console.log(category.id);

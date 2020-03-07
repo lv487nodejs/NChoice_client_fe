@@ -27,13 +27,13 @@ const BrandList = ({
     const brandItems = brands.map((brand, index) => (
         <TableContainerRow
             key={index}
-            id={brand.id}
+            id={brand._id}
             brand={brand.brand}
             editHandler={() => {
-                history.push(`/brand/${brand.id}`);
+                history.push(`/brand/${brand._id}`);
             }}
             deleteHandler={() => {
-                console.log(brand.id);
+                console.log(brand._id);
             }}
         />
     ));

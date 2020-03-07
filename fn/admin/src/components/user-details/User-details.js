@@ -142,7 +142,7 @@ const UserDetails = ({
     );
 };
 
-const mapStateToProps = ({ usersList: { user, disableEdit, loading } }) => ({
+const mapStateToProps = ({ usersState: { user, disableEdit, loading } }) => ({
     user,
     disableEdit,
     loading,

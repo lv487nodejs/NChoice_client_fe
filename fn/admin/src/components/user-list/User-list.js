@@ -51,7 +51,7 @@ const UserList = ({
     );
 };
 
-const mapStateToProps = ({ usersList: { users, loading } }) => ({
+const mapStateToProps = ({ usersState: { users, loading } }) => ({
     users,
     loading,
 });

@@ -9,6 +9,7 @@ import {
     UserDetailsPageContainer,
     BrandsPageContainer,
     CategoriesPageContainer,
+    CategoryDetailsPageContainer,
 } from '../../container';
 
 import NavBar from '../nav-bar';
@@ -20,7 +21,8 @@ const pathToUsers = '/users';
 const pathToBrands = '/brands';
 const pathToCategories = '/categories';
 const pathToUserDetails = '/user/:id';
-// const pathToProductDetails = '/product/:id';
+const pathToProductDetails = '/product/:id';
+const pathToCategoriesDetails = '/category/:id';
 
 const AppRouter = () => (
     <Router>
@@ -46,6 +48,12 @@ const AppRouter = () => (
                 exact
                 component={CategoriesPageContainer}
             />
+            <Route
+                path={pathToCategoriesDetails}
+                exact
+                component={CategoryDetailsPageContainer}
+            />
+            <Route path="/prodtest" exact component={ProductPage} />
         </Switch>
     </Router>
 );

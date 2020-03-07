@@ -27,7 +27,7 @@ export default class AdminService {
     putData = async (url, dataToSend) => {
         try {
             const response = await axios.put(`${SERVER_URL}${url}`, dataToSend);
-            return response.data;
+            return response;
         } catch (error) {
             console.error(error);
         }
@@ -103,6 +103,16 @@ export default class AdminService {
         return categories;
     };
 
+    getCategoryById = async id => {
+        const category = await this.getResource(`categories/${id}`);
+        return category;
+    };
+
+    putCategory = async category => {
+        const res = await this.putData(`categories/${category.id}`, category);
+        return res;
+    };
+
     getAllColors = async () => {
         const colors = await this.getResource('colors');
         return colors;
@@ -119,7 +129,6 @@ export default class AdminService {
     };
 
     putUser = async user => {
-        console.log(user);
         const res = await this.putData(`users/${user.id}`, user);
         return res;
     };
