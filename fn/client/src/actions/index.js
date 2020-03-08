@@ -29,5 +29,5 @@ export {
     filterRemoveCategory,
     filterRemoveColor,
     addCart,
-  getNumbers
+    getNumbers
 };

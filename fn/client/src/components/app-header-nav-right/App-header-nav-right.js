@@ -34,7 +34,7 @@ const AppHeaderNavRight = (props) => {
         <li key="7">
           <Link to="/cart">
             <FontAwesomeIcon icon={faShoppingBasket}/>
-            <span>{props.cartProps.cartNumbers}</span>
+            <span> <sup>{props.cartProps.cartNumbers}</sup> </span>
           </Link>
         </li>
       </ul>
