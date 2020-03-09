@@ -12,7 +12,7 @@ import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
 import ProductSort from '../product-sort';
 
-const ProductList = ({ storeService, productsLoaded, productsRequested, catalogLoaded, products, loading, catalog }) => {
+const ProductList = ({ storeService, productsLoaded, productsRequested, catalogLoaded, products, loading, catalog, currency }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
 
@@ -21,7 +21,8 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
     useEffect(() => {
         productsRequested();
         catalogLoaded(catalog);
-        storeService.getProductsByFilter({ catalog: catalog }).then(res => productsLoaded(res));
+        storeService.getProductsByFilter({ catalog: catalog })
+            .then(res => productsLoaded(res));
         if (sessionStorage.getItem("postPerPage") !== null) {
             setPostsPerPage(sessionStorage.getItem("postPerPage"))
         }
@@ -73,7 +74,7 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
     );
 };
 
-const mapStateToProps = ({ productsList: { products, loading } }) => ({ products, loading });
+const mapStateToProps = ({ productsList: { products, loading, currency } }) => ({ products, loading, currency });
 const mapDispatchToProps = { productsLoaded, productsRequested, catalogLoaded };
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));
