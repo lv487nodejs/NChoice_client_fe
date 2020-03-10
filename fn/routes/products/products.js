@@ -12,10 +12,16 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
+    let { currentpage, postsperpage } = query;
+    currentpage = +currentpage || 1;
+    postsperpage = +postsperpage || 15;
+    const skip = currentpage * postsperpage;
     try {
         const filter = await getFilters(query);
 
         const products = await Products.find(filter)
+            .skip(skip)
+            .limit(postsperpage)
             .populate('catalog')
             .populate('category')
             .populate('color')
@@ -26,8 +32,19 @@ router.get('/', async (req, res) => {
         }
 
         const productsToSend = prepareProductsToSend(products);
+        let foundProductsNumber = await Products.count(filter)
+            .skip(skip)
+            .limit(postsperpage)
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
 
-        res.status(200).send(productsToSend);
+        if (!foundProductsNumber) {
+            throw { message: 'Products not found ' };
+        }
+        foundProductsNumber = Math.ceil(foundProductsNumber / postsperpage);
+        res.status(200).send({ products: productsToSend, pagesCount: foundProductsNumber });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
@@ -52,15 +69,15 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
         if (!catalog) throw { message: 'Bad catalog name' };
 
         const requestedCategory = req.body.category;
-        let category = await Categories.findOne(requestedCategory);
+        const category = await Categories.findOne(requestedCategory);
         if (!category) throw { message: 'Bad category name' };
 
         const requestedBrand = req.body.brand;
-        let brand = await Brands.findOne(requestedBrand);
+        const brand = await Brands.findOne(requestedBrand);
         if (!brand) throw { message: 'Bad brand name' };
 
         const requestedColor = req.body.color;
-        let color = await Colors.findOne(requestedColor);
+        const color = await Colors.findOne(requestedColor);
         if (!color) throw { message: 'Bad color name' };
 
         const product = new Products({
@@ -115,8 +132,6 @@ router.put('/:id', async (req, res) => {
     if (Array.isArray(propetries) && images.propetries) {
         productToUpdate.propetries.push(...propetries);
     }
-
-
 });
 
 router.delete('/:id', async (req, res) => {
@@ -165,7 +180,6 @@ const getFilters = async query => {
 };
 
 const prepareProductsToSend = products => {
-
     const productsToSend = products.map(product => {
         const newProduct = {
             id: product.id,

@@ -24,7 +24,7 @@ export default class StoreService {
 
     getProductsByFilter = async filter => {
         let queryString = 'products/?';
-        const { brand, color, category, catalog } = filter;
+        const { brand, color, category, catalog, currentPage, postsPerPage } = filter;
         if (brand) {
             queryString = `${queryString}&brand=${brand}`;
         }
@@ -36,6 +36,12 @@ export default class StoreService {
         }
         if (catalog) {
             queryString = `${queryString}&catalog=${catalog}`;
+        }
+        if (currentPage) {
+            queryString = `${queryString}&currentpage=${currentPage}`;
+        }
+        if (postsPerPage) {
+            queryString = `${queryString}&postsperpage=${postsPerPage}`;
         }
         const catalogs = await this.getResource(queryString);
         return catalogs;
