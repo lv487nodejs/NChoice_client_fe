@@ -15,14 +15,14 @@ import {
 import NavBar from '../nav-bar';
 import NavMenu from '../nav-menu';
 import ProductPage from '../product-page/Product-page';
-import AddProductPage from '../add-product-page/Add-product-page';
+import ProductAddPage from '../product-add-page';
 
 const pathToProducts = '/products';
 const pathToUsers = '/users';
 const pathToBrands = '/brands';
 const pathToCategories = '/categories';
 const pathToUserDetails = '/user/:id';
-const pathToProductDetails = '/product/:id';
+// const pathToProductDetails = '/product/:id';
 const pathToCategoriesDetails = '/category/:id';
 
 const AppRouter = () => (
@@ -38,7 +38,7 @@ const AppRouter = () => (
             <Route path={pathToBrands} exact component={BrandsPageContainer} />
             <Route path={pathToCategories} exact component={CategoriesPageContainer} />
             <Route path={pathToCategoriesDetails} exact component={CategoryDetailsPageContainer} />
-            <Route path="/addproduct" exact component={AddProductPage} />
+            <Route path="/addproduct" exact component={ProductAddPage} />
             <Route path="/prodtest" exact component={ProductPage} />
         </Switch>
     </Router>

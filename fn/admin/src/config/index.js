@@ -13,25 +13,32 @@ export const MENU_CATEGORIES = [
     ['Brands', '/brands', CollectionsBookmarkIcon],
     ['Users', '/users', PeopleAltIcon],
 ];
-export const PRODUCTS_TABLE_HEAD = [
-    'Image',
-    'Catalog',
-    'Category',
-    'Brand',
-    'Title',
-    'Price',
-    'Mrsp',
-    'Actions',
-];
-export const USERS_TABLE_HEAD = [
-    'Avatar',
-    'First Name',
-    'Last Name',
-    'Email',
-    'Role',
-    'Actions',
-];
+export const PRODUCTS_TABLE_HEAD = ['Image', 'Catalog', 'Category', 'Brand', 'Title', 'Price', 'Mrsp', 'Actions'];
+export const USERS_TABLE_HEAD = ['Avatar', 'First Name', 'Last Name', 'Email', 'Role', 'Actions'];
 export const BRANDS_TABLE_HEAD = ['Avatar', 'Brand', 'Actions'];
 export const CATEGORIES_TABLE_HEAD = ['Avatar', 'Category', 'Actions'];
 
 export const SERVER_URL = 'https://stark-headland-06017.herokuapp.com/';
+
+export const NEW_PRODUCT_MODEL = {
+    catalog: '',
+    category: '',
+    brand: '',
+    color: '',
+    title: '',
+    description: '',
+    msrp: 0,
+    price: 0,
+    images: [],
+    propetries: [],
+};
+
+export const NEW_PRODUCT_PROPETRIES = {
+    size: '',
+    available: 0,
+    sku: '',
+};
+
+export const NEW_PRODUCT_DESCR = ['title', 'description', 'msrp', 'price'];
+export const SIZES_SHOES = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
+export const SIZES_CLOTHES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
