@@ -2,8 +2,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     tableNave: {
-        display: 'grid',
-        
+        marginBottom: theme.spacing(10),
     },
     search: {
         position: 'relative',

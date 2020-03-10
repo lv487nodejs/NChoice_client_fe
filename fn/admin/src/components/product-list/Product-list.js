@@ -11,14 +11,7 @@ import TableContainerGenerator from '../table-container-generator/Table-containe
 
 import { PRODUCTS_TABLE_HEAD } from '../../config';
 
-const ProductList = ({
-    adminService,
-    products,
-    setProducts,
-    productLoadingStatus,
-    loading,
-    history,
-}) => {
+const ProductList = ({ adminService, products, setProducts, productLoadingStatus, loading, history }) => {
     useEffect(() => {
         productLoadingStatus();
         adminService.getAllProducts().then(res => setProducts(res));
@@ -46,12 +39,7 @@ const ProductList = ({
     if (loading) {
         return <LoadingBar />;
     }
-    return (
-        <TableContainerGenerator
-            tableTitles={PRODUCTS_TABLE_HEAD}
-            tableItems={productItems}
-        />
-    );
+    return <TableContainerGenerator tableTitles={PRODUCTS_TABLE_HEAD} tableItems={productItems} />;
 };
 
 const mapStateToProps = ({ productsState: { products, loading } }) => ({
@@ -60,6 +48,4 @@ const mapStateToProps = ({ productsState: { products, loading } }) => ({
 });
 const mapDispatchToProps = { setProducts, productLoadingStatus };
 
-export default wrapWithAdminService()(
-    connect(mapStateToProps, mapDispatchToProps)(withRouter(ProductList))
-);
+export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(withRouter(ProductList)));

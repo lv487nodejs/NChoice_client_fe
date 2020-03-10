@@ -5,6 +5,7 @@ import categoriesState from './Categories-reducer';
 import brandsState from './Brands-reducer';
 import productsState from './Products-reducer';
 import usersState from './Users-reducer';
+import colorsState from './Colors-reducer';
 
 export default combineReducers({
     catalogsState,
@@ -12,4 +13,5 @@ export default combineReducers({
     brandsState,
     productsState,
     usersState,
+    colorsState,
 });
