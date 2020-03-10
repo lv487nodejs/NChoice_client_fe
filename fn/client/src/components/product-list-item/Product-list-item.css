@@ -40,14 +40,26 @@
   .bottomElements {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     padding: 0;
     justify-self: end;
-  }
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
   .description {
-    height: 10vh;
+    display: block;
+    display: -webkit-box;
+    max-width: 400px;
+    height: 125px;
+    margin: 10px auto;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
+
   }
   .heart,
   .cart {
