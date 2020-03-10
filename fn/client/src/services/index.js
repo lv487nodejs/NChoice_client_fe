@@ -18,6 +18,7 @@ export default class StoreService {
     };
 
     getProductById = async id => {
+        
         const products = await this.getResource(`products/${id}`);
         return products;
     };
@@ -42,6 +43,8 @@ export default class StoreService {
         }
         const products = await this.getResource(queryString);
         return products;
+        // const catalogs = await this.getResource(queryString);
+        // return catalogs;
     };
 
     getAllCatalogs = async () => {
