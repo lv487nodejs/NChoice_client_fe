@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Paper } from '@material-ui/core';
+import { Paper, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
+import SaveIcon from '@material-ui/icons/Save';
 import { useStyles } from './Product-add-page-style';
 import wrapWithAdminService from '../wrappers';
 
-import { setCatalogs, setCategories, setBrands, brandLoadingStatus, setColors } from '../../actions';
+import {
+    setCatalogs,
+    setCategories,
+    setBrands,
+    brandLoadingStatus,
+    setColors,
+} from '../../actions';
 import LoadingBar from '../loading-bar';
-import ProductAddOptions from '../product-add-page-options';
-import ProductDescriptions from '../product-add-page-descr/Product-add-page-descr';
-import { NEW_PRODUCT_MODEL, NEW_PRODUCT_DESCR } from '../../config';
+import ProductAddItemOptions from '../product-add-item-options';
+import ProductAddItemDescr from '../product-add-item-descr';
+import { NEW_PRODUCT_MODEL, NEW_PRODUCT_PROPETRIES, NEW_PRODUCT_DESCR } from '../../config';
+import AddProductPropetries from '../product-add-item-propetries';
 
 const ProductAddPage = ({
     adminService,
@@ -25,6 +33,7 @@ const ProductAddPage = ({
 }) => {
     const classes = useStyles();
     const [values, setValues] = useState(NEW_PRODUCT_MODEL);
+    const [newPropetry, setPropetries] = useState(NEW_PRODUCT_PROPETRIES);
 
     useEffect(() => {
         brandLoadingStatus();
@@ -34,9 +43,27 @@ const ProductAddPage = ({
         adminService.getAllBrands().then(res => setBrands(res));
     }, [adminService, setCatalogs, setCategories, setBrands, setColors, brandLoadingStatus]);
 
+    if (loading) {
+        return <LoadingBar />;
+    }
+
     const handleInputChange = event => {
         const { name, value } = event.target;
         setValues({ ...values, [name]: value });
+    };
+
+    const handlePropetriesInputChange = event => {
+        const { name, value } = event.target;
+        setPropetries({ ...newPropetry, [name]: value });
+    };
+
+    const onSaveProduct = () => {
+        adminService.postProduct(values).then(res => console.log(res));
+    };
+
+    const submitProp = () => {
+        setValues({ ...values, propetries: [...values.propetries, newPropetry] });
+        setPropetries(NEW_PRODUCT_PROPETRIES);
     };
 
     const productOptionGroups = [
@@ -65,7 +92,8 @@ const ProductAddPage = ({
         const optionValues = option[1];
 
         return (
-            <ProductAddOptions
+            <ProductAddItemOptions
+                classes={classes}
                 optionValues={optionValues}
                 optionName={optionName}
                 onChangeEvent={handleInputChange}
@@ -75,17 +103,35 @@ const ProductAddPage = ({
     });
 
     const productAddDescriptions = NEW_PRODUCT_DESCR.map(option => (
-        <ProductDescriptions option={option} values={values} onChangeEvent={handleInputChange} />
+        <ProductAddItemDescr
+            classes={classes}
+            option={option}
+            values={values}
+            onChangeEvent={handleInputChange}
+        />
     ));
-
-    if (loading) {
-        return <LoadingBar />;
-    }
-
+    console.log(values);
     return (
         <Paper className={classes.content}>
             {productAddOptions}
             {productAddDescriptions}
+            <AddProductPropetries
+                classes={classes}
+                newPropetry={newPropetry}
+                values={values}
+                onChangeEvent={handlePropetriesInputChange}
+                onSubmitEvent={submitProp}
+            />
+            <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                className={classes.button}
+                startIcon={<SaveIcon />}
+                onClick={onSaveProduct}
+            >
+                SAVE PRODUCT
+            </Button>
         </Paper>
     );
 };

@@ -27,7 +27,7 @@ export const NEW_PRODUCT_MODEL = {
     color: '',
     title: '',
     description: '',
-    msrp: 0,
+    mrsp: 0,
     price: 0,
     images: [],
     propetries: [],
@@ -39,6 +39,9 @@ export const NEW_PRODUCT_PROPETRIES = {
     sku: '',
 };
 
-export const NEW_PRODUCT_DESCR = ['title', 'description', 'msrp', 'price'];
+export const NEW_PRODUCT_DESCR = ['title', 'description', 'mrsp', 'price'];
 export const SIZES_SHOES = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
 export const SIZES_CLOTHES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+export const INPUT_TYPE_NUMBER = ['price', 'mrsp'];
+export const INPUT_MULTILINE = ['description'];

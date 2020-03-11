@@ -13,6 +13,7 @@ export default class AdminService {
     };
 
     postData = async (url, dataToSend) => {
+        console.log(dataToSend)
         try {
             const response = await axios.post(
                 `${SERVER_URL}${url}`,
@@ -67,6 +68,12 @@ export default class AdminService {
         const catalogs = await this.getResource(queryString);
         return catalogs;
     };
+
+    postProduct = async product => {
+        const url = 'products/';
+        const newProduct = await this.postData(url, product);
+        return newProduct;
+    }
 
     getAllCatalogs = async () => {
         const catalogs = await this.getResource('catalogs');

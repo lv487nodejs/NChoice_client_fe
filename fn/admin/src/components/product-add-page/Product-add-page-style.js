@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles(() => ({
     content: {
         display: 'flex',
         flexDirection: 'column',
@@ -9,5 +9,6 @@ export const useStyles = makeStyles(theme => ({
     },
     textfield: {
         margin: 10,
+        width: 200,
     },
 }));
