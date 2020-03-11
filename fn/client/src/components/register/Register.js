@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './Register.css';
 import { Form, Button, Col, InputGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -23,13 +24,15 @@ const Register = () => {
         if (event) event.preventDefault();
         axios({
             method: 'post',
-            url: '/user/12345',
+            url: 'https://stark-headland-06017.herokuapp.com/users',
             data: {
                 firstName: user.lastName,
                 lastName: user.lastName,
+                email: user.email,
+                password: user.password
 
             }
-        })//.then(приймати респонс).then()
+        }).then((r) => console.log(r)).catch((e) => console.log(e))//приймати респонс).then()
     };
 
 
@@ -91,7 +94,7 @@ const Register = () => {
                 <Button variant="primary" type="submit" >
                     Submit
                 </Button>
-                <Button variant="secondary">Return to LogIn</Button>
+                <Link to="/login" className="btn btn-link">Cancel</Link>
             </Form>
         );
 
