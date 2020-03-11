@@ -7,23 +7,43 @@ import ProductListButtonPages from '../product-list-button-pages';
 import Filter from '../filter';
 
 import SearchBar from '../search-bar/search-bar';
-import { productsLoaded, productsRequested, catalogLoaded } from '../../actions';
+import { productsLoaded, productsRequested, catalogLoaded, addSortByPrice } from '../../actions';
 import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
 import ProductSort from '../product-sort';
 
-const ProductList = ({ storeService, productsLoaded, productsRequested, catalogLoaded, products, loading, catalog }) => {
+const sortAsc = 1;
+const sortDesc = -1;
+
+const sortByPriceAscOptions = {
+    text: 'sort by price asc',
+    value: sortAsc,
+    func: addSortByPrice,
+};
+const sortByPriceDescOptions = {
+    text: 'sort by price desc',
+    value: sortDesc,
+    func: addSortByPrice,
+};
+
+const ProductList = ({
+    storeService,
+    productsLoaded,
+    productsRequested,
+    catalogLoaded,
+    products,
+    loading,
+    catalog,
+}) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
-
-
 
     useEffect(() => {
         productsRequested();
         catalogLoaded(catalog);
-        storeService.getProductsByFilter({ catalog: catalog }).then(res => productsLoaded(res));
-        if (sessionStorage.getItem("postPerPage") !== null) {
-            setPostsPerPage(sessionStorage.getItem("postPerPage"))
+        storeService.getProductsByFilter({ catalog }).then(res => productsLoaded(res));
+        if (sessionStorage.getItem('postPerPage') !== null) {
+            setPostsPerPage(sessionStorage.getItem('postPerPage'));
         }
     }, [productsLoaded, productsRequested, storeService, catalog, catalogLoaded]);
 
@@ -36,7 +56,7 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
     const paginateMethod = value => setCurrentPage(value);
     const changeItemsMethod = number => {
         setPostsPerPage(number);
-        sessionStorage.setItem("postPerPage", number);
+        sessionStorage.setItem('postPerPage', number);
     };
     const changePagination = () => setCurrentPage(1);
 
@@ -50,8 +70,8 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
             <div className="product-list-page">
                 <div className="products-options">
                     <SearchBar />
-                    <ProductSort arrayToSort={currentPosts} />
-                    <ProductSort arrayToSort={currentPosts} />
+                    <ProductSort options={sortByPriceAscOptions} />
+                    <ProductSort options={sortByPriceDescOptions} />
                     <ProductListButtonPages
                         changeItems={changeItemsMethod}
                         changeCurrentPage={changePagination}

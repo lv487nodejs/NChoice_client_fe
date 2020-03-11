@@ -3,6 +3,7 @@ const initialState = {
     product: {},
     currency: 1,
     loading: true,
+    sortByPrice: 0,
 };
 
 const productsList = (state = initialState, action) => {
@@ -26,7 +27,11 @@ const productsList = (state = initialState, action) => {
                 currency: action.payload,
                 loading: false,
             };
-
+        case 'SORT_BY_PRICE':
+            return {
+                ...state,
+                sortByPrice: action.payload,
+            };
         default:
             return state;
     }

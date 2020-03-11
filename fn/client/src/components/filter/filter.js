@@ -7,7 +7,7 @@ import {
     filterRemoveColor,
     filterRemoveCategory,
     filterRemoveBrand,
-    productsLoaded
+    productsLoaded,
 } from '../../actions';
 
 import FilterItem from '../filterItem';
@@ -28,6 +28,7 @@ const Filter = ({
     color,
     catalog,
     productsLoaded,
+    sortByPrice,
 }) => {
     const [getBrands, setBrands] = useState([]);
     const [getCategories, setCategories] = useState([]);
@@ -54,10 +55,10 @@ const Filter = ({
     }, [storeService]);
 
     useEffect(() => {
-        storeService.getProductsByFilter({ catalog, brand, color, category }).then(res => {
+        storeService.getProductsByFilter({ catalog, brand, color, category, sortByPrice }).then(res => {
             productsLoaded(res);
         });
-    }, [brand, category, catalog, color, storeService, productsLoaded]);
+    }, [brand, category, catalog, color, storeService, productsLoaded, sortByPrice]);
 
     const filterAddBrandHandler = (e, item) => {
         if (e.target.checked) {
@@ -90,11 +91,16 @@ const Filter = ({
         </div>
     );
 };
-const mapStateToProps = ({ filter: { brand, category, color }, catalogsList: { catalog } }) => ({
+const mapStateToProps = ({
+    productsList: { sortByPrice },
+    filter: { brand, category, color },
+    catalogsList: { catalog },
+}) => ({
     brand,
     category,
     color,
     catalog,
+    sortByPrice,
 });
 
 const mapDispatchToProps = dispatch => ({

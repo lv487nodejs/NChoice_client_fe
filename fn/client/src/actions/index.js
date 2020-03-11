@@ -1,5 +1,5 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
-import { productsLoaded, productsRequested, currencyChange } from './Products-actions';
+import { productsLoaded, productsRequested, currencyChange, addSortByPrice } from './Products-actions';
 import { catalogsLoaded, catalogsRequested, catalogLoaded } from './Catalogs-actions';
 
 
@@ -28,5 +28,5 @@ export {
     filterRemoveBrand,
     filterRemoveCategory,
     filterRemoveColor,
-
+    addSortByPrice,
 };
