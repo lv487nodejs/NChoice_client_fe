@@ -2,7 +2,7 @@ const initialState = {
     categories: [],
     category: {},
     loading: true,
-    success: false,
+    open: false,
 };
 
 const categoriesState = (state = initialState, action) => {
@@ -25,6 +25,16 @@ const categoriesState = (state = initialState, action) => {
                 ...state,
                 categories: action.payload,
                 loading: false,
+            };
+        case 'OPEN_TRUE':
+            return {
+                ...state,
+                open: true,
+            };
+        case 'OPEN_FALSE':
+            return {
+                ...state,
+                open: false,
             };
         default:
             return state;

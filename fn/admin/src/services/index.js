@@ -28,7 +28,7 @@ export default class AdminService {
     putData = async (url, dataToSend) => {
         try {
             const response = await axios.put(`${SERVER_URL}${url}`, dataToSend);
-            return response;
+            return response.data;
         } catch (error) {
             console.error(error);
         }

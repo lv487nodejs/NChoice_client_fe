@@ -2,7 +2,13 @@ import { setCatalog, setCatalogs, catalogLoadingStatus } from './Catalogs-action
 
 import { setBrand, setBrands, brandLoadingStatus } from './Brand-actions';
 
-import { setCategory, setCategories, categoryLoadingStatus } from './Categories-actions';
+import {
+    setCategory,
+    setCategories,
+    categoryLoadingStatus,
+    categorySnackbarOpenTrue,
+    categorySnackbarOpenFalse,
+} from './Categories-actions';
 
 import { setProduct, setProducts, setProductPropetries, productLoadingStatus } from './Products-actions';
 
@@ -39,4 +45,6 @@ export {
     userEdit,
     userSave,
     userSetRole,
+    categorySnackbarOpenTrue,
+    categorySnackbarOpenFalse,
 };

@@ -62,3 +62,4 @@ export const PRODUCT_ADD_STEPS_LABEL = [
     'Please provide product descriptions',
     'Please provide product propetries',
 ];
+export const snackbarDuration = 4000;
