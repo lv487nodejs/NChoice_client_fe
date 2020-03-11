@@ -12,4 +12,18 @@ const categoryLoadingStatus = () => ({
     type: 'LOADING_STATUS',
 });
 
-export { setCategory, setCategories, categoryLoadingStatus };
+const categorySnackbarOpenTrue = () => ({
+    type: 'OPEN_TRUE',
+});
+
+const categorySnackbarOpenFalse = () => ({
+    type: 'OPEN_FALSE',
+});
+
+export {
+    setCategory,
+    setCategories,
+    categoryLoadingStatus,
+    categorySnackbarOpenTrue,
+    categorySnackbarOpenFalse,
+};

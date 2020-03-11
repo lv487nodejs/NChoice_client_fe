@@ -10,6 +10,8 @@ import {
     setCategory,
     setCategories,
     categoryLoadingStatus,
+    categorySnackbarOpenTrue,
+    categorySnackbarOpenFalse,
 } from './Categories-actions';
 
 import {
@@ -50,4 +52,6 @@ export {
     userEdit,
     userSave,
     userSetRole,
+    categorySnackbarOpenTrue,
+    categorySnackbarOpenFalse,
 };

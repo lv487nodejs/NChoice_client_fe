@@ -35,3 +35,5 @@ export const BRANDS_TABLE_HEAD = ['Avatar', 'Brand', 'Actions'];
 export const CATEGORIES_TABLE_HEAD = ['Avatar', 'Category', 'Actions'];
 
 export const SERVER_URL = 'https://stark-headland-06017.herokuapp.com/';
+
+export const snackbarDuration = 4000;
