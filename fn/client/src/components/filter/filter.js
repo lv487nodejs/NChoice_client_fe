@@ -32,6 +32,7 @@ const Filter = ({
     productsLoaded,
     currentPage,
     postsPerPage,
+    addPagesCount,
 }) => {
     const [getBrands, setBrands] = useState([]);
     const [getCategories, setCategories] = useState([]);
@@ -108,16 +109,15 @@ const mapStateToProps = ({
     postsPerPage,
 });
 
-const mapDispatchToProps = () => ({
-    filterAddBrand,
-    filterAddColor,
-    filterAddCategory,
-    filterRemoveBrand,
-    filterRemoveCategory,
-    filterRemoveColor,
-    productsLoaded,
-    addPagesCount,
-    
+const mapDispatchToProps = (dispatch) => ({
+    filterAddBrand: brand => dispatch(filterAddBrand(brand)),
+    filterAddColor: color => dispatch(filterAddColor(color)),
+    filterAddCategory: category => dispatch(filterAddCategory(category)),
+    filterRemoveBrand: brand => dispatch(filterRemoveBrand(brand)),
+    filterRemoveCategory: category => dispatch(filterRemoveCategory(category)),
+    filterRemoveColor: category => dispatch(filterRemoveColor(category)),
+    productsLoaded: products => dispatch(productsLoaded(products)),
+    addPagesCount: value => dispatch(addPagesCount(value)),
 });
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Filter));
