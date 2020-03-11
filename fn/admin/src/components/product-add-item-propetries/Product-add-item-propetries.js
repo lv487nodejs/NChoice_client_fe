@@ -1,9 +1,17 @@
 import React from 'react';
-import { TextField, Paper, Button } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
-import { SIZES_CLOTHES, SIZES_SHOES } from '../../config';
+import { TextField, Paper } from '@material-ui/core';
+import { SIZES_CLOTHES /* , SIZES_SHOES */ } from '../../config';
+import { SaveButton } from '../buttons';
 
-const SKU_FIELD_RULES = { maxLength: 12, minLength: 8 };
+const nativeSelect = {
+    native: true,
+};
+
+const inputString = 'string';
+const inputNumber = 'number';
+const inputSize = 'size';
+const inputAvailable = 'available';
+const buttonLabel = 'ADD PROPETRY';
 
 const AddProductPropetries = ({ classes, newPropetry, onChangeEvent, onSubmitEvent }) => {
     const sizeOptions = SIZES_CLOTHES.map(size => (
@@ -12,57 +20,33 @@ const AddProductPropetries = ({ classes, newPropetry, onChangeEvent, onSubmitEve
         </option>
     ));
 
-    console.log(newPropetry);
-    return (
-        <Paper>
+    const propetryTextFields = Object.keys(newPropetry).map(name => {
+        const select = name === inputSize;
+        const inputType = name !== inputAvailable ? inputString : inputNumber;
+
+        return (
             <TextField
                 required
-                id="size"
-                select
+                id={name}
+                select={select}
                 className={classes.textfield}
-                name="size"
-                label="Choose size"
-                value={newPropetry.size}
+                name={name}
+                label={name}
+                type={inputType}
+                value={newPropetry[name]}
                 onChange={onChangeEvent}
-                SelectProps={{
-                    native: true,
-                }}
+                SelectProps={nativeSelect}
                 variant="outlined"
             >
                 {sizeOptions}
             </TextField>
-            <TextField
-                required
-                className={classes.textfield}
-                id="available"
-                label="Choose available"
-                name="available"
-                value={newPropetry.available}
-                onChange={onChangeEvent}
-                type="number"
-                variant="outlined"
-            />
-            <TextField
-                required
-                className={classes.textfield}
-                id="sku"
-                label="Choose sku"
-                name="sku"
-                value={newPropetry.sku}
-                onChange={onChangeEvent}
-                variant="outlined"
-                inputProps={SKU_FIELD_RULES}
-            />
-            <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                className={classes.button}
-                startIcon={<SaveIcon />}
-                onClick={onSubmitEvent}
-            >
-                ADD PROPETRY
-            </Button>
+        );
+    });
+
+    return (
+        <Paper className={classes.productPropetries}>
+            {propetryTextFields}
+            <SaveButton title={buttonLabel} eventHandler={onSubmitEvent} />
         </Paper>
     );
 };

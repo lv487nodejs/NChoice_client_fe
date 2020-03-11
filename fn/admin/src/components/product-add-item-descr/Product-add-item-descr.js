@@ -3,13 +3,13 @@ import { TextField } from '@material-ui/core';
 
 import { INPUT_TYPE_NUMBER, INPUT_MULTILINE } from '../../config';
 
-const NOT_HAVE = -1;
+const NOT_INCLUDE = -1;
+let inputMultiline = false;
+let inputType = 'string';
 
 const ProductAddItemDescr = ({ classes, option, values, onChangeEvent }) => {
-    let multiline = false;
-    let inputType = 'string';
-    if (INPUT_TYPE_NUMBER.findIndex(rule => rule === option) > NOT_HAVE) inputType = 'number';
-    if (INPUT_MULTILINE.findIndex(rule => rule === option) > NOT_HAVE) multiline = true;
+    if (INPUT_TYPE_NUMBER.findIndex(rule => rule === option) > NOT_INCLUDE) inputType = 'number';
+    if (INPUT_MULTILINE.findIndex(rule => rule === option) > NOT_INCLUDE) inputMultiline = true;
 
     return (
         <TextField
@@ -22,7 +22,7 @@ const ProductAddItemDescr = ({ classes, option, values, onChangeEvent }) => {
             onChange={onChangeEvent}
             type={inputType}
             variant="outlined"
-            multiline={multiline}
+            multiline={inputMultiline}
         />
     );
 };

@@ -8,7 +8,12 @@ export const useStyles = makeStyles(() => ({
         paddingTop: 70,
     },
     textfield: {
+        textTransform: 'uppercase',
         margin: 10,
         width: 200,
     },
+    productPropetries: {
+        margin: 10,
+        padding: 10,
+    }
 }));
