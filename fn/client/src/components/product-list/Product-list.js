@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import './Product-list.css';
 import ProductListPosts from '../product-list-posts';
@@ -24,8 +24,6 @@ const ProductList = ({
     addCurrentPage,
     pagesCount,
 }) => {
-  
-
     useEffect(() => {
         productsRequested();
         catalogLoaded(catalog);
@@ -33,7 +31,7 @@ const ProductList = ({
         if (sessionStorage.getItem('postPerPage') !== null) {
             addPostsPerPage(sessionStorage.getItem('postPerPage'));
         }
-    }, [productsLoaded, productsRequested, storeService, catalog, catalogLoaded]);
+    }, [productsLoaded, productsRequested, storeService, catalog, catalogLoaded, addPostsPerPage]);
 
     // Change view
     const paginateMethod = value => addCurrentPage(value);
@@ -71,13 +69,13 @@ const ProductList = ({
     );
 };
 
-const mapStateToProps = ({ productsList: { products, loading,pagesCount } }) => ({ products, loading,pagesCount });
-const mapDispatchToProps = { 
-     productsLoaded,
-     productsRequested,
-     catalogLoaded,
-     addCurrentPage,
-     addPostsPerPage,
-     };
+const mapStateToProps = ({ productsList: { products, loading, pagesCount } }) => ({ products, loading, pagesCount });
+const mapDispatchToProps = {
+    productsLoaded,
+    productsRequested,
+    catalogLoaded,
+    addCurrentPage,
+    addPostsPerPage,
+};
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));
