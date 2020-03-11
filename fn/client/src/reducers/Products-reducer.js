@@ -5,6 +5,7 @@ const initialState = {
     loading: true,
     currentPage: 1,
     postsPerPage: 15,
+    pagesCount: 1,
 };
 
 const productsList = (state = initialState, action) => {
