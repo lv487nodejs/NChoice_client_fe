@@ -1,6 +1,8 @@
 const { body, validationResult } = require('express-validator');
 
-const userValidationRules = () => [body('email', 'Email is required').isEmail(), body('password').isLength({ min: 6 })];
+const userValidationRules = () => [
+    body('email', 'Email is required').isEmail(),
+    body('password').isLength({ min: 6 })];
 
 const userLoginValidationRules = () => [
     body('email', 'Email is required').isEmail(),
@@ -55,6 +57,21 @@ const productValidationRules = () => [
         .isNumeric({ min: 1, max: 10000 }),
 ];
 
+const orderValidationRules = () => [
+    body('userId', 'user is required')
+        .notEmpty()
+        .isString(), 
+    body('deliveryType', 'deliveryType is required and has to be one of:"currier","post","delivery servise"')
+        .notEmpty()
+        .isString(),
+    body('paymentMethod', 'paymentMethod is required and has to be one of: credit Card,Pay Pal,Cash,Google pay,Amazon Pay,Apple Pay')
+        .notEmpty()
+        .isString(),
+    body('contactPhone', 'contactPhone is required')
+        .notEmpty()
+        .isNumeric(),
+];
+
 const validate = (req, res, next) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
@@ -62,6 +79,7 @@ const validate = (req, res, next) => {
     }
     return res.status(400).json({ errors: errors.array() });
 };
+
 
 module.exports = {
     userValidationRules,
@@ -72,5 +90,6 @@ module.exports = {
     brandValidationRules,
     colorValidationRules,
     categoryValidationRules,
+    orderValidationRules,
     validate,
 };

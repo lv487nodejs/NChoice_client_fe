@@ -3,12 +3,17 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const OrderSchema = new Schema({
-    orderId: String,
+
     orderItems: [{
-        type: Schema.Types.ObjectId,
-        ref: 'product',
-        quantity: Number,
-        required: true
+        item: {
+            type: Schema.Types.ObjectId,
+            ref: 'product'
+        },
+        quantity:
+        {
+            type: Number,
+            required: true
+        }
     }],
     userId: {
         type: Schema.Types.ObjectId,
@@ -20,31 +25,54 @@ const OrderSchema = new Schema({
         default: Date.now
     },
     deliveryAddress: {
-        type: String,
-        required: true
+        country: {
+            type: String,
+            required: true
+        },
+        city: {
+            type: String,
+            required: true
+        },
+        street: {
+            type: String,
+            required: true
+        },
+        buildingNumber: {
+            type: String,
+            required: true
+        }
     },
     deliveryType: {
         type: String,
         required: true,
         enum: [
-            "Currier",
-            "Post",
-            "Delivery servise"]
+            "currier",
+            "post",
+            "delivery servise"]
     },
     contactPhone: {
-        quantity: Number,
-        required: true
+        type: Number,
+        required: true,
     },
-    PaymentMethod: {
+    paymentMethod: {
         type: String,
         required: true,
         enum: [
-            "Credit Card",
-            "Pay Pal",
-            "Cash",
-            "Google pay",
-            "Amazon Pay",
-            'Apple Pay']
+            "credit card",
+            "pay pal",
+            "cash",
+            "google pay",
+            "amazon pay",
+            "apple pay"]
+    },
+    status: {
+        type: String,
+        required: true,
+        enum: [
+            "done",
+            "pending",
+            "open"
+        ]
     }
 });
 
