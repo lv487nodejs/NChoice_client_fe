@@ -96,7 +96,7 @@ const Filter = ({
     );
 };
 const mapStateToProps = ({
-    prudctsList: { currentPage, postsPerPage },
+    productsList: { currentPage, postsPerPage },
     filter: { brand, category, color },
     catalogsList: { catalog },
 }) => ({
