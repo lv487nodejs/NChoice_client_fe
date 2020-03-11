@@ -31,7 +31,7 @@ const ProductList = ({
         catalogLoaded(catalog);
         storeService.getProductsByFilter({ catalog }).then(res => productsLoaded(res.products));
         if (sessionStorage.getItem('postPerPage') !== null) {
-            setPostsPerPage(sessionStorage.getItem('postPerPage'));
+            addPostsPerPage(sessionStorage.getItem('postPerPage'));
         }
     }, [productsLoaded, productsRequested, storeService, catalog, catalogLoaded]);
 
