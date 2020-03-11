@@ -12,12 +12,12 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
-    const { sortByPrice } = query;
+    const { sortbyprice } = query;
     try {
         const filter = await getFilters(query);
 
         const products = await Products.find(filter)
-            .sort({ price: sortByPrice })
+            .sort({ price: sortbyprice })
             .populate('catalog')
             .populate('category')
             .populate('color')
