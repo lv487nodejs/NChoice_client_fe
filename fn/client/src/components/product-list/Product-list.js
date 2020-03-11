@@ -15,17 +15,6 @@ import ProductSort from '../product-sort';
 const sortAsc = 1;
 const sortDesc = -1;
 
-const sortByPriceAscOptions = {
-    text: 'sort by price asc',
-    value: sortAsc,
-    func: addSortByPrice,
-};
-const sortByPriceDescOptions = {
-    text: 'sort by price desc',
-    value: sortDesc,
-    func: addSortByPrice,
-};
-
 const ProductList = ({
     storeService,
     productsLoaded,
@@ -34,9 +23,22 @@ const ProductList = ({
     products,
     loading,
     catalog,
+    addSortByPrice,
 }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
+    
+    
+    const sortByPriceAscOptions = {
+        text: 'sort by price asc',
+        value: sortAsc,
+        func: addSortByPrice,
+    };
+    const sortByPriceDescOptions = {
+        text: 'sort by price desc',
+        value: sortDesc,
+        func: addSortByPrice,
+    };
 
     useEffect(() => {
         productsRequested();
@@ -94,6 +96,6 @@ const ProductList = ({
 };
 
 const mapStateToProps = ({ productsList: { products, loading } }) => ({ products, loading });
-const mapDispatchToProps = { productsLoaded, productsRequested, catalogLoaded };
+const mapDispatchToProps = { productsLoaded, productsRequested, catalogLoaded, addSortByPrice };
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));
