@@ -7,7 +7,9 @@ import {
     filterRemoveColor,
     filterRemoveCategory,
     filterRemoveBrand,
-    productsLoaded
+    productsLoaded,
+    addPagesCount,
+
 } from '../../actions';
 
 import FilterItem from '../filterItem';
@@ -28,6 +30,8 @@ const Filter = ({
     color,
     catalog,
     productsLoaded,
+    currentPage,
+    postsPerPage,
 }) => {
     const [getBrands, setBrands] = useState([]);
     const [getCategories, setCategories] = useState([]);
@@ -54,10 +58,11 @@ const Filter = ({
     }, [storeService]);
 
     useEffect(() => {
-        storeService.getProductsByFilter({ catalog, brand, color, category }).then(res => {
-            productsLoaded(res);
+        storeService.getProductsByFilter({ catalog, brand, color, category, currentPage, postsPerPage }).then(res => {
+            productsLoaded(res.products);
+            addPagesCount(res.pagesCount);
         });
-    }, [brand, category, catalog, color, storeService, productsLoaded]);
+    }, [brand, category, catalog, color, storeService, productsLoaded, currentPage, postsPerPage, addPagesCount]);
 
     const filterAddBrandHandler = (e, item) => {
         if (e.target.checked) {
@@ -90,21 +95,29 @@ const Filter = ({
         </div>
     );
 };
-const mapStateToProps = ({ filter: { brand, category, color }, catalogsList: { catalog } }) => ({
+const mapStateToProps = ({
+    prudctsList: { currentPage, postsPerPage },
+    filter: { brand, category, color },
+    catalogsList: { catalog },
+}) => ({
     brand,
     category,
     color,
     catalog,
+    currentPage,
+    postsPerPage,
 });
 
-const mapDispatchToProps = dispatch => ({
-    filterAddBrand: brand => dispatch(filterAddBrand(brand)),
-    filterAddColor: color => dispatch(filterAddColor(color)),
-    filterAddCategory: category => dispatch(filterAddCategory(category)),
-    filterRemoveBrand: brand => dispatch(filterRemoveBrand(brand)),
-    filterRemoveCategory: category => dispatch(filterRemoveCategory(category)),
-    filterRemoveColor: category => dispatch(filterRemoveColor(category)),
-    productsLoaded: products => dispatch(productsLoaded(products)),
+const mapDispatchToProps = () => ({
+    filterAddBrand,
+    filterAddColor,
+    filterAddCategory,
+    filterRemoveBrand,
+    filterRemoveCategory,
+    filterRemoveColor,
+    productsLoaded,
+    addPagesCount,
+    
 });
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Filter));
