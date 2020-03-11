@@ -10,11 +10,7 @@ const SnackbarItem = props => {
     const { open, severity, message, handleClose } = props;
 
     return (
-        <Snackbar
-            open={open}
-            autoHideDuration={snackbarDuration}
-            onClose={handleClose}
-        >
+        <Snackbar open={open} autoHideDuration={snackbarDuration} onClose={handleClose}>
             <Alert onClose={handleClose} severity={severity}>
                 {message}
             </Alert>

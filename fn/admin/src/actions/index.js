@@ -1,8 +1,4 @@
-import {
-    setCatalog,
-    setCatalogs,
-    catalogLoadingStatus,
-} from './Catalogs-actions';
+import { setCatalog, setCatalogs, catalogLoadingStatus } from './Catalogs-actions';
 
 import { setBrand, setBrands, brandLoadingStatus } from './Brand-actions';
 
@@ -14,12 +10,7 @@ import {
     categorySnackbarOpenFalse,
 } from './Categories-actions';
 
-import {
-    setProduct,
-    setProducts,
-    setProductPropetries,
-    productLoadingStatus,
-} from './Products-actions';
+import { setProduct, setProducts, setProductPropetries, productLoadingStatus } from './Products-actions';
 
 import {
     usersLoaded,
@@ -30,6 +21,7 @@ import {
     userSave,
     userSetRole,
 } from './Users-actions';
+import { setColors } from './Colors-actions';
 
 export {
     setBrand,
@@ -44,6 +36,7 @@ export {
     setProduct,
     setProducts,
     setProductPropetries,
+    setColors,
     productLoadingStatus,
     usersLoaded,
     usersRequested,

@@ -15,6 +15,7 @@ import {
 import NavBar from '../nav-bar';
 import NavMenu from '../nav-menu';
 import ProductPage from '../product-page/Product-page';
+import AddProductPage from '../add-product-page/Add-product-page';
 
 const pathToProducts = '/products';
 const pathToUsers = '/users';
@@ -30,29 +31,14 @@ const AppRouter = () => (
         <NavMenu />
         <Switch>
             <Route path="/" exact component={StatsPageContainer} />
-            <Route
-                path={pathToProducts}
-                exact
-                component={ProductsPageContainer}
-            />
+            <Route path={pathToProducts} exact component={ProductsPageContainer} />
             <Route path={pathToUsers} exact component={UsersPageContainer} />
-            <Route
-                path={pathToUserDetails}
-                exact
-                component={UserDetailsPageContainer}
-            />
+            <Route path={pathToUserDetails} exact component={UserDetailsPageContainer} />
             <Route path="/product/:id" exact component={ProductPage} />
             <Route path={pathToBrands} exact component={BrandsPageContainer} />
-            <Route
-                path={pathToCategories}
-                exact
-                component={CategoriesPageContainer}
-            />
-            <Route
-                path={pathToCategoriesDetails}
-                exact
-                component={CategoryDetailsPageContainer}
-            />
+            <Route path={pathToCategories} exact component={CategoriesPageContainer} />
+            <Route path={pathToCategoriesDetails} exact component={CategoryDetailsPageContainer} />
+            <Route path="/addproduct" exact component={AddProductPage} />
             <Route path="/prodtest" exact component={ProductPage} />
         </Switch>
     </Router>

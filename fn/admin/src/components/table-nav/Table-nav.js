@@ -36,23 +36,15 @@ const TableNav = () => {
         setState({ ...state, [name]: event.target.checked });
     };
     return (
-        <Grid container spacing={3} justify="center" alignItems="center">
+        <Grid className={classes.tableNav} container spacing={3} justify="center" alignItems="center">
             <Grid item xs={2}>
                 <Button variant="contained" color="primary" size="small">
                     NEW PRODUCT
                 </Button>
             </Grid>
             <Grid item xs={4}>
-                <ButtonGroup
-                    variant="contained"
-                    color="primary"
-                    aria-label="contained primary button group"
-                >
-                    <Button
-                        size="small"
-                        aria-controls="simple-menu"
-                        onClick={handleClick}
-                    >
+                <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+                    <Button size="small" aria-controls="simple-menu" onClick={handleClick}>
                         Catalogs
                     </Button>
                     <Menu
