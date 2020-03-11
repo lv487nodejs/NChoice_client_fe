@@ -13,15 +13,15 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     const { query } = req;
     let { currentpage, postsperpage } = query;
-    currentpage = +currentpage || 1;
-    postsperpage = +postsperpage || 15;
+    currentpage = currentpage || 1;
+    postsperpage = postsperpage || 15;
     const skip = currentpage * postsperpage;
     try {
         const filter = await getFilters(query);
 
         const products = await Products.find(filter)
-            .skip(skip)
-            .limit(postsperpage)
+            .skip(+skip)
+            .limit(+postsperpage)
             .populate('catalog')
             .populate('category')
             .populate('color')
@@ -32,9 +32,8 @@ router.get('/', async (req, res) => {
         }
 
         const productsToSend = prepareProductsToSend(products);
-        let foundProductsNumber = await Products.count(filter)
-            .skip(skip)
-            .limit(postsperpage)
+        const foundProductsNumber = await Products.find(filter)
+            .count()
             .populate('catalog')
             .populate('category')
             .populate('color')
@@ -43,8 +42,8 @@ router.get('/', async (req, res) => {
         if (!foundProductsNumber) {
             throw { message: 'Products not found ' };
         }
-        foundProductsNumber = Math.ceil(foundProductsNumber / postsperpage);
-        res.status(200).send({ products: productsToSend, pagesCount: foundProductsNumber });
+        const pagesCount = Math.ceil(foundProductsNumber / postsperpage);
+        res.status(200).send({ products: productsToSend, pagesCount });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
