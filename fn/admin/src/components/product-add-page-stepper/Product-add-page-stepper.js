@@ -25,11 +25,11 @@ const ProductAddPageStepper = ({ steps, labels, onSaveHandler }) => {
         />
     );
 
-    const stepperSteps = steps.map((option, index) => (
+    const stepperSteps = steps.map((step, index) => (
         <Step key={labels[index]}>
             <StepLabel>{labels[index]}</StepLabel>
             <StepContent>
-                {option}
+                {step}
                 {stepButtons}
             </StepContent>
         </Step>

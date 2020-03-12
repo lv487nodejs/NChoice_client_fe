@@ -30,7 +30,7 @@ const ProductAddItemOptions = ({ classes, onChangeEvent, values, optionGroups })
         return (
             <TextField
                 required
-                id={optionName}
+                key={optionName}
                 select
                 className={classes.textfield}
                 label={optionName}
@@ -41,6 +41,7 @@ const ProductAddItemOptions = ({ classes, onChangeEvent, values, optionGroups })
                 inputProps={inputCapitalize}
                 variant="outlined"
             >
+                <option value="" />
                 {option}
             </TextField>
         );

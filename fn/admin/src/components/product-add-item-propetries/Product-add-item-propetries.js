@@ -11,7 +11,7 @@ const inputString = 'string';
 const inputNumber = 'number';
 const inputSize = 'size';
 const inputAvailable = 'available';
-const buttonLabel = 'ADD PROPETRY';
+const buttonLabel = 'ADD SIZE';
 
 const AddProductPropetries = ({ classes, newPropetry, onChangeEvent, onSubmitEvent }) => {
     const sizeOptions = SIZES_CLOTHES.map(size => (
@@ -27,7 +27,7 @@ const AddProductPropetries = ({ classes, newPropetry, onChangeEvent, onSubmitEve
         return (
             <TextField
                 required
-                id={name}
+                key={name}
                 select={select}
                 className={classes.textfield}
                 name={name}
@@ -38,6 +38,7 @@ const AddProductPropetries = ({ classes, newPropetry, onChangeEvent, onSubmitEve
                 SelectProps={nativeSelect}
                 variant="outlined"
             >
+                <option value="" />
                 {sizeOptions}
             </TextField>
         );

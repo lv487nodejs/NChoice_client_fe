@@ -36,21 +36,21 @@ export const NEW_PRODUCT_MODEL = {
     color: '',
     title: '',
     description: '',
-    mrsp: 0,
-    price: 0,
+    mrsp: '',
+    price: '',
     images: [],
     propetries: [],
 };
 
 export const NEW_PRODUCT_PROPETRIES = {
     size: '',
-    available: 0,
+    available: '',
     sku: '',
 };
 
 export const PRODUCT_OPTION_NAMES = ['catalog', 'category', 'brand', 'color'];
 
-export const NEW_PRODUCT_DESCR = ['title', 'description', 'mrsp', 'price'];
+export const NEW_PRODUCT_DESCR = ['title', 'mrsp', 'price', 'description'];
 export const SIZES_SHOES = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
 export const SIZES_CLOTHES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
@@ -60,5 +60,6 @@ export const INPUT_MULTILINE = ['description'];
 export const PRODUCT_ADD_STEPS_LABEL = [
     'Please choose products Catalog, Category, Brand and Color',
     'Please provide product descriptions',
-    'Please provide product propetries',
+    'Please provide product sizes information',
+    'Please verify and confirm product saving',
 ];

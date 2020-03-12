@@ -18,6 +18,7 @@ import ProductAddItemOptions from '../product-add-item-options';
 import ProductAddItemDescr from '../product-add-item-descr';
 import ProductAddPropetries from '../product-add-item-propetries';
 import ProductAddPageStepper from '../product-add-page-stepper';
+import ProductAddVerifyPage from '../product-add-verify-page';
 
 import {
     NEW_PRODUCT_MODEL,
@@ -79,14 +80,15 @@ const ProductAddPage = ({
     const productAddOptions = (
         <ProductAddItemOptions
             classes={classes}
-            onChangeEvent={handleInputChange}
             values={values}
             optionGroups={productOptionGroups}
+            onChangeEvent={handleInputChange}
         />
     );
 
     const productAddDescriptions = NEW_PRODUCT_DESCR.map(option => (
         <ProductAddItemDescr
+            key={option}
             classes={classes}
             option={option}
             values={values}
@@ -104,7 +106,14 @@ const ProductAddPage = ({
         />
     );
 
-    const stepperSteps = [productAddOptions, productAddDescriptions, pruductAddPropetries];
+    const productVerifyPage = <ProductAddVerifyPage product={values} />;
+
+    const stepperSteps = [
+        productAddOptions,
+        productAddDescriptions,
+        pruductAddPropetries,
+        productVerifyPage,
+    ];
 
     return (
         <Paper className={classes.content}>
