@@ -75,6 +75,16 @@ export default class AdminService {
         return newProduct;
     }
 
+    getProductOptions = async () => {
+        const catalogs = await this.getAllCatalogs();
+        const categories = await this.getAllCategories();
+        const colors = await this.getAllColors();
+        const brands = await this.getAllBrands();
+
+        const productOptions = [catalogs, categories, brands, colors];
+        return productOptions;
+    };
+
     getAllCatalogs = async () => {
         const catalogs = await this.getResource('catalogs');
         return catalogs;

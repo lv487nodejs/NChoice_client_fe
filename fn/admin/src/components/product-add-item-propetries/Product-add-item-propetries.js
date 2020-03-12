@@ -1,62 +1,62 @@
 import React from 'react';
-import { TextField, Paper, Typography } from '@material-ui/core';
-import { SIZES_CLOTHES /* , SIZES_SHOES */ } from '../../config';
+import { connect } from 'react-redux';
+
+import { Paper, Typography } from '@material-ui/core';
+import { setNewPropetries, setNewProduct } from '../../actions';
+
 import { SaveButton } from '../buttons';
+import ProductAddPropetriesItem from '../product-add-propetries-item';
 
-const nativeSelect = {
-    native: true,
-};
-
-const inputString = 'string';
-const inputNumber = 'number';
-const inputSize = 'size';
-const inputAvailable = 'available';
 const buttonLabel = 'ADD SIZE';
-
 const propsKeys = ['size', 'available', 'sku'];
 
-const AddProductPropetries = ({ classes, newPropetry, onChangeEvent, onSubmitEvent, values }) => {
-    const sizeOptions = SIZES_CLOTHES.map(size => (
-        <option key={size} value={size}>
-            {size}
-        </option>
+const AddProductPropetries = ({
+    setNewPropetries,
+    setNewProduct,
+    newPropetries,
+    newProduct,
+    classes,
+}) => {
+    const handleInputChange = event => {
+        const { name, value } = event.target;
+        setNewPropetries({ ...newPropetries, [name]: value });
+    };
+
+    const handleAddPropetries = () => {
+        setNewProduct({ ...newProduct, propetries: [...newProduct.propetries, newPropetries] });
+    };
+
+    const propetryTextFields = Object.keys(newPropetries).map(name => (
+        <ProductAddPropetriesItem
+            key={name}
+            classes={classes}
+            name={name}
+            handleInputChange={handleInputChange}
+        />
     ));
 
-    const propetryTextFields = Object.keys(newPropetry).map(name => {
-        const select = name === inputSize;
-        const inputType = name !== inputAvailable ? inputString : inputNumber;
-
-        return (
-            <TextField
-                required
-                key={name}
-                select={select}
-                className={classes.textfield}
-                name={name}
-                label={name}
-                type={inputType}
-                value={newPropetry[name]}
-                onChange={onChangeEvent}
-                SelectProps={nativeSelect}
-                variant="outlined"
-            >
-                <option value="" />
-                {sizeOptions}
-            </TextField>
-        );
-    });
-
-    const addedPropetries = values.propetries.map(item =>
+    const addedPropetries = newProduct.propetries.map(item =>
         propsKeys.map(key => <Typography key={item[key]}>{`${key}: ${item[key]}`}</Typography>)
     );
 
     return (
         <Paper className={classes.productPropetries}>
             {propetryTextFields}
-            <SaveButton title={buttonLabel} eventHandler={onSubmitEvent} />
+            <SaveButton title={buttonLabel} eventHandler={handleAddPropetries} />
             {addedPropetries}
         </Paper>
     );
 };
 
-export default AddProductPropetries;
+const mapStateToProps = ({ newProductState: { newProduct, newPropetries, loading } }) => ({
+    newProduct,
+    newPropetries,
+    loading,
+});
+
+const mapDispatchToProps = {
+    setNewPropetries,
+    setNewProduct,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddProductPropetries);

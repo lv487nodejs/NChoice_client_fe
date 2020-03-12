@@ -7,11 +7,11 @@ function Alert(props) {
 }
 
 const SnackbarItem = props => {
-    const { open } = props;
+    const { open, msg } = props;
 
     return (
-        <Snackbar open={open} autoHideDuration={2000}>
-            <Alert severity="success">This is a success message!</Alert>
+        <Snackbar open={open} autoHideDuration={4000}>
+            <Alert severity="success">{msg}</Alert>
         </Snackbar>
     );
 };

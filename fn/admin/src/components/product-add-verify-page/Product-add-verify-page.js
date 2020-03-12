@@ -1,27 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { Typography } from '@material-ui/core';
 
-const productKeys = [
-    'catalog',
-    'category',
-    'brand',
-    'color',
-    'title',
-    'description',
-    'mrsp',
-    'price',
-];
+import { PRODUCT_KEYS, PROPETRIES_KEYS } from '../../config';
 
-const propsKeys = ['size', 'available', 'sku'];
-
-const ProductAddVerifyPage = ({ product }) => {
-    const productValues = productKeys.map(key => (
-        <Typography key={key}>{`${key}: ${product[key]}`}</Typography>
+const ProductAddVerifyPage = ({ newProduct }) => {
+    const productValues = PRODUCT_KEYS.map(key => (
+        <Typography key={key}>{`${key}: ${newProduct[key]}`}</Typography>
     ));
 
-    const productPropetries = product.propetries.map(item =>
-        propsKeys.map(key => <Typography key={item[key]}>{`${key}: ${item[key]}`}</Typography>)
+    const productPropetries = newProduct.propetries.map(item =>
+        PROPETRIES_KEYS.map(key => (
+            <Typography key={item[key]}>{`${key}: ${item[key]}`}</Typography>
+        ))
     );
 
     return (
@@ -32,4 +24,8 @@ const ProductAddVerifyPage = ({ product }) => {
     );
 };
 
-export default ProductAddVerifyPage;
+const mapStateToProps = ({ newProductState: { newProduct } }) => ({
+    newProduct,
+});
+
+export default connect(mapStateToProps)(ProductAddVerifyPage);

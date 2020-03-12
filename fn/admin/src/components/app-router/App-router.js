@@ -22,8 +22,9 @@ const pathToUsers = '/users';
 const pathToBrands = '/brands';
 const pathToCategories = '/categories';
 const pathToUserDetails = '/user/:id';
-// const pathToProductDetails = '/product/:id';
+const pathToProductDetails = '/product/:id';
 const pathToCategoriesDetails = '/category/:id';
+const pathToAddProductPage = '/productadd';
 
 const AppRouter = () => (
     <Router>
@@ -34,12 +35,11 @@ const AppRouter = () => (
             <Route path={pathToProducts} exact component={ProductsPageContainer} />
             <Route path={pathToUsers} exact component={UsersPageContainer} />
             <Route path={pathToUserDetails} exact component={UserDetailsPageContainer} />
-            <Route path="/product/:id" exact component={ProductPage} />
+            <Route path={pathToProductDetails} exact component={ProductPage} />
             <Route path={pathToBrands} exact component={BrandsPageContainer} />
             <Route path={pathToCategories} exact component={CategoriesPageContainer} />
             <Route path={pathToCategoriesDetails} exact component={CategoryDetailsPageContainer} />
-            <Route path="/addproduct" exact component={ProductAddPage} />
-            <Route path="/prodtest" exact component={ProductPage} />
+            <Route path={pathToAddProductPage} exact component={ProductAddPage} />
         </Switch>
     </Router>
 );

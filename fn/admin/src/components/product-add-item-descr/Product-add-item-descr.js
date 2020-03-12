@@ -1,11 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { TextField } from '@material-ui/core';
 
 import { INPUT_TYPE_NUMBER, INPUT_MULTILINE } from '../../config';
 
 const INPUT_PROPS = { min: 0, maxLength: 150 };
 
-const ProductAddItemDescr = ({ classes, option, values, onChangeEvent }) => {
+const ProductAddItemDescr = ({ classes, option, newProduct, onChangeEvent }) => {
     const inputMultiline = INPUT_MULTILINE.includes(option);
     let inputType = 'string';
     if (INPUT_TYPE_NUMBER.includes(option)) inputType = 'number';
@@ -17,7 +19,7 @@ const ProductAddItemDescr = ({ classes, option, values, onChangeEvent }) => {
             id={option}
             label={option}
             name={option}
-            value={values[option]}
+            value={newProduct[option]}
             onChange={onChangeEvent}
             type={inputType}
             variant="outlined"
@@ -27,4 +29,8 @@ const ProductAddItemDescr = ({ classes, option, values, onChangeEvent }) => {
     );
 };
 
-export default ProductAddItemDescr;
+const mapStateToProps = ({ newProductState: { newProduct } }) => ({
+    newProduct,
+});
+
+export default connect(mapStateToProps)(ProductAddItemDescr);

@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { TextField } from '@material-ui/core';
+import wrapWithAdminService from '../wrappers';
+
 import { PRODUCT_OPTION_NAMES } from '../../config';
+import { setOptions } from '../../actions';
+import LoadingBar from '../loading-bar';
 
 const inputCapitalize = {
     style: { textTransform: 'capitalize' },
@@ -10,7 +15,23 @@ const nativeSelect = {
     native: true,
 };
 
-const ProductAddItemOptions = ({ classes, onChangeEvent, values, optionGroups }) => {
+const ProductAddItemOptions = ({
+    adminService,
+    setOptions,
+    classes,
+    onChangeEvent,
+    newProduct,
+    options,
+    loading,
+}) => {
+    useEffect(() => {
+        adminService.getProductOptions().then(res => setOptions(res));
+    }, [adminService, setOptions]);
+
+    if (loading) {
+        return <LoadingBar />;
+    }
+
     const getGroupOptions = (group, name) =>
         group.map(groupOption => (
             <option key={groupOption[name]} value={groupOption[name]}>
@@ -18,7 +39,7 @@ const ProductAddItemOptions = ({ classes, onChangeEvent, values, optionGroups })
             </option>
         ));
 
-    const groupOptions = optionGroups.map((group, index) => {
+    const groupOptions = options.map((group, index) => {
         const name = PRODUCT_OPTION_NAMES[index];
         const options = getGroupOptions(group, name);
         return options;
@@ -35,7 +56,7 @@ const ProductAddItemOptions = ({ classes, onChangeEvent, values, optionGroups })
                 className={classes.textfield}
                 label={optionName}
                 name={optionName}
-                value={values[optionName]}
+                value={newProduct[optionName]}
                 onChange={onChangeEvent}
                 SelectProps={nativeSelect}
                 inputProps={inputCapitalize}
@@ -50,4 +71,16 @@ const ProductAddItemOptions = ({ classes, onChangeEvent, values, optionGroups })
     return productOptions;
 };
 
-export default ProductAddItemOptions;
+const mapStateToProps = ({ newProductState: { newProduct, options, loading } }) => ({
+    newProduct,
+    options,
+    loading,
+});
+
+const mapDispatchToProps = {
+    setOptions,
+};
+
+export default wrapWithAdminService()(
+    connect(mapStateToProps, mapDispatchToProps)(ProductAddItemOptions)
+);

@@ -4,9 +4,14 @@ import { setBrand, setBrands, brandLoadingStatus } from './Brand-actions';
 
 import { setCategory, setCategories, categoryLoadingStatus } from './Categories-actions';
 
-import { setProduct, setProducts, setProductPropetries, productLoadingStatus } from './Products-actions';
+import {
+    setProduct,
+    setProducts,
+    setProductPropetries,
+    productLoadingStatus,
+} from './Products-actions';
 
-import { setNewProduct } from './New-product-actions';
+import { setNewProduct, setNewPropetries, setOptions } from './New-product-actions';
 
 import {
     usersLoaded,
@@ -34,6 +39,8 @@ export {
     setProducts,
     setProductPropetries,
     setNewProduct,
+    setNewPropetries,
+    setOptions,
     setColors,
     productLoadingStatus,
     usersLoaded,

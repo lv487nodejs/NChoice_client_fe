@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import {
     Button,
@@ -13,6 +14,8 @@ import {
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import useStyle from './Table-nav-style';
+
+const pathToAddProductPage = '/productadd';
 
 const TableNav = () => {
     const classes = useStyle();
@@ -38,7 +41,7 @@ const TableNav = () => {
     return (
         <Grid className={classes.tableNav} container spacing={3} justify="center" alignItems="center">
             <Grid item xs={2}>
-                <Button variant="contained" color="primary" size="small">
+                <Button component={Link} to={pathToAddProductPage} variant="contained" color="primary" size="small">
                     NEW PRODUCT
                 </Button>
             </Grid>

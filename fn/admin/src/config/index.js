@@ -63,3 +63,16 @@ export const PRODUCT_ADD_STEPS_LABEL = [
     'Please provide product sizes information',
     'Please verify and confirm product saving',
 ];
+
+export const PRODUCT_KEYS = [
+    'catalog',
+    'category',
+    'brand',
+    'color',
+    'title',
+    'description',
+    'mrsp',
+    'price',
+];
+
+export const PROPETRIES_KEYS = ['size', 'available', 'sku'];

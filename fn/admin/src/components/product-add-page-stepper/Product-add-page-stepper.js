@@ -3,9 +3,12 @@ import { Stepper, Step, StepLabel, StepContent } from '@material-ui/core';
 
 import { SaveButton, StepperBackButton, StepperNextButton } from '../buttons';
 
-const SAVE_LABEL = 'SAVE PRODUCT';
+import { PRODUCT_ADD_STEPS_LABEL } from '../../config';
 
-const ProductAddPageStepper = ({ steps, labels, onSaveHandler }) => {
+const SAVE_LABEL = 'SAVE PRODUCT';
+const labels = PRODUCT_ADD_STEPS_LABEL;
+
+const ProductAddPageStepper = ({ steps, onSaveHandler }) => {
     const [activeStep, setActiveStep] = useState(0);
     const stepsLength = steps.length;
 
@@ -20,10 +23,13 @@ const ProductAddPageStepper = ({ steps, labels, onSaveHandler }) => {
 
     const lastStep = stepsLength - 1;
 
-    const saveButton = <SaveButton type="submit" title={SAVE_LABEL} />;
-    const nextButton = <StepperNextButton />;
-    const backButton = <StepperBackButton activeStep={activeStep} eventHandler={handleBack} />;
-    const doneButton = activeStep === lastStep ? saveButton : nextButton;
+    const buttons = {
+        nextButton: <StepperNextButton />,
+        backButton: <StepperBackButton activeStep={activeStep} eventHandler={handleBack} />,
+    };
+
+    if (activeStep === lastStep)
+        buttons.nextButton = <SaveButton type="submit" title={SAVE_LABEL} />;
 
     const stepperSteps = steps.map((step, index) => {
         const onSubmitHandler = lastStep === index ? onSaveHandler : handleNext;
@@ -34,8 +40,8 @@ const ProductAddPageStepper = ({ steps, labels, onSaveHandler }) => {
                 <StepContent>
                     <form onSubmit={onSubmitHandler}>
                         {step}
-                        {backButton}
-                        {doneButton}
+                        {buttons.backButton}
+                        {buttons.nextButton}
                     </form>
                 </StepContent>
             </Step>
