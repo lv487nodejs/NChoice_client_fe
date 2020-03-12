@@ -3,6 +3,7 @@ const initialState = {
     product: {},
     currency: 1,
     loading: true,
+    colors: [],
 };
 
 const productsList = (state = initialState, action) => {
@@ -24,6 +25,12 @@ const productsList = (state = initialState, action) => {
             return {
                 ...state,
                 product: action.payload,
+                loading: false,
+            };
+        case 'COLOR_LOADED':
+            return {
+                ...state,
+                colors: action.payload,
                 loading: false,
             };
 

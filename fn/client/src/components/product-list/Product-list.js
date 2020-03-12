@@ -12,7 +12,7 @@ import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
 import ProductSort from '../product-sort';
 
-const ProductList = ({ storeService, productsLoaded, productsRequested, catalogLoaded, products, loading, catalog }) => {
+const ProductList = ({ storeService, productsLoaded, productsRequested, catalogLoaded, products, loading, catalog, id }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
 

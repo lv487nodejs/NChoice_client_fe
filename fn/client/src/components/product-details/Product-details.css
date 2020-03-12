@@ -1,0 +1,44 @@
+.makeStyles-root-1 {
+  flex-grow: 1;
+  width: 80%;
+  margin: auto;
+}
+.MuiGrid-spacing-xs-2 {
+  margin: 0 !important;
+}
+.MuiGrid-spacing-xs-2 > .MuiGrid-item {
+  padding: 8px;
+  display: grid;
+  grid-gap: 10px;
+}
+.mainImageWrapper {
+  display: grid;
+}
+.descriptionWrapper {
+  padding-left: 5% !important;
+}
+.productColor {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  margin: 1rem;
+}
+.buttonsGroup {
+  display: grid;
+  justify-items: right;
+  font-family: "Oswald";
+  grid-template-columns: repeat(2, 13rem);
+  justify-content: right;
+}
+.button {
+  justify-self: center;
+}
+.title {
+  font-family: "Oswald";
+  text-transform: uppercase;
+}
+a {
+  justify-self: center;
+  color: #000 !important;
+  text-decoration: none !important;
+}

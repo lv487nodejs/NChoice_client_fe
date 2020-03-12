@@ -16,5 +16,9 @@ const currencyChange = newCurrency => ({
     type: 'CURRENCY_CHANGE',
     payload: newCurrency,
 });
+const colorLoaded = newColor => ({
+    type: 'COLOR_LOADED',
+    payload: newColor,
+});
 
-export { productsLoaded, productLoaded, productsRequested, currencyChange };
+export { productsLoaded, productLoaded, productsRequested, currencyChange, colorLoaded };
