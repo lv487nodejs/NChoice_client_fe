@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect } from 'react';
 import './Register.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { addUserToStore } from '../../actions'
-import {connect} from 'react-redux'
+import { addUserToStore } from "../../actions";
+import { connect } from "react-redux";
+
+
 
 const USER_DATA = {
     firstName: '',
@@ -13,8 +15,13 @@ const USER_DATA = {
     password: '',
 }
 
-const Register = () => {
+const Register = ({addUserToStore}) => {
     const[user, setUser] = useState(USER_DATA);
+    const [userDataResponse, setUserDataResponse] = useState({});
+
+    useEffect(() => {
+        addUserToStore(userDataResponse)
+    }, [userDataResponse]);
 
     const handleChange = (event) => {
         event.persist();
@@ -27,7 +34,10 @@ const Register = () => {
             method: 'post',
             url: 'https://stark-headland-06017.herokuapp.com/users/register',
             data: user
-        }).then((r) => console.log(r)).catch((e) => console.log(e))
+        })
+            .then(r => {
+                setUserDataResponse(r.data)})
+            .catch((e) => console.log(e))
     };
 
         return (
@@ -90,11 +100,13 @@ const Register = () => {
         );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-     addUserToStore: (value) => dispatch(addUserToStore(value)),
+const mapDispatchToProps = dispatch => ({
+    addUserToStore: (value) => dispatch(addUserToStore(value)),
 });
 
-export default connect() (Register);
+
+export default connect(null, mapDispatchToProps)(Register);
+
 
 
 // export function authHeader() {

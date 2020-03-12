@@ -5,28 +5,31 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import useForm from "./useForm";
 import validate from './LoginFormValidationRules';
+import { addUserToStore } from '../../actions'
+import {connect} from 'react-redux'
 
-const Login = () => {
+const Login = ({addUserToStore}) => {
+    const {form, setForm} = useState({firstName: null, lastName:null, email:null, password:null})
     const {
         values,
         errors,
-        //handleChange,
+        handleChange,
         //handleSubmit,
     } = useForm(login, validate);
-    function login() {
+    function login(token) {
+        localStorage.setItem('token', JSON.stringify(token))
         console.log('No errors, submit callback called!');
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event, route, value) => {
         if (event) event.preventDefault();
         axios({
             method: 'post',
-            url: 'https://stark-headland-06017.herokuapp.com/users/register',
-            data: {
-                email: user.email,
-                password: user.password
-            }
-        }).then((r) => console.log(r)).catch((e) => console.log(e))
+            url: `https://stark-headland-06017.herokuapp.com/auth/${route}`,
+            data: value
+        })
+            .then(r => login(r.data))
+            .catch((e) => console.log(e))
     };
 
     return (
@@ -38,7 +41,7 @@ const Login = () => {
                     type="email"
                     placeholder="Enter email"
                     name={'email'}
-                    value={user.email}
+                    value={values.email}
                     onChange={handleChange}
                     className={`input ${errors.email && 'is-danger'}`}
                 />
@@ -56,7 +59,7 @@ const Login = () => {
                     type="password"
                     placeholder="Password"
                     name={'password'}
-                    value={user.password}
+                    value={values.password}
                     onChange={handleChange}
                     className={`input ${errors.password && 'is-danger'}`}
                 />
@@ -77,7 +80,12 @@ const Login = () => {
 
 };
 
-export default Login;
+const mapDispatchToProps = dispatch => ({
+    addUserToStore: (value) => dispatch(addUserToStore(value)),
+});
+
+
+export default connect(mapDispatchToProps)(Login);
 
 
 //створити акшин і ред.сер для юзера

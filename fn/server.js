@@ -38,6 +38,6 @@ app.use('/brands', brands);
 app.use('/colors', colors);
 app.use('/generator', generator);
 
-const PORT = process.env.PORT || 5005;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
