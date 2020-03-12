@@ -33,14 +33,16 @@ const ProductList = ({
             text: 'sort by price asc',
             value: sortAsc,
             func: addSortByPrice,
+            variant: 'dark',
         },
         {
             text: 'sort by price desc',
             value: sortDesc,
             func: addSortByPrice,
+            variant: 'dark',
         },
     ];
-
+    
     useEffect(() => {
         productsRequested();
         catalogLoaded(catalog);
