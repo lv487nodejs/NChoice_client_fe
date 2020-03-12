@@ -27,18 +27,19 @@ const ProductList = ({
 }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
-    
-    
-    const sortByPriceAscOptions = {
-        text: 'sort by price asc',
-        value: sortAsc,
-        func: addSortByPrice,
-    };
-    const sortByPriceDescOptions = {
-        text: 'sort by price desc',
-        value: sortDesc,
-        func: addSortByPrice,
-    };
+
+    const sortOptions = [
+        {
+            text: 'sort by price asc',
+            value: sortAsc,
+            func: addSortByPrice,
+        },
+        {
+            text: 'sort by price desc',
+            value: sortDesc,
+            func: addSortByPrice,
+        },
+    ];
 
     useEffect(() => {
         productsRequested();
@@ -72,8 +73,8 @@ const ProductList = ({
             <div className="product-list-page">
                 <div className="products-options">
                     <SearchBar />
-                    <ProductSort options={sortByPriceAscOptions} />
-                    <ProductSort options={sortByPriceDescOptions} />
+                    <ProductSort options={sortOptions} />
+
                     <ProductListButtonPages
                         changeItems={changeItemsMethod}
                         changeCurrentPage={changePagination}
