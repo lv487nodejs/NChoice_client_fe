@@ -54,7 +54,7 @@ const ProductAddPropetriesItem = ({
     );
 };
 
-const mapStateToProps = ({ newProductState: { newProduct, newPropetries, loading } }) => ({
+const mapStateToProps = ({ newProductState: { newProduct, newPropetries } }) => ({
     newProduct,
     newPropetries,
 });
