@@ -308,7 +308,7 @@ GET:
 *Returns all products.*
 
 GET: 
-**http://localhost:5000/products?catalog=men&category=sweaters&brand=hikee&color=black**
+**http://localhost:5000/products?catalog=men&category=sweaters&brand=hikee&color=black&sortbyprice=1**
 
 
 
