@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Paper } from '@material-ui/core';
+import { TextField, Paper, Typography } from '@material-ui/core';
 import { SIZES_CLOTHES /* , SIZES_SHOES */ } from '../../config';
 import { SaveButton } from '../buttons';
 
@@ -13,7 +13,9 @@ const inputSize = 'size';
 const inputAvailable = 'available';
 const buttonLabel = 'ADD SIZE';
 
-const AddProductPropetries = ({ classes, newPropetry, onChangeEvent, onSubmitEvent }) => {
+const propsKeys = ['size', 'available', 'sku'];
+
+const AddProductPropetries = ({ classes, newPropetry, onChangeEvent, onSubmitEvent, values }) => {
     const sizeOptions = SIZES_CLOTHES.map(size => (
         <option key={size} value={size}>
             {size}
@@ -44,10 +46,15 @@ const AddProductPropetries = ({ classes, newPropetry, onChangeEvent, onSubmitEve
         );
     });
 
+    const addedPropetries = values.propetries.map(item =>
+        propsKeys.map(key => <Typography key={item[key]}>{`${key}: ${item[key]}`}</Typography>)
+    );
+
     return (
         <Paper className={classes.productPropetries}>
             {propetryTextFields}
             <SaveButton title={buttonLabel} eventHandler={onSubmitEvent} />
+            {addedPropetries}
         </Paper>
     );
 };

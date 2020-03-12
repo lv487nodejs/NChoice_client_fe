@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Button } from '@material-ui/core';
 
-const SaveButton = ({ title, eventHandler }) => (
-    <Button variant="contained" color="primary" onClick={eventHandler}>
+const SaveButton = ({ title, type, eventHandler }) => (
+    <Button variant="contained" color="primary" type={type} onClick={eventHandler}>
         {title}
     </Button>
 );

@@ -11,6 +11,7 @@ import {
     setBrands,
     brandLoadingStatus,
     setColors,
+    setNewProduct,
 } from '../../actions';
 
 import LoadingBar from '../loading-bar';
@@ -21,7 +22,6 @@ import ProductAddPageStepper from '../product-add-page-stepper';
 import ProductAddVerifyPage from '../product-add-verify-page';
 
 import {
-    NEW_PRODUCT_MODEL,
     NEW_PRODUCT_PROPETRIES,
     NEW_PRODUCT_DESCR,
     PRODUCT_ADD_STEPS_LABEL,
@@ -30,6 +30,7 @@ import {
 const ProductAddPage = ({
     adminService,
     loading,
+    newProduct,
     catalogs,
     categories,
     brands,
@@ -37,11 +38,11 @@ const ProductAddPage = ({
     setCatalogs,
     setCategories,
     setBrands,
+    setNewProduct,
     brandLoadingStatus,
     setColors,
 }) => {
     const classes = useStyles();
-    const [values, setValues] = useState(NEW_PRODUCT_MODEL);
     const [newPropetry, setPropetries] = useState(NEW_PRODUCT_PROPETRIES);
 
     useEffect(() => {
@@ -58,7 +59,7 @@ const ProductAddPage = ({
 
     const handleInputChange = event => {
         const { name, value } = event.target;
-        setValues({ ...values, [name]: value });
+        setNewProduct({ ...newProduct, [name]: value });
     };
 
     const handlePropetriesInputChange = event => {
@@ -67,12 +68,12 @@ const ProductAddPage = ({
     };
 
     const onSavePropetry = () => {
-        setValues({ ...values, propetries: [...values.propetries, newPropetry] });
-        setPropetries(NEW_PRODUCT_PROPETRIES);
+        setNewProduct({ ...newProduct, propetries: [...newProduct.propetries, newPropetry] });
     };
 
-    const onSaveProduct = () => {
-        adminService.postProduct(values).then(res => console.log(res));
+    const onSaveProduct = event => {
+        event.preventDefault();
+        adminService.postProduct(newProduct).then(res => console.log(res));
     };
 
     const productOptionGroups = [catalogs, categories, brands, colors];
@@ -80,7 +81,7 @@ const ProductAddPage = ({
     const productAddOptions = (
         <ProductAddItemOptions
             classes={classes}
-            values={values}
+            values={newProduct}
             optionGroups={productOptionGroups}
             onChangeEvent={handleInputChange}
         />
@@ -91,7 +92,7 @@ const ProductAddPage = ({
             key={option}
             classes={classes}
             option={option}
-            values={values}
+            values={newProduct}
             onChangeEvent={handleInputChange}
         />
     ));
@@ -100,13 +101,13 @@ const ProductAddPage = ({
         <ProductAddPropetries
             classes={classes}
             newPropetry={newPropetry}
-            values={values}
+            values={newProduct}
             onChangeEvent={handlePropetriesInputChange}
             onSubmitEvent={onSavePropetry}
         />
     );
 
-    const productVerifyPage = <ProductAddVerifyPage product={values} />;
+    const productVerifyPage = <ProductAddVerifyPage product={newProduct} />;
 
     const stepperSteps = [
         productAddOptions,
@@ -131,13 +132,15 @@ const mapStateToProps = ({
     categoriesState: { categories },
     brandsState: { brands, loading },
     colorsState: { colors },
+    newProductState: { newProduct },
 }) => ({
+    newProduct,
     brands,
     catalogs,
     categories,
     colors,
     loading,
 });
-const mapDispatchToProps = { setCatalogs, setCategories, setColors, setBrands, brandLoadingStatus };
+const mapDispatchToProps = { setCatalogs, setCategories, setColors, setBrands, setNewProduct, brandLoadingStatus };
 
 export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(ProductAddPage));

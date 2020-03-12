@@ -6,6 +6,8 @@ import { setCategory, setCategories, categoryLoadingStatus } from './Categories-
 
 import { setProduct, setProducts, setProductPropetries, productLoadingStatus } from './Products-actions';
 
+import { setNewProduct } from './New-product-actions';
+
 import {
     usersLoaded,
     usersRequested,
@@ -15,6 +17,7 @@ import {
     userSave,
     userSetRole,
 } from './Users-actions';
+
 import { setColors } from './Colors-actions';
 
 export {
@@ -30,6 +33,7 @@ export {
     setProduct,
     setProducts,
     setProductPropetries,
+    setNewProduct,
     setColors,
     productLoadingStatus,
     usersLoaded,

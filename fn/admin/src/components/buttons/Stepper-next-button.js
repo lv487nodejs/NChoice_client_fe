@@ -4,8 +4,8 @@ import { Button } from '@material-ui/core';
 
 const NEXT_BUTTON_TITLE = 'Next';
 
-const StepperNextButton = ({ eventHandler }) => (
-    <Button variant="contained" color="primary" onClick={eventHandler}>
+const StepperNextButton = (/* { eventHandler } */) => (
+    <Button variant="contained" color="primary" type="submit" /* onClick={eventHandler} */>
         {NEXT_BUTTON_TITLE}
     </Button>
 );
