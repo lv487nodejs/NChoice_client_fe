@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import './Register.css';
-import { Form, Button, Col, InputGroup } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import { addUserToStore } from '../../actions'
+import {connect} from 'react-redux'
 
 const USER_DATA = {
     firstName: '',
@@ -24,20 +25,10 @@ const Register = () => {
         if (event) event.preventDefault();
         axios({
             method: 'post',
-            url: 'https://stark-headland-06017.herokuapp.com/users',
-            data: {
-                firstName: user.lastName,
-                lastName: user.lastName,
-                email: user.email,
-                password: user.password
-
-            }
-        }).then((r) => console.log(r)).catch((e) => console.log(e))//приймати респонс).then()
+            url: 'https://stark-headland-06017.herokuapp.com/users/register',
+            data: user
+        }).then((r) => console.log(r)).catch((e) => console.log(e))
     };
-
-
-
-    console.log(user);
 
         return (
             <Form className="register" onSubmit={handleSubmit}>
@@ -89,18 +80,21 @@ const Register = () => {
                     <Form.Control type="password" placeholder="Password"/>
                 </Form.Group>
                 <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out"/>
+                    <Form.Check type="checkbox" label="I agree to terms"/>
                 </Form.Group>
                 <Button variant="primary" type="submit" >
                     Submit
                 </Button>
-                <Link to="/login" className="btn btn-link">Cancel</Link>
+                <Link to="/login" className="btn btn-link">Return to Login</Link>
             </Form>
         );
-
 }
 
-export default Register;
+const mapDispatchToProps = (dispatch) => ({
+     addUserToStore: (value) => dispatch(addUserToStore(value)),
+});
+
+export default connect() (Register);
 
 
 // export function authHeader() {
@@ -114,3 +108,5 @@ export default Register;
 //     }
 // }
 
+//кожен запи в хедері має давати токен. аксіос має поле хедер.
+// https://stark-headland-06017.herokuapp.com/auth/login
