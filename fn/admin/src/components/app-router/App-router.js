@@ -16,6 +16,7 @@ import NavBar from '../nav-bar';
 import NavMenu from '../nav-menu';
 import ProductPage from '../product-page/Product-page';
 import ProductAddPage from '../product-add-page';
+import CategoryAddPage from '../category-add-page';
 
 const pathToProducts = '/products';
 const pathToUsers = '/users';
@@ -38,6 +39,7 @@ const AppRouter = () => (
             <Route path={pathToBrands} exact component={BrandsPageContainer} />
             <Route path={pathToCategories} exact component={CategoriesPageContainer} />
             <Route path={pathToCategoriesDetails} exact component={CategoryDetailsPageContainer} />
+            <Route path="/addcategory" exact component={CategoryAddPage} />
             <Route path="/addproduct" exact component={ProductAddPage} />
             <Route path="/prodtest" exact component={ProductPage} />
         </Switch>

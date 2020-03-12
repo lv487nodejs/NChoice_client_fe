@@ -1,6 +1,7 @@
 const initialState = {
     categories: [],
     category: {},
+    catalogsToUpdate: [],
     loading: true,
     open: false,
 };
@@ -11,6 +12,12 @@ const categoriesState = (state = initialState, action) => {
             return {
                 ...state,
                 loading: true,
+            };
+
+        case 'LOADING_STOP':
+            return {
+                ...state,
+                loading: false,
             };
 
         case 'SET_CATEGORY':
@@ -35,6 +42,11 @@ const categoriesState = (state = initialState, action) => {
             return {
                 ...state,
                 open: false,
+            };
+        case 'UPDATE_CATALOGS':
+            return {
+                ...state,
+                catalogsToUpdate: action.payload,
             };
         default:
             return state;

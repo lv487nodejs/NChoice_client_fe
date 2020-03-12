@@ -8,9 +8,16 @@ import {
     categoryLoadingStatus,
     categorySnackbarOpenTrue,
     categorySnackbarOpenFalse,
+    categoryUpdateCatalogs,
+    categoryLoadingStop,
 } from './Categories-actions';
 
-import { setProduct, setProducts, setProductPropetries, productLoadingStatus } from './Products-actions';
+import {
+    setProduct,
+    setProducts,
+    setProductPropetries,
+    productLoadingStatus,
+} from './Products-actions';
 
 import {
     usersLoaded,
@@ -47,4 +54,6 @@ export {
     userSetRole,
     categorySnackbarOpenTrue,
     categorySnackbarOpenFalse,
+    categoryUpdateCatalogs,
+    categoryLoadingStop,
 };
