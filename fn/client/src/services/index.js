@@ -76,4 +76,14 @@ export default class StoreService {
         const colors = await this.getResource('colors');
         return colors;
     };
+
+    getAllCarts = async () => {
+        const carts = await this.getResource('cart');
+        return carts;
+    };
+
+    getCartById = async id => {
+        const cart = await this.getResource(`cart/${id}`);
+        return cart;
+    };
 }
