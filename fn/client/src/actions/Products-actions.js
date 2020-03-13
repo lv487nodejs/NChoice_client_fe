@@ -23,5 +23,17 @@ const addPagesCount = value => ({
     type: 'ADD_PAGES_COUNT',
     payload: value,
 });
+const addSortByPrice = value => ({
+    type: 'SORT_BY_PRICE',
+    payload: value,
+});
 
-export { productsLoaded, productsRequested, currencyChange, addCurrentPage, addPostsPerPage, addPagesCount };
+export {
+    productsLoaded,
+    productsRequested,
+    currencyChange,
+    addCurrentPage,
+    addPostsPerPage,
+    addPagesCount,
+    addSortByPrice,
+};

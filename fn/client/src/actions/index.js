@@ -6,6 +6,7 @@ import {
     addCurrentPage,
     addPostsPerPage,
     addPagesCount,
+    addSortByPrice,
 } from './Products-actions';
 
 import {
@@ -41,4 +42,5 @@ export {
     addCurrentPage,
     addPostsPerPage,
     addPagesCount,
+    addSortByPrice,
 };

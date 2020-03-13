@@ -8,7 +8,7 @@ import {
     filterRemoveCategory,
     filterRemoveBrand,
     productsLoaded,
-    addPagesCount,
+    addPagesCount,  
 
 } from '../../actions';
 
@@ -33,6 +33,8 @@ const Filter = ({
     currentPage,
     postsPerPage,
     addPagesCount,
+    sortByPrice,
+
 }) => {
     const [getBrands, setBrands] = useState([]);
     const [getCategories, setCategories] = useState([]);
@@ -59,11 +61,11 @@ const Filter = ({
     }, [storeService]);
 
     useEffect(() => {
-        storeService.getProductsByFilter({ catalog, brand, color, category, currentPage, postsPerPage }).then(res => {
+        storeService.getProductsByFilter({ catalog, brand, color, category, currentPage, postsPerPage,sortByPrice }).then(res => {
             productsLoaded(res.products);
             addPagesCount(res.pagesCount);
         });
-    }, [brand, category, catalog, color, storeService, productsLoaded, currentPage, postsPerPage, addPagesCount]);
+    }, [brand, category, catalog, color, storeService, productsLoaded, currentPage, postsPerPage, addPagesCount,sortByPrice]);
 
     const filterAddBrandHandler = (e, item) => {
         if (e.target.checked) {
@@ -97,7 +99,8 @@ const Filter = ({
     );
 };
 const mapStateToProps = ({
-    productsList: { currentPage, postsPerPage },
+    productsList: { currentPage, postsPerPage,sortByPrice },
+
     filter: { brand, category, color },
     catalogsList: { catalog },
 }) => ({
@@ -107,6 +110,7 @@ const mapStateToProps = ({
     catalog,
     currentPage,
     postsPerPage,
+    sortByPrice,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -7,10 +7,20 @@ import ProductListButtonPages from '../product-list-button-pages';
 import Filter from '../filter';
 
 import SearchBar from '../search-bar/search-bar';
-import { productsLoaded, productsRequested, catalogLoaded, addCurrentPage, addPostsPerPage } from '../../actions';
+import {
+    productsLoaded,
+    productsRequested,
+    catalogLoaded,
+    addCurrentPage,
+    addPostsPerPage,
+    addSortByPrice,
+} from '../../actions';
 import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
 import ProductSort from '../product-sort';
+
+const sortAsc = 1;
+const sortDesc = -1;
 
 const ProductList = ({
     storeService,
@@ -23,7 +33,23 @@ const ProductList = ({
     addPostsPerPage,
     addCurrentPage,
     pagesCount,
+    addSortByPrice,
 }) => {
+    const sortOptions = [
+        {
+            text: 'sort by price asc',
+            value: sortAsc,
+            func: addSortByPrice,
+            variant: 'dark',
+        },
+        {
+            text: 'sort by price desc',
+            value: sortDesc,
+            func: addSortByPrice,
+            variant: 'dark',
+        },
+    ];
+
     useEffect(() => {
         productsRequested();
         catalogLoaded(catalog);
@@ -51,8 +77,8 @@ const ProductList = ({
             <div className="product-list-page">
                 <div className="products-options">
                     <SearchBar />
-                    <ProductSort />
-                    <ProductSort />
+                    <ProductSort options={sortOptions} />
+
                     <ProductListButtonPages
                         changeItems={changeItemsMethod}
                         changeCurrentPage={changePagination}
@@ -76,6 +102,7 @@ const mapDispatchToProps = {
     catalogLoaded,
     addCurrentPage,
     addPostsPerPage,
+    addSortByPrice,
 };
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));
