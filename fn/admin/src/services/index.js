@@ -31,6 +31,15 @@ export default class AdminService {
         }
     };
 
+    deleteResource = async url => {
+        try {
+            const response = await axios.delete(`${SERVER_URL}${url}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     getAllProducts = async () => {
         const catalogs = await this.getResource('products');
         return catalogs;
@@ -94,7 +103,7 @@ export default class AdminService {
     };
 
     putCatalog = async (id, catalog) => {
-        const res = await this.putData(`catalogs/${id}`, catalog);
+        const res = await this.putData(`catalogs/${id}`, { catalog });
         return res;
     };
 
@@ -120,6 +129,11 @@ export default class AdminService {
 
     postCategory = async category => {
         const res = await this.postData('categories', category);
+        return res;
+    };
+
+    delteCategory = async id => {
+        const res = await this.deleteResource(`categories/${id}`);
         return res;
     };
 

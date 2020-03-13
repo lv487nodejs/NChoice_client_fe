@@ -65,12 +65,10 @@ const CategoryAddPage = props => {
             category: categoryName,
         };
         adminService.postCategory(newCategory).then(res => {
-            catalogsToUpdate.forEach(catalogId => {
-                const catalogCategoryToSave = {
-                    categories: [res._id],
-                };
-
-                adminService.putCatalog(catalogId, catalogCategoryToSave).then(res => {
+            catalogsToUpdate.forEach(catalog => {
+                catalog.categories.push(res._id);
+                console.log(catalog);
+                adminService.putCatalog(catalog._id, catalog).then(res => {
                     categorySnackbarOpenTrue();
                     setCategoryName('');
                 });
@@ -78,8 +76,8 @@ const CategoryAddPage = props => {
         });
     };
 
-    const handleCheck = id => event => {
-        categoryUpdateCatalogs([...catalogsToUpdate, id]);
+    const handleCheck = catalog => event => {
+        categoryUpdateCatalogs([...catalogsToUpdate, catalog]);
     };
 
     const closeSnackbarHandler = () => {
@@ -97,7 +95,7 @@ const CategoryAddPage = props => {
                         id={catalogName}
                         color="primary"
                         value={catalogName}
-                        onChange={handleCheck(catalog._id)}
+                        onChange={handleCheck(catalog)}
                     />
                 }
                 label={catalogName.toUpperCase()}
