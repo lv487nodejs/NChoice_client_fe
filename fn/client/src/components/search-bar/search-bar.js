@@ -14,7 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const SearchBar = ({ storeService, catalog, productsLoaded, filterByName, handler, searchTerm }) => {
     useEffect(() => {
         storeService.getProductsByFilter({ searchTerm }).then(res => {
-            productsLoaded(res);
+            productsLoaded(res.products);
         });
     }, [searchTerm, storeService, productsLoaded]);
 

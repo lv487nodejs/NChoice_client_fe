@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
         const sort = await getSort(query);
 
         const products = await Products.find(filter, projection)
-            .sort({price: sortbyprice })
+            .sort({sort, price: sortbyprice })
             .skip(+skip)
             .limit(+postsperpage)
             .populate('catalog')
