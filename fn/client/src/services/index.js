@@ -13,22 +13,23 @@ export default class StoreService {
     };
 
     getAllProducts = async () => {
-        const catalogs = await this.getResource('products');
-        return catalogs;
+        const products = await this.getResource('products');
+        return products;
     };
 
     getProductById = async id => {
-        const catalogs = await this.getResource(`products/${id}`);
-        return catalogs;
+
+        const products = await this.getResource(`products/${id}`);
+        return products;
     };
 
     getProductsByFilter = async filter => {
         let queryString = 'products/?';
-<<<<<<< HEAD
+
         const { brand, color, category, catalog, currentPage, postsPerPage } = filter;
-=======
         const { brand, color, category, catalog, sortByPrice, sortByRate } = filter;
->>>>>>> origin/sort-backend
+
+        const { brand, color, category, catalog, searchTerm } = filter;
         if (brand) {
             queryString = `${queryString}&brand=${brand}`;
         }
@@ -41,14 +42,13 @@ export default class StoreService {
         if (catalog) {
             queryString = `${queryString}&catalog=${catalog}`;
         }
-<<<<<<< HEAD
+
         if (currentPage) {
             queryString = `${queryString}&currentpage=${currentPage}`;
         }
         if (postsPerPage) {
             queryString = `${queryString}&postsperpage=${postsPerPage}`;
         }
-=======
         if (sortByPrice) {
             queryString = `${queryString}&sortbyprice=${sortByPrice}`;
         }
@@ -56,9 +56,15 @@ export default class StoreService {
             queryString = `${queryString}&sortbyrate=${sortByRate}`;
         }
 
->>>>>>> origin/sort-backend
         const catalogs = await this.getResource(queryString);
         return catalogs;
+        if (searchTerm) {
+            queryString = `${queryString}&searchTerm=${searchTerm}`;
+        }
+        const products = await this.getResource(queryString);
+        return products;
+        // const catalogs = await this.getResource(queryString);
+        // return catalogs;
     };
 
     getAllCatalogs = async () => {
