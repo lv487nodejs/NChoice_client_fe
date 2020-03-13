@@ -16,6 +16,7 @@
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.1.0",
     "config": "^3.2.5",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
@@ -23,10 +24,12 @@
     "mongoose": "^5.9.0",
     "morgan": "^1.9.1",
     "react-redux": "^7.2.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "rotating-file-stream": "^2.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
+    "chance": "^1.1.4",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.10.0",

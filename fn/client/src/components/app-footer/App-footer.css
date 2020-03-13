@@ -1,0 +1,21 @@
+.footer {
+    margin-top: 7rem;
+}
+
+.footer-inner {
+    background-color: black;
+    color: white;
+}
+
+.footer .icon {
+    color: white;
+    font-size: 3rem;
+    transition: all .5s;
+    padding: .5rem;
+    border-radius: 100%;
+}
+
+.footer .icon:hover {
+    color: black;
+    background-color: white;
+}

@@ -126,6 +126,8 @@ router.put('/:id', async (req, res) => {
     if (Array.isArray(propetries) && images.propetries) {
         productToUpdate.propetries.push(...propetries);
     }
+
+
 });
 
 router.delete('/:id', async (req, res) => {

@@ -32,8 +32,17 @@ const UserModel = new Schema({
         default: Date.now,
     },
     tokens: [String],
-    wishlist: [{ type: Schema.Types.ObjectId, ref: 'product' }],
+    wishlist: [String],
+    cart: {
+        type: Schema.Types.ObjectId,
+        ref: 'cart'
+    },
+    orders: {
+        type: Schema.Types.ObjectId, 
+        ref: 'order'
+    }
 });
 
 const Users = mongoose.model('user', UserModel);
 module.exports = Users;
+

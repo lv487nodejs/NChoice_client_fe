@@ -57,7 +57,7 @@ router.put('/:id', async (req, res) => {
     const { name, images } = req.body;
     try {
         const brandToUpdate = await Brands.findById(id);
-        if (!brandToUpdate) throw { message: 'Brand not found!' };
+        if (!brandToUpdate) throw { message: 'Brand not found!' }
 
         if (name) {
             brandToUpdate.brand = name;

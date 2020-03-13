@@ -56,7 +56,7 @@ router.put('/:id', async (req, res) => {
     const { name, images } = req.body;
     try {
         const categoryToUpdate = await Categories.findById(id);
-        if (!categoryToUpdate) throw { message: 'Category not found!' };
+        if (!categoryToUpdate) throw { message: 'Category not found!' }
 
         if (name) {
             categoryToUpdate.category = name;

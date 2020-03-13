@@ -56,7 +56,7 @@ router.put('/:id', async (req, res) => {
     const { name, images } = req.body;
     try {
         const colorToUpdate = await Colors.findById(id);
-        if (!colorToUpdate) throw { message: 'Color not found!' };
+        if (!colorToUpdate) throw { message: 'Color not found!' }
 
         if (name) {
             colorToUpdate.color = name;

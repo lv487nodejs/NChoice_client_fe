@@ -6,14 +6,14 @@ const CatalogSchema = new Schema({
     catalog: {
         type: String,
         required: true,
-        unique: true,
+        unique: true
     },
     images: [String],
     categories: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'category',
-        },
+            ref: 'category'
+        }
     ],
 });
 

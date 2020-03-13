@@ -1,0 +1,42 @@
+.nav-bar li {
+    display: inline-block;
+    margin:0;
+    padding:0;
+}
+
+.dropdown-item ul {
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+}
+
+.nav-bar a {
+    font-family: 'Oswald';
+    text-decoration: none;
+    font-size: 1.3rem;
+    color: white;
+    transition: all 0.3s;
+    text-transform: uppercase;
+}
+
+.nav-bar a:hover {
+    color: black;
+    background-color: white;
+}
+
+.link-button{
+    background: black;
+    color: white;
+    margin: 10px;
+}
+.link-name{
+    color: white;
+}
+.link-name:hover{
+    color: white;
+    text-decoration: none;
+}
+.link-name a:hover{
+    color: black;
+    background-color: white;
+}

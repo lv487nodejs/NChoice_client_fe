@@ -3,6 +3,13 @@ const morgan = require('morgan');
 const cors = require('cors');
 
 const connectDB = require('./config/db');
+const path = require('path');
+const rfs = require('rotating-file-stream');
+
+const accessLogStream = rfs.createStream('access.log', {
+    interval: '3d',
+    path: path.join(__dirname, 'logs')
+});
 
 const auth = require('./routes/users/auth');
 const users = require('./routes/users/users');
@@ -12,11 +19,14 @@ const categories = require('./routes/products/categories');
 const brands = require('./routes/products/brands');
 const colors = require('./routes/products/colors');
 const generator = require('./routes/products/generator');
+const orders = require('./routes/purchase/order');
+
 
 const app = express();
 app.use(cors());
 connectDB();
 
+app.use(morgan('combined', { stream: accessLogStream }));
 app.use(morgan('dev'));
 app.use(express.json({ extended: false }));
 
@@ -30,6 +40,8 @@ app.use('/categories', categories);
 app.use('/brands', brands);
 app.use('/colors', colors);
 app.use('/generator', generator);
+app.use('/orders', orders);
+
 
 const PORT = process.env.PORT || 5000;
 
