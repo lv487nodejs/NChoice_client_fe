@@ -24,8 +24,7 @@ router.get('/', async (req, res) => {
         const projection = await getProjection(query);
         const sort = await getSort(query);
 
-        const products = await Products.find(filter)
-            .skip(+skip)
+        const products = await Products.find(filter, projection).sort(sort).skip(+skip)
             .limit(+postsperpage)
             .sort({ price: sortbyprice })
             .populate('catalog')
