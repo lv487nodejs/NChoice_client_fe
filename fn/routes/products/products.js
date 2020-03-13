@@ -12,17 +12,17 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
-    let { currentpage, postsperpage, sortbyprice } = query;
+    let { currentpage, postsperpage } = query;
     currentpage = currentpage || 1;
     postsperpage = postsperpage || 15;
-    const skip = currentpage * postsperpage;
+    const skip = (currentpage-1) * postsperpage;
     try {
         const filter = await getFilters(query);
         const projection = await getProjection(query);
         const sort = await getSort(query);
 
         const products = await Products.find(filter, projection)
-            .sort({ price: sortbyprice })
+            .sort(sort)
             .skip(+skip)
             .limit(+postsperpage)
             .populate('catalog')
@@ -206,10 +206,12 @@ const getProjection = async query => {
 };
 
 const getSort = async query => {
-    const { searchTerm } = query;
+    const { searchTerm, sortbyprice } = query;
     const sort = {};
 
-    if (isNotBlank(searchTerm)) {
+    if (isNotBlank(sortbyprice)) {
+      sort.price = sortbyprice;
+    } else if (isNotBlank(searchTerm)) {
         // sort by relevance
         sort.score = { $meta: 'textScore' };
     }
