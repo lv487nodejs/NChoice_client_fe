@@ -13,9 +13,9 @@ const Login = () => {
         errors,
         handleChange,
         handleSubmit,
-    } = useForm(addDataToLokalStorage, validate);
+    } = useForm(addDataToLoсalStorage, validate);
 
-    function addDataToLokalStorage(token) {
+    function addDataToLoсalStorage(token) {
         localStorage.setItem('token', JSON.stringify(token));
         console.log('No errors, submit callback called!');
     }
@@ -72,9 +72,4 @@ const Login = () => {
 
 
 export default Login;
-
-
-//створити акшин і ред.сер для юзера
-// логін з токеном. токерн  с торедж
-// загнати дані юхерав в редакс (обвязати компонет коннектом)  з відео
 

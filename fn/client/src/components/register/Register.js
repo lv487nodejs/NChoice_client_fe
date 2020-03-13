@@ -6,9 +6,6 @@ import axios from 'axios';
 import { addUserToStore } from "../../actions";
 import { connect } from "react-redux";
 
-
-
-
 const USER_DATA = {
     firstName: '',
     lastName: '',
@@ -111,17 +108,3 @@ const mapDispatchToProps = dispatch => ({
 export default connect(null, mapDispatchToProps)(Register);
 
 
-
-// export function authHeader() {
-//     // return authorization header with jwt token
-//     let user = JSON.parse(localStorage.getItem('user'));
-//
-//     if (user && user.token) {
-//         return { 'Authorization': 'Bearer ' + user.token };
-//     } else {
-//         return {};
-//     }
-// }
-
-//кожен запи в хедері має давати токен. аксіос має поле хедер.
-// https://stark-headland-06017.herokuapp.com/auth/login
