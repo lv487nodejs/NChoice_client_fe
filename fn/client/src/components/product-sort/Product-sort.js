@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 
 const ProductSort = ({ options }) => {
     const buttons = options.map(({ text, value, variant, func }) => (
-        <Button variant={variant} value={value} onClick={() => func(value)}>
+        <Button key={text} variant={variant} value={value} onClick={() => func(value)}>
             {text}
         </Button>
     ));
