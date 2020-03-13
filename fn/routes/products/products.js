@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
-    let { currentpage, postsperpage } = query;
+    let { currentpage, postsperpage, sortbyprice } = query;
     currentpage = currentpage || 1;
     postsperpage = postsperpage || 15;
     const skip = currentpage * postsperpage;
@@ -20,6 +20,7 @@ router.get('/', async (req, res) => {
         const filter = await getFilters(query);
 
         const products = await Products.find(filter)
+            .sort({ price: sortbyprice })
             .skip(+skip)
             .limit(+postsperpage)
             .populate('catalog')
