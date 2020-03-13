@@ -5,10 +5,11 @@ const { catalogValidationRules, validate } = require('../../middleware/validator
 const router = express.Router();
 
 router.post('/', catalogValidationRules(), validate, async (req, res) => {
-    const { catalog, images } = req.body;
+    const { catalog, images, categories } = req.body;
     try {
         const newCatalog = new Catalogs({
             catalog,
+            categories,
             images,
         });
         await newCatalog.save();
@@ -24,7 +25,7 @@ router.get('/', async (req, res) => {
     try {
         // check if object query is not empty
         if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
-            catalogs = await Catalogs.find({ catalog }).populate('categories');
+            catalogs = await Catalogs.find({ catalog: { $in: catalog.split(',') } }).populate('categories');
         } else {
             catalogs = await Catalogs.find().populate('categories');
         }
@@ -46,6 +47,30 @@ router.get('/:id', async (req, res) => {
             throw { message: 'Can not find catalog with such an ID' };
         }
         res.status(200).send(catalog);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { catalog } = req.body;
+    try {
+        const updatedCatalog = await Catalogs.findByIdAndUpdate(id, catalog);
+        res.status(200).send(updatedCatalog);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await Catalogs.findByIdAndDelete({ _id: id });
+        if (!response) {
+            return res.status(404).send('Catalog does not exist!');
+        }
+        res.status(200).send(`Catalog ${response.catalog} successfully deleted!`);
     } catch (err) {
         res.status(400).send(err);
     }

@@ -1,5 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 const tokenValidation = require('../../middleware/auth');
 
 const Users = require('../../models/User');
@@ -30,8 +32,8 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', userValidationRules(), validate, async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
+router.post('/register', userValidationRules(), validate, async (req, res) => {
+    const { firstName, lastName, email, password, role } = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -40,13 +42,23 @@ router.post('/', userValidationRules(), validate, async (req, res) => {
             firstName,
             lastName,
             email,
+            role,
             password: hashedPassword,
         });
+
+        const userName = { name: user.email };
+        const accessToken = generateAccessToken(userName);
+        const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
+
+        user.tokens = [];
+        user.tokens.push(refreshToken);
         await user.save();
-        res.status(200).send({ message: 'User saved', user });
+        res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
 });
+
+const generateAccessToken = userName => jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
 
 module.exports = router;

@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
     try {
         // check if object query is not empty
         if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
-            colors = await Colors.find({ color });
+            colors = await Colors.find({ color: { $in: color.split(',') } });
         } else {
             colors = await Colors.find();
         }
@@ -46,6 +46,41 @@ router.get('/:id', async (req, res) => {
             throw { message: 'Can not find color with such an ID' };
         }
         res.status(200).send(color);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, images } = req.body;
+    try {
+        const colorToUpdate = await Colors.findById(id);
+        if (!colorToUpdate) throw { message: 'Color not found!' };
+
+        if (name) {
+            colorToUpdate.color = name;
+        }
+
+        if (Array.isArray(images) && images.length) {
+            colorToUpdate.images.push(...images);
+        }
+
+        await colorToUpdate.save();
+        res.status(200).send(colorToUpdate);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await Colors.findByIdAndDelete({ _id: id });
+        if (!response) {
+            return res.status(404).send('Color does not exist!');
+        }
+        res.status(200).send(`Color ${response.color} successfully deleted!`);
     } catch (err) {
         res.status(400).send(err);
     }
