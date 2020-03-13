@@ -5,8 +5,8 @@ const addUserToStore = (value) => {
     }
 }
 
-const loginUser = userObj => ({
-    type: 'LOGIN_USER',
-    payload: userObj
-})
-export { addUserToStore, loginUser };
+// const loginUser = userObj => ({
+//     type: 'LOGIN_USER',
+//     payload: userObj
+// })
+ export { addUserToStore };
