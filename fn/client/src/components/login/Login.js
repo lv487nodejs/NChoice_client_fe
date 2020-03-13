@@ -14,23 +14,13 @@ const Login = ({addUserToStore}) => {
         values,
         errors,
         handleChange,
-        //handleSubmit,
+        handleSubmit,
     } = useForm(login, validate);
     function login(token) {
         localStorage.setItem('token', JSON.stringify(token))
         console.log('No errors, submit callback called!');
     }
 
-    const handleSubmit = (event, route, value) => {
-        if (event) event.preventDefault();
-        axios({
-            method: 'post',
-            url: `https://stark-headland-06017.herokuapp.com/auth/${route}`,
-            data: value
-        })
-            .then(r => login(r.data))
-            .catch((e) => console.log(e))
-    };
 
     return (
         <div className={'login'}>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from "axios";
 
 const useForm = (callback, validate) => {
 
@@ -12,10 +13,17 @@ const useForm = (callback, validate) => {
         }
     }, [errors, callback]);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event, route, value) => {
         if (event) event.preventDefault();
-        setErrors(validate(values));
-        setIsSubmitting(true);
+        //setErrors(validate(value));
+        //setIsSubmitting(true);
+        axios({
+            method: 'post',
+            url: `https://stark-headland-06017.herokuapp.com/auth/${route}`,
+            data: value
+        })
+            .then(r => login(r.data))
+            .catch((e) => console.log(e))
     };
 
     const handleChange = (event) => {
