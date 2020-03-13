@@ -5,7 +5,7 @@ const useForm = (callback, validate) => {
 
     const [values, setValues] = useState({});
     const [errors, setErrors] = useState({});
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    // const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         if (Object.keys(errors).length === 0 && isSubmitting) {
@@ -15,8 +15,8 @@ const useForm = (callback, validate) => {
 
     const handleSubmit = (event, route, value) => {
         if (event) event.preventDefault();
-        //setErrors(validate(value));
-        //setIsSubmitting(true);
+        setErrors(validate(value));
+        // setIsSubmitting(true);
         axios({
             method: 'post',
             url: `https://stark-headland-06017.herokuapp.com/auth/${route}`,

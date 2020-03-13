@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 
 
 
+
 const USER_DATA = {
     firstName: '',
     lastName: '',
@@ -36,7 +37,9 @@ const Register = ({addUserToStore}) => {
             data: user
         })
             .then(r => {
-                setUserDataResponse(r.data)})
+                setUserDataResponse(r.data)
+                console.log('USER REGISTERED')
+            })
             .catch((e) => console.log(e))
     };
 
