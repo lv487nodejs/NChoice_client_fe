@@ -4,6 +4,7 @@ const addUserToStore = (value) => {
         payload: value
     }
 }
+
 const loginUser = userObj => ({
     type: 'LOGIN_USER',
     payload: userObj

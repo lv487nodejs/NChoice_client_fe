@@ -1,30 +1,29 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import useForm from "./useForm";
 import validate from './LoginFormValidationRules';
-import { addUserToStore } from '../../actions'
-import {connect} from 'react-redux'
 
-const Login = ({addUserToStore}) => {
-    const {form, setForm} = useState({firstName: null, lastName:null, email:null, password:null})
+
+
+const Login = () => {
     const {
         values,
         errors,
         handleChange,
         handleSubmit,
     } = useForm(login, validate);
+
     function login(token) {
-        localStorage.setItem('token', JSON.stringify(token))
+        localStorage.setItem('token', JSON.stringify(token));
         console.log('No errors, submit callback called!');
     }
 
 
     return (
         <div className={'login'}>
-        <Form onSubmit={handleSubmit} noValidate>
+        <Form onSubmit={(e) => handleSubmit(e, 'login', values)} noValidate>
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
@@ -70,15 +69,12 @@ const Login = ({addUserToStore}) => {
 
 };
 
-const mapDispatchToProps = dispatch => ({
-    addUserToStore: (value) => dispatch(addUserToStore(value)),
-});
 
 
-export default connect(mapDispatchToProps)(Login);
+export default Login;
 
 
 //створити акшин і ред.сер для юзера
 // логін з токеном. токерн  с торедж
-// загнати дані юхерав в редакс (обвязати компонет коннектом)  12 з відео
+// загнати дані юхерав в редакс (обвязати компонет коннектом)  з відео
 

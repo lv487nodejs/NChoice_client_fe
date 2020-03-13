@@ -1,6 +1,7 @@
 const initialState = {
     user: {}
 }
+
 const authReducer = (state = initialState, action) => {
     switch(action.type) {
         case 'ADD_USER':
@@ -13,4 +14,5 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export default authReducer;
+
+export default authReducer;1

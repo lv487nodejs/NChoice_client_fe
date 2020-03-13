@@ -22,7 +22,7 @@ const useForm = (callback, validate) => {
             url: `https://stark-headland-06017.herokuapp.com/auth/${route}`,
             data: value
         })
-            .then(r => login(r.data))
+            .then(r => callback(r.data))
             .catch((e) => console.log(e))
     };
 
