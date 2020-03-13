@@ -12,16 +12,20 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
+
     let { currentpage, postsperpage } = query;
     currentpage = currentpage || 1;
     postsperpage = postsperpage || 15;
     const skip = currentpage * postsperpage;
+    const { sortbyprice } = query;
+
     try {
         const filter = await getFilters(query);
 
         const products = await Products.find(filter)
             .skip(+skip)
             .limit(+postsperpage)
+            .sort({ price: sortbyprice })
             .populate('catalog')
             .populate('category')
             .populate('color')
@@ -78,15 +82,15 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
         if (!catalog) throw { message: 'Bad catalog name' };
 
         const requestedCategory = req.body.category;
-        const category = await Categories.findOne({ category: requestedCategory });
+        const category = await Categories.findOne(requestedCategory);
         if (!category) throw { message: 'Bad category name' };
 
         const requestedBrand = req.body.brand;
-        const brand = await Brands.findOne({ brand: requestedBrand });
+        const brand = await Brands.findOne(requestedBrand);
         if (!brand) throw { message: 'Bad brand name' };
 
         const requestedColor = req.body.color;
-        const color = await Colors.findOne({ color: requestedColor });
+        const color = await Colors.findOne(requestedColor);
         if (!color) throw { message: 'Bad color name' };
 
         const product = new Products({
