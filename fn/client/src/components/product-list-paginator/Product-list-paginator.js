@@ -12,7 +12,7 @@ export default function ProductListPaginator({ postPerPage, totalPosts, paginate
         <nav>
             <ul className="pagination">
                 {pageNumbers.map(number => (
-                    <li key={number} className="list-group-item-dark page-item page-link" onClick={() => paginate(number)}>
+                    <li key={number} className="page-item page-link" onClick={() => paginate(number)}>
                         {number}
                     </li>
                 ))}

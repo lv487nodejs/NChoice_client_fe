@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign, faEuroSign } from '@fortawesome/free-solid-svg-icons';
-import { currencyChange } from '../../actions';
-import './button.css'
 
-
-const Button = ({ currencyOptions, currency, currencyChange }) => {
+const Button = ({ currencyOptions }) => {
     const [icon, setIcon] = useState(faEuroSign);
+    const [cof, setCof] = useState(1);
+    useEffect(() => {}, [icon]);
 
     const onClickHandler = () => {
-        currency === 1 ? setIcon(faDollarSign) : setIcon(faEuroSign);
-        currency === 1 ? currencyChange(currencyOptions) : currencyChange(1);
+        icon === faEuroSign ? setIcon(faDollarSign) : setIcon(faEuroSign);
+        icon === faEuroSign ? setCof(1) : setCof(currencyOptions);
     };
 
     return (
         <>
-            <FontAwesomeIcon className='currency-icon' onClick={onClickHandler} icon={icon} />
+            {console.log(cof)}
+            <FontAwesomeIcon onClick={onClickHandler} icon={icon} />
         </>
     );
 };
 
-const mapStateToProps = ({ productsList: { currency } }) => ({ currency });
-const mapDispatchToProps = { currencyChange };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Button);
+export default Button;

@@ -1,5 +1,5 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
-import { productsLoaded, productsRequested, currencyChange } from './Products-actions';
+import { productsLoaded, productsRequested } from './Products-actions';
 import { catalogsLoaded, catalogsRequested, catalogLoaded } from './Catalogs-actions';
 import { addUserToStore} from './Auth-actions'
 
@@ -26,7 +26,6 @@ export {
     catalogsRequested,
     productsRequested,
     productsLoaded,
-    currencyChange,
     filterAddBrand,
     filterAddCategory,
     filterAddColor,

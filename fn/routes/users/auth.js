@@ -68,8 +68,8 @@ router.delete('/logout', async (req, res) => {
     }
 });
 
-const generateAccessToken = (userName) => {
-    return jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
+function generateAccessToken(userName) {
+    return jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
 }
 
 module.exports = router;
