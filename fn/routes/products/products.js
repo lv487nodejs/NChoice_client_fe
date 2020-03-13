@@ -12,11 +12,16 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
+    let { currentpage, postsperpage } = query;
+    currentpage = currentpage || 1;
+    postsperpage = postsperpage || 15;
+    const skip = currentpage * postsperpage;
     try {
         const filter = await getFilters(query);
 
         const products = await Products.find(filter)
-            .limit(50)
+            .skip(+skip)
+            .limit(+postsperpage)
             .populate('catalog')
             .populate('category')
             .populate('color')
@@ -27,8 +32,18 @@ router.get('/', async (req, res) => {
         }
 
         const productsToSend = prepareProductsToSend(products);
+        const foundProductsNumber = await Products.find(filter)
+            .count()
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
 
-        res.status(200).send(productsToSend);
+        if (!foundProductsNumber) {
+            throw { message: 'Products not found ' };
+        }
+        const pagesCount = Math.ceil(foundProductsNumber / postsperpage);
+        res.status(200).send({ products: productsToSend, pagesCount });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
@@ -126,8 +141,6 @@ router.put('/:id', async (req, res) => {
     if (Array.isArray(propetries) && images.propetries) {
         productToUpdate.propetries.push(...propetries);
     }
-
-
 });
 
 router.delete('/:id', async (req, res) => {
