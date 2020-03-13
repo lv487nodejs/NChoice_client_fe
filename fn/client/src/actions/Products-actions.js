@@ -7,4 +7,9 @@ const productsRequested = () => ({
     type: 'PRODUCTS_REQUESTED',
 });
 
-export { productsLoaded, productsRequested };
+const currencyChange = newCurrency => ({
+    type: 'CURRENCY_CHANGE',
+    payload: newCurrency,
+});
+
+export { productsLoaded, productsRequested, currencyChange };

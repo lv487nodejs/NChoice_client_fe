@@ -19,10 +19,10 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
 
 
     useEffect(() => {
-        catalogLoaded(catalog);
         productsRequested();
-        storeService.getCatalogByFilter({catalog: catalog}).then(res => productsLoaded(res));
-        if(sessionStorage.getItem("postPerPage") !== null){
+        catalogLoaded(catalog);
+        storeService.getProductsByFilter({ catalog: catalog }).then(res => productsLoaded(res));
+        if (sessionStorage.getItem("postPerPage") !== null) {
             setPostsPerPage(sessionStorage.getItem("postPerPage"))
         }
     }, [productsLoaded, productsRequested, storeService, catalog, catalogLoaded]);
@@ -45,9 +45,10 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
     }
 
     return (
-        
-        <div className="product-list-page">
-            <div className="products-options">
+        <div>
+            <h2 className="catalog-top-name">{catalog} Catalog</h2>
+            <div className="product-list-page">
+                <div className="products-options">
                     <SearchBar />
                     <ProductSort arrayToSort={currentPosts} />
                     <ProductSort arrayToSort={currentPosts} />
@@ -56,17 +57,18 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
                         changeCurrentPage={changePagination}
                         className="buttonsGroup productListButtons "
                     />
+                </div>
+                <div className="filters">
+                    <Filter />
+                </div>
+                <ProductListPosts products={currentPosts} />
             </div>
-            <div className="filters">
-                <Filter />
-            </div>
-            <ProductListPosts products={currentPosts} />
             <ProductListPaginator
-                        postPerPage={postsPerPage}
-                        totalPosts={products.length}
-                        paginate={paginateMethod}
-                        className="paginator"
-                    />
+                postPerPage={postsPerPage}
+                totalPosts={products.length}
+                paginate={paginateMethod}
+                className="paginator"
+            />
         </div>
     );
 };

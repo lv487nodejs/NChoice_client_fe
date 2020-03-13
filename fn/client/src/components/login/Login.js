@@ -15,7 +15,7 @@ const Login = () => {
         handleSubmit,
     } = useForm(addDataToLoсalStorage, validate);
 
-    function addDataToLoсalStorage(token) {
+    function addDataToLocalStorage(token) {
         localStorage.setItem('token', JSON.stringify(token));
         console.log('No errors, submit callback called!');
     }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default class StoreService {
-    _apiBase = 'https://stark-headland-06017.herokuapp.com/';
+    _apiBase = 'http://localhost:5000/';
 
     getResource = async url => {
         try {
@@ -22,7 +22,7 @@ export default class StoreService {
         return catalogs;
     };
 
-    getCatalogByFilter = async filter => {
+    getProductsByFilter = async filter => {
         let queryString = 'products/?';
         const { brand, color, category, catalog } = filter;
         if (brand) {

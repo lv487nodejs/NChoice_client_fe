@@ -8,6 +8,14 @@
         "filters productlist productlist productlist"
         ".  . . pages";
 }
+
+.catalog-top-name {
+    text-transform: uppercase;
+    font-family: Oswald;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
 .product-list-container {
     max-width: 1200px;
     margin: 0 auto;

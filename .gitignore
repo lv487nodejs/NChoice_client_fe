@@ -1,4 +1,6 @@
-node_modules
+access.log
+logs/
+node_modules/
 .vscode
 request.rest
-logs
+bash.exe.stackdump
