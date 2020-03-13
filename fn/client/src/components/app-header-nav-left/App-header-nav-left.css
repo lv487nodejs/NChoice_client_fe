@@ -1,0 +1,54 @@
+.nav-bar ul {
+    padding: 0;
+    margin: 0;
+}
+
+.nav-bar li {
+    display: inline-block;
+    margin:0;
+    padding:0;
+}
+
+.nav-bar a {
+    font-family: 'Oswald';
+    text-decoration: none;
+    font-size: 1.3rem;
+    color: white;
+    padding: .5rem 1rem;
+    transition: all 0.3s;
+    text-transform: uppercase;
+}
+
+.nav-bar a:hover {
+    color: black;
+    background-color: white;
+}
+
+.nav-item {
+    position: relative;
+}
+
+
+
+.nav-bar .nav-item .drop-down-container .drop-down {
+    display: block;
+    width: 30rem;
+    position: absolute;
+    color: black;
+    top: 38px;
+    z-index: 1000;
+}
+
+
+
+.nav-bar .nav-item .drop-down-container .drop-down a {
+    color: black;
+    background-color: white;
+    padding-left: .3rem;
+    transition: all 0.3s;
+}
+
+.nav-bar .nav-item .drop-down-container .drop-down a:hover {
+    color: white;
+    background-color: black;
+}

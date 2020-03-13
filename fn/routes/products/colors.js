@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
     try {
         // check if object query is not empty
         if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
-            colors = await Colors.find({ color });
+            colors = await Colors.find({ color: { $in: color.split(',') } });
         } else {
             colors = await Colors.find();
         }

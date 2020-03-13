@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
     try {
         // check if object query is not empty
         if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
-            categories = await Categories.find({ category });
+            categories = await Categories.find({ category: { $in: category.split(',') } });
         } else {
             categories = await Categories.find();
         }

@@ -1,0 +1,15 @@
+.loading-spinner-container {
+    width: 100%;
+    height: 800px;
+    background: transparent;
+}
+
+.loading-spinner 
+    {
+        position: absolute;
+        left: 50%;
+        top: 35%;
+        z-index: 1000;
+        height: 31px;
+        width: 31px;
+    }

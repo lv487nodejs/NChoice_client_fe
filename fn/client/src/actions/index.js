@@ -1,19 +1,41 @@
-const filterAddBrand = brand => ({
-    type: 'FILTER_ADD_BRAND',
-    payload: brand,
-});
-const filterRemoveBrand = brand => ({
-    type: 'FILTER_REMOVE_BRAND',
-    payload: brand,
-});
+import { categoriesLoaded, categoriesRequested } from './Categories-actions';
+import { productsLoaded, productsRequested } from './Products-actions';
+import { catalogsLoaded, catalogsRequested, catalogLoaded } from './Catalogs-actions';
+import { addUserToStore} from './Auth-actions'
 
-const filterAddCategory = (category) => ({
-    type: 'FILTER_ADD_CATEGORY',
-    payload: category,
-});
-const filterRemoveCategory = (category) => ({
-    type: 'FILTER_REMOVE_CATEGORY',
-    payload: category,
-});
 
-export { filterAddBrand, filterRemoveBrand, filterAddCategory, filterRemoveCategory };
+import {
+    filterAddBrand,
+    filterAddCategory,
+    filterAddColor,
+    filterRemoveCategory,
+    filterRemoveColor,
+    filterRemoveBrand,
+    composeFilters,
+    fetchSuccessBrands,
+    fetchSuccessCategories,
+    fetchSuccessColors,
+    composeReceivedData,
+} from './Filter-actions';
+
+export {
+    categoriesRequested,
+    categoriesLoaded,
+    catalogLoaded,
+    catalogsLoaded,
+    catalogsRequested,
+    productsRequested,
+    productsLoaded,
+    filterAddBrand,
+    filterAddCategory,
+    filterAddColor,
+    filterRemoveBrand,
+    filterRemoveCategory,
+    filterRemoveColor,
+    composeFilters,
+    fetchSuccessBrands,
+    fetchSuccessCategories,
+    fetchSuccessColors,
+    composeReceivedData,
+    addUserToStore,
+};

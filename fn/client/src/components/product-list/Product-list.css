@@ -1,0 +1,58 @@
+.product-list-page {
+    display: grid;
+    grid-template-columns: 300px 1fr 1fr 1fr;
+    grid-gap: 1em;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "options options options options"
+        "filters productlist productlist productlist"
+        ".  . . pages";
+}
+.product-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.products-options {
+    grid-area: options;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+
+}
+
+.filters {
+    grid-area: filters;
+}
+
+.products-items {
+    margin: 30px 0;
+    grid-gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-area: productlist;
+
+}
+.search-field {
+    margin-left: auto;
+}
+.productListPage>div.productCategory {
+    background-color: rgb(36, 32, 41);
+    text-align: center;
+    align-items: center;
+    color:white;
+    font-size:3vh;
+}
+
+
+
+.list>div.productListButtons {
+    background-color: rgb(184, 109, 158);
+}
+
+.list>div.productList {
+    background-color: rgb(109, 179, 184);
+}
+
+.list>div.paginator {
+    background-color: rgb(175, 115, 127);
+}
