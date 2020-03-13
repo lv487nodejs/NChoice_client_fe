@@ -22,22 +22,23 @@ function ProductListItem({ title, description, id, images, price, msrp, currency
        currency === 1 ? setCurrencyIcon('€') : setCurrencyIcon('$')
         }, [currency, price, msrp]);
   return (
-        <Card key={id} className="productCart">
-            <div className="image-container">
-            <Card.Img variant="top" src={`/images/products/${images}`} className="cardsImage" />
-            </div>
-            <Card.Body>
-                <Card.Title className="productName">{title}</Card.Title>
-                <Card.Text className="description">{description}</Card.Text>
-                <Card.Body className="bottomElements">
-                <Card.Text className="cardPrice">{`${priceWithRate} ${currencyIcon}`}</Card.Text>
-                <Card.Text className="cardPrice msrp-price">{`${msrpWithRate} ${currencyIcon}`}</Card.Text>
-                    <FontAwesomeIcon icon={faHeart} className="heart" />
-                    <FontAwesomeIcon icon={faShoppingCart} className="cart" onClick={()=> addCart()}/>
-                </Card.Body>
-            </Card.Body>
-        </Card>
-    );
+    <Card key={id} className="productCart">
+      <div className="image-container">
+        <Card.Img variant="top" src={`/images/products/${images}`} className="cardsImage"/>
+      </div>
+      <Card.Body>
+        <Card.Title className="productName">{title}</Card.Title>
+        <Card.Text className="description">{description}</Card.Text>
+        <Card.Body className="bottomElements">
+          <Card.Text className="cardPrice">{`${priceWithRate} ${currencyIcon}`}</Card.Text>
+          <Card.Text className="cardPrice msrp-price">{`${msrpWithRate} ${currencyIcon}`}</Card.Text>
+          <FontAwesomeIcon icon={faHeart} className="heart"/>
+          <FontAwesomeIcon icon={faShoppingCart} className="cart"
+                           onClick={() => addCart({id, title, price, currencyIcon, images})}/>
+        </Card.Body>
+      </Card.Body>
+    </Card>
+  );
 }
 
 const mapStateToProps = ({ productsList: { currency } }) => ({ currency });

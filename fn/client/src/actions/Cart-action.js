@@ -1,30 +1,16 @@
-// const productAddedToCart = wishItem => ({
-//   type: 'PRODUCT_ADDED_TO_CART',
-//   payload: wishItem,
-// });
-//
-// const productRemovedFromCart = wishItem => ({
-//   type: 'PRODUCT_REMOVED_FROM_CART',
-//   payload: wishItem,
-// });
-//
-// const allproductsRemovedFromCart = wishItem => ({
-//   type: 'ALL_PRODUCTS_REMOVED_FROM_CART',
-//   payload: wishItem,
-// });
-//
-// export { productAddedToCart, productRemovedFromCart, allproductsRemovedFromCart };
-
-const addCart = () => {
-  return (dispatch) =>{
+const addCart = (productName) => {
+  return (dispatch) => {
     console.log('Adding to cart');
+    console.log('Product: ', productName );
+
     dispatch({
-      type: 'ADD_PRODUCT_CART'
+      type: 'ADD_PRODUCT_CART',
+      payload: productName
     })
   }
 };
 
-const getNumbers =() => {
+const getNumbers = () => {
   return (dispatch) =>{
     console.log('Getting all numbers from cart');
     dispatch({

@@ -1,5 +1,32 @@
 .cart-wrap {
-    width: fit-content;
-    height: 20rem;
+    margin: 1rem 0 1rem 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+.cartImg{
+    display: block;
+    width: 130px;
+    overflow: hidden;
+    margin-left: 3rem;
+    margin-bottom: 0;
+}
+.cartTitle{
+    font-size: 1.5rem;
+    margin-left: 2rem;
+}
+.main-cart{
+    max-width: 900px;
+    min-height: 200px;
     margin: 0 auto;
+}
+.cart-item{
+    min-height: 84px;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 20px;
+}
+p {
+    margin: 0;
+    font-size: 1.2rem;
 }
