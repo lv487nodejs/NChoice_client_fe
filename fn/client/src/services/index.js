@@ -13,18 +13,28 @@ export default class StoreService {
     };
 
     getAllProducts = async () => {
-        const catalogs = await this.getResource('products');
-        return catalogs;
+        const products = await this.getResource('products');
+        return products;
     };
 
     getProductById = async id => {
-        const catalogs = await this.getResource(`products/${id}`);
-        return catalogs;
+        const products = await this.getResource(`products/${id}`);
+        return products;
     };
 
     getProductsByFilter = async filter => {
         let queryString = 'products/?';
-        const { brand, color, category, catalog, currentPage, postsPerPage, sortByPrice, sortByRate  } = filter;
+        const {
+            brand,
+            color,
+            category,
+            catalog,
+            currentPage,
+            postsPerPage,
+            sortByPrice,
+            sortByRate,
+            searchTerm,
+        } = filter;
         if (brand) {
             queryString = `${queryString}&brand=${brand}`;
         }
@@ -49,8 +59,13 @@ export default class StoreService {
         if (sortByRate) {
             queryString = `${queryString}&sortbyrate=${sortByRate}`;
         }
-        const catalogs = await this.getResource(queryString);
-        return catalogs;
+        if (searchTerm) {
+            queryString = `${queryString}&searchTerm=${searchTerm}`;
+        }
+        const products = await this.getResource(queryString);
+        return products;
+        // const catalogs = await this.getResource(queryString);
+        // return catalogs;
     };
 
     getAllCatalogs = async () => {
@@ -87,5 +102,15 @@ export default class StoreService {
     getAllColors = async () => {
         const colors = await this.getResource('colors');
         return colors;
+    };
+
+    getAllOrders = async () => {
+        const catalogs = await this.getResource('orders');
+        return catalogs;
+    };
+
+    getOrderById = async id => {
+        const catalogs = await this.getResource(`orders/${id}`);
+        return catalogs;
     };
 }

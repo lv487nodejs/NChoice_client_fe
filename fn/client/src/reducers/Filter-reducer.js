@@ -7,6 +7,7 @@ const instate = {
     receivedBrands: [],
     receivedCategories: [],
     receivedColors: [],
+    searchTerm: '',
 };
 
 const filter = (state = instate, action) => {
@@ -63,13 +64,19 @@ const filter = (state = instate, action) => {
             };
         }
         case 'COMPOSE_RECEIVED_DATA': {
-   const productsUnique = [
+            const productsUnique = [
                 ...new Set(state.receivedBrands, ...state.receivedCategories, ...state.receivedColors),
             ];
 
             return {
                 ...state,
                 products: [...productsUnique],
+            };
+        }
+        case 'FILTER_BY_NAME': {
+            return {
+                ...state,
+                searchTerm: [...state.searchTerm, action.payload],
             };
         }
         default:

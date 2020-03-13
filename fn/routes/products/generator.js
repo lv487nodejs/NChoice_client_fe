@@ -137,7 +137,6 @@ router.post('/', async (req, res) => {
                     propetries: props,
                 });
 
-
                 await product.save();
                 res.status(201).send(product);
             } catch (err) {

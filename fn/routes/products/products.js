@@ -18,9 +18,11 @@ router.get('/', async (req, res) => {
     const skip = currentpage * postsperpage;
     try {
         const filter = await getFilters(query);
+        const projection = await getProjection(query);
+        const sort = await getSort(query);
 
-        const products = await Products.find(filter)
-            .sort({ price: sortbyprice })
+        const products = await Products.find(filter, projection)
+            .sort({price: sortbyprice })
             .skip(+skip)
             .limit(+postsperpage)
             .populate('catalog')
@@ -53,9 +55,14 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const product = await Products.findById(id);
+        const product = await Products.findById(id)
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
         if (!product) throw { message: 'Can not find product' };
-        res.status(200).send(product);
+        const poructToSend = prepareProductsToSend([product]);
+        res.status(200).send(poructToSend);
     } catch (err) {
         return res.status(500).send({ message: err.message });
     }
@@ -63,9 +70,14 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', productValidationRules(), validate, async (req, res) => {
     const { title, description, images, propetries, price, mrsp } = req.body;
+
+    propetries.forEach(propetrie => {
+        propetrie.available = parseInt(propetrie.available);
+    });
+
     try {
         const requestedCatalog = req.body.catalog;
-        const catalog = await Catalogs.findOne(requestedCatalog);
+        const catalog = await Catalogs.findOne({ catalog: requestedCatalog });
         if (!catalog) throw { message: 'Bad catalog name' };
 
         const requestedCategory = req.body.category;
@@ -87,8 +99,8 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
             title,
             description,
             color,
-            price,
-            mrsp,
+            price: parseFloat(price),
+            mrsp: parseFloat(mrsp),
             images,
             propetries,
         });
@@ -148,7 +160,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 const getFilters = async query => {
-    const { catalog, category, color, brand } = query;
+    const { catalog, category, color, brand, searchTerm } = query;
     const filter = {};
 
     try {
@@ -172,11 +184,36 @@ const getFilters = async query => {
             colorFilter.forEach((value, i, array) => (array[i] = value.id));
             filter.color = { $in: colorFilter };
         }
+        if (isNotBlank(searchTerm)) {
+            filter.$text = { $search: searchTerm.trim() };
+        }
     } catch (err) {
         throw { message: err.message };
     }
 
     return filter;
+};
+
+const getProjection = async query => {
+    const { searchTerm } = query;
+    const projection = {};
+
+    if (isNotBlank(searchTerm)) {
+        // how much each product is relevant to searchTerm
+        projection.score = { $meta: 'textScore' };
+    }
+    return projection;
+};
+
+const getSort = async query => {
+    const { searchTerm } = query;
+    const sort = {};
+
+    if (isNotBlank(searchTerm)) {
+        // sort by relevance
+        sort.score = { $meta: 'textScore' };
+    }
+    return sort;
 };
 
 const prepareProductsToSend = products => {
@@ -200,5 +237,7 @@ const prepareProductsToSend = products => {
     });
     return productsToSend;
 };
+
+const isNotBlank = str => !(!str || str.trim().length === 0);
 
 module.exports = router;

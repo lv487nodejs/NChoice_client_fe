@@ -1,47 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import {
+    filterByName,
+    productsLoaded,
+} from '../../actions';
+
+import withStoreService from '../hoc';
 import './search-bar.css';
 
 import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// const products = [
-//     {
-//         id: 1,
-//         name: 'product1',
-//         price: '100',
-//     },
-//     {
-//         id: 2,
-//         name: 'product2',
-//         price: '200',
-//     },
-//     {
-//         id: 3,
+const SearchBar = ({ storeService, catalog, productsLoaded, filterByName, handler, searchTerm }) => {
+    useEffect(() => {
+        storeService.getProductsByFilter({ searchTerm }).then(res => {
+            productsLoaded(res);
+        });
+    }, [searchTerm, storeService, productsLoaded]);
 
-//         name: 'product3',
-//         price: '300',
-//     },
-//     {
-//         id: 4,
-//         name: 'product4',
-//         price: '400',
-//     },
-// ];
-
-function SearchBar() {
-    const [search, setSearch] = useState('');
-
-    const updateSearch = e => {
-        setSearch(e.target.value.substr(0, 20));
+    const filterAddNameHandler = (e) => {
+        if (e.target.value) {
+            filterByName(e.target.value);
+        } else {
+            filterByName('');
+        }
     };
-    // const filterProducts = products.filter(function(product) {
-    //     return product.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
-    // });
     return (
         <Form>
-            <Form.Control className="search-bar" placeholder="Search..." value={search} onChange={updateSearch.bind(this)} />
+            <Form.Control handler={filterAddNameHandler} type="searchTerm" className="search-bar" placeholder="Search..." onChange={filterAddNameHandler} />
         </Form>
     );
-}
+};
 
-export default SearchBar;
+const mapStateToProps = ({ filter: { searchTerm }, catalogsList: { catalog } }) => ({
+    searchTerm,
+    catalog,
+});
+
+const mapDispatchToProps = dispatch => ({
+    filterByName: searchTerm => dispatch(filterByName(searchTerm)),
+    productsLoaded: products => dispatch(productsLoaded(products)),
+});
+
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(SearchBar));

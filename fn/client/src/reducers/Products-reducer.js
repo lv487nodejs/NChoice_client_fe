@@ -10,6 +10,7 @@ const initialState = {
 };
 
 const productsList = (state = initialState, action) => {
+    
     switch (action.type) {
         case 'PRODUCTS_REQUESTED':
             return {

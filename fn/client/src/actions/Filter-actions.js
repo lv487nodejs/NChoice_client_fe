@@ -23,29 +23,16 @@ const filterRemoveCategory = category => ({
     payload: category,
 });
 
-const fetchSuccessBrands = brands => ({ type: 'FETCH_SUCCESS_BRANDS', payload: brands });
-
-const fetchSuccessCategories = categories => ({ type: 'FETCH_SUCCESS_CATEGORIES', payload: categories });
-
-const fetchSuccessColors = colors => ({ type: 'FETCH_SUCCESS_COLORS', payload: colors });
-
-const composeFilters = () => ({
-    type: 'COMPOSE_FILTERS',
+const filterByName = searchTerm => ({
+    type: 'FILTER_BY_NAME',
+    payload: searchTerm,
 });
-const composeReceivedData = () => ({
-    type: 'COMPOSE_RECEIVED_DATA',
-});
-
 export {
     filterAddBrand,
     filterAddCategory,
     filterAddColor,
-    composeFilters,
     filterRemoveBrand,
     filterRemoveCategory,
     filterRemoveColor,
-    fetchSuccessBrands,
-    fetchSuccessCategories,
-    fetchSuccessColors,
-    composeReceivedData,
+    filterByName,
 };

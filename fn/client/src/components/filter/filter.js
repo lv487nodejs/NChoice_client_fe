@@ -8,8 +8,7 @@ import {
     filterRemoveCategory,
     filterRemoveBrand,
     productsLoaded,
-    addPagesCount,  
-
+    addPagesCount,
 } from '../../actions';
 
 import FilterItem from '../filterItem';
@@ -34,7 +33,6 @@ const Filter = ({
     postsPerPage,
     addPagesCount,
     sortByPrice,
-
 }) => {
     const [getBrands, setBrands] = useState([]);
     const [getCategories, setCategories] = useState([]);
@@ -61,11 +59,24 @@ const Filter = ({
     }, [storeService]);
 
     useEffect(() => {
-        storeService.getProductsByFilter({ catalog, brand, color, category, currentPage, postsPerPage,sortByPrice }).then(res => {
-            productsLoaded(res.products);
-            addPagesCount(res.pagesCount);
-        });
-    }, [brand, category, catalog, color, storeService, productsLoaded, currentPage, postsPerPage, addPagesCount,sortByPrice]);
+        storeService
+            .getProductsByFilter({ catalog, brand, color, category, currentPage, postsPerPage, sortByPrice })
+            .then(res => {
+                productsLoaded(res.products);
+                addPagesCount(res.pagesCount);
+            });
+    }, [
+        brand,
+        category,
+        catalog,
+        color,
+        storeService,
+        productsLoaded,
+        currentPage,
+        postsPerPage,
+        addPagesCount,
+        sortByPrice,
+    ]);
 
     const filterAddBrandHandler = (e, item) => {
         if (e.target.checked) {
@@ -99,7 +110,7 @@ const Filter = ({
     );
 };
 const mapStateToProps = ({
-    productsList: { currentPage, postsPerPage,sortByPrice },
+    productsList: { currentPage, postsPerPage, sortByPrice },
 
     filter: { brand, category, color },
     catalogsList: { catalog },
@@ -113,7 +124,7 @@ const mapStateToProps = ({
     sortByPrice,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     filterAddBrand: brand => dispatch(filterAddBrand(brand)),
     filterAddColor: color => dispatch(filterAddColor(color)),
     filterAddCategory: category => dispatch(filterAddCategory(category)),

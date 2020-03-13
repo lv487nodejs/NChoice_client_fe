@@ -22,6 +22,7 @@ import {
     filterRemoveCategory,
     filterRemoveColor,
     filterRemoveBrand,
+    filterByName,
 } from './Filter-actions';
 
 export {
@@ -43,4 +44,5 @@ export {
     addPostsPerPage,
     addPagesCount,
     addSortByPrice,
+    filterByName,
 };
