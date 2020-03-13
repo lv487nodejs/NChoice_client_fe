@@ -71,6 +71,12 @@ const orderValidationRules = () => [
         .notEmpty()
         .isNumeric(),
 ];
+const cartValidationRules = () => [
+    body('userId', 'userId of product is required')
+        .notEmpty()
+        .isString(),
+];
+
 
 const validate = (req, res, next) => {
     const errors = validationResult(req);
@@ -91,5 +97,6 @@ module.exports = {
     colorValidationRules,
     categoryValidationRules,
     orderValidationRules,
+    cartValidationRules,
     validate,
 };
