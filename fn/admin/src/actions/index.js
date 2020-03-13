@@ -23,7 +23,11 @@ import {
     userSetRole,
 } from './Users-actions';
 
+import { setPagesCount, setCurrentPage, setRowsPerPage } from './Paginator-action';
+
 import { setColors } from './Colors-actions';
+
+import { setSnackBar } from './Snackbar-actions';
 
 export {
     setBrand,
@@ -50,4 +54,8 @@ export {
     userEdit,
     userSave,
     userSetRole,
+    setSnackBar,
+    setPagesCount,
+    setCurrentPage,
+    setRowsPerPage,
 };

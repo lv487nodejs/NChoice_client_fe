@@ -7,6 +7,8 @@ import productsState from './Products-reducer';
 import usersState from './Users-reducer';
 import colorsState from './Colors-reducer';
 import newProductState from './Add-product-reducer';
+import snackbarState from './Snackbar-reducer';
+import paginationState from './Paginator-reducer';
 
 export default combineReducers({
     catalogsState,
@@ -16,4 +18,6 @@ export default combineReducers({
     newProductState,
     usersState,
     colorsState,
+    snackbarState,
+    paginationState,
 });

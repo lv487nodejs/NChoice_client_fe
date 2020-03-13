@@ -13,12 +13,9 @@ export default class AdminService {
     };
 
     postData = async (url, dataToSend) => {
-        console.log(dataToSend)
+        console.log(dataToSend);
         try {
-            const response = await axios.post(
-                `${SERVER_URL}${url}`,
-                dataToSend
-            );
+            const response = await axios.post(`${SERVER_URL}${url}`, dataToSend);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -34,8 +31,10 @@ export default class AdminService {
         }
     };
 
-    getAllProducts = async () => {
-        const catalogs = await this.getResource('products');
+    getAllProducts = async (currentpage, postsperpage) => {
+        const catalogs = await this.getResource(
+            `products?currentpage=${currentpage}&postsperpage=${postsperpage}`
+        );
         return catalogs;
     };
 
@@ -73,7 +72,7 @@ export default class AdminService {
         const url = 'products/';
         const newProduct = await this.postData(url, product);
         return newProduct;
-    }
+    };
 
     getProductOptions = async () => {
         const catalogs = await this.getAllCatalogs();
@@ -96,16 +95,12 @@ export default class AdminService {
     };
 
     getCatalogByName = async catalogName => {
-        const catalogs = await this.getResource(
-            `catalogs/?catalog=${catalogName}`
-        );
+        const catalogs = await this.getResource(`catalogs/?catalog=${catalogName}`);
         return catalogs;
     };
 
     getCatalogCategories = async catalogName => {
-        const catalogs = await this.getResource(
-            `catalogs/?catalog=${catalogName}`
-        );
+        const catalogs = await this.getResource(`catalogs/?catalog=${catalogName}`);
         const { categories } = catalogs[0];
         return categories;
     };

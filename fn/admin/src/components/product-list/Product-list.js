@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import wrapWithAdminService from '../wrappers';
 
-import { setProducts, productLoadingStatus } from '../../actions';
+import { setProducts, productLoadingStatus, setPagesCount } from '../../actions';
 
 import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
@@ -11,11 +11,24 @@ import TableContainerGenerator from '../table-container-generator/Table-containe
 
 import { PRODUCTS_TABLE_HEAD } from '../../config';
 
-const ProductList = ({ adminService, products, setProducts, productLoadingStatus, loading, history }) => {
+const ProductList = ({
+    adminService,
+    products,
+    setProducts,
+    productLoadingStatus,
+    loading,
+    history,
+    currentPage,
+    rowsPerPage,
+    setPagesCount,
+}) => {
     useEffect(() => {
         productLoadingStatus();
-        adminService.getAllProducts().then(res => setProducts(res));
-    }, [adminService, setProducts, productLoadingStatus]);
+        adminService.getAllProducts(currentPage, rowsPerPage).then(res => {
+            setProducts(res.products);
+            setPagesCount(res.pagesCount);
+        });
+    }, [adminService, setProducts, setPagesCount, productLoadingStatus, currentPage, rowsPerPage]);
 
     const productItems = products.map((product, index) => (
         <TableContainerRow
@@ -39,13 +52,26 @@ const ProductList = ({ adminService, products, setProducts, productLoadingStatus
     if (loading) {
         return <LoadingBar />;
     }
-    return <TableContainerGenerator tableTitles={PRODUCTS_TABLE_HEAD} tableItems={productItems} />;
+    return (
+        <TableContainerGenerator
+            tableTitles={PRODUCTS_TABLE_HEAD}
+            tableItems={productItems}
+            pagination
+        />
+    );
 };
 
-const mapStateToProps = ({ productsState: { products, loading } }) => ({
+const mapStateToProps = ({
+    productsState: { products, loading },
+    paginationState: { currentPage, rowsPerPage },
+}) => ({
     products,
     loading,
+    currentPage,
+    rowsPerPage,
 });
-const mapDispatchToProps = { setProducts, productLoadingStatus };
+const mapDispatchToProps = { setProducts, productLoadingStatus, setPagesCount };
 
-export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(withRouter(ProductList)));
+export default wrapWithAdminService()(
+    connect(mapStateToProps, mapDispatchToProps)(withRouter(ProductList))
+);
