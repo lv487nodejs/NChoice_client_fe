@@ -38,7 +38,6 @@ const Filter = ({
     const [getCategories, setCategories] = useState([]);
     const [getColors, setColors] = useState([]);
 
-
     useEffect(() => {
         storeService
             .getAllBrands()
@@ -49,12 +48,9 @@ const Filter = ({
     useEffect(() => {
         storeService
             .getCatalogCategories(catalog)
-            .then(response => {
-                console.log(response);
-                
-                setCategories(response)})
+            .then(response => setCategories(response))
             .catch(err => console.log(err));
-    }, [storeService]);
+    }, [catalog, storeService]);
     useEffect(() => {
         storeService
             .getAllColors()
