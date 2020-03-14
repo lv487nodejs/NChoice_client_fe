@@ -30,10 +30,6 @@ router.get('/', async (req, res) => {
             .populate('color')
             .populate('brand');
 
-        if (!products) {
-            throw { message: 'Products not found ' };
-        }
-
         const productsToSend = prepareProductsToSend(products);
         const foundProductsNumber = await Products.find(filter)
             .count()
@@ -42,9 +38,6 @@ router.get('/', async (req, res) => {
             .populate('color')
             .populate('brand');
 
-        if (!foundProductsNumber) {
-            throw { message: 'Products not found ' };
-        }
         const pagesCount = Math.ceil(foundProductsNumber / postsperpage);
         res.status(200).send({ products: productsToSend, pagesCount });
     } catch (err) {
