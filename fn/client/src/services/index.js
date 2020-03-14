@@ -85,6 +85,8 @@ export default class StoreService {
 
     getCatalogCategories = async catalogName => {
         const catalogs = await this.getResource(`catalogs/?catalog=${catalogName}`);
+        console.log(catalogs);
+        
         const { categories } = catalogs[0];
         return categories;
     };

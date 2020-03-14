@@ -47,10 +47,10 @@ const Filter = ({
 
     useEffect(() => {
         storeService
-            .getAllCategories()
+            .getCatalogCategories(catalog)
             .then(response => setCategories(response))
             .catch(err => console.log(err));
-    }, [storeService]);
+    }, [catalog, storeService]);
     useEffect(() => {
         storeService
             .getAllColors()

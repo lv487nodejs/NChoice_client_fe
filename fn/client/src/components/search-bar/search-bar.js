@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import {
-    filterByName,
-    productsLoaded,
-} from '../../actions';
+import { filterByName, productsLoaded } from '../../actions';
 
 import withStoreService from '../hoc';
 import './search-bar.css';
@@ -18,7 +15,7 @@ const SearchBar = ({ storeService, catalog, productsLoaded, filterByName, handle
         });
     }, [searchTerm, storeService, productsLoaded]);
 
-    const filterAddNameHandler = (e) => {
+    const filterAddNameHandler = e => {
         if (e.target.value) {
             filterByName(e.target.value);
         } else {
@@ -27,7 +24,13 @@ const SearchBar = ({ storeService, catalog, productsLoaded, filterByName, handle
     };
     return (
         <Form>
-            <Form.Control handler={filterAddNameHandler} type="searchTerm" className="search-bar" placeholder="Search..." onChange={filterAddNameHandler} />
+            <Form.Control
+                handler={filterAddNameHandler}
+                type="searchTerm"
+                className="search-bar"
+                placeholder="Search..."
+                onChange={filterAddNameHandler}
+            />
         </Form>
     );
 };
@@ -43,3 +46,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(SearchBar));
+
