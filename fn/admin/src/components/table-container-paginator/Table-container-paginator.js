@@ -23,7 +23,7 @@ const TablePaginator = ({
     };
 
     const handleChangeRowsPerPage = event => {
-        setRowsPerPage(event.target.value);
+        setRowsPerPage(parseInt(event.target.value));
         setCurrentPage(0);
     };
 
