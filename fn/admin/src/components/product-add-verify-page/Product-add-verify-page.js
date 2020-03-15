@@ -24,7 +24,7 @@ const ProductAddVerifyPage = ({ newProduct }) => {
     );
 };
 
-const mapStateToProps = ({ newProductState: { newProduct } }) => ({
+const mapStateToProps = ({ productsState: { newProduct } }) => ({
     newProduct,
 });
 

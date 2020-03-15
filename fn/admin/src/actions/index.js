@@ -7,11 +7,14 @@ import { setCategory, setCategories, categoryLoadingStatus } from './Categories-
 import {
     setProduct,
     setProducts,
+    setProductsFilter,
     setProductPropetries,
+    setProductOptions,
+    setProductOptionsList,
+    setNewProduct,
+    setNewPropetries,
     productLoadingStatus,
 } from './Products-actions';
-
-import { setNewProduct, setNewPropetries, setOptions } from './New-product-actions';
 
 import {
     usersLoaded,
@@ -29,6 +32,8 @@ import { setColors } from './Colors-actions';
 
 import { setSnackBar } from './Snackbar-actions';
 
+import { setFilterOptions } from './Filters-action';
+
 export {
     setBrand,
     setBrands,
@@ -41,10 +46,12 @@ export {
     categoryLoadingStatus,
     setProduct,
     setProducts,
+    setProductsFilter,
     setProductPropetries,
+    setProductOptions,
+    setProductOptionsList,
     setNewProduct,
     setNewPropetries,
-    setOptions,
     setColors,
     productLoadingStatus,
     usersLoaded,
@@ -58,4 +65,5 @@ export {
     setPagesCount,
     setCurrentPage,
     setRowsPerPage,
+    setFilterOptions,
 };

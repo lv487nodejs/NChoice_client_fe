@@ -29,7 +29,7 @@ const ProductAddItemDescr = ({ classes, option, newProduct, onChangeEvent }) => 
     );
 };
 
-const mapStateToProps = ({ newProductState: { newProduct } }) => ({
+const mapStateToProps = ({ productsState: { newProduct } }) => ({
     newProduct,
 });
 

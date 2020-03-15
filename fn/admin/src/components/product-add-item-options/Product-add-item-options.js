@@ -4,7 +4,7 @@ import { TextField } from '@material-ui/core';
 import wrapWithAdminService from '../wrappers';
 
 import { PRODUCT_OPTION_NAMES } from '../../config';
-import { setOptions } from '../../actions';
+import { setProductOptions } from '../../actions';
 import LoadingBar from '../loading-bar';
 
 const inputCapitalize = {
@@ -17,16 +17,16 @@ const nativeSelect = {
 
 const ProductAddItemOptions = ({
     adminService,
-    setOptions,
+    setProductOptions,
     classes,
     onChangeEvent,
     newProduct,
-    options,
+    productOptions,
     loading,
 }) => {
     useEffect(() => {
-        adminService.getProductOptions().then(res => setOptions(res));
-    }, [adminService, setOptions]);
+        adminService.getProductOptions().then(res => setProductOptions(res));
+    }, [adminService, setProductOptions]);
 
     if (loading) {
         return <LoadingBar />;
@@ -39,13 +39,12 @@ const ProductAddItemOptions = ({
             </option>
         ));
 
-    const groupOptions = options.map((group, index) => {
+    const groupOptions = productOptions.map((group, index) => {
         const name = PRODUCT_OPTION_NAMES[index];
         const options = getGroupOptions(group, name);
         return options;
     });
-
-    const productOptions = groupOptions.map((option, index) => {
+    const optionsMenu = groupOptions.map((option, index) => {
         const optionName = PRODUCT_OPTION_NAMES[index];
 
         return (
@@ -68,17 +67,17 @@ const ProductAddItemOptions = ({
         );
     });
 
-    return productOptions;
+    return optionsMenu;
 };
 
-const mapStateToProps = ({ newProductState: { newProduct, options, loading } }) => ({
+const mapStateToProps = ({ productsState: { newProduct, productOptions, loading } }) => ({
     newProduct,
-    options,
+    productOptions,
     loading,
 });
 
 const mapDispatchToProps = {
-    setOptions,
+    setProductOptions,
 };
 
 export default wrapWithAdminService()(

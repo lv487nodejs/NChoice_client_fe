@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { SERVER_URL } from '../config';
+import { SERVER_URL, PRODUCT_OPTION_NAMES } from '../config';
 
 export default class AdminService {
     getResource = async url => {
@@ -49,8 +49,8 @@ export default class AdminService {
         return propetries;
     };
 
-    getProductsByFilter = async filter => {
-        let queryString = 'products/?';
+    getProductsByFilter = async (currentpage, postsperpage, filter) => {
+        let queryString = `products?currentpage=${currentpage}&postsperpage=${postsperpage}`;
         const { brand, color, category, catalog } = filter;
         if (brand) {
             queryString = `${queryString}&brand=${brand}`;
@@ -64,14 +64,25 @@ export default class AdminService {
         if (catalog) {
             queryString = `${queryString}&catalog=${catalog}`;
         }
-        const catalogs = await this.getResource(queryString);
-        return catalogs;
+        const products = await this.getResource(queryString);
+        return products;
     };
 
     postProduct = async product => {
         const url = 'products/';
         const newProduct = await this.postData(url, product);
         return newProduct;
+    };
+
+    getCheckboxList = (options, name) => {
+        const checkboxList = {};
+        options.map(option => {
+            const itemName = option[name];
+            checkboxList[itemName] = false;
+            return checkboxList[itemName]
+        });
+
+        return checkboxList;
     };
 
     getProductOptions = async () => {
@@ -81,7 +92,15 @@ export default class AdminService {
         const brands = await this.getAllBrands();
 
         const productOptions = [catalogs, categories, brands, colors];
-        return productOptions;
+
+        let productOptionsList = {};
+        productOptions.map((option, index) => {
+            const result = this.getCheckboxList(option, PRODUCT_OPTION_NAMES[index]);
+            productOptionsList = { ...productOptionsList, ...result };
+            return productOptionsList;
+        });
+
+        return { productOptions, productOptionsList };
     };
 
     getAllCatalogs = async () => {

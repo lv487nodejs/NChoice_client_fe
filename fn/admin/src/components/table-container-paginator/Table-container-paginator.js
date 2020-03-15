@@ -32,7 +32,7 @@ const TablePaginator = ({
             <TableRow>
                 <TablePagination
                     rowsPerPageOptions={rowsPerPageOptions}
-                    count={pagesCount * rowsPerPage}
+                    count={pagesCount}
                     rowsPerPage={rowsPerPage}
                     page={currentPage}
                     SelectProps={selectProps}

@@ -68,7 +68,7 @@ const ProductAddPage = ({ adminService, newProduct, setNewProduct }) => {
     );
 };
 
-const mapStateToProps = ({ newProductState: { newProduct } }) => ({
+const mapStateToProps = ({ productsState: { newProduct } }) => ({
     newProduct,
 });
 const mapDispatchToProps = {

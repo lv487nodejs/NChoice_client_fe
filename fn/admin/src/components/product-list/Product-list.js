@@ -14,6 +14,7 @@ import { PRODUCTS_TABLE_HEAD } from '../../config';
 const ProductList = ({
     adminService,
     products,
+    filter,
     setProducts,
     productLoadingStatus,
     loading,
@@ -24,11 +25,19 @@ const ProductList = ({
 }) => {
     useEffect(() => {
         productLoadingStatus();
-        adminService.getAllProducts(currentPage, rowsPerPage).then(res => {
+        adminService.getProductsByFilter(currentPage, rowsPerPage, filter).then(res => {
             setProducts(res.products);
-            setPagesCount(res.pagesCount);
+            setPagesCount(res.foundProductsNumber);
         });
-    }, [adminService, setProducts, setPagesCount, productLoadingStatus, currentPage, rowsPerPage]);
+    }, [
+        adminService,
+        setProducts,
+        setPagesCount,
+        productLoadingStatus,
+        currentPage,
+        rowsPerPage,
+        filter,
+    ]);
 
     const productItems = products.map((product, index) => (
         <TableContainerRow
@@ -62,10 +71,11 @@ const ProductList = ({
 };
 
 const mapStateToProps = ({
-    productsState: { products, loading },
+    productsState: { products, filter, loading },
     paginationState: { currentPage, rowsPerPage },
 }) => ({
     products,
+    filter,
     loading,
     currentPage,
     rowsPerPage,

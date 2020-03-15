@@ -7,7 +7,7 @@ import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 export const DRAWER_WIDTH = 220;
 export const PAGE_TITLE = 'FN Admin Panel';
 
-export const ROWS_PER_PAGE_OPTIONS = [10, 25, 100];
+export const ROWS_PER_PAGE_OPTIONS = [10, 25, 50, 100];
 
 export const MENU_CATEGORIES = [
     ['Statistics', '/', AssessmentIcon],
@@ -79,3 +79,10 @@ export const PRODUCT_KEYS = [
 ];
 
 export const PROPETRIES_KEYS = ['size', 'available', 'sku'];
+
+export const FILTER_OPTIONS = {
+    catalog: [],
+    category: [],
+    brand: [],
+    color: [],
+}
