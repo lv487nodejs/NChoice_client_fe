@@ -31,7 +31,7 @@ const Cart = ({cartProps}) => {
                 <Figure.Image src={`/images/products/${value.product.images[0]}`} className='cartImg'/>
                 <Figure.Caption className='cartTitle'>
                   {value.product.title}
-                  <p> Price: {value.product.price} {value.product.currencyIcon}</p>
+                  <p> Price: {value.product.price * value.quantity} {value.product.currencyIcon}</p>
                   <p> Quantity: {value.quantity}</p>
                 </Figure.Caption>
               </Row>
