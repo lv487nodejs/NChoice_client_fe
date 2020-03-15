@@ -10,5 +10,5 @@ export default combineReducers({
     categoriesList,
     catalogsList,
     filter,
-    cartState:cartReducer
+    cartReducer
 });

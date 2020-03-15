@@ -5,23 +5,23 @@ import {Figure} from 'react-bootstrap'
 import Row from "react-bootstrap/Row";
 import Container from "@material-ui/core/Container/Container";
 
-const Cart = ({cartProps}) => {
-  console.log(cartProps.products);
+const Cart = ({products}) => {
+  console.log(products);
 
   return (
     <div className='main-cart'>
       <h3>Cart</h3>
-      <h5>{cartProps.products.length < 1 && <em> Please add some products to cart.</em> }</h5>
+      <h5>{products.length < 1 && <em> Please add some products to cart.</em>}</h5>
       <ul className='cart-wrap'>
-        {cartProps.products.map((value) => (
-          <li key={value.id} className='cart-item'>
+        {products.map((item) => (
+          <li key={item.id} className='cart-item'>
             <Container>
               <Row>
-                <Figure.Image src={`/images/products/${value.images[0]}`} className='cartImg'/>
+                <Figure.Image src={`/images/products/${item.images[0]}`} className='cartImg'/>
                 <Figure.Caption className='cartTitle'>
-                  {value.title}
-                  <p> Price: {value.price * value.quantity} {value.currencyIcon}</p>
-                  <p> Quantity: {value.quantity}</p>
+                  {item.title}
+                  <p> Price: {item.price * item.quantity} {item.currencyIcon}</p>
+                  <p> Quantity: {item.quantity}</p>
                 </Figure.Caption>
               </Row>
             </Container>
@@ -32,9 +32,7 @@ const Cart = ({cartProps}) => {
   )
 };
 
-const mapStateToProps = state => ({
-  cartProps: state.cartState
-});
+const mapStateToProps = ({cartReducer: {products}}) => ({products});
 
 export default connect(mapStateToProps)(Cart);
 

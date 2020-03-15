@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './App-header-nav-right.css';
@@ -7,13 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faUser, faShoppingBasket} from '@fortawesome/free-solid-svg-icons';
 import Currency from '../currency';
 import { connect } from 'react-redux';
-import { getNumbers} from "../../actions";
 
-const AppHeaderNavRight = (props) => {
-
-    useEffect(() => {
-    getNumbers()
-  }, []);
+const AppHeaderNavRight = ({cartNumbers}) => {
 
   return (
     <nav className="nav-bar">
@@ -34,7 +29,7 @@ const AppHeaderNavRight = (props) => {
         <li key="7">
           <Link to="/cart">
             <FontAwesomeIcon icon={faShoppingBasket}/>
-            <span> <sup>{props.cartProps.cartNumbers}</sup> </span>
+            <span> <sup>{cartNumbers}</sup> </span>
           </Link>
         </li>
       </ul>
@@ -42,9 +37,6 @@ const AppHeaderNavRight = (props) => {
   )
 };
 
-const mapStateToProps =  state => ({
-    cartProps: state.cartState
-});
+const mapStateToProps =  ({ cartReducer: {cartNumbers}}) => ({cartNumbers});
 
-
-export default connect(mapStateToProps, {getNumbers})(AppHeaderNavRight);
+export default connect(mapStateToProps)(AppHeaderNavRight);
