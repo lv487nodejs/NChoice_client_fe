@@ -76,7 +76,7 @@ const filter = (state = instate, action) => {
         case 'FILTER_BY_NAME': {
             return {
                 ...state,
-                searchTerm: [...state.searchTerm, action.payload],
+                searchTerm: action.payload,
             };
         }
         default:

@@ -27,6 +27,7 @@ const filterByName = searchTerm => ({
     type: 'FILTER_BY_NAME',
     payload: searchTerm,
 });
+
 export {
     filterAddBrand,
     filterAddCategory,

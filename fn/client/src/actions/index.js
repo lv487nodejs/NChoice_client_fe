@@ -46,3 +46,4 @@ export {
     addSortByPrice,
     filterByName,
 };
+
