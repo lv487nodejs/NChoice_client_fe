@@ -1,7 +1,7 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
 import { productsLoaded, productsRequested } from './Products-actions';
 import { catalogsLoaded, catalogsRequested, catalogLoaded } from './Catalogs-actions';
-import { addUserToStore} from './Auth-actions'
+import { postUser} from './Auth-actions'
 
 
 import {
@@ -37,5 +37,5 @@ export {
     fetchSuccessCategories,
     fetchSuccessColors,
     composeReceivedData,
-    addUserToStore,
+    postUser,
 };
