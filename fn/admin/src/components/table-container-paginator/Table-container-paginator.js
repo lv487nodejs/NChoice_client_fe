@@ -1,9 +1,11 @@
 import React from 'react';
-import { TableFooter, TableRow, TablePagination } from '@material-ui/core';
+import { TablePagination } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 import { setCurrentPage, setRowsPerPage } from '../../actions';
 import TablePaginationActions from './Paginator-control';
+
+const FIRST_PAGE = 0;
 
 const selectProps = {
     inputProps: { 'aria-label': 'rows per page' },
@@ -23,25 +25,23 @@ const TablePaginator = ({
     };
 
     const handleChangeRowsPerPage = event => {
-        setRowsPerPage(parseInt(event.target.value));
-        setCurrentPage(0);
+        const rowsPerPageValue = parseInt(event.target.value);
+        setRowsPerPage(rowsPerPageValue);
+        setCurrentPage(FIRST_PAGE);
     };
 
     return (
-        <TableFooter>
-            <TableRow>
-                <TablePagination
-                    rowsPerPageOptions={rowsPerPageOptions}
-                    count={pagesCount}
-                    rowsPerPage={rowsPerPage}
-                    page={currentPage}
-                    SelectProps={selectProps}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                    ActionsComponent={TablePaginationActions}
-                />
-            </TableRow>
-        </TableFooter>
+        <TablePagination
+            component="div"
+            rowsPerPageOptions={rowsPerPageOptions}
+            count={pagesCount}
+            rowsPerPage={rowsPerPage}
+            page={currentPage}
+            SelectProps={selectProps}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+            ActionsComponent={TablePaginationActions}
+        />
     );
 };
 

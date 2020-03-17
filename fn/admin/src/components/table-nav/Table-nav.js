@@ -1,53 +1,65 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux';
 import wrapWithAdminService from '../wrappers';
 
 import {
-    setProductOptions,
-    setFilterOptions,
-    setProductOptionsList,
-    setProductsFilter,
+    setFilterOptionsGroups,
+    setFilterSelected,
+    setFilterOptionsList,
+    setProductsFilters,
+    setCheckBoxStatus,
 } from '../../actions';
 
 import useStyle from './Table-nav-style';
 import TableNavButtons from '../table-nav-buttons';
 import TableNavFilterMenu from '../table-nav-filter-menu';
+import TableNavSearchBar from '../table-nav-searchbar';
+
+
 import { FILTER_OPTIONS } from '../../config';
 
 const filterMenuStatus = {
     catalog: null,
     category: null,
     brand: null,
-    color: null,
 };
 
 const TableNav = ({
     adminService,
-    filterOptions,
-    setFilterOptions,
-    setProductsFilter,
-    setProductOptions,
-    setProductOptionsList,
+    filterSelected,
+    filterOptionsList,
+    setCheckBoxStatus,
+    checkboxLoaded,
+    setFilterSelected,
+    setFilterOptionsList,
+    setProductsFilters,
+    setFilterOptionsGroups,
 }) => {
     const classes = useStyle();
     const [menuStatus, setMenuStatus] = React.useState(filterMenuStatus);
 
-    const filterInitialState = useCallback(() => {
-        adminService.getProductOptions().then(res => {
-            setProductOptionsList(res.productOptionsList);
-        });
-        setFilterOptions(FILTER_OPTIONS);
-        setProductsFilter(FILTER_OPTIONS);
-    }, [setFilterOptions, setProductsFilter, adminService, setProductOptionsList]);
-
     useEffect(() => {
         adminService.getProductOptions().then(res => {
-            setProductOptionsList(res.productOptionsList);
-            setProductOptions(res.productOptions);
+            if (!checkboxLoaded) {
+                setCheckBoxStatus(res.filterOptionsList);
+            }
+            setFilterOptionsList(res.filterOptionsList);
+            setFilterOptionsGroups(res.filterOptions);
         });
-        return () => filterInitialState();
-    }, [filterInitialState, adminService, setProductOptionsList, setProductOptions]);
+    }, [
+        setCheckBoxStatus,
+        checkboxLoaded,
+        adminService,
+        setFilterOptionsGroups,
+        setFilterOptionsList,
+    ]);
+
+    const filterInitialState = () => {
+        setCheckBoxStatus(filterOptionsList);
+        setFilterSelected(FILTER_OPTIONS);
+        setProductsFilters(FILTER_OPTIONS);
+    };
 
     const handleMenuOpen = name => event => {
         const target = event.currentTarget;
@@ -56,7 +68,7 @@ const TableNav = ({
 
     const handleMenuClose = name => () => {
         setMenuStatus({ ...menuStatus, [name]: null });
-        setProductsFilter(filterOptions);
+        setProductsFilters(filterSelected);
     };
 
     const handleClearFilter = () => {
@@ -70,18 +82,25 @@ const TableNav = ({
                 handleClearFilter={handleClearFilter}
             />
             <TableNavFilterMenu handleMenuClose={handleMenuClose} menuStatus={menuStatus} />
+            <TableNavSearchBar />
         </div>
     );
 };
 
-const setMapStateToProps = ({ filtersState: { filterOptions } }) => ({
-    filterOptions,
+const setMapStateToProps = ({
+    filtersState: { filterSelected, filterOptionsList, checkboxStatus, checkboxLoaded },
+}) => ({
+    filterSelected,
+    filterOptionsList,
+    checkboxStatus,
+    checkboxLoaded,
 });
 const setDispatchToProps = {
-    setProductOptions,
-    setFilterOptions,
-    setProductsFilter,
-    setProductOptionsList,
+    setFilterOptionsGroups,
+    setFilterSelected,
+    setProductsFilters,
+    setFilterOptionsList,
+    setCheckBoxStatus,
 };
 
 export default wrapWithAdminService()(connect(setMapStateToProps, setDispatchToProps)(TableNav));

@@ -1,15 +1,38 @@
 import { FILTER_OPTIONS } from '../config';
 
 const initialState = {
-    filterOptions: FILTER_OPTIONS,
+    checkboxStatus: {},
+    checkboxLoaded: false,
+    filterSelected: FILTER_OPTIONS,
+    filterOptionsGroups: [],
+    filterOptionsList: {},
 };
 
 const filtersState = (state = initialState, action) => {
     switch (action.type) {
-        case 'SET_FILTER':
+        case 'SET_CHECKBOX_STATUS':
             return {
                 ...state,
-                filterOptions: action.payload,
+                checkboxStatus: action.payload,
+                checkboxLoaded: true,
+            };
+
+        case 'SET_FILTER_SELECTED':
+            return {
+                ...state,
+                filterSelected: action.payload,
+            };
+
+        case 'SET_FILTER_OPTIONS_LIST':
+            return {
+                ...state,
+                filterOptionsList: action.payload,
+            };
+
+        case 'SET_FILTER_OPTIONS_GROUPS':
+            return {
+                ...state,
+                filterOptionsGroups: action.payload,
             };
 
         default:

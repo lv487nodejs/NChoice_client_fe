@@ -1,17 +1,8 @@
-import { NEW_PRODUCT_MODEL, NEW_PRODUCT_PROPETRIES } from '../config';
-
-const newProduct = NEW_PRODUCT_MODEL;
-const newPropetries = NEW_PRODUCT_PROPETRIES;
-
 const initialState = {
-    filter: {},
-    products: [],
     product: {},
     productPropetries: [],
-    newProduct,
-    newPropetries,
-    productOptions: [],
-    productOptionsList: {},
+    products: [],
+    filters: {},
     loading: true,
 };
 
@@ -23,10 +14,11 @@ const productsState = (state = initialState, action) => {
                 loading: true,
             };
 
-        case 'SET_PRODUCTS_FILTER':
+        case 'SET_PRODUCTS':
             return {
                 ...state,
-                filter: action.payload,
+                products: action.payload,
+                loading: false,
             };
 
         case 'SET_PRODUCT':
@@ -36,44 +28,17 @@ const productsState = (state = initialState, action) => {
                 loading: false,
             };
 
-        case 'SET_PRODUCTS':
-            return {
-                ...state,
-                products: action.payload,
-                loading: false,
-            };
-
-        case 'SET_PRODUCTS_PROPETRIES':
+        case 'SET_PRODUCT_PROPETRIES':
             return {
                 ...state,
                 productPropetries: action.payload,
                 loading: false,
             };
 
-        case 'SET_NEW_PRODUCT':
+        case 'SET_PRODUCTS_FILTERS':
             return {
                 ...state,
-                newProduct: action.payload,
-            };
-
-        case 'SET_NEW_PROPETRIES':
-            return {
-                ...state,
-                newPropetries: action.payload,
-            };
-
-        case 'SET_PRODUCT_OPTIONS':
-            return {
-                ...state,
-                productOptions: action.payload,
-                loading: false,
-            };
-
-        case 'SET_PRODUCT_OPTIONS_LIST':
-            return {
-                ...state,
-                productOptionsList: action.payload,
-                loading: false,
+                filters: action.payload,
             };
 
         default:

@@ -3,70 +3,59 @@ import React from 'react';
 import { MenuItem, FormControlLabel, Checkbox } from '@material-ui/core';
 import { connect } from 'react-redux';
 
-import { setFilterOptions, setProductOptionsList } from '../../actions';
+import { setFilterSelected, setCheckBoxStatus } from '../../actions';
 
 const TableNavFilterMenuItem = ({
     name,
     filter,
     groupOption,
-    filterOptions,
-    productOptionsList,
-    setFilterOptions,
-    setProductOptionsList,
+    filterSelected,
+    checkboxStatus,
+    setFilterSelected,
+    setCheckBoxStatus,
 }) => {
     const addFilter = (name, filter) => ({
-        ...filterOptions,
-        [name]: [...filterOptions[name], filter],
+        ...filterSelected,
+        [name]: [...filterSelected[name], filter],
     });
 
     const removeFilter = (name, filter) => {
-        const filters = filterOptions[name].filter(option => option !== filter);
+        const filters = filterSelected[name].filter(option => option !== filter);
         return {
-            ...filterOptions,
+            ...filterSelected,
             [name]: filters,
         };
     };
 
     const handleChange = (name, filter) => event => {
         const { checked } = event.target;
-        setProductOptionsList({ ...productOptionsList, [filter]: checked });
+        setCheckBoxStatus({ ...checkboxStatus, [filter]: checked });
         if (checked) {
-            setFilterOptions(addFilter(name, filter));
+            setFilterSelected(addFilter(name, filter));
         } else {
-            setFilterOptions(removeFilter(name, filter));
+            setFilterSelected(removeFilter(name, filter));
         }
     };
 
+    const checkBox = (
+        <Checkbox checked={checkboxStatus[filter]} onChange={handleChange(name, filter)} />
+    );
+
     return (
         <MenuItem key={filter}>
-            <FormControlLabel
-                key={groupOption[name]}
-                control={
-                    <Checkbox
-                        key={filter}
-                        value={filter}
-                        checked={productOptionsList[filter]}
-                        color="primary"
-                        onChange={handleChange(name, filter)}
-                    />
-                }
-                label={groupOption[name]}
-            />
+            <FormControlLabel control={checkBox} label={groupOption[name]} />
         </MenuItem>
     );
 };
 
-const setMapStateToProps = ({
-    filtersState: { filterOptions },
-    productsState: { productOptionsList },
-}) => ({
-    filterOptions,
-    productOptionsList,
+const setMapStateToProps = ({ filtersState: { filterSelected, checkboxStatus } }) => ({
+    filterSelected,
+    checkboxStatus,
 });
 
 const setDispatchToProps = {
-    setFilterOptions,
-    setProductOptionsList,
+    setFilterSelected,
+    setCheckBoxStatus,
 };
 
 export default connect(setMapStateToProps, setDispatchToProps)(TableNavFilterMenuItem);

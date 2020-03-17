@@ -4,7 +4,7 @@ import { TextField } from '@material-ui/core';
 import wrapWithAdminService from '../wrappers';
 
 import { PRODUCT_OPTION_NAMES } from '../../config';
-import { setProductOptions } from '../../actions';
+import { setProductGroupedPropetries } from '../../actions';
 import LoadingBar from '../loading-bar';
 
 const inputCapitalize = {
@@ -17,16 +17,18 @@ const nativeSelect = {
 
 const ProductAddItemOptions = ({
     adminService,
-    setProductOptions,
+    setProductGroupedPropetries,
     classes,
     onChangeEvent,
-    newProduct,
-    productOptions,
+    productEdit,
+    productPropetriesEditGroups,
     loading,
 }) => {
     useEffect(() => {
-        adminService.getProductOptions().then(res => setProductOptions(res));
-    }, [adminService, setProductOptions]);
+        adminService
+            .getProductOptions()
+            .then(res => setProductGroupedPropetries(res.productPropetriesEditGroups));
+    }, [adminService, setProductGroupedPropetries]);
 
     if (loading) {
         return <LoadingBar />;
@@ -39,7 +41,7 @@ const ProductAddItemOptions = ({
             </option>
         ));
 
-    const groupOptions = productOptions.map((group, index) => {
+    const groupOptions = productPropetriesEditGroups.map((group, index) => {
         const name = PRODUCT_OPTION_NAMES[index];
         const options = getGroupOptions(group, name);
         return options;
@@ -55,7 +57,7 @@ const ProductAddItemOptions = ({
                 className={classes.textfield}
                 label={optionName}
                 name={optionName}
-                value={newProduct[optionName]}
+                value={productEdit[optionName]}
                 onChange={onChangeEvent}
                 SelectProps={nativeSelect}
                 inputProps={inputCapitalize}
@@ -70,14 +72,16 @@ const ProductAddItemOptions = ({
     return optionsMenu;
 };
 
-const mapStateToProps = ({ productsState: { newProduct, productOptions, loading } }) => ({
-    newProduct,
-    productOptions,
+const mapStateToProps = ({
+    productEditState: { productEdit, productPropetriesEditGroups, loading },
+}) => ({
+    productEdit,
+    productPropetriesEditGroups,
     loading,
 });
 
 const mapDispatchToProps = {
-    setProductOptions,
+    setProductGroupedPropetries,
 };
 
 export default wrapWithAdminService()(

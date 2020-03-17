@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import wrapWithAdminService from '../wrappers';
 
-import { setProducts, productLoadingStatus, setPagesCount } from '../../actions';
+import { setProducts, setProductLoadingStatus, setPagesCount } from '../../actions';
 
 import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
@@ -14,9 +14,10 @@ import { PRODUCTS_TABLE_HEAD } from '../../config';
 const ProductList = ({
     adminService,
     products,
-    filter,
+    filters,
+    searchTerm,
     setProducts,
-    productLoadingStatus,
+    setProductLoadingStatus,
     loading,
     history,
     currentPage,
@@ -24,20 +25,28 @@ const ProductList = ({
     setPagesCount,
 }) => {
     useEffect(() => {
-        productLoadingStatus();
-        adminService.getProductsByFilter(currentPage, rowsPerPage, filter).then(res => {
-            setProducts(res.products);
-            setPagesCount(res.foundProductsNumber);
-        });
+        setProductLoadingStatus();
+        adminService
+            .getProductsByFilter(currentPage, rowsPerPage, filters, searchTerm)
+            .then(res => {
+                setProducts(res.products);
+                setPagesCount(res.foundProductsNumber);
+            });
     }, [
         adminService,
         setProducts,
         setPagesCount,
-        productLoadingStatus,
+        setProductLoadingStatus,
         currentPage,
         rowsPerPage,
-        filter,
+        filters,
+        loading,
+        searchTerm,
     ]);
+
+    if (loading) {
+        return <LoadingBar />;
+    }
 
     const productItems = products.map((product, index) => (
         <TableContainerRow
@@ -58,29 +67,30 @@ const ProductList = ({
         />
     ));
 
-    if (loading) {
-        return <LoadingBar />;
-    }
-    return (
+    const productTable = (
         <TableContainerGenerator
             tableTitles={PRODUCTS_TABLE_HEAD}
             tableItems={productItems}
             pagination
         />
     );
+
+    return productTable;
 };
 
 const mapStateToProps = ({
-    productsState: { products, filter, loading },
+    productsState: { products, filters, loading },
     paginationState: { currentPage, rowsPerPage },
+    searchState: { searchTerm },
 }) => ({
     products,
-    filter,
+    filters,
     loading,
     currentPage,
     rowsPerPage,
+    searchTerm,
 });
-const mapDispatchToProps = { setProducts, productLoadingStatus, setPagesCount };
+const mapDispatchToProps = { setProducts, setProductLoadingStatus, setPagesCount };
 
 export default wrapWithAdminService()(
     connect(mapStateToProps, mapDispatchToProps)(withRouter(ProductList))

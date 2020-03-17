@@ -5,7 +5,7 @@ import wrapWithAdminService from '../wrappers';
 
 import { useStyles } from './Product-add-page-style';
 
-import { setNewProduct } from '../../actions';
+import { setProductEdit } from '../../actions';
 
 import ProductAddItemOptions from '../product-add-item-options';
 import ProductAddItemDescr from '../product-add-item-descr';
@@ -18,19 +18,19 @@ import SnackbarItem from '../snackbar-item/Snackbar-item';
 
 const successMessage = 'Product succesfully saved id:';
 
-const ProductAddPage = ({ adminService, newProduct, setNewProduct }) => {
+const ProductAddPage = ({ adminService, productEdit, setProductEdit }) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [msg, setMsg] = React.useState('');
 
     const handleInputChange = event => {
         const { name, value } = event.target;
-        setNewProduct({ ...newProduct, [name]: value });
+        setProductEdit({ ...productEdit, [name]: value });
     };
 
     const handleSaveProduct = event => {
         event.preventDefault();
-        adminService.postProduct(newProduct).then(res => {
+        adminService.postProduct(productEdit).then(res => {
             setOpen(true);
             setMsg(`${successMessage} ${res._id}`);
         });
@@ -51,7 +51,7 @@ const ProductAddPage = ({ adminService, newProduct, setNewProduct }) => {
 
     const pruductAddPropetries = <ProductAddPropetries classes={classes} />;
 
-    const productVerifyPage = <ProductAddVerifyPage product={newProduct} />;
+    const productVerifyPage = <ProductAddVerifyPage product={productEdit} />;
 
     const stepperSteps = [
         productAddOptions,
@@ -68,11 +68,11 @@ const ProductAddPage = ({ adminService, newProduct, setNewProduct }) => {
     );
 };
 
-const mapStateToProps = ({ productsState: { newProduct } }) => ({
-    newProduct,
+const mapStateToProps = ({ productEditState: { productEdit } }) => ({
+    productEdit,
 });
 const mapDispatchToProps = {
-    setNewProduct,
+    setProductEdit,
 };
 
 export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(ProductAddPage));

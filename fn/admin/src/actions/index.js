@@ -7,14 +7,16 @@ import { setCategory, setCategories, categoryLoadingStatus } from './Categories-
 import {
     setProduct,
     setProducts,
-    setProductsFilter,
+    setProductsFilters,
     setProductPropetries,
-    setProductOptions,
-    setProductOptionsList,
-    setNewProduct,
-    setNewPropetries,
-    productLoadingStatus,
+    setProductLoadingStatus,
 } from './Products-actions';
+
+import {
+    setProductEdit,
+    setProductPropetriesEdit,
+    setProductGroupedPropetries,
+} from './Product-edit-actions';
 
 import {
     usersLoaded,
@@ -32,9 +34,28 @@ import { setColors } from './Colors-actions';
 
 import { setSnackBar } from './Snackbar-actions';
 
-import { setFilterOptions } from './Filters-action';
+import {
+    setFilterSelected,
+    setCheckBoxStatus,
+    setFilterOptionsList,
+    setFilterOptionsGroups,
+} from './Filters-action';
+
+import { setSearchValue, setSearchTerm } from './Search-actions';
 
 export {
+    setProduct,
+    setProducts,
+    setProductsFilters,
+    setProductPropetries,
+    setProductLoadingStatus,
+    setProductEdit,
+    setProductPropetriesEdit,
+    setProductGroupedPropetries,
+    setFilterSelected,
+    setCheckBoxStatus,
+    setFilterOptionsList,
+    setFilterOptionsGroups,
     setBrand,
     setBrands,
     brandLoadingStatus,
@@ -44,16 +65,7 @@ export {
     setCategory,
     setCategories,
     categoryLoadingStatus,
-    setProduct,
-    setProducts,
-    setProductsFilter,
-    setProductPropetries,
-    setProductOptions,
-    setProductOptionsList,
-    setNewProduct,
-    setNewPropetries,
     setColors,
-    productLoadingStatus,
     usersLoaded,
     usersRequested,
     userLoaded,
@@ -65,5 +77,6 @@ export {
     setPagesCount,
     setCurrentPage,
     setRowsPerPage,
-    setFilterOptions,
+    setSearchValue,
+    setSearchTerm,
 };

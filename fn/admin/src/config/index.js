@@ -52,6 +52,7 @@ export const NEW_PRODUCT_PROPETRIES = {
 };
 
 export const PRODUCT_OPTION_NAMES = ['catalog', 'category', 'brand', 'color'];
+export const FILTER_OPTION_NAMES = ['catalog', 'category', 'brand'];
 
 export const NEW_PRODUCT_DESCR = ['title', 'mrsp', 'price', 'description'];
 export const SIZES_SHOES = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
@@ -84,5 +85,4 @@ export const FILTER_OPTIONS = {
     catalog: [],
     category: [],
     brand: [],
-    color: [],
-}
+};

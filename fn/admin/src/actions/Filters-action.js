@@ -1,6 +1,21 @@
-const setFilterOptions = newFilterOption => ({
-    type: 'SET_FILTER',
-    payload: newFilterOption,
+const setFilterSelected = newFilterSelected => ({
+    type: 'SET_FILTER_SELECTED',
+    payload: newFilterSelected,
 });
 
-export { setFilterOptions };
+const setFilterOptionsList = newfilterOptionsList => ({
+    type: 'SET_FILTER_OPTIONS_LIST',
+    payload: newfilterOptionsList,
+});
+
+const setFilterOptionsGroups = newfilterOptionsGroups => ({
+    type: 'SET_FILTER_OPTIONS_GROUPS',
+    payload: newfilterOptionsGroups,
+});
+
+const setCheckBoxStatus = newCheckboxStatus => ({
+    type: 'SET_CHECKBOX_STATUS',
+    payload: newCheckboxStatus,
+});
+
+export { setFilterSelected, setCheckBoxStatus, setFilterOptionsList, setFilterOptionsGroups };

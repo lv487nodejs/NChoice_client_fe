@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { Menu, FormGroup } from '@material-ui/core';
 
-import { PRODUCT_OPTION_NAMES } from '../../config';
+import { FILTER_OPTION_NAMES } from '../../config';
 import TableNavFilterMenuItem from '../table-nav-filter-menuitem';
 
 const menuAnchorPosition = {
@@ -16,9 +16,9 @@ const menuTransformPosition = {
     horizontal: 'center',
 };
 
-const filterNames = PRODUCT_OPTION_NAMES;
+const filterNames = FILTER_OPTION_NAMES;
 
-const TableNavFilterMenu = ({ productOptions, handleMenuClose, menuStatus }) => {
+const TableNavFilterMenu = ({ filterOptionsGroups, handleMenuClose, menuStatus }) => {
     const getFilterOptions = (group, name) =>
         group.map(groupOption => {
             const filter = groupOption[name];
@@ -33,7 +33,7 @@ const TableNavFilterMenu = ({ productOptions, handleMenuClose, menuStatus }) => 
             );
         });
 
-    const filterCheckboxes = productOptions.map((group, index) => {
+    const filterCheckboxes = filterOptionsGroups.map((group, index) => {
         const name = filterNames[index];
         const options = getFilterOptions(group, name);
         return options;
@@ -45,7 +45,7 @@ const TableNavFilterMenu = ({ productOptions, handleMenuClose, menuStatus }) => 
         return (
             <Menu
                 key={name}
-                elevation={0}
+                elevation={3}
                 getContentAnchorEl={null}
                 anchorOrigin={menuAnchorPosition}
                 transformOrigin={menuTransformPosition}
@@ -63,8 +63,8 @@ const TableNavFilterMenu = ({ productOptions, handleMenuClose, menuStatus }) => 
     return filterMenus;
 };
 
-const setMapStateToProps = ({ productsState: { productOptions } }) => ({
-    productOptions,
+const setMapStateToProps = ({ filtersState: { filterOptionsGroups } }) => ({
+    filterOptionsGroups,
 });
 
 export default connect(setMapStateToProps)(TableNavFilterMenu);

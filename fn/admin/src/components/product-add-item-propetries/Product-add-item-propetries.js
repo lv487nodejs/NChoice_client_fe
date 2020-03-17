@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Paper, Typography } from '@material-ui/core';
-import { setNewPropetries, setNewProduct } from '../../actions';
+import { setProductEdit, setProductPropetriesEdit } from '../../actions';
 
 import { SaveButton } from '../buttons';
 import ProductAddPropetriesItem from '../product-add-propetries-item';
@@ -11,22 +11,25 @@ const buttonLabel = 'ADD SIZE';
 const propsKeys = ['size', 'available', 'sku'];
 
 const AddProductPropetries = ({
-    setNewPropetries,
-    setNewProduct,
-    newPropetries,
-    newProduct,
+    setProductPropetriesEdit,
+    setProductEdit,
+    productPropetriesEdit,
+    productEdit,
     classes,
 }) => {
     const handleInputChange = event => {
         const { name, value } = event.target;
-        setNewPropetries({ ...newPropetries, [name]: value });
+        setProductPropetriesEdit({ ...productPropetriesEdit, [name]: value });
     };
 
     const handleAddPropetries = () => {
-        setNewProduct({ ...newProduct, propetries: [...newProduct.propetries, newPropetries] });
+        setProductEdit({
+            ...productEdit,
+            propetries: [...productEdit.propetries, productPropetriesEdit],
+        });
     };
 
-    const propetryTextFields = Object.keys(newPropetries).map(name => (
+    const propetryTextFields = Object.keys(productPropetriesEdit).map(name => (
         <ProductAddPropetriesItem
             key={name}
             classes={classes}
@@ -35,7 +38,7 @@ const AddProductPropetries = ({
         />
     ));
 
-    const addedPropetries = newProduct.propetries.map(item =>
+    const addedPropetries = productEdit.propetries.map(item =>
         propsKeys.map(key => <Typography key={item[key]}>{`${key}: ${item[key]}`}</Typography>)
     );
 
@@ -48,15 +51,17 @@ const AddProductPropetries = ({
     );
 };
 
-const mapStateToProps = ({ productsState: { newProduct, newPropetries, loading } }) => ({
-    newProduct,
-    newPropetries,
+const mapStateToProps = ({
+    productEditState: { productEdit, productPropetriesEdit, loading },
+}) => ({
+    productEdit,
+    productPropetriesEdit,
     loading,
 });
 
 const mapDispatchToProps = {
-    setNewPropetries,
-    setNewProduct,
+    setProductPropetriesEdit,
+    setProductEdit,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddProductPropetries);

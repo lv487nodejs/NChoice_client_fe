@@ -49,9 +49,9 @@ export default class AdminService {
         return propetries;
     };
 
-    getProductsByFilter = async (currentpage, postsperpage, filter) => {
+    getProductsByFilter = async (currentpage, postsperpage, filters, search) => {
         let queryString = `products?currentpage=${currentpage}&postsperpage=${postsperpage}`;
-        const { brand, color, category, catalog } = filter;
+        const { brand, color, category, catalog } = filters;
         if (brand) {
             queryString = `${queryString}&brand=${brand}`;
         }
@@ -63,6 +63,9 @@ export default class AdminService {
         }
         if (catalog) {
             queryString = `${queryString}&catalog=${catalog}`;
+        }
+        if (search) {
+            queryString = `${queryString}&searchTerm=${search}`;
         }
         const products = await this.getResource(queryString);
         return products;
@@ -79,7 +82,7 @@ export default class AdminService {
         options.map(option => {
             const itemName = option[name];
             checkboxList[itemName] = false;
-            return checkboxList[itemName]
+            return checkboxList[itemName];
         });
 
         return checkboxList;
@@ -92,15 +95,16 @@ export default class AdminService {
         const brands = await this.getAllBrands();
 
         const productOptions = [catalogs, categories, brands, colors];
+        const filterOptions = [catalogs, categories, brands];
 
-        let productOptionsList = {};
-        productOptions.map((option, index) => {
+        let filterOptionsList = {};
+        filterOptions.map((option, index) => {
             const result = this.getCheckboxList(option, PRODUCT_OPTION_NAMES[index]);
-            productOptionsList = { ...productOptionsList, ...result };
-            return productOptionsList;
+            filterOptionsList = { ...filterOptionsList, ...result };
+            return filterOptionsList;
         });
 
-        return { productOptions, productOptionsList };
+        return { productOptions, filterOptionsList, filterOptions };
     };
 
     getAllCatalogs = async () => {

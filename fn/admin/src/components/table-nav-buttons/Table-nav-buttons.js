@@ -1,14 +1,18 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Button, ButtonGroup, Typography } from '@material-ui/core';
 
-import { PRODUCT_OPTION_NAMES } from '../../config';
+import useStyle from './Table-nav-buttons-style';
 
-const filterNames = PRODUCT_OPTION_NAMES;
+import { FILTER_OPTION_NAMES } from '../../config';
+
+const filterNames = FILTER_OPTION_NAMES;
 const pathToAddProductPage = '/productadd';
 
 const TableNavButtons = ({ handleMenuOpen, handleClearFilter }) => {
+    const classes = useStyle();
+
     const filterButtons = filterNames.map(name => (
         <Button key={name} size="small" onClick={handleMenuOpen(name)}>
             {name}
@@ -16,8 +20,9 @@ const TableNavButtons = ({ handleMenuOpen, handleClearFilter }) => {
     ));
 
     return (
-        <div>
+        <div className={classes.root}>
             <Button
+                className={classes.tableNavButtons}
                 component={Link}
                 to={pathToAddProductPage}
                 variant="contained"
@@ -26,6 +31,9 @@ const TableNavButtons = ({ handleMenuOpen, handleClearFilter }) => {
             >
                 NEW PRODUCT
             </Button>
+            <Typography variant="button" className={classes.filterTitle}>
+                Filter by:
+            </Typography>
             <ButtonGroup variant="contained" color="primary">
                 {filterButtons}
                 <Button key="clearAll" size="small" onClick={handleClearFilter}>
