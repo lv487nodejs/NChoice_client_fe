@@ -1,10 +1,10 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState} from 'react';
 import './Register.css';
 import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { addUserToStore } from "../../actions";
+import { Link, Redirect } from 'react-router-dom';
+import { postUser } from "../../actions";
 import { connect } from "react-redux";
+
 
 const USER_DATA = {
     firstName: '',
@@ -13,13 +13,8 @@ const USER_DATA = {
     password: '',
 }
 
-const Register = ({addUserToStore}) => {
+const Register = (props) => {
     const[user, setUser] = useState(USER_DATA);
-    const [userDataResponse, setUserDataResponse] = useState({});
-
-    useEffect(() => {
-        addUserToStore(userDataResponse)
-    }, [userDataResponse]);
 
     const handleChange = (event) => {
         event.persist();
@@ -27,20 +22,19 @@ const Register = ({addUserToStore}) => {
     };
 
     const handleSubmit = (event) => {
-        if (event) event.preventDefault();
-        axios({
-            method: 'post',
-            url: 'https://stark-headland-06017.herokuapp.com/users/register',
-            data: user
-        })
-            .then(r => {
-                setUserDataResponse(r.data)
-                console.log('USER REGISTERED')
-            })
-            .catch((e) => console.log(e))
+        event.preventDefault();
+        props.postUser(user);
     };
 
-        return (
+    const {status} = props;
+
+    if (status === 'received') {
+        return <Redirect to='/' />
+    }
+
+    return (
+        status === 'loading' ?
+            <div>Loading...</div> : (
             <Form className="register" onSubmit={handleSubmit}>
                 <Form.Label>First name</Form.Label>
                 <Form.Control
@@ -97,14 +91,20 @@ const Register = ({addUserToStore}) => {
                 </Button>
                 <Link to="/login" className="btn btn-link">Return to Login</Link>
             </Form>
-        );
+        )
+    );
 }
 
 const mapDispatchToProps = dispatch => ({
-    addUserToStore: (value) => dispatch(addUserToStore(value)),
+    postUser: (value) => dispatch(postUser(value)),
 });
 
+const mapStateToProps = state => {
+    return {
+        status: state.authReducer.userStatus
+    }
+}
 
-export default connect(null, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
 
 

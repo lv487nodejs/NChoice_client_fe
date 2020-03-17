@@ -30,7 +30,7 @@ const Routes = () => (
                         const { name } = match.params;
                         return <ProductListPageContainer catalog={name}/>
                     }}
-                     />
+            />
         </Switch>
         <AppFooter />
     </Router>

@@ -1,7 +1,5 @@
 const express = require('express');
 const morgan = require('morgan');
-const cors = require('cors');
-
 const connectDB = require('./config/db');
 const path = require('path');
 const rfs = require('rotating-file-stream');
@@ -24,7 +22,7 @@ const cart = require('./routes/purchase/cart');
 
 
 const app = express();
-app.use(cors());
+
 connectDB();
 
 app.use(morgan('combined', { stream: accessLogStream }));

@@ -1,42 +1,49 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Login.css';
 import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import useForm from "./useForm";
-import validate from './LoginFormValidationRules';
+import { Link, Redirect } from 'react-router-dom';
+import { postUser } from "../../actions";
+import { connect } from "react-redux";
+
+const USER_DATA = {
+    email: '',
+    password: ''
+};
 
 
+const Login = (props) => {
+    const [user, setUser] = useState(USER_DATA);
 
-const Login = () => {
-    const {
-        values,
-        errors,
-        handleChange,
-        handleSubmit,
-    } = useForm(addDataToLoсalStorage, validate);
+    const handleChange = (event) => {
+        event.persist();
+        setUser( prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
+    };
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        props.postUser(user);
+    };
 
-    function addDataToLocalStorage(token) {
-        localStorage.setItem('token', JSON.stringify(token));
-        console.log('No errors, submit callback called!');
+    const {status} = props;
+
+    if (status === 'received') {
+        return <Redirect to='/' />
     }
 
-
     return (
-        <div className={'login'}>
-        <Form onSubmit={(e) => handleSubmit(e, 'login', values)} noValidate>
+        status === 'loading' ?
+            <div>Loading...</div> : (
+            <div className={'login'}>
+        <Form onSubmit={handleSubmit} >
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                     type="email"
                     placeholder="Enter email"
                     name={'email'}
-                    value={values.email}
+                    value={user.email}
                     onChange={handleChange}
-                    className={`input ${errors.email && 'is-danger'}`}
                 />
-                {errors.email && (
-                    <p className="help is-danger">{errors.email}</p>
-                )}
+
                 <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                 </Form.Text>
@@ -48,13 +55,10 @@ const Login = () => {
                     type="password"
                     placeholder="Password"
                     name={'password'}
-                    value={values.password}
+                    value={user.password}
                     onChange={handleChange}
-                    className={`input ${errors.password && 'is-danger'}`}
                 />
-                {errors.password && (
-                    <p className="help is-danger">{errors.password}</p>
-                )}
+
             </Form.Group>
             <Form.Group controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="Remember me" />
@@ -65,11 +69,20 @@ const Login = () => {
             <Link to="/register" className="btn btn-link">Register</Link>
         </Form>
         </div>
+            )
     )
-
 };
 
+const mapDispatchToProps = dispatch => ({
+    postUser: (value) => dispatch(postUser(value)),
+});
+
+const mapStateToProps = state => {
+    return {
+        status: state.authReducer.userStatus
+    }
+}
 
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 

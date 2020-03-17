@@ -1,7 +1,5 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-
 const tokenValidation = require('../../middleware/auth');
 
 const Users = require('../../models/User');
@@ -19,7 +17,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', tokenValidation, async (req, res) => {
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const user = await Users.findById(id);
@@ -32,8 +30,8 @@ router.get('/:id', tokenValidation, async (req, res) => {
     }
 });
 
-router.post('/register', userValidationRules(), validate, async (req, res) => {
-    const { firstName, lastName, email, password, role } = req.body;
+router.post('/', userValidationRules(), validate, async (req, res) => {
+    const { firstName, lastName, email, password } = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -42,25 +40,13 @@ router.post('/register', userValidationRules(), validate, async (req, res) => {
             firstName,
             lastName,
             email,
-            role,
             password: hashedPassword,
         });
-
-        const userName = { name: user.email };
-        const accessToken = generateAccessToken(userName);
-        const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
-
-        user.tokens = [];
-        user.tokens.push(refreshToken);
         await user.save();
-        res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
+        res.status(200).send({ message: 'User saved', user });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
 });
-
-const generateAccessToken = (userName) => {
-    return jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
-}
 
 module.exports = router;

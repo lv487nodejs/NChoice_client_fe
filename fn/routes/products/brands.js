@@ -52,40 +52,4 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
-    const { id } = req.params;
-    const { name, images } = req.body;
-    try {
-        const brandToUpdate = await Brands.findById(id);
-        if (!brandToUpdate) throw { message: 'Brand not found!' }
-
-        if (name) {
-            brandToUpdate.brand = name;
-        }
-
-        if (Array.isArray(images) && images.length) {
-            brandToUpdate.images.push(...images);
-        }
-
-        await brandToUpdate.save();
-        res.status(200).send(brandToUpdate);
-    } catch (err) {
-        res.status(400).send(err);
-    }
-
-});
-
-router.delete('/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const response = await Brands.findByIdAndDelete({ _id: id });
-        if (!response) {
-            return res.status(404).send('Brand does not exist!');
-        }
-        res.status(200).send(`Brand ${response.brand} successfully deleted!`);
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-
 module.exports = router;
