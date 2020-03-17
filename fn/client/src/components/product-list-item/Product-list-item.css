@@ -13,7 +13,6 @@
     position: relative;
     grid-gap: 20px;
     max-width: 17rem;
-    max-height: 550px;
     cursor: pointer;  
   }
 

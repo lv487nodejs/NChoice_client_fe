@@ -12,9 +12,9 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
+    console.log(query);
     try {
         const filter = await getFilters(query);
-
         const products = await Products.find(filter)
             .populate('catalog')
             .populate('category')
@@ -45,7 +45,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', productValidationRules(), validate, async (req, res) => {
-    const { title, description, images, propetries, price, mrsp } = req.body;
+    const { title, description, images, propetries, price, msrp } = req.body;
     try {
         const requestedCatalog = req.body.catalog;
         const catalog = await Catalogs.findOne(requestedCatalog);
@@ -53,15 +53,15 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
 
         const requestedCategory = req.body.category;
         let category = await Categories.findOne(requestedCategory);
-        if (!category) throw { message: 'Bad category name' };
+        if (!category)  throw { message: 'Bad category name' };
 
         const requestedBrand = req.body.brand;
         let brand = await Brands.findOne(requestedBrand);
-        if (!brand) throw { message: 'Bad brand name' };
+        if (!brand)  throw { message: 'Bad brand name' };
 
         const requestedColor = req.body.color;
         let color = await Colors.findOne(requestedColor);
-        if (!color) throw { message: 'Bad color name' };
+        if (!color)  throw { message: 'Bad color name' };
 
         const product = new Products({
             catalog,
@@ -71,7 +71,7 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
             description,
             color,
             price,
-            mrsp,
+            msrp,
             images,
             propetries,
         });
@@ -80,55 +80,6 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
         res.status(201).send(newProduct);
     } catch (err) {
         res.status(400).send({ message: err.message });
-    }
-});
-
-router.put('/:id', async (req, res) => {
-    const { id } = req.params;
-    const { catalogId, brandId, categoryId, colorId, images, title, description, mrsp, price, propetries } = req.body;
-
-    const productToUpdate = await Products.findById(id);
-    if (!productToUpdate) {
-        return res.status(404).send('Product not found!');
-    }
-
-    if (catalogId) productToUpdate.catalog = catalogId;
-
-    if (brandId) productToUpdate.brand = brandId;
-
-    if (categoryId) productToUpdate.category = categoryId;
-
-    if (colorId) productToUpdate.color = colorId;
-
-    if (title) productToUpdate.title = title;
-
-    if (description) productToUpdate.description = description;
-
-    if (mrsp) productToUpdate.mrsp = mrsp;
-
-    if (price) productToUpdate.price = price;
-
-    if (Array.isArray(images) && images.length) {
-        productToUpdate.images.push(...images);
-    }
-
-    if (Array.isArray(propetries) && images.propetries) {
-        productToUpdate.propetries.push(...propetries);
-    }
-
-
-});
-
-router.delete('/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const response = await Products.findByIdAndDelete({ _id: id });
-        if (!response) {
-            return res.status(404).send('Product does not exist!');
-        }
-        res.status(200).send(`Product ${response.title} successfully deleted!`);
-    } catch (err) {
-        res.status(400).send(err);
     }
 });
 
@@ -165,7 +116,6 @@ const getFilters = async query => {
 };
 
 const prepareProductsToSend = products => {
-
     const productsToSend = products.map(product => {
         const newProduct = {
             id: product.id,
@@ -174,14 +124,13 @@ const prepareProductsToSend = products => {
             description: product.description,
             propetries: product.propetries,
             modified: product.modified,
+            catalog: product.catalog.catalog,
+            category: product.category.category,
+            color: product.color.color,
+            brand: product.brand.brand,
             price: product.price,
             msrp: product.mrsp,
         };
-
-        if (product.brand) newProduct.brand = product.brand.brand;
-        if (product.catalog) newProduct.catalog = product.catalog.catalog;
-        if (product.category) newProduct.category = product.category.category;
-        if (product.color) newProduct.color = product.color.color;
         return newProduct;
     });
     return productsToSend;

@@ -14,7 +14,9 @@ function Currency() {
     }, []);
 
     return (
+        <>
             <Button currencyOptions={currencyOptions} />
+        </>
     );
 }
 

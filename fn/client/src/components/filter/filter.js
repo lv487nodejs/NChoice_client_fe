@@ -54,7 +54,7 @@ const Filter = ({
     }, [storeService]);
 
     useEffect(() => {
-        storeService.getProductsByFilter({ catalog, brand, color, category }).then(res => {
+        storeService.getCatalogByFilter({ catalog, brand, color, category }).then(res => { 
             productsLoaded(res);
         });
     }, [brand, category, catalog, color, storeService, productsLoaded]);
@@ -82,12 +82,12 @@ const Filter = ({
     };
 
     return (
-        <div className="filter-group">
-            <span>Filter</span>
-            <FilterItem items={getBrands} type="brand" handler={filterAddBrandHandler} />
-            <FilterItem items={getCategories} type="category" handler={filterAddCategoryHandler} />
-            <FilterItem items={getColors} type="color" handler={filterAddColorHandler} />
-        </div>
+            <div className="filter-group">
+                <span>Filter</span>
+                <FilterItem items={getBrands} type="brand" handler={filterAddBrandHandler} />
+                <FilterItem items={getCategories} type="category" handler={filterAddCategoryHandler} />
+                <FilterItem items={getColors} type="color" handler={filterAddColorHandler} />
+            </div>
     );
 };
 const mapStateToProps = ({ filter: { brand, category, color }, catalogsList: { catalog } }) => ({
