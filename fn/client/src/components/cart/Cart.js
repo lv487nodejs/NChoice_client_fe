@@ -12,14 +12,14 @@ const Cart = ({products}) => {
 
   const addToCart = (id) => {
     const newProducts = products.map(el=>
-      el.id === id > 1? {...el, quantity: el.quantity++} : el
+      el.id === id ? {...el, quantity: el.quantity++} : el
     );
     setProd(newProducts)
   };
 
   const removeFromCart = (id) => {
     const newProducts = products.map(el=>
-      el.id === id > 1 ? {...el, quantity: el.quantity--} : el
+      el.id === id ? {...el, quantity: el.quantity--} : el
     );
     setProd(newProducts)
   }
