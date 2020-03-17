@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import connect from "react-redux/es/connect/connect";
 import './Cart.css'
 import {Figure} from 'react-bootstrap'
@@ -7,6 +7,23 @@ import Container from "@material-ui/core/Container/Container";
 
 const Cart = ({products}) => {
   console.log(products);
+
+  const [prod, setProd] = useState(products)
+
+  const addToCart = (id) => {
+    const newProducts = products.map(el=>
+      el.id === id > 1? {...el, quantity: el.quantity++} : el
+    );
+    setProd(newProducts)
+  };
+
+  const removeFromCart = (id) => {
+    const newProducts = products.map(el=>
+      el.id === id > 1 ? {...el, quantity: el.quantity--} : el
+    );
+    setProd(newProducts)
+  }
+
 
   return (
     <div className='main-cart'>
@@ -21,7 +38,17 @@ const Cart = ({products}) => {
                 <Figure.Caption className='cartTitle'>
                   {item.title}
                   <p> Price: {item.price * item.quantity} {item.currencyIcon}</p>
-                  <p> Quantity: {item.quantity}</p>
+                  <button
+                    className="remove-from-cart-button"
+                    onClick={() => removeFromCart(item.id)}>
+                        -
+                  </button>
+                  <span id="quantity"> {item.quantity} </span>
+                  <button
+                    className="add-to-cart-button"
+                    onClick={() => addToCart(item.id)}>
+                        +
+                  </button>
                 </Figure.Caption>
               </Row>
             </Container>
