@@ -12,7 +12,7 @@ const USER_DATA = {
 
 
 const Login = (props) => {
-    const {user, setUser} = useState(USER_DATA);
+    const [user, setUser] = useState(USER_DATA);
 
     const handleChange = (event) => {
         event.persist();
@@ -20,7 +20,7 @@ const Login = (props) => {
     };
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.postUser(user,['auth', 'login']);
+        props.postUser(user);
     };
 
     const {status} = props;
@@ -33,7 +33,7 @@ const Login = (props) => {
         status === 'loading' ?
             <div>Loading...</div> : (
             <div className={'login'}>
-        <Form onSubmit={handleSubmit} noValidate>
+        <Form onSubmit={handleSubmit} >
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control

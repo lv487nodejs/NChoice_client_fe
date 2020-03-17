@@ -18,16 +18,18 @@ const postUserError = () => ({
     type: 'ADD_USER_ERROR,'
 });
 
+
+
 const logoutUser = () => ({
     type: 'LOGOUT_USER'
 })
 
-export const postUser = (value, type) => {
+export const postUser = (value) => {
     return (dispatch) => {
         dispatch(postUserStarted());
         return axios({
             method: 'post',
-            url: `https://stark-headland-06017.herokuapp.com/${type[0]}/${type[1]}`,
+            url: `https://stark-headland-06017.herokuapp.com/auth/login`,
             data: value
         }).then(response => {
             const { accessToken, refreshToken } = response.data;
@@ -41,31 +43,32 @@ export const postUser = (value, type) => {
     };
 }
 
-export const getProfileFetch = () => {
-    return dispatch => {
-        const token = localStorage.token;
-        if (token) {
-            return fetch("http://localhost:3000/api/v1/profile", {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-                .then(resp => resp.json())
-                .then(data => {
-                    if (data.message) {
-                        // Будет ошибка если token не дествительный
-                        localStorage.removeItem("token")
-                    } else {
-                        dispatch(loginUser(data.user))
-                    }
-                })
-        }
-    }
-}
+// export const loginUser = () => {
+//     return dispatch => {
+//         const token = localStorage.accesToken;
+//         if (token) {
+//             return fetch("https://stark-headland-06017.herokuapp.com/auth/login", {
+//                 method: "GET",
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                     Accept: 'application/json',
+//                     'Authorization': `Bearer ${token}`
+//                 }
+//             })
+//                 .then(resp => resp.json())
+//                 .then(data => {
+//                     if (data.message) {
+//                         // Будет ошибка если token не дествительный
+//                         localStorage.removeItem("token")
+//                     } else {
+//                         dispatch(loginUser(data.user))
+//                     }
+//                 })
+//         }
+//     }
+// }
 
+//
 //const mapDispatchToProps = dispatch => ({
 //   getProfileFetch: () => dispatch(getProfileFetch())
 // })

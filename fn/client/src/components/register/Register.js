@@ -23,7 +23,7 @@ const Register = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.postUser(user, ['users', 'register']);
+        props.postUser(user);
     };
 
     const {status} = props;

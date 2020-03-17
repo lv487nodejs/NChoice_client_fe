@@ -21,22 +21,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 userStatus: 'failed',
             }
-        case 'LOGIN_USER_REQUESTED':
-            return {
-                ...state,
-                userStatus: 'loading',
-            };
-        case 'LOGIN_USER_RECEIVED':
-            return {
-                ...state,
-                userTokens: action.payload,
-                userStatus: 'received',
-            }
-        case 'LOGIN_USER_ERROR':
-            return {
-                ...state,
-                userStatus: 'failed',
-            }
+
         case 'LOGOUT_USER':
             return {...state,
                 userTokens: {},
