@@ -5,9 +5,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { HomePageContainer, CategoriesPageContainer, ProductListPageContainer } from '../../containters';
 
 import AppHeader from '../app-header';
-import Register from '../register';
+// import Register from '../register';
 import AppFooter from '../app-footer';
-import Login from "../login";
+// import Login from "../login";
 
 const Routes = () => (
     <Router>
@@ -22,8 +22,8 @@ const Routes = () => (
                     return <CategoriesPageContainer catalog={name} />;
                 }}
             />
-            <Route path="/register" exact component={Register} />
-            <Route path="/login" exact component={Login} />
+            {/* <Route path="/register" exact component={Register} />
+            <Route path="/login" exact component={Login} /> */}
             <Route path={`/productlist/:name`}
                     exact
                     render={({ match }) => {

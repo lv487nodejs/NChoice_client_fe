@@ -85,7 +85,7 @@ export default class StoreService {
     getOrderById = async id => {
         const catalogs = await this.getResource(`orders/${id}`);
         return catalogs;
-
+    }
 
     getAllCarts = async () => {
         const carts = await this.getResource('cart');
@@ -97,4 +97,5 @@ export default class StoreService {
         return cart;
 
     };
-}
+    }
+
