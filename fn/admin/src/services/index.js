@@ -52,6 +52,7 @@ export default class AdminService {
     getProductsByFilter = async (currentpage, postsperpage, filters, search) => {
         let queryString = `products?currentpage=${currentpage}&postsperpage=${postsperpage}`;
         const { brand, color, category, catalog } = filters;
+        const searchTerm = search.toLowerCase();
         if (brand) {
             queryString = `${queryString}&brand=${brand}`;
         }
@@ -65,7 +66,7 @@ export default class AdminService {
             queryString = `${queryString}&catalog=${catalog}`;
         }
         if (search) {
-            queryString = `${queryString}&searchTerm=${search}`;
+            queryString = `${queryString}&searchTerm=${searchTerm}`;
         }
         const products = await this.getResource(queryString);
         return products;

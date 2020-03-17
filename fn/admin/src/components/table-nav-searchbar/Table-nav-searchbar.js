@@ -20,6 +20,7 @@ const TableNavSearchBar = ({ searchValue, setSearchValue, setSearchTerm }) => {
     const handleSearchSubmit = event => {
         if (event.key === 'Enter') {
             setSearchTerm(searchValue);
+            setSearchValue('');
         }
     };
 
