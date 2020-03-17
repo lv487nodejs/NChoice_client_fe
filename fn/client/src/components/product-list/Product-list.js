@@ -12,17 +12,17 @@ import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
 import ProductSort from '../product-sort';
 
-const ProductList = ({ storeService, productsLoaded, productsRequested, catalogLoaded, products, loading, catalog }) => {
+const ProductList = ({ storeService, productsLoaded, productsRequested, catalogLoaded, products, loading, catalog, currency }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(15);
 
 
 
     useEffect(() => {
-        catalogLoaded(catalog);
         productsRequested();
-        storeService.getCatalogByFilter({catalog: catalog}).then(res => productsLoaded(res));
-        if(sessionStorage.getItem("postPerPage") !== null){
+        catalogLoaded(catalog);
+        storeService.getProductsByFilter({ catalog: catalog }).then(res => productsLoaded(res));
+        if (sessionStorage.getItem("postPerPage") !== null) {
             setPostsPerPage(sessionStorage.getItem("postPerPage"))
         }
     }, [productsLoaded, productsRequested, storeService, catalog, catalogLoaded]);
@@ -45,7 +45,7 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
     }
 
     return (
-        
+
         <div className="product-list-page">
             <div className="products-options">
                     <SearchBar />
@@ -71,7 +71,7 @@ const ProductList = ({ storeService, productsLoaded, productsRequested, catalogL
     );
 };
 
-const mapStateToProps = ({ productsList: { products, loading } }) => ({ products, loading });
+const mapStateToProps = ({ productsList: { products, loading, currency } }) => ({ products, loading, currency });
 const mapDispatchToProps = { productsLoaded, productsRequested, catalogLoaded };
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));

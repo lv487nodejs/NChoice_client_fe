@@ -19,7 +19,7 @@ const AppHeaderNavRight = () => (
                 <span className="currency-button"><Currency /></span>
             </li>
             <li key="6">
-                <Link to="/register">
+                <Link to="/login">
                     <FontAwesomeIcon icon={faUser} />
                 </Link>
             </li>
