@@ -7,6 +7,7 @@ import { HomePageContainer, CategoriesPageContainer, ProductListPageContainer } 
 import AppHeader from '../app-header';
 import Register from '../register';
 import AppFooter from '../app-footer';
+import Login from "../login";
 
 const Routes = () => (
     <Router>
@@ -22,6 +23,7 @@ const Routes = () => (
                 }}
             />
             <Route path="/register" exact component={Register} />
+            <Route path="/login" exact component={Login} />
             <Route path={`/productlist/:name`}
                     exact
                     render={({ match }) => {
