@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import connect from "react-redux/es/connect/connect";
 import './Cart.css'
 import {Figure} from 'react-bootstrap'
