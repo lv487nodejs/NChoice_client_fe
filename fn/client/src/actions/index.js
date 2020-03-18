@@ -1,8 +1,19 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
-import { productsLoaded, productsRequested } from './Products-actions';
-import { catalogsLoaded, catalogsRequested, catalogLoaded } from './Catalogs-actions';
-import { postUser} from './Auth-actions'
+import {
+    productsLoaded,
+    productsRequested,
+    currencyChange,
+    addCurrentPage,
+    addPostsPerPage,
+    addPagesCount,
+    addSortByPrice,
+} from './Products-actions';
 
+import {
+    catalogsLoaded, 
+    catalogsRequested, 
+    catalogLoaded,
+ } from './Catalogs-actions';
 
 import {
     filterAddBrand,
@@ -11,11 +22,7 @@ import {
     filterRemoveCategory,
     filterRemoveColor,
     filterRemoveBrand,
-    composeFilters,
-    fetchSuccessBrands,
-    fetchSuccessCategories,
-    fetchSuccessColors,
-    composeReceivedData,
+    filterByName,
 } from './Filter-actions';
 
 export {
@@ -26,16 +33,17 @@ export {
     catalogsRequested,
     productsRequested,
     productsLoaded,
+    currencyChange,
     filterAddBrand,
     filterAddCategory,
     filterAddColor,
     filterRemoveBrand,
     filterRemoveCategory,
     filterRemoveColor,
-    composeFilters,
-    fetchSuccessBrands,
-    fetchSuccessCategories,
-    fetchSuccessColors,
-    composeReceivedData,
-    postUser,
+    addCurrentPage,
+    addPostsPerPage,
+    addPagesCount,
+    addSortByPrice,
+    filterByName,
 };
+

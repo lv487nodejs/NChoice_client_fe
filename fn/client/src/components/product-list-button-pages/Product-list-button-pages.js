@@ -10,8 +10,8 @@ export default function ProductListButtonPages({ changeItems, changeCurrentPage 
             <ButtonGroup aria-label="Buttons per page">
                 {itemsPerPage.map(number => (
                     <Button
-                        className="btn btn-primary"
                         key={number}
+                        variant="dark"
                         onClick={() => {
                             pickAmount(number);
                             changeCurrentPage();

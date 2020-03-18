@@ -1,7 +1,9 @@
 .page-item {
     cursor: pointer;
-    /* align-self: center; */
     font-family: "Oswald";
+    background-color:#343a40;
+    color: white;
+    margin-right: 1rem;
   }
   nav {
     display: grid;

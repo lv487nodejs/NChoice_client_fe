@@ -2,14 +2,13 @@ import React from 'react';
 import './Product-sort.css';
 import Button from 'react-bootstrap/Button';
 
-const sortByPrice = function(arrayToSortByPrice) {
-    console.log(arrayToSortByPrice[0].propetries[0].price);
-    return arrayToSortByPrice.sort((a, b) => a.propetries[0].price - b.propetries[0].price);
+const ProductSort = ({ options }) => {
+    const buttons = options.map(({ text, value, variant, func }) => (
+        <Button key={text} variant={variant} value={value} onClick={() => func(value)}>
+            {text}
+        </Button>
+    ));
+    return <div className="flex row flex-wrap">{buttons}</div>;
 };
 
-const ProductSort = ({ arrayToSort }) => (
-    <Button variant="primary" onClick={() => console.log(sortByPrice(arrayToSort))}>
-        Sort by price
-    </Button>
-);
 export default ProductSort;
