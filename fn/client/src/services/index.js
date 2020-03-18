@@ -115,4 +115,16 @@ export default class StoreService {
         const catalogs = await this.getResource(`orders/${id}`);
         return catalogs;
     };
+    
+    getAllCarts = async () => {
+        const carts = await this.getResource('cart');
+        return carts;
+    };
+
+    getCartById = async id => {
+        const cart = await this.getResource(`cart/${id}`);
+        return cart;
+
+    };
 }
+

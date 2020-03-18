@@ -12,7 +12,7 @@ const AppFooter = () => (
             <Card.Body>
                 <Row>
                     <Col>
-                        <Card.Title>Footer</Card.Title>
+                        <Card.Title></Card.Title>
                     </Col>
                     <Col>
                         <Card.Title>Links</Card.Title>
