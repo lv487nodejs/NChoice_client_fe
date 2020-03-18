@@ -70,7 +70,7 @@ router.put('/:id', async (req, res) => {
         if (!order) {
             throw { message: 'Can not find order with such an ID' };
         }
-        order = await Order.findByIdAndUpdate(id,req.body,{new:true})
+        order = await Order.findByIdAndUpdate(id,req.body)
         res.status(200).send(order);
     } catch (err) {
         res.status(400).send(err);
