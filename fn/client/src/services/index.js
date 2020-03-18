@@ -116,3 +116,4 @@ export default class StoreService {
         return catalogs;
     };
 }
+
