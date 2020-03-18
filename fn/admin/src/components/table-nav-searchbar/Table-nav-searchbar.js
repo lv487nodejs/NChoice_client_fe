@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
+
 import { useStyles } from './Table-nav-searchbar-style';
 
 import { setSearchValue, setSearchTerm } from '../../actions';
 
 const placeHolder = 'Search...';
 const inputProps = { 'aria-label': 'search' };
+const searchClear = '';
+const submitKey = 'Enter';
 
 const TableNavSearchBar = ({ searchValue, setSearchValue, setSearchTerm }) => {
     const classes = useStyles();
+
+    useEffect(() => () => setSearchTerm(searchClear), [setSearchTerm]);
 
     const handleSearchChange = event => {
         const { value } = event.target;
@@ -18,9 +24,9 @@ const TableNavSearchBar = ({ searchValue, setSearchValue, setSearchTerm }) => {
     };
 
     const handleSearchSubmit = event => {
-        if (event.key === 'Enter') {
+        if (event.key === submitKey) {
             setSearchTerm(searchValue);
-            setSearchValue('');
+            setSearchValue(searchClear);
         }
     };
 

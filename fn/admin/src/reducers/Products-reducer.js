@@ -1,14 +1,18 @@
+import { FILTER_OPTIONS } from '../config';
+
+const filters = FILTER_OPTIONS;
+
 const initialState = {
     product: {},
     productPropetries: [],
     products: [],
-    filters: {},
+    filters,
     loading: true,
 };
 
 const productsState = (state = initialState, action) => {
     switch (action.type) {
-        case 'LOADING_STATUS':
+        case 'SET_LOADING_STATUS':
             return {
                 ...state,
                 loading: true,

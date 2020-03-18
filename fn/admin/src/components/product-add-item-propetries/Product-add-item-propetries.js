@@ -6,8 +6,9 @@ import { setProductEdit, setProductPropetriesEdit } from '../../actions';
 
 import { SaveButton } from '../buttons';
 import ProductAddPropetriesItem from '../product-add-propetries-item';
+import { useStyles } from './Product-add-item-propetries-style';
 
-const buttonLabel = 'ADD SIZE';
+const ADD_BUTTON_LABEL = 'ADD SIZE';
 const propsKeys = ['size', 'available', 'sku'];
 
 const AddProductPropetries = ({
@@ -15,8 +16,9 @@ const AddProductPropetries = ({
     setProductEdit,
     productPropetriesEdit,
     productEdit,
-    classes,
 }) => {
+    const classes = useStyles();
+
     const handleInputChange = event => {
         const { name, value } = event.target;
         setProductPropetriesEdit({ ...productPropetriesEdit, [name]: value });
@@ -30,12 +32,7 @@ const AddProductPropetries = ({
     };
 
     const propetryTextFields = Object.keys(productPropetriesEdit).map(name => (
-        <ProductAddPropetriesItem
-            key={name}
-            classes={classes}
-            name={name}
-            handleInputChange={handleInputChange}
-        />
+        <ProductAddPropetriesItem key={name} name={name} handleInputChange={handleInputChange} />
     ));
 
     const addedPropetries = productEdit.propetries.map(item =>
@@ -45,7 +42,7 @@ const AddProductPropetries = ({
     return (
         <Paper className={classes.productPropetries}>
             {propetryTextFields}
-            <SaveButton title={buttonLabel} eventHandler={handleAddPropetries} />
+            <SaveButton title={ADD_BUTTON_LABEL} eventHandler={handleAddPropetries} />
             {addedPropetries}
         </Paper>
     );

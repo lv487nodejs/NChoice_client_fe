@@ -39,9 +39,14 @@ import {
     setCheckBoxStatus,
     setFilterOptionsList,
     setFilterOptionsGroups,
+    setFilterCounters,
 } from './Filters-action';
 
 import { setSearchValue, setSearchTerm } from './Search-actions';
+
+import { setTableDense } from './Table-actions';
+
+import { setThemeMode } from './Theme-actions';
 
 export {
     setProduct,
@@ -56,6 +61,7 @@ export {
     setCheckBoxStatus,
     setFilterOptionsList,
     setFilterOptionsGroups,
+    setFilterCounters,
     setBrand,
     setBrands,
     brandLoadingStatus,
@@ -79,4 +85,6 @@ export {
     setRowsPerPage,
     setSearchValue,
     setSearchTerm,
+    setTableDense,
+    setThemeMode,
 };

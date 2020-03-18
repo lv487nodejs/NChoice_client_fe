@@ -41,13 +41,8 @@ const ProductList = ({
         currentPage,
         rowsPerPage,
         filters,
-        loading,
         searchTerm,
     ]);
-
-    if (loading) {
-        return <LoadingBar />;
-    }
 
     const productItems = products.map((product, index) => (
         <TableContainerRow
@@ -75,6 +70,10 @@ const ProductList = ({
             pagination
         />
     );
+
+    if (loading) {
+        return <LoadingBar />;
+    }
 
     return productTable;
 };

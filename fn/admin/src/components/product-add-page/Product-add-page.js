@@ -20,6 +20,7 @@ const successMessage = 'Product succesfully saved id:';
 
 const ProductAddPage = ({ adminService, productEdit, setProductEdit }) => {
     const classes = useStyles();
+    const { productsService } = adminService;
     const [open, setOpen] = React.useState(false);
     const [msg, setMsg] = React.useState('');
 
@@ -30,7 +31,7 @@ const ProductAddPage = ({ adminService, productEdit, setProductEdit }) => {
 
     const handleSaveProduct = event => {
         event.preventDefault();
-        adminService.postProduct(productEdit).then(res => {
+        productsService.postProduct(productEdit).then(res => {
             setOpen(true);
             setMsg(`${successMessage} ${res._id}`);
         });
@@ -49,7 +50,7 @@ const ProductAddPage = ({ adminService, productEdit, setProductEdit }) => {
         />
     ));
 
-    const pruductAddPropetries = <ProductAddPropetries classes={classes} />;
+    const pruductAddPropetries = <ProductAddPropetries />;
 
     const productVerifyPage = <ProductAddVerifyPage product={productEdit} />;
 

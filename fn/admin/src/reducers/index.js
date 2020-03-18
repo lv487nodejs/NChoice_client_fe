@@ -11,6 +11,8 @@ import snackbarState from './Snackbar-reducer';
 import paginationState from './Paginator-reducer';
 import filtersState from './Filters-reducer';
 import searchState from './Search-reducer';
+import tableState from './Table-reducer';
+import themeState from './Theme-reducer';
 
 export default combineReducers({
     catalogsState,
@@ -24,4 +26,6 @@ export default combineReducers({
     paginationState,
     filtersState,
     searchState,
+    tableState,
+    themeState,
 });

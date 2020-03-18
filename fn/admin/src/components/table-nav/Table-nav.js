@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
 import { connect } from 'react-redux';
+import { FormControlLabel, Switch } from '@material-ui/core';
 import wrapWithAdminService from '../wrappers';
 
 import {
@@ -9,6 +10,9 @@ import {
     setFilterOptionsList,
     setProductsFilters,
     setCheckBoxStatus,
+    setFilterCounters,
+    setSearchTerm,
+    setTableDense,
 } from '../../actions';
 
 import useStyle from './Table-nav-style';
@@ -16,13 +20,15 @@ import TableNavButtons from '../table-nav-buttons';
 import TableNavFilterMenu from '../table-nav-filter-menu';
 import TableNavSearchBar from '../table-nav-searchbar';
 
-import { FILTER_OPTIONS } from '../../config';
+import { FILTER_OPTIONS, FILTER_COUNTERS } from '../../config';
 
 const filterMenuStatus = {
     catalog: null,
     category: null,
     brand: null,
 };
+
+const searchClear = '';
 
 const TableNav = ({
     adminService,
@@ -34,32 +40,45 @@ const TableNav = ({
     setFilterOptionsList,
     setProductsFilters,
     setFilterOptionsGroups,
+    setFilterCounters,
+    setSearchTerm,
+    setTableDense,
+    dense,
 }) => {
     const classes = useStyle();
     const [menuStatus, setMenuStatus] = React.useState(filterMenuStatus);
 
     const { productPropetriesService } = adminService;
 
+    const setCheckBoxes = useCallback(() => {
+        productPropetriesService
+            .getProductOptions()
+            .then(res => setCheckBoxStatus(res.filterOptionsList));
+    }, [setCheckBoxStatus, productPropetriesService]);
+
+    useEffect(() => {
+        if (!checkboxLoaded) {
+            setCheckBoxes();
+        }
+    }, [setCheckBoxes, checkboxLoaded]);
+
     useEffect(() => {
         productPropetriesService.getProductOptions().then(res => {
-            if (!checkboxLoaded) {
-                setCheckBoxStatus(res.filterOptionsList);
-            }
             setFilterOptionsList(res.filterOptionsList);
             setFilterOptionsGroups(res.filterOptions);
         });
-    }, [
-        setCheckBoxStatus,
-        checkboxLoaded,
-        productPropetriesService,
-        setFilterOptionsGroups,
-        setFilterOptionsList,
-    ]);
+    }, [productPropetriesService, setFilterOptionsList, setFilterOptionsGroups]);
 
     const filterInitialState = () => {
         setCheckBoxStatus(filterOptionsList);
         setFilterSelected(FILTER_OPTIONS);
         setProductsFilters(FILTER_OPTIONS);
+        setFilterCounters(FILTER_COUNTERS);
+        setSearchTerm(searchClear);
+    };
+
+    const handleChangeTableDense = event => {
+        setTableDense(event.target.checked);
     };
 
     const handleMenuOpen = name => event => {
@@ -83,6 +102,10 @@ const TableNav = ({
                 handleClearFilter={handleClearFilter}
             />
             <TableNavFilterMenu handleMenuClose={handleMenuClose} menuStatus={menuStatus} />
+            <FormControlLabel
+                control={<Switch checked={dense} onChange={handleChangeTableDense} size="small" />}
+                label="Compact mode"
+            />
             <TableNavSearchBar />
         </div>
     );
@@ -90,11 +113,13 @@ const TableNav = ({
 
 const setMapStateToProps = ({
     filtersState: { filterSelected, filterOptionsList, checkboxStatus, checkboxLoaded },
+    tableState: { dense },
 }) => ({
     filterSelected,
     filterOptionsList,
     checkboxStatus,
     checkboxLoaded,
+    dense,
 });
 const setDispatchToProps = {
     setFilterOptionsGroups,
@@ -102,6 +127,9 @@ const setDispatchToProps = {
     setProductsFilters,
     setFilterOptionsList,
     setCheckBoxStatus,
+    setFilterCounters,
+    setSearchTerm,
+    setTableDense,
 };
 
 export default wrapWithAdminService()(connect(setMapStateToProps, setDispatchToProps)(TableNav));

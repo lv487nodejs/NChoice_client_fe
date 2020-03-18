@@ -5,6 +5,8 @@ import { TextField } from '@material-ui/core';
 
 import { SIZES_CLOTHES, SIZES_SHOES } from '../../config';
 
+import { useStyles } from './Product-add-propetries-item-style';
+
 const input = {
     string: 'string',
     number: 'number',
@@ -19,9 +21,9 @@ const ProductAddPropetriesItem = ({
     productPropetriesEdit,
     productEdit,
     name,
-    classes,
     handleInputChange,
 }) => {
+    const classes = useStyles();
     const select = name === input.size;
     const inputType = name !== input.available ? input.string : input.number;
 

@@ -34,10 +34,13 @@ const ProductPage = ({
 
     const photo = 'https://www.yourwdwstore.net/assets/images/6/60000/7000/600/67670-s1.jpg';
 
-    const productPropetriesPages = productPropetries.map(propetry => <ProductPropetriesPage propetries={propetry} />);
+    const productPropetriesPages = productPropetries.map(propetry => (
+        <ProductPropetriesPage key={propetry.size} propetries={propetry} />
+    ));
 
     const productDetails = (
         <ProductContainerDetails
+            key={id}
             catalog={product.catalog}
             category={product.category}
             brand={product.brand}

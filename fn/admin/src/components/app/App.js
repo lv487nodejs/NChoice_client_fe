@@ -1,30 +1,21 @@
 import React from 'react';
 
 import { ThemeProvider } from '@material-ui/styles';
-import { createMuiTheme, CssBaseline } from '@material-ui/core';
-import { indigo } from '@material-ui/core/colors';
+import { CssBaseline } from '@material-ui/core';
 
+import { connect } from 'react-redux';
 import { useStyles } from './App-styles';
 import AppRouter from '../app-router';
 
-const theme = createMuiTheme({
-    palette: {
-        warning: {
-            main: '#ffb74d',
-        },
-        secondary: {
-            main: '#e57373',
-        },
-        primary: indigo,
-        type: 'dark',
-    },
-});
+import { darkTheme, lightTheme } from './App-theme';
 
-const App = () => {
+const App = ({ darkMode }) => {
+    const themeValue = darkMode ? darkTheme : lightTheme;
+
     const classes = useStyles();
 
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={themeValue}>
             <CssBaseline />
             <div className={classes.root}>
                 <AppRouter />
@@ -33,4 +24,6 @@ const App = () => {
     );
 };
 
-export default App;
+const mapsStateToProps = ({ themeState: { darkMode } }) => ({ darkMode });
+
+export default connect(mapsStateToProps)(App);

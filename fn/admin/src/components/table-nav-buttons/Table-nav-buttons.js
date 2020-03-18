@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { Link } from 'react-router-dom';
-import { Button, ButtonGroup, Typography } from '@material-ui/core';
+
+import { Badge, Button, Typography } from '@material-ui/core';
 
 import useStyle from './Table-nav-buttons-style';
 
@@ -10,14 +12,23 @@ import { FILTER_OPTION_NAMES } from '../../config';
 const filterNames = FILTER_OPTION_NAMES;
 const pathToAddProductPage = '/productadd';
 
-const TableNavButtons = ({ handleMenuOpen, handleClearFilter }) => {
+const FILTERS_TITLE = 'Filter by:';
+const CLEAR_BUTTON_TITLE = 'Clear All';
+const NEW_PRODUCT_BUTTON_TITLE = 'NEW PRODUCT';
+
+const TableNavButtons = ({ filterCounters, handleMenuOpen, handleClearFilter, dense }) => {
     const classes = useStyle();
+    const size = dense ? 'small' : 'medium';
 
     const filterButtons = filterNames.map(name => (
-        <Button key={name} size="small" onClick={handleMenuOpen(name)}>
-            {name}
-        </Button>
+        <Badge key={name} color="error" badgeContent={filterCounters[name]}>
+            <Button variant="contained" color="primary" size={size} onClick={handleMenuOpen(name)}>
+                {name}
+            </Button>
+        </Badge>
     ));
+
+    const clearDisable = filterCounters.total === 0;
 
     return (
         <div className={classes.root}>
@@ -27,21 +38,32 @@ const TableNavButtons = ({ handleMenuOpen, handleClearFilter }) => {
                 to={pathToAddProductPage}
                 variant="contained"
                 color="primary"
-                size="small"
+                size={size}
             >
-                NEW PRODUCT
+                {NEW_PRODUCT_BUTTON_TITLE}
             </Button>
             <Typography variant="button" className={classes.filterTitle}>
-                Filter by:
+                {FILTERS_TITLE}
             </Typography>
-            <ButtonGroup variant="contained" color="primary">
-                {filterButtons}
-                <Button key="clearAll" size="small" onClick={handleClearFilter}>
-                    Clear All
-                </Button>
-            </ButtonGroup>
+
+            {filterButtons}
+            <Button
+                color="primary"
+                variant="contained"
+                disabled={clearDisable}
+                key={CLEAR_BUTTON_TITLE}
+                onClick={handleClearFilter}
+                size={size}
+            >
+                {CLEAR_BUTTON_TITLE}
+            </Button>
         </div>
     );
 };
 
-export default TableNavButtons;
+const mapStateToProps = ({ filtersState: { filterCounters }, tableState: { dense } }) => ({
+    filterCounters,
+    dense,
+});
+
+export default connect(mapStateToProps)(TableNavButtons);

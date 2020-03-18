@@ -1,9 +1,12 @@
-import { FILTER_OPTIONS } from '../config';
+import { FILTER_OPTIONS, FILTER_COUNTERS } from '../config';
+
+const filterCounters = FILTER_COUNTERS;
 
 const initialState = {
     checkboxStatus: {},
     checkboxLoaded: false,
     filterSelected: FILTER_OPTIONS,
+    filterCounters,
     filterOptionsGroups: [],
     filterOptionsList: {},
 };
@@ -21,6 +24,12 @@ const filtersState = (state = initialState, action) => {
             return {
                 ...state,
                 filterSelected: action.payload,
+            };
+
+        case 'SET_FILTER_COUNTER':
+            return {
+                ...state,
+                filterCounters: action.payload,
             };
 
         case 'SET_FILTER_OPTIONS_LIST':

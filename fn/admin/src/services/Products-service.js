@@ -15,6 +15,7 @@ class ProductsService extends AdminService {
 
     getProductPropetries = async id => {
         const product = await this.getResource(`products/${id}`);
+
         const { propetries } = product[0];
         return propetries;
     };

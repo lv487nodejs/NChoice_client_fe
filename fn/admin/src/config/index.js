@@ -86,3 +86,10 @@ export const FILTER_OPTIONS = {
     category: [],
     brand: [],
 };
+
+export const FILTER_COUNTERS = {
+    catalog: 0,
+    brand: 0,
+    category: 0,
+    total: 0,
+};

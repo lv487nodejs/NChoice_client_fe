@@ -3,6 +3,11 @@ const setFilterSelected = newFilterSelected => ({
     payload: newFilterSelected,
 });
 
+const setFilterCounters = newFilterCounters => ({
+    type: 'SET_FILTER_COUNTER',
+    payload: newFilterCounters,
+});
+
 const setFilterOptionsList = newfilterOptionsList => ({
     type: 'SET_FILTER_OPTIONS_LIST',
     payload: newfilterOptionsList,
@@ -18,4 +23,10 @@ const setCheckBoxStatus = newCheckboxStatus => ({
     payload: newCheckboxStatus,
 });
 
-export { setFilterSelected, setCheckBoxStatus, setFilterOptionsList, setFilterOptionsGroups };
+export {
+    setFilterSelected,
+    setCheckBoxStatus,
+    setFilterOptionsList,
+    setFilterOptionsGroups,
+    setFilterCounters,
+};

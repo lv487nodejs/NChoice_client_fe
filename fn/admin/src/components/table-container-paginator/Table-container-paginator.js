@@ -26,8 +26,8 @@ const TablePaginator = ({
 
     const handleChangeRowsPerPage = event => {
         const rowsPerPageValue = parseInt(event.target.value);
-        setRowsPerPage(rowsPerPageValue);
         setCurrentPage(FIRST_PAGE);
+        setRowsPerPage(rowsPerPageValue);
     };
 
     return (
