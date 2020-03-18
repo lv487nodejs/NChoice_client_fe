@@ -1,7 +1,7 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
 import { productsLoaded, productsRequested, currencyChange } from './Products-actions';
 import { catalogsLoaded, catalogsRequested, catalogLoaded } from './Catalogs-actions';
-import {addCart, getNumbers} from './Cart-action'
+import {addCart, getNumbers, increaseToCart, decreaseFromCart, removeFromCart} from './Cart-action'
 
 import {
     filterAddBrand,
@@ -29,5 +29,8 @@ export {
     filterRemoveCategory,
     filterRemoveColor,
     addCart,
-    getNumbers
+    getNumbers,
+    increaseToCart,
+    decreaseFromCart,
+    removeFromCart
 };

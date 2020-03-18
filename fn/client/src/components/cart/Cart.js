@@ -1,27 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import connect from "react-redux/es/connect/connect";
 import './Cart.css'
 import {Figure} from 'react-bootstrap'
 import Row from "react-bootstrap/Row";
 import Container from "@material-ui/core/Container/Container";
 
-const Cart = ({products}) => {
+import {increaseToCart, decreaseFromCart, removeFromCart} from '../../actions'
+
+const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart}) => {
   console.log(products);
 
-  const [prod, setProd] = useState(products)
+  const [product, setProduct] = useState(products)
 
-  const addToCart = (id) => {
+  const removeFromCart1 = (id) => {
+    const newProducts = products.map(el=>
+      el.id === id ? products.splice(products.indexOf(el), 1) : el
+    );
+    setProduct(newProducts)
+  }
+
+  const increaseToCart1 = (id) => {
     const newProducts = products.map(el=>
       el.id === id ? {...el, quantity: el.quantity++} : el
     );
-    setProd(newProducts)
+    setProduct(newProducts)
   };
 
-  const removeFromCart = (id) => {
+  const decreaseFromCart1 = (id) => {
     const newProducts = products.map(el=>
-      el.id === id ? {...el, quantity: el.quantity--} : el
+      el.id === id && el.quantity > 1 ? {...el, quantity: el.quantity--} : 
+      el.id === id && el.quantity === 1 ? removeFromCart(el.id) : 
+      el
     );
-    setProd(newProducts)
+    setProduct(newProducts)
   }
 
 
@@ -37,17 +48,22 @@ const Cart = ({products}) => {
                 <Figure.Image src={`/images/products/${item.images[0]}`} className='cartImg'/>
                 <Figure.Caption className='cartTitle'>
                   {item.title}
-                  <p> Price: {item.price * item.quantity} {item.currencyIcon}</p>
+                  <p> Price: {item.price * item.quantity}</p>
                   <button
                     className="remove-from-cart-button"
-                    onClick={() => removeFromCart(item.id)}>
+                    onClick={() => {decreaseFromCart1(item.id); decreaseFromCart(item.id)}}>
                         -
                   </button>
                   <span id="quantity"> {item.quantity} </span>
                   <button
                     className="add-to-cart-button"
-                    onClick={() => addToCart(item.id)}>
+                    onClick={() => {increaseToCart1(item.id); increaseToCart(item.id)}}>
                         +
+                  </button>
+                  <button
+                    className="delte-cart-button"
+                    onClick={() => {removeFromCart1(item.id); removeFromCart(item.id)}}>
+                        delete
                   </button>
                 </Figure.Caption>
               </Row>
@@ -59,8 +75,8 @@ const Cart = ({products}) => {
   )
 };
 
-const mapStateToProps = ({cartReducer: {products}}) => ({products});
+const mapStateToProps = ({cartReducer: {products, cartNumbers}}) => ({products, cartNumbers});
 
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps, {increaseToCart, decreaseFromCart, removeFromCart})(Cart);
 
 

@@ -34,7 +34,7 @@ function ProductListItem({ title, description, id, images, price, msrp, currency
           <Card.Text className="cardPrice msrp-price">{`${msrpWithRate} ${currencyIcon}`}</Card.Text>
           <FontAwesomeIcon icon={faHeart} className="heart"/>
           <FontAwesomeIcon icon={faShoppingCart} className="cart"
-                           onClick={() => addCart({id, title, price, currencyIcon, images})}/>
+                           onClick={() => addCart({id, title, price, msrp, currencyIcon, images})}/>
         </Card.Body>
       </Card.Body>
     </Card>

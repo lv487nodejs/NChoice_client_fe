@@ -1,6 +1,7 @@
 const initialState = {
   cartNumbers: 0,
   products: [],
+  currency: 1,
 };
 
 export default (state = initialState, action) => {
@@ -24,7 +25,37 @@ export default (state = initialState, action) => {
       return {
         ...state
       };
+
+      case 'CURRENCY_CHANGE':
+        return {
+            ...state,
+            currency: action.payload,
+        };
+
+    case 'INCREASE_TO_CART':
+        return{
+          ...state,
+          cartNumbers: state.cartNumbers + 1,
+        }
+    
+    case 'DECREASE_TO_CART':
+        return{
+          ...state,
+          cartNumbers: state.cartNumbers - 1,
+        }
+
+    case 'REMOVE_FROM_CART':
+      let foundProduct1 = state.products.find((value)=> console.log(value.quantity));
+      return{
+        ...state,
+        cartNumbers:  state.cartNumbers ,
+      }
+
     default:
       return state
   }
 }
+
+
+
+

@@ -18,7 +18,37 @@ const getNumbers = () => {
     })
   }
 };
-export  {addCart, getNumbers}
+
+
+const increaseToCart = (id) => {
+  return(dispatch) => {
+    dispatch({
+      type: 'INCREASE_TO_CART',
+      payload: id
+    })
+  }
+};
+
+const decreaseFromCart = (id) => {
+  return(dispatch) => {
+    dispatch({
+      type: 'DECREASE_TO_CART',
+      payload: id
+    })
+  }
+};
+
+const removeFromCart = (id) => {
+  return(dispatch) => {
+    dispatch({
+      type: 'REMOVE_FROM_CART',
+      payload: id
+    })
+  }
+};
+
+
+export  {addCart, getNumbers, increaseToCart, decreaseFromCart, removeFromCart}
 
 
 
