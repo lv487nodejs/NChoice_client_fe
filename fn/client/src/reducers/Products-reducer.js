@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const productsList = (state = initialState, action) => {
-    
+
     switch (action.type) {
         case 'PRODUCTS_REQUESTED':
             return {
@@ -50,6 +50,12 @@ const productsList = (state = initialState, action) => {
             return {
                 ...state,
                 sortByPrice: action.payload,
+            };
+        case 'PRODUCT_LOADED':
+            return {
+                ...state,
+                product: action.payload,
+                loading: false,
             };
         default:
             return state;

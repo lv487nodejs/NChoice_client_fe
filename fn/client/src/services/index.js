@@ -18,8 +18,8 @@ export default class StoreService {
     };
 
     getProductById = async id => {
-        const products = await this.getResource(`products/${id}`);
-        return products;
+        const product = await this.getResource(`products/${id}`);
+        return product[0];
     };
 
     getProductsByFilter = async filter => {
