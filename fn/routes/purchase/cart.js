@@ -4,6 +4,7 @@ const { cartValidationRules, validate } = require('../../middleware/validator');
 
 const router = express.Router();
 
+// create the cart
 router.post('/', cartValidationRules(), validate, async (req, res) => {
     const {
         cartItems,
@@ -21,6 +22,7 @@ router.post('/', cartValidationRules(), validate, async (req, res) => {
     }
 });
 
+// Get all carts
 router.get('/', async (req, res) => {
     let carts;
     try {
@@ -34,6 +36,8 @@ router.get('/', async (req, res) => {
     }
 });
 
+
+// Get the cart by ID
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -47,7 +51,22 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// Update the cart by ID
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        let cart = await Cart.findById(id);
+        if (!cart) {
+            throw { message: 'Can not find cart with such an ID' };
+        }
+        cart = await Cart.findByIdAndUpdate(id,req.body)
+        res.status(200).send("Cart was successfully changed");
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
 
+// Delete the cart by ID
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {

@@ -12,6 +12,7 @@ import {
 import AppHeader from '../app-header';
 import Register from '../register';
 import AppFooter from '../app-footer';
+import Login from "../login/Login";
 
 const Routes = () => (
     <Router>
@@ -43,6 +44,7 @@ const Routes = () => (
                     return <ProductDetailsContainer id={id} />;
                 }}
             />
+            <Route path="/login" exact component={Login} />
         </Switch>
         <AppFooter />
     </Router>

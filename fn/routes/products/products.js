@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
         const projection = await getProjection(query);
         const sort = await getSort(query);
 
-        const products = await Products.find(filter, projection)
+        let products = await Products.find(filter, projection)
             .sort(sort)
             .skip(+skip)
             .limit(+postsperpage)
@@ -29,6 +29,19 @@ router.get('/', async (req, res) => {
             .populate('category')
             .populate('color')
             .populate('brand');
+
+        if (products.length === 0 && isNotBlank(query.searchTerm)) {
+          await updateSearchFilter(query, filter);
+
+          products = await Products.find(filter, projection)
+            .sort(sort)
+            .skip(+skip)
+            .limit(+postsperpage)
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
+        }
 
         const productsToSend = prepareProductsToSend(products);
         const foundProductsNumber = await Products.find(filter)
@@ -151,6 +164,18 @@ router.delete('/:id', async (req, res) => {
         res.status(400).send(err);
     }
 });
+
+const updateSearchFilter = async (query, filter) => {
+  const { searchTerm } = query;
+
+  delete filter['$text'];
+  let regexp = new RegExp('\.*'+ searchTerm.trim() + '.*\i');
+  filter.$or =  [
+     { title: regexp },
+     { description: regexp }
+   ];
+};
+
 
 const getFilters = async query => {
     const { catalog, category, color, brand, searchTerm } = query;

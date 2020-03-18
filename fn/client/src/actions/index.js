@@ -27,6 +27,12 @@ import {
     filterByName,
 } from './Filter-actions';
 
+import {
+    postUserSuccess,
+    postUserStarted,
+    postUserError
+} from "./Auth-actions";
+
 export {
     categoriesRequested,
     categoriesLoaded,
@@ -49,5 +55,8 @@ export {
     filterByName,
     productLoaded,
     sizesLoaded,
+    postUserError,
+    postUserSuccess,
+    postUserStarted
 };
 
