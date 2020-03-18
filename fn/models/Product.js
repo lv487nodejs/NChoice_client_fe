@@ -13,10 +13,16 @@ const ProductSchema = new Schema({
     color: { type: Schema.Types.ObjectId, ref: 'color' },
     mrsp: { type: Number, min: 0 },
     price: { type: Number, required: true, min: 0 },
+    rate: { type: Number, default: 0 },
     images: [String],
     propetries: [PropetriesSchema],
     modified: { type: Date, default: Date.now },
 });
+
+ProductSchema.index(
+  { "title": "text", "description": "text" },
+  { "weights": {  "title": 5 } }
+);
 
 const Products = mongoose.model('product', ProductSchema);
 

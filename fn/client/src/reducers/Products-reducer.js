@@ -6,9 +6,11 @@ const initialState = {
     currentPage: 1,
     postsPerPage: 15,
     pagesCount: 1,
+    sortByPrice: 0,
 };
 
 const productsList = (state = initialState, action) => {
+    
     switch (action.type) {
         case 'PRODUCTS_REQUESTED':
             return {
@@ -43,6 +45,11 @@ const productsList = (state = initialState, action) => {
             return {
                 ...state,
                 pagesCount: action.payload,
+            };
+        case 'SORT_BY_PRICE':
+            return {
+                ...state,
+                sortByPrice: action.payload,
             };
         default:
             return state;

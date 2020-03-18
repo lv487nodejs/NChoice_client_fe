@@ -6,6 +6,7 @@ import {
     addCurrentPage,
     addPostsPerPage,
     addPagesCount,
+    addSortByPrice,
 } from './Products-actions';
 
 import {
@@ -21,6 +22,7 @@ import {
     filterRemoveCategory,
     filterRemoveColor,
     filterRemoveBrand,
+    filterByName,
 } from './Filter-actions';
 
 export {
@@ -41,4 +43,7 @@ export {
     addCurrentPage,
     addPostsPerPage,
     addPagesCount,
+    addSortByPrice,
+    filterByName,
 };
+
