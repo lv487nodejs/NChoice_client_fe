@@ -6,7 +6,10 @@ const productsLoaded = newProducts => ({
 const productsRequested = () => ({
     type: 'PRODUCTS_REQUESTED',
 });
-
+const productLoaded = newProduct => ({
+    type: 'PRODUCT_LOADED',
+    payload: newProduct,
+});
 const currencyChange = newCurrency => ({
     type: 'CURRENCY_CHANGE',
     payload: newCurrency,
@@ -27,6 +30,10 @@ const addSortByPrice = value => ({
     type: 'SORT_BY_PRICE',
     payload: value,
 });
+const sizesLoaded = newSize => ({
+    type: 'SET_SIZES',
+    payload: newSize,
+});
 
 export {
     productsLoaded,
@@ -36,4 +43,6 @@ export {
     addPostsPerPage,
     addPagesCount,
     addSortByPrice,
+    productLoaded,
+    sizesLoaded,
 };

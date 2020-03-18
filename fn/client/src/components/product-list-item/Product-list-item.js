@@ -22,7 +22,7 @@ function ProductListItem({ title, description, id, images, price, msrp, currency
             <div className="image-container">
                 <Card.Img variant="top" src={`/images/products/${images}`} className="cardsImage" />
             </div>
-            <Card.Body>
+            <Card.Body className="cardWrapper">
                 <Card.Title className="productName">{title}</Card.Title>
                 <Card.Text className="description">{description}</Card.Text>
                 <Card.Body className="bottomElements">

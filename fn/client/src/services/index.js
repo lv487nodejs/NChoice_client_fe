@@ -14,12 +14,12 @@ export default class StoreService {
 
     getAllProducts = async () => {
         const products = await this.getResource('products');
-        return products;
+        return products.products;
     };
 
     getProductById = async id => {
-        const products = await this.getResource(`products/${id}`);
-        return products;
+        const product = await this.getResource(`products/${id}`);
+        return product[0];
     };
 
     getProductsByFilter = async filter => {
@@ -86,7 +86,7 @@ export default class StoreService {
     getCatalogCategories = async catalogName => {
         const catalogs = await this.getResource(`catalogs/?catalog=${catalogName}`);
         console.log(catalogs);
-        
+
         const { categories } = catalogs[0];
         return categories;
     };
@@ -115,6 +115,12 @@ export default class StoreService {
         const catalogs = await this.getResource(`orders/${id}`);
         return catalogs;
     };
+
+    getProductProperties = async id => {
+        const product = await this.getResource(`products/${id}`);
+        console.log(product);
+        const { propetries } = product[0];
+        return propetries;
     
     getAllCarts = async () => {
         const carts = await this.getResource('cart');
@@ -124,7 +130,6 @@ export default class StoreService {
     getCartById = async id => {
         const cart = await this.getResource(`cart/${id}`);
         return cart;
-
     };
 }
 

@@ -2,7 +2,12 @@ import React from 'react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { HomePageContainer, CategoriesPageContainer, ProductListPageContainer } from '../../containters';
+import {
+    HomePageContainer,
+    CategoriesPageContainer,
+    ProductListPageContainer,
+    ProductDetailsContainer,
+} from '../../containters';
 
 import AppHeader from '../app-header';
 import Register from '../register';
@@ -23,14 +28,23 @@ const Routes = () => (
                 }}
             />
             <Route path="/register" exact component={Register} />
+            <Route
+                path="/productlist/:name"
+                exact
+                render={({ match }) => {
+                    const { name } = match.params;
+                    return <ProductListPageContainer catalog={name} />;
+                }}
+            />
+            <Route
+                path="/products/:id"
+                exact
+                render={({ match }) => {
+                    const { id } = match.params;
+                    return <ProductDetailsContainer id={id} />;
+                }}
+            />
             <Route path="/login" exact component={Login} />
-            <Route path={`/productlist/:name`}
-                    exact
-                    render={({ match }) => {
-                        const { name } = match.params;
-                        return <ProductListPageContainer catalog={name}/>
-                    }}
-                     />
         </Switch>
         <AppFooter />
     </Router>

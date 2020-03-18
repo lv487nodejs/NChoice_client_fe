@@ -7,10 +7,11 @@ const initialState = {
     postsPerPage: 15,
     pagesCount: 1,
     sortByPrice: 0,
+    sizes: [],
 };
 
 const productsList = (state = initialState, action) => {
-    
+
     switch (action.type) {
         case 'PRODUCTS_REQUESTED':
             return {
@@ -51,6 +52,19 @@ const productsList = (state = initialState, action) => {
                 ...state,
                 sortByPrice: action.payload,
             };
+        case 'PRODUCT_LOADED':
+            return {
+                ...state,
+                product: action.payload,
+                loading: false,
+            };
+        case 'SET_SIZES':
+            return {
+                ...state,
+                sizes: action.payload,
+                loading: false,
+            };
+
         default:
             return state;
     }
