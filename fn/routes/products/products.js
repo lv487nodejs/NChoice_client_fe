@@ -220,13 +220,14 @@ const prepareProductsToSend = products => {
             description: product.description,
             propetries: product.propetries,
             modified: product.modified,
-            catalog: product.catalog.catalog,
-            category: product.category.category,
-            color: product.color.color,
-            brand: product.brand.brand,
             price: product.price,
             msrp: product.mrsp,
         };
+
+        if (product.brand) newProduct.brand = product.brand.brand;
+        if (product.catalog) newProduct.catalog = product.catalog.catalog;
+        if (product.category) newProduct.category = product.category.category;
+        if (product.color) newProduct.color = product.color.color;
         return newProduct;
     });
     return productsToSend;
