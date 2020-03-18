@@ -16,8 +16,8 @@ const input = {
 };
 
 const ProductAddPropetriesItem = ({
-    newPropetries,
-    newProduct,
+    productPropetriesEdit,
+    productEdit,
     name,
     classes,
     handleInputChange,
@@ -25,7 +25,7 @@ const ProductAddPropetriesItem = ({
     const select = name === input.size;
     const inputType = name !== input.available ? input.string : input.number;
 
-    const notShoes = newProduct.category !== 'shoes';
+    const notShoes = productEdit.category !== 'shoes';
     const sizes = notShoes ? SIZES_CLOTHES : SIZES_SHOES;
 
     const sizeOptions = sizes.map(size => (
@@ -43,7 +43,7 @@ const ProductAddPropetriesItem = ({
             name={name}
             label={name}
             type={inputType}
-            value={newPropetries[name]}
+            value={productPropetriesEdit[name]}
             onChange={handleInputChange}
             SelectProps={input.nativeSelect}
             variant="outlined"
@@ -54,9 +54,9 @@ const ProductAddPropetriesItem = ({
     );
 };
 
-const mapStateToProps = ({ productsState: { newProduct, newPropetries } }) => ({
-    newProduct,
-    newPropetries,
+const mapStateToProps = ({ productEditState: { productEdit, productPropetriesEdit } }) => ({
+    productEdit,
+    productPropetriesEdit,
 });
 
 export default connect(mapStateToProps)(ProductAddPropetriesItem);

@@ -7,7 +7,7 @@ import { INPUT_TYPE_NUMBER, INPUT_MULTILINE } from '../../config';
 
 const INPUT_PROPS = { min: 0, maxLength: 150 };
 
-const ProductAddItemDescr = ({ classes, option, newProduct, onChangeEvent }) => {
+const ProductAddItemDescr = ({ classes, option, productEdit, onChangeEvent }) => {
     const inputMultiline = INPUT_MULTILINE.includes(option);
     let inputType = 'string';
     if (INPUT_TYPE_NUMBER.includes(option)) inputType = 'number';
@@ -19,7 +19,7 @@ const ProductAddItemDescr = ({ classes, option, newProduct, onChangeEvent }) => 
             id={option}
             label={option}
             name={option}
-            value={newProduct[option]}
+            value={productEdit[option]}
             onChange={onChangeEvent}
             type={inputType}
             variant="outlined"
@@ -29,8 +29,8 @@ const ProductAddItemDescr = ({ classes, option, newProduct, onChangeEvent }) => 
     );
 };
 
-const mapStateToProps = ({ productsState: { newProduct } }) => ({
-    newProduct,
+const mapStateToProps = ({ productEditState: { productEdit } }) => ({
+    productEdit,
 });
 
 export default connect(mapStateToProps)(ProductAddItemDescr);

@@ -10,18 +10,12 @@ import { USERS_TABLE_HEAD } from '../../config';
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
 
-const UserList = ({
-    adminService,
-    users,
-    usersLoaded,
-    usersRequested,
-    history,
-    loading,
-}) => {
+const UserList = ({ adminService, users, usersLoaded, usersRequested, history, loading }) => {
+    const { usersService } = adminService;
     useEffect(() => {
         usersRequested();
-        adminService.getAllUsers().then(res => usersLoaded(res));
-    }, [adminService, usersRequested, usersLoaded]);
+        usersService.getAllUsers().then(res => usersLoaded(res));
+    }, [usersService, usersRequested, usersLoaded]);
 
     const userItems = users.map((user, index) => (
         <TableContainerRow
@@ -43,12 +37,7 @@ const UserList = ({
     if (loading) {
         return <LoadingBar />;
     }
-    return (
-        <TableContainerGenerator
-            tableTitles={USERS_TABLE_HEAD}
-            tableItems={userItems}
-        />
-    );
+    return <TableContainerGenerator tableTitles={USERS_TABLE_HEAD} tableItems={userItems} />;
 };
 
 const mapStateToProps = ({ usersState: { users, loading } }) => ({

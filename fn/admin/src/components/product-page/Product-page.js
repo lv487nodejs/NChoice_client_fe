@@ -25,12 +25,12 @@ const ProductPage = ({
 }) => {
     const classes = useStyles();
     const { id } = match.params;
-
+    const { productsService } = adminService;
     useEffect(() => {
         setProductLoadingStatus();
-        adminService.getProductById(id).then(res => setProduct(res));
-        adminService.getProductPropetries(id).then(res => setProductPropetries(res));
-    }, [id, adminService, setProduct, setProductLoadingStatus, setProductPropetries]);
+        productsService.getProductById(id).then(res => setProduct(res));
+        productsService.getProductPropetries(id).then(res => setProductPropetries(res));
+    }, [id, productsService, setProduct, setProductLoadingStatus, setProductPropetries]);
 
     const photo = 'https://www.yourwdwstore.net/assets/images/6/60000/7000/600/67670-s1.jpg';
 

@@ -17,11 +17,11 @@ const CategoryDetails = props => {
         loading,
         adminService,
     } = props;
-
+    const { categoriesService } = adminService;
     useEffect(() => {
         categoryLoadingStatus();
-        adminService.getCategoryById(categoryId).then(res => setCategory(res));
-    }, [setCategory, categoryLoadingStatus, categoryId, adminService]);
+        categoriesService.getCategoryById(categoryId).then(res => setCategory(res));
+    }, [setCategory, categoryLoadingStatus, categoryId, categoriesService]);
 
     const submitHandler = async e => {
         e.preventDefault();
@@ -30,7 +30,7 @@ const CategoryDetails = props => {
             id: category._id,
             name: e.target.categoryName.value,
         };
-        const res = await adminService.putCategory(categoryToSend);
+        const res = await categoriesService.putCategory(categoryToSend);
         if (res.status === 200) {
             setCategory(res.data);
             return <SnackbarItem open={success} />;

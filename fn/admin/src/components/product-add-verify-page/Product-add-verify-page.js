@@ -5,12 +5,12 @@ import { Typography } from '@material-ui/core';
 
 import { PRODUCT_KEYS, PROPETRIES_KEYS } from '../../config';
 
-const ProductAddVerifyPage = ({ newProduct }) => {
+const ProductAddVerifyPage = ({ productEdit }) => {
     const productValues = PRODUCT_KEYS.map(key => (
-        <Typography key={key}>{`${key}: ${newProduct[key]}`}</Typography>
+        <Typography key={key}>{`${key}: ${productEdit[key]}`}</Typography>
     ));
 
-    const productPropetries = newProduct.propetries.map(item =>
+    const productPropetries = productEdit.propetries.map(item =>
         PROPETRIES_KEYS.map(key => (
             <Typography key={item[key]}>{`${key}: ${item[key]}`}</Typography>
         ))
@@ -24,8 +24,8 @@ const ProductAddVerifyPage = ({ newProduct }) => {
     );
 };
 
-const mapStateToProps = ({ productsState: { newProduct } }) => ({
-    newProduct,
+const mapStateToProps = ({ productEditState: { productEdit } }) => ({
+    productEdit,
 });
 
 export default connect(mapStateToProps)(ProductAddVerifyPage);

@@ -19,10 +19,12 @@ const CategoryList = ({
     loading,
     history,
 }) => {
+    const { categoriesService } = adminService;
+
     useEffect(() => {
         categoryLoadingStatus();
-        adminService.getAllCategories().then(res => setCategories(res));
-    }, [adminService, setCategories, categoryLoadingStatus]);
+        categoriesService.getAllCategories().then(res => setCategories(res));
+    }, [categoriesService, setCategories, categoryLoadingStatus]);
 
     const categoryItems = categories.map((category, index) => (
         <TableContainerRow

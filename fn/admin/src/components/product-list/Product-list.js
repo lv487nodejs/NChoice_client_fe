@@ -24,16 +24,17 @@ const ProductList = ({
     rowsPerPage,
     setPagesCount,
 }) => {
+    const { productsService } = adminService;
     useEffect(() => {
         setProductLoadingStatus();
-        adminService
+        productsService
             .getProductsByFilter(currentPage, rowsPerPage, filters, searchTerm)
             .then(res => {
                 setProducts(res.products);
                 setPagesCount(res.foundProductsNumber);
             });
     }, [
-        adminService,
+        productsService,
         setProducts,
         setPagesCount,
         setProductLoadingStatus,

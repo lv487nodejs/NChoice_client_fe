@@ -16,7 +16,6 @@ import TableNavButtons from '../table-nav-buttons';
 import TableNavFilterMenu from '../table-nav-filter-menu';
 import TableNavSearchBar from '../table-nav-searchbar';
 
-
 import { FILTER_OPTIONS } from '../../config';
 
 const filterMenuStatus = {
@@ -39,8 +38,10 @@ const TableNav = ({
     const classes = useStyle();
     const [menuStatus, setMenuStatus] = React.useState(filterMenuStatus);
 
+    const { productPropetriesService } = adminService;
+
     useEffect(() => {
-        adminService.getProductOptions().then(res => {
+        productPropetriesService.getProductOptions().then(res => {
             if (!checkboxLoaded) {
                 setCheckBoxStatus(res.filterOptionsList);
             }
@@ -50,7 +51,7 @@ const TableNav = ({
     }, [
         setCheckBoxStatus,
         checkboxLoaded,
-        adminService,
+        productPropetriesService,
         setFilterOptionsGroups,
         setFilterOptionsList,
     ]);

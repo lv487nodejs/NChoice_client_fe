@@ -24,11 +24,12 @@ const ProductAddItemOptions = ({
     productPropetriesEditGroups,
     loading,
 }) => {
+    const { productPropetriesService } = adminService;
     useEffect(() => {
-        adminService
+        productPropetriesService
             .getProductOptions()
-            .then(res => setProductGroupedPropetries(res.productPropetriesEditGroups));
-    }, [adminService, setProductGroupedPropetries]);
+            .then(res => setProductGroupedPropetries(res.productOptions));
+    }, [productPropetriesService, setProductGroupedPropetries]);
 
     if (loading) {
         return <LoadingBar />;
