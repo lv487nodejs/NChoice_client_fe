@@ -3,6 +3,9 @@ const initialState = {
     product: {},
     currency: 1,
     loading: true,
+    currentPage: 1,
+    postsPerPage: 15,
+    pagesCount: 1,
 };
 
 const productsList = (state = initialState, action) => {
@@ -26,7 +29,21 @@ const productsList = (state = initialState, action) => {
                 currency: action.payload,
                 loading: false,
             };
-
+        case 'ADD_CURRENT_PAGE':
+            return {
+                ...state,
+                currentPage: action.payload,
+            };
+        case 'ADD_POSTS_PER_PAGE':
+            return {
+                ...state,
+                postsPerPage: action.payload,
+            };
+        case 'ADD_PAGES_COUNT':
+            return {
+                ...state,
+                pagesCount: action.payload,
+            };
         default:
             return state;
     }
