@@ -25,6 +25,12 @@ import {
     filterByName,
 } from './Filter-actions';
 
+import {
+    postUserSuccess,
+    postUserStarted,
+    postUserError
+} from "./Auth-actions";
+
 export {
     categoriesRequested,
     categoriesLoaded,
@@ -45,5 +51,8 @@ export {
     addPagesCount,
     addSortByPrice,
     filterByName,
+    postUserError,
+    postUserSuccess,
+    postUserStarted
 };
 
