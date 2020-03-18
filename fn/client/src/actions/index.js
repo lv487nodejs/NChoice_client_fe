@@ -8,6 +8,7 @@ import {
     addPagesCount,
     addSortByPrice,
     productLoaded,
+    sizesLoaded,
 } from './Products-actions';
 
 import {
@@ -47,5 +48,6 @@ export {
     addSortByPrice,
     filterByName,
     productLoaded,
+    sizesLoaded,
 };
 

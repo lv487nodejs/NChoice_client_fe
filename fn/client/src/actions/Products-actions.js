@@ -30,6 +30,10 @@ const addSortByPrice = value => ({
     type: 'SORT_BY_PRICE',
     payload: value,
 });
+const sizesLoaded = newSize => ({
+    type: 'SET_SIZES',
+    payload: newSize,
+});
 
 export {
     productsLoaded,
@@ -40,4 +44,5 @@ export {
     addPagesCount,
     addSortByPrice,
     productLoaded,
+    sizesLoaded,
 };

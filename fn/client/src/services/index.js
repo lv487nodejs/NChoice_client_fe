@@ -14,7 +14,7 @@ export default class StoreService {
 
     getAllProducts = async () => {
         const products = await this.getResource('products');
-        return products;
+        return products.products;
     };
 
     getProductById = async id => {
@@ -86,7 +86,7 @@ export default class StoreService {
     getCatalogCategories = async catalogName => {
         const catalogs = await this.getResource(`catalogs/?catalog=${catalogName}`);
         console.log(catalogs);
-        
+
         const { categories } = catalogs[0];
         return categories;
     };
@@ -114,5 +114,12 @@ export default class StoreService {
     getOrderById = async id => {
         const catalogs = await this.getResource(`orders/${id}`);
         return catalogs;
+    };
+
+    getProductProperties = async id => {
+        const product = await this.getResource(`products/${id}`);
+        console.log(product);
+        const { propetries } = product[0];
+        return propetries;
     };
 }
