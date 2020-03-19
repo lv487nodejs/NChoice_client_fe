@@ -1,7 +1,9 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './FilterItem.css';
 
 export const FilterItem = props => {
+    const [isVisible,setIsVisible] = useState(true);
+    const listClass = isVisible?'':'hide';
     const { items = [], type, handler  } = props;
     const elements = items.map(item => (
         <li key={item[type]} >
@@ -11,13 +13,16 @@ export const FilterItem = props => {
             </label>
         </li>
     ));
+const changeHandler = () =>{
+    isVisible?setIsVisible(false):setIsVisible(true)
+}
     return (
         <div className="filter-item">
             <p>
-                <i className="btn btn-outline-primary plus-button">+</i>
+                <i className="btn btn-outline-primary plus-button" onClick={changeHandler}>+</i>
             </p>
     <p className="filter-name">{type}</p>
-            <ul>{elements}</ul>
+            <ul className={listClass}>{elements}</ul>
         </div>
     );
 };
