@@ -1,9 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import wrapWithAdminService from '../wrappers';
 
-import { setProducts, setProductLoadingStatus, setPagesCount } from '../../actions';
+import {
+    setProducts,
+    setProductLoadingStatus,
+    setPagesCount,
+    setDialogStatus,
+    setDialogTitle,
+    setDialogContent,
+    setButtonTitle,
+    setEventHandler,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
+} from '../../actions';
 
 import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
@@ -17,15 +29,24 @@ const ProductList = ({
     filters,
     searchTerm,
     setProducts,
-    setProductLoadingStatus,
     loading,
     history,
     currentPage,
     rowsPerPage,
     setPagesCount,
+    setDialogStatus,
+    setDialogTitle,
+    setDialogContent,
+    setButtonTitle,
+    setEventHandler,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
+    setProductLoadingStatus,
 }) => {
     const { productsService } = adminService;
-    useEffect(() => {
+
+    const getProducts = useCallback(() => {
         setProductLoadingStatus();
         productsService
             .getProductsByFilter(currentPage, rowsPerPage, filters, searchTerm)
@@ -44,6 +65,30 @@ const ProductList = ({
         searchTerm,
     ]);
 
+    useEffect(() => {
+        getProducts();
+    }, [getProducts]);
+
+    const editHandler = productId => () => {
+        history.push(`/product/${productId}`);
+    };
+
+    const removeHandler = productId => () => {
+        const removeProduct = async () => {
+            const res = await productsService.removeProduct(productId);
+            getProducts();
+            setDialogStatus(false);
+            setSnackBarMessage(res);
+            setSnackBarSeverity('success');
+            setSnackBarStatus(true);
+        };
+        setDialogTitle('Remove product');
+        setDialogContent('Are you sure you want to remove this product');
+        setButtonTitle('Remove Product');
+        setEventHandler(removeProduct);
+        setDialogStatus(true);
+    };
+
     const productItems = products.map((product, index) => (
         <TableContainerRow
             key={index}
@@ -54,12 +99,8 @@ const ProductList = ({
             title={product.title}
             msrp={product.msrp}
             price={product.price}
-            editHandler={() => {
-                history.push(`/product/${product.id}`);
-            }}
-            deleteHandler={() => {
-                console.log(product.id);
-            }}
+            editHandler={editHandler(product.id)}
+            deleteHandler={removeHandler(product.id)}
         />
     ));
 
@@ -90,7 +131,19 @@ const mapStateToProps = ({
     rowsPerPage,
     searchTerm,
 });
-const mapDispatchToProps = { setProducts, setProductLoadingStatus, setPagesCount };
+const mapDispatchToProps = {
+    setProducts,
+    setProductLoadingStatus,
+    setPagesCount,
+    setDialogStatus,
+    setDialogTitle,
+    setDialogContent,
+    setButtonTitle,
+    setEventHandler,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
+};
 
 export default wrapWithAdminService()(
     connect(mapStateToProps, mapDispatchToProps)(withRouter(ProductList))

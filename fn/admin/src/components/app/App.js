@@ -8,6 +8,8 @@ import { useStyles } from './App-styles';
 import AppRouter from '../app-router';
 
 import { darkTheme, lightTheme } from './App-theme';
+import DialogWindow from '../dialog-window';
+import SnackbarItem from '../snackbar-item';
 
 const App = ({ darkMode }) => {
     const themeValue = darkMode ? darkTheme : lightTheme;
@@ -19,6 +21,8 @@ const App = ({ darkMode }) => {
             <CssBaseline />
             <div className={classes.root}>
                 <AppRouter />
+                <DialogWindow />
+                <SnackbarItem />
             </div>
         </ThemeProvider>
     );

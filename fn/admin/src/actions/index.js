@@ -40,7 +40,7 @@ import { setPagesCount, setCurrentPage, setRowsPerPage } from './Paginator-actio
 
 import { setColors } from './Colors-actions';
 
-import { setSnackBar } from './Snackbar-actions';
+import { setSnackBarStatus, setSnackBarSeverity, setSnackBarMessage } from './Snackbar-actions';
 
 import {
     setFilterSelected,
@@ -55,6 +55,14 @@ import { setSearchValue, setSearchTerm } from './Search-actions';
 import { setTableDense } from './Table-actions';
 
 import { setThemeMode } from './Theme-actions';
+
+import {
+    setDialogStatus,
+    setDialogTitle,
+    setDialogContent,
+    setButtonTitle,
+    setEventHandler,
+} from './Dialog-window-actions';
 
 export {
     setProduct,
@@ -91,7 +99,9 @@ export {
     categorySnackbarOpenFalse,
     categoryUpdateCatalogs,
     categoryLoadingStop,
-    setSnackBar,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
     setPagesCount,
     setCurrentPage,
     setRowsPerPage,
@@ -99,4 +109,9 @@ export {
     setSearchTerm,
     setTableDense,
     setThemeMode,
+    setDialogStatus,
+    setDialogTitle,
+    setDialogContent,
+    setButtonTitle,
+    setEventHandler,
 };

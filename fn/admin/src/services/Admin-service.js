@@ -13,7 +13,6 @@ export default class AdminService {
     };
 
     postData = async (url, dataToSend) => {
-        console.log(dataToSend);
         try {
             const response = await axios.post(`${SERVER_URL}${url}`, dataToSend);
             return response.data;
