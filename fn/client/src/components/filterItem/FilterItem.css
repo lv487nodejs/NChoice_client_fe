@@ -27,5 +27,8 @@ label{
    li{
       list-style: none;
   }
-
+.hide{
+  display: none;
+  transition: 0.3s ease-in-out;
+}
   
