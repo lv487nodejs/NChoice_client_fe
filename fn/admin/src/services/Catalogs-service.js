@@ -21,6 +21,11 @@ class CatalogsService extends AdminService {
         const { categories } = catalogs[0];
         return categories;
     };
+
+    putCatalog = async (id, catalog) => {
+        const res = await this.putData(`catalogs/${id}`, { catalog });
+        return res;
+    };
 }
 
 const catalogsService = new CatalogsService();

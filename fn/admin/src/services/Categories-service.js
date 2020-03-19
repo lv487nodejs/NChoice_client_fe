@@ -16,23 +16,13 @@ class CategoriesService extends AdminService {
         return res;
     };
 
-    getAllColors = async () => {
-        const colors = await this.getResource('colors');
-        return colors;
+    postCategory = async category => {
+        const res = await this.postData('categories', category);
+        return res;
     };
 
-    getAllUsers = async () => {
-        const colors = await this.getResource('users');
-        return colors;
-    };
-
-    getUserById = async id => {
-        const colors = await this.getResource(`users/${id}`);
-        return colors;
-    };
-
-    putUser = async user => {
-        const res = await this.putData(`users/${user.id}`, user);
+    delteCategory = async id => {
+        const res = await this.deleteResource(`categories/${id}`);
         return res;
     };
 }

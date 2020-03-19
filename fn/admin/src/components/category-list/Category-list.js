@@ -28,33 +28,33 @@ const CategoryList = ({
     open,
     history,
 }) => {
-    const { categoriesService } = adminService;
+    const { categoriesService, catalogsService } = adminService;
 
     useEffect(() => {
         categoryLoadingStatus();
-        adminService.getAllCategories().then(res => setCategories(res));
+        categoriesService.getAllCategories().then(res => setCategories(res));
     }, [
-        adminService,
+        categoriesService,
         setCategories,
         categoryLoadingStatus,
         categorySnackbarOpenTrue,
         categorySnackbarOpenFalse,
     ]);
 
-    const deleteHandler = id => async event => {
+    const deleteHandler = id => async () => {
         try {
-            const catalogs = await adminService.getAllCatalogs();
+            const catalogs = await catalogsService.getAllCatalogs();
 
             catalogs.forEach(async catalog => {
                 const categories = catalog.categories.filter(categori => categori._id !== id);
                 catalog.categories = categories;
-                await adminService.putCatalog(catalog._id, catalog);
+                await catalogsService.putCatalog(catalog._id, catalog);
             });
 
-            await adminService.delteCategory(id);
+            await categoriesService.delteCategory(id);
             categorySnackbarOpenTrue();
             categoryLoadingStatus();
-            const newCategories = await adminService.getAllCategories();
+            const newCategories = await categoriesService.getAllCategories();
             setCategories(newCategories);
         } catch (error) {
             console.error(error);

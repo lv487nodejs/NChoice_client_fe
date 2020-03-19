@@ -23,7 +23,6 @@ import {
     categorySnackbarOpenFalse,
 } from '../../actions';
 import SnackbarItem from '../snackbar-item';
-import LoadingBar from '../loading-bar';
 
 const CategoryAddPage = props => {
     const classes = useStyles();
@@ -39,17 +38,17 @@ const CategoryAddPage = props => {
         categoryLoadingStatus,
         open,
         catalogsToUpdate,
-        loading,
     } = props;
 
     const [categoryName, setCategoryName] = useState('');
+    const { catalogsService, categoriesService } = adminService;
 
     useEffect(() => {
         categoryLoadingStatus();
-        adminService.getAllCatalogs().then(res => setCatalogs(res));
+        catalogsService.getAllCatalogs().then(res => setCatalogs(res));
     }, [
         categoryLoadingStatus,
-        adminService,
+        catalogsService,
         setCatalogs,
         setCategory,
         categorySnackbarOpenTrue,
@@ -64,10 +63,10 @@ const CategoryAddPage = props => {
         const newCategory = {
             category: categoryName,
         };
-        adminService.postCategory(newCategory).then(res => {
+        categoriesService.postCategory(newCategory).then(res => {
             catalogsToUpdate.forEach(catalog => {
                 catalog.categories.push(res._id);
-                adminService.putCatalog(catalog._id, catalog).then(res => {
+                catalogsService.putCatalog(catalog._id, catalog).then(res => {
                     categorySnackbarOpenTrue();
                     setCategoryName('');
                 });
@@ -75,7 +74,7 @@ const CategoryAddPage = props => {
         });
     };
 
-    const handleCheck = catalog => event => {
+    const handleCheck = catalog => () => {
         categoryUpdateCatalogs([...catalogsToUpdate, catalog]);
     };
 

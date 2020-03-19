@@ -5,21 +5,6 @@ class ColorsService extends AdminService {
         const colors = await this.getResource('colors');
         return colors;
     };
-
-    getAllUsers = async () => {
-        const colors = await this.getResource('users');
-        return colors;
-    };
-
-    getUserById = async id => {
-        const colors = await this.getResource(`users/${id}`);
-        return colors;
-    };
-
-    putUser = async user => {
-        const res = await this.putData(`users/${user.id}`, user);
-        return res;
-    };
 }
 
 const colorsService = new ColorsService();

@@ -13,6 +13,7 @@ export default class AdminService {
     };
 
     postData = async (url, dataToSend) => {
+        console.log(dataToSend);
         try {
             const response = await axios.post(`${SERVER_URL}${url}`, dataToSend);
             return response.data;
@@ -24,7 +25,16 @@ export default class AdminService {
     putData = async (url, dataToSend) => {
         try {
             const response = await axios.put(`${SERVER_URL}${url}`, dataToSend);
-            return response;
+            return response.data;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    deleteResource = async url => {
+        try {
+            const response = await axios.delete(`${SERVER_URL}${url}`);
+            return response.data;
         } catch (error) {
             console.error(error);
         }

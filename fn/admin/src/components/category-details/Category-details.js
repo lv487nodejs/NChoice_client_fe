@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import {
-    TextField,
-    Button,
-    FormControlLabel,
-    Checkbox,
-    FormLabel,
-    FormGroup,
-} from '@material-ui/core';
+import { TextField, FormControlLabel, Checkbox, FormLabel, FormGroup } from '@material-ui/core';
 
 import {
     categoryLoadingStatus,
@@ -36,18 +29,21 @@ const CategoryDetails = props => {
         adminService,
     } = props;
 
-  const [catalogsToUpdate, setCatalogsToUpdate] = useState([]);
+    const [catalogsToUpdate, setCatalogsToUpdate] = useState([]);
+
+    const { categoriesService, catalogsService } = adminService;
 
     useEffect(() => {
         categoryLoadingStatus();
-        adminService.getCategoryById(categoryId).then(res => setCategory(res));
-        adminService.getAllCatalogs().then(res => setCatalogs(res));
+        categoriesService.getCategoryById(categoryId).then(res => setCategory(res));
+        catalogsService.getAllCatalogs().then(res => setCatalogs(res));
     }, [
         setCategory,
         categoryLoadingStatus,
         categoryId,
         setCatalogs,
-        adminService,
+        categoriesService,
+        catalogsService,
         categorySnackbarOpenTrue,
         categorySnackbarOpenFalse,
     ]);
@@ -63,7 +59,7 @@ const CategoryDetails = props => {
             id: category._id,
             name: e.target.categoryName.value,
         };
-        adminService
+        categoriesService
             .putCategory(categoryToSend)
             .then(res => {
                 setCategory(res);
@@ -72,7 +68,7 @@ const CategoryDetails = props => {
             .catch(err => categorySnackbarOpenFalse());
     };
 
-    const handleCheck = catalog => event => {
+    const handleCheck = catalog => () => {
         setCatalogsToUpdate([...catalogsToUpdate, catalog]);
     };
 
