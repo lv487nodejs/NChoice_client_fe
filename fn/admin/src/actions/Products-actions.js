@@ -3,18 +3,29 @@ const setProduct = newProduct => ({
     payload: newProduct,
 });
 
+const setProductPropetries = newProductPropetries => ({
+    type: 'SET_PRODUCT_PROPETRIES',
+    payload: newProductPropetries,
+});
+
 const setProducts = newProducts => ({
     type: 'SET_PRODUCTS',
     payload: newProducts,
 });
 
-const setProductPropetries = newPropetries => ({
-    type: 'SET_PRODUCTS_PROPETRIES',
-    payload: newPropetries,
+const setProductsFilters = newFilters => ({
+    type: 'SET_PRODUCTS_FILTERS',
+    payload: newFilters,
 });
 
-const productLoadingStatus = () => ({
-    type: 'LOADING_STATUS',
+const setProductLoadingStatus = () => ({
+    type: 'SET_LOADING_STATUS',
 });
 
-export { setProduct, setProducts, setProductPropetries, productLoadingStatus };
+export {
+    setProduct,
+    setProducts,
+    setProductsFilters,
+    setProductPropetries,
+    setProductLoadingStatus,
+};

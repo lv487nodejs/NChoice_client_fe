@@ -12,14 +12,14 @@ const catalogsState = (state = initialState, action) => {
                 loading: true,
             };
 
-        case 'GET_CATALOG':
+        case 'SET_CATALOG':
             return {
                 ...state,
                 catalog: action.payload,
                 loading: false,
             };
 
-        case 'GET_CATALOGS':
+        case 'SET_CATALOGS':
             return {
                 ...state,
                 catalogs: action.payload,
