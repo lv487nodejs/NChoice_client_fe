@@ -6,6 +6,9 @@ import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 
 export const DRAWER_WIDTH = 220;
 export const PAGE_TITLE = 'FN Admin Panel';
+
+export const ROWS_PER_PAGE_OPTIONS = [10, 25, 50, 100];
+
 export const MENU_CATEGORIES = [
     ['Statistics', '/', AssessmentIcon],
     ['Products', '/products', ShoppingBasketIcon],
@@ -36,21 +39,22 @@ export const NEW_PRODUCT_MODEL = {
     color: '',
     title: '',
     description: '',
-    mrsp: 0,
-    price: 0,
+    mrsp: '',
+    price: '',
     images: [],
     propetries: [],
 };
 
 export const NEW_PRODUCT_PROPETRIES = {
     size: '',
-    available: 0,
+    available: '',
     sku: '',
 };
 
 export const PRODUCT_OPTION_NAMES = ['catalog', 'category', 'brand', 'color'];
+export const FILTER_OPTION_NAMES = ['catalog', 'category', 'brand'];
 
-export const NEW_PRODUCT_DESCR = ['title', 'description', 'mrsp', 'price'];
+export const NEW_PRODUCT_DESCR = ['title', 'mrsp', 'price', 'description'];
 export const SIZES_SHOES = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
 export const SIZES_CLOTHES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
@@ -60,6 +64,34 @@ export const INPUT_MULTILINE = ['description'];
 export const PRODUCT_ADD_STEPS_LABEL = [
     'Please choose products Catalog, Category, Brand and Color',
     'Please provide product descriptions',
-    'Please provide product propetries',
+    'Please provide product sizes information',
+    'Please verify and confirm product saving',
 ];
+
+export const PRODUCT_KEYS = [
+    'catalog',
+    'category',
+    'brand',
+    'color',
+    'title',
+    'description',
+    'mrsp',
+    'price',
+];
+
 export const snackbarDuration = 4000;
+
+export const PROPETRIES_KEYS = ['size', 'available', 'sku'];
+
+export const FILTER_OPTIONS = {
+    catalog: [],
+    category: [],
+    brand: [],
+};
+
+export const FILTER_COUNTERS = {
+    catalog: 0,
+    brand: 0,
+    category: 0,
+    total: 0,
+};

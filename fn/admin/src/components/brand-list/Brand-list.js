@@ -11,18 +11,12 @@ import TableContainerGenerator from '../table-container-generator/Table-containe
 
 import { BRANDS_TABLE_HEAD } from '../../config';
 
-const BrandList = ({
-    adminService,
-    brands,
-    setBrands,
-    brandLoadingStatus,
-    loading,
-    history,
-}) => {
+const BrandList = ({ adminService, brands, setBrands, brandLoadingStatus, loading, history }) => {
+    const { brandsService } = adminService;
     useEffect(() => {
         brandLoadingStatus();
-        adminService.getAllBrands().then(res => setBrands(res));
-    }, [adminService, setBrands, brandLoadingStatus]);
+        brandsService.getAllBrands().then(res => setBrands(res));
+    }, [brandsService, setBrands, brandLoadingStatus]);
 
     const brandItems = brands.map((brand, index) => (
         <TableContainerRow
@@ -41,12 +35,7 @@ const BrandList = ({
     if (loading) {
         return <LoadingBar />;
     }
-    return (
-        <TableContainerGenerator
-            tableTitles={BRANDS_TABLE_HEAD}
-            tableItems={brandItems}
-        />
-    );
+    return <TableContainerGenerator tableTitles={BRANDS_TABLE_HEAD} tableItems={brandItems} />;
 };
 
 const mapStateToProps = ({ brandsState: { brands, loading } }) => ({

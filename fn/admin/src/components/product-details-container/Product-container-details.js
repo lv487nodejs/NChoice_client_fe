@@ -7,6 +7,7 @@ const ProductContainerDetails = ({ ...product }) => {
 
     const productDetails = Object.keys({ ...product }).map(propetry => (
         <TextField
+            key={propetry}
             className={classes.textField}
             fullWidth
             id="outlined-name"

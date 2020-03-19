@@ -28,6 +28,8 @@ const CategoryList = ({
     open,
     history,
 }) => {
+    const { categoriesService } = adminService;
+
     useEffect(() => {
         categoryLoadingStatus();
         adminService.getAllCategories().then(res => setCategories(res));

@@ -5,13 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, InputLabel, Select } from '@material-ui/core';
 import wrapWithAdminService from '../wrappers';
-import {
-    userLoaded,
-    userEdit,
-    userRequested,
-    userSave,
-    userSetRole,
-} from '../../actions';
+import { userLoaded, userEdit, userRequested, userSave, userSetRole } from '../../actions';
 import LoadingBar from '../loading-bar';
 
 const useStyles = makeStyles(theme => ({
@@ -40,17 +34,12 @@ const UserDetails = ({
 }) => {
     const classes = useStyles();
 
+    const { userService } = adminService;
+
     useEffect(() => {
         userRequested();
-        adminService.getUserById(userId).then(res => userLoaded(res));
-    }, [
-        adminService,
-        userLoaded,
-        userId,
-        userRequested,
-        userSave,
-        userSetRole,
-    ]);
+        userService.getUserById(userId).then(res => userLoaded(res));
+    }, [userService, userLoaded, userId, userRequested, userSave, userSetRole]);
 
     const clickEditHandler = () => userEdit(disableEdit);
 
@@ -77,12 +66,7 @@ const UserDetails = ({
 
     const inputFields = (
         <div>
-            <TextField
-                id="email"
-                label="Email"
-                defaultValue={user.email}
-                disabled={disableEdit}
-            />
+            <TextField id="email" label="Email" defaultValue={user.email} disabled={disableEdit} />
             <TextField
                 id="lastName"
                 label="Last Name"
@@ -115,12 +99,7 @@ const UserDetails = ({
 
     const buttons = (
         <div>
-            <Button
-                type="submit"
-                color="secondary"
-                variant="contained"
-                disabled={disableEdit}
-            >
+            <Button type="submit" color="secondary" variant="contained" disabled={disableEdit}>
                 Save
             </Button>
             <Button
@@ -155,6 +134,4 @@ const mapDispatchToProps = {
     userSetRole,
 };
 
-export default wrapWithAdminService()(
-    connect(mapStateToProps, mapDispatchToProps)(UserDetails)
-);
+export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(UserDetails));

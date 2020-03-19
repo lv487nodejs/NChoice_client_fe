@@ -1,134 +1,79 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Paper } from '@material-ui/core';
 import { connect } from 'react-redux';
 import wrapWithAdminService from '../wrappers';
 
 import { useStyles } from './Product-add-page-style';
 
-import {
-    setCatalogs,
-    setCategories,
-    setBrands,
-    brandLoadingStatus,
-    setColors,
-} from '../../actions';
+import { setProductEdit } from '../../actions';
 
-import LoadingBar from '../loading-bar';
 import ProductAddItemOptions from '../product-add-item-options';
 import ProductAddItemDescr from '../product-add-item-descr';
 import ProductAddPropetries from '../product-add-item-propetries';
 import ProductAddPageStepper from '../product-add-page-stepper';
+import ProductAddVerifyPage from '../product-add-verify-page';
 
-import {
-    NEW_PRODUCT_MODEL,
-    NEW_PRODUCT_PROPETRIES,
-    NEW_PRODUCT_DESCR,
-    PRODUCT_ADD_STEPS_LABEL,
-} from '../../config';
+import { NEW_PRODUCT_DESCR } from '../../config';
+import SnackbarItem from '../snackbar-item/Snackbar-item';
 
-const ProductAddPage = ({
-    adminService,
-    loading,
-    catalogs,
-    categories,
-    brands,
-    colors,
-    setCatalogs,
-    setCategories,
-    setBrands,
-    brandLoadingStatus,
-    setColors,
-}) => {
+const successMessage = 'Product succesfully saved id:';
+
+const ProductAddPage = ({ adminService, productEdit, setProductEdit }) => {
     const classes = useStyles();
-    const [values, setValues] = useState(NEW_PRODUCT_MODEL);
-    const [newPropetry, setPropetries] = useState(NEW_PRODUCT_PROPETRIES);
-
-    useEffect(() => {
-        brandLoadingStatus();
-        adminService.getAllCatalogs().then(res => setCatalogs(res));
-        adminService.getAllCategories().then(res => setCategories(res));
-        adminService.getAllColors().then(res => setColors(res));
-        adminService.getAllBrands().then(res => setBrands(res));
-    }, [adminService, setCatalogs, setCategories, setBrands, setColors, brandLoadingStatus]);
-
-    if (loading) {
-        return <LoadingBar />;
-    }
+    const { productsService } = adminService;
+    const [open, setOpen] = React.useState(false);
+    const [msg, setMsg] = React.useState('');
 
     const handleInputChange = event => {
         const { name, value } = event.target;
-        setValues({ ...values, [name]: value });
+        setProductEdit({ ...productEdit, [name]: value });
     };
 
-    const handlePropetriesInputChange = event => {
-        const { name, value } = event.target;
-        setPropetries({ ...newPropetry, [name]: value });
+    const handleSaveProduct = event => {
+        event.preventDefault();
+        productsService.postProduct(productEdit).then(res => {
+            setOpen(true);
+            setMsg(`${successMessage} ${res._id}`);
+        });
     };
-
-    const onSavePropetry = () => {
-        setValues({ ...values, propetries: [...values.propetries, newPropetry] });
-        setPropetries(NEW_PRODUCT_PROPETRIES);
-    };
-
-    const onSaveProduct = () => {
-        adminService.postProduct(values).then(res => console.log(res));
-    };
-
-    const productOptionGroups = [catalogs, categories, brands, colors];
 
     const productAddOptions = (
-        <ProductAddItemOptions
-            classes={classes}
-            onChangeEvent={handleInputChange}
-            values={values}
-            optionGroups={productOptionGroups}
-        />
+        <ProductAddItemOptions classes={classes} onChangeEvent={handleInputChange} />
     );
 
     const productAddDescriptions = NEW_PRODUCT_DESCR.map(option => (
         <ProductAddItemDescr
+            key={option}
             classes={classes}
             option={option}
-            values={values}
             onChangeEvent={handleInputChange}
         />
     ));
 
-    const pruductAddPropetries = (
-        <ProductAddPropetries
-            classes={classes}
-            newPropetry={newPropetry}
-            values={values}
-            onChangeEvent={handlePropetriesInputChange}
-            onSubmitEvent={onSavePropetry}
-        />
-    );
+    const pruductAddPropetries = <ProductAddPropetries />;
 
-    const stepperSteps = [productAddOptions, productAddDescriptions, pruductAddPropetries];
+    const productVerifyPage = <ProductAddVerifyPage product={productEdit} />;
+
+    const stepperSteps = [
+        productAddOptions,
+        productAddDescriptions,
+        pruductAddPropetries,
+        productVerifyPage,
+    ];
 
     return (
         <Paper className={classes.content}>
-            <ProductAddPageStepper
-                steps={stepperSteps}
-                labels={PRODUCT_ADD_STEPS_LABEL}
-                onSaveHandler={onSaveProduct}
-            />
+            <ProductAddPageStepper steps={stepperSteps} onSaveHandler={handleSaveProduct} />
+            <SnackbarItem open={open} msg={msg} />
         </Paper>
     );
 };
 
-const mapStateToProps = ({
-    catalogsState: { catalogs },
-    categoriesState: { categories },
-    brandsState: { brands, loading },
-    colorsState: { colors },
-}) => ({
-    brands,
-    catalogs,
-    categories,
-    colors,
-    loading,
+const mapStateToProps = ({ productEditState: { productEdit } }) => ({
+    productEdit,
 });
-const mapDispatchToProps = { setCatalogs, setCategories, setColors, setBrands, brandLoadingStatus };
+const mapDispatchToProps = {
+    setProductEdit,
+};
 
 export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(ProductAddPage));

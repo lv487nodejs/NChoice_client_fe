@@ -1,11 +1,6 @@
-const themeDark = changeTheme => ({
-    type: 'THEME_DARK',
+const setThemeMode = changeTheme => ({
+    type: 'SET_THEME_MODE',
     payload: changeTheme,
 });
 
-const themeLight = changeTheme => ({
-    type: 'THEME_LIGHT',
-    payload: changeTheme,
-});
-
-export { themeDark, themeLight };
+export { setThemeMode };

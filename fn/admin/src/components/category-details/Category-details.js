@@ -36,7 +36,7 @@ const CategoryDetails = props => {
         adminService,
     } = props;
 
-    const [catalogsToUpdate, setCatalogsToUpdate] = useState([]);
+  const [catalogsToUpdate, setCatalogsToUpdate] = useState([]);
 
     useEffect(() => {
         categoryLoadingStatus();
@@ -63,7 +63,6 @@ const CategoryDetails = props => {
             id: category._id,
             name: e.target.categoryName.value,
         };
-
         adminService
             .putCategory(categoryToSend)
             .then(res => {
