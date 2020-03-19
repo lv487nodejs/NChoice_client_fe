@@ -20,7 +20,6 @@ import LoadingSpinner from '../Loading-spinner';
 import ProductSort from '../product-sort';
 
 const sortAsc = 1;
-const sortDesc = -1;
 
 const ProductList = ({
     storeService,
@@ -35,19 +34,14 @@ const ProductList = ({
     pagesCount,
     addSortByPrice,
 }) => {
+
     const sortOptions = [
         {
-            text: 'sort by price asc',
+            text: 'sort by price',
             value: sortAsc,
-            func: addSortByPrice,
+            handler: addSortByPrice,
             variant: 'dark',
-        },
-        {
-            text: 'sort by price desc',
-            value: sortDesc,
-            func: addSortByPrice,
-            variant: 'dark',
-        },
+        }
     ];
 
     useEffect(() => {
