@@ -5,8 +5,7 @@ import FA from 'react-fontawesome';
 
 const ProductSort = ({ options }) => {
     const [sortValue, setSortValue] = useState(options[0].value);
-    const [className, setClassName] = useState(null)
-
+    const [className, setClassName] = useState(null);
     const changeHandler = () => {
         setSortValue(-sortValue);
         sortValue === 1 ? setClassName('fa fa-arrow-up') : setClassName('fa fa-arrow-down');
