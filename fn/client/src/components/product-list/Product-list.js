@@ -20,7 +20,6 @@ import LoadingSpinner from '../Loading-spinner';
 import ProductSort from '../product-sort';
 
 const sortAsc = 1;
-const sortDesc = -1;
 
 const ProductList = ({
     storeService,
@@ -35,6 +34,7 @@ const ProductList = ({
     pagesCount,
     addSortByPrice,
 }) => {
+
     const sortOptions = [
         {
             text: 'sort by price',
@@ -53,7 +53,6 @@ const ProductList = ({
         }
     }, [productsLoaded, productsRequested, storeService, catalog, catalogLoaded, addPostsPerPage]);
 
-    console.log(products)
 
     // Change view
     const paginateMethod = value => addCurrentPage(value);
