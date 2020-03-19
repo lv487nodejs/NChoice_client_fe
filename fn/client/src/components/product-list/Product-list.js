@@ -37,17 +37,11 @@ const ProductList = ({
 }) => {
     const sortOptions = [
         {
-            text: 'sort by price asc',
+            text: 'sort by price',
             value: sortAsc,
-            func: addSortByPrice,
+            handler: addSortByPrice,
             variant: 'dark',
-        },
-        {
-            text: 'sort by price desc',
-            value: sortDesc,
-            func: addSortByPrice,
-            variant: 'dark',
-        },
+        }
     ];
 
     useEffect(() => {
