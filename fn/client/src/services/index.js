@@ -13,18 +13,28 @@ export default class StoreService {
     };
 
     getAllProducts = async () => {
-        const catalogs = await this.getResource('products');
-        return catalogs;
+        const products = await this.getResource('products');
+        return products.products;
     };
 
     getProductById = async id => {
-        const catalogs = await this.getResource(`products/${id}`);
-        return catalogs;
+        const product = await this.getResource(`products/${id}`);
+        return product[0];
     };
 
     getProductsByFilter = async filter => {
         let queryString = 'products/?';
-        const { brand, color, category, catalog } = filter;
+        const {
+            brand,
+            color,
+            category,
+            catalog,
+            currentPage,
+            postsPerPage,
+            sortByPrice,
+            sortByRate,
+            searchTerm,
+        } = filter;
         if (brand) {
             queryString = `${queryString}&brand=${brand}`;
         }
@@ -37,8 +47,25 @@ export default class StoreService {
         if (catalog) {
             queryString = `${queryString}&catalog=${catalog}`;
         }
-        const catalogs = await this.getResource(queryString);
-        return catalogs;
+        if (currentPage) {
+            queryString = `${queryString}&currentpage=${currentPage}`;
+        }
+        if (postsPerPage) {
+            queryString = `${queryString}&postsperpage=${postsPerPage}`;
+        }
+        if (sortByPrice) {
+            queryString = `${queryString}&sortbyprice=${sortByPrice}`;
+        }
+        if (sortByRate) {
+            queryString = `${queryString}&sortbyrate=${sortByRate}`;
+        }
+        if (searchTerm) {
+            queryString = `${queryString}&searchTerm=${searchTerm}`;
+        }
+        const products = await this.getResource(queryString);
+        return products;
+        // const catalogs = await this.getResource(queryString);
+        // return catalogs;
     };
 
     getAllCatalogs = async () => {
@@ -76,4 +103,31 @@ export default class StoreService {
         const colors = await this.getResource('colors');
         return colors;
     };
+
+    getAllOrders = async () => {
+        const catalogs = await this.getResource('orders');
+        return catalogs;
+    };
+
+    getOrderById = async id => {
+        const catalogs = await this.getResource(`orders/${id}`);
+        return catalogs;
+    };
+
+    getProductProperties = async id => {
+        const product = await this.getResource(`products/${id}`);
+        console.log(product);
+        const { propetries } = product[0];
+        return propetries;
+    }
+    getAllCarts = async () => {
+        const carts = await this.getResource('cart');
+        return carts;
+    };
+
+    getCartById = async id => {
+        const cart = await this.getResource(`cart/${id}`);
+        return cart;
+    };
 }
+

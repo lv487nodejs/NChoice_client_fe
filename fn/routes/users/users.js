@@ -59,8 +59,6 @@ router.post('/register', userValidationRules(), validate, async (req, res) => {
     }
 });
 
-const generateAccessToken = (userName) => {
-    return jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
-}
+const generateAccessToken = userName => jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
 
 module.exports = router;

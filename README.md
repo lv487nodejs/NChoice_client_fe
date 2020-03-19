@@ -308,11 +308,11 @@ GET:
 *Returns all products.*
 
 GET: 
-**http://localhost:5000/products?catalog=men&category=sweaters&brand=hikee&color=black**
+**http://localhost:5000/products?catalog=men&category=sweaters&brand=hikee&color=black&&searchTerm=hoodies dive bib**
 
 
 
-***Query can be filtered by:*** **catalog, category, brand, color.**
+***Query can be filtered by:*** **catalog, category, brand, color, searchTerm.**
 
 
 

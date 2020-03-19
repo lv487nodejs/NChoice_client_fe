@@ -54,29 +54,13 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { name, images, categories } = req.body;
+    const { catalog } = req.body;
     try {
-        const catalogToUpdate = await Catalogs.findById(id);
-        if (!catalogToUpdate) throw { message: 'Catalog not found!' }
-
-        if (name) {
-            catalogToUpdate.catalog = name;
-        }
-
-        if (Array.isArray(categories) && categories.length) {
-            catalogToUpdate.categories.push(...categories);
-        }
-
-        if (Array.isArray(images) && images.length) {
-            catalogToUpdate.images.push(...images);
-        }
-
-        await catalogToUpdate.save();
-        res.status(200).send(catalogToUpdate);
+        const updatedCatalog = await Catalogs.findByIdAndUpdate(id, catalog);
+        res.status(200).send(updatedCatalog);
     } catch (err) {
         res.status(400).send(err);
     }
-
 });
 
 router.delete('/:id', async (req, res) => {

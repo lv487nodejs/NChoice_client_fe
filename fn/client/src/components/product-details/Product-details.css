@@ -1,0 +1,92 @@
+.wrapper {
+  width: 90%;
+  margin: auto;
+  background-color: rgb(245, 245, 245);
+}
+.cardBody {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 2rem 0;
+}
+.images {
+  display: grid;
+  grid-gap: 5px;
+  padding-right: 0;
+}
+.img {
+  display: grid;
+  align-self: stretch;
+  width: 120px;
+  height: 150px;
+}
+.mainImg {
+  padding-left: 0;
+  width: 350px;
+  height: 100%;
+}
+.mainImgWrapper,
+.mainImg {
+  padding-left: 0;
+}
+.text {
+  margin-left: 10%;
+}
+.color {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.size {
+  display: flex;
+  padding-left: 0;
+  margin: 1rem 0;
+}
+.sizeItem {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  margin-right: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Oswald";
+}
+.sizeItem:hover {
+  color: white;
+  background-color: black;
+}
+.title {
+  text-transform: uppercase;
+  font-family: "Oswald";
+}
+.productDescription {
+  font-weight: normal;
+  text-align: justify;
+  margin-right: 2rem;
+}
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 0;
+  justify-self: end;
+}
+.zoom {
+  overflow: hidden;
+}
+.zoom img {
+  transition: 1s;
+}
+.zoom img:hover {
+  transform: scale(1.2);
+}
+.similarItems{
+    text-align: center;
+    font-size: 24;
+    font-family: "Oswald";
+    text-transform: uppercase;
+}
+

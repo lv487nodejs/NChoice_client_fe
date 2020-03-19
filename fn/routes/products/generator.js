@@ -99,6 +99,8 @@ router.post('/', async (req, res) => {
                 }
                 const mrspR = chance.integer({ min: 100, max: 1000 });
                 const priceR = parseInt(mrspR * chance.pick([0.8, 0.6, 0.7, 0.9], 1));
+                const rateChance = chance.integer({ min: 1, max: 5 });
+                const rate = parseInt(rateChance * chance.pick([0.8, 0.6, 0.7, 0.9], 1));
 
                 const props = [
                     {
@@ -131,9 +133,9 @@ router.post('/', async (req, res) => {
                     images: [`${product.category.category}_${product.catalog.catalog}.jpg`],
                     mrsp: mrspR,
                     price: priceR,
+                    rate,
                     propetries: props,
                 });
-
 
                 await product.save();
                 res.status(201).send(product);

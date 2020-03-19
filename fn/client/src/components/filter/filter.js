@@ -7,7 +7,8 @@ import {
     filterRemoveColor,
     filterRemoveCategory,
     filterRemoveBrand,
-    productsLoaded
+    productsLoaded,
+    addPagesCount,
 } from '../../actions';
 
 import FilterItem from '../filterItem';
@@ -28,6 +29,11 @@ const Filter = ({
     color,
     catalog,
     productsLoaded,
+    currentPage,
+    postsPerPage,
+    addPagesCount,
+    sortByPrice,
+    searchTerm,
 }) => {
     const [getBrands, setBrands] = useState([]);
     const [getCategories, setCategories] = useState([]);
@@ -42,10 +48,10 @@ const Filter = ({
 
     useEffect(() => {
         storeService
-            .getAllCategories()
+            .getCatalogCategories(catalog)
             .then(response => setCategories(response))
             .catch(err => console.log(err));
-    }, [storeService]);
+    }, [catalog, storeService]);
     useEffect(() => {
         storeService
             .getAllColors()
@@ -54,10 +60,34 @@ const Filter = ({
     }, [storeService]);
 
     useEffect(() => {
-        storeService.getProductsByFilter({ catalog, brand, color, category }).then(res => {
-            productsLoaded(res);
-        });
-    }, [brand, category, catalog, color, storeService, productsLoaded]);
+        storeService
+            .getProductsByFilter({
+                catalog,
+                brand,
+                color,
+                category,
+                currentPage,
+                postsPerPage,
+                sortByPrice,
+                searchTerm,
+            })
+            .then(res => {
+                productsLoaded(res.products);
+                addPagesCount(res.pagesCount);
+            });
+    }, [
+        brand,
+        category,
+        catalog,
+        color,
+        storeService,
+        productsLoaded,
+        currentPage,
+        postsPerPage,
+        addPagesCount,
+        sortByPrice,
+        searchTerm,
+    ]);
 
     const filterAddBrandHandler = (e, item) => {
         if (e.target.checked) {
@@ -90,11 +120,20 @@ const Filter = ({
         </div>
     );
 };
-const mapStateToProps = ({ filter: { brand, category, color }, catalogsList: { catalog } }) => ({
+const mapStateToProps = ({
+    productsList: { currentPage, postsPerPage, sortByPrice },
+
+    filter: { brand, category, color, searchTerm },
+    catalogsList: { catalog },
+}) => ({
     brand,
     category,
     color,
     catalog,
+    currentPage,
+    postsPerPage,
+    sortByPrice,
+    searchTerm,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -105,6 +144,7 @@ const mapDispatchToProps = dispatch => ({
     filterRemoveCategory: category => dispatch(filterRemoveCategory(category)),
     filterRemoveColor: category => dispatch(filterRemoveColor(category)),
     productsLoaded: products => dispatch(productsLoaded(products)),
+    addPagesCount: value => dispatch(addPagesCount(value)),
 });
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Filter));
