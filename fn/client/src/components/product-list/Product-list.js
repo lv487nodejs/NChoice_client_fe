@@ -41,6 +41,8 @@ const ProductList = ({
             value: sortAsc,
             handler: addSortByPrice,
             variant: 'dark',
+            defaultClass: 'fa fa-arrow-up',
+            toChangeClass: 'fa fa-arrow-down',
         }
     ];
 
