@@ -15,6 +15,8 @@ import {
 import NavBar from '../nav-bar';
 import NavMenu from '../nav-menu';
 import ProductPage from '../product-page/Product-page';
+import ProductAddPage from '../product-add-page';
+import CategoryAddPage from '../category-add-page';
 
 const pathToProducts = '/products';
 const pathToUsers = '/users';
@@ -23,6 +25,7 @@ const pathToCategories = '/categories';
 const pathToUserDetails = '/user/:id';
 const pathToProductDetails = '/product/:id';
 const pathToCategoriesDetails = '/category/:id';
+const pathToAddProductPage = '/productadd';
 
 const AppRouter = () => (
     <Router>
@@ -30,30 +33,15 @@ const AppRouter = () => (
         <NavMenu />
         <Switch>
             <Route path="/" exact component={StatsPageContainer} />
-            <Route
-                path={pathToProducts}
-                exact
-                component={ProductsPageContainer}
-            />
+            <Route path={pathToProducts} exact component={ProductsPageContainer} />
             <Route path={pathToUsers} exact component={UsersPageContainer} />
-            <Route
-                path={pathToUserDetails}
-                exact
-                component={UserDetailsPageContainer}
-            />
-            <Route path="/product/:id" exact component={ProductPage} />
+            <Route path={pathToUserDetails} exact component={UserDetailsPageContainer} />
+            <Route path={pathToProductDetails} exact component={ProductPage} />
             <Route path={pathToBrands} exact component={BrandsPageContainer} />
-            <Route
-                path={pathToCategories}
-                exact
-                component={CategoriesPageContainer}
-            />
-            <Route
-                path={pathToCategoriesDetails}
-                exact
-                component={CategoryDetailsPageContainer}
-            />
-            <Route path="/prodtest" exact component={ProductPage} />
+            <Route path={pathToCategories} exact component={CategoriesPageContainer} />
+            <Route path={pathToCategoriesDetails} exact component={CategoryDetailsPageContainer} />
+            <Route path="/addcategory" exact component={CategoryAddPage} />
+            <Route path={pathToAddProductPage} exact component={ProductAddPage} />
         </Switch>
     </Router>
 );

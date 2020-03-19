@@ -5,7 +5,7 @@ const useStyles = makeStyles({
         textTransform: 'capitalize',
     },
     container: {
-        maxHeight: 600,
+        maxHeight: '80vh',
     },
 });
 

@@ -4,11 +4,10 @@ import { useStyles } from './Product-propetries-container-style';
 
 const ProductPropetriesPage = ({ propetries: { _id, ...propetries } }) => {
     const classes = useStyles();
-    console.log(_id);
     const productPropetries = Object.keys({ ...propetries }).map(propetry => (
         <TextField
+            key={propetry}
             className={classes.textField}
-            id={_id}
             label={propetry}
             value={propetries[propetry]}
             variant="outlined"
@@ -20,7 +19,7 @@ const ProductPropetriesPage = ({ propetries: { _id, ...propetries } }) => {
     ));
 
     return (
-        <Grid xs>
+        <Grid item xs>
             <Paper elevation={3} className={classes.paper}>
                 {productPropetries}
             </Paper>
