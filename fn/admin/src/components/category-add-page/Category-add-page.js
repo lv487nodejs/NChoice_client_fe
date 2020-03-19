@@ -67,7 +67,6 @@ const CategoryAddPage = props => {
         adminService.postCategory(newCategory).then(res => {
             catalogsToUpdate.forEach(catalog => {
                 catalog.categories.push(res._id);
-                console.log(catalog);
                 adminService.putCatalog(catalog._id, catalog).then(res => {
                     categorySnackbarOpenTrue();
                     setCategoryName('');
@@ -82,6 +81,10 @@ const CategoryAddPage = props => {
 
     const closeSnackbarHandler = () => {
         categorySnackbarOpenFalse();
+    };
+
+    const categoryNameHandler = e => {
+        setCategoryName(e.target.value);
     };
 
     const checkboxes = catalogs.map(catalog => {
@@ -113,7 +116,7 @@ const CategoryAddPage = props => {
                         variant="outlined"
                         label="Category name"
                         value={categoryName}
-                        onChange={e => setCategoryName(e.target.value)}
+                        onChange={categoryNameHandler}
                         required
                     />
                     <FormLabel component="legend">Choose catalogs for this category</FormLabel>
