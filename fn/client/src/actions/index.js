@@ -7,13 +7,15 @@ import {
     addPostsPerPage,
     addPagesCount,
     addSortByPrice,
+    productLoaded,
+    sizesLoaded,
 } from './Products-actions';
 
 import {
-    catalogsLoaded, 
-    catalogsRequested, 
+    catalogsLoaded,
+    catalogsRequested,
     catalogLoaded,
- } from './Catalogs-actions';
+} from './Catalogs-actions';
 
 import {
     filterAddBrand,
@@ -24,6 +26,12 @@ import {
     filterRemoveBrand,
     filterByName,
 } from './Filter-actions';
+
+import {
+    postUserSuccess,
+    postUserStarted,
+    postUserError
+} from "./Auth-actions";
 
 export {
     categoriesRequested,
@@ -45,5 +53,10 @@ export {
     addPagesCount,
     addSortByPrice,
     filterByName,
+    productLoaded,
+    sizesLoaded,
+    postUserError,
+    postUserSuccess,
+    postUserStarted
 };
 
