@@ -1,5 +1,7 @@
 import AdminService from './Admin-service';
 
+const productsPath = 'products';
+
 class ProductsService extends AdminService {
     getAllProducts = async (currentpage, postsperpage) => {
         const catalogs = await this.getResource(
@@ -9,19 +11,19 @@ class ProductsService extends AdminService {
     };
 
     getProductById = async id => {
-        const product = await this.getResource(`products/${id}`);
+        const product = await this.getResource(`${productsPath}/${id}`);
         return product[0];
     };
 
     getProductPropetries = async id => {
-        const product = await this.getResource(`products/${id}`);
+        const product = await this.getResource(`${productsPath}/${id}`);
 
         const { propetries } = product[0];
         return propetries;
     };
 
     getProductsByFilter = async (currentpage, postsperpage, filters, search) => {
-        let queryString = `products?currentpage=${currentpage}&postsperpage=${postsperpage}`;
+        let queryString = `${productsPath}?currentpage=${currentpage}&postsperpage=${postsperpage}`;
         const { brand, color, category, catalog } = filters;
         const searchTerm = search.toLowerCase();
         if (brand) {
@@ -44,9 +46,14 @@ class ProductsService extends AdminService {
     };
 
     postProduct = async product => {
-        const url = 'products/';
+        const url = `${productsPath}/`;
         const newProduct = await this.postData(url, product);
         return newProduct;
+    };
+
+    removeProduct = async id => {
+        const res = await this.deleteResource(`${productsPath}/${id}`);
+        return res;
     };
 }
 

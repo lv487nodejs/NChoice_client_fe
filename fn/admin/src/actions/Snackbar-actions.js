@@ -1,6 +1,16 @@
-const setSnackBar = newMessage => ({
-    type: 'SET_COLORS',
-    payload: newMessage,
+const setSnackBarStatus = newSnackBarStatus => ({
+    type: 'SET_SNACKBAR_STATUS',
+    payload: newSnackBarStatus,
 });
 
-export { setSnackBar };
+const setSnackBarSeverity = newSnackBarSeverity => ({
+    type: 'SET_SNACKBAR_SEVERITY',
+    payload: newSnackBarSeverity,
+});
+
+const setSnackBarMessage = newSnackBarMessage => ({
+    type: 'SET_SNACKBAR_MESSAGE',
+    payload: newSnackBarMessage,
+});
+
+export { setSnackBarStatus, setSnackBarSeverity, setSnackBarMessage };

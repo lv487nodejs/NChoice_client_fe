@@ -13,6 +13,8 @@ import { setProduct, setProductLoadingStatus, setProductPropetries } from '../..
 import LoadingBar from '../loading-bar';
 import ProductImageContainer from '../product-image-container';
 
+const IMG_URL = 'https://www.yourwdwstore.net/assets/images/6/60000/7000/600/67670-s1.jpg';
+
 const ProductPage = ({
     adminService,
     product,
@@ -32,7 +34,7 @@ const ProductPage = ({
         productsService.getProductPropetries(id).then(res => setProductPropetries(res));
     }, [id, productsService, setProduct, setProductLoadingStatus, setProductPropetries]);
 
-    const photo = 'https://www.yourwdwstore.net/assets/images/6/60000/7000/600/67670-s1.jpg';
+    
 
     const productPropetriesPages = productPropetries.map(propetry => (
         <ProductPropetriesPage key={propetry.size} propetries={propetry} />
@@ -57,7 +59,7 @@ const ProductPage = ({
     }
     return (
         <Grid container spacing={3} className={classes.content} alignItems="center">
-            <ProductImageContainer imageURL={photo} />
+            <ProductImageContainer imageURL={IMG_URL} />
             {productDetails}
             {productPropetriesPages}
         </Grid>
