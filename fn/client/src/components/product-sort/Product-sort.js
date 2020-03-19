@@ -8,7 +8,7 @@ const ProductSort = ({ options }) => {
     const [className, setClassName] = useState(null);
     const changeHandler = () => {
         setSortValue(-sortValue);
-        sortValue === 1 ? setClassName('fa fa-arrow-up') : setClassName('fa fa-arrow-down');
+        sortValue === 1 ? setClassName(options[0].defaultClass) : setClassName(options[0].toChangeClass);
         options[0].handler(sortValue)
     }
     const buttons = options.map(({ text, variant }) => (
