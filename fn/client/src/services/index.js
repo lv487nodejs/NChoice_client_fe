@@ -121,6 +121,7 @@ export default class StoreService {
         console.log(product);
         const { propetries } = product[0];
         return propetries;
+    }
     
     getAllCarts = async () => {
         const carts = await this.getResource('cart');

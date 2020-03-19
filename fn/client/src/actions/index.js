@@ -25,6 +25,7 @@ import {
     filterRemoveColor,
     filterRemoveBrand,
     filterByName,
+    setSearchValue ,
 } from './Filter-actions';
 
 import {
@@ -57,6 +58,7 @@ export {
     sizesLoaded,
     postUserError,
     postUserSuccess,
-    postUserStarted
+    postUserStarted,
+    setSearchValue ,
 };
 

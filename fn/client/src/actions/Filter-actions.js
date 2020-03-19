@@ -23,9 +23,13 @@ const filterRemoveCategory = category => ({
     payload: category,
 });
 
-const filterByName = searchTerm => ({
+const filterByName = newSearchTerm => ({
     type: 'FILTER_BY_NAME',
-    payload: searchTerm,
+    payload: newSearchTerm,
+});
+const setSearchValue  = newSearchValue => ({
+    type: 'CLEAR_FIELD',
+    payload: newSearchValue,
 });
 
 export {
@@ -36,4 +40,5 @@ export {
     filterRemoveCategory,
     filterRemoveColor,
     filterByName,
+    setSearchValue ,
 };

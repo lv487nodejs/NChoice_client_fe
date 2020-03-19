@@ -59,8 +59,6 @@ const ProductList = ({
         }
     }, [productsLoaded, productsRequested, storeService, catalog, catalogLoaded, addPostsPerPage]);
 
-    console.log(products)
-
     // Change view
     const paginateMethod = value => addCurrentPage(value);
     const changeItemsMethod = number => {
