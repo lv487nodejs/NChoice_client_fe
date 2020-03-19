@@ -8,6 +8,7 @@ const instate = {
     receivedCategories: [],
     receivedColors: [],
     searchTerm: '',
+    setSearchTerm:'',
 };
 
 const filter = (state = instate, action) => {
@@ -77,6 +78,12 @@ const filter = (state = instate, action) => {
             return {
                 ...state,
                 searchTerm: action.payload,
+            };
+        }
+        case 'CLEAR_FIELD': {
+            return {
+                ...state,
+                searchValue: action.payload,
             };
         }
         default:
