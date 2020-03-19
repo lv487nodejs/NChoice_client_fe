@@ -79,6 +79,8 @@ export const PRODUCT_KEYS = [
     'price',
 ];
 
+export const snackbarDuration = 4000;
+
 export const PROPETRIES_KEYS = ['size', 'available', 'sku'];
 
 export const FILTER_OPTIONS = {
