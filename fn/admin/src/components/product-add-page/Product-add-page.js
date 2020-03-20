@@ -1,11 +1,17 @@
 import React from 'react';
 import { Paper } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import wrapWithAdminService from '../wrappers';
 
 import { useStyles } from './Product-add-page-style';
 
-import { setNewProduct } from '../../actions';
+import {
+    setProductEdit,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
+} from '../../actions';
 
 import ProductAddItemOptions from '../product-add-item-options';
 import ProductAddItemDescr from '../product-add-item-descr';
@@ -14,26 +20,35 @@ import ProductAddPageStepper from '../product-add-page-stepper';
 import ProductAddVerifyPage from '../product-add-verify-page';
 
 import { NEW_PRODUCT_DESCR } from '../../config';
-import SnackbarItem from '../snackbar-item/Snackbar-item';
 
 const successMessage = 'Product succesfully saved id:';
 
-const ProductAddPage = ({ adminService, newProduct, setNewProduct }) => {
+const ProductAddPage = ({
+    history,
+    adminService,
+    productEdit,
+    setProductEdit,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
+}) => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-    const [msg, setMsg] = React.useState('');
+    const { productsService } = adminService;
 
     const handleInputChange = event => {
         const { name, value } = event.target;
-        setNewProduct({ ...newProduct, [name]: value });
+        setProductEdit({ ...productEdit, [name]: value });
     };
 
-    const handleSaveProduct = event => {
+    const handleSaveProduct = async event => {
         event.preventDefault();
-        adminService.postProduct(newProduct).then(res => {
-            setOpen(true);
-            setMsg(`${successMessage} ${res._id}`);
+        const productId = await productsService.postProduct(productEdit).then(res => {
+            setSnackBarSeverity('success');
+            setSnackBarMessage(`${successMessage} ${res._id}`);
+            setSnackBarStatus(true);
+            return res._id;
         });
+        history.push(`/product/${productId}`);
     };
 
     const productAddOptions = (
@@ -49,9 +64,9 @@ const ProductAddPage = ({ adminService, newProduct, setNewProduct }) => {
         />
     ));
 
-    const pruductAddPropetries = <ProductAddPropetries classes={classes} />;
+    const pruductAddPropetries = <ProductAddPropetries />;
 
-    const productVerifyPage = <ProductAddVerifyPage product={newProduct} />;
+    const productVerifyPage = <ProductAddVerifyPage product={productEdit} />;
 
     const stepperSteps = [
         productAddOptions,
@@ -63,16 +78,20 @@ const ProductAddPage = ({ adminService, newProduct, setNewProduct }) => {
     return (
         <Paper className={classes.content}>
             <ProductAddPageStepper steps={stepperSteps} onSaveHandler={handleSaveProduct} />
-            <SnackbarItem open={open} msg={msg} />
         </Paper>
     );
 };
 
-const mapStateToProps = ({ newProductState: { newProduct } }) => ({
-    newProduct,
+const mapStateToProps = ({ productEditState: { productEdit } }) => ({
+    productEdit,
 });
 const mapDispatchToProps = {
-    setNewProduct,
+    setProductEdit,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
 };
 
-export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(ProductAddPage));
+export default wrapWithAdminService()(
+    connect(mapStateToProps, mapDispatchToProps)(withRouter(ProductAddPage))
+);

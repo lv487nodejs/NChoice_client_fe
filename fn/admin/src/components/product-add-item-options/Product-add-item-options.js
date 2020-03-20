@@ -4,7 +4,7 @@ import { TextField } from '@material-ui/core';
 import wrapWithAdminService from '../wrappers';
 
 import { PRODUCT_OPTION_NAMES } from '../../config';
-import { setOptions } from '../../actions';
+import { setProductGroupedPropetries } from '../../actions';
 import LoadingBar from '../loading-bar';
 
 const inputCapitalize = {
@@ -17,16 +17,19 @@ const nativeSelect = {
 
 const ProductAddItemOptions = ({
     adminService,
-    setOptions,
+    setProductGroupedPropetries,
     classes,
     onChangeEvent,
-    newProduct,
-    options,
+    productEdit,
+    productPropetriesEditGroups,
     loading,
 }) => {
+    const { productPropetriesService } = adminService;
     useEffect(() => {
-        adminService.getProductOptions().then(res => setOptions(res));
-    }, [adminService, setOptions]);
+        productPropetriesService
+            .getProductOptions()
+            .then(res => setProductGroupedPropetries(res.productOptions));
+    }, [productPropetriesService, setProductGroupedPropetries]);
 
     if (loading) {
         return <LoadingBar />;
@@ -39,13 +42,12 @@ const ProductAddItemOptions = ({
             </option>
         ));
 
-    const groupOptions = options.map((group, index) => {
+    const groupOptions = productPropetriesEditGroups.map((group, index) => {
         const name = PRODUCT_OPTION_NAMES[index];
         const options = getGroupOptions(group, name);
         return options;
     });
-
-    const productOptions = groupOptions.map((option, index) => {
+    const optionsMenu = groupOptions.map((option, index) => {
         const optionName = PRODUCT_OPTION_NAMES[index];
 
         return (
@@ -56,7 +58,7 @@ const ProductAddItemOptions = ({
                 className={classes.textfield}
                 label={optionName}
                 name={optionName}
-                value={newProduct[optionName]}
+                value={productEdit[optionName]}
                 onChange={onChangeEvent}
                 SelectProps={nativeSelect}
                 inputProps={inputCapitalize}
@@ -68,17 +70,19 @@ const ProductAddItemOptions = ({
         );
     });
 
-    return productOptions;
+    return optionsMenu;
 };
 
-const mapStateToProps = ({ newProductState: { newProduct, options, loading } }) => ({
-    newProduct,
-    options,
+const mapStateToProps = ({
+    productEditState: { productEdit, productPropetriesEditGroups, loading },
+}) => ({
+    productEdit,
+    productPropetriesEditGroups,
     loading,
 });
 
 const mapDispatchToProps = {
-    setOptions,
+    setProductGroupedPropetries,
 };
 
 export default wrapWithAdminService()(

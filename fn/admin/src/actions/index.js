@@ -2,16 +2,29 @@ import { setCatalog, setCatalogs, catalogLoadingStatus } from './Catalogs-action
 
 import { setBrand, setBrands, brandLoadingStatus } from './Brand-actions';
 
-import { setCategory, setCategories, categoryLoadingStatus } from './Categories-actions';
+import {
+    setCategory,
+    setCategories,
+    categoryLoadingStatus,
+    categorySnackbarOpenTrue,
+    categorySnackbarOpenFalse,
+    categoryUpdateCatalogs,
+    categoryLoadingStop,
+} from './Categories-actions';
 
 import {
     setProduct,
     setProducts,
+    setProductsFilters,
     setProductPropetries,
-    productLoadingStatus,
+    setProductLoadingStatus,
 } from './Products-actions';
 
-import { setNewProduct, setNewPropetries, setOptions } from './New-product-actions';
+import {
+    setProductEdit,
+    setProductPropetriesEdit,
+    setProductGroupedPropetries,
+} from './Product-edit-actions';
 
 import {
     usersLoaded,
@@ -23,9 +36,48 @@ import {
     userSetRole,
 } from './Users-actions';
 
+import { setPagesCount, setCurrentPage, setRowsPerPage } from './Paginator-action';
+
 import { setColors } from './Colors-actions';
 
+import { setSnackBarStatus, setSnackBarSeverity, setSnackBarMessage } from './Snackbar-actions';
+
+import {
+    setFilterSelected,
+    setCheckBoxStatus,
+    setFilterOptionsList,
+    setFilterOptionsGroups,
+    setFilterCounters,
+} from './Filters-action';
+
+import { setSearchValue, setSearchTerm } from './Search-actions';
+
+import { setTableDense } from './Table-actions';
+
+import { setThemeMode } from './Theme-actions';
+
+import {
+    setDialogStatus,
+    setDialogTitle,
+    setDialogContent,
+    setButtonTitle,
+    setEventHandler,
+} from './Dialog-window-actions';
+
 export {
+    setProduct,
+    setProducts,
+    setProductsFilters,
+    setProductPropetries,
+    setProductLoadingStatus,
+    setProductEdit,
+    setProductPropetriesEdit,
+    setProductGroupedPropetries,
+    setFilterSelected,
+    setCheckBoxStatus,
+    setFilterOptionsList,
+    setFilterOptionsGroups,
+    setFilterCounters,
     setBrand,
     setBrands,
     brandLoadingStatus,
@@ -35,14 +87,7 @@ export {
     setCategory,
     setCategories,
     categoryLoadingStatus,
-    setProduct,
-    setProducts,
-    setProductPropetries,
-    setNewProduct,
-    setNewPropetries,
-    setOptions,
     setColors,
-    productLoadingStatus,
     usersLoaded,
     usersRequested,
     userLoaded,
@@ -50,4 +95,23 @@ export {
     userEdit,
     userSave,
     userSetRole,
+    categorySnackbarOpenTrue,
+    categorySnackbarOpenFalse,
+    categoryUpdateCatalogs,
+    categoryLoadingStop,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
+    setPagesCount,
+    setCurrentPage,
+    setRowsPerPage,
+    setSearchValue,
+    setSearchTerm,
+    setTableDense,
+    setThemeMode,
+    setDialogStatus,
+    setDialogTitle,
+    setDialogContent,
+    setButtonTitle,
+    setEventHandler,
 };

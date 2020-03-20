@@ -6,12 +6,28 @@ import { Provider } from 'react-redux';
 import 'typeface-roboto';
 
 import App from './components/app';
-import AdminService from './services';
+import {
+    productsService,
+    productPropetriesService,
+    catalogsService,
+    brandsService,
+    categoriesService,
+    usersService,
+    colorsService,
+} from './services';
 import { AdminServiceProvider } from './components/context';
 
 import store from './store';
 
-const adminService = new AdminService();
+const adminService = {
+    productsService,
+    productPropetriesService,
+    catalogsService,
+    brandsService,
+    categoriesService,
+    usersService,
+    colorsService,
+};
 
 ReactDOM.render(
     <Provider store={store}>

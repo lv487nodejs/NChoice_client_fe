@@ -1,149 +1,135 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useCallback } from 'react';
+
+import { connect } from 'react-redux';
+import { FormControlLabel, Switch } from '@material-ui/core';
+import wrapWithAdminService from '../wrappers';
 
 import {
-    Button,
-    ButtonGroup,
-    Menu,
-    MenuItem,
-    FormControlLabel,
-    Checkbox,
-    InputBase,
-    Grid,
-    FormGroup,
-} from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+    setFilterOptionsGroups,
+    setFilterSelected,
+    setFilterOptionsList,
+    setProductsFilters,
+    setCheckBoxStatus,
+    setFilterCounters,
+    setSearchTerm,
+    setTableDense,
+} from '../../actions';
+
 import useStyle from './Table-nav-style';
+import TableNavButtons from '../table-nav-buttons';
+import TableNavFilterMenu from '../table-nav-filter-menu';
+import TableNavSearchBar from '../table-nav-searchbar';
 
-const pathToAddProductPage = '/productadd';
+import { FILTER_OPTIONS, FILTER_COUNTERS } from '../../config';
 
-const TableNav = () => {
+const filterMenuStatus = {
+    catalog: null,
+    category: null,
+    brand: null,
+};
+
+const searchClear = '';
+
+const TableNav = ({
+    adminService,
+    filterSelected,
+    filterOptionsList,
+    setCheckBoxStatus,
+    checkboxLoaded,
+    setFilterSelected,
+    setFilterOptionsList,
+    setProductsFilters,
+    setFilterOptionsGroups,
+    setFilterCounters,
+    setSearchTerm,
+    setTableDense,
+    dense,
+}) => {
     const classes = useStyle();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [state, setState] = React.useState({
-        checkedA: true,
-        checkedB: true,
-        checkedF: true,
-        checkedG: true,
-    });
+    const [menuStatus, setMenuStatus] = React.useState(filterMenuStatus);
 
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
+    const { productPropetriesService } = adminService;
+
+    const setCheckBoxes = useCallback(() => {
+        productPropetriesService
+            .getProductOptions()
+            .then(res => setCheckBoxStatus(res.filterOptionsList));
+    }, [setCheckBoxStatus, productPropetriesService]);
+
+    useEffect(() => {
+        if (!checkboxLoaded) {
+            setCheckBoxes();
+        }
+    }, [setCheckBoxes, checkboxLoaded]);
+
+    useEffect(() => {
+        productPropetriesService.getProductOptions().then(res => {
+            setFilterOptionsList(res.filterOptionsList);
+            setFilterOptionsGroups(res.filterOptions);
+        });
+    }, [productPropetriesService, setFilterOptionsList, setFilterOptionsGroups]);
+
+    const filterInitialState = () => {
+        setCheckBoxStatus(filterOptionsList);
+        setFilterSelected(FILTER_OPTIONS);
+        setProductsFilters(FILTER_OPTIONS);
+        setFilterCounters(FILTER_COUNTERS);
+        setSearchTerm(searchClear);
     };
 
-    const handleClose = () => {
-        setAnchorEl(null);
+    const handleChangeTableDense = event => {
+        setTableDense(event.target.checked);
     };
 
-    const handleChange = name => event => {
-        setState({ ...state, [name]: event.target.checked });
+    const handleMenuOpen = name => event => {
+        const target = event.currentTarget;
+        setMenuStatus({ ...menuStatus, [name]: target });
     };
+
+    const handleMenuClose = name => () => {
+        setMenuStatus({ ...menuStatus, [name]: null });
+        setProductsFilters(filterSelected);
+    };
+
+    const handleClearFilter = () => {
+        filterInitialState();
+    };
+
     return (
-        <Grid className={classes.tableNav} container spacing={3} justify="center" alignItems="center">
-            <Grid item xs={2}>
-                <Button component={Link} to={pathToAddProductPage} variant="contained" color="primary" size="small">
-                    NEW PRODUCT
-                </Button>
-            </Grid>
-            <Grid item xs={4}>
-                <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                    <Button size="small" aria-controls="simple-menu" onClick={handleClick}>
-                        Catalogs
-                    </Button>
-                    <Menu
-                        elevation={0}
-                        getContentAnchorEl={null}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                        }}
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                    >
-                        <FormGroup column>
-                            <MenuItem>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={state.checkedA}
-                                            onChange={handleChange('checkedA')}
-                                            value="checkedA"
-                                            size="small"
-                                        />
-                                    }
-                                    label="Secondary"
-                                    size="small"
-                                />
-                            </MenuItem>
-                            <MenuItem>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={state.checkedB}
-                                            onChange={handleChange('checkedB')}
-                                            value="checkedB"
-                                            size="small"
-                                        />
-                                    }
-                                    label="Secondary"
-                                />
-                            </MenuItem>
-                            <MenuItem>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={state.checkedC}
-                                            onChange={handleChange('checkedC')}
-                                            value="checkedC"
-                                            size="small"
-                                        />
-                                    }
-                                    label="Secondary"
-                                />
-                            </MenuItem>
-                            <MenuItem>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={state.checkedD}
-                                            onChange={handleChange('checkedD')}
-                                            value="checkedD"
-                                            size="small"
-                                        />
-                                    }
-                                    label="Secondary"
-                                />
-                            </MenuItem>
-                        </FormGroup>
-                    </Menu>
-                    <Button size="small">Categories</Button>
-                    <Button size="small">Brands</Button>
-                </ButtonGroup>
-            </Grid>
-            <Grid item xs={3}>
-                <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                        <SearchIcon />
-                    </div>
-                    <InputBase
-                        placeholder="Search…"
-                        classes={{
-                            root: classes.inputRoot,
-                            input: classes.inputInput,
-                        }}
-                        inputProps={{ 'aria-label': 'search' }}
-                    />
-                </div>
-            </Grid>
-        </Grid>
+        <div className={classes.tableNav}>
+            <TableNavButtons
+                handleMenuOpen={handleMenuOpen}
+                handleClearFilter={handleClearFilter}
+            />
+            <TableNavFilterMenu handleMenuClose={handleMenuClose} menuStatus={menuStatus} />
+            <FormControlLabel
+                control={<Switch checked={dense} onChange={handleChangeTableDense} size="small" />}
+                label="Compact mode"
+            />
+            <TableNavSearchBar />
+        </div>
     );
 };
 
-export default TableNav;
+const setMapStateToProps = ({
+    filtersState: { filterSelected, filterOptionsList, checkboxStatus, checkboxLoaded },
+    tableState: { dense },
+}) => ({
+    filterSelected,
+    filterOptionsList,
+    checkboxStatus,
+    checkboxLoaded,
+    dense,
+});
+const setDispatchToProps = {
+    setFilterOptionsGroups,
+    setFilterSelected,
+    setProductsFilters,
+    setFilterOptionsList,
+    setCheckBoxStatus,
+    setFilterCounters,
+    setSearchTerm,
+    setTableDense,
+};
+
+export default wrapWithAdminService()(connect(setMapStateToProps, setDispatchToProps)(TableNav));

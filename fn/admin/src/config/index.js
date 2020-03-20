@@ -6,6 +6,9 @@ import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 
 export const DRAWER_WIDTH = 220;
 export const PAGE_TITLE = 'FN Admin Panel';
+
+export const ROWS_PER_PAGE_OPTIONS = [10, 25, 50, 100];
+
 export const MENU_CATEGORIES = [
     ['Statistics', '/', AssessmentIcon],
     ['Products', '/products', ShoppingBasketIcon],
@@ -49,6 +52,7 @@ export const NEW_PRODUCT_PROPETRIES = {
 };
 
 export const PRODUCT_OPTION_NAMES = ['catalog', 'category', 'brand', 'color'];
+export const FILTER_OPTION_NAMES = ['catalog', 'category', 'brand'];
 
 export const NEW_PRODUCT_DESCR = ['title', 'mrsp', 'price', 'description'];
 export const SIZES_SHOES = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
@@ -75,4 +79,19 @@ export const PRODUCT_KEYS = [
     'price',
 ];
 
+export const snackbarDuration = 4000;
+
 export const PROPETRIES_KEYS = ['size', 'available', 'sku'];
+
+export const FILTER_OPTIONS = {
+    catalog: [],
+    category: [],
+    brand: [],
+};
+
+export const FILTER_COUNTERS = {
+    catalog: 0,
+    brand: 0,
+    category: 0,
+    total: 0,
+};

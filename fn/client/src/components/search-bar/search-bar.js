@@ -1,47 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { filterByName, productsLoaded, setSearchValue } from '../../actions';
+
+import withStoreService from '../hoc';
 import './search-bar.css';
 
 import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// const products = [
-//     {
-//         id: 1,
-//         name: 'product1',
-//         price: '100',
-//     },
-//     {
-//         id: 2,
-//         name: 'product2',
-//         price: '200',
-//     },
-//     {
-//         id: 3,
+const SearchBar = ({ storeService, productsLoaded, filterByName, setSearchValue, searchTerm,searchValue }) => {
 
-//         name: 'product3',
-//         price: '300',
-//     },
-//     {
-//         id: 4,
-//         name: 'product4',
-//         price: '400',
-//     },
-// ];
+    useEffect(() => {
+        storeService.getProductsByFilter({ searchTerm }).then(res => {
+            productsLoaded(res.products);
+            setSearchValue('');
+        });
+    }, [searchTerm, storeService, productsLoaded, filterByName ]);
 
-function SearchBar() {
-    const [search, setSearch] = useState('');
+    const handleChange = event => {
+        const value = event.target.value;
+        setSearchValue(value);
 
-    const updateSearch = e => {
-        setSearch(e.target.value.substr(0, 20));
     };
-    // const filterProducts = products.filter(function(product) {
-    //     return product.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
-    // });
+
+    const handleCatchName = event => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            filterByName(searchValue);
+        }
+    };
+
     return (
         <Form>
-            <Form.Control className="search-bar" placeholder="Search..." value={search} onChange={updateSearch.bind(this)} />
+            <Form.Control
+                type="searchTerm"
+                className="search-bar"
+                placeholder="Search..."
+                onChange={handleChange}
+                onKeyDown={handleCatchName}
+                value={searchValue}
+            />
         </Form>
     );
-}
+};
 
-export default SearchBar;
+const mapStateToProps = ({ filter: { searchValue, searchTerm }}) => ({
+    searchTerm,
+    searchValue,
+});
+
+const mapDispatchToProps = { filterByName, productsLoaded, setSearchValue };
+
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(SearchBar));

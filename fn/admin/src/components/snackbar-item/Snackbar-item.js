@@ -1,19 +1,37 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
-function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import { setSnackBarStatus } from '../../actions';
 
-const SnackbarItem = props => {
-    const { open, msg } = props;
+import { snackbarDuration } from '../../config';
+
+const Alert = props => <MuiAlert elevation={6} variant="filled" {...props} />;
+
+const SnackbarItem = ({ snackBarStatus, snackBarSeverity, snackBarMessage, setSnackBarStatus }) => {
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setSnackBarStatus(false);
+    };
 
     return (
-        <Snackbar open={open} autoHideDuration={4000}>
-            <Alert severity="success">{msg}</Alert>
+        <Snackbar open={snackBarStatus} autoHideDuration={snackbarDuration} onClose={handleClose}>
+            <Alert onClose={handleClose} severity={snackBarSeverity}>
+                {snackBarMessage}
+            </Alert>
         </Snackbar>
     );
 };
 
-export default SnackbarItem;
+const mapStateToProps = ({
+    snackbarState: { snackBarStatus, snackBarSeverity, snackBarMessage },
+}) => ({ snackBarStatus, snackBarSeverity, snackBarMessage });
+
+const mapDispatchToProps = { setSnackBarStatus };
+
+export default connect(mapStateToProps, mapDispatchToProps)(SnackbarItem);

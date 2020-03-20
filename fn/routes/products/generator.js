@@ -97,24 +97,25 @@ router.post('/', async (req, res) => {
                     });
                     color = await color.save();
                 }
-
-                const priceR = chance.integer({ min: 100, max: 1000 });
-                const mrspR = parseInt(priceR * chance.pick([1.1, 1.2, 1.3, 1.4], 1));
+                const mrspR = chance.integer({ min: 100, max: 1000 });
+                const priceR = parseInt(mrspR * chance.pick([0.8, 0.6, 0.7, 0.9], 1));
+                const rateChance = chance.integer({ min: 1, max: 5 });
+                const rate = parseInt(rateChance * chance.pick([0.8, 0.6, 0.7, 0.9], 1));
 
                 const props = [
                     {
                         size: requestedCategory.category === 'shoes' ? sizeShoesSmall : sizeWearSmall,
-                        available: chance.integer({ min: 1, max: 8 }),
+                        available: chance.integer({ min: 1, max: 10 }),
                         sku: chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }),
                     },
                     {
                         size: requestedCategory.category === 'shoes' ? sizeShoesMedium : sizeWearMedium,
-                        available: chance.integer({ min: 1, max: 12 }),
+                        available: chance.integer({ min: 1, max: 10 }),
                         sku: chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }),
                     },
                     {
                         size: requestedCategory.category === 'shoes' ? sizeShoesBig : sizeWearBig,
-                        available: chance.integer({ min: 1, max: 8 }),
+                        available: chance.integer({ min: 1, max: 10 }),
                         sku: chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }),
                     },
                 ];
@@ -132,13 +133,12 @@ router.post('/', async (req, res) => {
                     images: [`${product.category.category}_${product.catalog.catalog}.jpg`],
                     mrsp: mrspR,
                     price: priceR,
+                    rate,
                     propetries: props,
                 });
 
-
                 await product.save();
-
-                ;
+                res.status(201).send(product);
             } catch (err) {
                 res.status(400).send({ message: err.message });
             }

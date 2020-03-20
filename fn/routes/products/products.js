@@ -12,22 +12,47 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
-    console.log(query);
+    let { currentpage, postsperpage } = query;
+    currentpage = currentpage || 1;
+    postsperpage = postsperpage || 15;
+    const skip = (currentpage-1) * postsperpage;
     try {
         const filter = await getFilters(query);
-        const products = await Products.find(filter)
+        const projection = await getProjection(query);
+        const sort = await getSort(query);
+
+        let products = await Products.find(filter, projection)
+            .sort(sort)
+            .skip(+skip)
+            .limit(+postsperpage)
             .populate('catalog')
             .populate('category')
             .populate('color')
             .populate('brand');
 
-        if (!products) {
-            throw { message: 'Products not found ' };
+        if (products.length === 0 && isNotBlank(query.searchTerm)) {
+          await updateSearchFilter(query, filter);
+
+          products = await Products.find(filter, projection)
+            .sort(sort)
+            .skip(+skip)
+            .limit(+postsperpage)
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
         }
 
         const productsToSend = prepareProductsToSend(products);
+        const foundProductsNumber = await Products.find(filter)
+            .count()
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
 
-        res.status(200).send(productsToSend);
+        const pagesCount = Math.ceil(foundProductsNumber / postsperpage);
+        res.status(200).send({ products: productsToSend, pagesCount, foundProductsNumber });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
@@ -36,32 +61,42 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const product = await Products.findById(id);
+        const product = await Products.findById(id)
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
         if (!product) throw { message: 'Can not find product' };
-        res.status(200).send(product);
+        const poructToSend = prepareProductsToSend([product]);
+        res.status(200).send(poructToSend);
     } catch (err) {
         return res.status(500).send({ message: err.message });
     }
 });
 
 router.post('/', productValidationRules(), validate, async (req, res) => {
-    const { title, description, images, propetries, price, msrp } = req.body;
+    const { title, description, images, propetries, price, mrsp } = req.body;
+
+    propetries.forEach(propetrie => {
+        propetrie.available = parseInt(propetrie.available);
+    });
+
     try {
         const requestedCatalog = req.body.catalog;
-        const catalog = await Catalogs.findOne(requestedCatalog);
+        const catalog = await Catalogs.findOne({ catalog: requestedCatalog });
         if (!catalog) throw { message: 'Bad catalog name' };
 
         const requestedCategory = req.body.category;
-        let category = await Categories.findOne(requestedCategory);
-        if (!category)  throw { message: 'Bad category name' };
+        const category = await Categories.findOne(requestedCategory);
+        if (!category) throw { message: 'Bad category name' };
 
         const requestedBrand = req.body.brand;
-        let brand = await Brands.findOne(requestedBrand);
-        if (!brand)  throw { message: 'Bad brand name' };
+        const brand = await Brands.findOne(requestedBrand);
+        if (!brand) throw { message: 'Bad brand name' };
 
         const requestedColor = req.body.color;
-        let color = await Colors.findOne(requestedColor);
-        if (!color)  throw { message: 'Bad color name' };
+        const color = await Colors.findOne(requestedColor);
+        if (!color) throw { message: 'Bad color name' };
 
         const product = new Products({
             catalog,
@@ -70,8 +105,8 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
             title,
             description,
             color,
-            price,
-            msrp,
+            price: parseFloat(price),
+            mrsp: parseFloat(mrsp),
             images,
             propetries,
         });
@@ -83,8 +118,67 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
     }
 });
 
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { catalogId, brandId, categoryId, colorId, images, title, description, mrsp, price, propetries } = req.body;
+
+    const productToUpdate = await Products.findById(id);
+    if (!productToUpdate) {
+        return res.status(404).send('Product not found!');
+    }
+
+    if (catalogId) productToUpdate.catalog = catalogId;
+
+    if (brandId) productToUpdate.brand = brandId;
+
+    if (categoryId) productToUpdate.category = categoryId;
+
+    if (colorId) productToUpdate.color = colorId;
+
+    if (title) productToUpdate.title = title;
+
+    if (description) productToUpdate.description = description;
+
+    if (mrsp) productToUpdate.mrsp = mrsp;
+
+    if (price) productToUpdate.price = price;
+
+    if (Array.isArray(images) && images.length) {
+        productToUpdate.images.push(...images);
+    }
+
+    if (Array.isArray(propetries) && images.propetries) {
+        productToUpdate.propetries.push(...propetries);
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await Products.findByIdAndDelete({ _id: id });
+        if (!response) {
+            return res.status(404).send('Product does not exist!');
+        }
+        res.status(200).send(`Product ${response.title} successfully deleted!`);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+const updateSearchFilter = async (query, filter) => {
+  const { searchTerm } = query;
+
+  delete filter['$text'];
+  let regexp = new RegExp('\.*'+ searchTerm.trim() + '.*\i');
+  filter.$or =  [
+     { title: regexp },
+     { description: regexp }
+   ];
+};
+
+
 const getFilters = async query => {
-    const { catalog, category, color, brand } = query;
+    const { catalog, category, color, brand, searchTerm } = query;
     const filter = {};
 
     try {
@@ -108,11 +202,38 @@ const getFilters = async query => {
             colorFilter.forEach((value, i, array) => (array[i] = value.id));
             filter.color = { $in: colorFilter };
         }
+        if (isNotBlank(searchTerm)) {
+            filter.$text = { $search: searchTerm.trim() };
+        }
     } catch (err) {
         throw { message: err.message };
     }
 
     return filter;
+};
+
+const getProjection = async query => {
+    const { searchTerm } = query;
+    const projection = {};
+
+    if (isNotBlank(searchTerm)) {
+        // how much each product is relevant to searchTerm
+        projection.score = { $meta: 'textScore' };
+    }
+    return projection;
+};
+
+const getSort = async query => {
+    const { searchTerm, sortbyprice } = query;
+    const sort = {};
+
+    if (isNotBlank(sortbyprice)) {
+      sort.price = sortbyprice;
+    } else if (isNotBlank(searchTerm)) {
+        // sort by relevance
+        sort.score = { $meta: 'textScore' };
+    }
+    return sort;
 };
 
 const prepareProductsToSend = products => {
@@ -124,16 +245,19 @@ const prepareProductsToSend = products => {
             description: product.description,
             propetries: product.propetries,
             modified: product.modified,
-            catalog: product.catalog.catalog,
-            category: product.category.category,
-            color: product.color.color,
-            brand: product.brand.brand,
             price: product.price,
             msrp: product.mrsp,
         };
+
+        if (product.brand) newProduct.brand = product.brand.brand;
+        if (product.catalog) newProduct.catalog = product.catalog.catalog;
+        if (product.category) newProduct.category = product.category.category;
+        if (product.color) newProduct.color = product.color.color;
         return newProduct;
     });
     return productsToSend;
 };
+
+const isNotBlank = str => !(!str || str.trim().length === 0);
 
 module.exports = router;

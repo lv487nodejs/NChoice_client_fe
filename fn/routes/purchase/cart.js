@@ -60,7 +60,7 @@ router.put('/:id', async (req, res) => {
             throw { message: 'Can not find cart with such an ID' };
         }
         cart = await Cart.findByIdAndUpdate(id,req.body)
-        res.status(200).send(cart);
+        res.status(200).send("Cart was successfully changed");
     } catch (err) {
         res.status(400).send(err);
     }

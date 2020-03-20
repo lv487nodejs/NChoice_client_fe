@@ -1,51 +1,48 @@
-const filterAddBrand = brand => ({
-    type: 'FILTER_ADD_BRAND',
-    payload: brand,
+const filterAddBrand = (brand) => ({
+  type: 'FILTER_ADD_BRAND',
+  payload: brand,
 });
-const filterAddCategory = category => ({
-    type: 'FILTER_ADD_CATEGORY',
-    payload: category,
+const filterAddCategory = (category) => ({
+  type: 'FILTER_ADD_CATEGORY',
+  payload: category,
 });
-const filterAddColor = color => ({
-    type: 'FILTER_ADD_COLOR',
-    payload: color,
+const filterAddColor = (color) => ({
+  type: 'FILTER_ADD_COLOR',
+  payload: color,
 });
-const filterRemoveColor = color => ({
-    type: 'FILTER_REMOVE_COLOR',
-    payload: color,
+const filterRemoveColor = (color) => ({
+  type: 'FILTER_REMOVE_COLOR',
+  payload: color,
 });
-const filterRemoveBrand = brand => ({
-    type: 'FILTER_REMOVE_BRAND',
-    payload: brand,
+const filterRemoveBrand = (brand) => ({
+  type: 'FILTER_REMOVE_BRAND',
+  payload: brand,
 });
-const filterRemoveCategory = category => ({
-    type: 'FILTER_REMOVE_CATEGORY',
-    payload: category,
+const filterRemoveCategory = (category) => ({
+  type: 'FILTER_REMOVE_CATEGORY',
+  payload: category,
+});
+const filterRemoveAllCategories = () => ({
+  type: 'FILTER_REMOVE_ALL_CATEGORIES',
 });
 
-const fetchSuccessBrands = brands => ({ type: 'FETCH_SUCCESS_BRANDS', payload: brands });
-
-const fetchSuccessCategories = categories => ({ type: 'FETCH_SUCCESS_CATEGORIES', payload: categories });
-
-const fetchSuccessColors = colors => ({ type: 'FETCH_SUCCESS_COLORS', payload: colors });
-
-const composeFilters = () => ({
-    type: 'COMPOSE_FILTERS',
+const filterByName = (newSearchTerm) => ({
+  type: 'FILTER_BY_NAME',
+  payload: newSearchTerm,
 });
-const composeReceivedData = () => ({
-    type: 'COMPOSE_RECEIVED_DATA',
+const setSearchValue = (newSearchValue) => ({
+  type: 'CLEAR_FIELD',
+  payload: newSearchValue,
 });
 
 export {
-    filterAddBrand,
-    filterAddCategory,
-    filterAddColor,
-    composeFilters,
-    filterRemoveBrand,
-    filterRemoveCategory,
-    filterRemoveColor,
-    fetchSuccessBrands,
-    fetchSuccessCategories,
-    fetchSuccessColors,
-    composeReceivedData,
+  filterAddBrand,
+  filterAddCategory,
+  filterAddColor,
+  filterRemoveBrand,
+  filterRemoveCategory,
+  filterRemoveAllCategories,
+  filterRemoveColor,
+  filterByName,
+  setSearchValue,
 };
