@@ -31,7 +31,8 @@ import {
 import {
     postUserSuccess,
     postUserStarted,
-    postUserError
+    postUserError,
+    logoutUser
 } from "./Auth-actions";
 
 export {
@@ -60,5 +61,6 @@ export {
     postUserSuccess,
     postUserStarted,
     setSearchValue ,
+    logoutUser
 };
 

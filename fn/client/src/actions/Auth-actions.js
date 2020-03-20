@@ -16,4 +16,4 @@ const logoutUser = () => ({
     type: 'LOGOUT_USER'
 });
 
-export {postUserError,postUserStarted, postUserSuccess};
+export {postUserError,postUserStarted, postUserSuccess, logoutUser};
