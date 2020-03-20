@@ -5,7 +5,11 @@ import './App-header-nav-left-item-dropdown.css';
 import { Link } from 'react-router-dom';
 import { PRODUCT_LIST_URL } from '../../configs/frontend-config';
 
-const AppHeaderNavLeftItemDropDown = ({ catalog, handler }) => {
+const AppHeaderNavLeftItemDropDown = ({
+  catalog,
+  handler,
+  categoryRemover,
+}) => {
   const items = catalog.categories.map((category) => (
     <Nav>
       <Link
@@ -24,6 +28,7 @@ const AppHeaderNavLeftItemDropDown = ({ catalog, handler }) => {
         to={PRODUCT_LIST_URL + catalog.catalog}
         className="nav-link"
         role="button"
+        onClick={() => categoryRemover()}
       >
         All Categories
       </Link>

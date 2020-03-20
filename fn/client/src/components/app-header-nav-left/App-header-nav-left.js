@@ -50,6 +50,7 @@ const AppHeaderNavLeft = ({
           <AppHeaderNavLeftItemDropDown
             catalog={catalog}
             handler={filterAddCategoryHandler}
+            categoryRemover={filterRemoveAllCategories}
           />
         </div>
       )}

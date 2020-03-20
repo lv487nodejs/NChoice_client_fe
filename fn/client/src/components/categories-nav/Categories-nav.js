@@ -42,7 +42,12 @@ const CategoriesNav = ({
   return (
     <ul className="categories-nav">
       <li key="all" className="category-item">
-        <Link to={PRODUCT_LIST_URL + catalog}>All Categories</Link>
+        <Link
+          to={PRODUCT_LIST_URL + catalog}
+          onClick={() => filterRemoveAllCategories()}
+        >
+          All Categories
+        </Link>
       </li>
       {categories.map((category) => (
         <li key={category.category} className="category-item">
