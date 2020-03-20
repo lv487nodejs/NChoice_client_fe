@@ -8,8 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Wishlist = ({products}) => {
-    console.log(products)
-
+    
     const [product, setProduct] = useState(products)
 
     const removeFromWishlist = (id) => {
