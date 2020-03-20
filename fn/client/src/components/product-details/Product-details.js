@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
 import './Product-details.css';
-import Button from '@material-ui/core/Button';
-import { Card, Row, Col, Image } from 'react-bootstrap';
+// import Button from '@material-ui/core/Button';
+import { Card, Row, Col, Image, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import ProductListPosts from '../product-list-posts';
@@ -95,9 +95,11 @@ const ProductDetails = ({
           ></Card.Text>
           <Col className="size">{sizeItem}</Col>
           <Card.Body className="buttons">
-            <FontAwesomeIcon icon={faHeart} className="heart" />
-            <Button>Add to card</Button>
-            <Button>By now</Button>
+            <FontAwesomeIcon icon={faHeart} className="heart button" />
+            <Button variant="dark" className="button">Add to card</Button>
+            <Button variant="dark" className="button">By now</Button>
+            {/* <Button>Add to card</Button>
+            <Button>By now</Button> */}
           </Card.Body>
         </Col>
       </Card.Body>
