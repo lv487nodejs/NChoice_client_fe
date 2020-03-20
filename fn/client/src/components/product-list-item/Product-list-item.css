@@ -44,8 +44,9 @@
   justify-self: end;
   position: absolute;
   right: 0;
-  bottom: 10px;
+  bottom: 10 px;
 }
+
 .description {
   display: block;
   display: -webkit-box;
@@ -56,9 +57,11 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: unset;
+  text-align: justify;
 }
 .cardWrapper {
-  height: 235px;
+  height: 265px;
 
 }
 .heart,
