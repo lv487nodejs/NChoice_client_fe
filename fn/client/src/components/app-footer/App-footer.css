@@ -1,21 +1,23 @@
 .footer {
-    margin-top: 7rem;
+  margin-top: 7rem;
 }
 
 .footer-inner {
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
+  width: "100%";
+  margin: "0";
 }
 
 .footer .icon {
-    color: white;
-    font-size: 3rem;
-    transition: all .5s;
-    padding: .5rem;
-    border-radius: 100%;
+  color: white;
+  font-size: 3rem;
+  transition: all 0.5s;
+  padding: 0.5rem;
+  border-radius: 100%;
 }
 
 .footer .icon:hover {
-    color: black;
-    background-color: white;
+  color: black;
+  background-color: white;
 }

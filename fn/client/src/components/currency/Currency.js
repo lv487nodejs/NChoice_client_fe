@@ -9,7 +9,7 @@ function Currency() {
     useEffect(() => {
         fetch(BASE_URL)
             .then(res => res.json())
-            .then(data => Object.entries(data.rates)[26])
+            .then(data => Object.entries(data.rates)[26]) //dollar
             .then(coff => setCurrencyOptions(coff[1]));
     }, []);
 

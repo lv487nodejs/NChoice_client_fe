@@ -5,8 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import './Product-list-item.css';
 import { connect } from 'react-redux';
+import {addToCart, addToWishlist} from '../../actions'
 
-function ProductListItem({ title, description, id, images, price, msrp, currency }) {
+
+function ProductListItem({ title, description, id, images, price, msrp, currency, addToCart, addToWishlist }) {
     const [priceWithRate, setPriceWithRate] = useState();
     const [msrpWithRate, setMsrpWithRate] = useState();
     const [currencyIcon, setCurrencyIcon] = useState();
@@ -28,8 +30,10 @@ function ProductListItem({ title, description, id, images, price, msrp, currency
                 <Card.Body className="bottomElements">
                     <Card.Text className="cardPrice">{`${priceWithRate} ${currencyIcon}`}</Card.Text>
                     <Card.Text className="cardPrice msrp-price">{`${msrpWithRate} ${currencyIcon}`}</Card.Text>
-                    <FontAwesomeIcon icon={faHeart} className="heart" />
-                    <FontAwesomeIcon icon={faShoppingCart} className="cart" />
+                    <FontAwesomeIcon icon={faHeart} className="heart"
+                           onClick={() => addToWishlist({id, title, description, images})}/>
+          <FontAwesomeIcon icon={faShoppingCart} className="cart"
+                           onClick={() => addToCart({id, title, price, msrp, currencyIcon, images})}/>
                 </Card.Body>
             </Card.Body>
         </Card>
@@ -37,5 +41,6 @@ function ProductListItem({ title, description, id, images, price, msrp, currency
 }
 
 const mapStateToProps = ({ productsList: { currency } }) => ({ currency });
+const mapDispatchToProps = {addToCart, addToWishlist}
 
-export default connect(mapStateToProps)(ProductListItem);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductListItem);
