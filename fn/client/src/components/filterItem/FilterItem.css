@@ -1,8 +1,14 @@
-.plus-button{
-    position: absolute;
-    top:-1.4rem;
-    right: 1rem;
-    background-color: white;
+.btn.btn-outline-primary.plus-button {
+  position: absolute;
+  top: -1rem;
+  right: 1rem;
+  background-color: white;
+  padding: .1rem .5rem;
+}
+
+.btn.btn-outline-primary:hover.plus-button {
+  background-color: blue;
+  color: white;
 }
 .list-group-item input{
 margin-right: 1rem;
