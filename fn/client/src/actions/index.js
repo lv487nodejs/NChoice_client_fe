@@ -12,7 +12,7 @@ import {
   sizesLoaded,
 } from './Products-actions';
 
-import {addToCart, getNumbers, increaseToCart, decreaseFromCart, removeFromCart} from './Cart-action'
+import {addToCart, increaseToCart, decreaseFromCart, removeFromCart} from './Cart-action'
 import {addToWishlist} from './Wishlist-actions'
 
 import {
@@ -67,7 +67,6 @@ export {
   postUserStarted,
   setSearchValue,
   addToCart,
-  getNumbers,
   increaseToCart,
   decreaseFromCart,
   removeFromCart,
