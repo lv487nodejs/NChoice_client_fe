@@ -18,6 +18,13 @@ const BrandList = ({ adminService, brands, setBrands, brandLoadingStatus, loadin
         brandsService.getAllBrands().then(res => setBrands(res));
     }, [brandsService, setBrands, brandLoadingStatus]);
 
+    const brandDeleteHandler = id => async () => {
+        brandsService.deleteBrand(id).then(res => {
+            brandLoadingStatus();
+            brandsService.getAllBrands().then(res => setBrands(res));
+        });
+    };
+
     const brandItems = brands.map((brand, index) => (
         <TableContainerRow
             key={index}
@@ -26,9 +33,7 @@ const BrandList = ({ adminService, brands, setBrands, brandLoadingStatus, loadin
             editHandler={() => {
                 history.push(`/brand/${brand._id}`);
             }}
-            deleteHandler={() => {
-                console.log(brand._id);
-            }}
+            deleteHandler={brandDeleteHandler(brand._id)}
         />
     ));
 

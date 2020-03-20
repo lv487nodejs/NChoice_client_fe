@@ -17,6 +17,8 @@ import NavMenu from '../nav-menu';
 import ProductPage from '../product-page/Product-page';
 import ProductAddPage from '../product-add-page';
 import CategoryAddPage from '../category-add-page';
+import BrandAddPage from '../brand-add-page';
+import BrandDetails from '../brand-details';
 
 const pathToProducts = '/products';
 const pathToUsers = '/users';
@@ -25,7 +27,10 @@ const pathToCategories = '/categories';
 const pathToUserDetails = '/user/:id';
 const pathToProductDetails = '/product/:id';
 const pathToCategoriesDetails = '/category/:id';
+const pathToBrandDetails = '/brand/:id';
+const pathToAddCategoryPage = '/categoryadd';
 const pathToAddProductPage = '/productadd';
+const pathToAddBrandPage = '/brandadd';
 
 const AppRouter = () => (
     <Router>
@@ -40,8 +45,10 @@ const AppRouter = () => (
             <Route path={pathToBrands} exact component={BrandsPageContainer} />
             <Route path={pathToCategories} exact component={CategoriesPageContainer} />
             <Route path={pathToCategoriesDetails} exact component={CategoryDetailsPageContainer} />
-            <Route path="/addcategory" exact component={CategoryAddPage} />
+            <Route path={pathToAddCategoryPage} exact component={CategoryAddPage} />
             <Route path={pathToAddProductPage} exact component={ProductAddPage} />
+            <Route path={pathToAddBrandPage} exact component={BrandAddPage} />
+            <Route path={pathToBrandDetails} exact component={BrandDetails} />
         </Switch>
     </Router>
 );

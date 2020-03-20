@@ -68,7 +68,7 @@ const CategoryList = ({
     const categoryItems = categories.map((category, index) => (
         <TableContainerRow
             key={index}
-            id={category.id}
+            id={category._id}
             category={category.category}
             editHandler={() => {
                 history.push(`/category/${category._id}`);

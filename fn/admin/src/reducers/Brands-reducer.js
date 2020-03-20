@@ -2,6 +2,7 @@ const initialState = {
     brands: [],
     brand: '',
     loading: true,
+    open: false,
 };
 
 const brandsState = (state = initialState, action) => {
@@ -24,6 +25,16 @@ const brandsState = (state = initialState, action) => {
                 ...state,
                 brands: action.payload,
                 loading: false,
+            };
+        case 'OPEN_TRUE':
+            return {
+                ...state,
+                open: true,
+            };
+        case 'OPEN_FALSE':
+            return {
+                ...state,
+                open: false,
             };
 
         default:

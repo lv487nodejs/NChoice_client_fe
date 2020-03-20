@@ -1,6 +1,12 @@
 import { setCatalog, setCatalogs, catalogLoadingStatus } from './Catalogs-actions';
 
-import { setBrand, setBrands, brandLoadingStatus } from './Brand-actions';
+import {
+    setBrand,
+    setBrands,
+    brandLoadingStatus,
+    brandSnackbarOpenTrue,
+    brandSnackbarOpenFalse,
+} from './Brand-actions';
 
 import {
     setCategory,
@@ -74,6 +80,8 @@ export {
     setBrand,
     setBrands,
     brandLoadingStatus,
+    brandSnackbarOpenTrue,
+    brandSnackbarOpenFalse,
     setCatalog,
     setCatalogs,
     catalogLoadingStatus,
