@@ -60,11 +60,13 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: unset;
+  text-align: justify;
 }
 
 .cardWrapper {
-  height: 235px;
-  margin-bottom: 2rem;
+  height: 265px;
+
 }
 
 .heart, .cart {
