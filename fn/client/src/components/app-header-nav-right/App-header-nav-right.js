@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 import './App-header-nav-right.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faUser, faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faUser, faShoppingBasket, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import Currency from '../currency';
 import { connect } from 'react-redux';
+import { logoutUser } from "../../actions";
 
-const AppHeaderNavRight = ({ cartNumbers }) => {
+const AppHeaderNavRight = ({ cartNumbers, logoutUser, userStatus }) => {
 
   return (
     <nav className="nav-bar">
@@ -32,11 +33,20 @@ const AppHeaderNavRight = ({ cartNumbers }) => {
             <span> <sup>{cartNumbers}</sup> </span>
           </Link>
         </li>
+        {
+          userStatus === 'received' ? <li key="8">
+          <Link to={"/login"}>
+            <FontAwesomeIcon icon={faSignOutAlt} onClick={logoutUser} />
+          </Link>
+        </li> : null
+        }
       </ul>
     </nav>
   )
 };
 
-const mapStateToProps = ({ cartReducer: { cartNumbers } }) => ({ cartNumbers });
+const mapDispatchToProps = {logoutUser};
 
-export default connect(mapStateToProps)(AppHeaderNavRight);
+const mapStateToProps = ({ cartReducer: { cartNumbers }, authReducer: {userStatus}}) => ({ cartNumbers, userStatus });
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppHeaderNavRight);

@@ -14,7 +14,7 @@ import Register from '../register';
 import AppFooter from '../app-footer';
 import Cart from "../cart/Cart";
 import Wishlist from '../wish-list/Wish-list'
-import Login from '../login/Login';
+import Login from '../login';
 
 const Routes = () => (
   <Router>

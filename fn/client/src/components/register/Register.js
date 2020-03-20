@@ -52,7 +52,7 @@ const Register = (props) => {
     };
 
     if (userStatus === 'received') {
-        return <Redirect to='/' />
+        return (<Redirect to='/' />)
     }
 
     return (

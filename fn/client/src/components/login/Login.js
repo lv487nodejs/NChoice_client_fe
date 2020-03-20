@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import {LOGIN_ROUTE} from "../../configs/login-register-config";
 import axios from "axios";
-import { postUserError, postUserStarted, postUserSuccess, logoutUser } from "../../actions";
+import { postUserError, postUserStarted, postUserSuccess } from "../../actions";
 
 const addDataToLocalStorage = (token) => {
     localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
@@ -19,7 +19,7 @@ const USER_DATA = {
 
 const Login = (props) => {
     const [user, setUser] = useState(USER_DATA);
-    const {postUserStarted,postUserSuccess,postUserError, userStatus, logoutUser}  = props;
+    const {postUserStarted,postUserSuccess,postUserError, userStatus}  = props;
 
     const handleChange = (event) => {
         event.persist();
