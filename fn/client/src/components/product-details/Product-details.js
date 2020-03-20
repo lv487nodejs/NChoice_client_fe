@@ -14,6 +14,8 @@ import {
   productsRequested,
   catalogLoaded,
   sizesLoaded,
+  addToCart,
+  addToWishlist
 } from '../../actions';
 
 const ProductDetails = ({
@@ -24,6 +26,8 @@ const ProductDetails = ({
   productsRequested,
   storeService,
   products,
+  addToCart,
+  addToWishlist
 }) => {
   const [getSizes, setSizes] = useState([]);
   useEffect(() => {
@@ -95,9 +99,11 @@ const ProductDetails = ({
           ></Card.Text>
           <Col className="size">{sizeItem}</Col>
           <Card.Body className="buttons">
-            <FontAwesomeIcon icon={faHeart} className="heart button" />
-            <Button variant="dark" className="button">Add to card</Button>
-            <Button variant="dark" className="button">By now</Button>
+            <FontAwesomeIcon icon={faHeart} className="heart button"
+                             onClick = {() => addToWishlist(product)} />
+            <Button variant="dark" className="button"
+                             onClick = {() => addToCart(product)}> Add to card </Button>
+            <Button variant="dark" className="button"> By now </Button>
             {/* <Button>Add to card</Button>
             <Button>By now</Button> */}
           </Card.Body>
@@ -125,6 +131,8 @@ const mapDispatchToProps = {
   productsRequested,
   catalogLoaded,
   sizesLoaded,
+  addToCart,
+  addToWishlist
 };
 
 export default withStoreService()(

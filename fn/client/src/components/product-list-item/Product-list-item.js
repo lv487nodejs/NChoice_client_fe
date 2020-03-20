@@ -45,6 +45,6 @@ function ProductListItem({ title, description, id, images, price, msrp, currency
 }
 
 const mapStateToProps = ({ productsList: { currency } }) => ({ currency });
-const mapDispatchToProps = { addToCart, addToWishlist }
+const mapDispatchToProps = { addToCart, addToWishlist };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductListItem);
