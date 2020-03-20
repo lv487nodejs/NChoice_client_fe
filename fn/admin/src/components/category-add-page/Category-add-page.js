@@ -64,18 +64,29 @@ const CategoryAddPage = props => {
             category: categoryName,
         };
         categoriesService.postCategory(newCategory).then(res => {
-            catalogsToUpdate.forEach(catalog => {
-                catalog.categories.push(res._id);
-                catalogsService.putCatalog(catalog._id, catalog).then(res => {
-                    categorySnackbarOpenTrue();
-                    setCategoryName('');
-                });
+            catalogsToUpdate.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkbox.catalog.categories.push(res._id);
+                    catalogsService.putCatalog(checkbox.catalog._id, checkbox.catalog).then(res => {
+                        categorySnackbarOpenTrue();
+                        setCategoryName('');
+                    });
+                }
             });
         });
     };
 
-    const handleCheck = catalog => () => {
-        categoryUpdateCatalogs([...catalogsToUpdate, catalog]);
+    const catalogsToUpdateHandler = catalog => e => {
+        const index = catalogsToUpdate.findIndex(element => element.catalog._id === catalog._id);
+        const catalogToUpdate = {
+            catalog,
+            checked: e.target.checked,
+        };
+        if (index > -1) {
+            catalogsToUpdate[index] = catalogToUpdate;
+        } else {
+            categoryUpdateCatalogs([...catalogsToUpdate, catalogToUpdate]);
+        }
     };
 
     const closeSnackbarHandler = () => {
@@ -97,7 +108,7 @@ const CategoryAddPage = props => {
                         id={catalogName}
                         color="primary"
                         value={catalogName}
-                        onChange={handleCheck(catalog)}
+                        onChange={catalogsToUpdateHandler(catalog)}
                     />
                 }
                 label={catalogName.toUpperCase()}

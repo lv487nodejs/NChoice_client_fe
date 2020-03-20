@@ -2,6 +2,7 @@ const initialState = {
     categories: [],
     category: {},
     catalogsToUpdate: [],
+    catalogCheck: {},
     loading: true,
     open: false,
 };
@@ -42,6 +43,11 @@ const categoriesState = (state = initialState, action) => {
             return {
                 ...state,
                 open: false,
+            };
+        case 'SET_CATALOG_CHECK':
+            return {
+                ...state,
+                catalogCheck: action.payload,
             };
         case 'UPDATE_CATALOGS':
             return {

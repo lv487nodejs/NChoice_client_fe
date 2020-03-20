@@ -10,6 +10,7 @@ import {
     categorySnackbarOpenFalse,
     categoryUpdateCatalogs,
     categoryLoadingStop,
+    setCatalogCheck,
 } from './Categories-actions';
 
 import {
@@ -78,6 +79,7 @@ export {
     catalogLoadingStatus,
     setCategory,
     setCategories,
+    setCatalogCheck,
     categoryLoadingStatus,
     setColors,
     usersLoaded,

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { TextField, FormControlLabel, Checkbox, FormLabel, FormGroup } from '@material-ui/core';
 
 import {
     categoryLoadingStatus,
     setCategory,
-    setCatalogs,
     categorySnackbarOpenTrue,
+    categoryUpdateCatalogs,
     categorySnackbarOpenFalse,
 } from '../../actions';
 import wrapWithAdminService from '../wrappers';
@@ -18,8 +18,8 @@ const CategoryDetails = props => {
     const {
         categoryId,
         setCategory,
-        setCatalogs,
-        catalogs,
+        categoryUpdateCatalogs,
+        catalogsToUpdate,
         categoryLoadingStatus,
         open,
         categorySnackbarOpenTrue,
@@ -29,23 +29,43 @@ const CategoryDetails = props => {
         adminService,
     } = props;
 
-    const [catalogsToUpdate, setCatalogsToUpdate] = useState([]);
-
     const { categoriesService, catalogsService } = adminService;
 
     useEffect(() => {
         categoryLoadingStatus();
-        categoriesService.getCategoryById(categoryId).then(res => setCategory(res));
-        catalogsService.getAllCatalogs().then(res => setCatalogs(res));
+        categoriesService.getCategoryById(categoryId).then(resCategory => {
+            setCategory(resCategory);
+            catalogsService.getAllCatalogs().then(resCatalog => {
+                const newCatalogs = resCatalog.map(catalog => {
+                    const categoryName = resCategory.category;
+
+                    const index = catalog.categories.findIndex(
+                        element => element.category === categoryName
+                    );
+
+                    if (index > -1) {
+                        return {
+                            ...catalog,
+                            checked: true,
+                        };
+                    }
+                    return {
+                        ...catalog,
+                        checked: false,
+                    };
+                });
+                categoryUpdateCatalogs(newCatalogs);
+            });
+        });
     }, [
         setCategory,
         categoryLoadingStatus,
         categoryId,
-        setCatalogs,
         categoriesService,
         catalogsService,
         categorySnackbarOpenTrue,
         categorySnackbarOpenFalse,
+        categoryUpdateCatalogs,
     ]);
 
     const closeSnackbarHandler = () => {
@@ -66,14 +86,31 @@ const CategoryDetails = props => {
                 categorySnackbarOpenTrue();
             })
             .catch(err => categorySnackbarOpenFalse());
+
+        catalogsToUpdate.forEach(catalog => {
+            if (catalog.checked) {
+                catalogsService.putCatalog(catalog._id, catalog).then(res => console.log(res));
+            }
+        });
     };
 
-    const handleCheck = catalog => () => {
-        setCatalogsToUpdate([...catalogsToUpdate, catalog]);
+    const catalogsToUpdateHandler = catalogCheckbox => e => {
+        const index = catalogsToUpdate.findIndex(element => element._id === catalogCheckbox._id);
+
+        const catalogToUpdate = {
+            ...catalogCheckbox,
+            checked: e.target.checked,
+        };
+        const newCatalogsToUpdate = [...catalogsToUpdate];
+        if (index > -1) {
+            newCatalogsToUpdate[index] = catalogToUpdate;
+        }
+        categoryUpdateCatalogs(newCatalogsToUpdate);
     };
 
-    const checkboxes = catalogs.map(catalog => {
+    const checkboxes = catalogsToUpdate.map(catalog => {
         const catalogName = catalog.catalog;
+
         return (
             <FormControlLabel
                 key={catalogName}
@@ -82,8 +119,9 @@ const CategoryDetails = props => {
                         key={catalogName}
                         id={catalogName}
                         color="primary"
+                        checked={catalog.checked}
                         value={catalogName}
-                        onChange={handleCheck(catalog)}
+                        onChange={catalogsToUpdateHandler(catalog)}
                     />
                 }
                 label={catalogName.toUpperCase()}
@@ -117,19 +155,16 @@ const CategoryDetails = props => {
     );
 };
 
-const mapStateToProps = ({
-    categoriesState: { category, loading, open },
-    catalogsState: { catalogs },
-}) => ({
+const mapStateToProps = ({ categoriesState: { category, loading, open, catalogsToUpdate } }) => ({
     category,
     loading,
     open,
-    catalogs,
+    catalogsToUpdate,
 });
 const mapDispatchToProps = {
     categoryLoadingStatus,
     setCategory,
-    setCatalogs,
+    categoryUpdateCatalogs,
     categorySnackbarOpenTrue,
     categorySnackbarOpenFalse,
 };

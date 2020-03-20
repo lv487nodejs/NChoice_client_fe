@@ -29,6 +29,11 @@ const categoryUpdateCatalogs = catalogs => ({
     payload: catalogs,
 });
 
+const setCatalogCheck = catalogCheck => ({
+    type: 'SET_CATALOG_CHECK',
+    payload: catalogCheck,
+});
+
 export {
     setCategory,
     setCategories,
@@ -37,4 +42,5 @@ export {
     categorySnackbarOpenFalse,
     categoryUpdateCatalogs,
     categoryLoadingStop,
+    setCatalogCheck,
 };
