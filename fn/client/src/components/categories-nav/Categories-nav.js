@@ -13,7 +13,7 @@ import {
 import CategoriesNavItem from '../categories-nav-item';
 import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
-
+import { PRODUCT_LIST_URL } from '../../configs/frontend-config';
 const CategoriesNav = ({
   storeService,
   categoriesLoaded,
@@ -42,7 +42,7 @@ const CategoriesNav = ({
   return (
     <ul className="categories-nav">
       <li key="all" className="category-item">
-        <Link to={`/productlist/${catalog}`}>All Categories</Link>
+        <Link to={PRODUCT_LIST_URL + catalog}>All Categories</Link>
       </li>
       {categories.map((category) => (
         <li key={category.category} className="category-item">
@@ -50,6 +50,7 @@ const CategoriesNav = ({
             handler={filterAddCategoryHandler}
             catalog={catalog}
             name={category.category}
+            config={PRODUCT_LIST_URL}
           />
         </li>
       ))}

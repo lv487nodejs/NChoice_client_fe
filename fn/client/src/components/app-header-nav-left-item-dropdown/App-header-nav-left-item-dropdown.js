@@ -3,12 +3,13 @@ import Nav from 'react-bootstrap/Nav';
 
 import './App-header-nav-left-item-dropdown.css';
 import { Link } from 'react-router-dom';
+import { PRODUCT_LIST_URL } from '../../configs/frontend-config';
 
 const AppHeaderNavLeftItemDropDown = ({ catalog, handler }) => {
   const items = catalog.categories.map((category) => (
     <Nav>
       <Link
-        to={`/productlist/${catalog.catalog}`}
+        to={PRODUCT_LIST_URL + catalog.catalog}
         key={category._id}
         onClick={() => handler(category.category)}
       >
@@ -20,7 +21,7 @@ const AppHeaderNavLeftItemDropDown = ({ catalog, handler }) => {
   return (
     <Nav defaultActiveKey="/home" className="flex-column drop-down">
       <Link
-        to={`/productlist/${catalog.catalog}`}
+        to={PRODUCT_LIST_URL + catalog.catalog}
         className="nav-link"
         role="button"
       >
