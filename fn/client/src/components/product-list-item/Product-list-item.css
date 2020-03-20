@@ -45,6 +45,7 @@
   right: 0;
   bottom: 10px;
 }
+
 .description {
   display: block;
   display: -webkit-box;
@@ -55,10 +56,12 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: unset;
+  text-align: justify;
 }
 .cardWrapper {
-  height: 235px;
-  margin-bottom: 3rem;
+  height: 265px;
+
 }
 .heart,
 .cart {
