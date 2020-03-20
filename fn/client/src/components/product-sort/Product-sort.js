@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Product-sort.css';
 import Button from 'react-bootstrap/Button';
+import FA from 'react-fontawesome';
 
-const sortByPrice = function(arrayToSortByPrice) {
-    console.log(arrayToSortByPrice[0].propetries[0].price);
-    return arrayToSortByPrice.sort((a, b) => a.propetries[0].price - b.propetries[0].price);
+const ProductSort = ({ options }) => {
+  const [sortValue, setSortValue] = useState(options[0].value);
+  const [className, setClassName] = useState(null);
+  const changeHandler = () => {
+    setSortValue(-sortValue);
+    sortValue === 1
+      ? setClassName(options[0].defaultClass)
+      : setClassName(options[0].toChangeClass);
+    options[0].handler(sortValue);
+  };
+  const buttons = options.map(({ text, variant }) => (
+    <Button key={text} variant={variant} onClick={changeHandler}>
+      {text} <FA className={className ? className : 'fas fa-sort'} />
+    </Button>
+  ));
+  return <div className="flex row flex-wrap">{buttons}</div>;
 };
 
-const ProductSort = ({ arrayToSort }) => (
-    <Button variant="dark" onClick={() => console.log(sortByPrice(arrayToSort))}>
-        Sort by price
-    </Button>
-);
 export default ProductSort;

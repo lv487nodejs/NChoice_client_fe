@@ -14,31 +14,33 @@ function ProductListItem({ title, description, id, images, price, msrp, currency
     const [currencyIcon, setCurrencyIcon] = useState();
 
     useEffect(() => {
-       setPriceWithRate(Math.floor(price * currency))
-       setMsrpWithRate(Math.floor(msrp * currency))
-       currency === 1 ? setCurrencyIcon('€') : setCurrencyIcon('$')
-        }, [currency, price, msrp]);
-  return (
-    <Card key={id} className="productCart">
-      <div className="image-container">
-        <Card.Img variant="top" src={`/images/products/${images}`} className="cardsImage"/>
-      </div>
-      <Card.Body>
-        <Card.Title className="productName">{title}</Card.Title>
-        <Card.Text className="description">{description}</Card.Text>
-        <Card.Body className="bottomElements">
-          <Card.Text className="cardPrice">{`${priceWithRate} ${currencyIcon}`}</Card.Text>
-          <Card.Text className="cardPrice msrp-price">{`${msrpWithRate} ${currencyIcon}`}</Card.Text>
-          <FontAwesomeIcon icon={faHeart} className="heart"
+        setPriceWithRate(Math.floor(price * currency));
+        setMsrpWithRate(Math.floor(msrp * currency));
+        currency === 1 ? setCurrencyIcon('€') : setCurrencyIcon('$');
+    }, [currency, price, msrp]);
+
+    return (
+        <Card key={id} className="productCart">
+            <div className="image-container">
+                <Card.Img variant="top" src={`/images/products/${images}`} className="cardsImage" />
+            </div>
+            <Card.Body className="cardWrapper">
+                <Card.Title className="productName">{title}</Card.Title>
+                <Card.Text className="description">{description}</Card.Text>
+                <Card.Body className="bottomElements">
+                    <Card.Text className="cardPrice">{`${priceWithRate} ${currencyIcon}`}</Card.Text>
+                    <Card.Text className="cardPrice msrp-price">{`${msrpWithRate} ${currencyIcon}`}</Card.Text>
+                    <FontAwesomeIcon icon={faHeart} className="heart"
                            onClick={() => addToWishlist({id, title, description, images})}/>
           <FontAwesomeIcon icon={faShoppingCart} className="cart"
                            onClick={() => addToCart({id, title, price, msrp, currencyIcon, images})}/>
-        </Card.Body>
-      </Card.Body>
-    </Card>
-  );
+                </Card.Body>
+            </Card.Body>
+        </Card>
+    );
 }
 
 const mapStateToProps = ({ productsList: { currency } }) => ({ currency });
+const mapDispatchToProps = {addToCart, addToWishlist}
 
-export default connect(mapStateToProps, {addToCart, addToWishlist})(ProductListItem);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductListItem);

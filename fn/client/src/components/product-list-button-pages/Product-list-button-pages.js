@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import './Product-list-button-pages.css';
-import { itemsPerPage } from '../../frontend-config';
+import { itemsPerPage } from '../../configs/frontend-config';
 
 export default function ProductListButtonPages({ changeItems, changeCurrentPage }) {
     const pickAmount = number => changeItems(number);

@@ -12,27 +12,26 @@ const AppHeaderNavRight = ({cartNumbers}) => {
 
   return (
     <nav className="nav-bar">
-      <ul>
-        <li key="4">
-          <Link to="/wishlist">
-            <FontAwesomeIcon icon={faHeart}/>
-          </Link>
-        </li>
-        <li key="5">
-          <span className="currency-button"><Currency/></span>
-        </li>
-        <li key="6">
-          <Link to="/register">
-            <FontAwesomeIcon icon={faUser}/>
-          </Link>
-        </li>
-        <li key="7">
+        <ul>
+            <li key="4">
+                <Link to="/wishlist">
+                    <FontAwesomeIcon icon={faHeart} />
+                </Link>
+            </li>
+            <li key="5">
+                <span className="currency-button"><Currency /></span>
+            </li>
+            <li key="6">
+                <Link to="/login">
+                    <FontAwesomeIcon icon={faUser} />
+                </Link>
+    <li key="7">
           <Link to="/cart">
             <FontAwesomeIcon icon={faShoppingBasket}/>
             <span> <sup>{cartNumbers}</sup> </span>
           </Link>
-        </li>
-      </ul>
+            </li>
+        </ul>
     </nav>
   )
 };
