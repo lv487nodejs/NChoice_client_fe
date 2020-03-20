@@ -9,7 +9,7 @@ const instate = {
   receivedCategories: [],
   receivedColors: [],
   searchTerm: '',
-  setSearchTerm: '',
+  searchValue: '',
 };
 
 const filter = (state = instate, action) => {

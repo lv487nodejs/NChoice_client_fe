@@ -11,10 +11,9 @@ const AppHeaderNavLeftItemDropDown = ({
   categoryRemover,
 }) => {
   const items = catalog.categories.map((category) => (
-    <Nav>
+    <Nav key={category._id}>
       <Link
         to={PRODUCT_LIST_URL + catalog.catalog}
-        key={category._id}
         onClick={() => handler(category.category)}
       >
         {category.category}
