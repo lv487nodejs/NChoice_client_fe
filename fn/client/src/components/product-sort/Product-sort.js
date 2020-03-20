@@ -15,7 +15,7 @@ const ProductSort = ({ options }) => {
   };
   const buttons = options.map(({ text, variant }) => (
     <Button key={text} variant={variant} onClick={changeHandler}>
-      {text} <FA className={className ? className : 'fas fa-sort'} />
+      {text} <FA name='sort' className={className ? className : 'fas fa-sort'} />
     </Button>
   ));
   return <div className="flex row flex-wrap">{buttons}</div>;
