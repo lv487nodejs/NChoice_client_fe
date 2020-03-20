@@ -39,3 +39,6 @@
 ::1 - - [11/Mar/2020:18:11:32 +0000] "GET /products/ HTTP/1.1" 500 50 "-" "PostmanRuntime/7.23.0"
 ::1 - - [11/Mar/2020:18:11:52 +0000] "POST /users/ HTTP/1.1" 200 234 "-" "PostmanRuntime/7.23.0"
 ::1 - - [11/Mar/2020:18:15:51 +0000] "OPTIONS /products/users HTTP/1.1" 200 8 "http://localhost:3000/register" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36"
+::1 - - [20/Mar/2020:18:00:26 +0000] "GET /catalogs HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36"
+::1 - - [20/Mar/2020:18:00:26 +0000] "GET /catalogs HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36"
+::1 - - [20/Mar/2020:18:00:42 +0000] "GET /catalogs HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36"
