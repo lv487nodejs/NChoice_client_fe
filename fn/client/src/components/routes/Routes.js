@@ -8,6 +8,7 @@ import AppHeader from '../app-header';
 import Register from '../register';
 import AppFooter from '../app-footer';
 import Cart from "../cart/Cart";
+import Wishlist from '../wish-list/Wish-list'
 
 const Routes = () => (
     <Router>
@@ -24,6 +25,7 @@ const Routes = () => (
             />
             <Route path="/register" exact component={Register} />
             <Route path="/cart" exact component={Cart} />
+            <Route path="/wishlist" exact component={Wishlist} />
             <Route path={`/productlist/:name`}
                     exact
                     render={({ match }) => {

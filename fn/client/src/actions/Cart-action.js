@@ -1,8 +1,5 @@
-const addCart = (productName) => {
+const addToCart = (productName) => {
   return (dispatch) => {
-    console.log('Adding to cart');
-    console.log('Product: ', productName );
-
     dispatch({
       type: 'ADD_PRODUCT_CART',
       payload: productName
@@ -12,7 +9,6 @@ const addCart = (productName) => {
 
 const getNumbers = () => {
   return (dispatch) =>{
-    console.log('Getting all numbers from cart');
     dispatch({
       type: 'GET_NUMBERS_CART'
     })
@@ -38,17 +34,23 @@ const decreaseFromCart = (id) => {
   }
 };
 
-const removeFromCart = (id) => {
+const removeFromCart = (quantity) => {
   return(dispatch) => {
     dispatch({
       type: 'REMOVE_FROM_CART',
-      payload: id
+      payload: quantity
     })
   }
 };
 
 
-export  {addCart, getNumbers, increaseToCart, decreaseFromCart, removeFromCart}
+export  {
+  addToCart,
+  getNumbers, 
+  increaseToCart, 
+  decreaseFromCart, 
+  removeFromCart,
+}
 
 
 

@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
         ...state
       };
 
-      case 'CURRENCY_CHANGE':
+      case 'CURRENCY_CHANGE_CART':
         return {
             ...state,
             currency: action.payload,
@@ -45,17 +45,12 @@ export default (state = initialState, action) => {
         }
 
     case 'REMOVE_FROM_CART':
-      let foundProduct1 = state.products.find((value)=> console.log(value.quantity));
       return{
         ...state,
-        cartNumbers:  state.cartNumbers ,
+        cartNumbers:  state.cartNumbers - action.payload,
       }
-
+    
     default:
       return state
   }
 }
-
-
-
-

@@ -1,7 +1,8 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
 import { productsLoaded, productsRequested, currencyChange } from './Products-actions';
 import { catalogsLoaded, catalogsRequested, catalogLoaded } from './Catalogs-actions';
-import {addCart, getNumbers, increaseToCart, decreaseFromCart, removeFromCart} from './Cart-action'
+import {addToCart, getNumbers, increaseToCart, decreaseFromCart, removeFromCart} from './Cart-action'
+import {addToWishlist} from './Wishlist-actions'
 
 import {
     filterAddBrand,
@@ -28,9 +29,10 @@ export {
     filterRemoveBrand,
     filterRemoveCategory,
     filterRemoveColor,
-    addCart,
+    addToCart,
     getNumbers,
     increaseToCart,
     decreaseFromCart,
-    removeFromCart
+    removeFromCart,
+    addToWishlist
 };
