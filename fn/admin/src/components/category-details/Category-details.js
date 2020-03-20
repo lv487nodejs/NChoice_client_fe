@@ -1,6 +1,15 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { TextField, FormControlLabel, Checkbox, FormLabel, FormGroup } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
+
+import {
+    TextField,
+    FormControlLabel,
+    Checkbox,
+    FormLabel,
+    FormGroup,
+    Paper,
+} from '@material-ui/core';
 
 import {
     categoryLoadingStatus,
@@ -9,6 +18,7 @@ import {
     categoryUpdateCatalogs,
     categorySnackbarOpenFalse,
 } from '../../actions';
+import { useStyles } from './Category-details-style';
 import wrapWithAdminService from '../wrappers';
 import LoadingBar from '../loading-bar';
 import SnackbarItem from '../snackbar-item';
@@ -27,9 +37,12 @@ const CategoryDetails = props => {
         category,
         loading,
         adminService,
+        history,
     } = props;
 
     const { categoriesService, catalogsService } = adminService;
+
+    const classes = useStyles();
 
     useEffect(() => {
         categoryLoadingStatus();
@@ -83,15 +96,25 @@ const CategoryDetails = props => {
             .putCategory(categoryToSend)
             .then(res => {
                 setCategory(res);
-                categorySnackbarOpenTrue();
+
+                catalogsToUpdate.forEach(async catalog => {
+                    const index = catalog.categories.findIndex(
+                        categoryItem => categoryItem._id === res._id
+                    );
+
+                    if (index > -1 && !catalog.checked) {
+                        catalog.categories.splice(index, 1);
+                    }
+                    if (index === -1 && catalog.checked) {
+                        catalog.categories.push({ _id: res._id });
+                    }
+                    catalogsService
+                        .putCatalog(catalog._id, catalog)
+                        .then(res => categorySnackbarOpenTrue());
+                });
+                history.push(`/categories`);
             })
             .catch(err => categorySnackbarOpenFalse());
-
-        catalogsToUpdate.forEach(catalog => {
-            if (catalog.checked) {
-                catalogsService.putCatalog(catalog._id, catalog).then(res => console.log(res));
-            }
-        });
     };
 
     const catalogsToUpdateHandler = catalogCheckbox => e => {
@@ -118,6 +141,7 @@ const CategoryDetails = props => {
                     <Checkbox
                         key={catalogName}
                         id={catalogName}
+                        className={classes.checkbox}
                         color="primary"
                         checked={catalog.checked}
                         value={catalogName}
@@ -136,14 +160,20 @@ const CategoryDetails = props => {
     return (
         <div>
             <form onSubmit={submitHandler}>
-                <TextField
-                    id="categoryName"
-                    label="Category Name"
-                    defaultValue={category.category}
-                />
-                <FormLabel component="legend">Choose catalogs for this category</FormLabel>
-                <FormGroup row>{checkboxes}</FormGroup>
-                <SaveButton type="submit" title="Save" />
+                <Paper className={classes.categoryEdit}>
+                    <TextField
+                        id="categoryName"
+                        className={classes.textfield}
+                        variant="outlined"
+                        label="Category Name"
+                        defaultValue={category.category}
+                    />
+                    <FormLabel className={classes.formLable} component="legend">
+                        Choose catalogs for this category
+                    </FormLabel>
+                    <FormGroup row>{checkboxes}</FormGroup>
+                    <SaveButton type="submit" title="Save" />
+                </Paper>
             </form>
             <SnackbarItem
                 open={open}
@@ -170,5 +200,5 @@ const mapDispatchToProps = {
 };
 
 export default wrapWithAdminService()(
-    connect(mapStateToProps, mapDispatchToProps)(CategoryDetails)
+    connect(mapStateToProps, mapDispatchToProps)(withRouter(CategoryDetails))
 );

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import {
     Paper,
@@ -7,7 +8,6 @@ import {
     FormGroup,
     FormControlLabel,
     FormLabel,
-    FormControl,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { useStyles } from './Category-add-page-style';
@@ -38,6 +38,7 @@ const CategoryAddPage = props => {
         categoryLoadingStatus,
         open,
         catalogsToUpdate,
+        history,
     } = props;
 
     const [categoryName, setCategoryName] = useState('');
@@ -66,13 +67,18 @@ const CategoryAddPage = props => {
         categoriesService.postCategory(newCategory).then(res => {
             catalogsToUpdate.forEach(checkbox => {
                 if (checkbox.checked) {
-                    checkbox.catalog.categories.push(res._id);
+                    if (checkbox.catalog.categories) {
+                        checkbox.catalog.categories.push(res._id);
+                    }
+
                     catalogsService.putCatalog(checkbox.catalog._id, checkbox.catalog).then(res => {
                         categorySnackbarOpenTrue();
                         setCategoryName('');
                     });
                 }
             });
+
+            history.push(`/categories`);
         });
     };
 
@@ -101,6 +107,7 @@ const CategoryAddPage = props => {
         const catalogName = catalog.catalog;
         return (
             <FormControlLabel
+                className={classes.checkbox}
                 key={catalogName}
                 control={
                     <Checkbox
@@ -118,22 +125,22 @@ const CategoryAddPage = props => {
 
     return (
         <form onSubmit={categorySaveHandler}>
-            <FormControl>
-                <Paper className={classes.content}>
-                    <TextField
-                        id="categoryName"
-                        className={classes.textfield}
-                        variant="outlined"
-                        label="Category name"
-                        value={categoryName}
-                        onChange={categoryNameHandler}
-                        required
-                    />
-                    <FormLabel component="legend">Choose catalogs for this category</FormLabel>
-                    <FormGroup row>{checkboxes}</FormGroup>
-                    <SaveButton type="submit" title="Save" />
-                </Paper>
-            </FormControl>
+            <Paper className={classes.categoryAdd}>
+                <TextField
+                    id="categoryName"
+                    className={classes.textfield}
+                    variant="outlined"
+                    label="Category name"
+                    value={categoryName}
+                    onChange={categoryNameHandler}
+                    required
+                />
+                <FormLabel className={classes.formLable} component="legend">
+                    Choose catalogs for this category
+                </FormLabel>
+                <FormGroup row>{checkboxes}</FormGroup>
+                <SaveButton className={classes.button} type="submit" title="Save" />
+            </Paper>
             <SnackbarItem
                 open={open}
                 handleClose={closeSnackbarHandler}
@@ -163,5 +170,5 @@ const mapDispatchToProps = {
 };
 
 export default wrapWithAdminService()(
-    connect(mapStateToProps, mapDispatchToProps)(CategoryAddPage)
+    connect(mapStateToProps, mapDispatchToProps)(withRouter(CategoryAddPage))
 );

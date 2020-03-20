@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
-    categoryAdd: {
+    categoryEdit: {
         display: 'flex',
         flexDirection: 'column',
         margin: theme.spacing(2),

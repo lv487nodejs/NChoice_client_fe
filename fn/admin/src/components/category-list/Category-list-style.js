@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-    table: {
-        textTransform: 'capitalize',
-    },
     tableNav: {
         display: 'flex',
         justifyContent: 'space-between',

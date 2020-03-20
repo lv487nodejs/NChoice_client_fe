@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FormControl, Paper, TextField } from '@material-ui/core';
+import { Paper, TextField } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { useStyles } from './Brand-details-style';
 import { SaveButton } from '../buttons';
@@ -50,20 +50,18 @@ const BrandDetails = props => {
 
     return (
         <form onSubmit={brandSaveHandler}>
-            <FormControl>
-                <Paper className={classes.content}>
-                    <TextField
-                        id="brandName"
-                        className={classes.textfield}
-                        variant="outlined"
-                        label="Brand name"
-                        value={brandName}
-                        onChange={chengeHandler}
-                        required
-                    />
-                    <SaveButton type="submit" title="Save" />
-                </Paper>
-            </FormControl>
+            <Paper className={classes.brandEdit}>
+                <TextField
+                    id="brandName"
+                    className={classes.textfield}
+                    variant="outlined"
+                    label="Brand name"
+                    value={brandName}
+                    onChange={chengeHandler}
+                    required
+                />
+                <SaveButton type="submit" title="Save" />
+            </Paper>
             <SnackbarItem
                 open={open}
                 handleClose={closeSnackbarHandler}

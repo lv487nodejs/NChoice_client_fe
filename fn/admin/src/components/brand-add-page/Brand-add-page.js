@@ -39,7 +39,7 @@ const BrandAddPage = props => {
     return (
         <form onSubmit={brandSaveHandler}>
             <FormControl>
-                <Paper className={classes.content}>
+                <Paper className={classes.brandAdd}>
                     <TextField
                         id="brandName"
                         className={classes.textfield}
