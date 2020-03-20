@@ -14,6 +14,7 @@ const ProductListPosts = ({ products }) => (
           price={price}
           msrp={msrp}
           id={id}
+          key={id}
         />
       </Link>
     ))}

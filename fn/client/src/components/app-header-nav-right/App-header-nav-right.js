@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom';
 import './App-header-nav-right.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faUser, faShoppingBasket} from '@fortawesome/free-solid-svg-icons';
 import Currency from '../currency';
+import { connect } from 'react-redux';
 
-const AppHeaderNavRight = () => (
+const AppHeaderNavRight = ({cartNumbers}) => {
+
+  return (
     <nav className="nav-bar">
         <ul>
             <li key="4">
@@ -22,9 +25,17 @@ const AppHeaderNavRight = () => (
                 <Link to="/login">
                     <FontAwesomeIcon icon={faUser} />
                 </Link>
+    <li key="7">
+          <Link to="/cart">
+            <FontAwesomeIcon icon={faShoppingBasket}/>
+            <span> <sup>{cartNumbers}</sup> </span>
+          </Link>
             </li>
         </ul>
     </nav>
-);
+  )
+};
 
-export default AppHeaderNavRight;
+const mapStateToProps =  ({ cartReducer: {cartNumbers}}) => ({cartNumbers});
+
+export default connect(mapStateToProps)(AppHeaderNavRight);

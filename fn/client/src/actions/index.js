@@ -1,4 +1,5 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
+
 import {
   productsLoaded,
   productsRequested,
@@ -10,6 +11,9 @@ import {
   productLoaded,
   sizesLoaded,
 } from './Products-actions';
+
+import {addToCart, getNumbers, increaseToCart, decreaseFromCart, removeFromCart} from './Cart-action'
+import {addToWishlist} from './Wishlist-actions'
 
 import {
   catalogsLoaded,
@@ -62,4 +66,10 @@ export {
   postUserSuccess,
   postUserStarted,
   setSearchValue,
+  addToCart,
+  getNumbers,
+  increaseToCart,
+  decreaseFromCart,
+  removeFromCart,
+  addToWishlist,
 };
