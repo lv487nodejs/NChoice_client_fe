@@ -37,6 +37,7 @@ import {
   postUserSuccess,
   postUserStarted,
   postUserError,
+  logoutUser
 } from './Auth-actions';
 
 export {
@@ -71,4 +72,5 @@ export {
   decreaseFromCart,
   removeFromCart,
   addToWishlist,
+  logoutUser
 };
