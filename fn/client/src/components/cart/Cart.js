@@ -6,12 +6,9 @@ import Row from "react-bootstrap/Row";
 import Container from "@material-ui/core/Container/Container";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
-
 import {increaseToCart, decreaseFromCart, removeFromCart } from '../../actions'
 
-
 const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart}) => {
-
   const [product, setProduct] = useState(products)
 
   const removeFromCart1 = (id) => {
@@ -30,8 +27,8 @@ const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart}) => {
 
   const decreaseFromCart1 = (id) => {
     const newProducts = products.map(el=>
-      el.id === id && el.quantity > 1 ? {...el, quantity: el.quantity--} : 
-      el.id === id && el.quantity === 1 ? removeFromCart1(el.id) : 
+      el.id === id && el.quantity > 1 ? {...el, quantity: el.quantity--} :
+      el.id === id && el.quantity === 1 ? removeFromCart1(el.id) :
       el
     );
     setProduct(newProducts)
@@ -72,10 +69,11 @@ const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart}) => {
                 <Figure.Image src={`/images/products/${item.images[0]}`} className='cart-img'/>
                 <Figure.Caption className='cart-title'>
                   {item.title}
-                  <p> Price: 
+                  <p> Price:
                   <span className="price">{item.price * item.quantity} {item.currencyIcon}</span>
                   <span className="msrp-price">{item.msrp * item.quantity} {item.currencyIcon}</span>
                   </p>
+                  <p> Size: <span>{item.size}</span> </p>
                   <div className="quantity-control">
                   <FontAwesomeIcon
                     icon = {faMinus}
