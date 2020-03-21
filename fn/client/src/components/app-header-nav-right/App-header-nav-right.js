@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import './App-header-nav-right.css';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faUser, faShoppingBasket, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import Currency from '../currency';

@@ -7,15 +7,6 @@ const addToCart = (productName) => {
   }
 };
 
-const getNumbers = () => {
-  return (dispatch) =>{
-    dispatch({
-      type: 'GET_NUMBERS_CART'
-    })
-  }
-};
-
-
 const increaseToCart = (id) => {
   return(dispatch) => {
     dispatch({
@@ -46,9 +37,8 @@ const removeFromCart = (quantity) => {
 
 export  {
   addToCart,
-  getNumbers, 
-  increaseToCart, 
-  decreaseFromCart, 
+  increaseToCart,
+  decreaseFromCart,
   removeFromCart,
 }
 

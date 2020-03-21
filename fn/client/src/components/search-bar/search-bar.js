@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { filterByName, productsLoaded, setSearchValue } from '../../actions';
+import { filterByName, productsLoaded, setSearchValue, } from '../../actions';
 
 import withStoreService from '../hoc';
 import './search-bar.css';
@@ -8,14 +8,16 @@ import './search-bar.css';
 import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const SearchBar = ({ storeService, productsLoaded, filterByName, setSearchValue, searchTerm,searchValue }) => {
+const SearchBar = ({ catalog, storeService, productsLoaded, filterByName, setSearchValue, searchTerm, searchValue, setSearchTerm }) => {
 
     useEffect(() => {
         storeService.getProductsByFilter({ searchTerm }).then(res => {
             productsLoaded(res.products);
             setSearchValue('');
         });
-    }, [searchTerm, storeService, productsLoaded, filterByName ]);
+    }, [storeService,productsLoaded,searchTerm, setSearchValue]);
+
+    useEffect(() => () => filterByName(''), [filterByName]);
 
     const handleChange = event => {
         const value = event.target.value;
@@ -27,6 +29,7 @@ const SearchBar = ({ storeService, productsLoaded, filterByName, setSearchValue,
         if (event.key === 'Enter') {
             event.preventDefault();
             filterByName(searchValue);
+            setSearchValue('');
         }
     };
 
@@ -39,14 +42,16 @@ const SearchBar = ({ storeService, productsLoaded, filterByName, setSearchValue,
                 onChange={handleChange}
                 onKeyDown={handleCatchName}
                 value={searchValue}
+                onKeyUp={handleChange}
             />
         </Form>
     );
 };
 
-const mapStateToProps = ({ filter: { searchValue, searchTerm }}) => ({
+const mapStateToProps = ({ filter: { searchValue, searchTerm }, catalogsList: { catalog } }) => ({
     searchTerm,
     searchValue,
+    catalog,
 });
 
 const mapDispatchToProps = { filterByName, productsLoaded, setSearchValue };
