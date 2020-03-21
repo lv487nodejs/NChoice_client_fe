@@ -34,11 +34,13 @@ const AppHeaderNavRight = ({ cartNumbers, logoutUser, userStatus }) => {
           </Link>
         </li>
         {
-          userStatus === 'received' ? <li key="8">
-          <Link to={"/login"}>
-            <FontAwesomeIcon icon={faSignOutAlt} onClick={logoutUser} />
-          </Link>
-        </li> : null
+          userStatus === 'received' ? (
+            <li key="8" onClick={logoutUser}>
+              <Link to={"/login"}>
+                <FontAwesomeIcon icon={faSignOutAlt}  />
+              </Link>
+            </li>
+          ) : null
         }
       </ul>
     </nav>

@@ -42,7 +42,8 @@ const Register = (props) => {
                 postUserSuccess(json);
                 addDataToLocalStorage(json);
             }).catch(e => {
-                postUserError();
+                console.log(e);
+                postUserError(e);
             });
     }
 

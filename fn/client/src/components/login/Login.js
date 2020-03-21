@@ -8,8 +8,7 @@ import axios from "axios";
 import { postUserError, postUserStarted, postUserSuccess } from "../../actions";
 
 const addDataToLocalStorage = (token) => {
-    localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
-    localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
+    localStorage.setItem('Token', JSON.stringify(token));
 }
 
 const USER_DATA = {
@@ -39,6 +38,7 @@ const Login = (props) => {
             addDataToLocalStorage(json);
         }).catch(e => {
             postUserError();
+
         });
     }
     const handleSubmit = (event) => {
