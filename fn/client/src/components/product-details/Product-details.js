@@ -29,7 +29,10 @@ const ProductDetails = ({
   addToCart,
   addToWishlist
 }) => {
+
   const [getSizes, setSizes] = useState([]);
+  const [checkSize, setCheckSize] = useState('');
+
   useEffect(() => {
     productsRequested();
     storeService.getProductById(id).then((res) => productLoaded(res));
@@ -46,13 +49,26 @@ const ProductDetails = ({
 
   const newProducts = products.slice(-3);
 
+  const handleCheck = item => () => {
+      setCheckSize(item)
+  };
+
+  const handleAddToCart = () => {
+    if (checkSize) {
+      addToCart(productToSend);
+    }
+  };
+
+  const productToSend = {...product, size:checkSize};
+
   const sizeItem = getSizes
     .reduce((accum, { size }) => [...accum, ...size], [])
     .map((item) => (
-      <div key={item} className="sizeItem">
-        <span>{item}</span>
+      <div key={item} className="sizeItem" onClick={handleCheck(item) } >
+        <span className={item === checkSize ? 'check' : '' }> {item} </span>
       </div>
     ));
+
   return (
     <Card className="wrapper">
       <Card.Body className="cardBody">
@@ -101,11 +117,9 @@ const ProductDetails = ({
           <Card.Body className="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
                              onClick = {() => addToWishlist(product)} />
-            <Button variant="dark" className="button"
-                             onClick = {() => addToCart(product)}> Add to card </Button>
+            <Button variant="dark" className = { checkSize ? 'button' : 'button disabled' }
+                             onClick = { handleAddToCart }> Add to card </Button>
             <Button variant="dark" className="button"> By now </Button>
-            {/* <Button>Add to card</Button>
-            <Button>By now</Button> */}
           </Card.Body>
         </Col>
       </Card.Body>
