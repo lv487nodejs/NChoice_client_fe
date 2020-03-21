@@ -8,8 +8,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_PRODUCT_TO_CART':
       let newProducts = [...state.products];
-
-      let foundProduct = newProducts.find(value => action.payload.id === value.id);
+      let foundProduct = newProducts.find(item => action.payload.id === item.id);
       if (foundProduct) {
         foundProduct.quantity++;
       } else {
@@ -20,10 +19,6 @@ export default (state = initialState, action) => {
         ...state,
         cartNumbers: state.cartNumbers + 1,
         products: newProducts,
-      };
-    case 'GET_NUMBERS_CART':
-      return {
-        ...state
       };
 
       case 'CURRENCY_CHANGE_CART':
@@ -37,7 +32,7 @@ export default (state = initialState, action) => {
           ...state,
           cartNumbers: state.cartNumbers + 1,
         }
-    
+
     case 'DECREASE_TO_CART':
         return{
           ...state,
@@ -49,7 +44,7 @@ export default (state = initialState, action) => {
         ...state,
         cartNumbers:  state.cartNumbers - action.payload,
       }
-    
+
     default:
       return state
   }
