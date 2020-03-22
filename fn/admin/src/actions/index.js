@@ -1,6 +1,12 @@
 export { setCatalog, setCatalogs, catalogLoadingStatus } from './Catalogs-actions';
 
-export { setBrand, setBrands, brandLoadingStatus } from './Brand-actions';
+export {
+    setBrand,
+    setBrands,
+    brandLoadingStatus,
+    brandSnackbarOpenTrue,
+    brandSnackbarOpenFalse,
+} from './Brand-actions';
 
 export {
     setCategory,
@@ -27,15 +33,7 @@ export {
     setProductGroupedPropetries,
 } from './Product-edit-actions';
 
-export {
-    usersLoaded,
-    usersRequested,
-    userEdit,
-    userLoaded,
-    userRequested,
-    userSave,
-    userSetRole,
-} from './Users-actions';
+export { setUsers, setUser, userLoadingStatus } from './Users-actions';
 
 export { setPagesCount, setCurrentPage, setRowsPerPage } from './Paginator-action';
 

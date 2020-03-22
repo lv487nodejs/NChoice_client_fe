@@ -15,6 +15,11 @@ class UsersService extends AdminService {
         const res = await this.putData(`users/${user.id}`, user);
         return res;
     };
+
+    putUserRole = async user => {
+        const res = await this.putData(`users/role/${user._id}`, { user });
+        return res;
+    };
 }
 
 const usersService = new UsersService();

@@ -14,6 +14,8 @@ import {
 
 import ProductAddPage from '../product-add-page';
 import CategoryAddPage from '../category-add-page';
+import BrandAddPage from '../brand-add-page';
+import BrandDetails from '../brand-details';
 
 import DialogWindow from '../dialog-window';
 import SnackbarItem from '../snackbar-item';
@@ -30,7 +32,9 @@ const PATH_TO_USER_DETAILS = '/user/:id';
 const PATH_TO_PRODUCT_DETAILS = '/product/:id';
 const PATH_TO_CATEGORY_DETAILS = '/category/:id';
 const PATH_TO_ADD_PRODUCT = '/productadd';
-const PATH_TO_ADD_CATEGORY = '/addcategory';
+const PATH_TO_ADD_CATEGORY = '/categoryadd';
+const PATH_TO_BRAND_DETAILS = '/brand/:id';
+const PATH_TO_ADD_BRAND = '/brandadd';
 
 const AppRouter = () => (
     <Router>
@@ -47,6 +51,8 @@ const AppRouter = () => (
             <Route path={PATH_TO_CATEGORY_DETAILS} exact component={CategoryDetailsPageContainer} />
             <Route path={PATH_TO_ADD_CATEGORY} exact component={CategoryAddPage} />
             <Route path={PATH_TO_ADD_PRODUCT} exact component={ProductAddPage} />
+            <Route path={PATH_TO_ADD_BRAND} exact component={BrandAddPage} />
+            <Route path={PATH_TO_BRAND_DETAILS} exact component={BrandDetails} />
         </Switch>
         <DialogWindow />
         <SnackbarItem />

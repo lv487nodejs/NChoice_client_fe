@@ -2,62 +2,35 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, InputLabel, Select } from '@material-ui/core';
+import { InputLabel, Select, Paper, MenuItem, FormControl } from '@material-ui/core';
 import wrapWithAdminService from '../wrappers';
-import { userLoaded, userEdit, userRequested, userSave, userSetRole } from '../../actions';
+import { setUser, userLoadingStatus } from '../../actions';
 import LoadingBar from '../loading-bar';
+import { SaveButton } from '../buttons';
+import { useStyles } from './User-details-style';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        '& .MuiTextField-root': {
-            margin: theme.spacing(1),
-            width: 200,
-        },
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
-}));
-
-const UserDetails = ({
-    adminService,
-    user,
-    userLoaded,
-    userEdit,
-    disableEdit,
-    userId,
-    loading,
-    userRequested,
-    userSave,
-    userSetRole,
-}) => {
+const UserDetails = ({ adminService, user, userId, loading, setUser, userLoadingStatus }) => {
     const classes = useStyles();
 
-    const { userService } = adminService;
+    const { usersService } = adminService;
 
     useEffect(() => {
-        userRequested();
-        userService.getUserById(userId).then(res => userLoaded(res));
-    }, [userService, userLoaded, userId, userRequested, userSave, userSetRole]);
+        userLoadingStatus();
+        usersService.getUserById(userId).then(res => {
+            setUser(res);
+        });
+    }, [usersService, userId, userLoadingStatus, setUser]);
 
-    const clickEditHandler = () => userEdit(disableEdit);
+    const changeHandler = e => {
+        const newUser = { ...user };
+        newUser.role = e.target.value;
+        setUser(newUser);
+    };
 
-    const changeHandler = e => userSetRole(e.target.value);
-
-    const submitHandler = async e => {
+    const submitHandler = e => {
         e.preventDefault();
-        userEdit(disableEdit);
-        const userToSend = {
-            id: user._id,
-            firstName: e.target.firstName.value,
-            email: e.target.email.value,
-            lastName: e.target.lastName.value,
-            role: e.target.role.value,
-        };
-        // const updatedUser = await adminService.putUser(userToSend);
-        console.log(userToSend);
-        // return userSave(updatedUser);
+        const newUser = { ...user };
+        usersService.putUserRole(newUser);
     };
 
     if (loading) {
@@ -66,72 +39,61 @@ const UserDetails = ({
 
     const inputFields = (
         <div>
-            <TextField id="email" label="Email" defaultValue={user.email} disabled={disableEdit} />
+            <TextField
+                id="email"
+                label="Email"
+                variant="outlined"
+                defaultValue={user.email}
+                disabled
+            />
             <TextField
                 id="lastName"
                 label="Last Name"
+                variant="outlined"
                 defaultValue={user.lastName}
-                disabled={disableEdit}
+                disabled
             />
             <TextField
                 id="firstName"
                 label="First Name"
-                disabled={disableEdit}
+                variant="outlined"
+                disabled
                 defaultValue={user.firstName}
             />
-            <InputLabel id="label">Role</InputLabel>
-            <Select
-                id="role"
-                labelId="label"
-                value={user.role}
-                disabled={disableEdit}
-                onChange={changeHandler}
-                inputProps={{
-                    name: 'role',
-                    id: 'role',
-                }}
-            >
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-            </Select>
-        </div>
-    );
-
-    const buttons = (
-        <div>
-            <Button type="submit" color="secondary" variant="contained" disabled={disableEdit}>
-                Save
-            </Button>
-            <Button
-                color="primary"
-                onClick={clickEditHandler}
-                variant="contained"
-                disabled={!disableEdit}
-            >
-                Edit
-            </Button>
+            <FormControl id="roleControl" variant="outlined">
+                <InputLabel id="label">Role</InputLabel>
+                <Select
+                    className={classes.selectElement}
+                    labelId="label"
+                    id="role"
+                    value={user.role}
+                    onChange={changeHandler}
+                    label="Role"
+                >
+                    <MenuItem value="user">User</MenuItem>
+                    <MenuItem value="admin">Admin</MenuItem>
+                </Select>
+            </FormControl>
         </div>
     );
 
     return (
         <form onSubmit={submitHandler} className={classes.root}>
-            {inputFields}
-            {buttons}
+            <Paper>
+                {inputFields}
+                <SaveButton type="submit" title="Save" />
+            </Paper>
         </form>
     );
 };
 
-const mapStateToProps = ({ usersState: { user, disableEdit, loading } }) => ({
+const mapStateToProps = ({ usersState: { user, loading } }) => ({
     user,
-    disableEdit,
     loading,
 });
 const mapDispatchToProps = {
-    userLoaded,
-    userEdit,
-    userRequested,
-    userSave,
-    userSetRole,
+    setUser,
+    userLoadingStatus,
 };
 
 export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(UserDetails));

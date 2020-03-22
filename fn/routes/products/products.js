@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
     let { currentpage, postsperpage } = query;
     currentpage = currentpage || 1;
     postsperpage = postsperpage || 15;
-    const skip = (currentpage-1) * postsperpage;
+    const skip = (currentpage - 1) * postsperpage;
     try {
         const filter = await getFilters(query);
         const projection = await getProjection(query);
@@ -31,16 +31,16 @@ router.get('/', async (req, res) => {
             .populate('brand');
 
         if (products.length === 0 && isNotBlank(query.searchTerm)) {
-          await updateSearchFilter(query, filter);
+            await updateSearchFilter(query, filter);
 
-          products = await Products.find(filter, projection)
-            .sort(sort)
-            .skip(+skip)
-            .limit(+postsperpage)
-            .populate('catalog')
-            .populate('category')
-            .populate('color')
-            .populate('brand');
+            products = await Products.find(filter, projection)
+                .sort(sort)
+                .skip(+skip)
+                .limit(+postsperpage)
+                .populate('catalog')
+                .populate('category')
+                .populate('color')
+                .populate('brand');
         }
 
         const productsToSend = prepareProductsToSend(products);
@@ -120,35 +120,12 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { catalogId, brandId, categoryId, colorId, images, title, description, mrsp, price, propetries } = req.body;
-
-    const productToUpdate = await Products.findById(id);
-    if (!productToUpdate) {
-        return res.status(404).send('Product not found!');
-    }
-
-    if (catalogId) productToUpdate.catalog = catalogId;
-
-    if (brandId) productToUpdate.brand = brandId;
-
-    if (categoryId) productToUpdate.category = categoryId;
-
-    if (colorId) productToUpdate.color = colorId;
-
-    if (title) productToUpdate.title = title;
-
-    if (description) productToUpdate.description = description;
-
-    if (mrsp) productToUpdate.mrsp = mrsp;
-
-    if (price) productToUpdate.price = price;
-
-    if (Array.isArray(images) && images.length) {
-        productToUpdate.images.push(...images);
-    }
-
-    if (Array.isArray(propetries) && images.propetries) {
-        productToUpdate.propetries.push(...propetries);
+    const { product } = req.body;
+    try {
+        const updatedProduct = await Products.findByIdAndUpdate(id, product);
+        res.status(200).send(updatedProduct);
+    } catch (err) {
+        res.status(400).send(err);
     }
 });
 
@@ -166,14 +143,14 @@ router.delete('/:id', async (req, res) => {
 });
 
 const updateSearchFilter = async (query, filter) => {
-  const { searchTerm } = query;
+    const { searchTerm } = query;
 
-  delete filter['$text'];
-  let regexp = new RegExp('\.*'+ searchTerm.trim() + '.*\i');
-  filter.$or =  [
-     { title: regexp },
-     { description: regexp }
-   ];
+    delete filter['$text'];
+    let regexp = new RegExp('\.*' + searchTerm.trim() + '.*\i');
+    filter.$or = [
+        { title: regexp },
+        { description: regexp }
+    ];
 };
 
 
@@ -228,7 +205,7 @@ const getSort = async query => {
     const sort = {};
 
     if (isNotBlank(sortbyprice)) {
-      sort.price = sortbyprice;
+        sort.price = sortbyprice;
     } else if (isNotBlank(searchTerm)) {
         // sort by relevance
         sort.score = { $meta: 'textScore' };

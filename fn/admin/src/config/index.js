@@ -26,7 +26,7 @@ export const PRODUCTS_TABLE_HEAD = [
     'Mrsp',
     'Actions',
 ];
-export const USERS_TABLE_HEAD = ['Avatar', 'First Name', 'Last Name', 'Email', 'Role', 'Actions'];
+export const USERS_TABLE_HEAD = ['Avatar', 'Email', 'First Name', 'Last Name', 'Role', 'Actions'];
 export const BRANDS_TABLE_HEAD = ['Avatar', 'Brand', 'Actions'];
 export const CATEGORIES_TABLE_HEAD = ['Avatar', 'Category', 'Actions'];
 

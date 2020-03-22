@@ -4,18 +4,18 @@ import { withRouter } from 'react-router-dom';
 import wrapWithAdminService from '../wrappers';
 import LoadingBar from '../loading-bar';
 
-import { usersLoaded, usersRequested } from '../../actions';
+import { setUsers, userLoadingStatus } from '../../actions';
 import { USERS_TABLE_HEAD } from '../../config';
 
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
 
-const UserList = ({ adminService, users, usersLoaded, usersRequested, history, loading }) => {
+const UserList = ({ adminService, users, setUsers, userLoadingStatus, history, loading }) => {
     const { usersService } = adminService;
     useEffect(() => {
-        usersRequested();
-        usersService.getAllUsers().then(res => usersLoaded(res));
-    }, [usersService, usersRequested, usersLoaded]);
+        userLoadingStatus();
+        usersService.getAllUsers().then(res => setUsers(res));
+    }, [usersService, setUsers, userLoadingStatus]);
 
     const userItems = users.map((user, index) => (
         <TableContainerRow
@@ -45,7 +45,7 @@ const mapStateToProps = ({ usersState: { users, loading } }) => ({
     loading,
 });
 
-const mapDispatchToProps = { usersLoaded, usersRequested };
+const mapDispatchToProps = { setUsers, userLoadingStatus };
 
 export default wrapWithAdminService()(
     connect(mapStateToProps, mapDispatchToProps)(withRouter(UserList))
