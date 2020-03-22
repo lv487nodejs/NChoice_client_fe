@@ -38,7 +38,8 @@ router.post('/', orderValidationRules(), validate, async (req, res) => {
 router.get('/', async (req, res) => {
     let orders;
     try {
-            orders = await Order.find();
+        orders = await Order.find()
+            .populate('userId');
         if (!orders || orders.length === 0) {
             throw { message: 'orders not found' };
         }
@@ -52,7 +53,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const order = await Order.findById(id);
+        const order = await Order.findById(id)
+            .populate('orderItems')
+            .populate('userId');
+
         if (!order) {
             throw { message: 'Can not find order with such an ID' };
         }
@@ -70,9 +74,9 @@ router.put('/:id', orderValidationRules(), validate, async (req, res) => {
         if (!order) {
             throw { message: 'Can not find order with such an ID' };
         }
-        order = await Order.findByIdAndUpdate(id,req.body,{
+        order = await Order.findByIdAndUpdate(id, req.body, {
             new: true,
-            runValidators:true
+            runValidators: true
         })
         res.status(200).send("Order was updated successfully");
     } catch (err) {

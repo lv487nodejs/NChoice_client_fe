@@ -26,7 +26,8 @@ router.post('/', cartValidationRules(), validate, async (req, res) => {
 router.get('/', async (req, res) => {
     let carts;
     try {
-        carts = await Cart.find();
+        carts = await Cart.find()
+        .populate('userId');
         if (!carts || carts.length === 0) {
             throw { message: 'carts not found' };
         }
