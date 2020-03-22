@@ -4,45 +4,52 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
     StatsPageContainer,
     ProductsPageContainer,
-    // ProductPageContainer,
     UsersPageContainer,
     UserDetailsPageContainer,
     BrandsPageContainer,
     CategoriesPageContainer,
     CategoryDetailsPageContainer,
+    ProductDetailsPage,
 } from '../../container';
 
-import NavBar from '../nav-bar';
-import NavMenu from '../nav-menu';
-import ProductPage from '../product-page/Product-page';
 import ProductAddPage from '../product-add-page';
 import CategoryAddPage from '../category-add-page';
 
-const pathToProducts = '/products';
-const pathToUsers = '/users';
-const pathToBrands = '/brands';
-const pathToCategories = '/categories';
-const pathToUserDetails = '/user/:id';
-const pathToProductDetails = '/product/:id';
-const pathToCategoriesDetails = '/category/:id';
-const pathToAddProductPage = '/productadd';
+import DialogWindow from '../dialog-window';
+import SnackbarItem from '../snackbar-item';
+
+import NavBar from '../nav-bar';
+import NavMenu from '../nav-menu';
+
+const PATH_TO_STATS = '/';
+const PATH_TO_PRODUCTS = '/products';
+const PATH_TO_USERS = '/users';
+const PATH_TO_BRANDS = '/brands';
+const PATH_TO_CATEGORIES = '/categories';
+const PATH_TO_USER_DETAILS = '/user/:id';
+const PATH_TO_PRODUCT_DETAILS = '/product/:id';
+const PATH_TO_CATEGORY_DETAILS = '/category/:id';
+const PATH_TO_ADD_PRODUCT = '/productadd';
+const PATH_TO_ADD_CATEGORY = '/addcategory';
 
 const AppRouter = () => (
     <Router>
         <NavBar />
         <NavMenu />
         <Switch>
-            <Route path="/" exact component={StatsPageContainer} />
-            <Route path={pathToProducts} exact component={ProductsPageContainer} />
-            <Route path={pathToUsers} exact component={UsersPageContainer} />
-            <Route path={pathToUserDetails} exact component={UserDetailsPageContainer} />
-            <Route path={pathToProductDetails} exact component={ProductPage} />
-            <Route path={pathToBrands} exact component={BrandsPageContainer} />
-            <Route path={pathToCategories} exact component={CategoriesPageContainer} />
-            <Route path={pathToCategoriesDetails} exact component={CategoryDetailsPageContainer} />
-            <Route path="/addcategory" exact component={CategoryAddPage} />
-            <Route path={pathToAddProductPage} exact component={ProductAddPage} />
+            <Route path={PATH_TO_STATS} exact component={StatsPageContainer} />
+            <Route path={PATH_TO_PRODUCTS} exact component={ProductsPageContainer} />
+            <Route path={PATH_TO_USERS} exact component={UsersPageContainer} />
+            <Route path={PATH_TO_USER_DETAILS} exact component={UserDetailsPageContainer} />
+            <Route path={PATH_TO_PRODUCT_DETAILS} exact component={ProductDetailsPage} />
+            <Route path={PATH_TO_BRANDS} exact component={BrandsPageContainer} />
+            <Route path={PATH_TO_CATEGORIES} exact component={CategoriesPageContainer} />
+            <Route path={PATH_TO_CATEGORY_DETAILS} exact component={CategoryDetailsPageContainer} />
+            <Route path={PATH_TO_ADD_CATEGORY} exact component={CategoryAddPage} />
+            <Route path={PATH_TO_ADD_PRODUCT} exact component={ProductAddPage} />
         </Switch>
+        <DialogWindow />
+        <SnackbarItem />
     </Router>
 );
 
