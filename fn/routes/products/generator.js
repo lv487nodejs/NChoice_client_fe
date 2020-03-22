@@ -81,7 +81,7 @@ router.post('/', async (req, res) => {
                         1
                     ),
                 };
-                let brand = await Brands.findOne(requestedBrand);
+                let brand = await Brands.findOne({ brand: requestedBrand.brand });
                 if (!brand) {
                     brand = new Brands({
                         brand: requestedBrand.brand,
@@ -130,7 +130,7 @@ router.post('/', async (req, res) => {
                     title: gentitle,
                     description: chance.pick([lorem, sed, vero], 1),
                     color,
-                    images: [`${product.category.category}_${product.catalog.catalog}.jpg`],
+                    images: [`${category.category}_${catalog.catalog}.jpg`],
                     mrsp: mrspR,
                     price: priceR,
                     rate,

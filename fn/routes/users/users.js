@@ -59,6 +59,17 @@ router.post('/register', userValidationRules(), validate, async (req, res) => {
     }
 });
 
+router.put('/role/:id', async (req, res) => {
+    const { id } = req.params;
+    const { user } = req.body;
+    try {
+        const userToUpdate = await Users.findByIdAndUpdate(id, user);
+        res.status(200).send(userToUpdate);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
 const generateAccessToken = userName => jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
 
 module.exports = router;
