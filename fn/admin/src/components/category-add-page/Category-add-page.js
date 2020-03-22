@@ -19,10 +19,10 @@ import {
     setCategory,
     categoryUpdateCatalogs,
     categoryLoadingStatus,
-    categorySnackbarOpenTrue,
-    categorySnackbarOpenFalse,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
 } from '../../actions';
-import SnackbarItem from '../snackbar-item';
 
 const CategoryAddPage = props => {
     const classes = useStyles();
@@ -33,12 +33,12 @@ const CategoryAddPage = props => {
         setCatalogs,
         catalogs,
         categoryUpdateCatalogs,
-        categorySnackbarOpenTrue,
-        categorySnackbarOpenFalse,
         categoryLoadingStatus,
-        open,
         catalogsToUpdate,
         history,
+        setSnackBarStatus,
+        setSnackBarSeverity,
+        setSnackBarMessage,
     } = props;
 
     const [categoryName, setCategoryName] = useState('');
@@ -50,15 +50,7 @@ const CategoryAddPage = props => {
         return () => {
             categoryUpdateCatalogs([]);
         };
-    }, [
-        categoryLoadingStatus,
-        catalogsService,
-        setCatalogs,
-        setCategory,
-        categorySnackbarOpenTrue,
-        categorySnackbarOpenFalse,
-        categoryUpdateCatalogs,
-    ]);
+    }, [categoryLoadingStatus, catalogsService, setCatalogs, setCategory, categoryUpdateCatalogs]);
 
     const categorySaveHandler = e => {
         e.preventDefault();
@@ -68,17 +60,21 @@ const CategoryAddPage = props => {
             category: categoryName,
         };
         categoriesService.postCategory(newCategory).then(res => {
-            catalogsToUpdate.forEach(checkbox => {
-                if (checkbox.checked) {
-                    if (checkbox.catalog.categories) {
-                        checkbox.catalog.categories.push(res._id);
+            const newCategoryName = res.category;
+            catalogsToUpdate.forEach(catalogToUpdate => {
+                if (catalogToUpdate.checked) {
+                    if (catalogToUpdate.catalog.categories) {
+                        catalogToUpdate.catalog.categories.push(res._id);
                     }
 
-                    catalogsService.putCatalog(checkbox.catalog._id, checkbox.catalog).then(res => {
-                        categorySnackbarOpenTrue();
-                        setCategoryName('');
-                        history.push(`/categories`);
-                    });
+                    catalogsService
+                        .putCatalog(catalogToUpdate.catalog._id, catalogToUpdate.catalog)
+                        .then(res => {
+                            setSnackBarSeverity('success');
+                            setSnackBarMessage(`Category ${newCategoryName} succesfully saved!`);
+                            setSnackBarStatus(true);
+                            history.push(`/categories`);
+                        });
                 }
             });
         });
@@ -95,10 +91,6 @@ const CategoryAddPage = props => {
         } else {
             categoryUpdateCatalogs([...catalogsToUpdate, catalogToUpdate]);
         }
-    };
-
-    const closeSnackbarHandler = () => {
-        categorySnackbarOpenFalse();
     };
 
     const categoryNameHandler = e => {
@@ -143,32 +135,26 @@ const CategoryAddPage = props => {
                 <FormGroup row>{checkboxes}</FormGroup>
                 <SaveButton className={classes.button} type="submit" title="Save" />
             </Paper>
-            <SnackbarItem
-                open={open}
-                handleClose={closeSnackbarHandler}
-                severity="success"
-                message="Successefly created category!"
-            />
         </form>
     );
 };
 const mapStateToProps = ({
     catalogsState: { catalogs },
-    categoriesState: { category, loading, catalogsToUpdate, open },
+    categoriesState: { category, loading, catalogsToUpdate },
 }) => ({
     catalogs,
     category,
     loading,
     catalogsToUpdate,
-    open,
 });
 const mapDispatchToProps = {
     setCatalogs,
     setCategory,
     categoryLoadingStatus,
-    categorySnackbarOpenTrue,
-    categorySnackbarOpenFalse,
     categoryUpdateCatalogs,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
 };
 
 export default wrapWithAdminService()(

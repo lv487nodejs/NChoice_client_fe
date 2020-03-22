@@ -5,20 +5,24 @@ import { connect } from 'react-redux';
 import { useStyles } from './Brand-details-style';
 import { SaveButton } from '../buttons';
 import wrapWithAdminService from '../wrappers';
-import SnackbarItem from '../snackbar-item';
 
-import { brandSnackbarOpenTrue, brandSnackbarOpenFalse, setBrand } from '../../actions';
+import {
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
+    setBrand,
+} from '../../actions';
 
 const BrandDetails = props => {
     const classes = useStyles();
     const [brandName, setBrandName] = useState('');
     const {
         adminService,
-        brandSnackbarOpenTrue,
-        brandSnackbarOpenFalse,
+        setSnackBarStatus,
+        setSnackBarSeverity,
+        setSnackBarMessage,
         setBrand,
         brand,
-        open,
         match,
         history,
     } = props;
@@ -32,21 +36,18 @@ const BrandDetails = props => {
         });
     }, [brandsService, id, setBrand]);
 
-    const brandSaveHandler = e => {
+    const brandSaveHandler = async e => {
         e.preventDefault();
         const newBrand = { ...brand };
         newBrand.brand = brandName;
 
-        brandsService.putBrand(newBrand).then(res => {
-            brandSnackbarOpenTrue();
-            history.push(`/brands`);
-        });
-    };
+        await brandsService.putBrand(newBrand);
 
-    const closeSnackbarHandler = () => {
-        brandSnackbarOpenFalse();
+        setSnackBarSeverity('success');
+        setSnackBarMessage(`Brand ${brandName} succesfully edited!`);
+        setSnackBarStatus(true);
+        history.push(`/brands`);
     };
-
     const chengeHandler = e => {
         setBrandName(e.target.value);
     };
@@ -65,23 +66,17 @@ const BrandDetails = props => {
                 />
                 <SaveButton type="submit" title="Save" />
             </Paper>
-            <SnackbarItem
-                open={open}
-                handleClose={closeSnackbarHandler}
-                severity="success"
-                message="Successefly updated brand!"
-            />
         </form>
     );
 };
 
-const mapStateToProps = ({ brandsState: { open, brand } }) => ({
-    open,
+const mapStateToProps = ({ brandsState: { brand } }) => ({
     brand,
 });
 const mapDispatchToProps = {
-    brandSnackbarOpenTrue,
-    brandSnackbarOpenFalse,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
     setBrand,
 };
 

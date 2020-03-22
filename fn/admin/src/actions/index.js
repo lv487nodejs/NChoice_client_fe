@@ -1,19 +1,11 @@
 export { setCatalog, setCatalogs, catalogLoadingStatus } from './Catalogs-actions';
 
-export {
-    setBrand,
-    setBrands,
-    brandLoadingStatus,
-    brandSnackbarOpenTrue,
-    brandSnackbarOpenFalse,
-} from './Brand-actions';
+export { setBrand, setBrands, brandLoadingStatus } from './Brand-actions';
 
 export {
     setCategory,
     setCategories,
     categoryLoadingStatus,
-    categorySnackbarOpenTrue,
-    categorySnackbarOpenFalse,
     categoryUpdateCatalogs,
     categoryLoadingStop,
 } from './Categories-actions';

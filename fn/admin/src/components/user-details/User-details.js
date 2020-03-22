@@ -4,12 +4,28 @@ import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { InputLabel, Select, Paper, MenuItem, FormControl } from '@material-ui/core';
 import wrapWithAdminService from '../wrappers';
-import { setUser, userLoadingStatus } from '../../actions';
+import {
+    setUser,
+    userLoadingStatus,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
+} from '../../actions';
 import LoadingBar from '../loading-bar';
 import { SaveButton } from '../buttons';
 import { useStyles } from './User-details-style';
 
-const UserDetails = ({ adminService, user, userId, loading, setUser, userLoadingStatus }) => {
+const UserDetails = ({
+    adminService,
+    user,
+    userId,
+    loading,
+    setUser,
+    userLoadingStatus,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
+}) => {
     const classes = useStyles();
 
     const { usersService } = adminService;
@@ -30,7 +46,11 @@ const UserDetails = ({ adminService, user, userId, loading, setUser, userLoading
     const submitHandler = e => {
         e.preventDefault();
         const newUser = { ...user };
-        usersService.putUserRole(newUser);
+        usersService.putUserRole(newUser).then(res => {
+            setSnackBarSeverity('success');
+            setSnackBarMessage(`User role succesfully changed to ${newUser.role}!`);
+            setSnackBarStatus(true);
+        });
     };
 
     if (loading) {
@@ -94,6 +114,9 @@ const mapStateToProps = ({ usersState: { user, loading } }) => ({
 const mapDispatchToProps = {
     setUser,
     userLoadingStatus,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
 };
 
 export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(UserDetails));

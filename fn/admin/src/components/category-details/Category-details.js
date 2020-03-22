@@ -14,14 +14,14 @@ import {
 import {
     categoryLoadingStatus,
     setCategory,
-    categorySnackbarOpenTrue,
     categoryUpdateCatalogs,
-    categorySnackbarOpenFalse,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
 } from '../../actions';
 import { useStyles } from './Category-details-style';
 import wrapWithAdminService from '../wrappers';
 import LoadingBar from '../loading-bar';
-import SnackbarItem from '../snackbar-item';
 import { SaveButton } from '../buttons';
 
 const CategoryDetails = props => {
@@ -31,13 +31,13 @@ const CategoryDetails = props => {
         categoryUpdateCatalogs,
         catalogsToUpdate,
         categoryLoadingStatus,
-        open,
-        categorySnackbarOpenTrue,
-        categorySnackbarOpenFalse,
         category,
         loading,
         adminService,
         history,
+        setSnackBarStatus,
+        setSnackBarSeverity,
+        setSnackBarMessage,
     } = props;
 
     const { categoriesService, catalogsService } = adminService;
@@ -72,14 +72,8 @@ const CategoryDetails = props => {
         categoryId,
         categoriesService,
         catalogsService,
-        categorySnackbarOpenTrue,
-        categorySnackbarOpenFalse,
         categoryUpdateCatalogs,
     ]);
-
-    const closeSnackbarHandler = () => {
-        categorySnackbarOpenFalse();
-    };
 
     const submitHandler = async e => {
         e.preventDefault();
@@ -88,29 +82,28 @@ const CategoryDetails = props => {
             id: category._id,
             name: e.target.categoryName.value,
         };
-        categoriesService
-            .putCategory(categoryToSend)
-            .then(res => {
-                setCategory(res);
+        categoriesService.putCategory(categoryToSend).then(res => {
+            setCategory(res);
+            const editedCategoryName = res.category;
+            catalogsToUpdate.forEach(async catalog => {
+                const index = catalog.categories.findIndex(
+                    categoryItem => categoryItem._id === res._id
+                );
 
-                catalogsToUpdate.forEach(async catalog => {
-                    const index = catalog.categories.findIndex(
-                        categoryItem => categoryItem._id === res._id
-                    );
-
-                    if (index > -1 && !catalog.checked) {
-                        catalog.categories.splice(index, 1);
-                    }
-                    if (index === -1 && catalog.checked) {
-                        catalog.categories.push({ _id: res._id });
-                    }
-                    catalogsService
-                        .putCatalog(catalog._id, catalog)
-                        .then(res => categorySnackbarOpenTrue());
+                if (index > -1 && !catalog.checked) {
+                    catalog.categories.splice(index, 1);
+                }
+                if (index === -1 && catalog.checked) {
+                    catalog.categories.push({ _id: res._id });
+                }
+                catalogsService.putCatalog(catalog._id, catalog).then(res => {
+                    setSnackBarSeverity('success');
+                    setSnackBarMessage(`Category ${editedCategoryName} succesfully edited!`);
+                    setSnackBarStatus(true);
                 });
                 history.push(`/categories`);
-            })
-            .catch(err => categorySnackbarOpenFalse());
+            });
+        });
     };
 
     const catalogsToUpdateHandler = catalogCheckbox => e => {
@@ -171,28 +164,22 @@ const CategoryDetails = props => {
                     <SaveButton type="submit" title="Save" />
                 </Paper>
             </form>
-            <SnackbarItem
-                open={open}
-                handleClose={closeSnackbarHandler}
-                severity="success"
-                message="Successefly update category!"
-            />
         </div>
     );
 };
 
-const mapStateToProps = ({ categoriesState: { category, loading, open, catalogsToUpdate } }) => ({
+const mapStateToProps = ({ categoriesState: { category, loading, catalogsToUpdate } }) => ({
     category,
     loading,
-    open,
     catalogsToUpdate,
 });
 const mapDispatchToProps = {
     categoryLoadingStatus,
     setCategory,
     categoryUpdateCatalogs,
-    categorySnackbarOpenTrue,
-    categorySnackbarOpenFalse,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
 };
 
 export default wrapWithAdminService()(

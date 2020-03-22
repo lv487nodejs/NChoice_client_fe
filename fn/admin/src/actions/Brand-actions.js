@@ -12,12 +12,4 @@ const brandLoadingStatus = () => ({
     type: 'LOADING_STATUS',
 });
 
-const brandSnackbarOpenTrue = () => ({
-    type: 'OPEN_TRUE',
-});
-
-const brandSnackbarOpenFalse = () => ({
-    type: 'OPEN_FALSE',
-});
-
-export { setBrand, setBrands, brandLoadingStatus, brandSnackbarOpenTrue, brandSnackbarOpenFalse };
+export { setBrand, setBrands, brandLoadingStatus };

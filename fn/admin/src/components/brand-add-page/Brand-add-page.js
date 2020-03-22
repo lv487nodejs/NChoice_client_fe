@@ -5,37 +5,39 @@ import { withRouter } from 'react-router-dom';
 import { useStyles } from './Brand-add-page-style';
 import { SaveButton } from '../buttons';
 import wrapWithAdminService from '../wrappers';
-import SnackbarItem from '../snackbar-item';
 
-import { brandSnackbarOpenTrue, brandSnackbarOpenFalse } from '../../actions';
+import { setSnackBarStatus, setSnackBarSeverity, setSnackBarMessage } from '../../actions';
 
 const BrandAddPage = props => {
     const classes = useStyles();
 
-    const { adminService, brandSnackbarOpenTrue, brandSnackbarOpenFalse, open, history } = props;
+    const {
+        adminService,
+        history,
+        setSnackBarStatus,
+        setSnackBarSeverity,
+        setSnackBarMessage,
+    } = props;
     const { brandsService } = adminService;
 
     const [brandName, setBrandName] = useState('');
 
-    const brandSaveHandler = e => {
+    const brandSaveHandler = async e => {
         e.preventDefault();
         const newBrand = {
             brand: e.target.brandName.value,
         };
 
-        brandsService.postBrand(newBrand).then(res => {
-            brandSnackbarOpenTrue();
-            setBrandName('');
-            history.push(`/brands`);
-        });
+        const res = await brandsService.postBrand(newBrand);
+        setSnackBarSeverity('success');
+        setSnackBarMessage(`Brand ${res.brand} succesfully saved!`);
+        setSnackBarStatus(true);
+        setBrandName('');
+        history.push(`/brands`);
     };
 
     const brandNameHandler = e => {
         setBrandName(e.target.value);
-    };
-
-    const closeSnackbarHandler = () => {
-        brandSnackbarOpenFalse();
     };
 
     return (
@@ -54,24 +56,14 @@ const BrandAddPage = props => {
                     <SaveButton type="submit" title="Save" />
                 </Paper>
             </FormControl>
-            <SnackbarItem
-                open={open}
-                handleClose={closeSnackbarHandler}
-                severity="success"
-                message="Successefly created brand!"
-            />
         </form>
     );
 };
 
-const mapStateToProps = ({ brandsState: { open } }) => ({
-    open,
-});
 const mapDispatchToProps = {
-    brandSnackbarOpenTrue,
-    brandSnackbarOpenFalse,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
 };
 
-export default wrapWithAdminService()(
-    connect(mapStateToProps, mapDispatchToProps)(withRouter(BrandAddPage))
-);
+export default wrapWithAdminService()(connect(null, mapDispatchToProps)(withRouter(BrandAddPage)));
