@@ -129,7 +129,6 @@ const CategoryDetails = props => {
 
     const checkboxes = catalogsToUpdate.map(catalog => {
         const catalogName = catalog.catalog;
-        console.log(catalogName);
 
         return (
             <FormControlLabel
