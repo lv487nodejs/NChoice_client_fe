@@ -8,14 +8,13 @@ import axios from "axios";
 import { postUserError, postUserStarted, postUserSuccess } from "../../actions";
 
 const addDataToLocalStorage = (token) => {
-    localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
-    localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
+    localStorage.setItem('Token', JSON.stringify(token));
 }
 
 const USER_DATA = {
-        email: '',
-        password: ''
-    };
+    email: '',
+    password: ''
+};
 
 const Login = (props) => {
     const [user, setUser] = useState(USER_DATA);
@@ -39,6 +38,7 @@ const Login = (props) => {
             addDataToLocalStorage(json);
         }).catch(e => {
             postUserError();
+
         });
     }
     const handleSubmit = (event) => {
@@ -53,45 +53,45 @@ const Login = (props) => {
     return (
         userStatus === 'loading' ?
             <div>Loading...</div> : (
-            <div className={'login'}>
-        <Form onSubmit={handleSubmit} >
-            <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                    required
-                    type="email"
-                    placeholder="Enter email"
-                    name={'email'}
-                    value={user.email}
-                    onChange={handleChange}
-                />
+                <div className={'login'}>
+                    <Form onSubmit={handleSubmit} >
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control
+                                required
+                                type="email"
+                                placeholder="Enter email"
+                                name={'email'}
+                                value={user.email}
+                                onChange={handleChange}
+                            />
 
-                <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                </Form.Text>
-            </Form.Group>
+                            <Form.Text className="text-muted">
+                                We'll never share your email with anyone else.
+                            </Form.Text>
+                        </Form.Group>
 
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                    required
-                    type="password"
-                    placeholder="Password"
-                    name={'password'}
-                    value={user.password}
-                    onChange={handleChange}
-                />
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control
+                                required
+                                type="password"
+                                placeholder="Password"
+                                name={'password'}
+                                value={user.password}
+                                onChange={handleChange}
+                            />
 
-            </Form.Group>
-            <Form.Group controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Remember me" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
-            <Link to="/register" className="btn btn-link">Register</Link>
-        </Form>
-        </div>
+                        </Form.Group>
+                        <Form.Group controlId="formBasicCheckbox">
+                            <Form.Check type="checkbox" label="Remember me" />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                        <Link to="/register" className="btn btn-link">Register</Link>
+                    </Form>
+                </div>
             )
     )
 };
