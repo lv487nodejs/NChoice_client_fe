@@ -7,10 +7,14 @@ import { connect } from 'react-redux';
 import { useStyles } from './App-styles';
 import AppRouter from '../app-router';
 
-import { darkTheme, lightTheme } from './App-theme';
+import { theme } from './app-theme/App-theme';
+
+const darkTheme = 'dark';
+const lightTheme = 'light';
 
 const App = ({ darkMode }) => {
-    const themeValue = darkMode ? darkTheme : lightTheme;
+    const themeMode = darkMode ? darkTheme : lightTheme;
+    const themeValue = theme(themeMode);
 
     const classes = useStyles();
 
@@ -19,6 +23,7 @@ const App = ({ darkMode }) => {
             <CssBaseline />
             <div className={classes.root}>
                 <AppRouter />
+
             </div>
         </ThemeProvider>
     );

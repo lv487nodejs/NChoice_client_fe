@@ -5,6 +5,7 @@ import UserDetailsPageContainer from './user-details-page-container';
 import BrandsPageContainer from './brand-page-container';
 import CategoriesPageContainer from './categories-page-container';
 import CategoryDetailsPageContainer from './category-details-page-container';
+import ProductDetailsPage from './product-details-container';
 
 export {
     ProductsPageContainer,
@@ -14,4 +15,5 @@ export {
     BrandsPageContainer,
     CategoriesPageContainer,
     CategoryDetailsPageContainer,
+    ProductDetailsPage,
 };

@@ -1,3 +1,3 @@
-import ProductPropetriesPage from './Product-propetries-page';
+import ProductPage from './Product-page';
 
-export default ProductPropetriesPage;
+export default ProductPage;

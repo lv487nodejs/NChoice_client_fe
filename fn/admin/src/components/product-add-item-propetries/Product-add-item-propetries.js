@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Paper, Typography } from '@material-ui/core';
+import { Paper, Typography, Button } from '@material-ui/core';
 import { setProductEdit, setProductPropetriesEdit } from '../../actions';
 
 import { SaveButton } from '../buttons';
@@ -9,6 +9,7 @@ import ProductAddPropetriesItem from '../product-add-propetries-item';
 import { useStyles } from './Product-add-item-propetries-style';
 
 const ADD_BUTTON_LABEL = 'ADD SIZE';
+const REMOVE_BUTTON_LABEL = 'REMOVE SIZE';
 const propsKeys = ['size', 'available', 'sku'];
 
 const AddProductPropetries = ({
@@ -31,19 +32,45 @@ const AddProductPropetries = ({
         });
     };
 
+    const handleRemoveProperty = sizeToRemove => () => {
+        const filteredPropetries = productEdit.propetries.filter(
+            property => property.size !== sizeToRemove
+        );
+        setProductEdit({
+            ...productEdit,
+            propetries: [...filteredPropetries],
+        });
+    };
+
     const propetryTextFields = Object.keys(productPropetriesEdit).map(name => (
         <ProductAddPropetriesItem key={name} name={name} handleInputChange={handleInputChange} />
     ));
 
-    const addedPropetries = productEdit.propetries.map(item =>
-        propsKeys.map(key => <Typography key={item[key]}>{`${key}: ${item[key]}`}</Typography>)
-    );
+    const addedPropetries = productEdit.propetries.map(item => (
+        <Paper key={item.size} className={classes.productPropetries}>
+            {propsKeys.map(key => (
+                <Typography
+                    className={classes.propsText}
+                    key={item[key]}
+                >{`${key}: ${item[key]}`}</Typography>
+            ))}
+            <Button
+                size="small"
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                onClick={handleRemoveProperty(item.size)}
+            >
+                {REMOVE_BUTTON_LABEL}
+            </Button>
+        </Paper>
+    ));
 
     return (
         <Paper className={classes.productPropetries}>
             {propetryTextFields}
             <SaveButton title={ADD_BUTTON_LABEL} eventHandler={handleAddPropetries} />
-            {addedPropetries}
+            <div className={classes.addedPropetries}>{addedPropetries}</div>
         </Paper>
     );
 };

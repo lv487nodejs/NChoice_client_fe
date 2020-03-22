@@ -1,34 +1,37 @@
-import React from 'react';
-import { Grid, Paper, TextField } from '@material-ui/core';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+
+import { TextField } from '@material-ui/core';
 import { useStyles } from './Product-container-details-style';
 
-const ProductContainerDetails = ({ ...product }) => {
+const ProductContainerDetails = ({ readOnly, handleInputChange, dispatch, ...product }) => {
     const classes = useStyles();
+
+    const inputReadOnly = {
+        readOnly,
+    };
+
+    const inputVariant = readOnly ? 'filled' : 'standard';
 
     const productDetails = Object.keys({ ...product }).map(propetry => (
         <TextField
             key={propetry}
             className={classes.textField}
             fullWidth
-            id="outlined-name"
             label={propetry}
+            name={propetry}
             value={product[propetry]}
-            variant="outlined"
+            variant={inputVariant}
             size="small"
             multiline
-            InputProps={{
-                readOnly: true,
-            }}
+            InputProps={inputReadOnly}
+            onChange={handleInputChange}
         />
     ));
 
-    return (
-        <Grid item xs={8}>
-            <Paper elevation={3} className={classes.paper}>
-                {productDetails}
-            </Paper>
-        </Grid>
-    );
+    return <Fragment>{productDetails}</Fragment>;
 };
 
-export default ProductContainerDetails;
+const mapStateToProps = ({ productsState: { readOnly } }) => ({ readOnly });
+
+export default connect(mapStateToProps)(ProductContainerDetails);

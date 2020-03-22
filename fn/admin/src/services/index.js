@@ -5,6 +5,7 @@ import brandsService from './Brands-service';
 import categoriesService from './Categories-service';
 import usersService from './Users-service';
 import colorsService from './Colors-service';
+import ordersService from './Orders-service';
 
 export {
     productsService,
@@ -14,4 +15,5 @@ export {
     categoriesService,
     usersService,
     colorsService,
+    ordersService
 };

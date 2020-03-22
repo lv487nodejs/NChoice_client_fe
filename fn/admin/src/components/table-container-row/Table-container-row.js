@@ -31,8 +31,8 @@ const TableContainerRow = ({ dense, id, editHandler, deleteHandler, dispatch, ..
             </TableCell>
             {tableCells}
             <TableCell padding="default">
-                <DeleteButton size={iconSize} eventHandler={deleteHandler} />
                 <EditButton size={iconSize} eventHandler={editHandler} />
+                <DeleteButton size={iconSize} eventHandler={deleteHandler} />
             </TableCell>
         </TableRow>
     );

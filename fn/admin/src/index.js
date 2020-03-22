@@ -14,6 +14,7 @@ import {
     categoriesService,
     usersService,
     colorsService,
+    ordersService,
 } from './services';
 import { AdminServiceProvider } from './components/context';
 
@@ -27,6 +28,7 @@ const adminService = {
     categoriesService,
     usersService,
     colorsService,
+    ordersService,
 };
 
 ReactDOM.render(

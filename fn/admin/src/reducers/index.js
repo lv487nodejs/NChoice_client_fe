@@ -7,12 +7,15 @@ import productsState from './Products-reducer';
 import usersState from './Users-reducer';
 import colorsState from './Colors-reducer';
 import productEditState from './Product-edit-reducer';
-import snackbarState from './Snackbar-reducer';
 import paginationState from './Paginator-reducer';
 import filtersState from './Filters-reducer';
 import searchState from './Search-reducer';
 import tableState from './Table-reducer';
 import themeState from './Theme-reducer';
+import dialogWindowState from './Dialog-window-reducer';
+import snackbarState from './Snackbar-reducer';
+import chartsState from './Charts-reducer';
+import ordersState from './Orders-reducer';
 
 export default combineReducers({
     catalogsState,
@@ -22,10 +25,13 @@ export default combineReducers({
     productEditState,
     usersState,
     colorsState,
-    snackbarState,
     paginationState,
     filtersState,
     searchState,
     tableState,
     themeState,
+    dialogWindowState,
+    snackbarState,
+    chartsState,
+    ordersState,
 });

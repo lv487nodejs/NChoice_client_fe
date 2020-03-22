@@ -7,6 +7,7 @@ const initialState = {
     productPropetries: [],
     products: [],
     filters,
+    readOnly: true,
     loading: true,
 };
 
@@ -43,6 +44,12 @@ const productsState = (state = initialState, action) => {
             return {
                 ...state,
                 filters: action.payload,
+            };
+
+        case 'SET_PRODUCT_READONLY':
+            return {
+                ...state,
+                readOnly: action.payload,
             };
 
         default:
