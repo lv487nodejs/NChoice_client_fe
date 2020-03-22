@@ -16,7 +16,6 @@ import {
     categorySnackbarOpenFalse,
     categoryUpdateCatalogs,
     categoryLoadingStop,
-    setCatalogCheck,
 } from './Categories-actions';
 
 import {
@@ -33,15 +32,7 @@ import {
     setProductGroupedPropetries,
 } from './Product-edit-actions';
 
-import {
-    usersLoaded,
-    usersRequested,
-    userEdit,
-    userLoaded,
-    userRequested,
-    userSave,
-    userSetRole,
-} from './Users-actions';
+import { setUsers, setUser, userLoadingStatus } from './Users-actions';
 
 import { setPagesCount, setCurrentPage, setRowsPerPage } from './Paginator-action';
 
@@ -87,16 +78,11 @@ export {
     catalogLoadingStatus,
     setCategory,
     setCategories,
-    setCatalogCheck,
     categoryLoadingStatus,
     setColors,
-    usersLoaded,
-    usersRequested,
-    userLoaded,
-    userRequested,
-    userEdit,
-    userSave,
-    userSetRole,
+    setUsers,
+    setUser,
+    userLoadingStatus,
     categorySnackbarOpenTrue,
     categorySnackbarOpenFalse,
     categoryUpdateCatalogs,

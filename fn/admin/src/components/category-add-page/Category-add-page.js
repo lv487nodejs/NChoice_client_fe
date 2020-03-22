@@ -47,6 +47,9 @@ const CategoryAddPage = props => {
     useEffect(() => {
         categoryLoadingStatus();
         catalogsService.getAllCatalogs().then(res => setCatalogs(res));
+        return () => {
+            categoryUpdateCatalogs([]);
+        };
     }, [
         categoryLoadingStatus,
         catalogsService,

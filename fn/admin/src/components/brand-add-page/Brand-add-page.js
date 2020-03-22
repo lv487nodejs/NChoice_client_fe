@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FormControl, Paper, TextField } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { useStyles } from './Brand-add-page-style';
 import { SaveButton } from '../buttons';
 import wrapWithAdminService from '../wrappers';
@@ -11,7 +12,7 @@ import { brandSnackbarOpenTrue, brandSnackbarOpenFalse } from '../../actions';
 const BrandAddPage = props => {
     const classes = useStyles();
 
-    const { adminService, brandSnackbarOpenTrue, brandSnackbarOpenFalse, open } = props;
+    const { adminService, brandSnackbarOpenTrue, brandSnackbarOpenFalse, open, history } = props;
     const { brandsService } = adminService;
 
     const [brandName, setBrandName] = useState('');
@@ -25,6 +26,7 @@ const BrandAddPage = props => {
         brandsService.postBrand(newBrand).then(res => {
             brandSnackbarOpenTrue();
             setBrandName('');
+            history.push(`/brands`);
         });
     };
 
@@ -70,4 +72,6 @@ const mapDispatchToProps = {
     brandSnackbarOpenFalse,
 };
 
-export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(BrandAddPage));
+export default wrapWithAdminService()(
+    connect(mapStateToProps, mapDispatchToProps)(withRouter(BrandAddPage))
+);

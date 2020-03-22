@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Paper, TextField } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useStyles } from './Brand-details-style';
 import { SaveButton } from '../buttons';
@@ -19,6 +20,7 @@ const BrandDetails = props => {
         brand,
         open,
         match,
+        history,
     } = props;
     const { id } = match.params;
     const { brandsService } = adminService;
@@ -37,6 +39,7 @@ const BrandDetails = props => {
 
         brandsService.putBrand(newBrand).then(res => {
             brandSnackbarOpenTrue();
+            history.push(`/brands`);
         });
     };
 
@@ -82,4 +85,6 @@ const mapDispatchToProps = {
     setBrand,
 };
 
-export default wrapWithAdminService()(connect(mapStateToProps, mapDispatchToProps)(BrandDetails));
+export default wrapWithAdminService()(
+    connect(mapStateToProps, mapDispatchToProps)(withRouter(BrandDetails))
+);

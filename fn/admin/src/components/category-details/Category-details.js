@@ -57,15 +57,11 @@ const CategoryDetails = props => {
                     );
 
                     if (index > -1) {
-                        return {
-                            ...catalog,
-                            checked: true,
-                        };
+                        catalog.checked = true;
+                        return catalog;
                     }
-                    return {
-                        ...catalog,
-                        checked: false,
-                    };
+                    catalog.checked = false;
+                    return catalog;
                 });
                 categoryUpdateCatalogs(newCatalogs);
             });
@@ -133,6 +129,7 @@ const CategoryDetails = props => {
 
     const checkboxes = catalogsToUpdate.map(catalog => {
         const catalogName = catalog.catalog;
+        console.log(catalogName);
 
         return (
             <FormControlLabel
