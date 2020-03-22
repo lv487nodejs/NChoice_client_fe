@@ -63,14 +63,17 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update the order by ID
-router.put('/:id', async (req, res) => {
+router.put('/:id', orderValidationRules(), validate, async (req, res) => {
     const { id } = req.params;
     try {
         let order = await Order.findById(id);
         if (!order) {
             throw { message: 'Can not find order with such an ID' };
         }
-        const newOrder = await Order.findByIdAndUpdate(id,req.body)
+        order = await Order.findByIdAndUpdate(id,req.body,{
+            new: true,
+            runValidators:true
+        })
         res.status(200).send("Order was updated successfully");
     } catch (err) {
         res.status(400).send(err);
