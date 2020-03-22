@@ -53,7 +53,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update the cart by ID
-router.put('/:id', cartValidationRules(), validate, async (req, res) => {
+router.put('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         let cart = await Cart.findById(id);

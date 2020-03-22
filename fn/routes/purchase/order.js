@@ -54,7 +54,6 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const order = await Order.findById(id)
-            .populate('orderItems')
             .populate('userId');
 
         if (!order) {
@@ -67,7 +66,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update the order by ID
-router.put('/:id', orderValidationRules(), validate, async (req, res) => {
+router.put('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         let order = await Order.findById(id);
