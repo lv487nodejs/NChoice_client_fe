@@ -77,11 +77,10 @@ const CategoryAddPage = props => {
                     catalogsService.putCatalog(checkbox.catalog._id, checkbox.catalog).then(res => {
                         categorySnackbarOpenTrue();
                         setCategoryName('');
+                        history.push(`/categories`);
                     });
                 }
             });
-
-            history.push(`/categories`);
         });
     };
 
