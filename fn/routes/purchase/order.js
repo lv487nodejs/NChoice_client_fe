@@ -44,7 +44,9 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const order = await Order.findById(id);
+        const order = await Order.findById(id)
+            .populate('userId');
+
         if (!order) {
             throw { message: 'Can not find order with such an ID' };
         }

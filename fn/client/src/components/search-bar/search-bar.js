@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { filterByName, productsLoaded } from '../../actions';
+import { filterByName, productsLoaded, setSearchValue, } from '../../actions';
 
 import withStoreService from '../hoc';
 import './search-bar.css';
@@ -8,16 +8,29 @@ import './search-bar.css';
 import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const SearchBar = ({ storeService, catalog, productsLoaded, filterByName, searchTerm }) => {
+const SearchBar = ({ catalog, storeService, productsLoaded, filterByName, setSearchValue, searchTerm, searchValue, setSearchTerm }) => {
 
     useEffect(() => {
         storeService.getProductsByFilter({ searchTerm }).then(res => {
             productsLoaded(res.products);
+            setSearchValue('');
         });
-    }, [searchTerm, storeService, productsLoaded]);
+    }, [storeService,productsLoaded,searchTerm, setSearchValue]);
+
+    useEffect(() => () => filterByName(''), [filterByName]);
+
+    const handleChange = event => {
+        const value = event.target.value;
+        setSearchValue(value);
+
+    };
 
     const handleCatchName = event => {
-        filterByName(event.target.value);
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            filterByName(searchValue);
+            setSearchValue('');
+        }
     };
 
     return (
@@ -26,17 +39,21 @@ const SearchBar = ({ storeService, catalog, productsLoaded, filterByName, search
                 type="searchTerm"
                 className="search-bar"
                 placeholder="Search..."
-                onChange={handleCatchName}
+                onChange={handleChange}
+                onKeyDown={handleCatchName}
+                value={searchValue}
+                onKeyUp={handleChange}
             />
         </Form>
     );
 };
 
-const mapStateToProps = ({ filter: { searchTerm }, catalogsList: { catalog } }) => ({
+const mapStateToProps = ({ filter: { searchValue, searchTerm }, catalogsList: { catalog } }) => ({
     searchTerm,
+    searchValue,
     catalog,
 });
 
-const mapDispatchToProps = { filterByName, productsLoaded };
+const mapDispatchToProps = { filterByName, productsLoaded, setSearchValue };
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(SearchBar));

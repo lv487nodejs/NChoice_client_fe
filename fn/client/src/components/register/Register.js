@@ -32,18 +32,19 @@ const Register = (props) => {
     const postUser = (value, route) => {
         postUserStarted();
         axios({
-                method: 'post',
-                url: route,
-                data: value
-            }).then(response => {
-                const { accessToken, refreshToken } = response.data;
-                return { accessToken, refreshToken };
-            }).then(json => {
-                postUserSuccess(json);
-                addDataToLocalStorage(json);
-            }).catch(e => {
-                postUserError();
-            });
+            method: 'post',
+            url: route,
+            data: value
+        }).then(response => {
+            const { accessToken, refreshToken } = response.data;
+            return { accessToken, refreshToken };
+        }).then(json => {
+            postUserSuccess(json);
+            addDataToLocalStorage(json);
+        }).catch(e => {
+            console.log(e);
+            postUserError(e);
+        });
     }
 
     const handleSubmit = (event) => {
@@ -52,71 +53,71 @@ const Register = (props) => {
     };
 
     if (userStatus === 'received') {
-        return <Redirect to='/' />
+        return (<Redirect to='/' />)
     }
 
     return (
         userStatus === 'loading' ?
             <div>Loading...</div> : (
-            <Form className="register" onSubmit={handleSubmit}>
-                <Form.Label>First name</Form.Label>
-                <Form.Control
-                    required
-                    type="text"
-                    placeholder="First name"
-                    defaultValue="Mark"
-                    name={'firstName'}
-                    value={user.firstName}
-                    onChange={handleChange}
-                />
-
-                <Form.Label>Last name</Form.Label>
-                <Form.Control
-                    required
-                    type="text"
-                    placeholder="Last name"
-                    defaultValue="Otto"
-                    name={'lastName'}
-                    value={user.lastName}
-                    onChange={handleChange}
-                />
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
+                <Form className="register" onSubmit={handleSubmit}>
+                    <Form.Label>First name</Form.Label>
                     <Form.Control
                         required
-                        type="email"
-                        placeholder="Enter email"
-                        name={'email'}
-                        value={user.email}
+                        type="text"
+                        placeholder="First name"
+                        defaultValue="Mark"
+                        name={'firstName'}
+                        value={user.firstName}
                         onChange={handleChange}
                     />
-                    <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
-                </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Last name</Form.Label>
                     <Form.Control
                         required
-                        type="password"
-                        placeholder="Password"
-                        name={'password'}
-                        value={user.password}
+                        type="text"
+                        placeholder="Last name"
+                        defaultValue="Otto"
+                        name={'lastName'}
+                        value={user.lastName}
                         onChange={handleChange}
                     />
-                </Form.Group>
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label> Confirm Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password"/>
-                </Form.Group>
-                <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="I agree to terms"/>
-                </Form.Group>
-                <Button variant="primary" type="submit" >
-                    Submit
-                </Button>
-                <Link to="/login" className="btn btn-link">Return to Login</Link>
-            </Form>
-        )
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control
+                            required
+                            type="email"
+                            placeholder="Enter email"
+                            name={'email'}
+                            value={user.email}
+                            onChange={handleChange}
+                        />
+                        <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            required
+                            type="password"
+                            placeholder="Password"
+                            name={'password'}
+                            value={user.password}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Label> Confirm Password</Form.Label>
+                        <Form.Control type="password" placeholder="Password"/>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicCheckbox">
+                        <Form.Check type="checkbox" label="I agree to terms"/>
+                    </Form.Group>
+                    <Button variant="primary" type="submit" >
+                        Submit
+                    </Button>
+                    <Link to="/login" className="btn btn-link">Return to Login</Link>
+                </Form>
+            )
     );
 }
 
