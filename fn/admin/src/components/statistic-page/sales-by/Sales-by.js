@@ -13,15 +13,16 @@ const mensSale = 372;
 const womensSale = 465;
 const kidsSale = 230;
 
+const ratioOptions = [mensSale, womensSale, kidsSale];
 const salesLabel = ['Men', 'Women', 'Kids'];
 
 const SalesBy = () => {
     const classes = useStyles();
     const theme = useTheme();
 
-    const chartData = [salesLabel, salesRatio(mensSale, womensSale, kidsSale), chartsColors];
+    const chartData = [salesLabel, salesRatio(...ratioOptions), chartsColors];
 
-    const chartLegends = chartData.map((data, index) => {
+    const chartLegends = salesLabel.map((data, index) => {
         const title = chartData[0][index];
         const value = chartData[1][index];
         const color = chartData[2][index];

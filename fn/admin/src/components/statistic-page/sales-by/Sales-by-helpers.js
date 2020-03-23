@@ -1,6 +1,12 @@
 import { colors } from '@material-ui/core';
 
-export const chartsColors = [colors.indigo[400], colors.red[400], colors.orange[400]];
+export const chartsColors = [
+    colors.indigo[400],
+    colors.red[400],
+    colors.orange[400],
+    colors.green[400],
+    colors.brown[400],
+];
 
 export const dataSets = (theme, data, labels) => ({
     datasets: [
