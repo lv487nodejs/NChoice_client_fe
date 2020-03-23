@@ -18,9 +18,9 @@ const setProductsFilters = newFilters => ({
     payload: newFilters,
 });
 
-const setProductsReadOnly = newReadOnly => ({
-    type: 'SET_PRODUCT_READONLY',
-    payload: newReadOnly,
+const setProductEditStatus = newEditStatus => ({
+    type: 'SET_PRODUCT_EDIT_STATUS',
+    payload: newEditStatus,
 });
 
 const setProductLoadingStatus = () => ({
@@ -31,7 +31,7 @@ export {
     setProduct,
     setProducts,
     setProductsFilters,
-    setProductsReadOnly,
+    setProductEditStatus,
     setProductPropetries,
     setProductLoadingStatus,
 };

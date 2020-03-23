@@ -1,7 +1,9 @@
 import { makeStyles } from '@material-ui/styles';
 
 export const useStyles = makeStyles(() => ({
-    root: {},
+    root: {
+        height: '100%',
+    },
     chartContainer: {
         height: 400,
         position: 'relative',

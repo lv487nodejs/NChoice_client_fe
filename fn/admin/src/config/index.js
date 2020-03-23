@@ -7,15 +7,29 @@ import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 export const DRAWER_WIDTH = 220;
 export const PAGE_TITLE = 'FN Admin Portal';
 
-export const ROWS_PER_PAGE_OPTIONS = [10, 25, 50, 100];
+export const PATH_TO_STATS = '/';
+export const PATH_TO_PRODUCTS = '/products';
+export const PATH_TO_USERS = '/users';
+export const PATH_TO_BRANDS = '/brands';
+export const PATH_TO_CATEGORIES = '/categories';
+export const PATH_TO_USER_DETAILS = '/user/:id';
+export const PATH_TO_PRODUCT_DETAILS = '/product/:id';
+export const PATH_TO_CATEGORY_DETAILS = '/category/:id';
+export const PATH_TO_ADD_PRODUCT = '/productadd';
+export const PATH_TO_ADD_CATEGORY = '/categoryadd';
+export const PATH_TO_BRAND_DETAILS = '/brand/:id';
+export const PATH_TO_ADD_BRAND = '/brandadd';
 
 export const MENU_CATEGORIES = [
-    ['Orders', '/', AssessmentIcon],
-    ['Products', '/products', ShoppingBasketIcon],
-    ['Categories', '/categories', CategoryIcon],
-    ['Brands', '/brands', CollectionsBookmarkIcon],
-    ['Users', '/users', PeopleAltIcon],
+    ['Orders', PATH_TO_STATS, AssessmentIcon],
+    ['Products', PATH_TO_PRODUCTS, ShoppingBasketIcon],
+    ['Categories', PATH_TO_CATEGORIES, CategoryIcon],
+    ['Brands', PATH_TO_BRANDS, CollectionsBookmarkIcon],
+    ['Users', PATH_TO_USERS, PeopleAltIcon],
 ];
+
+export const ROWS_PER_PAGE_OPTIONS = [10, 25, 50, 100];
+
 export const PRODUCTS_TABLE_HEAD = [
     'Image',
     'Catalog',
@@ -31,6 +45,8 @@ export const BRANDS_TABLE_HEAD = ['Avatar', 'Brand', 'Actions'];
 export const CATEGORIES_TABLE_HEAD = ['Avatar', 'Category', 'Actions'];
 
 export const SERVER_URL = 'https://stark-headland-06017.herokuapp.com/';
+
+export const IMG_URL = 'https://www.yourwdwstore.net/assets/images/6/60000/7000/600/67670-s1.jpg';
 
 export const NEW_PRODUCT_MODEL = {
     catalog: '',
@@ -55,8 +71,11 @@ export const PRODUCT_OPTION_NAMES = ['catalog', 'category', 'brand', 'color'];
 export const FILTER_OPTION_NAMES = ['catalog', 'category', 'brand'];
 
 export const NEW_PRODUCT_DESCR = ['title', 'mrsp', 'price', 'description'];
-export const SIZES_SHOES = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
-export const SIZES_CLOTHES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+export const SIZES_TYPE_NUMBER = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
+export const SIZES_TYPE_LETTERS = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+export const NUMBER_SIZES_FOR = ['shoes'];
 
 export const INPUT_TYPE_NUMBER = ['price', 'mrsp'];
 export const INPUT_MULTILINE = ['description'];
@@ -79,7 +98,7 @@ export const PRODUCT_KEYS = [
     'price',
 ];
 
-export const snackbarDuration = 4000;
+export const SNACK_BAR_DURATION = 4000;
 
 export const PROPETRIES_KEYS = ['size', 'available', 'sku'];
 

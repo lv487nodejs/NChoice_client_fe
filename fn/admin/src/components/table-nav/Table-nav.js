@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
-
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { FormControlLabel, Switch } from '@material-ui/core';
+import { FormControlLabel, Switch, Grid } from '@material-ui/core';
 import wrapWithAdminService from '../wrappers';
 
 import {
@@ -15,20 +15,24 @@ import {
     setTableDense,
 } from '../../actions';
 
-import useStyle from './Table-nav-style';
+import useStyles from './Table-nav-style';
 import TableNavButtons from '../table-nav-buttons';
 import TableNavFilterMenu from '../table-nav-filter-menu';
 import TableNavSearchBar from '../table-nav-searchbar';
 
-import { FILTER_OPTIONS, FILTER_COUNTERS } from '../../config';
+import { FILTER_OPTIONS, FILTER_COUNTERS, PATH_TO_ADD_PRODUCT } from '../../config';
+import { StandardButton } from '../buttons';
 
+const NEW_PRODUCT_BUTTON_TITLE = 'NEW PRODUCT';
 const filterMenuStatus = {
     catalog: null,
     category: null,
     brand: null,
 };
 
-const searchClear = '';
+const SMALL_SIZE = 'small';
+const DEFAULT_SIZE = 'default';
+const SEATCH_CLEAR = '';
 
 const TableNav = ({
     adminService,
@@ -45,8 +49,10 @@ const TableNav = ({
     setTableDense,
     dense,
 }) => {
-    const classes = useStyle();
     const [menuStatus, setMenuStatus] = React.useState(filterMenuStatus);
+
+    const classes = useStyles();
+    const size = dense ? SMALL_SIZE : DEFAULT_SIZE;
 
     const { productPropetriesService } = adminService;
 
@@ -74,7 +80,7 @@ const TableNav = ({
         setFilterSelected(FILTER_OPTIONS);
         setProductsFilters(FILTER_OPTIONS);
         setFilterCounters(FILTER_COUNTERS);
-        setSearchTerm(searchClear);
+        setSearchTerm(SEATCH_CLEAR);
     };
 
     const handleChangeTableDense = event => {
@@ -96,18 +102,47 @@ const TableNav = ({
     };
 
     return (
-        <div className={classes.tableNav}>
-            <TableNavButtons
-                handleMenuOpen={handleMenuOpen}
-                handleClearFilter={handleClearFilter}
-            />
-            <TableNavFilterMenu handleMenuClose={handleMenuClose} menuStatus={menuStatus} />
-            <FormControlLabel
-                control={<Switch checked={dense} onChange={handleChangeTableDense} size="small" />}
-                label="Compact mode"
-            />
-            <TableNavSearchBar />
-        </div>
+        // <div className={classes.tableNav}>
+        <Grid
+            className={classes.tableNav}
+            container
+            spacing={2}
+            justify="center"
+            alignItems="center"
+        >
+            <Grid item md={2}>
+                <StandardButton
+                    component={Link}
+                    to={PATH_TO_ADD_PRODUCT}
+                    size={size}
+                    title={NEW_PRODUCT_BUTTON_TITLE}
+                />
+            </Grid>
+            <Grid item md={2}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={dense}
+                            onChange={handleChangeTableDense}
+                            size={SMALL_SIZE}
+                        />
+                    }
+                    label="Compact"
+                />
+            </Grid>
+            <Grid item md={6}>
+                <TableNavButtons
+                    handleMenuOpen={handleMenuOpen}
+                    handleClearFilter={handleClearFilter}
+                />
+                <TableNavFilterMenu handleMenuClose={handleMenuClose} menuStatus={menuStatus} />
+            </Grid>
+            <Grid item md={2}>
+                <TableNavSearchBar />
+            </Grid>
+        </Grid>
+
+        // </div>
     );
 };
 

@@ -15,6 +15,7 @@ import {
     setSnackBarStatus,
     setSnackBarSeverity,
     setSnackBarMessage,
+    setDrawerStatus,
 } from '../../actions';
 
 import LoadingBar from '../loading-bar';
@@ -26,7 +27,7 @@ import { PRODUCTS_TABLE_HEAD } from '../../config';
 const REMOVE_TITLE = 'Product remove';
 const REMOVE_MESSAGE = 'Are you sure you want to remove product?';
 const SUCCESS_STATUS = 'success';
-const PATH_TO_PRODUCT = '/product';
+const PATH_TO_PRODUCT = id => `/product/${id}`;
 
 const ProductList = ({
     adminService,
@@ -48,6 +49,7 @@ const ProductList = ({
     setSnackBarSeverity,
     setSnackBarMessage,
     setProductLoadingStatus,
+    setDrawerStatus,
 }) => {
     const { productsService } = adminService;
 
@@ -71,14 +73,15 @@ const ProductList = ({
     ]);
 
     useEffect(() => {
+        setDrawerStatus(false)
         getProducts();
-    }, [getProducts]);
+    }, [getProducts, setDrawerStatus]);
 
     const editHandler = productId => () => {
-        history.push(`${PATH_TO_PRODUCT}/${productId}`);
+        history.push(PATH_TO_PRODUCT(productId));
     };
 
-    const openSuccessSnackbar = eventHandler => {
+    const openDialogWindow = eventHandler => {
         setDialogTitle(REMOVE_TITLE);
         setDialogContent(REMOVE_MESSAGE);
         setButtonTitle(REMOVE_TITLE);
@@ -96,7 +99,7 @@ const ProductList = ({
             setSnackBarStatus(true);
         };
 
-        openSuccessSnackbar(removeProduct)
+        openDialogWindow(removeProduct);
     };
 
     const productItems = products.map((product, index) => (
@@ -107,7 +110,7 @@ const ProductList = ({
             category={product.category}
             brand={product.brand}
             title={product.title}
-            msrp={product.msrp}
+            mrsp={product.mrsp}
             price={product.price}
             editHandler={editHandler(product.id)}
             deleteHandler={removeHandler(product.id)}
@@ -153,6 +156,7 @@ const mapDispatchToProps = {
     setSnackBarStatus,
     setSnackBarSeverity,
     setSnackBarMessage,
+    setDrawerStatus,
 };
 
 export default wrapWithAdminService()(

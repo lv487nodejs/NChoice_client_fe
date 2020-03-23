@@ -6,12 +6,12 @@ class OrdersService extends AdminService {
         return orders;
     };
 
-    getCatalogById = async id => {
+    getOrderById = async id => {
         const order = await this.getResource(`orders/${id}`);
         return order;
     };
 
-    putCatalog = async (id, order) => {
+    putOrder = async (id, order) => {
         const res = await this.putData(`orders/${id}`, { order });
         return res;
     };

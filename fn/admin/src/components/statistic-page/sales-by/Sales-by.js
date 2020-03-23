@@ -5,41 +5,31 @@ import { useTheme } from '@material-ui/styles';
 import { Card, CardHeader, CardContent, Divider, Typography } from '@material-ui/core';
 
 import { useStyles } from './Sales-by-style';
-import { dataSets, chartOptions, salesRatio, chartsColors } from './Sales-by-helpers';
+import { dataSets, chartOptions, chartGenerator } from './Sales-by-helpers';
 
 const chartTitle = 'Sales By Catalog';
 
-const mensSale = 372;
-const womensSale = 465;
-const kidsSale = 230;
-
-const salesLabel = ['Men', 'Women', 'Kids'];
+const salesByCatalog = {
+    Men: 372,
+    Women: 465,
+    Kids: 230,
+};
 
 const SalesBy = () => {
     const classes = useStyles();
     const theme = useTheme();
 
-    const chartData = [salesLabel, salesRatio(mensSale, womensSale, kidsSale), chartsColors];
+    const chartLegends = chartGenerator(salesByCatalog);
 
-    const chartLegends = chartData.map((data, index) => {
-        const title = chartData[0][index];
-        const value = chartData[1][index];
-        const color = chartData[2][index];
+    const labels = chartLegends.map(legend => legend.title);
+    const data = chartLegends.map(legend => legend.value);
 
-        return {
-            title,
-            value,
-            color,
-        };
-    });
-
-    const labels = chartData[0];
-    const data = chartData[1];
+    const dataSet = dataSets(theme, data, labels)
     const options = chartOptions(theme);
 
     const chartLegendsItems = chartLegends.map(legend => (
         <div className={classes.legend} key={legend.title}>
-            <Typography>{legend.title}</Typography>
+            <Typography variant="h5">{legend.title}</Typography>
             <Typography style={{ color: legend.color }} variant="h2">
                 {legend.value}%
             </Typography>
@@ -52,7 +42,7 @@ const SalesBy = () => {
             <Divider />
             <CardContent>
                 <div className={classes.chartContainer}>
-                    <Doughnut data={dataSets(theme, data, labels)} options={options} />
+                    <Doughnut data={dataSet} options={options} />
                 </div>
                 <div className={classes.stats}>{chartLegendsItems}</div>
             </CardContent>

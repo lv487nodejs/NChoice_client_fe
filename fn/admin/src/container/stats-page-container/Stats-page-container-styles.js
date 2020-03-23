@@ -2,11 +2,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { DRAWER_WIDTH } from '../../config';
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles(theme => ({
     statsPageContainer: {
-        width: `calc(100% - ${DRAWER_WIDTH}px)`,
+        [theme.breakpoints.up('md')]: {
+            width: `calc(100% - ${DRAWER_WIDTH}px)`,
+        },
         marginTop: 65,
-        position: 'static',
         padding: 20,
+        width: '100%',
     },
 }));

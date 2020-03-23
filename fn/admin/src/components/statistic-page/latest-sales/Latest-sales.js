@@ -13,15 +13,15 @@ import {
     Select,
 } from '@material-ui/core';
 
-import { setDaysValue } from '../../../../actions';
+import { setDaysValue } from '../../../actions';
 import { useStyles } from './Latest-sales-style';
 import { chartBarOptions, daysCount, chartBarDataSet, chartData } from './Latest-sales-helpers';
 
-const chartTitle = 'Latest Sales';
-const daysOptions = [7, 14, 30];
-const optionsLabel = 'Days';
+const CHART_TITLE = 'Latest Sales';
+const DAYS_OPTIONS = [7, 14, 30];
+const CHART_OPTIONS_LABEL = 'Days';
 
-const selectStyle = {
+const SELECT_STYLE = {
     size: 'small',
     variant: 'outlined',
     native: true,
@@ -42,7 +42,7 @@ const LatestSales = ({ setDaysValue, daysValue }) => {
     };
 
     const chartDaysOptionsField = (daysOptions, label) => {
-        const { size, variant, native } = selectStyle;
+        const { size, variant, native } = SELECT_STYLE;
 
         return (
             <FormControl size={size} variant={variant} className={classes.formControl}>
@@ -54,7 +54,7 @@ const LatestSales = ({ setDaysValue, daysValue }) => {
                     onChange={handleOptionChange}
                 >
                     {daysOptions.map(option => (
-                        <option value={option}>{`${option} ${label}`}</option>
+                        <option key={option} value={option}>{`${option} ${label}`}</option>
                     ))}
                 </Select>
             </FormControl>
@@ -64,8 +64,8 @@ const LatestSales = ({ setDaysValue, daysValue }) => {
     return (
         <Card className={classes.root}>
             <CardHeader
-                action={chartDaysOptionsField(daysOptions, optionsLabel)}
-                title={chartTitle}
+                action={chartDaysOptionsField(DAYS_OPTIONS, CHART_OPTIONS_LABEL)}
+                title={CHART_TITLE}
             />
             <Divider />
             <CardContent>

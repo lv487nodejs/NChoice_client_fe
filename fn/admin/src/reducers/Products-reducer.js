@@ -7,7 +7,7 @@ const initialState = {
     productPropetries: [],
     products: [],
     filters,
-    readOnly: true,
+    productEditStatus: true,
     loading: true,
 };
 
@@ -46,10 +46,10 @@ const productsState = (state = initialState, action) => {
                 filters: action.payload,
             };
 
-        case 'SET_PRODUCT_READONLY':
+        case 'SET_PRODUCT_EDIT_STATUS':
             return {
                 ...state,
-                readOnly: action.payload,
+                productEditStatus: action.payload,
             };
 
         default:

@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Paper, Typography, Button } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import { setProductEdit, setProductPropetriesEdit } from '../../actions';
 
-import { SaveButton } from '../buttons';
+import { SaveButton, StandardButton } from '../buttons';
 import ProductAddPropetriesItem from '../product-add-propetries-item';
 import { useStyles } from './Product-add-item-propetries-style';
 
@@ -54,22 +54,22 @@ const AddProductPropetries = ({
                     key={item[key]}
                 >{`${key}: ${item[key]}`}</Typography>
             ))}
-            <Button
+            <StandardButton
                 size="small"
-                variant="contained"
                 color="secondary"
                 className={classes.button}
-                onClick={handleRemoveProperty(item.size)}
-            >
-                {REMOVE_BUTTON_LABEL}
-            </Button>
+                eventHandler={handleRemoveProperty(item.size)}
+                title={REMOVE_BUTTON_LABEL}
+            />
         </Paper>
     ));
 
     return (
         <Paper className={classes.productPropetries}>
             {propetryTextFields}
-            <SaveButton title={ADD_BUTTON_LABEL} eventHandler={handleAddPropetries} />
+            <div>
+                <SaveButton title={ADD_BUTTON_LABEL} eventHandler={handleAddPropetries} />
+            </div>
             <div className={classes.addedPropetries}>{addedPropetries}</div>
         </Paper>
     );

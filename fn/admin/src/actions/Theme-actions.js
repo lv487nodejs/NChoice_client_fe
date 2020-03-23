@@ -3,4 +3,9 @@ const setThemeMode = changeTheme => ({
     payload: changeTheme,
 });
 
-export { setThemeMode };
+const setDrawerStatus = newDrawerStatus => ({
+    type: 'SET_DRAWER_STATUS',
+    payload: newDrawerStatus,
+});
+
+export { setThemeMode, setDrawerStatus };

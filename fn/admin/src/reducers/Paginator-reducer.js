@@ -3,7 +3,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../config';
 const initialState = {
     pagesCount: 0,
     currentPage: 0,
-    rowsPerPage: 10,
+    rowsPerPage: ROWS_PER_PAGE_OPTIONS[0],
     rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
 };
 

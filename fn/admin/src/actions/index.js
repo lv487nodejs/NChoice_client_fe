@@ -15,7 +15,7 @@ export {
     setProducts,
     setProductsFilters,
     setProductPropetries,
-    setProductsReadOnly,
+    setProductEditStatus,
     setProductLoadingStatus,
 } from './Products-actions';
 
@@ -45,7 +45,7 @@ export { setSearchValue, setSearchTerm } from './Search-actions';
 
 export { setTableDense } from './Table-actions';
 
-export { setThemeMode } from './Theme-actions';
+export { setThemeMode, setDrawerStatus } from './Theme-actions';
 
 export {
     setDialogStatus,

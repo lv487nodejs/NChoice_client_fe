@@ -21,7 +21,10 @@ import ProductAddVerifyPage from '../product-add-verify-page';
 
 import { NEW_PRODUCT_DESCR } from '../../config';
 
-const successMessage = 'Product succesfully saved id:';
+const successMessage = id => `Product succesfully saved id: ${id}`;
+const SUCCESS_STATUS = 'success';
+
+const PATH_TO_PRODUCT = id => `/product/${id}`;
 
 const ProductAddPage = ({
     history,
@@ -43,12 +46,12 @@ const ProductAddPage = ({
     const handleSaveProduct = async event => {
         event.preventDefault();
         const productId = await productsService.postProduct(productEdit).then(res => {
-            setSnackBarSeverity('success');
-            setSnackBarMessage(`${successMessage} ${res._id}`);
+            setSnackBarSeverity(SUCCESS_STATUS);
+            setSnackBarMessage(successMessage(res._id));
             setSnackBarStatus(true);
             return res._id;
         });
-        history.push(`/product/${productId}`);
+        history.push(PATH_TO_PRODUCT(productId));
     };
 
     const productAddOptions = (

@@ -12,6 +12,21 @@ import {
     ProductDetailsPage,
 } from '../../container';
 
+import {
+    PATH_TO_STATS,
+    PATH_TO_PRODUCTS,
+    PATH_TO_USERS,
+    PATH_TO_BRANDS,
+    PATH_TO_CATEGORIES,
+    PATH_TO_USER_DETAILS,
+    PATH_TO_PRODUCT_DETAILS,
+    PATH_TO_CATEGORY_DETAILS,
+    PATH_TO_ADD_PRODUCT,
+    PATH_TO_ADD_CATEGORY,
+    PATH_TO_BRAND_DETAILS,
+    PATH_TO_ADD_BRAND,
+} from '../../config';
+
 import ProductAddPage from '../product-add-page';
 import CategoryAddPage from '../category-add-page';
 import BrandAddPage from '../brand-add-page';
@@ -22,19 +37,6 @@ import SnackbarItem from '../snackbar-item';
 
 import NavBar from '../nav-bar';
 import NavMenu from '../nav-menu';
-
-const PATH_TO_STATS = '/';
-const PATH_TO_PRODUCTS = '/products';
-const PATH_TO_USERS = '/users';
-const PATH_TO_BRANDS = '/brands';
-const PATH_TO_CATEGORIES = '/categories';
-const PATH_TO_USER_DETAILS = '/user/:id';
-const PATH_TO_PRODUCT_DETAILS = '/product/:id';
-const PATH_TO_CATEGORY_DETAILS = '/category/:id';
-const PATH_TO_ADD_PRODUCT = '/productadd';
-const PATH_TO_ADD_CATEGORY = '/categoryadd';
-const PATH_TO_BRAND_DETAILS = '/brand/:id';
-const PATH_TO_ADD_BRAND = '/brandadd';
 
 const AppRouter = () => (
     <Router>

@@ -9,11 +9,11 @@ import AppRouter from '../app-router';
 
 import { theme } from './app-theme/App-theme';
 
-const darkTheme = 'dark';
-const lightTheme = 'light';
+const DARK_THEME = 'dark';
+const LIGHT_THEME = 'light';
 
 const App = ({ darkMode }) => {
-    const themeMode = darkMode ? darkTheme : lightTheme;
+    const themeMode = darkMode ? DARK_THEME : LIGHT_THEME;
     const themeValue = theme(themeMode);
 
     const classes = useStyles();
@@ -23,7 +23,6 @@ const App = ({ darkMode }) => {
             <CssBaseline />
             <div className={classes.root}>
                 <AppRouter />
-
             </div>
         </ThemeProvider>
     );

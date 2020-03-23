@@ -30,9 +30,7 @@ const ProductAddVerifyPage = ({ productEdit }) => {
     return (
         <Paper className={classes.product}>
             {productValues}
-            <div key="props" className={classes.props}>
-                {productPropetries}
-            </div>
+            <div className={classes.props}>{productPropetries}</div>
         </Paper>
     );
 };

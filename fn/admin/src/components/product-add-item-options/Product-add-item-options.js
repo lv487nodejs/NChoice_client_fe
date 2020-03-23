@@ -11,6 +11,8 @@ const inputCapitalize = {
     style: { textTransform: 'capitalize' },
 };
 
+const INPUT_VARIANT = 'outlined';
+
 const nativeSelect = {
     native: true,
 };
@@ -62,7 +64,7 @@ const ProductAddItemOptions = ({
                 onChange={onChangeEvent}
                 SelectProps={nativeSelect}
                 inputProps={inputCapitalize}
-                variant="outlined"
+                variant={INPUT_VARIANT}
             >
                 <option value="" />
                 {option}
