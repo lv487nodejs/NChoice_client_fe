@@ -69,7 +69,9 @@ const AddProductPropetries = ({
     return (
         <Paper className={classes.productPropetries}>
             {propetryTextFields}
-            <SaveButton title={ADD_BUTTON_LABEL} eventHandler={handleAddPropetries} />
+            <div>
+                <SaveButton title={ADD_BUTTON_LABEL} eventHandler={handleAddPropetries} />
+            </div>
             <div className={classes.addedPropetries}>{addedPropetries}</div>
         </Paper>
     );

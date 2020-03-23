@@ -40,8 +40,10 @@ const ProductAddPageStepper = ({ steps, onSaveHandler }) => {
                 <StepContent>
                     <form onSubmit={onSubmitHandler}>
                         {step}
-                        {buttons.backButton}
-                        {buttons.nextButton}
+                        <div>
+                            {buttons.backButton}
+                            {buttons.nextButton}
+                        </div>
                     </form>
                 </StepContent>
             </Step>

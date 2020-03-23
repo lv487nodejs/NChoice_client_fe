@@ -49,4 +49,7 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: red[500],
         marginRight: theme.spacing(1),
     },
+    editButton: {
+        margiinLeft: 5,
+    }
 }));

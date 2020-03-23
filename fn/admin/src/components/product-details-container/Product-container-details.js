@@ -4,14 +4,19 @@ import { connect } from 'react-redux';
 import { TextField } from '@material-ui/core';
 import { useStyles } from './Product-container-details-style';
 
-const ProductContainerDetails = ({ readOnly, handleInputChange, dispatch, ...product }) => {
+const ProductContainerDetails = ({
+    productEditStatus,
+    handleInputChange,
+    dispatch,
+    ...product
+}) => {
     const classes = useStyles();
 
     const inputReadOnly = {
-        readOnly,
+        readOnly: productEditStatus,
     };
 
-    const inputVariant = readOnly ? 'filled' : 'standard';
+    const inputVariant = productEditStatus ? 'filled' : 'standard';
 
     const productDetails = Object.keys({ ...product }).map(propetry => (
         <TextField
@@ -32,6 +37,6 @@ const ProductContainerDetails = ({ readOnly, handleInputChange, dispatch, ...pro
     return <Fragment>{productDetails}</Fragment>;
 };
 
-const mapStateToProps = ({ productsState: { readOnly } }) => ({ readOnly });
+const mapStateToProps = ({ productsState: { productEditStatus } }) => ({ productEditStatus });
 
 export default connect(mapStateToProps)(ProductContainerDetails);

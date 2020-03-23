@@ -1,5 +1,4 @@
 import { colors } from '@material-ui/core';
-// import { indigo } from '@material-ui/core/colors';
 
 const white = '#FFFFFF';
 const black = '#000000';
@@ -43,13 +42,6 @@ export const paletteGenerator = colorScheme => ({
         main: colors.red[600],
         light: colors.red[400],
     },
-    // text: {
-    //     primary: colors.blueGrey[900],
-    //     secondary: colors.blueGrey[600],
-    //     link: colors.blue[600],
-    // },
-
     icon: colors.blueGrey[600],
-
     type: colorScheme,
 });

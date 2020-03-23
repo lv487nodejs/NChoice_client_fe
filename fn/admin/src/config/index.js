@@ -7,15 +7,29 @@ import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 export const DRAWER_WIDTH = 220;
 export const PAGE_TITLE = 'FN Admin Portal';
 
-export const ROWS_PER_PAGE_OPTIONS = [10, 25, 50, 100];
+export const PATH_TO_STATS = '/';
+export const PATH_TO_PRODUCTS = '/products';
+export const PATH_TO_USERS = '/users';
+export const PATH_TO_BRANDS = '/brands';
+export const PATH_TO_CATEGORIES = '/categories';
+export const PATH_TO_USER_DETAILS = '/user/:id';
+export const PATH_TO_PRODUCT_DETAILS = '/product/:id';
+export const PATH_TO_CATEGORY_DETAILS = '/category/:id';
+export const PATH_TO_ADD_PRODUCT = '/productadd';
+export const PATH_TO_ADD_CATEGORY = '/categoryadd';
+export const PATH_TO_BRAND_DETAILS = '/brand/:id';
+export const PATH_TO_ADD_BRAND = '/brandadd';
 
 export const MENU_CATEGORIES = [
-    ['Orders', '/', AssessmentIcon],
-    ['Products', '/products', ShoppingBasketIcon],
-    ['Categories', '/categories', CategoryIcon],
-    ['Brands', '/brands', CollectionsBookmarkIcon],
-    ['Users', '/users', PeopleAltIcon],
+    ['Orders', PATH_TO_STATS, AssessmentIcon],
+    ['Products', PATH_TO_PRODUCTS, ShoppingBasketIcon],
+    ['Categories', PATH_TO_CATEGORIES, CategoryIcon],
+    ['Brands', PATH_TO_BRANDS, CollectionsBookmarkIcon],
+    ['Users', PATH_TO_USERS, PeopleAltIcon],
 ];
+
+export const ROWS_PER_PAGE_OPTIONS = [10, 25, 50, 100];
+
 export const PRODUCTS_TABLE_HEAD = [
     'Image',
     'Catalog',
@@ -55,6 +69,7 @@ export const PRODUCT_OPTION_NAMES = ['catalog', 'category', 'brand', 'color'];
 export const FILTER_OPTION_NAMES = ['catalog', 'category', 'brand'];
 
 export const NEW_PRODUCT_DESCR = ['title', 'mrsp', 'price', 'description'];
+
 export const SIZES_SHOES = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
 export const SIZES_CLOTHES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 

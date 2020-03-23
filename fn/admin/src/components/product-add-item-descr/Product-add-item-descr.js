@@ -6,6 +6,7 @@ import { TextField } from '@material-ui/core';
 import { INPUT_TYPE_NUMBER, INPUT_MULTILINE } from '../../config';
 
 const INPUT_PROPS = { min: 0, maxLength: 150 };
+const INPUT_VARIANT = 'outlined';
 
 const ProductAddItemDescr = ({ classes, option, productEdit, onChangeEvent }) => {
     const inputMultiline = INPUT_MULTILINE.includes(option);
@@ -22,7 +23,7 @@ const ProductAddItemDescr = ({ classes, option, productEdit, onChangeEvent }) =>
             value={productEdit[option]}
             onChange={onChangeEvent}
             type={inputType}
-            variant="outlined"
+            variant={INPUT_VARIANT}
             multiline={inputMultiline}
             inputProps={INPUT_PROPS}
         />
