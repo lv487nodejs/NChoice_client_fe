@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { TextField } from '@material-ui/core';
 
-import { SIZES_CLOTHES, SIZES_SHOES } from '../../config';
+import { SIZES_TYPE_LETTERS, SIZES_TYPE_NUMBER, NUMBER_SIZES_FOR } from '../../config';
 
 import { useStyles } from './Product-add-propetries-item-style';
 
@@ -17,6 +17,8 @@ const input = {
     },
 };
 
+const inputVariant = 'outlined';
+
 const ProductAddPropetriesItem = ({
     productPropetriesEdit,
     productEdit,
@@ -27,8 +29,10 @@ const ProductAddPropetriesItem = ({
     const select = name === input.size;
     const inputType = name !== input.available ? input.string : input.number;
 
-    const notShoes = productEdit.category !== 'shoes';
-    const sizes = notShoes ? SIZES_CLOTHES : SIZES_SHOES;
+    const { category } = productEdit;
+
+    const numberSize = NUMBER_SIZES_FOR.find(value => value === category);
+    const sizes = !numberSize ? SIZES_TYPE_LETTERS : SIZES_TYPE_NUMBER;
 
     const sizeOptions = sizes.map(size => (
         <option key={size} value={size}>
@@ -48,7 +52,7 @@ const ProductAddPropetriesItem = ({
             value={productPropetriesEdit[name]}
             onChange={handleInputChange}
             SelectProps={input.nativeSelect}
-            variant="outlined"
+            variant={inputVariant}
         >
             <option value="" />
             {sizeOptions}

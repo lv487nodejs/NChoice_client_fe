@@ -56,7 +56,6 @@ const NavMenu = ({ width, drawerStatus, setDrawerStatus }) => {
                 classes={{
                     paper: classes.drawerPaper,
                 }}
-                anchor="left"
             >
                 <div className={classes.toolbar} />
                 <Divider />

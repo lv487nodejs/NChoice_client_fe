@@ -27,7 +27,7 @@ import { PRODUCTS_TABLE_HEAD } from '../../config';
 const REMOVE_TITLE = 'Product remove';
 const REMOVE_MESSAGE = 'Are you sure you want to remove product?';
 const SUCCESS_STATUS = 'success';
-const PATH_TO_PRODUCT = '/product';
+const PATH_TO_PRODUCT = id => `/product/${id}`;
 
 const ProductList = ({
     adminService,
@@ -78,7 +78,7 @@ const ProductList = ({
     }, [getProducts, setDrawerStatus]);
 
     const editHandler = productId => () => {
-        history.push(`${PATH_TO_PRODUCT}/${productId}`);
+        history.push(PATH_TO_PRODUCT(productId));
     };
 
     const openDialogWindow = eventHandler => {

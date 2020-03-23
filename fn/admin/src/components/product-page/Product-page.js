@@ -27,14 +27,14 @@ import {
 import LoadingBar from '../loading-bar';
 import ProductImageContainer from '../product-image-container';
 import { StandardButton } from '../buttons';
-import { NEW_PRODUCT_MODEL } from '../../config';
+import { NEW_PRODUCT_MODEL, IMG_URL } from '../../config';
 
 const SUCCESS_STATUS = 'success';
+const SUCCESS_MSG = id => `Changes to product ${id} has been saved!`;
 
-const IMG_URL = 'https://www.yourwdwstore.net/assets/images/6/60000/7000/600/67670-s1.jpg';
 const EDIT_BUTTON_TITLE = 'EDIT PRODUCT';
-const SAVE_BUTTON_TITLE = 'SAVE';
-const DISCARD_BUTTON_TITLE = 'DISCARD';
+const DIALOG_DISCARD = ['Discard Changes', 'Are you sure you want to discard changes?', 'DISCARD'];
+const DIALOG_SAVE = ['Save Changes', 'Are you sure you want to save changes to product?', 'SAVE'];
 
 const ProductPage = ({
     adminService,
@@ -120,7 +120,7 @@ const ProductPage = ({
         setProductEditStatus(true);
         setDialogStatus(false);
         const prodId = res[0].id;
-        handleSnackBarOpen(`Changes to product ${prodId} has been saved!`, SUCCESS_STATUS);
+        handleSnackBarOpen(SUCCESS_MSG(prodId), SUCCESS_STATUS);
     };
 
     const discardChanges = () => {
@@ -130,21 +130,11 @@ const ProductPage = ({
     };
 
     const handleDiscardChanges = () => {
-        handleDialogOpen(
-            'Discard Changes',
-            'Are you sure you want to discard changes?',
-            DISCARD_BUTTON_TITLE,
-            discardChanges
-        );
+        handleDialogOpen(DIALOG_DISCARD[0], DIALOG_DISCARD[1], DIALOG_DISCARD[2], discardChanges);
     };
 
     const handleSaveChanges = () => {
-        handleDialogOpen(
-            'Save Changes',
-            'Are you sure you want to save changes to product?',
-            SAVE_BUTTON_TITLE,
-            saveChanges
-        );
+        handleDialogOpen(DIALOG_SAVE[0], DIALOG_SAVE[1], DIALOG_SAVE[2], saveChanges);
     };
 
     const editProductButton = (
@@ -152,7 +142,7 @@ const ProductPage = ({
     );
 
     const discardChangesButton = (
-        <StandardButton eventHandler={handleDiscardChanges} title={DISCARD_BUTTON_TITLE} />
+        <StandardButton eventHandler={handleDiscardChanges} title={DIALOG_DISCARD[2]} />
     );
 
     const editDiscardButton = productEditStatus ? editProductButton : discardChangesButton;
@@ -181,7 +171,7 @@ const ProductPage = ({
                         {editDiscardButton}
                         <StandardButton
                             eventHandler={handleSaveChanges}
-                            title={SAVE_BUTTON_TITLE}
+                            title={DIALOG_SAVE[2]}
                             disabled={productEditStatus}
                         />
                     </div>

@@ -25,13 +25,7 @@ const NavBar = ({ drawerStatus, darkMode, setThemeMode, setDrawerStatus }) => {
     };
 
     const menuToggle = (
-        <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-        >
+        <IconButton onClick={handleDrawerToggle} className={classes.menuButton}>
             <MenuIcon />
         </IconButton>
     );

@@ -30,7 +30,9 @@ const filterMenuStatus = {
     brand: null,
 };
 
-const searchClear = '';
+const SMALL_SIZE = 'small';
+const DEFAULT_SIZE = 'default';
+const SEATCH_CLEAR = '';
 
 const TableNav = ({
     adminService,
@@ -50,7 +52,7 @@ const TableNav = ({
     const [menuStatus, setMenuStatus] = React.useState(filterMenuStatus);
 
     const classes = useStyles();
-    const size = dense ? 'small' : 'medium';
+    const size = dense ? SMALL_SIZE : DEFAULT_SIZE;
 
     const { productPropetriesService } = adminService;
 
@@ -78,7 +80,7 @@ const TableNav = ({
         setFilterSelected(FILTER_OPTIONS);
         setProductsFilters(FILTER_OPTIONS);
         setFilterCounters(FILTER_COUNTERS);
-        setSearchTerm(searchClear);
+        setSearchTerm(SEATCH_CLEAR);
     };
 
     const handleChangeTableDense = event => {
@@ -119,7 +121,11 @@ const TableNav = ({
             <Grid item md={2}>
                 <FormControlLabel
                     control={
-                        <Switch checked={dense} onChange={handleChangeTableDense} size="small" />
+                        <Switch
+                            checked={dense}
+                            onChange={handleChangeTableDense}
+                            size={SMALL_SIZE}
+                        />
                     }
                     label="Compact"
                 />

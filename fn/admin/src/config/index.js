@@ -46,6 +46,8 @@ export const CATEGORIES_TABLE_HEAD = ['Avatar', 'Category', 'Actions'];
 
 export const SERVER_URL = 'https://stark-headland-06017.herokuapp.com/';
 
+export const IMG_URL = 'https://www.yourwdwstore.net/assets/images/6/60000/7000/600/67670-s1.jpg';
+
 export const NEW_PRODUCT_MODEL = {
     catalog: '',
     category: '',
@@ -70,8 +72,10 @@ export const FILTER_OPTION_NAMES = ['catalog', 'category', 'brand'];
 
 export const NEW_PRODUCT_DESCR = ['title', 'mrsp', 'price', 'description'];
 
-export const SIZES_SHOES = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
-export const SIZES_CLOTHES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+export const SIZES_TYPE_NUMBER = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
+export const SIZES_TYPE_LETTERS = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+export const NUMBER_SIZES_FOR = ['shoes'];
 
 export const INPUT_TYPE_NUMBER = ['price', 'mrsp'];
 export const INPUT_MULTILINE = ['description'];
@@ -94,7 +98,7 @@ export const PRODUCT_KEYS = [
     'price',
 ];
 
-export const snackbarDuration = 4000;
+export const SNACK_BAR_DURATION = 4000;
 
 export const PROPETRIES_KEYS = ['size', 'available', 'sku'];
 

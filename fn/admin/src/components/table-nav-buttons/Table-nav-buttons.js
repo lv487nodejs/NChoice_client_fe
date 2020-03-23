@@ -8,9 +8,11 @@ import { FILTER_OPTION_NAMES } from '../../config';
 
 const filterNames = FILTER_OPTION_NAMES;
 const CLEAR_BUTTON_TITLE = 'Clear All';
+const SMALL_SIZE = 'small';
+const DEFAULT_SIZE = 'default';
 
 const TableNavButtons = ({ filterCounters, handleMenuOpen, handleClearFilter, dense }) => {
-    const size = dense ? 'small' : 'medium';
+    const size = dense ? SMALL_SIZE : DEFAULT_SIZE;
 
     const filterButtons = filterNames.map(name => (
         <Badge key={name} color="error" badgeContent={filterCounters[name]}>

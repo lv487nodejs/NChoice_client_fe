@@ -48,7 +48,7 @@ const checkRatio = array => {
     return sum === 100;
 };
 
-export const salesRatio = (...sales) => {
+const salesRatio = (...sales) => {
     const salesArray = [...sales];
     const salesSum = salesArray.reduce((sale, sum) => sum + sale);
     const salesRatio = salesArray.map(sale => Math.round((sale / salesSum) * 100));
@@ -59,4 +59,21 @@ export const salesRatio = (...sales) => {
     }
 
     return salesRatio;
+};
+
+export const chartGenerator = sales => {
+    const result = Object.keys(sales)
+        .map((sale, index) => [sale, sales[sale], chartsColors[index]])
+        .sort((a, b) => b[1] - a[1]);
+
+    const salesQnt = result.map(value => value[1]);
+    const ratio = salesRatio(...salesQnt);
+
+    const dataForChart = result.map((value, index) => ({
+        title: value[0],
+        value: ratio[index],
+        color: value[2],
+    }));
+
+    return dataForChart;
 };
