@@ -2,3 +2,12 @@
     width: 800px;
     margin: 0 auto;
 }
+.registerHeader {
+    font-size: 42px;
+    line-height: 32px;
+    font-family: AdineuePRO,Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    margin-bottom: 30px;
+    margin-top: 80px;
+
+}
