@@ -5,12 +5,12 @@ import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 
 export const DRAWER_WIDTH = 220;
-export const PAGE_TITLE = 'FN Admin Panel';
+export const PAGE_TITLE = 'FN Admin Portal';
 
 export const ROWS_PER_PAGE_OPTIONS = [10, 25, 50, 100];
 
 export const MENU_CATEGORIES = [
-    ['Statistics', '/', AssessmentIcon],
+    ['Orders', '/', AssessmentIcon],
     ['Products', '/products', ShoppingBasketIcon],
     ['Categories', '/categories', CategoryIcon],
     ['Brands', '/brands', CollectionsBookmarkIcon],
@@ -26,7 +26,7 @@ export const PRODUCTS_TABLE_HEAD = [
     'Mrsp',
     'Actions',
 ];
-export const USERS_TABLE_HEAD = ['Avatar', 'First Name', 'Last Name', 'Email', 'Role', 'Actions'];
+export const USERS_TABLE_HEAD = ['Avatar', 'Email', 'First Name', 'Last Name', 'Role', 'Actions'];
 export const BRANDS_TABLE_HEAD = ['Avatar', 'Brand', 'Actions'];
 export const CATEGORIES_TABLE_HEAD = ['Avatar', 'Category', 'Actions'];
 

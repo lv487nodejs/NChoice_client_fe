@@ -1,5 +1,5 @@
-import React from 'react';
-import { Grid, Paper, TextField } from '@material-ui/core';
+import React, { Fragment } from 'react';
+import { TextField } from '@material-ui/core';
 import { useStyles } from './Product-propetries-container-style';
 
 const ProductPropetriesPage = ({ propetries: { _id, ...propetries } }) => {
@@ -18,13 +18,7 @@ const ProductPropetriesPage = ({ propetries: { _id, ...propetries } }) => {
         />
     ));
 
-    return (
-        <Grid item xs>
-            <Paper elevation={3} className={classes.paper}>
-                {productPropetries}
-            </Paper>
-        </Grid>
-    );
+    return <Fragment>{productPropetries}</Fragment>;
 };
 
 export default ProductPropetriesPage;

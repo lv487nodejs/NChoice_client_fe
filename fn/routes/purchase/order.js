@@ -4,18 +4,8 @@ const { orderValidationRules, validate } = require('../../middleware/validator')
 
 const router = express.Router();
 
-// Create the order
 router.post('/', orderValidationRules(), validate, async (req, res) => {
-    const {
-        orderItems,
-        userId,
-        date,
-        deliveryAddress,
-        deliveryType,
-        contactPhone,
-        paymentMethod,
-        status
-    } = req.body;
+    const { orderItems, userId, date, deliveryAddress, deliveryType, contactPhone, paymentMethod, status } = req.body;
     try {
         const newOrder = new Order({
             orderItems,
@@ -25,7 +15,7 @@ router.post('/', orderValidationRules(), validate, async (req, res) => {
             deliveryType,
             contactPhone,
             paymentMethod,
-            status
+            status,
         });
         await newOrder.save();
         res.status(200).send(newOrder);
@@ -34,12 +24,14 @@ router.post('/', orderValidationRules(), validate, async (req, res) => {
     }
 });
 
-// Get all orders
 router.get('/', async (req, res) => {
     let orders;
     try {
         orders = await Order.find()
+            .sort('-date')
+            .populate('orderItems.item')
             .populate('userId');
+
         if (!orders || orders.length === 0) {
             throw { message: 'orders not found' };
         }
@@ -49,7 +41,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Get the order by ID
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -68,22 +59,15 @@ router.get('/:id', async (req, res) => {
 // Update the order by ID
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
+    const { order } = req.body;
     try {
-        let order = await Order.findById(id);
-        if (!order) {
-            throw { message: 'Can not find order with such an ID' };
-        }
-        order = await Order.findByIdAndUpdate(id, req.body, {
-            new: true,
-            runValidators: true
-        })
-        res.status(200).send("Order was updated successfully");
+        const newOrder = await Order.findByIdAndUpdate(id, order);
+        res.status(200).send(newOrder);
     } catch (err) {
         res.status(400).send(err);
     }
 });
 
-// Delete the order by ID
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {

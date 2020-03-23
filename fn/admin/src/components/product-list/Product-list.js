@@ -23,6 +23,11 @@ import TableContainerGenerator from '../table-container-generator/Table-containe
 
 import { PRODUCTS_TABLE_HEAD } from '../../config';
 
+const REMOVE_TITLE = 'Product remove';
+const REMOVE_MESSAGE = 'Are you sure you want to remove product?';
+const SUCCESS_STATUS = 'success';
+const PATH_TO_PRODUCT = '/product';
+
 const ProductList = ({
     adminService,
     products,
@@ -70,7 +75,15 @@ const ProductList = ({
     }, [getProducts]);
 
     const editHandler = productId => () => {
-        history.push(`/product/${productId}`);
+        history.push(`${PATH_TO_PRODUCT}/${productId}`);
+    };
+
+    const openSuccessSnackbar = eventHandler => {
+        setDialogTitle(REMOVE_TITLE);
+        setDialogContent(REMOVE_MESSAGE);
+        setButtonTitle(REMOVE_TITLE);
+        setEventHandler(eventHandler);
+        setDialogStatus(true);
     };
 
     const removeHandler = productId => () => {
@@ -79,14 +92,11 @@ const ProductList = ({
             getProducts();
             setDialogStatus(false);
             setSnackBarMessage(res);
-            setSnackBarSeverity('success');
+            setSnackBarSeverity(SUCCESS_STATUS);
             setSnackBarStatus(true);
         };
-        setDialogTitle('Remove product');
-        setDialogContent('Are you sure you want to remove this product');
-        setButtonTitle('Remove Product');
-        setEventHandler(removeProduct);
-        setDialogStatus(true);
+
+        openSuccessSnackbar(removeProduct)
     };
 
     const productItems = products.map((product, index) => (

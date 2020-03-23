@@ -14,6 +14,8 @@ import tableState from './Table-reducer';
 import themeState from './Theme-reducer';
 import dialogWindowState from './Dialog-window-reducer';
 import snackbarState from './Snackbar-reducer';
+import chartsState from './Charts-reducer';
+import ordersState from './Orders-reducer';
 
 export default combineReducers({
     catalogsState,
@@ -30,4 +32,6 @@ export default combineReducers({
     themeState,
     dialogWindowState,
     snackbarState,
+    chartsState,
+    ordersState,
 });
