@@ -8,7 +8,7 @@ import useStyles from './Table-container-generator-style';
 import TablePaginator from '../table-container-paginator';
 
 const SMALL_SIZE = 'small';
-const DEFAULT_SIZE = 'default';
+const DEFAULT_SIZE = 'medium';
 
 const TableContainerGenerator = ({ tableTitles, tableItems, pagination, dense }) => {
     const classes = useStyles();
