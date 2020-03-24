@@ -31,7 +31,7 @@ const filterMenuStatus = {
 };
 
 const SMALL_SIZE = 'small';
-const DEFAULT_SIZE = 'default';
+const DEFAULT_SIZE = 'medium';
 const SEATCH_CLEAR = '';
 
 const TableNav = ({

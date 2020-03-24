@@ -24,7 +24,7 @@ const SalesBy = () => {
     const labels = chartLegends.map(legend => legend.title);
     const data = chartLegends.map(legend => legend.value);
 
-    const dataSet = dataSets(theme, data, labels)
+    const dataSet = dataSets(theme, data, labels);
     const options = chartOptions(theme);
 
     const chartLegendsItems = chartLegends.map(legend => (
