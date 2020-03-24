@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Product-details.css';
 // import Button from '@material-ui/core/Button';
@@ -119,7 +119,7 @@ const ProductDetails = ({
                              onClick = {() => addToWishlist(product)} />
             <Button variant="dark" className = { checkSize ? 'button' : 'button disabled' }
                              onClick = { handleAddToCart }> Add to card </Button>
-            <Button variant="dark" className="button"> By now </Button>
+            <Link to="/checkout"><Button variant="dark" className="button">Buy now</Button></Link>
           </Card.Body>
         </Col>
       </Card.Body>
