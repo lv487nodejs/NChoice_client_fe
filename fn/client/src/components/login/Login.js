@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import {LOGIN_ROUTE} from "../../configs/login-register-config";
 import axios from "axios";
 import { postUserError, postUserStarted, postUserSuccess } from "../../actions";
+import LoadingSpinner from "../Loading-spinner";
 
 const addDataToLocalStorage = (token) => {
     localStorage.setItem('Token', JSON.stringify(token));
@@ -34,10 +35,10 @@ const Login = (props) => {
             const { accessToken, refreshToken } = response.data;
             return { accessToken, refreshToken };
         }).then(json => {
-            postUserSuccess(json);
+            postUserSuccess(json, 'Login');
             addDataToLocalStorage(json);
         }).catch(e => {
-            postUserError();
+            postUserError('Login');
 
         });
     }
@@ -52,8 +53,9 @@ const Login = (props) => {
 
     return (
         userStatus === 'loading' ?
-            <div>Loading...</div> : (
+            <LoadingSpinner /> : (
                 <div className={'login'}>
+                    <h3 className={'loginHeader'}> Sign in </h3>
                     <Form onSubmit={handleSubmit} >
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
