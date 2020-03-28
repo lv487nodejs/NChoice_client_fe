@@ -19,11 +19,7 @@ export {
     setProductLoadingStatus,
 } from './Products-actions';
 
-export {
-    setProductEdit,
-    setProductPropetriesEdit,
-    setProductGroupedPropetries,
-} from './Product-edit-actions';
+export { setProductModel, setSizeModel, setProductSizes } from './Product-model-actions';
 
 export { setUsers, setUser, userLoadingStatus } from './Users-actions';
 

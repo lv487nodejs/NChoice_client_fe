@@ -22,7 +22,9 @@ import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
 
-import { CATEGORIES_TABLE_HEAD } from '../../config';
+import { config } from '../../config';
+
+const tableTitles = config.tableHeadRowTitles.categories;
 
 const REMOVE_TITLE = 'Remove category';
 const REMOVE_MESSAGE = 'Are you sure you want to remove category?';
@@ -118,7 +120,7 @@ const CategoryList = ({
                 </Button>
             </div>
             <TableContainerGenerator
-                tableTitles={CATEGORIES_TABLE_HEAD}
+                tableTitles={tableTitles}
                 tableItems={categoryItems}
             />
         </div>

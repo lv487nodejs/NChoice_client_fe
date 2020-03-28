@@ -22,7 +22,9 @@ import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
 
-import { BRANDS_TABLE_HEAD } from '../../config';
+import { config } from '../../config';
+
+const tableTitles = config.tableHeadRowTitles.brands;
 
 const REMOVE_TITLE = 'Remove brand';
 const REMOVE_MESSAGE = 'Are you sure you want to remove brand?';
@@ -104,7 +106,7 @@ const BrandList = ({
                     New Brand
                 </Button>
             </div>
-            <TableContainerGenerator tableTitles={BRANDS_TABLE_HEAD} tableItems={brandItems} />
+            <TableContainerGenerator tableTitles={tableTitles} tableItems={brandItems} />
         </div>
     );
 };

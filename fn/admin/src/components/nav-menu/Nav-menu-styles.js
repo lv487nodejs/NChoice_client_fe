@@ -1,14 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { config } from '../../config';
 
-import { DRAWER_WIDTH } from '../../config';
+const { drawerWidth } = config.app;
 
 export const useStyles = makeStyles(theme => ({
     drawer: {
-        width: DRAWER_WIDTH,
+        width: drawerWidth,
         flexShrink: 0,
     },
     drawerPaper: {
-        width: DRAWER_WIDTH,
+        width: drawerWidth,
     },
     toolbar: theme.mixins.toolbar,
     content: {
