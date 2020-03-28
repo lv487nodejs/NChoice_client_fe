@@ -1,14 +1,15 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
-import {LOGIN_ROUTE} from "../../configs/login-register-config";
+import { LOGIN_ROUTE } from "../../configs/login-register-config";
 import axios from "axios";
 import { postUserError, postUserStarted, postUserSuccess } from "../../actions";
 
 const addDataToLocalStorage = (token) => {
     localStorage.setItem('Token', JSON.stringify(token));
+    console.log(token)
 }
 
 const USER_DATA = {
@@ -18,11 +19,11 @@ const USER_DATA = {
 
 const Login = (props) => {
     const [user, setUser] = useState(USER_DATA);
-    const {postUserStarted,postUserSuccess,postUserError, userStatus}  = props;
+    const { postUserStarted, postUserSuccess, postUserError, userStatus } = props;
 
     const handleChange = (event) => {
         event.persist();
-        setUser( prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
+        setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
     };
     const postUser = (value, route) => {
         postUserStarted();
@@ -31,11 +32,12 @@ const Login = (props) => {
             url: route,
             data: value
         }).then(response => {
-            const { accessToken, refreshToken } = response.data;
-            return { accessToken, refreshToken };
+            const { accessToken, refreshToken, user} = response.data;
+            return { accessToken, refreshToken, user };
         }).then(json => {
             postUserSuccess(json);
             addDataToLocalStorage(json);
+            // console.log(json)
         }).catch(e => {
             postUserError();
 
@@ -44,7 +46,9 @@ const Login = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         postUser(user, LOGIN_ROUTE);
+        console.log(user)
     };
+    console.log(user.email)
 
     if (userStatus === 'received') {
         return <Redirect to='/' />
@@ -97,9 +101,9 @@ const Login = (props) => {
 };
 
 
-const mapDispatchToProps = {postUserStarted,postUserSuccess,postUserError};
+const mapDispatchToProps = { postUserStarted, postUserSuccess, postUserError };
 
-const mapStateToProps = ({authReducer: {userStatus}}) => ({
+const mapStateToProps = ({ authReducer: { userStatus } }) => ({
     userStatus
 });
 

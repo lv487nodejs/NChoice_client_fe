@@ -1,5 +1,6 @@
 .msrp-price {
   text-decoration: line-through;
+  margin: 0!important;
 }
 
 .posts {
@@ -46,9 +47,11 @@
   align-items: center;
   padding: 0;
   justify-self: end;
+  position: absolute;
   right: 0;
   bottom: 10px;
 }
+
 
 .description {
   display: block;

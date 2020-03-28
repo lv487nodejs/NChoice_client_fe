@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './Register.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
-import {REGISTER_ROUTE} from "../../configs/login-register-config";
+import { REGISTER_ROUTE } from "../../configs/login-register-config";
 import axios from "axios";
-import {postUserError, postUserStarted, postUserSuccess} from "../../actions";
+import { postUserError, postUserStarted, postUserSuccess, postUserLoginSuccess } from "../../actions";
 
 
 const addDataToLocalStorage = (token) => {
@@ -21,8 +21,8 @@ const USER_DATA = {
 }
 
 const Register = (props) => {
-    const[user, setUser] = useState(USER_DATA);
-    const {postUserStarted,postUserSuccess,postUserError, userStatus} = props;
+    const [user, setUser] = useState(USER_DATA);
+    const { postUserStarted, postUserSuccess, postUserError, userStatus, postUserLoginSuccess } = props;
 
     const handleChange = (event) => {
         event.persist();
@@ -39,7 +39,7 @@ const Register = (props) => {
             const { accessToken, refreshToken } = response.data;
             return { accessToken, refreshToken };
         }).then(json => {
-            postUserSuccess(json);
+            postUserLoginSuccess(json);
             addDataToLocalStorage(json);
         }).catch(e => {
             console.log(e);
@@ -52,8 +52,8 @@ const Register = (props) => {
         postUser(user, REGISTER_ROUTE);
     };
 
-    if (userStatus === 'received') {
-        return (<Redirect to='/' />)
+    if (userStatus === 'loginReceived') {
+        return (<Redirect to='/login' />)
     }
 
     return (
@@ -107,10 +107,10 @@ const Register = (props) => {
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label> Confirm Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password"/>
+                        <Form.Control type="password" placeholder="Password" />
                     </Form.Group>
                     <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check type="checkbox" label="I agree to terms"/>
+                        <Form.Check type="checkbox" label="I agree to terms" />
                     </Form.Group>
                     <Button variant="primary" type="submit" >
                         Submit
@@ -121,9 +121,9 @@ const Register = (props) => {
     );
 }
 
-const mapDispatchToProps = {postUserStarted,postUserSuccess,postUserError};
+const mapDispatchToProps = { postUserStarted, postUserSuccess, postUserError, postUserLoginSuccess };
 
-const mapStateToProps = ({authReducer: {userStatus}}) => ({
+const mapStateToProps = ({ authReducer: { userStatus } }) => ({
     userStatus
 });
 

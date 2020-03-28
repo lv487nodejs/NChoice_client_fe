@@ -4,7 +4,7 @@ const initialState = {
 }
 
 const authReducer = (state = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case 'ADD_USER_REQUESTED':
             return {
                 ...state,
@@ -16,6 +16,12 @@ const authReducer = (state = initialState, action) => {
                 userTokens: action.payload,
                 userStatus: 'received',
             }
+        case 'ADD_USER_LOGIN_RECEIVED':
+            return {
+                ...state,
+                userTokens: action.payload,
+                userStatus: 'loginReceived',
+            }
         case 'ADD_USER_ERROR':
             return {
                 ...state,
@@ -23,11 +29,12 @@ const authReducer = (state = initialState, action) => {
             }
 
         case 'LOGOUT_USER':
-            return {...state,
+            return {
+                ...state,
                 userStatus: null
             }
         default:
-            return {...state};
+            return { ...state };
     }
 }
 
