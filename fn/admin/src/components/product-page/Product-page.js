@@ -10,7 +10,7 @@ import ProductContainerDetails from '../product-details-container/Product-contai
 
 import {
     setProduct,
-    setProductEdit,
+    setProductModel,
     setProductLoadingStatus,
     setProductPropetries,
     setProductEditStatus,
@@ -27,7 +27,9 @@ import {
 import LoadingBar from '../loading-bar';
 import ProductImageContainer from '../product-image-container';
 import { StandardButton } from '../buttons';
-import { NEW_PRODUCT_MODEL, IMG_URL } from '../../config';
+import { config, IMG_URL } from '../../config';
+
+const productInitialModel = config.product.model;
 
 const SUCCESS_STATUS = 'success';
 const SUCCESS_MSG = id => `Changes to product ${id} has been saved!`;
@@ -39,8 +41,8 @@ const DIALOG_SAVE = ['Save Changes', 'Are you sure you want to save changes to p
 const ProductPage = ({
     adminService,
     product,
-    productEdit,
-    setProductEdit,
+    productModel,
+    setProductModel,
     productPropetries,
     setProduct,
     setProductLoadingStatus,
@@ -69,14 +71,14 @@ const ProductPage = ({
         });
         productsService.getProductPropetries(id).then(res => setProductPropetries(res));
         return () => {
-            setProductEdit(NEW_PRODUCT_MODEL);
+            setProductModel(productInitialModel);
             setProduct({});
         };
     }, [
         id,
         productsService,
         setProduct,
-        setProductEdit,
+        setProductModel,
         setProductLoadingStatus,
         setProductPropetries,
     ]);
@@ -111,7 +113,7 @@ const ProductPage = ({
     };
 
     const handleEditStatus = () => {
-        setProductEdit(product);
+        setProductModel(product);
         setProductEditStatus(false);
     };
 
@@ -124,7 +126,7 @@ const ProductPage = ({
     };
 
     const discardChanges = () => {
-        setProduct(productEdit);
+        setProduct(productModel);
         setProductEditStatus(true);
         setDialogStatus(false);
     };
@@ -195,17 +197,17 @@ const ProductPage = ({
 
 const mapStateToProps = ({
     productsState: { product, productPropetries, productEditStatus, loading },
-    productEditState: { productEdit },
+    productModelState: { productModel },
 }) => ({
     product,
-    productEdit,
+    productModel,
     productPropetries,
     productEditStatus,
     loading,
 });
 const mapDispatchToProps = {
     setProduct,
-    setProductEdit,
+    setProductModel,
     setProductPropetries,
     setProductLoadingStatus,
     setProductEditStatus,

@@ -1,5 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { DRAWER_WIDTH } from '../../config';
+import { config } from '../../config';
+
+const { drawerWidth } = config.app;
 
 export const useStyles = makeStyles(theme => ({
     content: {
@@ -10,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
         margin: theme.spacing(2),
         minHeight: '80vh',
         [theme.breakpoints.up('md')]: {
-            width: `calc(100% - ${DRAWER_WIDTH}px)`,
+            width: `calc(100% - ${drawerWidth}px)`,
         },
     },
     textfield: {

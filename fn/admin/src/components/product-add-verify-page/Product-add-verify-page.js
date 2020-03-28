@@ -3,22 +3,24 @@ import { connect } from 'react-redux';
 
 import { Typography, Paper } from '@material-ui/core';
 
-import { PRODUCT_KEYS, PROPETRIES_KEYS } from '../../config';
+import { config } from '../../config';
 import { useStyles } from './Product-add-verify-page-style';
 
-const ProductAddVerifyPage = ({ productEdit }) => {
+const { productKeys, sizeKeys } = config.product;
+
+const ProductAddVerifyPage = ({ productModel }) => {
     const classes = useStyles();
 
-    const productValues = PRODUCT_KEYS.map(key => (
+    const productValues = productKeys.map(key => (
         <Typography
             className={classes.propsText}
             key={key}
-        >{`${key}: ${productEdit[key]}`}</Typography>
+        >{`${key}: ${productModel[key]}`}</Typography>
     ));
 
-    const productPropetries = productEdit.propetries.map(item => (
+    const productPropetries = productModel.propetries.map(item => (
         <div key={item.size} className={classes.product}>
-            {PROPETRIES_KEYS.map(key => (
+            {sizeKeys.map(key => (
                 <Typography
                     className={classes.propsText}
                     key={item[key]}
@@ -35,8 +37,8 @@ const ProductAddVerifyPage = ({ productEdit }) => {
     );
 };
 
-const mapStateToProps = ({ productEditState: { productEdit } }) => ({
-    productEdit,
+const mapStateToProps = ({ productModelState: { productModel } }) => ({
+    productModel,
 });
 
 export default connect(mapStateToProps)(ProductAddVerifyPage);

@@ -6,7 +6,7 @@ import brandsState from './Brands-reducer';
 import productsState from './Products-reducer';
 import usersState from './Users-reducer';
 import colorsState from './Colors-reducer';
-import productEditState from './Product-edit-reducer';
+import productModelState from './Product-model-reducer';
 import paginationState from './Paginator-reducer';
 import filtersState from './Filters-reducer';
 import searchState from './Search-reducer';
@@ -22,7 +22,7 @@ export default combineReducers({
     categoriesState,
     brandsState,
     productsState,
-    productEditState,
+    productModelState,
     usersState,
     colorsState,
     paginationState,

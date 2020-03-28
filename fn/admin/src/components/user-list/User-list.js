@@ -5,10 +5,12 @@ import wrapWithAdminService from '../wrappers';
 import LoadingBar from '../loading-bar';
 
 import { setUsers, userLoadingStatus } from '../../actions';
-import { USERS_TABLE_HEAD } from '../../config';
+import { config } from '../../config';
 
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
+
+const tableTitles = config.tableHeadRowTitles.users;
 
 const UserList = ({ adminService, users, setUsers, userLoadingStatus, history, loading }) => {
     const { usersService } = adminService;
@@ -37,7 +39,7 @@ const UserList = ({ adminService, users, setUsers, userLoadingStatus, history, l
     if (loading) {
         return <LoadingBar />;
     }
-    return <TableContainerGenerator tableTitles={USERS_TABLE_HEAD} tableItems={userItems} />;
+    return <TableContainerGenerator tableTitles={tableTitles} tableItems={userItems} />;
 };
 
 const mapStateToProps = ({ usersState: { users, loading } }) => ({

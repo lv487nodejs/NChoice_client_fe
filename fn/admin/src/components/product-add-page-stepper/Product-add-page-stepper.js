@@ -3,10 +3,10 @@ import { Stepper, Step, StepLabel, StepContent } from '@material-ui/core';
 
 import { SaveButton, StepperBackButton, StepperNextButton } from '../buttons';
 
-import { PRODUCT_ADD_STEPS_LABEL } from '../../config';
+import { config } from '../../config';
 
+const { labels } = config.stepper;
 const SAVE_LABEL = 'SAVE PRODUCT';
-const labels = PRODUCT_ADD_STEPS_LABEL;
 const STEP_ORIENTATION = 'vertical';
 
 const ProductAddPageStepper = ({ steps, onSaveHandler }) => {
