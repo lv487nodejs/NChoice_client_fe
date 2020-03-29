@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import './App-header-nav-right.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +7,20 @@ import Currency from '../currency';
 import { connect } from 'react-redux';
 import { logoutUser } from "../../actions";
 
-const AppHeaderNavRight = ({ cartNumbers, logoutUser, userStatus }) => {
+const AppHeaderNavRight = ({cartNumbers, logoutUser, userStatus }) => {
+  // const [cartNumbers, setValue] = React.useState(
+  //   0 || localStorage.getItem('myValueInLocalStorage')
+  // );
+
+  // useEffect(() => {
+  //   localStorage.setItem('myValueInLocalStorage', cartNumbers);
+  // }, [cartNumbers]);
+
+  // useEffect(() => {
+  //   setValue('myValueInLocalStorage', cartNumbers);
+  // }, []);
+
+  // localStorage.setItem('recipe', cartNumbers);
 
   return (
       <nav className="nav-bar">
@@ -28,7 +41,7 @@ const AppHeaderNavRight = ({ cartNumbers, logoutUser, userStatus }) => {
           <li key="7">
             <Link to="/cart">
               <FontAwesomeIcon icon={faShoppingBasket} />
-              <span> <sup>{cartNumbers}</sup> </span>
+              <span> <sup >{ cartNumbers}</sup> </span>
             </Link>
           </li>
           {
