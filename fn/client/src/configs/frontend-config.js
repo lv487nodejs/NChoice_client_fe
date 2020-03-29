@@ -3,6 +3,7 @@ export const PRODUCT_LIST_URL = '/productlist/';
 export const countries = {
     name: 'Country',
     value: [
+        "",
         "Ukraine",
         "Italy",
         "Netherlands",
@@ -21,6 +22,7 @@ export const countries = {
 export const paymentMethods = {
     name: "Payment Method",
     value: [
+        "",
         "credit card",
         "pay pal",
         "cash",
@@ -32,6 +34,7 @@ export const paymentMethods = {
 export const deliveryType = {
     name: "Delivery Type",
     value: [
+        "",
         "currier",
         "post",
         "delivery servise"

@@ -56,7 +56,7 @@ const ProductDetails = ({
   const handleAddToCart = () => {
     if (checkSize) {
       addToCart(productToSend);
-    }
+    } 
   };
 
   const productToSend = {...product, size:checkSize};
