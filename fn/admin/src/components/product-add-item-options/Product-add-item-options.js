@@ -3,13 +3,17 @@ import { connect } from 'react-redux';
 import { TextField } from '@material-ui/core';
 import wrapWithAdminService from '../wrappers';
 
-import { PRODUCT_OPTION_NAMES } from '../../config';
-import { setProductGroupedPropetries } from '../../actions';
+import { config } from '../../config';
+import { setProductSizes } from '../../actions';
 import LoadingBar from '../loading-bar';
+
+const { productLabels } = config.product;
 
 const inputCapitalize = {
     style: { textTransform: 'capitalize' },
 };
+
+const INPUT_VARIANT = 'outlined';
 
 const nativeSelect = {
     native: true,
@@ -17,52 +21,52 @@ const nativeSelect = {
 
 const ProductAddItemOptions = ({
     adminService,
-    setProductGroupedPropetries,
+    setProductSizes,
     classes,
     onChangeEvent,
-    productEdit,
-    productPropetriesEditGroups,
+    productModel,
+    productSizes,
     loading,
 }) => {
     const { productPropetriesService } = adminService;
     useEffect(() => {
         productPropetriesService
             .getProductOptions()
-            .then(res => setProductGroupedPropetries(res.productOptions));
-    }, [productPropetriesService, setProductGroupedPropetries]);
+            .then(res => setProductSizes(res.productOptions));
+    }, [productPropetriesService, setProductSizes]);
 
     if (loading) {
         return <LoadingBar />;
     }
 
-    const getGroupOptions = (group, name) =>
+    const getGroupOptions = (group, label) =>
         group.map(groupOption => (
-            <option key={groupOption[name]} value={groupOption[name]}>
-                {groupOption[name]}
+            <option key={groupOption[label]} value={groupOption[label]}>
+                {groupOption[label]}
             </option>
         ));
 
-    const groupOptions = productPropetriesEditGroups.map((group, index) => {
-        const name = PRODUCT_OPTION_NAMES[index];
-        const options = getGroupOptions(group, name);
+    const groupOptions = productSizes.map((group, index) => {
+        const label = productLabels[index];
+        const options = getGroupOptions(group, label);
         return options;
     });
     const optionsMenu = groupOptions.map((option, index) => {
-        const optionName = PRODUCT_OPTION_NAMES[index];
+        const label = productLabels[index];
 
         return (
             <TextField
                 required
-                key={optionName}
+                key={label}
                 select
                 className={classes.textfield}
-                label={optionName}
-                name={optionName}
-                value={productEdit[optionName]}
+                label={label}
+                name={label}
+                value={productModel[label]}
                 onChange={onChangeEvent}
                 SelectProps={nativeSelect}
                 inputProps={inputCapitalize}
-                variant="outlined"
+                variant={INPUT_VARIANT}
             >
                 <option value="" />
                 {option}
@@ -73,16 +77,14 @@ const ProductAddItemOptions = ({
     return optionsMenu;
 };
 
-const mapStateToProps = ({
-    productEditState: { productEdit, productPropetriesEditGroups, loading },
-}) => ({
-    productEdit,
-    productPropetriesEditGroups,
+const mapStateToProps = ({ productModelState: { productModel, productSizes, loading } }) => ({
+    productModel,
+    productSizes,
     loading,
 });
 
 const mapDispatchToProps = {
-    setProductGroupedPropetries,
+    setProductSizes,
 };
 
 export default wrapWithAdminService()(

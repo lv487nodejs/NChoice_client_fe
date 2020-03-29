@@ -7,13 +7,20 @@ import TableContainerHead from '../table-container-head';
 import useStyles from './Table-container-generator-style';
 import TablePaginator from '../table-container-paginator';
 
+const SMALL_SIZE = 'small';
+const DEFAULT_SIZE = 'medium';
+
 const TableContainerGenerator = ({ tableTitles, tableItems, pagination, dense }) => {
     const classes = useStyles();
 
     return (
         <div>
             <TableContainer className={classes.container} component={Paper}>
-                <Table className={classes.table} stickyHeader size={dense ? 'small' : 'medium'}>
+                <Table
+                    className={classes.table}
+                    stickyHeader
+                    size={dense ? SMALL_SIZE : DEFAULT_SIZE}
+                >
                     <TableContainerHead titles={tableTitles} />
                     <TableBody>{tableItems}</TableBody>
                 </Table>

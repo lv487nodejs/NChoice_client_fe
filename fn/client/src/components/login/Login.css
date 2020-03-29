@@ -3,3 +3,13 @@
     margin: 0 auto;
 
 }
+
+.loginHeader {
+    font-size: 52px;
+    line-height: 32px;
+    font-family: AdineuePRO,Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    margin-bottom: 100px;
+    margin-top: 200px;
+
+}

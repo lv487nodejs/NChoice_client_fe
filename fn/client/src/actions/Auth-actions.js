@@ -2,17 +2,20 @@ const postUserStarted = () => ({
   type: 'ADD_USER_REQUESTED',
 });
 
-const postUserSuccess = (data) => ({
+const postUserSuccess = (data, type) => ({
   type: 'ADD_USER_RECEIVED',
-  payload: data,
+  payload: {data, type}
 });
 
-const postUserError = () => ({
-  type: 'ADD_USER_ERROR,',
+const postUserError = (type) => ({
+  type: 'ADD_USER_ERROR',
+  payload: {type}
 });
 
-const logoutUser = () => ({
+const logoutUser = () => {
+  localStorage.removeItem('Token');
+  return {
   type: 'LOGOUT_USER',
-});
+}};
 
 export { postUserError, postUserStarted, postUserSuccess, logoutUser };

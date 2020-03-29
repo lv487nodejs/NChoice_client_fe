@@ -1,63 +1,38 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import { Badge } from '@material-ui/core';
 
-import { Link } from 'react-router-dom';
+import { StandardButton } from '../buttons';
 
-import { Badge, Button, Typography } from '@material-ui/core';
+import { config } from '../../config';
 
-import useStyle from './Table-nav-buttons-style';
-
-import { FILTER_OPTION_NAMES } from '../../config';
-
-const filterNames = FILTER_OPTION_NAMES;
-const pathToAddProductPage = '/productadd';
-
-const FILTERS_TITLE = 'Filter by:';
+const { filterLabels } = config.productFilters;
 const CLEAR_BUTTON_TITLE = 'Clear All';
-const NEW_PRODUCT_BUTTON_TITLE = 'NEW PRODUCT';
+const SMALL_SIZE = 'small';
+const DEFAULT_SIZE = 'medium';
 
 const TableNavButtons = ({ filterCounters, handleMenuOpen, handleClearFilter, dense }) => {
-    const classes = useStyle();
-    const size = dense ? 'small' : 'medium';
+    const size = dense ? SMALL_SIZE : DEFAULT_SIZE;
 
-    const filterButtons = filterNames.map(name => (
+    const filterButtons = filterLabels.map(name => (
         <Badge key={name} color="error" badgeContent={filterCounters[name]}>
-            <Button variant="contained" color="primary" size={size} onClick={handleMenuOpen(name)}>
-                {name}
-            </Button>
+            <StandardButton title={name} size={size} eventHandler={handleMenuOpen(name)} />
         </Badge>
     ));
 
     const clearDisable = filterCounters.total === 0;
 
     return (
-        <div className={classes.root}>
-            <Button
-                className={classes.tableNavButtons}
-                component={Link}
-                to={pathToAddProductPage}
-                variant="contained"
-                color="primary"
-                size={size}
-            >
-                {NEW_PRODUCT_BUTTON_TITLE}
-            </Button>
-            <Typography variant="button" className={classes.filterTitle}>
-                {FILTERS_TITLE}
-            </Typography>
-
+        <Fragment>
             {filterButtons}
-            <Button
-                color="primary"
-                variant="contained"
+            <StandardButton
                 disabled={clearDisable}
                 key={CLEAR_BUTTON_TITLE}
-                onClick={handleClearFilter}
+                eventHandler={handleClearFilter}
                 size={size}
-            >
-                {CLEAR_BUTTON_TITLE}
-            </Button>
-        </div>
+                title={CLEAR_BUTTON_TITLE}
+            />
+        </Fragment>
     );
 };
 

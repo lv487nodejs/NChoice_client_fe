@@ -15,13 +15,21 @@ import {
     setSnackBarStatus,
     setSnackBarSeverity,
     setSnackBarMessage,
+    setDrawerStatus,
 } from '../../actions';
 
 import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
 
-import { PRODUCTS_TABLE_HEAD } from '../../config';
+import { config } from '../../config';
+
+const tableTitles = config.tableHeadRowTitles.products;
+
+const REMOVE_TITLE = 'Product remove';
+const REMOVE_MESSAGE = 'Are you sure you want to remove product?';
+const SUCCESS_STATUS = 'success';
+const PATH_TO_PRODUCT = id => `/product/${id}`;
 
 const ProductList = ({
     adminService,
@@ -43,6 +51,7 @@ const ProductList = ({
     setSnackBarSeverity,
     setSnackBarMessage,
     setProductLoadingStatus,
+    setDrawerStatus,
 }) => {
     const { productsService } = adminService;
 
@@ -51,8 +60,13 @@ const ProductList = ({
         productsService
             .getProductsByFilter(currentPage, rowsPerPage, filters, searchTerm)
             .then(res => {
-                setProducts(res.products);
-                setPagesCount(res.foundProductsNumber);
+                if (res) {
+                    setProducts(res.products);
+                    setPagesCount(res.foundProductsNumber);
+                } else {
+                    setProducts([]);
+                    setPagesCount(0);
+                }
             });
     }, [
         productsService,
@@ -66,11 +80,20 @@ const ProductList = ({
     ]);
 
     useEffect(() => {
+        setDrawerStatus(false);
         getProducts();
-    }, [getProducts]);
+    }, [getProducts, setDrawerStatus]);
 
     const editHandler = productId => () => {
-        history.push(`/product/${productId}`);
+        history.push(PATH_TO_PRODUCT(productId));
+    };
+
+    const openDialogWindow = eventHandler => {
+        setDialogTitle(REMOVE_TITLE);
+        setDialogContent(REMOVE_MESSAGE);
+        setButtonTitle(REMOVE_TITLE);
+        setEventHandler(eventHandler);
+        setDialogStatus(true);
     };
 
     const removeHandler = productId => () => {
@@ -79,14 +102,11 @@ const ProductList = ({
             getProducts();
             setDialogStatus(false);
             setSnackBarMessage(res);
-            setSnackBarSeverity('success');
+            setSnackBarSeverity(SUCCESS_STATUS);
             setSnackBarStatus(true);
         };
-        setDialogTitle('Remove product');
-        setDialogContent('Are you sure you want to remove this product');
-        setButtonTitle('Remove Product');
-        setEventHandler(removeProduct);
-        setDialogStatus(true);
+
+        openDialogWindow(removeProduct);
     };
 
     const productItems = products.map((product, index) => (
@@ -97,7 +117,7 @@ const ProductList = ({
             category={product.category}
             brand={product.brand}
             title={product.title}
-            msrp={product.msrp}
+            mrsp={product.mrsp}
             price={product.price}
             editHandler={editHandler(product.id)}
             deleteHandler={removeHandler(product.id)}
@@ -105,11 +125,7 @@ const ProductList = ({
     ));
 
     const productTable = (
-        <TableContainerGenerator
-            tableTitles={PRODUCTS_TABLE_HEAD}
-            tableItems={productItems}
-            pagination
-        />
+        <TableContainerGenerator tableTitles={tableTitles} tableItems={productItems} pagination />
     );
 
     if (loading) {
@@ -143,6 +159,7 @@ const mapDispatchToProps = {
     setSnackBarStatus,
     setSnackBarSeverity,
     setSnackBarMessage,
+    setDrawerStatus,
 };
 
 export default wrapWithAdminService()(

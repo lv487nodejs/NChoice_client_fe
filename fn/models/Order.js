@@ -69,9 +69,9 @@ const OrderSchema = new Schema({
         type: String,
         required: true,
         enum: [
-            "done",
+            "delivered",
             "pending",
-            "open"
+            "canceled"
         ]
     }
 });

@@ -7,12 +7,14 @@ import { connect } from 'react-redux';
 import { useStyles } from './App-styles';
 import AppRouter from '../app-router';
 
-import { darkTheme, lightTheme } from './App-theme';
-import DialogWindow from '../dialog-window';
-import SnackbarItem from '../snackbar-item';
+import { theme } from './app-theme/App-theme';
+
+const DARK_THEME = 'dark';
+const LIGHT_THEME = 'light';
 
 const App = ({ darkMode }) => {
-    const themeValue = darkMode ? darkTheme : lightTheme;
+    const themeMode = darkMode ? DARK_THEME : LIGHT_THEME;
+    const themeValue = theme(themeMode);
 
     const classes = useStyles();
 
@@ -21,8 +23,6 @@ const App = ({ darkMode }) => {
             <CssBaseline />
             <div className={classes.root}>
                 <AppRouter />
-                <DialogWindow />
-                <SnackbarItem />
             </div>
         </ThemeProvider>
     );

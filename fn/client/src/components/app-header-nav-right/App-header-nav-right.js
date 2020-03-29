@@ -6,6 +6,7 @@ import { faHeart, faUser, faShoppingBasket, faSignOutAlt } from '@fortawesome/fr
 import Currency from '../currency';
 import { connect } from 'react-redux';
 import { logoutUser } from "../../actions";
+import InfoPopup from '../info-popup';
 
 const AppHeaderNavRight = ({cartNumbers, logoutUser, userStatus }) => {
   // const [cartNumbers, setValue] = React.useState(
@@ -23,6 +24,7 @@ const AppHeaderNavRight = ({cartNumbers, logoutUser, userStatus }) => {
   // localStorage.setItem('recipe', cartNumbers);
 
   return (
+    <>
       <nav className="nav-bar">
         <ul>
           <li key="4">
@@ -55,6 +57,8 @@ const AppHeaderNavRight = ({cartNumbers, logoutUser, userStatus }) => {
           }
         </ul>
       </nav>
+      <InfoPopup/>
+    </>
   )
 };
 

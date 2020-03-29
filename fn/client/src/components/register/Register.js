@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 import {REGISTER_ROUTE} from "../../configs/login-register-config";
 import axios from "axios";
 import {postUserError, postUserStarted, postUserSuccess} from "../../actions";
+import LoadingSpinner from "../Loading-spinner";
 
 
 const addDataToLocalStorage = (token) => {
-    localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
-    localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
+    localStorage.setItem('Token', JSON.stringify(token));
 }
 
 const USER_DATA = {
@@ -18,6 +18,7 @@ const USER_DATA = {
     lastName: '',
     email: '',
     password: '',
+    nextPassword: ''
 }
 
 const Register = (props) => {
@@ -39,11 +40,10 @@ const Register = (props) => {
             const { accessToken, refreshToken } = response.data;
             return { accessToken, refreshToken };
         }).then(json => {
-            postUserSuccess(json);
+            postUserSuccess(json, 'Register');
             addDataToLocalStorage(json);
         }).catch(e => {
-            console.log(e);
-            postUserError(e);
+            postUserError('Register');
         });
     }
 
@@ -58,8 +58,10 @@ const Register = (props) => {
 
     return (
         userStatus === 'loading' ?
-            <div>Loading...</div> : (
-                <Form className="register" onSubmit={handleSubmit}>
+            <LoadingSpinner /> : (
+            <div className="register">
+                <h3 className={'registerHeader'}>Join our Fashion Note club </h3>
+                <Form  onSubmit={handleSubmit}>
                     <Form.Label>First name</Form.Label>
                     <Form.Control
                         required
@@ -105,10 +107,6 @@ const Register = (props) => {
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label> Confirm Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password"/>
-                    </Form.Group>
                     <Form.Group controlId="formBasicCheckbox">
                         <Form.Check type="checkbox" label="I agree to terms"/>
                     </Form.Group>
@@ -117,6 +115,7 @@ const Register = (props) => {
                     </Button>
                     <Link to="/login" className="btn btn-link">Return to Login</Link>
                 </Form>
+            </div>
             )
     );
 }

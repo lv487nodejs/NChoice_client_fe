@@ -12,45 +12,42 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const { query } = req;
+
     let { currentpage, postsperpage } = query;
     currentpage = currentpage || 1;
     postsperpage = postsperpage || 15;
-    const skip = (currentpage-1) * postsperpage;
+    let skip = currentpage * postsperpage;
+    const { sortbyprice } = query;
+
     try {
         const filter = await getFilters(query);
         const projection = await getProjection(query);
         const sort = await getSort(query);
 
-        let products = await Products.find(filter, projection)
+        if (projection.score) {
+            skip = 0;
+        }
+
+        const products = await Products.find(filter, projection)
             .sort(sort)
             .skip(+skip)
             .limit(+postsperpage)
+            .sort({ price: sortbyprice })
             .populate('catalog')
             .populate('category')
             .populate('color')
             .populate('brand');
 
-        if (products.length === 0 && isNotBlank(query.searchTerm)) {
-          await updateSearchFilter(query, filter);
-
-          products = await Products.find(filter, projection)
-            .sort(sort)
-            .skip(+skip)
-            .limit(+postsperpage)
-            .populate('catalog')
-            .populate('category')
-            .populate('color')
-            .populate('brand');
+        if (!products) {
+            throw { message: 'Products not found ' };
         }
 
         const productsToSend = prepareProductsToSend(products);
-        const foundProductsNumber = await Products.find(filter)
-            .count()
-            .populate('catalog')
-            .populate('category')
-            .populate('color')
-            .populate('brand');
+        const foundProductsNumber = await Products.find(filter).count();
 
+        if (!foundProductsNumber) {
+            throw { message: 'Products not found ' };
+        }
         const pagesCount = Math.ceil(foundProductsNumber / postsperpage);
         res.status(200).send({ products: productsToSend, pagesCount, foundProductsNumber });
     } catch (err) {
@@ -87,15 +84,15 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
         if (!catalog) throw { message: 'Bad catalog name' };
 
         const requestedCategory = req.body.category;
-        const category = await Categories.findOne(requestedCategory);
+        const category = await Categories.findOne({ category: requestedCategory });
         if (!category) throw { message: 'Bad category name' };
 
         const requestedBrand = req.body.brand;
-        const brand = await Brands.findOne(requestedBrand);
+        const brand = await Brands.findOne({ brand: requestedBrand });
         if (!brand) throw { message: 'Bad brand name' };
 
         const requestedColor = req.body.color;
-        const color = await Colors.findOne(requestedColor);
+        const color = await Colors.findOne({ color: requestedColor });
         if (!color) throw { message: 'Bad color name' };
 
         const product = new Products({
@@ -120,35 +117,19 @@ router.post('/', productValidationRules(), validate, async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { catalogId, brandId, categoryId, colorId, images, title, description, mrsp, price, propetries } = req.body;
+    const { product } = req.body;
 
-    const productToUpdate = await Products.findById(id);
-    if (!productToUpdate) {
-        return res.status(404).send('Product not found!');
-    }
-
-    if (catalogId) productToUpdate.catalog = catalogId;
-
-    if (brandId) productToUpdate.brand = brandId;
-
-    if (categoryId) productToUpdate.category = categoryId;
-
-    if (colorId) productToUpdate.color = colorId;
-
-    if (title) productToUpdate.title = title;
-
-    if (description) productToUpdate.description = description;
-
-    if (mrsp) productToUpdate.mrsp = mrsp;
-
-    if (price) productToUpdate.price = price;
-
-    if (Array.isArray(images) && images.length) {
-        productToUpdate.images.push(...images);
-    }
-
-    if (Array.isArray(propetries) && images.propetries) {
-        productToUpdate.propetries.push(...propetries);
+    try {
+        const productToUpdate = await prepareProductsToUpdate(product);
+        const updatedProduct = await Products.findByIdAndUpdate(id, productToUpdate)
+            .populate('catalog')
+            .populate('category')
+            .populate('color')
+            .populate('brand');
+        const productToSend = prepareProductsToSend([updatedProduct]);
+        res.status(200).send(productToSend);
+    } catch (err) {
+        res.status(400).send(err);
     }
 });
 
@@ -164,18 +145,6 @@ router.delete('/:id', async (req, res) => {
         res.status(400).send(err);
     }
 });
-
-const updateSearchFilter = async (query, filter) => {
-  const { searchTerm } = query;
-
-  delete filter['$text'];
-  let regexp = new RegExp('\.*'+ searchTerm.trim() + '.*\i');
-  filter.$or =  [
-     { title: regexp },
-     { description: regexp }
-   ];
-};
-
 
 const getFilters = async query => {
     const { catalog, category, color, brand, searchTerm } = query;
@@ -224,12 +193,10 @@ const getProjection = async query => {
 };
 
 const getSort = async query => {
-    const { searchTerm, sortbyprice } = query;
+    const { searchTerm } = query;
     const sort = {};
 
-    if (isNotBlank(sortbyprice)) {
-      sort.price = sortbyprice;
-    } else if (isNotBlank(searchTerm)) {
+    if (isNotBlank(searchTerm)) {
         // sort by relevance
         sort.score = { $meta: 'textScore' };
     }
@@ -244,9 +211,8 @@ const prepareProductsToSend = products => {
             images: product.images,
             description: product.description,
             propetries: product.propetries,
-            modified: product.modified,
             price: product.price,
-            msrp: product.mrsp,
+            mrsp: product.mrsp,
         };
 
         if (product.brand) newProduct.brand = product.brand.brand;
@@ -256,6 +222,34 @@ const prepareProductsToSend = products => {
         return newProduct;
     });
     return productsToSend;
+};
+
+const prepareProductsToUpdate = async product => {
+    const { brand, color, category, catalog } = product;
+
+    if (product.price) product.price = parseFloat(product.price);
+    if (product.mrsp) product.mrsp = parseFloat(product.mrsp);
+
+    if (product.brand) {
+        const brandToSave = await Brands.findOne({ brand });
+        product.brand = brandToSave._id;
+    }
+
+    if (product.catalog) {
+        const catalogToSave = await Catalogs.findOne({ catalog });
+        product.catalog = catalogToSave._id;
+    }
+
+    if (product.category) {
+        const categoryToSave = await Categories.findOne({ category });
+        product.category = categoryToSave._id;
+    }
+
+    if (product.color) {
+        const colorToSave = await Colors.findOne({ color });
+        product.color = colorToSave._id;
+    }
+    return product;
 };
 
 const isNotBlank = str => !(!str || str.trim().length === 0);

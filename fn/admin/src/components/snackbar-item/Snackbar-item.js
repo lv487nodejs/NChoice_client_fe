@@ -6,7 +6,9 @@ import MuiAlert from '@material-ui/lab/Alert';
 
 import { setSnackBarStatus } from '../../actions';
 
-import { snackbarDuration } from '../../config';
+import { config } from '../../config';
+
+const { snackBarDuration } = config.app;
 
 const Alert = props => <MuiAlert elevation={6} variant="filled" {...props} />;
 
@@ -20,7 +22,7 @@ const SnackbarItem = ({ snackBarStatus, snackBarSeverity, snackBarMessage, setSn
     };
 
     return (
-        <Snackbar open={snackBarStatus} autoHideDuration={snackbarDuration} onClose={handleClose}>
+        <Snackbar open={snackBarStatus} autoHideDuration={snackBarDuration} onClose={handleClose}>
             <Alert onClose={handleClose} severity={snackBarSeverity}>
                 {snackBarMessage}
             </Alert>

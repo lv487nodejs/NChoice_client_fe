@@ -45,6 +45,11 @@ class ProductsService extends AdminService {
         return products;
     };
 
+    putProduct = async (id, product) => {
+        const res = await this.putData(`${productsPath}/${id}`, { product });
+        return res;
+    };
+
     postProduct = async product => {
         const url = `${productsPath}/`;
         const newProduct = await this.postData(url, product);

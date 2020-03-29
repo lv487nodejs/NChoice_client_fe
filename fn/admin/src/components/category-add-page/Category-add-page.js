@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import {
     Paper,
@@ -7,7 +8,6 @@ import {
     FormGroup,
     FormControlLabel,
     FormLabel,
-    FormControl,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { useStyles } from './Category-add-page-style';
@@ -19,10 +19,10 @@ import {
     setCategory,
     categoryUpdateCatalogs,
     categoryLoadingStatus,
-    categorySnackbarOpenTrue,
-    categorySnackbarOpenFalse,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
 } from '../../actions';
-import SnackbarItem from '../snackbar-item';
 
 const CategoryAddPage = props => {
     const classes = useStyles();
@@ -33,11 +33,12 @@ const CategoryAddPage = props => {
         setCatalogs,
         catalogs,
         categoryUpdateCatalogs,
-        categorySnackbarOpenTrue,
-        categorySnackbarOpenFalse,
         categoryLoadingStatus,
-        open,
         catalogsToUpdate,
+        history,
+        setSnackBarStatus,
+        setSnackBarSeverity,
+        setSnackBarMessage,
     } = props;
 
     const [categoryName, setCategoryName] = useState('');
@@ -46,15 +47,10 @@ const CategoryAddPage = props => {
     useEffect(() => {
         categoryLoadingStatus();
         catalogsService.getAllCatalogs().then(res => setCatalogs(res));
-    }, [
-        categoryLoadingStatus,
-        catalogsService,
-        setCatalogs,
-        setCategory,
-        categorySnackbarOpenTrue,
-        categorySnackbarOpenFalse,
-        categoryUpdateCatalogs,
-    ]);
+        return () => {
+            categoryUpdateCatalogs([]);
+        };
+    }, [categoryLoadingStatus, catalogsService, setCatalogs, setCategory, categoryUpdateCatalogs]);
 
     const categorySaveHandler = e => {
         e.preventDefault();
@@ -64,22 +60,37 @@ const CategoryAddPage = props => {
             category: categoryName,
         };
         categoriesService.postCategory(newCategory).then(res => {
-            catalogsToUpdate.forEach(catalog => {
-                catalog.categories.push(res._id);
-                catalogsService.putCatalog(catalog._id, catalog).then(res => {
-                    categorySnackbarOpenTrue();
-                    setCategoryName('');
-                });
+            const newCategoryName = res.category;
+            catalogsToUpdate.forEach(catalogToUpdate => {
+                if (catalogToUpdate.checked) {
+                    if (catalogToUpdate.catalog.categories) {
+                        catalogToUpdate.catalog.categories.push(res._id);
+                    }
+
+                    catalogsService
+                        .putCatalog(catalogToUpdate.catalog._id, catalogToUpdate.catalog)
+                        .then(res => {
+                            setSnackBarSeverity('success');
+                            setSnackBarMessage(`Category ${newCategoryName} succesfully saved!`);
+                            setSnackBarStatus(true);
+                            history.push(`/categories`);
+                        });
+                }
             });
         });
     };
 
-    const handleCheck = catalog => () => {
-        categoryUpdateCatalogs([...catalogsToUpdate, catalog]);
-    };
-
-    const closeSnackbarHandler = () => {
-        categorySnackbarOpenFalse();
+    const catalogsToUpdateHandler = catalog => e => {
+        const index = catalogsToUpdate.findIndex(element => element.catalog._id === catalog._id);
+        const catalogToUpdate = {
+            catalog,
+            checked: e.target.checked,
+        };
+        if (index > -1) {
+            catalogsToUpdate[index] = catalogToUpdate;
+        } else {
+            categoryUpdateCatalogs([...catalogsToUpdate, catalogToUpdate]);
+        }
     };
 
     const categoryNameHandler = e => {
@@ -90,6 +101,7 @@ const CategoryAddPage = props => {
         const catalogName = catalog.catalog;
         return (
             <FormControlLabel
+                className={classes.checkbox}
                 key={catalogName}
                 control={
                     <Checkbox
@@ -97,7 +109,7 @@ const CategoryAddPage = props => {
                         id={catalogName}
                         color="primary"
                         value={catalogName}
-                        onChange={handleCheck(catalog)}
+                        onChange={catalogsToUpdateHandler(catalog)}
                     />
                 }
                 label={catalogName.toUpperCase()}
@@ -107,50 +119,44 @@ const CategoryAddPage = props => {
 
     return (
         <form onSubmit={categorySaveHandler}>
-            <FormControl>
-                <Paper className={classes.content}>
-                    <TextField
-                        id="categoryName"
-                        className={classes.textfield}
-                        variant="outlined"
-                        label="Category name"
-                        value={categoryName}
-                        onChange={categoryNameHandler}
-                        required
-                    />
-                    <FormLabel component="legend">Choose catalogs for this category</FormLabel>
-                    <FormGroup row>{checkboxes}</FormGroup>
-                    <SaveButton type="submit" title="Save" />
-                </Paper>
-            </FormControl>
-            <SnackbarItem
-                open={open}
-                handleClose={closeSnackbarHandler}
-                severity="success"
-                message="Successefly created category!"
-            />
+            <Paper className={classes.categoryAdd}>
+                <TextField
+                    id="categoryName"
+                    className={classes.textfield}
+                    variant="outlined"
+                    label="Category name"
+                    value={categoryName}
+                    onChange={categoryNameHandler}
+                    required
+                />
+                <FormLabel className={classes.formLable} component="legend">
+                    Choose catalogs for this category
+                </FormLabel>
+                <FormGroup row>{checkboxes}</FormGroup>
+                <SaveButton className={classes.button} type="submit" title="Save" />
+            </Paper>
         </form>
     );
 };
 const mapStateToProps = ({
     catalogsState: { catalogs },
-    categoriesState: { category, loading, catalogsToUpdate, open },
+    categoriesState: { category, loading, catalogsToUpdate },
 }) => ({
     catalogs,
     category,
     loading,
     catalogsToUpdate,
-    open,
 });
 const mapDispatchToProps = {
     setCatalogs,
     setCategory,
     categoryLoadingStatus,
-    categorySnackbarOpenTrue,
-    categorySnackbarOpenFalse,
     categoryUpdateCatalogs,
+    setSnackBarStatus,
+    setSnackBarSeverity,
+    setSnackBarMessage,
 };
 
 export default wrapWithAdminService()(
-    connect(mapStateToProps, mapDispatchToProps)(CategoryAddPage)
+    connect(mapStateToProps, mapDispatchToProps)(withRouter(CategoryAddPage))
 );

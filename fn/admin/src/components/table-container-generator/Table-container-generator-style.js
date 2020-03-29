@@ -1,12 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(() => ({
     table: {
         textTransform: 'capitalize',
     },
     container: {
-        maxHeight: '80vh',
+        maxHeight: '78vh',
     },
-});
+}));
 
 export default useStyles;

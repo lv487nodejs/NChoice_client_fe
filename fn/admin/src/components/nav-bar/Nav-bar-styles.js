@@ -8,4 +8,10 @@ export const useStyles = makeStyles(theme => ({
     title: {
         flexGrow: 1,
     },
+    menuButton: {
+        marginRight: theme.spacing(2),
+        [theme.breakpoints.up('md')]: {
+            display: 'none',
+        },
+    },
 }));

@@ -6,7 +6,7 @@ const TableContainerHead = ({ titles }) => {
     const headRow = titles.map((title, index) => <TableCell key={index}>{title}</TableCell>);
 
     return (
-        <TableHead key="head">
+        <TableHead>
             <TableRow>{headRow}</TableRow>
         </TableHead>
     );

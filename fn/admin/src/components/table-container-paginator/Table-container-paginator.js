@@ -8,7 +8,6 @@ import TablePaginationActions from './Paginator-control';
 const FIRST_PAGE = 0;
 
 const selectProps = {
-    inputProps: { 'aria-label': 'rows per page' },
     native: true,
 };
 
