@@ -10,7 +10,6 @@ import {removeFromWishlist} from "../../actions";
 
 const Wishlist = ({removeFromWishlist}) => {
 
-    // const [product, setProduct] = useState(products)
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -24,13 +23,6 @@ const Wishlist = ({removeFromWishlist}) => {
     let foundIncreaseItems = products.findIndex(value => value.id === item.id);
     products.splice(foundIncreaseItems, 1)
   };
-
-    // const removeFromWishlist = (id) => {
-    //   const newProducts = products.map(el=>
-    //     el.id === id ? products.splice(products.indexOf(el), 1) : el
-    //   );
-    //   setProduct(newProducts)
-    // }
 
   return (
     <div className='main-wishlist'>

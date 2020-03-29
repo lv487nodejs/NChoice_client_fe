@@ -15,6 +15,7 @@ export default (state = initialState, action) => {
         newProducts.push({ ...action.payload, quantity: 1 });
       }
       localStorage.setItem("products-collection", JSON.stringify(newProducts));
+      localStorage.setItem("cart-numbers", (state.cartNumbers + 1));
 
       return {
         ...state,
@@ -27,7 +28,7 @@ export default (state = initialState, action) => {
       let foundIncreaseItems = newIncreaseProducts.find(item => action.payload.id === item.id);
       foundIncreaseItems.quantity += 1;
       localStorage.setItem("products-collection", JSON.stringify(newIncreaseProducts));
-
+      localStorage.setItem("cart-numbers", (state.cartNumbers + 1));
       return {
         ...state,
         products: newIncreaseProducts,
@@ -43,6 +44,7 @@ export default (state = initialState, action) => {
       if (foundItem.quantity === 1) {
         let new_items = state.products.filter(item => action.payload.id !== item.id);
         localStorage.setItem("products-collection", JSON.stringify(new_items));
+        localStorage.setItem("cart-numbers", (state.cartNumbers - 1));
 
         return {
           ...state,
@@ -52,6 +54,7 @@ export default (state = initialState, action) => {
       } else {
         foundItem.quantity -= 1;
         localStorage.setItem("products-collection", JSON.stringify(new_products));
+        localStorage.setItem("cart-numbers", (state.cartNumbers - 1));
 
         return {
           ...state,
@@ -63,13 +66,24 @@ export default (state = initialState, action) => {
     case "REMOVE_FROM_CART":
       let newItems = state.products.filter(item => action.payload.id !== item.id);
       let itemToRemove = state.products.find(item => action.payload.id === item.id);
-      localStorage.setItem("products-collection", JSON.stringify(newItems));
-
-      return {
-        ...state,
-        cartNumbers: state.cartNumbers - itemToRemove.quantity,
-        products: newItems
-      };
+      let quantity = 0;
+      if (itemToRemove) {
+        localStorage.setItem("products-collection", JSON.stringify(newItems));
+        quantity = itemToRemove.quantity;
+        localStorage.setItem("cart-numbers", (state.cartNumbers - quantity));
+        return {
+          ...state,
+          cartNumbers: state.cartNumbers - quantity,
+          products: newItems
+        };
+      } else {
+        localStorage.setItem("cart-numbers", "0");
+        return {
+          ...state,
+          cartNumbers: 0,
+          products: newItems
+        };
+      }
 
     case "CURRENCY_CHANGE_CART":
       return {

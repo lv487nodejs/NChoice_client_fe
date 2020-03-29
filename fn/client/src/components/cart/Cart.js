@@ -15,7 +15,7 @@ const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart}) => {
     if (localStorage.getItem('products-collection')) {
       setProducts(JSON.parse(localStorage.getItem('products-collection')));
     }
-  }, [increaseToCart, decreaseFromCart, removeFromCart]);
+  }, []);
 
   const handleIncreaseToCart = (item) => {
     increaseToCart(item);
@@ -78,7 +78,7 @@ const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart}) => {
                   {item.title}
                   <p> Price:
                   <span className="price">{item.price * item.quantity} {item.currencyIcon}</span>
-                  <span className="msrp-price">{item.msrp * item.quantity} {item.currencyIcon}</span>
+                  <span className="msrp-price">{item.msrp * item.quantity} </span>
                   </p>
                   <p> Size: <span>{item.propetries.size[0]}</span> </p>
                   <div className="quantity-control">

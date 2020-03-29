@@ -8,20 +8,11 @@ import { connect } from 'react-redux';
 import { logoutUser } from "../../actions";
 import InfoPopup from '../info-popup';
 
-const AppHeaderNavRight = ({cartNumbers, logoutUser, userStatus }) => {
-  // const [cartNumbers, setValue] = React.useState(
-  //   0 || localStorage.getItem('myValueInLocalStorage')
-  // );
-
-  // useEffect(() => {
-  //   localStorage.setItem('myValueInLocalStorage', cartNumbers);
-  // }, [cartNumbers]);
-
-  // useEffect(() => {
-  //   setValue('myValueInLocalStorage', cartNumbers);
-  // }, []);
-
-  // localStorage.setItem('recipe', cartNumbers);
+const AppHeaderNavRight = ({ logoutUser, userStatus }) => {
+  let cartNumbers = 0;
+  if (localStorage.getItem("cart-numbers")) {
+    cartNumbers = localStorage.getItem("cart-numbers");
+  }
 
   return (
     <>
