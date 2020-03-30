@@ -5,10 +5,12 @@ import UserPage from '../components/userPage/UserPage';
 import Cart from '../components/cart'
 import './User-page-container.css';
 
+
 const UserPageContainer = () => {
     const [showValue, setShowValue] = useState(1)
 
     const storageData = JSON.parse(localStorage.getItem('user'))
+
     const buttonOptions = [
         {
             title: 'change settings',

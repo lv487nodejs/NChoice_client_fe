@@ -73,7 +73,7 @@ const ProductList = ({
     ]);
 
     useEffect(() => {
-        setDrawerStatus(false)
+        setDrawerStatus(false);
         getProducts();
     }, [getProducts, setDrawerStatus]);
 

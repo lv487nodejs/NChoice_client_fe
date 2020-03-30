@@ -28,7 +28,6 @@ router.post('/login', userLoginValidationRules(), validate, async (req, res) => 
         user.tokens = [];
         user.tokens.push(refreshToken);
         await user.save();
-
         res.send({ accessToken, refreshToken, user });
     } catch (err) {
         req.status(500).send(err.message);
