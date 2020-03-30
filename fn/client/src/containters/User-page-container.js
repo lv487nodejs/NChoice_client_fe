@@ -47,7 +47,7 @@ const UserPageContainer = () => {
             </div>
         )
     }
-    return (<Redirect to="/userpage" />)
+    return (<Redirect to="/" />)
 }
 
 export default UserPageContainer;

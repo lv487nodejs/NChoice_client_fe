@@ -8,9 +8,9 @@ import './UserPage.css';
 
 import {postUserSuccess} from '../../actions'
 const UserPage = ({user,user:{firstName,lastName,email},userTokens, postUserSuccess}) => {
-    const localStorageUser = localStorage.getItem('user');
 
     const [userChangedData, setUserChangedData] = useState({ firstName, lastName, email, password: '' })
+
 
     // handler for user data
     const changeHandler = (e) => {
