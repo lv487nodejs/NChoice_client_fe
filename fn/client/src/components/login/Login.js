@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
@@ -25,28 +25,27 @@ const USER_DATA = {
 
 const SignupSchema = yup.object().shape({
     email: yup.string()
-    // .email()
-    .required("Required")
-    .matches(/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/, "Email must be correct. Example: nick@mail.com"),
-    
+        // .email()
+        .required("Required")
+        .matches(/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/, "Email must be correct. Example: nick@mail.com"),
+
     password: yup.string()
-    .required("No password provided.")
-    .min(8, "Password is too short - should be 8 chars minimum.")
-    .matches(/(?=.*[0-9])/, "Password must contain a number.")
+        .required("No password provided.")
+        .min(8, "Password is too short - should be 8 chars minimum.")
+        .matches(/(?=.*[0-9])/, "Password must contain a number.")
 });
 const Login = (props) => {
     const [user, setUser] = useState(USER_DATA);
-    const { postUserStarted, postUserSuccess, postUserError, userStatus, storeUser } = props;
+    const { postUserStarted, postUserSuccess, postUserError, userStatus } = props;
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchema
     });
-    const localStorageUser = localStorage.getItem('user')
 
     const [passwordShown, setPasswordShown] = useState(false);
     // const onSubmit = data => {
     //     alert(JSON.stringify(data));
     // };
-
+ 
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
     };
@@ -149,8 +148,8 @@ const Login = (props) => {
 
 const mapDispatchToProps = { postUserStarted, postUserSuccess, postUserError };
 
-const mapStateToProps = ({ authReducer: { userStatus, user } }) => ({
-    userStatus, storeUser: user
+const mapStateToProps = ({ authReducer: { userStatus} }) => ({
+    userStatus, 
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
