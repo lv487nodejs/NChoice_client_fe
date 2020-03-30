@@ -1,7 +1,8 @@
 export const itemsPerPage = [15, 30, 60];
 export const PRODUCT_LIST_URL = '/productlist/';
 export const countries = {
-    name: 'Country',
+    title: 'Country',
+    name: 'country',
     value: [
         "",
         "Ukraine",
@@ -20,7 +21,8 @@ export const countries = {
     ]
 };
 export const paymentMethods = {
-    name: "Payment Method",
+    title: "Payment Method",
+    name: "paymentMethod",
     value: [
         "",
         "credit card",
@@ -32,7 +34,8 @@ export const paymentMethods = {
     ]
 };
 export const deliveryType = {
-    name: "Delivery Type",
+    title: "Delivery Type",
+    name: "deliveryType",
     value: [
         "",
         "currier",

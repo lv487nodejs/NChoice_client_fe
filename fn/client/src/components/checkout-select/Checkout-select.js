@@ -5,7 +5,7 @@ import { Form } from 'react-bootstrap'
 
 const CheckoutSelect = ({ selectOptions, handleChange }) => (
     <Form.Group>
-        <Form.Label>{selectOptions.name}</Form.Label>
+        <Form.Label>{selectOptions.title}</Form.Label>
         <Form.Control
             as="select"
             name={selectOptions.name}

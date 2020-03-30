@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -8,15 +8,27 @@ import CheckoutSelect from '../checkout-select';
 import './checkout-form.css'
 
 
+const orderForm = {
+    country: '',
+    street: '',
+    buildingNumber: '',
+    contactPhone: '',
+    deliveryType: '',
+    paymentMethod: '',
+}
+
 const CheckoutForm = () => {
+
+    const [order, setOrder] = useState(orderForm)
 
     const submitHandler = (event) => {
         event.preventDefault();
-        // console.log(event.target.value);
+        console.log(order);
     }
 
     const handleChange = (event) => {
-        console.log(`${event.target.name}:${event.target.value}`);
+        event.persist();
+        setOrder(prevOrder => ({ ...prevOrder, [event.target.name]: event.target.value }));
     }
 
     return (
@@ -41,7 +53,7 @@ const CheckoutForm = () => {
                                 <Form.Label>Building number</Form.Label>
                                 <Form.Control
                                     placeholder="Type here..."
-                                    name="Building number"
+                                    name="buildingNumber"
                                     onChange={handleChange} />
                                 <Form.Label>Contact Phone Number</Form.Label>
                                 <Form.Control
@@ -74,7 +86,7 @@ const CheckoutForm = () => {
                         <Link to="/cart">
                             <Button
                                 variant="dark"
-                            >Go back to cart to make changes</Button>
+                            >Go to cart to make changes</Button>
                         </Link>
                     </Jumbotron>
                 </Col>
