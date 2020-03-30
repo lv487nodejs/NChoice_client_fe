@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './Checkout-table.css';
 import { Table } from 'react-bootstrap'
 import { connect } from 'react-redux';
@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 
 const CheckoutTable = ({ products, currency }) => {
 
-    const [currencyIcon, setCurrencyIcon] = useState();
-    
+    const [currencyIcon, setCurrencyIcon] = useState('$');
+
     useEffect(() => {
         currency === 1 ? setCurrencyIcon('€') : setCurrencyIcon('$');
     }, [currency]);
@@ -31,7 +31,9 @@ const CheckoutTable = ({ products, currency }) => {
                         <td>
                             <img
                                 className="order-tbl-img"
-                                src={`/images/products/${productRow.images}`} />
+                                alt="order-item"
+                                src={`/images/products/${productRow.images}`}
+                            />
                         </td>
                         <td>{productRow.title}</td>
                         <td>{productRow.quantity}</td>

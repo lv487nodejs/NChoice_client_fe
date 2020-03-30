@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
-import './checkout-form.css'
-import CheckoutTable from '../checkout-table';
-import { connect } from 'react-redux'
-import CheckoutSelect from '../checkout-select';
-import { countries, paymentMethods, deliveryType } from '../../configs/frontend-config'
+import React from 'react'
+import { Link } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import { countries, paymentMethods, deliveryType } from '../../configs/frontend-config'
+import CheckoutTable from '../checkout-table';
+import CheckoutSelect from '../checkout-select';
+import './checkout-form.css'
 
 
 const CheckoutForm = () => {
@@ -23,7 +24,7 @@ const CheckoutForm = () => {
             <Row>
                 <Col>
                     <Jumbotron>
-                    <h2>Order Form</h2>
+                        <h2>Order Form</h2>
                         <Form onSubmit={submitHandler}>
                             <fieldset className="field">
                                 <h3 className="text-center">Please fill in your address</h3>
@@ -70,6 +71,11 @@ const CheckoutForm = () => {
                     <Jumbotron>
                         <h2>Your Items</h2>
                         <CheckoutTable />
+                        <Link to="/cart">
+                            <Button
+                                variant="dark"
+                            >Go back to cart to make changes</Button>
+                        </Link>
                     </Jumbotron>
                 </Col>
             </Row>
