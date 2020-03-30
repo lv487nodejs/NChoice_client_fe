@@ -48,7 +48,7 @@ router.get('/', async (req, res) => {
         if (!foundProductsNumber) {
             throw { message: 'Products not found ' };
         }
-        const pagesCount = Math.ceil(foundProductsNumber / postsperpage);
+        const pagesCount = Math.floor(foundProductsNumber / postsperpage);
         res.status(200).send({ products: productsToSend, pagesCount, foundProductsNumber });
     } catch (err) {
         res.status(500).send({ message: err.message });

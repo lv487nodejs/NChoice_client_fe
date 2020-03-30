@@ -5,24 +5,26 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import {LOGIN_ROUTE} from "../../configs/login-register-config";
 import axios from "axios";
-import { postUserError, postUserStarted, postUserSuccess } from "../../actions";
+import { postUserError, postUserStarted, postUserSuccess} from "../../actions";
 
 const addDataToLocalStorage = (token) => {
-    localStorage.setItem('Token', JSON.stringify(token));
+    localStorage.setItem('user', JSON.stringify(token));
 }
 
 const USER_DATA = {
     email: '',
-    password: ''
+    password: '',
+    accessToken:''
 };
 
 const Login = (props) => {
     const [user, setUser] = useState(USER_DATA);
     const {postUserStarted,postUserSuccess,postUserError, userStatus}  = props;
 
+const accessToken = localStorage.getItem('accessToken')    
     const handleChange = (event) => {
         event.persist();
-        setUser( prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
+        setUser({ ...user,accessToken, [event.target.name]: event.target.value });
     };
     const postUser = (value, route) => {
         postUserStarted();
@@ -31,14 +33,13 @@ const Login = (props) => {
             url: route,
             data: value
         }).then(response => {
-            const { accessToken, refreshToken } = response.data;
-            return { accessToken, refreshToken };
+            const { accessToken, refreshToken,user } = response.data;            
+            return { accessToken, refreshToken,user };
         }).then(json => {
-            postUserSuccess(json);
+            postUserSuccess(json);            
             addDataToLocalStorage(json);
         }).catch(e => {
             postUserError();
-
         });
     }
     const handleSubmit = (event) => {
@@ -47,9 +48,8 @@ const Login = (props) => {
     };
 
     if (userStatus === 'received') {
-        return <Redirect to='/' />
+        return <Redirect to='/userpage' />
     }
-
     return (
         userStatus === 'loading' ?
             <div>Loading...</div> : (
