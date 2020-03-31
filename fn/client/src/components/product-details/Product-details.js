@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
 import './Product-details.css';
-// import Button from '@material-ui/core/Button';
 import { Card, Row, Col, Image, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';

@@ -25,7 +25,6 @@ const USER_DATA = {
 
 const SignupSchema = yup.object().shape({
     email: yup.string()
-        // .email()
         .required("Required")
         .matches(/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/, "Email must be correct. Example: nick@mail.com"),
 
@@ -41,9 +40,6 @@ const Login = (props) => {
         validationSchema: SignupSchema
     });
     const [passwordShown, setPasswordShown] = useState(false);
-    // const onSubmit = data => {
-    //     alert(JSON.stringify(data));
-    // };
 
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
@@ -71,8 +67,7 @@ const Login = (props) => {
         });
     }
     const onSubmit = (event, data) => {
-        // event.preventDefault();
-        // alert(JSON.stringify(data));
+
         postUser(user, LOGIN_ROUTE);
     };
 
@@ -89,7 +84,6 @@ const Login = (props) => {
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control
-                                // required
                                 type="text"
                                 placeholder="Enter email"
                                 name={'email'}
@@ -107,7 +101,6 @@ const Login = (props) => {
                             <Form.Label>Password</Form.Label>
                             <Form.Group className="pass-wrapper">
                             <Form.Control
-                                // required
                                 type={passwordShown ? "text" : "password"}
                                 placeholder="Password"
                                 name={'password'}
@@ -120,14 +113,11 @@ const Login = (props) => {
                             </Form.Group>
                             
                         </Form.Group>
-                        {/* <Form.Group controlId="formBasicCheckbox"> */}
-                        {/* <Form.Check type="checkbox" label="Remember me" /> */}
                         <Form.Check
                             type="switch"
                             id="custom-switch"
                             label="Remember me"
                         />
-                        {/* </Form.Group> */}
                         <Form.Group >
                             <Button variant="dark" type="submit" block>
                                 LOG IN

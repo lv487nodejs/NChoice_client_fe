@@ -13,7 +13,6 @@ import * as yup from "yup";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-const eye = <FontAwesomeIcon icon={faEye} />;
 
 
 const addDataToLocalStorage = (token) => {
@@ -27,6 +26,9 @@ const USER_DATA = {
     email: '',
     password: '',
 }
+
+const eye = <FontAwesomeIcon icon={faEye} />;
+
 const SignupSchema = yup.object().shape({
     firstName: yup
         .string()
@@ -56,7 +58,7 @@ const SignupSchema = yup.object().shape({
         .label('Terms')
         .test(
             'is-true',
-            'You nust agree to terms to continue',
+            'You must agree to terms to continue',
             value => value === true
         ),
 });
@@ -91,7 +93,6 @@ const Register = (props) => {
             const { accessToken, refreshToken } = response.data;
             return { accessToken, refreshToken };
         }).then(json => {
-            // postUserSuccess(json);
             postUserLoginSuccess(json);
             addDataToLocalStorage(json);
         }).catch(e => {
@@ -101,7 +102,6 @@ const Register = (props) => {
     }
 
     const onSubmit = (event) => {
-        // event.preventDefault();
         postUser(user, REGISTER_ROUTE);
     };
 
@@ -117,7 +117,6 @@ const Register = (props) => {
                     <Form.Group>
                     <Form.Label>First name</Form.Label>
                     <Form.Control
-                        // required
                         type="text"
                         placeholder="First name"
                         defaultValue="Mark"
@@ -131,7 +130,6 @@ const Register = (props) => {
                     <Form.Group>
                     <Form.Label>Last name</Form.Label>
                     <Form.Control
-                        // required
                         type="text"
                         placeholder="Last name"
                         defaultValue="Otto"
@@ -145,7 +143,6 @@ const Register = (props) => {
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control
-                            // required
                             type="email"
                             placeholder="Enter email"
                             name={'email'}
@@ -161,7 +158,6 @@ const Register = (props) => {
                         <Form.Label>Password</Form.Label>
                         <Form.Group className="pass-wrapper">
                             <Form.Control
-                                // required
                                 type={passwordShown ? "text" : "password"}
                                 placeholder="Password"
                                 name={'password'}
@@ -186,9 +182,6 @@ const Register = (props) => {
                         </Form.Group>
                     </Form.Group>
                     <Form.Group controlId="formBasicCheckbox">
-                        {/* <Form.Check type="checkbox" label="I agree to terms"
-                            name={'agreeToTerms'}
-                            ref={register} /> */}
                         <Form.Check
                             type="switch"
                             id="custom-switch"
@@ -199,11 +192,6 @@ const Register = (props) => {
                     </Form.Group>
 
                     {errors.agreeToTerms && <p className="errorMessage">{errors.agreeToTerms.message}</p>}
-                    {/* <Button variant="primary" type="submit" >
-                        Submit
-                    </Button>
-                    <Link to="/login" className="btn btn-link">Return to Login</Link> */}
-
                     <Form.Group >
                         <Button variant="dark" type="submit" block>
                             REGISTER
