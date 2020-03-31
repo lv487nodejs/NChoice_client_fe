@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { connect } from 'react-redux';
 import './Product-details.css';
 import { Card, Row, Col, Image, Button } from 'react-bootstrap';
