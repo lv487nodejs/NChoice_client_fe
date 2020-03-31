@@ -24,10 +24,6 @@ router.get('/', async (req, res) => {
         const projection = await getProjection(query);
         const sort = await getSort(query);
 
-        if (projection.score) {
-            skip = 0;
-        }
-
         const products = await Products.find(filter, projection)
             .sort(sort)
             .skip(+skip)
@@ -48,7 +44,7 @@ router.get('/', async (req, res) => {
         if (!foundProductsNumber) {
             throw { message: 'Products not found ' };
         }
-        const pagesCount = Math.floor(foundProductsNumber / postsperpage);
+        const pagesCount = Math.ceil(foundProductsNumber / postsperpage);
         res.status(200).send({ products: productsToSend, pagesCount, foundProductsNumber });
     } catch (err) {
         res.status(500).send({ message: err.message });

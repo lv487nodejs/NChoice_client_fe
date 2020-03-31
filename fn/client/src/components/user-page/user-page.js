@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'react-bootstrap'
-import UserPage from '../components/userPage/UserPage';
-import Cart from '../components/cart'
-import './User-page-container.css';
+import UserChangeData from '../user-page-change-data/user-page-change-data';
+import Cart from '../cart'
+import './user-page.css';
+import {connect} from 'react-redux'
+import {postUserSuccess} from '../../actions'
 
-
-const UserPageContainer = () => {
+const UserPage = () => {
     const [showValue, setShowValue] = useState(1)
+    
+    const storageData = JSON.parse(localStorage.getItem('user'));
 
-    const storageData = JSON.parse(localStorage.getItem('user'))
-
+    
     const buttonOptions = [
         {
             title: 'change settings',
@@ -33,7 +35,7 @@ const UserPageContainer = () => {
         <div className="user-page-container">
             <ul>{buttons}</ul>
             <div className="container">
-                <UserPage />
+                <UserChangeData />
             </div>
         </div> : showValue === 2 ?
             <div className="user-page-container">
@@ -51,5 +53,9 @@ const UserPageContainer = () => {
     }
     return (<Redirect to="/" />)
 }
+const mapStateToProps = ({authReducer:{user}}) =>({user})
+const mapDispatchToProps = {
+    postUserSuccess
+}
 
-export default UserPageContainer;
+export default connect(mapStateToProps,mapDispatchToProps)(UserPage);

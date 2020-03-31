@@ -47,7 +47,7 @@ export default class StoreService {
     if (catalog) {
       queryString = `${queryString}&catalog=${catalog}`;
     }
-    if (currentPage) {
+    if (currentPage>-1) {
       queryString = `${queryString}&currentpage=${currentPage}`;
     }
     if (postsPerPage) {

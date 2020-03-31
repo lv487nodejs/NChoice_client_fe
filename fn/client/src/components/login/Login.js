@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
@@ -23,9 +23,10 @@ const USER_DATA = {
     accessToken: ''
 };
 
+
 const SignupSchema = yup.object().shape({
     email: yup.string()
-        // .email()
+        .email()
         .required("Required")
         .matches(/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/, "Email must be correct. Example: nick@mail.com"),
 
@@ -36,16 +37,18 @@ const SignupSchema = yup.object().shape({
 });
 const Login = (props) => {
     const [user, setUser] = useState(USER_DATA);
-    const { postUserStarted, postUserSuccess, postUserError, userStatus } = props;
+    const { postUserStarted, postUserSuccess, postUserError, userStatus, storeUser } = props;
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchema
     });
-
+    const local = JSON.parse(localStorage.getItem('user'))
+  
     const [passwordShown, setPasswordShown] = useState(false);
+
     // const onSubmit = data => {
     //     alert(JSON.stringify(data));
     // };
- 
+
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
     };
@@ -148,8 +151,8 @@ const Login = (props) => {
 
 const mapDispatchToProps = { postUserStarted, postUserSuccess, postUserError };
 
-const mapStateToProps = ({ authReducer: { userStatus} }) => ({
-    userStatus, 
+const mapStateToProps = ({ authReducer: { userStatus, user } }) => ({
+    userStatus, storeUser: user
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,11 +1,11 @@
 const initialState = {
     userTokens: {},
     userStatus: null,
-    user:null,
+    user:{},
 }
 
 const authReducer = (state = initialState, action) => {
-    console.log(state);
+    console.log('auth reducer',state);
     
     switch (action.type) {
         case 'ADD_USER_REQUESTED':
