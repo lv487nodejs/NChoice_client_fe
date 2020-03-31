@@ -25,11 +25,10 @@ const SignupSchema = yup.object().shape({
 });
 
 // component
-const local = JSON.parse(localStorage.getItem('user'))||{}
-const {firstName,lastName,email} = local
+const local = JSON.parse(localStorage.getItem('user'))
+const {firstName,lastName,email} = local.user
 const UserChangeData = ({ user }) => {
     const [userChangedData, setUserChangedData] = useState({ firstName, lastName, email, password: '' })
-
     
     const history = useHistory()
 
@@ -39,32 +38,34 @@ const UserChangeData = ({ user }) => {
     // handler for user data
     const changeHandler = (e) => {
         setUserChangedData({ ...userChangedData, [e.target.name]: e.target.value })
-    }        
-    
-    const submitHandler = (e) => {
+    }      
+    useEffect(()=>{
+
         axios({
             method: "get",
             url: `http://localhost:5000/users/${local.user._id}`,
             data: { userChangedData },
-            headers: { "x-auth-token": local.user.tokens[0] }
-        }).then(response => {
-            console.log('response',response);
-            const { accessToken, refreshToken, user } = response.data
-            return { accessToken, refreshToken, user };
-        }).then(json => {
-            postUserSuccess(json);
-            localStorage.setItem('user', JSON.stringify(json));
-        }).catch(e => {
-            console.log(e.message);
-        });
+        headers: { "x-auth-token": local.accessToken }
+    }).then(response => {
+        console.log('response',response);
+        const { accessToken, refreshToken, user } = response.data
+        return { accessToken, refreshToken, user };
+    }).then(json => {
+        postUserSuccess(json);
+        localStorage.setItem('user', JSON.stringify(json));
+    }).catch(e => {
+        console.log(e.message);
+    });
+},[axios,postUserSuccess,local])  
+    
+    const submitHandler = (e) => {
         // const { user: prevUser } = JSON.parse(localStorage.getItem('user'));
         localStorage.setItem('user', JSON.stringify({ ...JSON.parse(localStorage.getItem('user')), ...{ user: { ...local.user, ...userChangedData } } }))
-     console.log('changed data',userChangedData);
-     
+        
         history.push('/')
         console.log('submit handler');        
     }
-
+    
     if (user) {
         return (
             <form onSubmit={handleSubmit(submitHandler)}>

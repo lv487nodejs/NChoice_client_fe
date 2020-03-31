@@ -44,7 +44,7 @@ const UserPage = () => {
                     <Cart />
                 </div>
             </div> : ""
-    if (storageData && storageData.accessToken) {
+    if (storageData.user && storageData.user._id ) {
         return (
             <div className="container">
                 {itemToShow}
