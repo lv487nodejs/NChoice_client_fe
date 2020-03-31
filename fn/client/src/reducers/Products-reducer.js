@@ -3,7 +3,7 @@ const initialState = {
     product: {},
     currency: 1,
     loading: true,
-    currentPage: 1,
+    currentPage: 0,
     postsPerPage: 15,
     pagesCount: 1,
     sortByPrice: 0,

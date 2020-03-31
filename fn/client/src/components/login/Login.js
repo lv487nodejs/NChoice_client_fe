@@ -9,7 +9,7 @@ import { postUserError, postUserStarted, postUserSuccess } from "../../actions";
 import LoadingSpinner from "../Loading-spinner";
 
 const addDataToLocalStorage = (token) => {
-    localStorage.setItem('Token', JSON.stringify(token));
+    localStorage.setItem('user', JSON.stringify(token));
 }
 
 const USER_DATA = {
@@ -32,8 +32,8 @@ const Login = (props) => {
             url: route,
             data: value
         }).then(response => {
-            const { accessToken, refreshToken } = response.data;
-            return { accessToken, refreshToken };
+            const { accessToken, refreshToken, user } = response.data;
+            return { accessToken, refreshToken, user };
         }).then(json => {
             postUserSuccess(json, 'Login');
             addDataToLocalStorage(json);

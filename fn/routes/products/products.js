@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     const { query } = req;
 
     let { currentpage, postsperpage } = query;
-    currentpage = currentpage || 1;
+    currentpage = currentpage || 0;
     postsperpage = postsperpage || 15;
     let skip = currentpage * postsperpage;
     const { sortbyprice } = query;
@@ -23,12 +23,7 @@ router.get('/', async (req, res) => {
         const filter = await getFilters(query);
         const projection = await getProjection(query);
         const sort = await getSort(query);
-
-        if (!projection.score) {
-            skip = 0;
-        }
-        console.log(filter);
-
+        
         const products = await Products.find(filter, projection)
             .sort(sort)
             .skip(+skip)

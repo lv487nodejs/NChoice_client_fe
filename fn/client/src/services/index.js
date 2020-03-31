@@ -56,7 +56,7 @@ export default class StoreService {
     if (catalog) {
       queryString = `${queryString}&catalog=${catalog}`;
     }
-    if (currentPage) {
+    if (currentPage > -1) {
       queryString = `${queryString}&currentpage=${currentPage}`;
     }
     if (postsPerPage) {
@@ -73,9 +73,7 @@ export default class StoreService {
     }
     const products = await this.getResource(queryString);
     return products;
-    // const catalogs = await this.getResource(queryString);
-    // return catalogs;
-  };
+     };
 
   getAllCatalogs = async () => {
     const catalogs = await this.getResource('catalogs');
