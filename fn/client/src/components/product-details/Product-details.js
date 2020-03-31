@@ -47,7 +47,6 @@ const ProductDetails = ({
 
 
   const newProducts = products.filter(elem => elem.category === product.category).slice(-3)
-  console.log(newProducts)
 
   const handleCheck = item => () => {
     setCheckSize(item)
