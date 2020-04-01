@@ -3,26 +3,22 @@ import './Product-sort.css';
 import Button from 'react-bootstrap/Button';
 import FA from 'react-fontawesome';
 
-const ProductSort = ({ options }) => {
-  const [sortValue, setSortValue] = useState(options[0].value);
+const ProductSort = (props) => {
+  const [sortValue, setSortValue] = useState(props.value);
   const [className, setClassName] = useState(null);
-  const changeHandler = (sortOption) => {
+  const changeHandler = () => {
     setSortValue(-sortValue);
     sortValue === 1
-      ? setClassName(options[sortOption].defaultClass)
-      : setClassName(options[sortOption].toChangeClass);
-    options[sortOption].handler(sortValue);
+        ? setClassName(props.defaultClass)
+        : setClassName(props.toChangeClass);
+    props.handler(sortValue);
   };
-  const buttons = options.map(({ text, variant, option }) => (
-    <Button
-        key={text}
-        variant={variant}
-        onClick={() => changeHandler(option)}
-    >
-      {text} <FA name="sort" className={className ? className : 'fas fa-sort'} />
-    </Button>
-  ));
-  return <div className="flex row flex-wrap">{buttons}</div>;
+
+  return (
+      <Button key={props.text} variant={props.variant} onClick={changeHandler}>
+        {props.text} <FA name="sort" className={className ? className : 'fas fa-sort'} />
+      </Button>
+  )
 };
 
 export default ProductSort;

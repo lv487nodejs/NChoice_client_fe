@@ -38,7 +38,6 @@ const ProductList = ({
 }) => {
   const sortOptions = [
     {
-      option: 0,
       text: 'sort by price',
       value: sortAsc,
       handler: addSortByPrice,
@@ -46,7 +45,6 @@ const ProductList = ({
       defaultClass: 'fas fa-sort-up',
       toChangeClass: 'fas fa-sort-down',
     }, {
-      option: 1,
       text: 'sort by rating',
       value: sortAsc,
       handler: addSortByRating,
@@ -92,7 +90,10 @@ const ProductList = ({
       <div className="product-list-page">
         <div className="products-options">
           <SearchBar />
-          <ProductSort options={sortOptions} />
+          {sortOptions.map(({ value, variant, defaultClass, toChangeClass, handler, text }) => {
+            return  <ProductSort value={value} defaultClass={defaultClass} toChangeClass={toChangeClass} variant={variant} text={text} handler={handler} />
+
+          })}
 
           <ProductListButtonPages
             changeItems={changeItemsMethod}
