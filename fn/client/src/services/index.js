@@ -1,6 +1,8 @@
+import ClientService from './client-service';
+
 import axios from 'axios';
 
-export default class StoreService {
+export class StoreService {
   _apiBase = 'http://localhost:5000/';
 
   getResource = async (url) => {
@@ -129,3 +131,28 @@ export default class StoreService {
     return cart;
   };
 }
+
+
+export class CartService extends ClientService {
+  postCartItem = async cartItem => {
+    const res = await this.postData('cart', cartItem);
+    return res;
+  };
+
+  getCartById = async id => {
+    const cart = await this.getResource(`cart/${id}`);
+    return cart;
+  };
+
+  putCart = async (id, cartItem) => {
+    const res = await this.putData(`cart/${id}`, { cartItem });
+    return res;
+  };
+
+  deleteCart = async id => {
+    const cart = await this.deleteResource(`cart/${id}`);
+    return cart;
+  }
+}
+
+

@@ -17,7 +17,7 @@ import withStoreService from '../hoc';
 import './filter.css';
 
 const Filter = ({
-  storeService,
+  a:{storeService},
   filterAddBrand,
   filterAddCategory,
   filterAddColor,

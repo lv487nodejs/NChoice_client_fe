@@ -23,7 +23,7 @@ import ProductSort from '../product-sort';
 const sortAsc = 1;
 
 const ProductList = ({
-  storeService,
+  a:{storeService},
   productsLoaded,
   productsRequested,
   catalogLoaded,

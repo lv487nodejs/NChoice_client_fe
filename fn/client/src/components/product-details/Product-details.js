@@ -24,7 +24,7 @@ const ProductDetails = ({
   productLoaded,
   productsLoaded,
   productsRequested,
-  storeService,
+  a:{storeService},
   products,
   addToCart,
   addToWishlist

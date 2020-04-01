@@ -7,16 +7,17 @@ import Container from "@material-ui/core/Container/Container";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
 import {increaseToCart, decreaseFromCart, removeFromCart } from '../../actions'
+import withStoreService from "../hoc";
 
 
-const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart, cartService}) => {
-  const [product, setProduct] = useState(products)
+const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart, a:{cartService}}) => {
+  const [product, setProduct] = useState(products);
 
-  console.log(product);
-//   const productCallback = async (product, userId='5e6a43fcfeebf82614b774ab') => {
-//     cartService.postCartItem(userId, product).then()
-//
-// }
+  const productCallback = async (product, userId={userId: '5e6a43fcfeebf82614b774ab'}) => {
+
+    cartService.postCartItem(userId, product).then((res) => console.log(res))
+
+}
 
   const removeFromCart1 = (id) => {
     const newProducts = products.map(el=>
@@ -67,6 +68,7 @@ const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart, cartS
   return (
     <div className='main-cart'>
       <h3>Cart</h3>
+      <Button onClick={() => productCallback(product)} />
       <h5>{products.length < 1 && <em> Please add some products to cart.</em>}</h5>
       <ul className='cart-wrap'>
         {products.map((item) => (
@@ -110,6 +112,7 @@ const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart, cartS
 
 const mapStateToProps = ({cartReducer: {products}}) => ({products});
 
-export default connect(mapStateToProps, {increaseToCart, decreaseFromCart, removeFromCart})(Cart);
+export default withStoreService() (connect(mapStateToProps, {increaseToCart, decreaseFromCart, removeFromCart})(Cart));
+
 
 

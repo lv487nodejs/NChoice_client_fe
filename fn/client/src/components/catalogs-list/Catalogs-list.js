@@ -7,7 +7,9 @@ import withStoreService from '../hoc';
 import CatalogsListItem from '../catalogs-list-item/Catalogs-list-item';
 import LoadingSpinner from '../Loading-spinner';
 
-const CatalogsList = ({ storeService, catalogsLoaded, catalogsRequested, catalogs, loading }) => {
+
+const CatalogsList = ({ catalogsLoaded, catalogsRequested, catalogs, loading, a:{storeService} }) => {
+
     useEffect(() => {
         catalogsRequested();
         storeService
