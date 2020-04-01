@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
@@ -37,12 +37,11 @@ const SignupSchema = yup.object().shape({
 });
 const Login = (props) => {
     const [user, setUser] = useState(USER_DATA);
-    const { postUserStarted, postUserSuccess, postUserError, userStatus, storeUser } = props;
+    const { postUserStarted, postUserSuccess, postUserError, userStatus } = props;
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchema
     });
-    const local = JSON.parse(localStorage.getItem('user'))
-  
+
     const [passwordShown, setPasswordShown] = useState(false);
 
     // const onSubmit = data => {
@@ -53,7 +52,6 @@ const Login = (props) => {
         setPasswordShown(passwordShown ? false : true);
     };
 
-    const accessToken = localStorage.getItem('accessToken')
     const handleChange = (event) => {
         event.persist();
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
@@ -66,8 +64,6 @@ const Login = (props) => {
             data: value
         }).then(response => {
             const { accessToken, refreshToken, user } = response.data;
-            console.log(response);
-
             return { accessToken, refreshToken, user };
 
         }).then(json => {
@@ -151,8 +147,8 @@ const Login = (props) => {
 
 const mapDispatchToProps = { postUserStarted, postUserSuccess, postUserError };
 
-const mapStateToProps = ({ authReducer: { userStatus, user } }) => ({
-    userStatus, storeUser: user
+const mapStateToProps = ({ authReducer: { userStatus } }) => ({
+    userStatus
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

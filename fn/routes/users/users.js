@@ -69,6 +69,32 @@ router.put('/role/:id', async (req, res) => {
         res.status(400).send(err);
     }
 });
+// change user data
+router.put('/:id', tokenValidation, async (req, res) => {
+    const { id } = req.params;
+
+    const { firstName, lastName, email, password } = req.body.userToChange;
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const user = await Users.findByIdAndUpdate(id, { firstName, lastName, email, password:hashedPassword });
+        console.log('user', user);
+
+        if (!user) {
+            throw { message: 'User doesnt exist' };
+        }
+        const userName = { name: user.email };
+        const accessToken = generateAccessToken(userName);
+        const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
+
+        user.tokens = [];
+        user.tokens.push(refreshToken);
+        res.status(200).send({accessToken, refreshToken, user});
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+});
 
 const generateAccessToken = userName => jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
 

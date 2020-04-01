@@ -10,7 +10,7 @@ import {postUserSuccess} from '../../actions'
 const UserPage = () => {
     const [showValue, setShowValue] = useState(1)
     
-    const storageData = JSON.parse(localStorage.getItem('user'));
+    const storageData = JSON.parse(localStorage.getItem('user'))||{};
 
     
     const buttonOptions = [
