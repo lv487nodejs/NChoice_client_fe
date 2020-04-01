@@ -14,6 +14,7 @@ import {
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
+  addSortByRating
 } from '../../actions';
 import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
@@ -33,16 +34,26 @@ const ProductList = ({
   addCurrentPage,
   pagesCount,
   addSortByPrice,
+  addSortByRating
 }) => {
   const sortOptions = [
     {
+      option: 0,
       text: 'sort by price',
       value: sortAsc,
       handler: addSortByPrice,
       variant: 'dark',
       defaultClass: 'fas fa-sort-up',
       toChangeClass: 'fas fa-sort-down',
-    },
+    }, {
+      option: 1,
+      text: 'sort by rating',
+      value: sortAsc,
+      handler: addSortByRating,
+      variant: 'dark',
+      defaultClass: 'fas fa-sort-up',
+      toChangeClass: 'fas fa-sort-down'
+    }
   ];
 
   useEffect(() => {
@@ -113,6 +124,7 @@ const mapDispatchToProps = {
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
+  addSortByRating
 };
 
 export default withStoreService()(

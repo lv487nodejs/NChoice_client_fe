@@ -35,6 +35,11 @@ const sizesLoaded = newSize => ({
     payload: newSize,
 });
 
+const addSortByRating = value => ({
+    type: 'SORT_BY_RATING',
+    payload: value,
+});
+
 export {
     productsLoaded,
     productsRequested,
@@ -45,4 +50,5 @@ export {
     addSortByPrice,
     productLoaded,
     sizesLoaded,
+    addSortByRating
 };

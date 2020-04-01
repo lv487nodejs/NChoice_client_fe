@@ -10,6 +10,7 @@ import {
   addSortByPrice,
   productLoaded,
   sizesLoaded,
+  addSortByRating
 } from './Products-actions';
 
 import {addToCart, increaseToCart, decreaseFromCart, removeFromCart} from './Cart-action'
@@ -72,5 +73,6 @@ export {
   decreaseFromCart,
   removeFromCart,
   addToWishlist,
-  logoutUser
+  logoutUser,
+  addSortByRating
 };

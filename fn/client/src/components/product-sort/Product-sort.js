@@ -6,15 +6,19 @@ import FA from 'react-fontawesome';
 const ProductSort = ({ options }) => {
   const [sortValue, setSortValue] = useState(options[0].value);
   const [className, setClassName] = useState(null);
-  const changeHandler = () => {
+  const changeHandler = (sortOption) => {
     setSortValue(-sortValue);
     sortValue === 1
-      ? setClassName(options[0].defaultClass)
-      : setClassName(options[0].toChangeClass);
-    options[0].handler(sortValue);
+      ? setClassName(options[sortOption].defaultClass)
+      : setClassName(options[sortOption].toChangeClass);
+    options[sortOption].handler(sortValue);
   };
-  const buttons = options.map(({ text, variant }) => (
-    <Button key={text} variant={variant} onClick={changeHandler}>
+  const buttons = options.map(({ text, variant, option }) => (
+    <Button
+        key={text}
+        variant={variant}
+        onClick={() => changeHandler(option)}
+    >
       {text} <FA name="sort" className={className ? className : 'fas fa-sort'} />
     </Button>
   ));

@@ -55,16 +55,14 @@ router.get('/:id', async (req, res) => {
 // Update the cart by ID
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
+    const { cartItems } = req.body;
     try {
         let cart = await Cart.findById(id);
         if (!cart) {
             throw { message: 'Can not find cart with such an ID' };
         }
-        cart = await Cart.findByIdAndUpdate(id, req.body, {
-            new: true,
-            runValidators: true
-        })
-        res.status(200).send("Cart was successfully changed");
+        const updatedCart = await Cart.findByIdAndUpdate(id, cartItems);
+        res.status(200).send(updatedCart);
     } catch (err) {
         res.status(400).send(err);
     }

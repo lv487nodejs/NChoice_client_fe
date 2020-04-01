@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import connect from "react-redux/es/connect/connect";
 import './Cart.css'
-import {Figure} from 'react-bootstrap'
+import { Button, Figure } from 'react-bootstrap'
 import Row from "react-bootstrap/Row";
 import Container from "@material-ui/core/Container/Container";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
 import {increaseToCart, decreaseFromCart, removeFromCart } from '../../actions'
 
-const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart}) => {
+
+const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart, cartService}) => {
   const [product, setProduct] = useState(products)
+
+  console.log(product);
+//   const productCallback = async (product, userId='5e6a43fcfeebf82614b774ab') => {
+//     cartService.postCartItem(userId, product).then()
+//
+// }
 
   const removeFromCart1 = (id) => {
     const newProducts = products.map(el=>
@@ -86,7 +93,7 @@ const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart}) => {
                     onClick={() => {increaseToCart1(item.id); increaseToCart(item.id)}}/>
                   <FontAwesomeIcon
                     icon = {faTrash}
-                    className="delte-cart-button"
+                    className="delete-cart-button"
                     onClick={() => {removeFromCart1(item.id); removeFromCart(item.quantity)}}/>
                   </div>
                 </Figure.Caption>

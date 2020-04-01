@@ -32,7 +32,7 @@ export default class StoreService {
       currentPage,
       postsPerPage,
       sortByPrice,
-      sortByRate,
+      sortByRating,
       searchTerm,
     } = filter;
     if (brand) {
@@ -56,8 +56,8 @@ export default class StoreService {
     if (sortByPrice) {
       queryString = `${queryString}&sortbyprice=${sortByPrice}`;
     }
-    if (sortByRate) {
-      queryString = `${queryString}&sortbyrate=${sortByRate}`;
+    if (sortByRating) {
+      queryString = `${queryString}&sortbyrating=${sortByRating}`;
     }
     if (searchTerm) {
       queryString = `${queryString}&searchTerm=${searchTerm}`;

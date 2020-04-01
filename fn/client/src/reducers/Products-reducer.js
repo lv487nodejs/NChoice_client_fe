@@ -8,6 +8,7 @@ const initialState = {
     pagesCount: 1,
     sortByPrice: 0,
     sizes: [],
+    sortByRating: 0,
 };
 
 const productsList = (state = initialState, action) => {
@@ -63,6 +64,11 @@ const productsList = (state = initialState, action) => {
                 ...state,
                 sizes: action.payload,
                 loading: false,
+            };
+        case 'SORT_BY_RATING':
+            return {
+                ...state,
+                sortByRating: action.payload,
             };
 
         default:
