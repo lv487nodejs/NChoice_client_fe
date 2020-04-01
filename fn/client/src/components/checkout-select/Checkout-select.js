@@ -4,9 +4,10 @@ import { Form } from 'react-bootstrap'
 
 
 const CheckoutSelect = ({ selectOptions, handleChange }) => (
-    <Form.Group>
+    <Form.Group controlId="countryValidate">
         <Form.Label>{selectOptions.title}</Form.Label>
         <Form.Control
+            required
             as="select"
             name={selectOptions.name}
             onChange={handleChange}>

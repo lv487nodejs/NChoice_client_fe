@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -7,7 +7,6 @@ import CheckoutTable from '../checkout-table';
 import CheckoutSelect from '../checkout-select';
 import withStoreService from '../hoc';
 import './checkout-form.css'
-
 
 
 const orderForm = {
@@ -20,14 +19,15 @@ const orderForm = {
     paymentMethod: '',
 }
 
-const CheckoutForm = ({products,storeService}) => {
+const CheckoutForm = ({ products, storeService }) => {
 
+    const [validated, setValidated] = useState(false);
     const [order, setOrder] = useState(orderForm)
 
-    const productsINeed = products.map(product =>{
+    const productsINeed = products.map(product => {
         return {
-          item: product.id,
-          quantity: product.quantity   
+            item: product.id,
+            quantity: product.quantity
         }
     })
 
@@ -46,9 +46,18 @@ const CheckoutForm = ({products,storeService}) => {
         "status": "pending"
     }
 
-    const submitHandler = (event) => {
+    const handleSubmit = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false && true) {
+            event.preventDefault();
+            event.stopPropagation();
+            setValidated(true);
+            console.log(orderToServer.orderItems)
+            return
+        }
         event.preventDefault();
-        storeService.postOrder(orderToServer);
+        console.log(`After if ${orderToServer.orderItems}`)
+        // storeService.postOrder(orderToServer);
     }
 
     const handleChange = (event) => {
@@ -62,44 +71,66 @@ const CheckoutForm = ({products,storeService}) => {
                 <Col>
                     <Jumbotron>
                         <h2>Order Form</h2>
-                        <Form onSubmit={submitHandler}>
+                        <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <fieldset className="field">
                                 <h3 className="text-center">Please fill in your address</h3>
-                                <CheckoutSelect
-                                    selectOptions={countries}
-                                    name="country"
-                                    handleChange={handleChange}
-                                />
-                                <Form.Label>City</Form.Label>
-                                <Form.Control
-                                    placeholder="Type here..."
-                                    name="city"
-                                    onChange={handleChange} />
-                                <Form.Label>Street</Form.Label>
-                                <Form.Control
-                                    placeholder="Type here..."
-                                    name="street"
-                                    onChange={handleChange} />
-                                <Form.Label>Building number</Form.Label>
-                                <Form.Control
-                                    placeholder="Type here..."
-                                    name="buildingNumber"
-                                    onChange={handleChange} />
-                                <Form.Label>Contact Phone Number</Form.Label>
-                                <Form.Control
-                                    placeholder="Type here..."
-                                    name="contactPhone"
-                                    onChange={handleChange} />
+                                <Form.Group>
+                                    <CheckoutSelect
+                                        selectOptions={countries}
+                                        name="country"
+                                        handleChange={handleChange}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="cityValidate">
+                                    <Form.Label>City</Form.Label>
+                                    <Form.Control
+                                        required
+                                        placeholder="Type here..."
+                                        name={"city"}
+                                        onChange={handleChange}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="streetValidate">
+                                    <Form.Label>Street</Form.Label>
+                                    <Form.Control
+                                        required
+                                        placeholder="Type here..."
+                                        name="street"
+                                        onChange={handleChange}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="buildingValidate">
+                                    <Form.Label>Building number</Form.Label>
+                                    <Form.Control
+                                        required
+                                        placeholder="Type here..."
+                                        name="buildingNumber"
+                                        onChange={handleChange}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="phoneValidate">
+                                    <Form.Label>Contact Phone Number</Form.Label>
+                                    <Form.Control
+                                        required
+                                        placeholder="Type here..."
+                                        name="contactPhone"
+                                        onChange={handleChange}
+                                    />
+                                </Form.Group>
                             </fieldset>
                             <Form.Group className="form-space">
                                 <fieldset className="field">
                                     <h3 className="text-center">Please coose delivery type and payment method</h3>
                                     <CheckoutSelect
                                         selectOptions={deliveryType}
-                                        handleChange={handleChange} />
+                                        handleChange={handleChange}
+                                    />
+
                                     <CheckoutSelect
                                         selectOptions={paymentMethods}
-                                        handleChange={handleChange} />
+                                        handleChange={handleChange}
+                                    />
+
                                 </fieldset>
                             </Form.Group>
                             <Button
@@ -133,5 +164,4 @@ const mapStateToProps = ({ cartReducer: { products } }) => ({
 
 export default withStoreService()(
     connect(mapStateToProps)(CheckoutForm)
-    );
-
+);
