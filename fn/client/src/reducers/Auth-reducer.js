@@ -1,12 +1,13 @@
 const initialState = {
     userTokens: {},
     userStatus: null,
-    user:{},
+    user: {},
 }
 
 const authReducer = (state = initialState, action) => {
-    console.log('auth reducer',state);
-    
+    console.log('auth reducer state', state);
+    console.log('action payload', action);
+
     switch (action.type) {
         case 'ADD_USER_REQUESTED':
             return {
@@ -19,12 +20,12 @@ const authReducer = (state = initialState, action) => {
                 ...action.payload,
                 userStatus: 'received',
             }
-            case 'SET_USER':
-                return {
-                    ...state,
-                    user: action.payload,
-                    userStatus: 'received',
-                }
+        case 'SET_USER':
+            return {
+                ...state,
+                user: action.payload,
+                userStatus: 'received',
+            }
         case 'ADD_USER_LOGIN_RECEIVED':
             return {
                 ...state,

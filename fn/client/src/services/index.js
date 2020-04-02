@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { header } from 'express-validator';
 
 export default class StoreService {
   _apiBase = 'http://localhost:5000/';
@@ -127,5 +128,9 @@ export default class StoreService {
   getCartById = async (id) => {
     const cart = await this.getResource(`cart/${id}`);
     return cart;
+  };
+  getUserById = async (id,token) => {
+    const user = axios({method:'GET',url:`${this._apiBase}users/${id}`, headers: {"x-auth-token":token}})
+    return user;
   };
 }

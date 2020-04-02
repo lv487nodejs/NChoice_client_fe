@@ -26,7 +26,14 @@ router.get('/:id', tokenValidation, async (req, res) => {
         if (!user) {
             throw { message: 'User doesnt exist' };
         }
-        res.status(200).send(user);
+        const userName = { name: user.email };
+        const accessToken = generateAccessToken(userName);
+        const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
+
+        user.tokens = [];
+        user.tokens.push(refreshToken);
+        await user.save()
+        res.status(200).send({accessToken, refreshToken, user});
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
