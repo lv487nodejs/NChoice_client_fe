@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { countries, paymentMethods, deliveryType } from '../../configs/frontend-config'
@@ -23,7 +23,7 @@ const CheckoutForm = ({ products, storeService }) => {
 
     const [validated, setValidated] = useState(false);
     const [order, setOrder] = useState(orderForm)
-    
+
     const productsINeed = products.map(product => {
         return {
             item: product.id,
@@ -32,18 +32,18 @@ const CheckoutForm = ({ products, storeService }) => {
     })
 
     const orderToServer = {
-        "orderItems": productsINeed,
-        "userId": "5e5c066c39d3fa165ca5eb3b", //TODO: change to real auth userID
-        "deliveryAddress": {
-            "country": order.country,
-            "city": order.city,
-            "street": order.street,
-            "buildingNumber": order.buildingNumber
+        orderItems: productsINeed,
+        userId: "5e5c066c39d3fa165ca5eb3b", //TODO: change to real auth userID
+        deliveryAddress: {
+            country: order.country,
+            city: order.city,
+            street: order.street,
+            buildingNumber: order.buildingNumber
         },
-        "deliveryType": order.deliveryType,
-        "contactPhone": order.contactPhone,
-        "paymentMethod": order.paymentMethod,
-        "status": "pending"
+        deliveryType: order.deliveryType,
+        contactPhone: order.contactPhone,
+        paymentMethod: order.paymentMethod,
+        status: "pending"
     }
 
     const handleSubmit = (event) => {
