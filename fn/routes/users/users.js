@@ -79,8 +79,6 @@ router.put('/:id', tokenValidation, async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await Users.findByIdAndUpdate(id, { firstName, lastName, email, password:hashedPassword });
-        console.log('user', user);
-
         if (!user) {
             throw { message: 'User doesnt exist' };
         }
@@ -90,6 +88,7 @@ router.put('/:id', tokenValidation, async (req, res) => {
 
         user.tokens = [];
         user.tokens.push(refreshToken);
+        await user.save()
         res.status(200).send({accessToken, refreshToken, user});
     } catch (err) {
         res.status(500).send({ message: err.message });
