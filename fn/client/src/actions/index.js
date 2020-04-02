@@ -38,7 +38,8 @@ import {
   postUserStarted,
   postUserError,
   logoutUser,
-  postUserLoginSuccess
+  postUserLoginSuccess,
+  setUser
 } from './Auth-actions';
 
 export {
@@ -74,5 +75,6 @@ export {
   removeFromCart,
   addToWishlist,
   logoutUser,
-  postUserLoginSuccess
+  postUserLoginSuccess,
+  setUser
 };

@@ -5,7 +5,7 @@ import { InputGroup, FormControl } from 'react-bootstrap'
 import { Redirect, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import './user-page-change-data.css';
-import { postUserSuccess } from '../../actions'
+import { setUser } from '../../actions'
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { BASE_ROUTE } from '../../configs/login-register-config';
@@ -26,10 +26,10 @@ const SignupSchema = yup.object().shape({
 });
 
 // component
-const UserChangeData = (user) => {
+const UserChangeData = ({user}) => {
     const local = JSON.parse(localStorage.getItem('user'))
-
-    const { firstName, lastName, email } = local.user
+    const {firstName,lastName,email} = user;
+    // const { firstName, lastName, email } = local.user
     const [userChangedData, setUserChangedData] = useState({ firstName, lastName, email, password: '' })
 
     const history = useHistory()
@@ -44,41 +44,36 @@ const UserChangeData = (user) => {
     }
 
 
-    const addUserDataToStore = useCallback(() => {
+    const addUserDataToStore = useCallback((id, token) => {
         axios({
             method: "get",
-            url: `http://localhost:5000/users/${local.user._id}`,
-            headers: { "x-auth-token": local.accessToken }
-        }).then(response => {
-            console.log('response', response);
-            return response.data;
-        }).then(json => {
-            postUserSuccess({ user: json });
-            localStorage.setItem('user', JSON.stringify({ user: json }));
+            url: `http://localhost:5000/users/${id}`,
+            headers: { "x-auth-token": token }
+        })
+        .then(res => {
+            const user = res.data;
+            setUser(user);
+            const { firstName, lastName } = user
+            setUserChangedData({ ...userChangedData, firstName, lastName })
+            // localStorage.setItem('user', JSON.stringify({ user }));
         }).catch(e => {
             console.log(e.message);
         });
-    }, [axios, postUserSuccess, local])
+    }, [axios, setUser])
 
 
     useEffect(() => {
-        if (user.user._id === undefined || user.user.firstName === undefined) {
-            addUserDataToStore()
-        }
+            addUserDataToStore(local.user._id, local.accessToken)        
     }, [addUserDataToStore])
 
     const submitHandler = (e) => {
         axios({
             method: 'put', url: `${BASE_ROUTE}users/${local.user._id}`,
             data: { userToChange: userChangedData }, headers: { "x-auth-token": local.accessToken }
-        }).then(response => {
-            const { accessToken, refreshToken, user } = response.data;
-            return { accessToken, refreshToken, user };
-
-        }).then(json => {
-            postUserSuccess(json);
-            localStorage.setItem('user', JSON.stringify(json));
-            history.push('/')
+        })
+        .then(res => {
+            const { user, accessToken } = res.data;
+            addUserDataToStore(user._id, accessToken)
         }).catch(e => {
             console.log(e);
         });
@@ -120,6 +115,6 @@ const mapStateToProps = ({ authReducer: { user, userTokens } }) => ({
 
 })
 const mapDispatchToProps = {
-    postUserSuccess
+    setUser
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserChangeData);

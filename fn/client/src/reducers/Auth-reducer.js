@@ -19,6 +19,12 @@ const authReducer = (state = initialState, action) => {
                 ...action.payload,
                 userStatus: 'received',
             }
+            case 'SET_USER':
+                return {
+                    ...state,
+                    user: action.payload,
+                    userStatus: 'received',
+                }
         case 'ADD_USER_LOGIN_RECEIVED':
             return {
                 ...state,
