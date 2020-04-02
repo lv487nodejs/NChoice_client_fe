@@ -23,7 +23,7 @@ const CheckoutForm = ({ products, storeService }) => {
 
     const [validated, setValidated] = useState(false);
     const [order, setOrder] = useState(orderForm)
-
+    
     const productsINeed = products.map(product => {
         return {
             item: product.id,
@@ -48,16 +48,14 @@ const CheckoutForm = ({ products, storeService }) => {
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
-        if (form.checkValidity() === false && true) {
+        if (form.checkValidity() === false || orderToServer.orderItems.length === 0) {
             event.preventDefault();
             event.stopPropagation();
             setValidated(true);
-            console.log(orderToServer.orderItems)
             return
         }
         event.preventDefault();
-        console.log(`After if ${orderToServer.orderItems}`)
-        // storeService.postOrder(orderToServer);
+        storeService.postOrder(orderToServer);
     }
 
     const handleChange = (event) => {
@@ -89,15 +87,23 @@ const CheckoutForm = ({ products, storeService }) => {
                                         name={"city"}
                                         onChange={handleChange}
                                     />
+                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type City. This field is required
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group controlId="streetValidate">
-                                    <Form.Label>Street</Form.Label>
+                                    <Form.Label required>Street</Form.Label>
                                     <Form.Control
                                         required
                                         placeholder="Type here..."
                                         name="street"
                                         onChange={handleChange}
                                     />
+                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type street name. This field is required
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group controlId="buildingValidate">
                                     <Form.Label>Building number</Form.Label>
@@ -107,6 +113,10 @@ const CheckoutForm = ({ products, storeService }) => {
                                         name="buildingNumber"
                                         onChange={handleChange}
                                     />
+                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type your building. This field is required
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group controlId="phoneValidate">
                                     <Form.Label>Contact Phone Number</Form.Label>
@@ -116,6 +126,10 @@ const CheckoutForm = ({ products, storeService }) => {
                                         name="contactPhone"
                                         onChange={handleChange}
                                     />
+                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type Phone number. This field is required
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </fieldset>
                             <Form.Group className="form-space">

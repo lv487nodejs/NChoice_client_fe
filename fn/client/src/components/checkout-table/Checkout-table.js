@@ -12,6 +12,12 @@ const CheckoutTable = ({ products, currency }) => {
         currency === 1 ? setCurrencyIcon('€') : setCurrencyIcon('$');
     }, [currency]);
 
+    const totallCounter = () => {
+        const row = products.map(product => product.price * product.quantity);
+        const total = row.reduce((sum, next) => sum + next)
+        return total
+    }
+
     return (
         <Table
             bordered
@@ -42,7 +48,7 @@ const CheckoutTable = ({ products, currency }) => {
                 )}
                 <tr>
                     <td colSpan="3">Total:</td>
-                    <td>1000!!!</td>
+                    <td>{`${Math.round(totallCounter() * currency).toFixed(2)} ${currencyIcon}`}</td>
                 </tr>
             </tbody>
         </Table>

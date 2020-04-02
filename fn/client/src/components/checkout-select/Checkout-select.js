@@ -12,8 +12,12 @@ const CheckoutSelect = ({ selectOptions, handleChange }) => (
             name={selectOptions.name}
             onChange={handleChange}>
             {selectOptions.value.map(optionValue =>
-            <option key={optionValue}>{optionValue}</option>)}
+                <option key={optionValue}>{optionValue}</option>)}
         </Form.Control>
+        <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+            Please choose {selectOptions.title}. This field is required
+        </Form.Control.Feedback>
     </Form.Group>
 );
 
