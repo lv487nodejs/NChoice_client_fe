@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { connect } from 'react-redux'
 import { InputGroup, FormControl } from 'react-bootstrap'
 import { Redirect, useHistory } from 'react-router-dom';
@@ -7,7 +7,6 @@ import { setUser, postUserSuccess } from '../../actions'
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import withStoreService from '../hoc'
-import { axios } from 'axios';
 
 // validation
 const SignupSchema = yup.object().shape({
@@ -25,23 +24,22 @@ const SignupSchema = yup.object().shape({
 });
 
 // component
-const UserChangeData = ({user,storeService,accessToken}) => {
+const UserChangeData = ({ user, storeService, accessToken,setUser,postUserSuccess }) => {
     const local = JSON.parse(localStorage.getItem('user'))
-    const {firstName,lastName,email} = user;
+    const { firstName, lastName, email } = user;
     const history = useHistory()
 
 
-useEffect(()=>{
-    storeService.getUserById(local.userId,local.accessToken).then((res)=>{
-    console.log(res.data);
-    const {accessToken,refreshToken,user} = res.data
-    // setUser(res.data)
-    // setUser(user)
-    postUserSuccess(user)
-    
-    })
-    
-},[storeService,postUserSuccess])
+    useEffect(() => {
+        storeService.getUserById(local.userId, local.accessToken).then((res) => {
+            console.log(res.data);
+            const { accessToken, refreshToken, user } = res.data
+            // setUser(user)
+            postUserSuccess(user)
+
+        })
+
+    }, [storeService, postUserSuccess])
 
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchema
@@ -52,53 +50,57 @@ useEffect(()=>{
         setUser({ ...user, [e.target.name]: e.target.value })
     }
     const submitHandler = (e) => {
-    storeService.getUserById(local.userId,local.accessToken).then((res)=>{
-        setUser(res.data.user)
-    })   
-    
-    history.push('/')
+        storeService.getUserById(local.userId, local.accessToken).then((res) => {
+            setUser(res.data.user)
+            postUserSuccess(res.data.user)
+            console.log('submit handler');
+        })
     }
 
 
-if (user) {
-    return (
-        <form onSubmit={handleSubmit(submitHandler)}>
-            <label htmlFor="firstname">change your firstname</label>
-            <InputGroup className="mb-3">
-                <FormControl id="firstname" name="firstName" ref={register} value={firstName} placeholder="enter firstname..." onChange={changeHandler} />
-            </InputGroup>
-            {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
-            <label htmlFor="lastname">change your lastname</label>
-            <InputGroup>
-                <FormControl id="lastname" name="lastName" ref={register} value={lastName} placeholder="enter lastname..." onChange={changeHandler} />
-            </InputGroup>
-            {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
-            <label htmlFor="email">change your email</label>
-            <InputGroup>
-                <FormControl type="text" name="email" id="email" ref={register} value={email} placeholder="enter email..." onChange={changeHandler} />
-            </InputGroup>
-            {errors.email && <p className="errorMessage">{errors.email.message}</p>}
-            <label htmlFor="password">change your password</label>
-            <InputGroup>
-                <FormControl type="password" name="password" id="password" ref={register} value={user.password} placeholder="enter password..." onChange={changeHandler} />
-                {errors.password && <p className="errorMessage">{errors.password.message}</p>}
-            </InputGroup>
-            <input className="btn btn-dark user-page-button" type="submit" value="send changed data" />
-        </form>
-    )
-}
-return <Redirect to="/login" />
+    if (user) {
+        return (
+            <form onSubmit={handleSubmit(submitHandler)}>
+                <label htmlFor="firstname">change your firstname</label>
+                <InputGroup className="mb-3">
+                    <FormControl id="firstname" name="firstName" ref={register} value={firstName} placeholder="enter firstname..." onChange={changeHandler} />
+                </InputGroup>
+                {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
+                <label htmlFor="lastname">change your lastname</label>
+                <InputGroup>
+                    <FormControl id="lastname" name="lastName" ref={register} value={lastName} placeholder="enter lastname..." onChange={changeHandler} />
+                </InputGroup>
+                {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
+                <label htmlFor="email">change your email</label>
+                <InputGroup>
+                    <FormControl type="text" name="email" id="email" ref={register} value={email} placeholder="enter email..." onChange={changeHandler} />
+                </InputGroup>
+                {errors.email && <p className="errorMessage">{errors.email.message}</p>}
+                <label htmlFor="password">change your password</label>
+                <InputGroup>
+                    <FormControl type="password" name="password" id="password" ref={register} value={user.password} placeholder="enter password..." onChange={changeHandler} />
+                    {errors.password && <p className="errorMessage">{errors.password.message}</p>}
+                </InputGroup>
+                <input className="btn btn-dark user-page-button" type="submit" value="send changed data" />
+            </form>
+        )
+    }
+    return <Redirect to="/login" />
 
 }
 const mapStateToProps = (state) => {
     console.log(state);
-    
- return {
-     user:state.authReducer.user,accessToken:state.authReducer.accessToken
-    }   
+
+    return {
+        user: state.authReducer.user, accessToken: state.authReducer.accessToken
+    }
 
 }
-const mapDispatchToProps = {
-    setUser
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: (user) => dispatch(setUser(user)),
+        postUserSuccess: (user) => dispatch(postUserSuccess(user)),
+    }
+
 }
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(UserChangeData));
