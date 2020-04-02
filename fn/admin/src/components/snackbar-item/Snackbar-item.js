@@ -22,7 +22,12 @@ const SnackbarItem = ({ snackBarStatus, snackBarSeverity, snackBarMessage, setSn
     };
 
     return (
-        <Snackbar open={snackBarStatus} autoHideDuration={snackBarDuration} onClose={handleClose}>
+        <Snackbar
+            id="snack-bar"
+            open={snackBarStatus}
+            autoHideDuration={snackBarDuration}
+            onClose={handleClose}
+        >
             <Alert onClose={handleClose} severity={snackBarSeverity}>
                 {snackBarMessage}
             </Alert>

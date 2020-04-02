@@ -2,7 +2,8 @@
   "extends": [
     "airbnb",
     "prettier",
-    "prettier/react"
+    "prettier/react",
+    "plugin:cypress/recommended"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -43,7 +44,7 @@
     "prefer-const": [
       "error",
       {
-        "destructuring": "all",
+        "destructuring": "all"
       }
     ],
     "arrow-body-style": [

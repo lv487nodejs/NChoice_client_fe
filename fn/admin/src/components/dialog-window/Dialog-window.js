@@ -21,7 +21,7 @@ const DialogWindow = ({
     };
 
     return (
-        <Dialog onClose={handleClose} open={dialogStatus}>
+        <Dialog id="dialog-window" onClose={handleClose} open={dialogStatus}>
             <DialogTitle onClose={handleClose}>{dialogTitle}</DialogTitle>
             <DialogContent dividers>
                 <Typography gutterBottom>{dialogContent}</Typography>

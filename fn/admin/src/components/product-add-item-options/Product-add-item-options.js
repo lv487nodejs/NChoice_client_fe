@@ -34,7 +34,7 @@ const ProductAddItemOptions = ({
             .getProductOptions()
             .then(res => setProductSizes(res.productOptions));
     }, [productPropetriesService, setProductSizes]);
-
+    console.log(productModel)
     if (loading) {
         return <LoadingBar />;
     }
@@ -53,7 +53,7 @@ const ProductAddItemOptions = ({
     });
     const optionsMenu = groupOptions.map((option, index) => {
         const label = productLabels[index];
-
+        
         return (
             <TextField
                 required
@@ -67,6 +67,7 @@ const ProductAddItemOptions = ({
                 SelectProps={nativeSelect}
                 inputProps={inputCapitalize}
                 variant={INPUT_VARIANT}
+                id={label}
             >
                 <option value="" />
                 {option}
