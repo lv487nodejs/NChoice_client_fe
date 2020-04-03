@@ -7,16 +7,18 @@ import { Link } from 'react-router-dom';
 
 
 
-function ProductListItem({ title, description, id, images, price, msrp, currency }) {
+function ProductListItem({ title, description, id, images, price, mrsp, currency }) {
+    console.log(mrsp);
+    
     const [priceWithRate, setPriceWithRate] = useState();
     const [msrpWithRate, setMsrpWithRate] = useState();
     const [currencyIcon, setCurrencyIcon] = useState();
 
     useEffect(() => {
         setPriceWithRate(Math.floor(price * currency));
-        setMsrpWithRate(Math.floor(msrp * currency));
+        setMsrpWithRate(Math.floor(mrsp * currency));
         currency === 1 ? setCurrencyIcon('€') : setCurrencyIcon('$');
-    }, [currency, price, msrp]);
+    }, [currency, price, mrsp]);
 
     return (
         <Card key={id} className="productCart">
