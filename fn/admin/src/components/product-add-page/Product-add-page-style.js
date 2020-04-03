@@ -5,9 +5,6 @@ const { drawerWidth } = config.app;
 
 export const useStyles = makeStyles(theme => ({
     content: {
-        // display: 'flex',
-        // flexDirection: 'column',
-        // flexGrow: 1,
         marginTop: 90,
         margin: theme.spacing(2),
         minHeight: '80vh',

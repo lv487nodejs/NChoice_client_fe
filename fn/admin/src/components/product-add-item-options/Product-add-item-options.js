@@ -34,7 +34,6 @@ const ProductAddItemOptions = ({
             .getProductOptions()
             .then(res => setProductSizes(res.productOptions));
     }, [productPropetriesService, setProductSizes]);
-    console.log(productModel)
     if (loading) {
         return <LoadingBar />;
     }

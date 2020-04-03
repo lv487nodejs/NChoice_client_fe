@@ -24,14 +24,6 @@ const ProductAddPageStepper = ({ steps, onSaveHandler }) => {
 
     const lastStep = stepsLength - 1;
 
-    // const buttons = {
-    //     nextButton: <StepperNextButton />,
-    //     backButton: <StepperBackButton activeStep={activeStep} eventHandler={handleBack} />,
-    // };
-
-    // if (activeStep === lastStep)
-    //     buttons.nextButton = <SaveButton id="savebutton" title={SAVE_LABEL} />;
-
     const stepperSteps = steps.map((step, index) => {
         const onSubmitHandler = lastStep === index ? onSaveHandler : handleNext;
 
