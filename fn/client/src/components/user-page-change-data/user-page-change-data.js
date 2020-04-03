@@ -51,7 +51,6 @@ addUserDataToSTore(local.userId,local.accessToken)
     }
     const submitHandler = (e) => {
         storeService.sendUserChangedData(local.userId, local.accessToken,{userToChange: user}).then((res) => {
-            setUser(res.data.user)
             addUserDataToSTore(local.userId,local.accessToken)
         })
     }

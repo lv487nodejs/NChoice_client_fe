@@ -106,7 +106,7 @@ router.put('/:id', tokenValidation, async (req, res) => {
         user.tokens = [];
         user.tokens.push(refreshToken);
         await user.save()
-        res.status(200).send({ accessToken, refreshToken, user });
+        res.status(200).send({msg:'user data successfully changed'});
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
