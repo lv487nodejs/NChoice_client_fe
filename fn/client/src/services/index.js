@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { header } from 'express-validator';
 
 export default class StoreService {
   _apiBase = 'http://localhost:5000/';
@@ -131,6 +130,10 @@ export default class StoreService {
   };
   getUserById = async (id,token) => {
     const user = axios({method:'GET',url:`${this._apiBase}users/${id}`, headers: {"x-auth-token":token}})
+    return user;
+  };
+  sendUserChangedData = async (id,token,data) => {
+    const user = axios({method:'PUT',url:`${this._apiBase}users/${id}`,data, headers: {"x-auth-token":token}})
     return user;
   };
 }

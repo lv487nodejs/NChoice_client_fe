@@ -4,10 +4,7 @@ const initialState = {
     user: {},
 }
 
-const authReducer = (state = initialState, action) => {
-    console.log('auth reducer state', state);
-    console.log('action payload', action);
-
+const authReducer = (state = initialState, action) => {    
     switch (action.type) {
         case 'ADD_USER_REQUESTED':
             return {

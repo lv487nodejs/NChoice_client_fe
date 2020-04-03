@@ -38,7 +38,8 @@ router.get('/:id', tokenValidation, async (req, res) => {
             lastName: user.lastName,
             email: user.email,
             date: user.date,
-            tokens: user.tokens
+            tokens: user.tokens,
+            wishlist:user.wishlist,
         }
         res.status(200).send({ accessToken, refreshToken, user: mappedUser });
     } catch (err) {
@@ -87,7 +88,7 @@ router.put('/role/:id', async (req, res) => {
 router.put('/:id', tokenValidation, async (req, res) => {
     const { id } = req.params;
 
-    const { firstName, lastName, email, password } = req.body.userToChange;
+    const { firstName, lastName, email,password } = req.body.userToChange;
 
     try {
         const user = await Users.findByIdAndUpdate(id, { firstName, lastName, email });

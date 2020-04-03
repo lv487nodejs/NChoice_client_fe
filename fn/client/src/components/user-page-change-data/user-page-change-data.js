@@ -1,9 +1,9 @@
 import React, { useEffect, useCallback } from 'react'
 import { connect } from 'react-redux'
 import { InputGroup, FormControl } from 'react-bootstrap'
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import './user-page-change-data.css';
-import { setUser, postUserSuccess } from '../../actions'
+import { setUser } from '../../actions'
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import withStoreService from '../hoc'
@@ -27,17 +27,15 @@ const SignupSchema = yup.object().shape({
 const UserChangeData = ({ user, storeService,setUser }) => {
     const local = JSON.parse(localStorage.getItem('user'))
     const { firstName, lastName, email } = user;
-    const history = useHistory()
 
 
    const addUserDataToSTore =  useCallback((id,token) => {
         storeService.getUserById(id, token).then((res) => {
-            console.log(res.data);
             const { user } = res.data
             setUser(user)
         })
 
-    }, [storeService, postUserSuccess])
+    }, [storeService,setUser])
 
     useEffect(()=>{
 addUserDataToSTore(local.userId,local.accessToken)
@@ -52,10 +50,9 @@ addUserDataToSTore(local.userId,local.accessToken)
         setUser({ ...user, [e.target.name]: e.target.value })
     }
     const submitHandler = (e) => {
-        storeService.getUserById(local.userId, local.accessToken).then((res) => {
+        storeService.sendUserChangedData(local.userId, local.accessToken,{userToChange: user}).then((res) => {
             setUser(res.data.user)
-            postUserSuccess(res.data.user)
-            console.log('submit handler');
+            addUserDataToSTore(local.userId,local.accessToken)
         })
     }
 
@@ -79,7 +76,7 @@ addUserDataToSTore(local.userId,local.accessToken)
                 {errors.email && <p className="errorMessage">{errors.email.message}</p>}
                 <label htmlFor="password">change your password</label>
                 <InputGroup>
-                    <FormControl type="password" name="password" id="password" ref={register} value={user.password} placeholder="enter password..." onChange={changeHandler} />
+                    <FormControl type="password" name="password" id="password" ref={register} placeholder="enter password..." onChange={changeHandler} />
                     {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                 </InputGroup>
                 <input className="btn btn-dark user-page-button" type="submit" value="send changed data" />
