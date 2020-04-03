@@ -44,10 +44,6 @@ const Login = (props) => {
 
     const [passwordShown, setPasswordShown] = useState(false);
 
-    // const onSubmit = data => {
-    //     alert(JSON.stringify(data));
-    // };
-
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
     };
@@ -74,8 +70,6 @@ const Login = (props) => {
         });
     }
     const onSubmit = (event, data) => {
-        // event.preventDefault();
-        // alert(JSON.stringify(data));
         postUser(user, LOGIN_ROUTE);
     };
 
@@ -91,7 +85,7 @@ const Login = (props) => {
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control
-                                // required
+                      
                                 type="text"
                                 placeholder="Enter email"
                                 name={'email'}
@@ -109,7 +103,7 @@ const Login = (props) => {
                             <Form.Label>Password</Form.Label>
                             <Form.Group className="pass-wrapper">
                                 <Form.Control
-                                    // required
+                      
                                     type={passwordShown ? "text" : "password"}
                                     placeholder="Password"
                                     name={'password'}
@@ -120,16 +114,12 @@ const Login = (props) => {
                                 <i onClick={togglePasswordVisiblity}>{eye}</i>
                                 {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                             </Form.Group>
-
-                        </Form.Group>
-                        {/* <Form.Group controlId="formBasicCheckbox"> */}
-                        {/* <Form.Check type="checkbox" label="Remember me" /> */}
+                        </Form.Group>             
                         <Form.Check
                             type="switch"
                             id="custom-switch"
                             label="Remember me"
-                        />
-                        {/* </Form.Group> */}
+                        />                
                         <Form.Group >
                             <Button variant="dark" type="submit" block>
                                 LOG IN

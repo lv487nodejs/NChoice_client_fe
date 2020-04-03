@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 
 
 function ProductListItem({ title, description, id, images, price, mrsp, currency }) {
-    console.log(mrsp);
     
     const [priceWithRate, setPriceWithRate] = useState();
     const [msrpWithRate, setMsrpWithRate] = useState();

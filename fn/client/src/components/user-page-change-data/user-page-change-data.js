@@ -8,14 +8,22 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import withStoreService from '../hoc'
 
-// validation
+const firstnameRegex = /\w+/;
+const firstnameValidationText = 'enter firstname';
+
+const lastnameRegex = /\w+/;
+const lastnameValidationText = 'enter lastname';
+
+const emailRegEx = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
+const emailValidationText = "Email must be correct. Example: nick@mail.com";
+
 const SignupSchema = yup.object().shape({
-    firstName: yup.string().matches(/\w+/, 'enter firstname'),
-    lastName: yup.string().matches(/\w+/, 'enter lastName'),
+    firstName: yup.string().matches(firstnameRegex, firstnameValidationText),
+    lastName: yup.string().matches(lastnameRegex, lastnameValidationText),
     email: yup.string()
         .email()
         .required("Required")
-        .matches(/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/, "Email must be correct. Example: nick@mail.com"),
+        .matches(emailRegEx, emailValidationText),
 
     password: yup.string()
         .required("No password provided.")
@@ -23,35 +31,32 @@ const SignupSchema = yup.object().shape({
         .matches(/(?=.*[0-9])/, "Password must contain a number.")
 });
 
-// component
-const UserChangeData = ({ user, storeService,setUser }) => {
+const UserChangeData = ({ user, storeService, setUser }) => {
     const local = JSON.parse(localStorage.getItem('user'))
     const { firstName, lastName, email } = user;
 
 
-   const addUserDataToSTore =  useCallback((id,token) => {
+    const addUserDataToSTore = useCallback((id, token) => {
         storeService.getUserById(id, token).then((res) => {
             const { user } = res.data
             setUser(user)
         })
+    }, [storeService, setUser])
 
-    }, [storeService,setUser])
-
-    useEffect(()=>{
-addUserDataToSTore(local.userId,local.accessToken)
-    },[addUserDataToSTore])
+    useEffect(() => {
+        addUserDataToSTore(local.userId, local.accessToken)
+    }, [addUserDataToSTore])
 
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchema
     })
 
-    // handler for user data
     const changeHandler = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
     const submitHandler = (e) => {
-        storeService.sendUserChangedData(local.userId, local.accessToken,{userToChange: user}).then((res) => {
-            addUserDataToSTore(local.userId,local.accessToken)
+        storeService.sendUserChangedData(local.userId, local.accessToken, { userToChange: user }).then((res) => {
+            addUserDataToSTore(local.userId, local.accessToken)
         })
     }
 
@@ -60,22 +65,26 @@ addUserDataToSTore(local.userId,local.accessToken)
             <form onSubmit={handleSubmit(submitHandler)}>
                 <label htmlFor="firstname">change your firstname</label>
                 <InputGroup className="mb-3">
-                    <FormControl id="firstname" name="firstName" ref={register} value={firstName} placeholder="enter firstname..." onChange={changeHandler} />
+                    <FormControl id="firstname" name="firstName" ref={register} value={firstName}
+                        placeholder="enter firstname..." onChange={changeHandler} />
                 </InputGroup>
                 {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
                 <label htmlFor="lastname">change your lastname</label>
                 <InputGroup>
-                    <FormControl id="lastname" name="lastName" ref={register} value={lastName} placeholder="enter lastname..." onChange={changeHandler} />
+                    <FormControl id="lastname" name="lastName" ref={register} value={lastName}
+                        placeholder="enter lastname..." onChange={changeHandler} />
                 </InputGroup>
                 {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
                 <label htmlFor="email">change your email</label>
                 <InputGroup>
-                    <FormControl type="text" name="email" id="email" ref={register} value={email} placeholder="enter email..." onChange={changeHandler} />
+                    <FormControl type="text" name="email" id="email" ref={register} value={email}
+                        placeholder="enter email..." onChange={changeHandler} />
                 </InputGroup>
                 {errors.email && <p className="errorMessage">{errors.email.message}</p>}
                 <label htmlFor="password">change your password</label>
                 <InputGroup>
-                    <FormControl type="password" name="password" id="password" ref={register} placeholder="enter password..." onChange={changeHandler} />
+                    <FormControl type="password" name="password" id="password" ref={register}
+                        placeholder="enter password..." onChange={changeHandler} />
                     {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                 </InputGroup>
                 <input className="btn btn-dark user-page-button" type="submit" value="send changed data" />
@@ -85,10 +94,10 @@ addUserDataToSTore(local.userId,local.accessToken)
     return <Redirect to="/login" />
 
 }
-const mapStateToProps = ({authReducer:{user}}) => ({
-        user
-    })
+const mapStateToProps = ({ authReducer: { user } }) => ({
+    user
+})
 const mapDispatchToProps = ({
-        setUser 
-    })
+    setUser
+})
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(UserChangeData));
