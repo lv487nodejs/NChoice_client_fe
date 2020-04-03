@@ -8,7 +8,7 @@ import './search-bar.css';
 import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const SearchBar = ({ catalog, a:{storeService}, productsLoaded, filterByName, setSearchValue, searchTerm, searchValue, setSearchTerm }) => {
+const SearchBar = ({ catalog, cartAndStoreService:{storeService}, productsLoaded, filterByName, setSearchValue, searchTerm, searchValue, setSearchTerm }) => {
 
     useEffect(() => {
         storeService.getProductsByFilter({ searchTerm }).then(res => {

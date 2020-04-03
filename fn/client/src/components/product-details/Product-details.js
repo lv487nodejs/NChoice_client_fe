@@ -24,7 +24,7 @@ const ProductDetails = ({
   productLoaded,
   productsLoaded,
   productsRequested,
-  a:{storeService},
+  cartAndStoreService:{storeService},
   products,
   addToCart,
   addToWishlist
@@ -56,6 +56,7 @@ const ProductDetails = ({
   const handleAddToCart = () => {
     if (checkSize) {
       addToCart(productToSend);
+
     }
   };
 

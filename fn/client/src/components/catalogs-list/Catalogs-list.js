@@ -8,7 +8,7 @@ import CatalogsListItem from '../catalogs-list-item/Catalogs-list-item';
 import LoadingSpinner from '../Loading-spinner';
 
 
-const CatalogsList = ({ catalogsLoaded, catalogsRequested, catalogs, loading, a:{storeService} }) => {
+const CatalogsList = ({ catalogsLoaded, catalogsRequested, catalogs, loading, cartAndStoreService:{storeService} }) => {
 
     useEffect(() => {
         catalogsRequested();

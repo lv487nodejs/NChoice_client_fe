@@ -13,7 +13,7 @@ import AppHeaderNavLeftItem from '../app-header-nav-left-item';
 import AppHeaderNavLeftItemDropDown from '../app-header-nav-left-item-dropdown';
 
 const AppHeaderNavLeft = ({
-  a:{storeService},
+  cartAndStoreService:{storeService},
   catalogsLoaded,
   catalogsRequested,
   catalogs,

@@ -15,7 +15,7 @@ import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
 import { PRODUCT_LIST_URL } from '../../configs/frontend-config';
 const CategoriesNav = ({
-  a:{storeService},
+  cartAndStoreService:{storeService},
   categoriesLoaded,
   categoriesRequested,
   categories,

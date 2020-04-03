@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import connect from "react-redux/es/connect/connect";
 import './Cart.css'
 import { Button, Figure } from 'react-bootstrap'
@@ -10,14 +10,29 @@ import {increaseToCart, decreaseFromCart, removeFromCart } from '../../actions'
 import withStoreService from "../hoc";
 
 
-const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart, a:{cartService}}) => {
+
+const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart, cartAndStoreService:{cartService}}) => {
   const [product, setProduct] = useState(products);
-
-  const productCallback = async (product, userId={userId: '5e6a43fcfeebf82614b774ab'}) => {
-
-    cartService.postCartItem(userId, product).then((res) => console.log(res))
-
+  const userId = '5e6a43fcfeebf82614b774ab';
+  const cartId = '5e6a4490feebf82614b774b3';
+  const productCallback = async (product, userId) => {
+    cartService.putCart({userId, product}).then((res) => console.log(res))
 }
+
+  const addProductsToStore =  useCallback((cartId) => {
+          cartService.getCartById(cartId).then((res) => {
+            const { cartItems } = res
+            setProduct(cartItems)
+          })
+
+      }, [cartService,setProduct])
+
+      useEffect(()=>{
+        addProductsToStore(cartId)
+      },[addProductsToStore])
+  useEffect(() => () => { if (userId !== null) { productCallback(product, userId) }},[]);
+
+  const sizeAvaliable = (el) => { el.propetries.map(propEl => propEl === [el.size]) }
 
   const removeFromCart1 = (id) => {
     const newProducts = products.map(el=>
@@ -28,7 +43,7 @@ const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart, a:{ca
 
   const increaseToCart1 = (id) => {
     const newProducts = products.map(el=>
-      el.id === id ? {...el, quantity: el.quantity++} : el
+        el.id === id  && (sizeAvaliable(el).available < el.quantity ) ? {...el, quantity: el.quantity++} : el
     );
     setProduct(newProducts)
   };

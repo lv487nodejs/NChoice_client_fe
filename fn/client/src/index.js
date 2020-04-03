@@ -12,11 +12,11 @@ import store from './store/store';
 
 const storeService = new StoreService();
 const cartService = new CartService();
-const a = {storeService, cartService};
+const cartAndStoreService = {storeService, cartService};
 
 ReactDOM.render(
     <Provider store={store}>
-        <StoreServiceProvider value={a}>
+        <StoreServiceProvider value={cartAndStoreService}>
             <App />
         </StoreServiceProvider>
     </Provider>,

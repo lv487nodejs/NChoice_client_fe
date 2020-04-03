@@ -2,7 +2,7 @@ import React from 'react';
 import { StoreServiceConsumer } from '../store-service-context';
 
 const withStoreService = () => Wrapped => props => (
-    <StoreServiceConsumer>{a => <Wrapped {...props} a={a} />}</StoreServiceConsumer>
+    <StoreServiceConsumer>{cartAndStoreService => <Wrapped {...props} cartAndStoreService={cartAndStoreService} />}</StoreServiceConsumer>
 );
 
 export default withStoreService;
