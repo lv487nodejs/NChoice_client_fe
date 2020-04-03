@@ -1,10 +1,12 @@
-import { ROWS_PER_PAGE_OPTIONS } from '../config';
+import { config } from '../config';
+
+const { rowsPerPageOptions } = config.app;
 
 const initialState = {
     pagesCount: 0,
     currentPage: 0,
-    rowsPerPage: ROWS_PER_PAGE_OPTIONS[0],
-    rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
+    rowsPerPage: rowsPerPageOptions[0],
+    rowsPerPageOptions,
 };
 
 const paginationState = (state = initialState, action) => {

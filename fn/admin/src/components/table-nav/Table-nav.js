@@ -20,8 +20,11 @@ import TableNavButtons from '../table-nav-buttons';
 import TableNavFilterMenu from '../table-nav-filter-menu';
 import TableNavSearchBar from '../table-nav-searchbar';
 
-import { FILTER_OPTIONS, FILTER_COUNTERS, PATH_TO_ADD_PRODUCT } from '../../config';
+import { config } from '../../config';
 import { StandardButton } from '../buttons';
+
+const { filterLabels, filterCounters } = config.productFilters;
+const { pathToAddProduct } = config.app.routes;
 
 const NEW_PRODUCT_BUTTON_TITLE = 'NEW PRODUCT';
 const filterMenuStatus = {
@@ -77,9 +80,9 @@ const TableNav = ({
 
     const filterInitialState = () => {
         setCheckBoxStatus(filterOptionsList);
-        setFilterSelected(FILTER_OPTIONS);
-        setProductsFilters(FILTER_OPTIONS);
-        setFilterCounters(FILTER_COUNTERS);
+        setFilterSelected(filterLabels);
+        setProductsFilters(filterLabels);
+        setFilterCounters(filterCounters);
         setSearchTerm(SEATCH_CLEAR);
     };
 
@@ -113,7 +116,7 @@ const TableNav = ({
             <Grid item md={2}>
                 <StandardButton
                     component={Link}
-                    to={PATH_TO_ADD_PRODUCT}
+                    to={pathToAddProduct}
                     size={size}
                     title={NEW_PRODUCT_BUTTON_TITLE}
                 />

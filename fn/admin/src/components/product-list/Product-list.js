@@ -22,7 +22,9 @@ import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
 
-import { PRODUCTS_TABLE_HEAD } from '../../config';
+import { config } from '../../config';
+
+const tableTitles = config.tableHeadRowTitles.products;
 
 const REMOVE_TITLE = 'Product remove';
 const REMOVE_MESSAGE = 'Are you sure you want to remove product?';
@@ -58,8 +60,13 @@ const ProductList = ({
         productsService
             .getProductsByFilter(currentPage, rowsPerPage, filters, searchTerm)
             .then(res => {
-                setProducts(res.products);
-                setPagesCount(res.foundProductsNumber);
+                if (res) {
+                    setProducts(res.products);
+                    setPagesCount(res.foundProductsNumber);
+                } else {
+                    setProducts([]);
+                    setPagesCount(0);
+                }
             });
     }, [
         productsService,
@@ -118,11 +125,7 @@ const ProductList = ({
     ));
 
     const productTable = (
-        <TableContainerGenerator
-            tableTitles={PRODUCTS_TABLE_HEAD}
-            tableItems={productItems}
-            pagination
-        />
+        <TableContainerGenerator tableTitles={tableTitles} tableItems={productItems} pagination />
     );
 
     if (loading) {

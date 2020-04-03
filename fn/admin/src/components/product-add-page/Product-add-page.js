@@ -7,7 +7,7 @@ import wrapWithAdminService from '../wrappers';
 import { useStyles } from './Product-add-page-style';
 
 import {
-    setProductEdit,
+    setProductModel,
     setSnackBarStatus,
     setSnackBarSeverity,
     setSnackBarMessage,
@@ -19,7 +19,9 @@ import ProductAddPropetries from '../product-add-item-propetries';
 import ProductAddPageStepper from '../product-add-page-stepper';
 import ProductAddVerifyPage from '../product-add-verify-page';
 
-import { NEW_PRODUCT_DESCR } from '../../config';
+import { config } from '../../config';
+
+const { descriptionLabels } = config.product;
 
 const successMessage = id => `Product succesfully saved id: ${id}`;
 const SUCCESS_STATUS = 'success';
@@ -29,8 +31,8 @@ const PATH_TO_PRODUCT = id => `/product/${id}`;
 const ProductAddPage = ({
     history,
     adminService,
-    productEdit,
-    setProductEdit,
+    productModel,
+    setProductModel,
     setSnackBarStatus,
     setSnackBarSeverity,
     setSnackBarMessage,
@@ -40,12 +42,12 @@ const ProductAddPage = ({
 
     const handleInputChange = event => {
         const { name, value } = event.target;
-        setProductEdit({ ...productEdit, [name]: value });
+        setProductModel({ ...productModel, [name]: value });
     };
 
     const handleSaveProduct = async event => {
         event.preventDefault();
-        const productId = await productsService.postProduct(productEdit).then(res => {
+        const productId = await productsService.postProduct(productModel).then(res => {
             setSnackBarSeverity(SUCCESS_STATUS);
             setSnackBarMessage(successMessage(res._id));
             setSnackBarStatus(true);
@@ -58,7 +60,7 @@ const ProductAddPage = ({
         <ProductAddItemOptions classes={classes} onChangeEvent={handleInputChange} />
     );
 
-    const productAddDescriptions = NEW_PRODUCT_DESCR.map(option => (
+    const productAddDescriptions = descriptionLabels.map(option => (
         <ProductAddItemDescr
             key={option}
             classes={classes}
@@ -69,7 +71,7 @@ const ProductAddPage = ({
 
     const pruductAddPropetries = <ProductAddPropetries />;
 
-    const productVerifyPage = <ProductAddVerifyPage product={productEdit} />;
+    const productVerifyPage = <ProductAddVerifyPage product={productModel} />;
 
     const stepperSteps = [
         productAddOptions,
@@ -85,11 +87,11 @@ const ProductAddPage = ({
     );
 };
 
-const mapStateToProps = ({ productEditState: { productEdit } }) => ({
-    productEdit,
+const mapStateToProps = ({ productModelState: { productModel } }) => ({
+    productModel,
 });
 const mapDispatchToProps = {
-    setProductEdit,
+    setProductModel,
     setSnackBarStatus,
     setSnackBarSeverity,
     setSnackBarMessage,

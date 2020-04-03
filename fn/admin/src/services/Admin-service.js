@@ -1,11 +1,13 @@
 import axios from 'axios';
 
-import { SERVER_URL } from '../config';
+import { config } from '../config';
+
+const { serverUrl } = config.app;
 
 export default class AdminService {
     getResource = async url => {
         try {
-            const response = await axios.get(`${SERVER_URL}${url}`);
+            const response = await axios.get(`${serverUrl}${url}`);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -14,7 +16,7 @@ export default class AdminService {
 
     postData = async (url, dataToSend) => {
         try {
-            const response = await axios.post(`${SERVER_URL}${url}`, dataToSend);
+            const response = await axios.post(`${serverUrl}${url}`, dataToSend);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -23,7 +25,7 @@ export default class AdminService {
 
     putData = async (url, dataToSend) => {
         try {
-            const response = await axios.put(`${SERVER_URL}${url}`, dataToSend);
+            const response = await axios.put(`${serverUrl}${url}`, dataToSend);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -32,7 +34,7 @@ export default class AdminService {
 
     deleteResource = async url => {
         try {
-            const response = await axios.delete(`${SERVER_URL}${url}`);
+            const response = await axios.delete(`${serverUrl}${url}`);
             return response.data;
         } catch (error) {
             console.error(error);
