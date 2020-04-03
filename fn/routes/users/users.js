@@ -33,7 +33,14 @@ router.get('/:id', tokenValidation, async (req, res) => {
         user.tokens = [];
         user.tokens.push(refreshToken);
         await user.save()
-        res.status(200).send({accessToken, refreshToken, user});
+        const mappedUser = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            date: user.date,
+            tokens: user.tokens
+        }
+        res.status(200).send({ accessToken, refreshToken, user: mappedUser });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
@@ -83,11 +90,13 @@ router.put('/:id', tokenValidation, async (req, res) => {
     const { firstName, lastName, email, password } = req.body.userToChange;
 
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const user = await Users.findByIdAndUpdate(id, { firstName, lastName, email, password:hashedPassword });
+        const user = await Users.findByIdAndUpdate(id, { firstName, lastName, email });
         if (!user) {
             throw { message: 'User doesnt exist' };
+        }
+        const comparePassword = await bcrypt.compare(password, user.password);
+        if (!comparePassword) {
+            return res.status(400).send({ errors: [{ msg: 'User password is incorrect.' }] });
         }
         const userName = { name: user.email };
         const accessToken = generateAccessToken(userName);
@@ -96,7 +105,7 @@ router.put('/:id', tokenValidation, async (req, res) => {
         user.tokens = [];
         user.tokens.push(refreshToken);
         await user.save()
-        res.status(200).send({accessToken, refreshToken, user});
+        res.status(200).send({ accessToken, refreshToken, user });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }

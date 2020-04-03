@@ -24,22 +24,24 @@ const SignupSchema = yup.object().shape({
 });
 
 // component
-const UserChangeData = ({ user, storeService, accessToken,setUser,postUserSuccess }) => {
+const UserChangeData = ({ user, storeService,setUser }) => {
     const local = JSON.parse(localStorage.getItem('user'))
     const { firstName, lastName, email } = user;
     const history = useHistory()
 
 
-    useEffect(() => {
-        storeService.getUserById(local.userId, local.accessToken).then((res) => {
+   const addUserDataToSTore =  useCallback((id,token) => {
+        storeService.getUserById(id, token).then((res) => {
             console.log(res.data);
-            const { accessToken, refreshToken, user } = res.data
-            // setUser(user)
-            postUserSuccess(user)
-
+            const { user } = res.data
+            setUser(user)
         })
 
     }, [storeService, postUserSuccess])
+
+    useEffect(()=>{
+addUserDataToSTore(local.userId,local.accessToken)
+    },[addUserDataToSTore])
 
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchema
@@ -56,7 +58,6 @@ const UserChangeData = ({ user, storeService, accessToken,setUser,postUserSucces
             console.log('submit handler');
         })
     }
-
 
     if (user) {
         return (
@@ -88,19 +89,10 @@ const UserChangeData = ({ user, storeService, accessToken,setUser,postUserSucces
     return <Redirect to="/login" />
 
 }
-const mapStateToProps = (state) => {
-    console.log(state);
-
-    return {
-        user: state.authReducer.user, accessToken: state.authReducer.accessToken
-    }
-
-}
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setUser: (user) => dispatch(setUser(user)),
-        postUserSuccess: (user) => dispatch(postUserSuccess(user)),
-    }
-
-}
+const mapStateToProps = ({authReducer:{user}}) => ({
+        user
+    })
+const mapDispatchToProps = ({
+        setUser 
+    })
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(UserChangeData));
