@@ -5,7 +5,6 @@ import UserChangeData from '../user-page-change-data/user-page-change-data';
 import Cart from '../cart'
 import './user-page.css';
 import {connect} from 'react-redux'
-import {postUserSuccess} from '../../actions'
 
 const UserPage = () => {
     const [showValue, setShowValue] = useState(1)
@@ -54,8 +53,6 @@ const UserPage = () => {
     return (<Redirect to="/" />)
 }
 const mapStateToProps = ({authReducer:{user}}) =>({user})
-const mapDispatchToProps = {
-    postUserSuccess
-}
 
-export default connect(mapStateToProps,mapDispatchToProps)(UserPage);
+
+export default connect(mapStateToProps)(UserPage);
