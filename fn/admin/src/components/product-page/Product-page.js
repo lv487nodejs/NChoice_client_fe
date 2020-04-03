@@ -29,7 +29,7 @@ import ProductImageContainer from '../product-image-container';
 import { StandardButton } from '../buttons';
 import { config, IMG_URL } from '../../config';
 
-const productInitialModel = config.product.model;
+const { productInitialModel } = config.product;
 
 const SUCCESS_STATUS = 'success';
 const SUCCESS_MSG = id => `Changes to product ${id} has been saved!`;

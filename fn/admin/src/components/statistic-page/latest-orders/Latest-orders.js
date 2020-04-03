@@ -15,6 +15,7 @@ import {
     TableCell,
     TableHead,
     TableRow,
+    Typography,
 } from '@material-ui/core';
 
 import EditIcon from '@material-ui/icons/Edit';
@@ -38,6 +39,8 @@ const ORDER_STATUSES = ['pending', 'canceled', 'delivered'];
 const SUCCESS_MSG = (name, status) => `Order ${name} status updated to ${status}`;
 const SUCCESS = 'success';
 
+const noOrdersText = 'No orders were found.';
+
 const LatestOrders = ({
     orders,
     loading,
@@ -54,13 +57,29 @@ const LatestOrders = ({
 
     const getOrders = useCallback(() => {
         ordersLoadingStatus();
-        ordersService.getAllOrders().then(res => setOrders(res));
+        ordersService.getAllOrders().then(res => {
+            if (res) {
+                const orders = res.slice(0, 10);
+                setOrders(orders);
+                return;
+            }
+
+            setOrders([]);
+        });
     }, [ordersService, setOrders, ordersLoadingStatus]);
 
     useEffect(() => getOrders(), [getOrders]);
 
     if (loading) {
         return <LoadingBar />;
+    }
+
+    if (!orders.length) {
+        return (
+            <Typography id="no-orders-msg" variant="h4" component="h2">
+                {noOrdersText}
+            </Typography>
+        );
     }
 
     const handleSnackBarOpen = (message, severity) => {
@@ -123,7 +142,7 @@ const LatestOrders = ({
     ));
 
     return (
-        <Card className={classes.root}>
+        <Card id="latest-orders" className={classes.root}>
             <CardHeader title={TABLE_TITLE} />
             <Divider />
             <CardContent className={classes.content}>
@@ -132,7 +151,7 @@ const LatestOrders = ({
                         <TableHead>
                             <TableRow>{tableHeaders}</TableRow>
                         </TableHead>
-                        <TableBody>{tableRows}</TableBody>
+                        <TableBody id="table-body">{tableRows}</TableBody>
                     </Table>
                 </div>
             </CardContent>
