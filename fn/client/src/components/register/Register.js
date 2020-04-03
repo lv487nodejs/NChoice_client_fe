@@ -166,9 +166,9 @@ const Register = (props) => {
                                 ref={register}
                             />
                             <i onClick={togglePasswordVisiblity}>{eye}</i>
-                            {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                         </Form.Group>
                     </Form.Group>
+                    {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label> Confirm Password</Form.Label>
                         <Form.Group className="pass-wrapper">
