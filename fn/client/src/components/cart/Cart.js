@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
 import {increaseToCart, decreaseFromCart, removeFromCart } from '../../actions'
 
-const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart}) => {
+const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart, currencyIcon, currency}) => {
   const [product, setProduct] = useState(products)
 
   const removeFromCart1 = (id) => {
@@ -70,8 +70,8 @@ const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart}) => {
                 <Figure.Caption className='cart-title'>
                   {item.title}
                   <p> Price:
-                  <span className="price">{item.price * item.quantity} {item.currencyIcon}</span>
-                  <span className="msrp-price">{item.msrp * item.quantity} {item.currencyIcon}</span>
+                  <span className="price">{item.price * currency * item.quantity} {currencyIcon}</span>
+                  <span className="msrp-price">{item.msrp * currency * item.quantity} {currencyIcon}</span>
                   </p>
                   <p> Size: <span>{item.size}</span> </p>
                   <div className="quantity-control">
@@ -101,7 +101,7 @@ const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart}) => {
   )
 };
 
-const mapStateToProps = ({cartReducer: {products}}) => ({products});
+const mapStateToProps = ({cartReducer: {products}, productsList: { currency, currencyIcon } }) => ({products, currency, currencyIcon });
 
 export default connect(mapStateToProps, {increaseToCart, decreaseFromCart, removeFromCart})(Cart);
 

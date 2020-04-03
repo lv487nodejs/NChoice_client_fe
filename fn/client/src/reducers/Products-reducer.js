@@ -2,6 +2,7 @@ const initialState = {
     products: [],
     product: {},
     currency: 1,
+    currencyIcon: '€',
     loading: true,
     currentPage: 1,
     postsPerPage: 15,
@@ -30,6 +31,12 @@ const productsList = (state = initialState, action) => {
             return {
                 ...state,
                 currency: action.payload,
+                loading: false,
+            };
+        case 'CURRENCY_ICON_CHANGE':
+            return {
+                ...state,
+                currencyIcon: action.payload,
                 loading: false,
             };
         case 'ADD_CURRENT_PAGE':

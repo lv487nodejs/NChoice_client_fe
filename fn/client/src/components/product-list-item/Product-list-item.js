@@ -7,15 +7,13 @@ import { Link } from 'react-router-dom';
 
 
 
-function ProductListItem({ title, description, id, images, price, msrp, currency }) {
+function ProductListItem({ title, description, id, images, price, msrp, currency, currencyIcon }) {
     const [priceWithRate, setPriceWithRate] = useState();
     const [msrpWithRate, setMsrpWithRate] = useState();
-    const [currencyIcon, setCurrencyIcon] = useState();
 
     useEffect(() => {
         setPriceWithRate(Math.floor(price * currency));
         setMsrpWithRate(Math.floor(msrp * currency));
-        currency === 1 ? setCurrencyIcon('€') : setCurrencyIcon('$');
     }, [currency, price, msrp]);
 
     return (
@@ -37,6 +35,6 @@ function ProductListItem({ title, description, id, images, price, msrp, currency
     );
 }
 
-const mapStateToProps = ({ productsList: { currency } }) => ({ currency });
+const mapStateToProps = ({ productsList: { currency, currencyIcon } }) => ({ currency, currencyIcon });
 
 export default connect(mapStateToProps)(ProductListItem);
