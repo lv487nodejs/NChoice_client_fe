@@ -8,14 +8,18 @@ const CheckoutTable = ({ products, currency }) => {
 
     const [currencyIcon, setCurrencyIcon] = useState('$');
 
+    const tableRowPrice = (price , quantity) => {
+        return (parseFloat(price * quantity * currency).toFixed(2))
+    }
+
     useEffect(() => {
         currency === 1 ? setCurrencyIcon('€') : setCurrencyIcon('$');
     }, [currency]);
 
-    const totallCounter = () => {
+    const totalCounter = () => {
         const row = products.map(product => product.price * product.quantity);
         const total = row.reduce((sum, next) => sum + next)
-        return total
+        return (parseFloat(total * currency).toFixed(2))
     }
 
     return (
@@ -43,12 +47,12 @@ const CheckoutTable = ({ products, currency }) => {
                         </td>
                         <td>{productRow.title}</td>
                         <td>{productRow.quantity}</td>
-                        <td>{`${Math.round(productRow.price * productRow.quantity * currency).toFixed(2)} ${currencyIcon}`}</td>
+                        <td>{tableRowPrice(productRow.price, productRow.quantity)} {currencyIcon}</td>
                     </tr>
                 )}
                 <tr>
                     <td colSpan="3">Total:</td>
-                    <td>{`${Math.round(totallCounter() * currency).toFixed(2)} ${currencyIcon}`}</td>
+                    <td>{`${totalCounter()} ${currencyIcon}`}</td>
                 </tr>
             </tbody>
         </Table>

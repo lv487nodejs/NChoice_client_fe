@@ -23,13 +23,18 @@ const CheckoutForm = ({ products, storeService }) => {
 
     const [validated, setValidated] = useState(false);
     const [order, setOrder] = useState(orderForm)
-
+    
+    if (products.length === 0) {
+        return (<Redirect to='/' />)
+    }
     const productsINeed = products.map(product => {
         return {
             item: product.id,
             quantity: product.quantity
         }
     })
+
+    const placeholder = "Type here..."
 
     const orderToServer = {
         orderItems: productsINeed,
@@ -54,7 +59,6 @@ const CheckoutForm = ({ products, storeService }) => {
             setValidated(true);
             return
         }
-        event.preventDefault();
         storeService.postOrder(orderToServer);
     }
 
@@ -83,7 +87,7 @@ const CheckoutForm = ({ products, storeService }) => {
                                     <Form.Label>City</Form.Label>
                                     <Form.Control
                                         required
-                                        placeholder="Type here..."
+                                        placeholder={placeholder}
                                         name={"city"}
                                         onChange={handleChange}
                                     />
@@ -96,7 +100,7 @@ const CheckoutForm = ({ products, storeService }) => {
                                     <Form.Label required>Street</Form.Label>
                                     <Form.Control
                                         required
-                                        placeholder="Type here..."
+                                        placeholder={placeholder}
                                         name="street"
                                         onChange={handleChange}
                                     />
@@ -109,7 +113,7 @@ const CheckoutForm = ({ products, storeService }) => {
                                     <Form.Label>Building number</Form.Label>
                                     <Form.Control
                                         required
-                                        placeholder="Type here..."
+                                        placeholder={placeholder}
                                         name="buildingNumber"
                                         onChange={handleChange}
                                     />
@@ -122,7 +126,7 @@ const CheckoutForm = ({ products, storeService }) => {
                                     <Form.Label>Contact Phone Number</Form.Label>
                                     <Form.Control
                                         required
-                                        placeholder="Type here..."
+                                        placeholder={placeholder}
                                         name="contactPhone"
                                         onChange={handleChange}
                                     />
