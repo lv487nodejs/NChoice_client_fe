@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Product-details.css';
 // import Button from '@material-ui/core/Button';
@@ -50,7 +50,7 @@ const ProductDetails = ({
   const newProducts = products.slice(-3);
 
   const handleCheck = item => () => {
-      setCheckSize(item)
+    setCheckSize(item)
   };
 
   const handleAddToCart = () => {
@@ -59,13 +59,13 @@ const ProductDetails = ({
     }
   };
 
-  const productToSend = {...product, size:checkSize};
+  const productToSend = { ...product, size: checkSize };
 
   const sizeItem = getSizes
     .reduce((accum, { size }) => [...accum, ...size], [])
     .map((item) => (
-      <div key={item} className="sizeItem" onClick={handleCheck(item) } >
-        <span className={item === checkSize ? 'check' : '' }> {item} </span>
+      <div key={item} className="sizeItem" onClick={handleCheck(item)} >
+        <span className={item === checkSize ? 'check' : ''}> {item} </span>
       </div>
     ));
 
@@ -116,10 +116,18 @@ const ProductDetails = ({
           <Col className="size">{sizeItem}</Col>
           <Card.Body className="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
-                             onClick = {() => addToWishlist(product)} />
-            <Button variant="dark" className = { checkSize ? 'button' : 'button disabled' }
-                             onClick = { handleAddToCart }> Add to card </Button>
-            <Button variant="dark" className="button"> By now </Button>
+              onClick={() => addToWishlist(product)} />
+            <Button 
+            variant="dark" 
+            className={checkSize ? 'button' : 'button disabled'}
+            onClick={handleAddToCart}
+            >Add to card </Button>
+            <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none' }>
+              <Button
+                variant="dark"
+                onClick={handleAddToCart}
+              >Buy now</Button>
+            </Link>
           </Card.Body>
         </Col>
       </Card.Body>

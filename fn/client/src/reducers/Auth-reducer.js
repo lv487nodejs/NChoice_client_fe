@@ -1,7 +1,8 @@
 const initialState = {
     userTokens: {},
     userStatus: null,
-    user: {},
+    popupShown: true,
+    user:{}
 }
 
 const authReducer = (state = initialState, action) => {    
