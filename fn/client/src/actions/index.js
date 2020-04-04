@@ -12,8 +12,8 @@ import {
   sizesLoaded,
 } from './Products-actions';
 
-import { addToCart, increaseToCart, decreaseFromCart, removeFromCart } from './Cart-action'
-import { addToWishlist } from './Wishlist-actions'
+import {addToCart, increaseToCart, decreaseFromCart, removeFromCart} from './Cart-action'
+import {addToWishlist, removeFromWishlist} from './Wishlist-actions'
 
 import {
   catalogsLoaded,
@@ -80,6 +80,7 @@ export {
   decreaseFromCart,
   removeFromCart,
   addToWishlist,
+  removeFromWishlist,
   logoutUser,
   postUserLoginSuccess,
   setUser,

@@ -54,12 +54,15 @@ const ProductDetails = ({
   };
 
   const handleAddToCart = () => {
-    if (checkSize) {
-      addToCart(productToSend);
-    }
+      product.propetries.filter((el) => {
+        if (el.size[0] === checkSize) {
+        let productToSend = {...product, propetries: el};
+          if (checkSize) {
+            addToCart(productToSend);
+          }
+        }
+      })
   };
-
-  const productToSend = { ...product, size: checkSize };
 
   const sizeItem = getSizes
     .reduce((accum, { size }) => [...accum, ...size], [])
