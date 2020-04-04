@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Product-details.css';
-// import Button from '@material-ui/core/Button';
 import { Card, Row, Col, Image, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -47,7 +46,8 @@ const ProductDetails = ({
     storeService.getAllProducts().then((res) => productsLoaded(res));
   }, [productsLoaded, productsRequested, storeService]);
 
-  const newProducts = products.slice(-3);
+
+  const newProducts = products.filter(elem => elem.category === product.category).slice(-3)
 
   const handleCheck = item => () => {
     setCheckSize(item)
@@ -120,6 +120,9 @@ const ProductDetails = ({
           <Card.Body className="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
               onClick={() => addToWishlist(product)} />
+            <Button variant="dark" className={checkSize ? 'button' : 'button disabled'}
+              onClick={handleAddToCart}> Add to card </Button>
+            <Button variant="dark" className="button"> By now </Button>
             <Button 
             variant="dark" 
             className={checkSize ? 'button' : 'button disabled'}
