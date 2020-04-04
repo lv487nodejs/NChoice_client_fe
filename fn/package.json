@@ -13,23 +13,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@material-ui/lab": "^4.0.0-alpha.47",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.1.0",
     "config": "^3.2.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
-    "formik": "^2.1.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.0",
     "morgan": "^1.9.1",
     "react-redux": "^7.2.0",
-    "redux": "^4.0.5",
-    "rotating-file-stream": "^2.0.2",
-    "yup": "^0.28.3"
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
