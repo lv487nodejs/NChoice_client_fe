@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import connect from "react-redux/es/connect/connect";
 import './Cart.css'
-import {Figure} from 'react-bootstrap'
+import { Link } from 'react-router-dom';
+import { Figure, Button } from 'react-bootstrap'
 import Row from "react-bootstrap/Row";
 import Container from "@material-ui/core/Container/Container";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -73,7 +74,7 @@ const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart}) => {
           <li key={item.id} className='cart-item'>
             <Container>
               <Row>
-                <Figure.Image src={`/images/products/${item.images[0]}`} className='cart-img'/>
+                <Figure.Image src={`/images/products/${item.images[0]}`} className='cart-img' />
                 <Figure.Caption className='cart-title'>
                   {item.title}
                   <p> Price:
@@ -108,8 +109,7 @@ const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart}) => {
   )
 };
 
+
 const mapStateToProps = ({cartReducer: {products, cartNumbers}}) => ({products, cartNumbers});
 
 export default connect(mapStateToProps, {addToCart, increaseToCart, decreaseFromCart, removeFromCart})(Cart);
-
-

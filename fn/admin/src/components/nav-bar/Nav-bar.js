@@ -27,7 +27,7 @@ const NavBar = ({ drawerStatus, darkMode, setThemeMode, setDrawerStatus }) => {
     };
 
     const menuToggle = (
-        <IconButton onClick={handleDrawerToggle} className={classes.menuButton}>
+        <IconButton id="menuToggle" onClick={handleDrawerToggle} className={classes.menuButton}>
             <MenuIcon />
         </IconButton>
     );
@@ -36,11 +36,13 @@ const NavBar = ({ drawerStatus, darkMode, setThemeMode, setDrawerStatus }) => {
         <AppBar className={classes.appBar}>
             <Toolbar>
                 {menuToggle}
-                <Typography variant="h4" className={classes.title}>
+                <Typography id="logo" variant="h4" className={classes.title}>
                     {title}
                 </Typography>
-                <IconButton onClick={themeChangeHandler}>{themeButton}</IconButton>
-                <AccountCircle />
+                <IconButton id="themeToggler" onClick={themeChangeHandler}>
+                    {themeButton}
+                </IconButton>
+                <AccountCircle id="profileButton" />
             </Toolbar>
         </AppBar>
     );

@@ -37,8 +37,16 @@ import {
   postUserSuccess,
   postUserStarted,
   postUserError,
-  logoutUser
+  logoutUser,
+  postUserLoginSuccess,
+  setUser
 } from './Auth-actions';
+import {
+  setSnackbarStatus,
+  setSnackbarText,
+  setSnackbarDuration,
+  setSnackbarSeverity,
+} from './Snackbar-actions'
 
 export {
   categoriesRequested,
@@ -73,5 +81,11 @@ export {
   removeFromCart,
   addToWishlist,
   removeFromWishlist,
-  logoutUser
+  logoutUser,
+  postUserLoginSuccess,
+  setUser,
+  setSnackbarDuration,
+  setSnackbarStatus,
+  setSnackbarText,
+  setSnackbarSeverity,
 };

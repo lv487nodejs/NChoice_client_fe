@@ -6,7 +6,6 @@ import { faHeart, faUser, faShoppingBasket, faSignOutAlt } from '@fortawesome/fr
 import Currency from '../currency';
 import { connect } from 'react-redux';
 import { logoutUser } from "../../actions";
-import InfoPopup from '../info-popup';
 
 const AppHeaderNavRight = ({ logoutUser, userStatus }) => {
   let cartNumbers = 0;
@@ -15,7 +14,6 @@ const AppHeaderNavRight = ({ logoutUser, userStatus }) => {
   }
 
   return (
-    <>
       <nav className="nav-bar">
         <ul>
           <li key="4">
@@ -48,8 +46,6 @@ const AppHeaderNavRight = ({ logoutUser, userStatus }) => {
           }
         </ul>
       </nav>
-      <InfoPopup/>
-    </>
   )
 };
 

@@ -7,6 +7,7 @@ import {
   catalogsRequested,
   filterAddCategory,
   filterRemoveAllCategories,
+  filterByName
 } from '../../actions';
 import withStoreService from '../hoc';
 import AppHeaderNavLeftItem from '../app-header-nav-left-item';
@@ -19,6 +20,7 @@ const AppHeaderNavLeft = ({
   catalogs,
   filterAddCategory,
   filterRemoveAllCategories,
+  filterByName
 }) => {
   const [isShown, setIsShown] = useState('');
 
@@ -35,6 +37,7 @@ const AppHeaderNavLeft = ({
   };
   const filterAddCategoryHandler = (item) => {
     filterRemoveAllCategories();
+    filterByName('');
     filterAddCategory(item);
   };
   const items = catalogs.map((catalog) => (
@@ -73,6 +76,7 @@ const mapDispatchToProps = {
   catalogsRequested,
   filterAddCategory,
   filterRemoveAllCategories,
+  filterByName
 };
 
 export default withStoreService()(
