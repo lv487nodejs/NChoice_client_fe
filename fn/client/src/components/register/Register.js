@@ -28,29 +28,44 @@ const USER_DATA = {
 }
 
 const eye = <FontAwesomeIcon icon={faEye} />;
-
+const firstNameRequiredMessage = "No first name provided";
+const firstNameMinElementCount = 2;
+const firstNameMinMessage = `First name is too short - should be ${firstNameMinElementCount} chars minimum`;
+const lastNameRequiredMessage = "No last name provided";
+const lastNameMinElementCount = 2;
+const lastNameMinMessage = `Last name is too short - should be ${lastNameMinElementCount} chars minimum`;
+const emailRegExp = new RegExp(/^([a-z0-9_-]+.)[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+).[a-z]{2,6}$/);
+const emailRegExpMessage = "Email must be correct. Example: nick@mail.com";
+const emailRequiredMessage = "Required";
+const passwordRegExp = new RegExp(/(?=.*[0-9])/);
+const passwordRegExpMessage = "Password must contain a number";
+const passwordRequiredMessage = "No password provided";
+const passwordMinElementCount = 8;
+const passwordMinMessage = `Password is too short - should be ${passwordMinElementCount} chars minimum`;
+const passwordConfirmMessage = 'Please, confirm your password';
+const agreeToTermsMessage = 'You must agree to terms to continue';
 const SignupSchema = yup.object().shape({
     firstName: yup
         .string()
-        .required("No first name provided.")
-        .min(2, "First name is too short - should be 2 chars minimum."),
+        .required(firstNameRequiredMessage)
+        .min(firstNameMinElementCount, firstNameMinMessage),
     lastName: yup
         .string()
-        .required("No last name provided.")
-        .min(2, "Last name is too short - should be 2 chars minimum."),
+        .required(lastNameRequiredMessage)
+        .min(lastNameMinElementCount, lastNameMinMessage),
     email: yup
         .string()
-        .required("Required")
-        .matches(/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/, "Email must be correct. Example: nick@mail.com"),
+        .required(emailRequiredMessage)
+        .matches(emailRegExp, emailRegExpMessage),
     password: yup
         .string()
-        .required("No password provided")
-        .min(8, "Password is too short - should be 8 chars minimum")
-        .matches(/(?=.*[0-9])/, "Password must contain a number"),
+        .required(passwordRequiredMessage)
+        .min(passwordMinElementCount, passwordMinMessage)
+        .matches(passwordRegExp, passwordRegExpMessage),
     confirmPassword: yup
         .string()
-        .required("No password provided.")
-        .test('passwords-match', 'please, confirm your password', function (value) {
+        .required(passwordRequiredMessage)
+        .test('passwords-match', passwordConfirmMessage, function (value) {
             return this.parent.password === value;
         }),
     agreeToTerms: yup
@@ -58,7 +73,7 @@ const SignupSchema = yup.object().shape({
         .label('Terms')
         .test(
             'is-true',
-            'You must agree to terms to continue',
+            agreeToTermsMessage,
             value => value === true
         ),
 });
@@ -178,8 +193,8 @@ const Register = (props) => {
                             type={confirmPasswordShown ? "text" : "password"}
                         />
                         <i onClick={toggleConfirmPasswordVisiblity}>{eye}</i>
-                        {errors.confirmPassword && <p className="errorMessage">{errors.confirmPassword.message}</p>}
                         </Form.Group>
+                        {errors.confirmPassword && <p className="errorMessage">{errors.confirmPassword.message}</p>}
                     </Form.Group>
                     <Form.Group controlId="formBasicCheckbox">
                         <Form.Check

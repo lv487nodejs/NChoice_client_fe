@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { Form, Button, Col } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import { LOGIN_ROUTE } from "../../configs/login-register-config";
@@ -22,16 +22,24 @@ const USER_DATA = {
     email: '',
     password: ''
 };
+const emailRegExp =new RegExp(/^([a-z0-9_-]+.)[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+).[a-z]{2,6}$/);
+const emailRegExpMessage = "Email must be correct. Example: nick@mail.com";
+const emailRequiredMessage = "Required";
+const passwordRegExp = new RegExp(/(?=.*[0-9])/);
+const passwordRegExpMessage = "Password must contain a number";
+const passwordRequiredMessage = "No password provided";
+const passwordMinElementCount = 8;
+const passwordMinMessage = `Password is too short - should be ${passwordMinElementCount} chars minimum`;
 
 const SignupSchema = yup.object().shape({
     email: yup.string()
-        .required("Required")
-        .matches(/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/, "Email must be correct. Example: nick@mail.com"),
+        .required(emailRequiredMessage)
+        .matches(emailRegExp, emailRegExpMessage),
 
     password: yup.string()
-        .required("No password provided.")
-        .min(8, "Password is too short - should be 8 chars minimum.")
-        .matches(/(?=.*[0-9])/, "Password must contain a number.")
+        .required(passwordRequiredMessage)
+        .min(passwordMinElementCount, passwordMinMessage)
+        .matches(passwordRegExp,passwordRegExpMessage )
 });
 const Login = (props) => {
     const [user, setUser] = useState(USER_DATA);
@@ -56,8 +64,8 @@ const Login = (props) => {
             url: route,
             data: value
         }).then(response => {
-            const { accessToken, refreshToken, user } = response.data;
-            return { accessToken, refreshToken, user };
+            const { accessToken, refreshToken, userId } = response.data;
+            return { accessToken, refreshToken, userId };
         }).then(json => {
             postUserSuccess(json);
             addDataToLocalStorage(json);
@@ -66,8 +74,7 @@ const Login = (props) => {
 
         });
     }
-    const onSubmit = (event, data) => {
-
+    const onSubmit = () => {
         postUser(user, LOGIN_ROUTE);
     };
 
