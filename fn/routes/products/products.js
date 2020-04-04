@@ -23,7 +23,6 @@ router.get('/', async (req, res) => {
         const filter = await getFilters(query);
         const projection = await getProjection(query);
         const sort = await getSort(query);
-        
         const products = await Products.find(filter, projection)
             .sort(sort)
             .skip(+skip)

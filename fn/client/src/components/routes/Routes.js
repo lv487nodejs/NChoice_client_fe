@@ -16,6 +16,7 @@ import AppFooter from '../app-footer';
 import Cart from "../cart/Cart";
 import Wishlist from '../wish-list/Wish-list'
 import Login from '../login/Login';
+import  UserPage  from  '../user-page';
 
 
 const Routes = () => (
@@ -52,6 +53,7 @@ const Routes = () => (
       <Route path="/cart" exact component={Cart} />
       <Route path="/wishlist" exact component={Wishlist} />
       <Route path="/checkout" exact component={CheckoutContainer} />
+      <Route path="/userpage" exact component={UserPage} />
     </Switch>
     <AppFooter />
   </Router>

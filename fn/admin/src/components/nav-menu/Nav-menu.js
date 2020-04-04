@@ -13,8 +13,10 @@ import {
 import { connect } from 'react-redux';
 import { useStyles } from './Nav-menu-styles';
 
-import { MENU_CATEGORIES } from '../../config';
+import { config } from '../../config';
 import { setDrawerStatus } from '../../actions';
+
+const { menuCategories } = config.app;
 
 const DRAWER_TEMPORARY = 'temporary';
 const DRAWER_PERMANENT = 'permanent';
@@ -23,7 +25,7 @@ const TEMPORARY_WIDTHS = ['sm', 'xs'];
 const NavMenu = ({ width, drawerStatus, setDrawerStatus }) => {
     const classes = useStyles();
 
-    const menuItems = MENU_CATEGORIES.map(category => {
+    const menuItems = menuCategories.map(category => {
         const pathTitle = category[0];
         const pathTo = category[1];
         const PathIcon = category[2];
@@ -47,8 +49,9 @@ const NavMenu = ({ width, drawerStatus, setDrawerStatus }) => {
     const drawerVariant = checkWidth(width) ? DRAWER_TEMPORARY : DRAWER_PERMANENT;
 
     return (
-        <div>
+
             <Drawer
+                id="menuDrawer"
                 className={classes.drawer}
                 variant={drawerVariant}
                 open={drawerStatus}
@@ -62,7 +65,7 @@ const NavMenu = ({ width, drawerStatus, setDrawerStatus }) => {
                 <List>{menuItems}</List>
                 <Divider />
             </Drawer>
-        </div>
+
     );
 };
 

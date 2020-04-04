@@ -33,7 +33,7 @@ const ProductList = ({
   addCurrentPage,
   pagesCount,
   addSortByPrice,
-}) => {
+}) => {  
   const sortOptions = [
     {
       text: 'sort by price',

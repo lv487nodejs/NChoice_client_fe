@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Paper, Typography } from '@material-ui/core';
-import { setProductEdit, setProductPropetriesEdit } from '../../actions';
+import { setProductModel, setSizeModel } from '../../actions';
 
 import { SaveButton, StandardButton } from '../buttons';
 import ProductAddPropetriesItem from '../product-add-propetries-item';
@@ -12,41 +12,36 @@ const ADD_BUTTON_LABEL = 'ADD SIZE';
 const REMOVE_BUTTON_LABEL = 'REMOVE SIZE';
 const propsKeys = ['size', 'available', 'sku'];
 
-const AddProductPropetries = ({
-    setProductPropetriesEdit,
-    setProductEdit,
-    productPropetriesEdit,
-    productEdit,
-}) => {
+const AddProductPropetries = ({ setSizeModel, setProductModel, sizeModel, productModel }) => {
     const classes = useStyles();
 
     const handleInputChange = event => {
         const { name, value } = event.target;
-        setProductPropetriesEdit({ ...productPropetriesEdit, [name]: value });
+        setSizeModel({ ...sizeModel, [name]: value });
     };
 
     const handleAddPropetries = () => {
-        setProductEdit({
-            ...productEdit,
-            propetries: [...productEdit.propetries, productPropetriesEdit],
+        setProductModel({
+            ...productModel,
+            propetries: [...productModel.propetries, sizeModel],
         });
     };
 
     const handleRemoveProperty = sizeToRemove => () => {
-        const filteredPropetries = productEdit.propetries.filter(
+        const filteredPropetries = productModel.propetries.filter(
             property => property.size !== sizeToRemove
         );
-        setProductEdit({
-            ...productEdit,
+        setProductModel({
+            ...productModel,
             propetries: [...filteredPropetries],
         });
     };
 
-    const propetryTextFields = Object.keys(productPropetriesEdit).map(name => (
+    const propetryTextFields = Object.keys(sizeModel).map(name => (
         <ProductAddPropetriesItem key={name} name={name} handleInputChange={handleInputChange} />
     ));
 
-    const addedPropetries = productEdit.propetries.map(item => (
+    const addedPropetries = productModel.propetries.map(item => (
         <Paper key={item.size} className={classes.productPropetries}>
             {propsKeys.map(key => (
                 <Typography
@@ -60,6 +55,7 @@ const AddProductPropetries = ({
                 className={classes.button}
                 eventHandler={handleRemoveProperty(item.size)}
                 title={REMOVE_BUTTON_LABEL}
+                id={item.size}
             />
         </Paper>
     ));
@@ -68,24 +64,22 @@ const AddProductPropetries = ({
         <Paper className={classes.productPropetries}>
             {propetryTextFields}
             <div>
-                <SaveButton title={ADD_BUTTON_LABEL} eventHandler={handleAddPropetries} />
+                <SaveButton id="add" title={ADD_BUTTON_LABEL} eventHandler={handleAddPropetries} />
             </div>
             <div className={classes.addedPropetries}>{addedPropetries}</div>
         </Paper>
     );
 };
 
-const mapStateToProps = ({
-    productEditState: { productEdit, productPropetriesEdit, loading },
-}) => ({
-    productEdit,
-    productPropetriesEdit,
+const mapStateToProps = ({ productModelState: { productModel, sizeModel, loading } }) => ({
+    productModel,
+    sizeModel,
     loading,
 });
 
 const mapDispatchToProps = {
-    setProductPropetriesEdit,
-    setProductEdit,
+    setSizeModel,
+    setProductModel,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddProductPropetries);

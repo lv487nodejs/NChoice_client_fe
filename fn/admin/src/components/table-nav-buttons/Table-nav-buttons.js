@@ -4,9 +4,9 @@ import { Badge } from '@material-ui/core';
 
 import { StandardButton } from '../buttons';
 
-import { FILTER_OPTION_NAMES } from '../../config';
+import { config } from '../../config';
 
-const filterNames = FILTER_OPTION_NAMES;
+const { filterLabels } = config.productFilters;
 const CLEAR_BUTTON_TITLE = 'Clear All';
 const SMALL_SIZE = 'small';
 const DEFAULT_SIZE = 'medium';
@@ -14,7 +14,7 @@ const DEFAULT_SIZE = 'medium';
 const TableNavButtons = ({ filterCounters, handleMenuOpen, handleClearFilter, dense }) => {
     const size = dense ? SMALL_SIZE : DEFAULT_SIZE;
 
-    const filterButtons = filterNames.map(name => (
+    const filterButtons = filterLabels.map(name => (
         <Badge key={name} color="error" badgeContent={filterCounters[name]}>
             <StandardButton title={name} size={size} eventHandler={handleMenuOpen(name)} />
         </Badge>

@@ -92,6 +92,7 @@ export default class StoreService {
 
   getCatalogCategories = async (catalogName) => {
     const catalogs = await this.getResource(`catalogs/?catalog=${catalogName}`);
+
     const { categories } = catalogs[0];
     return categories;
   };
@@ -139,5 +140,11 @@ export default class StoreService {
   getCartById = async (id) => {
     const cart = await this.getResource(`cart/${id}`);
     return cart;
+  };
+  getUserById = async (id, token) => {
+    return axios({ method: 'GET', url: `${this._apiBase}users/${id}`, headers: { "x-auth-token": token } })
+  };
+  sendUserChangedData = async (id, token, data) => {
+    return axios({ method: 'PUT', url: `${this._apiBase}users/${id}`, data, headers: { "x-auth-token": token } })
   };
 }
