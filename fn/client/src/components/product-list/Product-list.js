@@ -33,7 +33,7 @@ const ProductList = ({
   addCurrentPage,
   pagesCount,
   addSortByPrice,
-}) => {
+}) => {  
   const sortOptions = [
     {
       text: 'sort by price',
@@ -64,7 +64,7 @@ const ProductList = ({
   ]);
 
   // Change view
-  const paginateMethod = (value) => addCurrentPage(value);
+  const paginateMethod = (value) => addCurrentPage(value-1);
   const changeItemsMethod = (number) => {
     addPostsPerPage(number);
     sessionStorage.setItem('postPerPage', number);

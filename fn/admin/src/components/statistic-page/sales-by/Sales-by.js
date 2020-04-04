@@ -37,7 +37,7 @@ const SalesBy = () => {
     ));
 
     return (
-        <Card className={classes.root}>
+        <Card id="sales-by" className={classes.root}>
             <CardHeader title={chartTitle} />
             <Divider />
             <CardContent>

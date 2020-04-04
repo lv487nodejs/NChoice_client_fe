@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import './App-header-nav-right.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,12 +6,14 @@ import { faHeart, faUser, faShoppingBasket, faSignOutAlt } from '@fortawesome/fr
 import Currency from '../currency';
 import { connect } from 'react-redux';
 import { logoutUser } from "../../actions";
-import InfoPopup from '../info-popup';
 
-const AppHeaderNavRight = ({ cartNumbers, logoutUser, userStatus }) => {
+const AppHeaderNavRight = ({ logoutUser, userStatus }) => {
+  let cartNumbers = 0;
+  if (localStorage.getItem("cart-numbers")) {
+    cartNumbers = localStorage.getItem("cart-numbers");
+  }
 
   return (
-    <>
       <nav className="nav-bar">
         <ul>
           <li key="4">
@@ -30,7 +32,7 @@ const AppHeaderNavRight = ({ cartNumbers, logoutUser, userStatus }) => {
           <li key="7">
             <Link to="/cart">
               <FontAwesomeIcon icon={faShoppingBasket} />
-              <span> <sup>{cartNumbers}</sup> </span>
+              <span> <sup >{ cartNumbers}</sup> </span>
             </Link>
           </li>
           {
@@ -44,8 +46,6 @@ const AppHeaderNavRight = ({ cartNumbers, logoutUser, userStatus }) => {
           }
         </ul>
       </nav>
-      <InfoPopup/>
-    </>
   )
 };
 

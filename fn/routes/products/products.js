@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     const { query } = req;
 
     let { currentpage, postsperpage } = query;
-    currentpage = currentpage || 1;
+    currentpage = currentpage || 0;
     postsperpage = postsperpage || 15;
     let skip = currentpage * postsperpage;
     const { sortbyprice } = query;
@@ -23,11 +23,6 @@ router.get('/', async (req, res) => {
         const filter = await getFilters(query);
         const projection = await getProjection(query);
         const sort = await getSort(query);
-
-        if (projection.score) {
-            skip = 0;
-        }
-
         const products = await Products.find(filter, projection)
             .sort(sort)
             .skip(+skip)
@@ -41,9 +36,8 @@ router.get('/', async (req, res) => {
         if (!products) {
             throw { message: 'Products not found ' };
         }
-
         const productsToSend = prepareProductsToSend(products);
-        const foundProductsNumber = await Products.find(filter).count();
+        const foundProductsNumber = await Products.find(filter).count() ;
 
         if (!foundProductsNumber) {
             throw { message: 'Products not found ' };

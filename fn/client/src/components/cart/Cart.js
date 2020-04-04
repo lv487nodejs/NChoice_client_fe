@@ -1,61 +1,69 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import connect from "react-redux/es/connect/connect";
 import './Cart.css'
-import {Figure} from 'react-bootstrap'
+import { Link } from 'react-router-dom';
+import { Figure, Button } from 'react-bootstrap'
 import Row from "react-bootstrap/Row";
 import Container from "@material-ui/core/Container/Container";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
-import {increaseToCart, decreaseFromCart, removeFromCart } from '../../actions'
+import { increaseToCart, decreaseFromCart, removeFromCart, addToCart } from "../../actions";
 
-const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart}) => {
-  const [product, setProduct] = useState(products)
+const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart}) => {
+  const [products, setProducts] = useState([]);
 
-  const removeFromCart1 = (id) => {
-    const newProducts = products.map(el=>
-      el.id === id ? products.splice(products.indexOf(el), 1) : el
-    );
-    setProduct(newProducts)
-  }
+  useEffect(() => {
+    if (localStorage.getItem('products-collection')) {
+      setProducts(JSON.parse(localStorage.getItem('products-collection')));
+    }
+  }, []);
 
-  const increaseToCart1 = (id) => {
-    const newProducts = products.map(el=>
-      el.id === id ? {...el, quantity: el.quantity++} : el
-    );
-    setProduct(newProducts)
+  const handleIncreaseToCart = (item) => {
+    increaseToCart(item);
+    let foundIncreaseItems = products.find(value => value.id === item.id);
+    foundIncreaseItems.quantity += 1;
   };
 
-  const decreaseFromCart1 = (id) => {
-    const newProducts = products.map(el=>
-      el.id === id && el.quantity > 1 ? {...el, quantity: el.quantity--} :
-      el.id === id && el.quantity === 1 ? removeFromCart1(el.id) :
-      el
-    );
-    setProduct(newProducts)
-  }
+  const handleDecreaseFromCart = (item) => {
+    let foundIncreaseItems = products.find(value => value.id === item.id);
+    let foundToRemove = products.findIndex(value => value.id === item.id);
+    if (foundIncreaseItems.quantity === 1) {
+      products.splice(foundToRemove, 1);
+    } else {
+      foundIncreaseItems.quantity -= 1;
+    }
+    decreaseFromCart(item);
+  };
 
-  const salePrices = []
-  const fullPrices = []
+  const handleRemoveFromCart = (item) => {
+    removeFromCart(item);
+    let foundIncreaseItems = products.findIndex(value => value.id === item.id);
+    products.splice(foundIncreaseItems, 1)
+  };
+
+  const salePrices = [];
+  const fullPrices = [];
   products.map(i=>{
-    const price = i.price * i.quantity
+    const price = i.price * i.quantity;
     return salePrices.push(price)
-  })
+  });
+
   products.map(i=>{
-    const price = i.msrp * i.quantity
+    const price = i.msrp * i.quantity;
     return fullPrices.push(price)
-  })
+  });
 
   const fullPrice =
    fullPrices.length === 1 ? fullPrices[0] :
    fullPrices.length > 1 ? fullPrices.reduce((accumulator, currentValue) => accumulator + currentValue) :
-   0
+   0;
 
   const total =
    salePrices.length === 1 ? salePrices[0] :
    salePrices.length > 1 ? salePrices.reduce((accumulator, currentValue) => accumulator + currentValue) :
-   0
+   0;
 
-  const sale = fullPrice - total
+  const sale = fullPrice - total;
 
   return (
     <div className='main-cart'>
@@ -66,28 +74,28 @@ const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart}) => {
           <li key={item.id} className='cart-item'>
             <Container>
               <Row>
-                <Figure.Image src={`/images/products/${item.images[0]}`} className='cart-img'/>
+                <Figure.Image src={`/images/products/${item.images[0]}`} className='cart-img' />
                 <Figure.Caption className='cart-title'>
                   {item.title}
                   <p> Price:
                   <span className="price">{item.price * item.quantity} {item.currencyIcon}</span>
-                  <span className="msrp-price">{item.msrp * item.quantity} {item.currencyIcon}</span>
+                  <span className="msrp-price">{item.msrp * item.quantity} </span>
                   </p>
-                  <p> Size: <span>{item.size}</span> </p>
+                  <p> Size: <span>{item.propetries.size[0]}</span> </p>
                   <div className="quantity-control">
                   <FontAwesomeIcon
                     icon = {faMinus}
                     className="remove-from-cart-button"
-                    onClick={() => {decreaseFromCart1(item.id); decreaseFromCart(item.id)}}/>
+                    onClick={() => handleDecreaseFromCart(item)}/>
                   <span id="quantity"> {item.quantity} </span>
                   <FontAwesomeIcon
                     icon = {faPlus}
                     className="add-to-cart-button"
-                    onClick={() => {increaseToCart1(item.id); increaseToCart(item.id)}}/>
+                    onClick ={() => handleIncreaseToCart(item)}/>
                   <FontAwesomeIcon
                     icon = {faTrash}
                     className="delte-cart-button"
-                    onClick={() => {removeFromCart1(item.id); removeFromCart(item.quantity)}}/>
+                    onClick={() => handleRemoveFromCart(item)}/>
                   </div>
                 </Figure.Caption>
               </Row>
@@ -101,8 +109,7 @@ const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart}) => {
   )
 };
 
-const mapStateToProps = ({cartReducer: {products}}) => ({products});
 
-export default connect(mapStateToProps, {increaseToCart, decreaseFromCart, removeFromCart})(Cart);
+const mapStateToProps = ({cartReducer: {products, cartNumbers}}) => ({products, cartNumbers});
 
-
+export default connect(mapStateToProps, {addToCart, increaseToCart, decreaseFromCart, removeFromCart})(Cart);
