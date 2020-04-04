@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import {
     StatsPageContainer,
@@ -39,11 +39,16 @@ const AppRouter = () => (
             <Route path={routes.pathToProductDetails} exact component={ProductDetailsPage} />
             <Route path={routes.pathToBrands} exact component={BrandsPageContainer} />
             <Route path={routes.pathToCategories} exact component={CategoriesPageContainer} />
-            <Route path={routes.pathToCategoryDetails} exact component={CategoryDetailsPageContainer} />
+            <Route
+                path={routes.pathToCategoryDetails}
+                exact
+                component={CategoryDetailsPageContainer}
+            />
             <Route path={routes.pathToAddCategory} exact component={CategoryAddPage} />
             <Route path={routes.pathToAddProduct} exact component={ProductAddPage} />
             <Route path={routes.pathToAddBrand} exact component={BrandAddPage} />
             <Route path={routes.pathToBrandDetails} exact component={BrandDetails} />
+            <Redirect to={routes.pathToOrders} />
         </Switch>
         <DialogWindow />
         <SnackbarItem />
