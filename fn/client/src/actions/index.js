@@ -12,8 +12,8 @@ import {
   sizesLoaded,
 } from './Products-actions';
 
-import {addToCart, increaseToCart, decreaseFromCart, removeFromCart} from './Cart-action'
-import {addToWishlist} from './Wishlist-actions'
+import { addToCart, increaseToCart, decreaseFromCart, removeFromCart } from './Cart-action'
+import { addToWishlist } from './Wishlist-actions'
 
 import {
   catalogsLoaded,
@@ -41,6 +41,12 @@ import {
   postUserLoginSuccess,
   setUser
 } from './Auth-actions';
+import {
+  setSnackbarStatus,
+  setSnackbarText,
+  setSnackbarDuration,
+  setSnackbarSeverity,
+} from './Snackbar-actions'
 
 export {
   categoriesRequested,
@@ -76,5 +82,9 @@ export {
   addToWishlist,
   logoutUser,
   postUserLoginSuccess,
-  setUser
+  setUser,
+  setSnackbarDuration,
+  setSnackbarStatus,
+  setSnackbarText,
+  setSnackbarSeverity,
 };
