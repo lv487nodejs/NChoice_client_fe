@@ -1,34 +1,21 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Snackbar} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import {setSnackbarStatus} from '../../actions'
-const SnackbarItem = ({ snackbarStatus, setSnackbarStatus, snackbarText, snackbarDuration,snackbarSeverity}) => {
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setSnackbarStatus(false);
-    };
+import React from 'react'
+import { Toast, Row, Col } from 'react-bootstrap'
+import { connect } from 'react-redux'
+
+const Snackbar = ({ showSnackbar, snackbarText }) => {
+
     return (
-        <div>
-
-        <Snackbar open={snackbarStatus} autoHideDuration={snackbarDuration} onClose={handleClose}>
-        <Alert onClose={handleClose} severity={snackbarSeverity}>
-          {snackbarText}
-        </Alert>
-      </Snackbar>
-        </div>
-    )
+        <Row>
+            <Col xs={6}>
+                <Toast show={showSnackbar}>
+                    <Toast.Body>{snackbarText}</Toast.Body>
+                </Toast>
+            </Col>
+        </Row>
+    );
 }
-const mapStateToProps = ({ snackbarReducer: {
-    snackbarStatus,
+const mapStateToProps = ({ snackbarReducer: { showSnackbar,snackbarText } }) => ({
+    showSnackbar,
     snackbarText,
-    snackbarDuration,
-    snackbarSeverity,
-} }) => ({ snackbarStatus, snackbarText, snackbarDuration, snackbarSeverity })
-
-const mapDispatchToProps = {
-setSnackbarStatus
-}
-export default connect(mapStateToProps,mapDispatchToProps)(SnackbarItem)
+})
+export default connect(mapStateToProps)(Snackbar);

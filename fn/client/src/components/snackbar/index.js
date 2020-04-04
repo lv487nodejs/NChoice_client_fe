@@ -1,2 +1,2 @@
-import SnackbarItem from './Snackbar'
-export default SnackbarItem
+import Snackbar from './Snackbar'
+export default Snackbar

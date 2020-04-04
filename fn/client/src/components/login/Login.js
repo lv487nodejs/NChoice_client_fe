@@ -20,20 +20,22 @@ const addDataToLocalStorage = (token) => {
 const USER_DATA = {
     email: '',
     password: '',
-    accessToken: ''
 };
-
+const passwordRegex = /(?=.*[0-9])/;
+const passwordValidationText = "Password must contain a number.";
+const emailRegEx = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
+const emailValidationText = "Email must be correct. Example: nick@mail.com";
 
 const SignupSchema = yup.object().shape({
     email: yup.string()
         .email()
         .required("Required")
-        .matches(/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/, "Email must be correct. Example: nick@mail.com"),
+        .matches(emailRegEx, emailValidationText),
 
     password: yup.string()
         .required("No password provided.")
         .min(8, "Password is too short - should be 8 chars minimum.")
-        .matches(/(?=.*[0-9])/, "Password must contain a number.")
+        .matches(passwordRegex, passwordValidationText)
 });
 const Login = (props) => {
     const [user, setUser] = useState(USER_DATA);
@@ -57,11 +59,8 @@ const Login = (props) => {
         axios({
             method: 'post',
             url: route,
-            data: value
+            data: value     
         }).then(response => {
-            const { accessToken, refreshToken, user } = response.data;
-            return { accessToken, refreshToken, user };
-        }).then(response => {            
             const { accessToken, refreshToken, userId } = response.data;
             return { accessToken, refreshToken, userId };
         }).then(json => {
@@ -87,7 +86,7 @@ const Login = (props) => {
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control
-                      
+
                                 type="text"
                                 placeholder="Enter email"
                                 name={'email'}
@@ -105,7 +104,7 @@ const Login = (props) => {
                             <Form.Label>Password</Form.Label>
                             <Form.Group className="pass-wrapper">
                                 <Form.Control
-                      
+
                                     type={passwordShown ? "text" : "password"}
                                     placeholder="Password"
                                     name={'password'}
@@ -116,12 +115,12 @@ const Login = (props) => {
                                 <i onClick={togglePasswordVisiblity}>{eye}</i>
                                 {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                             </Form.Group>
-                        </Form.Group>             
+                        </Form.Group>
                         <Form.Check
                             type="switch"
                             id="custom-switch"
                             label="Remember me"
-                        />                
+                        />
                         <Form.Group >
                             <Button variant="dark" type="submit" block>
                                 LOG IN

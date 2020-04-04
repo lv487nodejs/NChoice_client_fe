@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { InputGroup, FormControl } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom';
 import './user-page-change-data.css';
-import { setUser, setSnackbarDuration, setSnackbarStatus, setSnackbarText, setSnackbarSeverity } from '../../actions'
+import { setUser, setShowSnackbar, setSnackbarText } from '../../actions'
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import withStoreService from '../hoc'
-import Snackbar from '../snackbar'
+import Snackbar from '../snackbar';
 
 
 const firstnameRegex = /\w+/;
@@ -20,8 +20,12 @@ const emailRegEx = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a
 const emailValidationText = "Email must be correct. Example: nick@mail.com";
 
 const SignupSchema = yup.object().shape({
-    firstName: yup.string().matches(firstnameRegex, firstnameValidationText),
-    lastName: yup.string().matches(lastnameRegex, lastnameValidationText),
+    firstName: yup.string()
+        .min(6, "firstname is too short - should be 6 chars minimum.")
+        .matches(firstnameRegex, firstnameValidationText),
+    lastName: yup.string()
+        .min(6, "lastname is too short - should be 6 chars minimum.")
+        .matches(lastnameRegex, lastnameValidationText),
     email: yup.string()
         .email()
         .required("Required")
@@ -36,10 +40,9 @@ const SignupSchema = yup.object().shape({
 const UserChangeData = ({ user,
     storeService,
     setUser,
+    setShowSnackbar,
     setSnackbarText,
-    setSnackbarDuration,
-    setSnackbarStatus,
-    setSnackbarSeverity
+
 }) => {
     const local = JSON.parse(localStorage.getItem('user'))
     const { firstName, lastName, email } = user;
@@ -55,7 +58,7 @@ const UserChangeData = ({ user,
     useEffect(() => {
         addUserDataToSTore(local.userId, local.accessToken)
     }, [addUserDataToSTore])
-    
+
     useEffect(() => {
         addUserDataToSTore(local.userId, local.accessToken)
     }, [])
@@ -70,14 +73,17 @@ const UserChangeData = ({ user,
     const submitHandler = (e) => {
         storeService.sendUserChangedData(local.userId, local.accessToken, { userToChange: user }).then((res) => {
             addUserDataToSTore(local.userId, local.accessToken)
-            snackbarHandler(2000, true, res.data.msg,'success')
+            console.log(res.data.msg);
+            
+            snackbarHandler(res.data.msg)
         })
     }
-    const snackbarHandler = (duration, status, text, severity) => {
-        setSnackbarDuration(duration)
-        setSnackbarStatus(status)
+    const snackbarHandler = (text) => {
         setSnackbarText(text)
-        setSnackbarSeverity(severity)
+        setShowSnackbar(true)
+        setTimeout(() => {
+            setShowSnackbar(false)
+        }, 3000)
     }
 
     if (user) {
@@ -109,8 +115,10 @@ const UserChangeData = ({ user,
                         {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                     </InputGroup>
                     <input className="btn btn-dark user-page-button" type="submit" value="send changed data" />
-                </form>
-                <Snackbar />
+                </form><div id="user-page-snackbar">
+
+                <Snackbar  />
+                </div>
             </div>
         )
     }
@@ -121,10 +129,6 @@ const mapStateToProps = ({ authReducer: { user } }) => ({
     user
 })
 const mapDispatchToProps = ({
-    setUser,
-    setSnackbarDuration,
-    setSnackbarStatus,
-    setSnackbarText,
-    setSnackbarSeverity,
+    setUser, setShowSnackbar, setSnackbarText
 })
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(UserChangeData));

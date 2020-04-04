@@ -41,12 +41,8 @@ import {
   postUserLoginSuccess,
   setUser
 } from './Auth-actions';
-import {
-  setSnackbarStatus,
-  setSnackbarText,
-  setSnackbarDuration,
-  setSnackbarSeverity,
-} from './Snackbar-actions'
+
+import {setShowSnackbar, setSnackbarText} from './Snackbar--actions'
 
 export {
   categoriesRequested,
@@ -84,8 +80,6 @@ export {
   logoutUser,
   postUserLoginSuccess,
   setUser,
-  setSnackbarDuration,
-  setSnackbarStatus,
+  setShowSnackbar,
   setSnackbarText,
-  setSnackbarSeverity,
 };

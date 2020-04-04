@@ -1,26 +1,20 @@
 const initialState = {
-    snackbarStatus: false,
+    showSnackbar: false,
     snackbarText: '',
-    snackbarDuration: null
 }
-const snackbarReducer = (state = initialState, action) => {    
+const snackbarReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'SET_SNACKBAR_STATUS':
+        case 'SET_SHOW':
             return {
                 ...state,
-                snackbarStatus: action.payload,
+                showSnackbar: action.payload
             }
-        case 'SET_SNACKBAR_TEXT':
+        case 'SET_TEXT':
             return {
                 ...state,
-                snackbarText: action.payload,
+                snackbarText: action.payload
             }
-        case 'SET_SNACKBAR_DURATION':
-            return {
-                ...state,
-                snackbarDuration: action.payload
-            }
-            default:
+        default:
             return state;
     }
 }
