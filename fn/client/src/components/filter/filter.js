@@ -134,7 +134,6 @@ const Filter = ({
 };
 const mapStateToProps = ({
   productsList: { currentPage, postsPerPage, sortByPrice },
-
   filter: { brand, category, color, searchTerm },
   catalogsList: { catalog },
 }) => ({

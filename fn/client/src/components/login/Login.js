@@ -58,10 +58,12 @@ const Login = (props) => {
             method: 'post',
             url: route,
             data: value
+        }).then(response => {
+            const { accessToken, refreshToken, user } = response.data;
+            return { accessToken, refreshToken, user };
         }).then(response => {            
             const { accessToken, refreshToken, userId } = response.data;
             return { accessToken, refreshToken, userId };
-
         }).then(json => {
             postUserSuccess(json);
             addDataToLocalStorage(json);

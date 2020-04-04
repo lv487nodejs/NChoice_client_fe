@@ -12,6 +12,15 @@ export default class StoreService {
     }
   };
 
+  postData = async (url, dataToSend) => {
+    try {
+        const response = await axios.post(`${this._apiBase}${url}`, dataToSend);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
   getAllProducts = async () => {
     const products = await this.getResource('products');
     return products.products;
@@ -64,9 +73,7 @@ export default class StoreService {
     }
     const products = await this.getResource(queryString);
     return products;
-    // const catalogs = await this.getResource(queryString);
-    // return catalogs;
-  };
+     };
 
   getAllCatalogs = async () => {
     const catalogs = await this.getResource('catalogs');
@@ -114,6 +121,11 @@ export default class StoreService {
     const catalogs = await this.getResource(`orders/${id}`);
     return catalogs;
   };
+
+  postOrder = async order => {
+    const res = await this.postData('orders', order);
+    return res;
+};
 
   getProductProperties = async (id) => {
     const product = await this.getResource(`products/${id}`);
