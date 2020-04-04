@@ -3,10 +3,7 @@
     grid-template-columns: 300px 1fr 1fr 1fr;
     grid-gap: 1em;
     grid-template-rows: auto;
-    grid-template-areas: 
-        "options options options options"
-        "filters productlist productlist productlist"
-        ".  . . pages";
+    grid-template-areas: "options options options options" "filters productlist productlist productlist" ".  . . pages";
 }
 
 .catalog-top-name {
@@ -25,7 +22,6 @@
     grid-area: options;
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
-
 }
 
 .filters {
@@ -36,22 +32,21 @@
     margin: 30px 0;
     grid-gap: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr) );   
     grid-area: productlist;
-
 }
+
 .search-field {
     margin-left: auto;
 }
+
 .productListPage>div.productCategory {
     background-color: rgb(36, 32, 41);
     text-align: center;
     align-items: center;
-    color:white;
-    font-size:3vh;
+    color: white;
+    font-size: 3vh;
 }
-
-
 
 .list>div.productListButtons {
     background-color: rgb(184, 109, 158);

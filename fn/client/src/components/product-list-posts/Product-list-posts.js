@@ -4,13 +4,13 @@ import './Product-list-posts.css';
 
 const ProductListPosts = ({ products }) => (
   <div className="products-items">
-    {products.map(({ id, title, description, images, price, msrp }) => (
+    {products.map(({ id, title, description, images, price, mrsp }) => (
         <ProductsListItem
           title={title}
           description={description}
           images={images}
           price={price}
-          msrp={msrp}
+          mrsp={mrsp}
           id={id}
           key={id}
         />
