@@ -1,3 +1,7 @@
 .user-page-button{
     margin-top: 1rem;
 }
+#user-page-snackbar{
+    margin-left:30vw;
+    text-align: center;
+}
