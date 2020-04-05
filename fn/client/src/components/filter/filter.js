@@ -88,7 +88,6 @@ const Filter = ({
     sortByPrice,
     searchTerm,
   ]);
-
   const filterAddBrandHandler = (e, item) => {
     if (e.target.checked) {
       filterAddBrand(item);
@@ -111,24 +110,36 @@ const Filter = ({
     }
   };
 
+  const filterOptions = [
+    {
+      items: getBrands,
+      type: 'brand',
+      handler: filterAddBrandHandler,
+    },
+    {
+      items: getCategories,
+      type: 'category',
+      handler: filterAddCategoryHandler,
+    },
+    {
+      items: getColors,
+      type: 'color',
+      handler: filterAddColorHandler,
+    },
+  ]
+
   return (
     <div className="filter-group">
       <span>Filter</span>
-      <FilterItem
-        items={getBrands}
-        type="brand"
-        handler={filterAddBrandHandler}
-      />
-      <FilterItem
-        items={getCategories}
-        type="category"
-        handler={filterAddCategoryHandler}
-      />
-      <FilterItem
-        items={getColors}
-        type="color"
-        handler={filterAddColorHandler}
-      />
+      {
+        filterOptions.map(({ items, type, handler }) => {
+          return <FilterItem
+            items={items}
+            type={type}
+            handler={handler}
+          />
+        })
+      }
     </div>
   );
 };
@@ -147,16 +158,16 @@ const mapStateToProps = ({
   searchTerm,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  filterAddBrand: (brand) => dispatch(filterAddBrand(brand)),
-  filterAddColor: (color) => dispatch(filterAddColor(color)),
-  filterAddCategory: (category) => dispatch(filterAddCategory(category)),
-  filterRemoveBrand: (brand) => dispatch(filterRemoveBrand(brand)),
-  filterRemoveCategory: (category) => dispatch(filterRemoveCategory(category)),
-  filterRemoveColor: (category) => dispatch(filterRemoveColor(category)),
-  productsLoaded: (products) => dispatch(productsLoaded(products)),
-  addPagesCount: (value) => dispatch(addPagesCount(value)),
-});
+const mapDispatchToProps = {
+  filterAddBrand,
+  filterAddColor,
+  filterAddCategory,
+  filterRemoveBrand,
+  filterRemoveCategory,
+  filterRemoveColor,
+  productsLoaded,
+  addPagesCount,
+};
 
 export default withStoreService()(
   connect(mapStateToProps, mapDispatchToProps)(Filter)
