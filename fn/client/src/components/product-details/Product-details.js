@@ -120,9 +120,6 @@ const ProductDetails = ({
           <Card.Body className="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
               onClick={() => addToWishlist(product)} />
-            <Button variant="dark" className={checkSize ? 'button' : 'button disabled'}
-              onClick={handleAddToCart}> Add to card </Button>
-            <Button variant="dark" className="button"> By now </Button>
             <Button 
             variant="dark" 
             className={checkSize ? 'button' : 'button disabled'}
