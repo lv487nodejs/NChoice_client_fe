@@ -59,14 +59,13 @@ const UserChangeData = ({ user,
         addUserDataToSTore(local.userId, local.accessToken)
     }, [addUserDataToSTore])
 
-    useEffect(() => {
-        addUserDataToSTore(local.userId, local.accessToken)
-    }, [])
-
+ 
+    
+    
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchema
     })
-
+    
     const changeHandler = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
@@ -85,7 +84,9 @@ const UserChangeData = ({ user,
             setShowSnackbar(false)
         }, 3000)
     }
-
+    if (user === {}){      
+        addUserDataToSTore(local.userId, local.accessToken)
+}
     if (user) {
         return (
             <div>
