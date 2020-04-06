@@ -6,7 +6,7 @@ import { Card, Row, Col, Image, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import ProductListPosts from '../product-list-posts';
-import StarRating from '../star-rating';
+import StarsRating from '../star-rating';
  
 import withStoreService from '../hoc';
 import {
@@ -106,7 +106,7 @@ const ProductDetails = ({
           </Col>
         </Row>
         <Col className="text">
-          <StarRating />
+          <StarsRating />
           <Card.Title className="title">{product.title}</Card.Title>
           <Card.Text className="productDescription">
             {product.description}
