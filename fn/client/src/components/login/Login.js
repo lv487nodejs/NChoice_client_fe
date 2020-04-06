@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import { LOGIN_ROUTE } from "../../configs/login-register-config";
 import axios from "axios";
-import { postUserError, postUserStarted, postUserSuccess, logoutUser } from "../../actions";
+import { setUserLogged, setUserLoading } from "../../actions";
 
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -16,7 +16,9 @@ import LoadingSpinner from "../Loading-spinner";
 const eye = <FontAwesomeIcon icon={faEye} />;
 
 const addDataToLocalStorage = (token) => {
-    localStorage.setItem('Token', JSON.stringify(token));
+    localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
+    localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
+    localStorage.setItem('userId', JSON.stringify(token.userId))
 }
 
 const USER_DATA = {
@@ -29,7 +31,7 @@ const emailRequiredMessage = "Required";
 const passwordRegExp = new RegExp(/(?=.*[0-9])/);
 const passwordRegExpMessage = "Password must contain a number";
 const passwordRequiredMessage = "No password provided";
-const passwordMinElementCount = 8;
+const passwordMinElementCount = 6;
 const passwordMinMessage = `Password is too short - should be ${passwordMinElementCount} chars minimum`;
 
 const SignupSchema = yup.object().shape({
@@ -46,15 +48,15 @@ const SignupSchema = yup.object().shape({
 const Login = (props) => {
     const [user, setUser] = useState(USER_DATA);
     const [errorMsg, setErrorMsg] = useState('');
-    const { postUserStarted, postUserSuccess, postUserError, userStatus, logoutUser } = props;
-    const { register, handleSubmit, errors } = useForm({
+    const { setUserLogged, setUserLoading, userLogged, userLoading } = props;
+    const { register, errors, handleSubmit } = useForm({
         validationSchema: SignupSchema
     });
     const [passwordShown, setPasswordShown] = useState(false);
 
     useEffect(() => {
-        logoutUser()
-    }, [logoutUser])
+        setUserLogged(false)
+    }, [setUserLogged])
 
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
@@ -67,32 +69,33 @@ const Login = (props) => {
 
     const postUser = async (value, route) => {
         try {
-            postUserStarted();
+            setUserLoading();
             const response = await axios.post(route, value);
-            postUserSuccess(response.data);
+            setUserLogged(true);
             addDataToLocalStorage(response.data);
         } catch (error) {
-            logoutUser()
+            setUserLogged(false)
             const {msg} = error.response.data.errors[0]
             setErrorMsg(msg)
         }
-        
     }
-    const onSubmit = () => {
+    const handleOnSubmit = event => {
+        // event.preventDefault();
         postUser(user, LOGIN_ROUTE);
     };
 
-    if (userStatus === 'loading') {
+    if (userLoading) {
         return <LoadingSpinner />
     }
 
-    if (userStatus === 'received') {
+    if (userLogged) {
         return <Redirect to='/' />
     }
 
+
     return (
                 <div className={'login'}>
-                    <Form onSubmit={handleSubmit(onSubmit)} >
+                    <Form onSubmit={handleSubmit(handleOnSubmit)} >
                         <Form.Label className="lable">Log In</Form.Label>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
@@ -146,10 +149,10 @@ const Login = (props) => {
 };
 
 
-const mapDispatchToProps = { postUserStarted, postUserSuccess, postUserError, logoutUser };
+const mapDispatchToProps = { setUserLogged, setUserLoading };
 
-const mapStateToProps = ({ authReducer: { userStatus } }) => ({
-    userStatus
+const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({
+    userLogged, userLoading
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Register.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import { REGISTER_ROUTE } from "../../configs/login-register-config";
 import axios from "axios";
-import { postUserError, postUserStarted, postUserSuccess, postUserLoginSuccess } from "../../actions";
+import { setUserLogged, setUserLoading } from "../../actions";
 
 
 import { useForm } from "react-hook-form";
@@ -13,11 +13,13 @@ import * as yup from "yup";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import LoadingSpinner from "../Loading-spinner";
 
 
 const addDataToLocalStorage = (token) => {
     localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
     localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
+    localStorage.setItem('userId', JSON.stringify(token.id))
 }
 
 const USER_DATA = {
@@ -79,12 +81,17 @@ const SignupSchema = yup.object().shape({
 });
 const Register = (props) => {
     const [user, setUser] = useState(USER_DATA);
-    const { postUserStarted, postUserSuccess, postUserError, userStatus, postUserLoginSuccess } = props;
+    const { setUserLogged, setUserLoading, userLogged, userLoading } = props;
+    const [errorMsg, setErrorMsg] = useState('');
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchema
     });
     const [passwordShown, setPasswordShown] = useState(false);
     const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
+
+    useEffect(() => {
+        setUserLogged(false)
+    }, [setUserLogged])
 
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
@@ -98,36 +105,50 @@ const Register = (props) => {
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
     };
 
-    const postUser = (value, route) => {
-        postUserStarted();
-        axios({
-            method: 'post',
-            url: route,
-            data: value
-        }).then(response => {
-            const { accessToken, refreshToken } = response.data;
-            return { accessToken, refreshToken };
-        }).then(json => {
-            postUserLoginSuccess(json);
-            addDataToLocalStorage(json);
-        }).catch(e => {
-            console.log(e);
-            postUserError(e);
-        });
+    const postUser = async (value, route) => {
+        try {
+            setUserLoading();
+            const response = await axios.post(route, value);
+            setUserLogged(true);
+            addDataToLocalStorage(response.data);
+        } catch (error) {
+            setUserLogged(false)
+            const {msg} = error.response.data.errors[0]
+            setErrorMsg(msg)
+        }
     }
+    // const postUser = (value, route) => {
+    //     postUserStarted();
+    //     axios({
+    //         method: 'post',
+    //         url: route,
+    //         data: value
+    //     }).then(response => {
+    //         const { accessToken, refreshToken } = response.data;
+    //         return { accessToken, refreshToken };
+    //     }).then(json => {
+    //         postUserSuccess(json);
+    //         addDataToLocalStorage(json);
+    //     }).catch(e => {
+    //         console.log(e);
+    //         postUserError(e);
+    //     });
+    // }
 
-    const onSubmit = (event) => {
+    const handleOnSubmit = (event) => {
         postUser(user, REGISTER_ROUTE);
     };
 
-    if (userStatus === 'loginReceived') {
-        return (<Redirect to='/login' />)
+    if (userLoading) {
+        return <LoadingSpinner />
+    }
+
+    if (userLogged) {
+        return <Redirect to='/' />
     }
 
     return (
-        userStatus === 'loading' ?
-            <div>Loading...</div> : (
-                <Form className="register" onSubmit={handleSubmit(onSubmit)}>
+                <Form className="register" onSubmit={handleSubmit(handleOnSubmit)}>
                     <Form.Label className="lable">Register</Form.Label>
                     <Form.Group>
                     <Form.Label>First name</Form.Label>
@@ -211,19 +232,20 @@ const Register = (props) => {
                         <Button variant="dark" type="submit" block>
                             REGISTER
                         </Button>
+                        <span>{errorMsg}</span>
                     </Form.Group>
                     <Form.Group className="link">
                         <Link to="/login" className="btn btn-link" >LOG IN</Link>
                     </Form.Group>
                 </Form>
-            )
+
     );
 }
 
-const mapDispatchToProps = { postUserStarted, postUserSuccess, postUserError, postUserLoginSuccess };
+const mapDispatchToProps = { setUserLogged, setUserLoading };
 
-const mapStateToProps = ({ authReducer: { userStatus } }) => ({
-    userStatus
+const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({
+    userLogged, userLoading
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

@@ -34,11 +34,7 @@ import {
 } from './Filter-actions';
 
 import {
-  postUserSuccess,
-  postUserStarted,
-  postUserError,
-  logoutUser,
-  postUserLoginSuccess
+  setUserLogged, setUserLoading
 } from './Auth-actions';
 
 export {
@@ -64,15 +60,14 @@ export {
   filterByName,
   productLoaded,
   sizesLoaded,
-  postUserError,
-  postUserSuccess,
-  postUserStarted,
+  // postUserError,
+  // postUserSuccess,
+  // postUserStarted,
   setSearchValue,
   addToCart,
   increaseToCart,
   decreaseFromCart,
   removeFromCart,
   addToWishlist,
-  logoutUser,
-  postUserLoginSuccess
+  setUserLogged, setUserLoading
 };

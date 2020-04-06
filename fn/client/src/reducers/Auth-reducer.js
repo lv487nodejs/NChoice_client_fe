@@ -1,37 +1,19 @@
 const initialState = {
-    userTokens: {},
-    userStatus: null,
+    userLogged: false,
+    userLoading: false
 }
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'ADD_USER_REQUESTED':
+        case 'SET_USER_LOGGED':
             return {
-                ...state,
-                userStatus: 'loading',
+                userLoading: false,
+                userLogged: action.payload,
             };
-        case 'ADD_USER_RECEIVED':
+        case 'SET_USER_LOADING':
             return {
                 ...state,
-                userTokens: action.payload,
-                userStatus: 'received',
-            }
-        case 'ADD_USER_LOGIN_RECEIVED':
-            return {
-                ...state,
-                userTokens: action.payload,
-                userStatus: 'loginReceived',
-            }
-        case 'ADD_USER_ERROR':
-            return {
-                ...state,
-                userStatus: 'failed',
-            }
-
-        case 'LOGOUT_USER':
-            return {
-                ...state,
-                userStatus: null
+                userLoading: true,
             }
         default:
             return { ...state };

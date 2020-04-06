@@ -5,9 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faUser, faShoppingBasket, faSignOutAlt, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import Currency from '../currency';
 import { connect } from 'react-redux';
-import { logoutUser } from "../../actions";
+import { setUserLogged } from "../../actions";
 
-const AppHeaderNavRight = ({ cartNumbers, logoutUser, userStatus }) => {
+const AppHeaderNavRight = ({ cartNumbers, setUserLogged , userLogged }) => {
+
+  const handleLogOut = () => {
+    setUserLogged(false)
+    localStorage.clear()
+  }
 
   return (
     <nav className="nav-bar">
@@ -22,7 +27,7 @@ const AppHeaderNavRight = ({ cartNumbers, logoutUser, userStatus }) => {
         </li>
         <li key="6">
           {
-            userStatus === 'received' ? (
+            localStorage.getItem('userId') || userLogged ? (
               <p key="8" >
                 <Link to={"/user"}>
                   <FontAwesomeIcon icon={faUser} />
@@ -40,8 +45,8 @@ const AppHeaderNavRight = ({ cartNumbers, logoutUser, userStatus }) => {
           </Link>
         </li>
         {
-          userStatus === 'received' ? (
-            <li key="8" onClick={logoutUser}>
+          localStorage.getItem('userId') || userLogged ? (
+            <li key="8" onClick={handleLogOut}>
               <Link to={"/login"}>
                 <FontAwesomeIcon icon={faSignOutAlt} />
               </Link>
@@ -53,8 +58,8 @@ const AppHeaderNavRight = ({ cartNumbers, logoutUser, userStatus }) => {
   )
 };
 
-const mapDispatchToProps = { logoutUser };
+const mapDispatchToProps = { setUserLogged };
 
-const mapStateToProps = ({ cartReducer: { cartNumbers }, authReducer: { userStatus } }) => ({ cartNumbers, userStatus });
+const mapStateToProps = ({ cartReducer: { cartNumbers }, authReducer: { userLogged } }) => ({ cartNumbers, userLogged });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppHeaderNavRight);
