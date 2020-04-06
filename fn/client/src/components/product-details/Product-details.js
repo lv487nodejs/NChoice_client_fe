@@ -132,7 +132,7 @@ const ProductDetails = ({
               <Button
                 variant="dark"
                 onClick={handleAddToCart}
-              >Buy now</Button>
+              >Add to card and checkout</Button>
             </Link>
           </Card.Body>
         </Col>
