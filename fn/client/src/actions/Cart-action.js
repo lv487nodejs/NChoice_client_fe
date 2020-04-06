@@ -7,33 +7,32 @@ const addToCart = (productName) => {
   }
 };
 
-const increaseToCart = (id) => {
+const increaseToCart = (productName) => {
   return(dispatch) => {
     dispatch({
       type: 'INCREASE_TO_CART',
-      payload: id
+      payload: productName
     })
   }
 };
 
-const decreaseFromCart = (id) => {
+const decreaseFromCart = (productName) => {
   return(dispatch) => {
     dispatch({
       type: 'DECREASE_TO_CART',
-      payload: id
+      payload: productName
     })
   }
 };
 
-const removeFromCart = (quantity) => {
+const removeFromCart = (productName) => {
   return(dispatch) => {
     dispatch({
       type: 'REMOVE_FROM_CART',
-      payload: quantity
+      payload: productName
     })
   }
 };
-
 
 export  {
   addToCart,
