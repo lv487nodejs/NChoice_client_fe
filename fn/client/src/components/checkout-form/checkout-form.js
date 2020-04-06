@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -27,6 +27,14 @@ const CheckoutForm = ({ products, storeService }) => {
     if (products.length === 0) {
         return (<Redirect to='/' />)
     }
+
+    const storageData = JSON.parse(localStorage.getItem('user'))||{};
+
+    const clearLocalStorage = () => {
+        localStorage.removeItem('cart-numbers')
+        localStorage.removeItem('products-collection')   
+    }
+
     const productsINeed = products.map(product => {
         return {
             item: product.id,
@@ -38,7 +46,7 @@ const CheckoutForm = ({ products, storeService }) => {
 
     const orderToServer = {
         orderItems: productsINeed,
-        userId: "5e5c066c39d3fa165ca5eb3b", //TODO: change to real auth userID
+        userId: storageData.userId,
         deliveryAddress: {
             country: order.country,
             city: order.city,
@@ -59,6 +67,7 @@ const CheckoutForm = ({ products, storeService }) => {
             setValidated(true);
             return
         }
+        clearLocalStorage();
         storeService.postOrder(orderToServer);
     }
 
