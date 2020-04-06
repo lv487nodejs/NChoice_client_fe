@@ -105,8 +105,8 @@ const TableNav = ({
     };
 
     return (
-        // <div className={classes.tableNav}>
         <Grid
+            id="tableNav"
             className={classes.tableNav}
             container
             spacing={2}
@@ -144,8 +144,6 @@ const TableNav = ({
                 <TableNavSearchBar />
             </Grid>
         </Grid>
-
-        // </div>
     );
 };
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
 import wrapWithAdminService from '../wrappers';
 
 import {
@@ -30,6 +31,7 @@ const REMOVE_TITLE = 'Product remove';
 const REMOVE_MESSAGE = 'Are you sure you want to remove product?';
 const SUCCESS_STATUS = 'success';
 const PATH_TO_PRODUCT = id => `/product/${id}`;
+const noProductsText = 'No products were found matching your selection.';
 
 const ProductList = ({
     adminService,
@@ -63,10 +65,11 @@ const ProductList = ({
                 if (res) {
                     setProducts(res.products);
                     setPagesCount(res.foundProductsNumber);
-                } else {
-                    setProducts([]);
-                    setPagesCount(0);
+                    return;
                 }
+
+                setProducts([]);
+                setPagesCount(0);
             });
     }, [
         productsService,
@@ -83,6 +86,10 @@ const ProductList = ({
         setDrawerStatus(false);
         getProducts();
     }, [getProducts, setDrawerStatus]);
+
+    if (loading) {
+        return <LoadingBar />;
+    }
 
     const editHandler = productId => () => {
         history.push(PATH_TO_PRODUCT(productId));
@@ -125,14 +132,25 @@ const ProductList = ({
     ));
 
     const productTable = (
-        <TableContainerGenerator tableTitles={tableTitles} tableItems={productItems} pagination />
+        <TableContainerGenerator
+            id="productTable"
+            tableTitles={tableTitles}
+            tableItems={productItems}
+            pagination
+        />
     );
 
-    if (loading) {
-        return <LoadingBar />;
+    if (!products.length) {
+        return (
+            <Typography id="noProducts" variant="h4" component="h2">
+                {noProductsText}
+            </Typography>
+        );
     }
 
-    return productTable;
+    if (products.length) {
+        return productTable;
+    }
 };
 
 const mapStateToProps = ({
