@@ -21,16 +21,13 @@ const AppHeaderNavRight = ({ cartNumbers, logoutUser, userStatus }) => {
           <span className="currency-button"><Currency /></span>
         </li>
         <li key="6">
-          {/* <Link to="/login">
-            <FontAwesomeIcon icon={faUser} />
-          </Link> */}
           {
             userStatus === 'received' ? (
-              <li key="8" >
-                <Link to={"/login"}>
+              <p key="8" >
+                <Link to={"/user"}>
                   <FontAwesomeIcon icon={faUser} />
                 </Link>
-              </li>
+              </p>
             ) : <Link to="/login">
                 <FontAwesomeIcon icon={faSignInAlt} />
               </Link>
