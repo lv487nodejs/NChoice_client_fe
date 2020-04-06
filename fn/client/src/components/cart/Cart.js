@@ -102,6 +102,11 @@ const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart}) => {
             </Container>
           </li>
         ))}
+        <Link to="/checkout" className={products.length >= 1 ? 'disp-block' : 'disp-none' }>
+              <Button
+                variant="dark"
+              >Go to checkout</Button>
+            </Link>
         <h5>{products.length >= 1 && <em>Total: {total}</em>}</h5>
         <h5>{products.length >= 1 && <em>Sale: {sale}</em>}</h5>
       </ul>

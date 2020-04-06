@@ -6,6 +6,8 @@ import { Card, Row, Col, Image, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import ProductListPosts from '../product-list-posts';
+import StarRating from '../star-rating';
+ 
 import withStoreService from '../hoc';
 import {
   productLoaded,
@@ -108,6 +110,7 @@ const ProductDetails = ({
           </Col>
         </Row>
         <Col className="text">
+          <StarRating />
           <Card.Title className="title">{product.title}</Card.Title>
           <Card.Text className="productDescription">
             {product.description}
@@ -120,9 +123,6 @@ const ProductDetails = ({
           <Card.Body className="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
               onClick={() => addToWishlist(product)} />
-            <Button variant="dark" className={checkSize ? 'button' : 'button disabled'}
-              onClick={handleAddToCart}> Add to card </Button>
-            <Button variant="dark" className="button"> By now </Button>
             <Button 
             variant="dark" 
             className={checkSize ? 'button' : 'button disabled'}
