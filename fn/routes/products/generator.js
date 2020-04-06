@@ -176,7 +176,7 @@ router.post('/', async (req, res) => {
           images: [`${category.category}_${catalog.catalog}.jpg`],
           mrsp: mrspR,
           price: priceR,
-          rate: rate,
+          rate: rateR,
           propetries: props,
         });
 

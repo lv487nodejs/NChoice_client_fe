@@ -7,8 +7,8 @@ const path = require('path');
 const rfs = require('rotating-file-stream');
 
 const accessLogStream = rfs.createStream('access.log', {
-    interval: '3d',
-    path: path.join(__dirname, 'logs')
+  interval: '3d',
+  path: path.join(__dirname, 'logs'),
 });
 
 const auth = require('./routes/users/auth');
@@ -21,7 +21,6 @@ const colors = require('./routes/products/colors');
 const generator = require('./routes/products/generator');
 const orders = require('./routes/purchase/order');
 const cart = require('./routes/purchase/cart');
-
 
 const app = express();
 app.use(cors());
@@ -43,7 +42,6 @@ app.use('/colors', colors);
 app.use('/generator', generator);
 app.use('/orders', orders);
 app.use('/cart', cart);
-
 
 const PORT = process.env.PORT || 5000;
 
