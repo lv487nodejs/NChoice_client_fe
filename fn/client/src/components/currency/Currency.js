@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Button from './button';
 
 const BASE_URL = 'https://api.exchangeratesapi.io/latest';
+const currencies = {'PLN': '‎zł', 'USD': '$', 'EUR': '€'}
 
 function Currency() {
+    const currencies = {'PLN': '‎zł', 'USD': '$', 'EUR': '€'}
     const [currencyOptions, setCurrencyOptions] = useState([]);
    
     useEffect(() => {
@@ -19,23 +21,16 @@ function Currency() {
             }
             )))
             .then(cur => setCurrencyOptions(cur.filter(i => {
-                if(i.name === 'USD' || i.name === 'PLN'){
-                    return i
+                if(currencies.hasOwnProperty(i.name)){
+                    return (i.name)
                 }
             })))
     }, []);
 
     return (
-            <Button currencyOptions={currencyOptions} />
+            <Button currencyOptions={currencyOptions} currencies={currencies}  />
     );
 }
 
 export default Currency;
 
-
-// .then((currency => {for (const [curr, count] of currency) {
-//     return ({
-//         name: curr,
-//         cof: count
-//     })
-//   }}))
