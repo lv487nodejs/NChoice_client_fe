@@ -2,6 +2,11 @@ const filterAddBrand = (brand) => ({
   type: 'FILTER_ADD_BRAND',
   payload: brand,
 });
+
+const setCatalogFilter = (catalog) => ({
+  type: 'SET_CATALOG_FILTER',
+  payload: catalog,
+})
 const filterAddCategory = (category) => ({
   type: 'FILTER_ADD_CATEGORY',
   payload: category,
@@ -22,8 +27,9 @@ const filterRemoveCategory = (category) => ({
   type: 'FILTER_REMOVE_CATEGORY',
   payload: category,
 });
-const filterRemoveAllCategories = () => ({
+const filterRemoveAllCategories = (catalog) => ({
   type: 'FILTER_REMOVE_ALL_CATEGORIES',
+  payload: catalog,
 });
 
 const filterByName = (newSearchTerm) => ({
@@ -45,4 +51,5 @@ export {
   filterRemoveColor,
   filterByName,
   setSearchValue,
+  setCatalogFilter,
 };

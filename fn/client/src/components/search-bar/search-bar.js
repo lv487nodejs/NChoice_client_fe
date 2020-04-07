@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { filterByName, productsLoaded, setSearchValue, } from '../../actions';
+import { filterByName, setProducts, setSearchValue, } from '../../actions';
 
 import withStoreService from '../hoc';
 import './search-bar.css';
@@ -8,14 +8,7 @@ import './search-bar.css';
 import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const SearchBar = ({ storeService, productsLoaded, filterByName, setSearchValue, searchTerm, searchValue, setSearchTerm }) => {
-
-    useEffect(() => {
-        storeService.getProductsByFilter({ searchTerm }).then(res => {
-            productsLoaded(res.products);
-            setSearchValue('');
-        });
-    }, [storeService,productsLoaded,searchTerm, setSearchValue]);
+const SearchBar = ({ filterByName, setSearchValue, searchValue, }) => {
 
     useEffect(() => () => filterByName(''), [filterByName]);
 
@@ -54,6 +47,6 @@ const mapStateToProps = ({ filter: { searchValue, searchTerm }, catalogsList: { 
     catalog,
 });
 
-const mapDispatchToProps = { filterByName, productsLoaded, setSearchValue };
+const mapDispatchToProps = { filterByName, setProducts, setSearchValue };
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(SearchBar));

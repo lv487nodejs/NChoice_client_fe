@@ -20,7 +20,7 @@ const catalogsList = (state = initialState, action) => {
             };
         case 'CATALOG_LOADED':
             return {
-                catalogs: state.catalogs,
+                ...state,
                 catalog: action.payload,
                 loading: false,
             };
