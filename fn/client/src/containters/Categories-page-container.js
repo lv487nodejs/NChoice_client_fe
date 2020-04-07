@@ -8,9 +8,8 @@ import CategoriesNav from '../components/categories-nav';
 const CategoriesPageContainer = ({ catalog }) => (
     <div className="categories">
         <CategoriesNav catalog={catalog} />
-        <CategoriesCarousel image={`${catalog}.jpg`} />
-        <CategoriesCarousel image={`${catalog}.jpg`} />
-        <CategoriesCarousel image={`${catalog}.jpg`} />
+        <CategoriesCarousel catalog={catalog} />
+
     </div>
 );
 

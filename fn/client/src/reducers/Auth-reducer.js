@@ -1,9 +1,10 @@
 const initialState = {
     userLogged: false,
-    userLoading: false
+    userLoading: false,
+    user:{}
 }
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {    
     switch (action.type) {
         case 'SET_USER_LOGGED':
             return {
@@ -14,6 +15,11 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userLoading: true,
+            }
+        case 'SET_USER':
+            return {
+                ...state,
+                user: action.payload
             }
         default:
             return { ...state };

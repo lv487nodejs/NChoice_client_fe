@@ -1,12 +1,12 @@
-import { FILTER_OPTIONS, FILTER_COUNTERS } from '../config';
+import { config } from '../config';
 
-const filterCounters = FILTER_COUNTERS;
+const { filterCounters, initialFilters } = config.productFilters;
 
 const initialState = {
     checkboxStatus: {},
     checkboxLoaded: false,
-    filterSelected: FILTER_OPTIONS,
     filterCounters,
+    filterSelected: initialFilters,
     filterOptionsGroups: [],
     filterOptionsList: {},
 };

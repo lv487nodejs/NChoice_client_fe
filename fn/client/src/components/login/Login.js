@@ -156,6 +156,3 @@ const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
-
-
-

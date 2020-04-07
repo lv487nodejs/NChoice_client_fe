@@ -6,5 +6,13 @@ const addToWishlist = (productDescription) => {
       })
     }
   };
+const removeFromWishlist = (productName) => {
+  return(dispatch) => {
+    dispatch({
+      type: 'REMOVE_FROM_WISHLIST',
+      payload: productName
+    })
+  }
+};
 
-export {addToWishlist}
+export {addToWishlist, removeFromWishlist}

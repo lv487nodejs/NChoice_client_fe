@@ -1,12 +1,12 @@
-import { FILTER_OPTIONS } from '../config';
+import { config } from '../config';
 
-const filters = FILTER_OPTIONS;
+const { initialFilters } = config.productFilters;
 
 const initialState = {
     product: {},
     productPropetries: [],
     products: [],
-    filters,
+    filters: initialFilters,
     productEditStatus: true,
     loading: true,
 };

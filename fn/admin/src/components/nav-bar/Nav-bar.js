@@ -9,9 +9,11 @@ import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 import { useStyles } from './Nav-bar-styles';
-import { PAGE_TITLE } from '../../config';
+import { config } from '../../config';
 
 import { setThemeMode, setDrawerStatus } from '../../actions';
+
+const { title } = config.app;
 
 const NavBar = ({ drawerStatus, darkMode, setThemeMode, setDrawerStatus }) => {
     const classes = useStyles();
@@ -25,7 +27,7 @@ const NavBar = ({ drawerStatus, darkMode, setThemeMode, setDrawerStatus }) => {
     };
 
     const menuToggle = (
-        <IconButton onClick={handleDrawerToggle} className={classes.menuButton}>
+        <IconButton id="menuToggle" onClick={handleDrawerToggle} className={classes.menuButton}>
             <MenuIcon />
         </IconButton>
     );
@@ -34,11 +36,13 @@ const NavBar = ({ drawerStatus, darkMode, setThemeMode, setDrawerStatus }) => {
         <AppBar className={classes.appBar}>
             <Toolbar>
                 {menuToggle}
-                <Typography variant="h4" className={classes.title}>
-                    {PAGE_TITLE}
+                <Typography id="logo" variant="h4" className={classes.title}>
+                    {title}
                 </Typography>
-                <IconButton onClick={themeChangeHandler}>{themeButton}</IconButton>
-                <AccountCircle />
+                <IconButton id="themeToggler" onClick={themeChangeHandler}>
+                    {themeButton}
+                </IconButton>
+                <AccountCircle id="profileButton" />
             </Toolbar>
         </AppBar>
     );

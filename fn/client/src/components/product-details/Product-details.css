@@ -72,7 +72,7 @@
 .buttons {
   width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   padding: 0;
   justify-self: end;
@@ -106,4 +106,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.disp-none {
+  display: none;
+}
+.disp-block { 
+  display:block;
 }

@@ -13,7 +13,6 @@ router.post('/login', userLoginValidationRules(), validate, async (req, res) => 
     const { password, email } = req.body;
     try {
         const user = await Users.findOne({ email });
-
         if (!user) {
             return res.status(400).send({ errors: [{ msg: 'Cannot find user with such email.' }] });
         }
@@ -22,7 +21,6 @@ router.post('/login', userLoginValidationRules(), validate, async (req, res) => 
         if (!comparePassword) {
             return res.status(400).send({ errors: [{ msg: 'User password is incorrect.' }] });
         }
-
         const userName = { name: user.email };
         const accessToken = generateAccessToken(userName);
         const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
@@ -71,3 +69,4 @@ router.delete('/logout', async (req, res) => {
 const generateAccessToken = userName => jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
 
 module.exports = router;
+
