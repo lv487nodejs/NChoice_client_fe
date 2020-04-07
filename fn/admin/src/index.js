@@ -14,6 +14,7 @@ import {
     categoriesService,
     usersService,
     colorsService,
+    ordersService,
 } from './services';
 import { AdminServiceProvider } from './components/context';
 
@@ -27,6 +28,7 @@ const adminService = {
     categoriesService,
     usersService,
     colorsService,
+    ordersService,
 };
 
 ReactDOM.render(
@@ -37,3 +39,7 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root')
 );
+
+if (window.Cypress) {
+    window.store = store;
+}

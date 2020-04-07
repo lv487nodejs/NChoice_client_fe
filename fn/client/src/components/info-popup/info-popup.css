@@ -1,0 +1,9 @@
+.info-popup {
+  display: block;
+  position: fixed;
+  top: 100px;
+  right: 10px;
+  height: 50px;
+  width: 100px;
+}
+

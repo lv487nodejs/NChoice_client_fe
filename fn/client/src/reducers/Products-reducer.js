@@ -4,7 +4,7 @@ const initialState = {
     currency: 1,
     currencyIcon: '€',
     loading: true,
-    currentPage: 1,
+    currentPage: 0,
     postsPerPage: 15,
     pagesCount: 1,
     sortByPrice: 0,
@@ -14,13 +14,18 @@ const initialState = {
 const productsList = (state = initialState, action) => {
 
     switch (action.type) {
-        case 'PRODUCTS_REQUESTED':
+        case 'PRODUCTS_LOADING_START':
             return {
                 ...state,
                 loading: true,
             };
 
-        case 'PRODUCTS_LOADED':
+        case 'PRODUCTS_LOADING_STOP':
+            return {
+                ...state,
+                loading: false,
+            };
+        case 'SET_PRODUCTS':
             return {
                 ...state,
                 products: action.payload,
@@ -59,7 +64,7 @@ const productsList = (state = initialState, action) => {
                 ...state,
                 sortByPrice: action.payload,
             };
-        case 'PRODUCT_LOADED':
+        case 'SET_PRODUCT':
             return {
                 ...state,
                 product: action.payload,

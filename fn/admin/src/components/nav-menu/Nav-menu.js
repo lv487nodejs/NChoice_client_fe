@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import {
     Drawer,
     Divider,
@@ -8,45 +7,69 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
+    withWidth,
 } from '@material-ui/core';
 
+import { connect } from 'react-redux';
 import { useStyles } from './Nav-menu-styles';
 
-import { MENU_CATEGORIES } from '../../config';
+import { config } from '../../config';
+import { setDrawerStatus } from '../../actions';
 
-const NavMenu = () => {
+const { menuCategories } = config.app;
+
+const DRAWER_TEMPORARY = 'temporary';
+const DRAWER_PERMANENT = 'permanent';
+const TEMPORARY_WIDTHS = ['sm', 'xs'];
+
+const NavMenu = ({ width, drawerStatus, setDrawerStatus }) => {
     const classes = useStyles();
 
-    const menuItems = MENU_CATEGORIES.map(category => {
-        const pathText = category[0];
+    const menuItems = menuCategories.map(category => {
+        const pathTitle = category[0];
         const pathTo = category[1];
         const PathIcon = category[2];
 
         return (
-            <ListItem button key={pathText} component={Link} to={pathTo}>
+            <ListItem button key={pathTitle} component={Link} to={pathTo}>
                 <ListItemIcon>
                     <PathIcon />
                 </ListItemIcon>
-                <ListItemText primary={pathText} />
+                <ListItemText primary={pathTitle} />
             </ListItem>
         );
     });
 
+    const handleDrawerToggle = () => {
+        setDrawerStatus(!drawerStatus);
+    };
+
+    const checkWidth = width => TEMPORARY_WIDTHS.find(element => element === width);
+
+    const drawerVariant = checkWidth(width) ? DRAWER_TEMPORARY : DRAWER_PERMANENT;
+
     return (
-        <Drawer
-            className={classes.drawer}
-            variant="permanent"
-            classes={{
-                paper: classes.drawerPaper,
-            }}
-            anchor="left"
-        >
-            <div className={classes.toolbar} />
-            <Divider />
-            <List>{menuItems}</List>
-            <Divider />
-        </Drawer>
+
+            <Drawer
+                id="menuDrawer"
+                className={classes.drawer}
+                variant={drawerVariant}
+                open={drawerStatus}
+                onClose={handleDrawerToggle}
+                classes={{
+                    paper: classes.drawerPaper,
+                }}
+            >
+                <div className={classes.toolbar} />
+                <Divider />
+                <List>{menuItems}</List>
+                <Divider />
+            </Drawer>
+
     );
 };
 
-export default NavMenu;
+const mapStateToProps = ({ themeState: { drawerStatus } }) => ({ drawerStatus });
+const mapDispatchToProps = { setDrawerStatus };
+
+export default connect(mapStateToProps, mapDispatchToProps)(withWidth()(NavMenu));

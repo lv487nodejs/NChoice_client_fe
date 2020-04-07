@@ -5,16 +5,15 @@ import './Product-list-item.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+function ProductListItem({ title, description, id, images, price, mrsp, currency, currencyIcon }) {
 
-
-function ProductListItem({ title, description, id, images, price, msrp, currency, currencyIcon }) {
     const [priceWithRate, setPriceWithRate] = useState();
     const [msrpWithRate, setMsrpWithRate] = useState();
 
     useEffect(() => {
         setPriceWithRate(Math.floor(price * currency));
-        setMsrpWithRate(Math.floor(msrp * currency));
-    }, [currency, price, msrp]);
+        setMsrpWithRate(Math.floor(mrsp * currency));
+    }, [currency, price, mrsp]);
 
     return (
         <Card key={id} className="productCart">

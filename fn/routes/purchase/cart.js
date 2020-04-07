@@ -26,7 +26,8 @@ router.post('/', cartValidationRules(), validate, async (req, res) => {
 router.get('/', async (req, res) => {
     let carts;
     try {
-            carts = await Cart.find();
+        carts = await Cart.find()
+        .populate('userId');
         if (!carts || carts.length === 0) {
             throw { message: 'carts not found' };
         }
@@ -59,7 +60,10 @@ router.put('/:id', async (req, res) => {
         if (!cart) {
             throw { message: 'Can not find cart with such an ID' };
         }
-        cart = await Cart.findByIdAndUpdate(id,req.body)
+        cart = await Cart.findByIdAndUpdate(id, req.body, {
+            new: true,
+            runValidators: true
+        })
         res.status(200).send("Cart was successfully changed");
     } catch (err) {
         res.status(400).send(err);

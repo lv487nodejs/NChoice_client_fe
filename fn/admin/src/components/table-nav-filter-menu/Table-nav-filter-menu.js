@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 
 import { Menu, FormGroup } from '@material-ui/core';
 
-import { FILTER_OPTION_NAMES } from '../../config';
+import { config } from '../../config';
 import TableNavFilterMenuItem from '../table-nav-filter-menuitem';
+
+const { filterLabels } = config.productFilters;
 
 const menuAnchorPosition = {
     vertical: 'bottom',
@@ -15,8 +17,6 @@ const menuTransformPosition = {
     vertical: 'top',
     horizontal: 'center',
 };
-
-const filterNames = FILTER_OPTION_NAMES;
 
 const TableNavFilterMenu = ({ filterOptionsGroups, handleMenuClose, menuStatus }) => {
     const getFilterOptions = (group, name) =>
@@ -34,13 +34,13 @@ const TableNavFilterMenu = ({ filterOptionsGroups, handleMenuClose, menuStatus }
         });
 
     const filterCheckboxes = filterOptionsGroups.map((group, index) => {
-        const name = filterNames[index];
+        const name = filterLabels[index];
         const options = getFilterOptions(group, name);
         return options;
     });
 
     const filterMenus = filterCheckboxes.map((checkboxes, index) => {
-        const name = filterNames[index];
+        const name = filterLabels[index];
 
         return (
             <Menu

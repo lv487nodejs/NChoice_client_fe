@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Product-details.css';
-// import Button from '@material-ui/core/Button';
 import { Card, Row, Col, Image, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import ProductListPosts from '../product-list-posts';
+import ProductList from '../product-list';
+import StarsRating from '../star-rating';
+ 
 import withStoreService from '../hoc';
 import {
-  productLoaded,
-  productsLoaded,
-  productsRequested,
+  setProduct,
+  productsLoadingStart,
   catalogLoaded,
   sizesLoaded,
   addToCart,
@@ -21,9 +21,8 @@ import {
 const ProductDetails = ({
   id,
   product,
-  productLoaded,
-  productsLoaded,
-  productsRequested,
+  setProduct,
+  productsLoadingStart,
   storeService,
   products,
   addToCart,
@@ -34,38 +33,37 @@ const ProductDetails = ({
   const [checkSize, setCheckSize] = useState('');
 
   useEffect(() => {
-    productsRequested();
-    storeService.getProductById(id).then((res) => productLoaded(res));
-  }, [productsRequested, storeService, id, productLoaded]);
+    productsLoadingStart();
+    storeService.getProductById(id).then((res) => setProduct(res));
+  }, [productsLoadingStart, storeService, id, setProduct]);
 
   useEffect(() => {
     storeService.getProductProperties(id).then((res) => setSizes(res));
   }, [id, storeService]);
 
-  useEffect(() => {
-    productsRequested();
-    storeService.getAllProducts().then((res) => productsLoaded(res));
-  }, [productsLoaded, productsRequested, storeService]);
 
-  const newProducts = products.slice(-3);
+  const newProducts = products.filter(elem => elem.category === product.category).slice(-3)
 
   const handleCheck = item => () => {
-      setCheckSize(item)
+    setCheckSize(item)
   };
 
   const handleAddToCart = () => {
-    if (checkSize) {
-      addToCart(productToSend);
-    }
+    product.propetries.filter((el) => {
+      if (el.size[0] === checkSize) {
+        let productToSend = { ...product, propetries: el };
+        if (checkSize) {
+          addToCart(productToSend);
+        }
+      }
+    })
   };
-
-  const productToSend = {...product, size:checkSize};
 
   const sizeItem = getSizes
     .reduce((accum, { size }) => [...accum, ...size], [])
     .map((item) => (
-      <div key={item} className="sizeItem" onClick={handleCheck(item) } >
-        <span className={item === checkSize ? 'check' : '' }> {item} </span>
+      <div key={item} className="sizeItem" onClick={handleCheck(item)} >
+        <span className={item === checkSize ? 'check' : ''}> {item} </span>
       </div>
     ));
 
@@ -105,6 +103,7 @@ const ProductDetails = ({
           </Col>
         </Row>
         <Col className="text">
+          <StarsRating />
           <Card.Title className="title">{product.title}</Card.Title>
           <Card.Text className="productDescription">
             {product.description}
@@ -116,17 +115,25 @@ const ProductDetails = ({
           <Col className="size">{sizeItem}</Col>
           <Card.Body className="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
-                             onClick = {() => addToWishlist(product)} />
-            <Button variant="dark" className = { checkSize ? 'button' : 'button disabled' }
-                             onClick = { handleAddToCart }> Add to card </Button>
-            <Button variant="dark" className="button"> By now </Button>
+              onClick={() => addToWishlist(product)} />
+            <Button 
+            variant="dark" 
+            className={checkSize ? 'button' : 'button disabled'}
+            onClick={handleAddToCart}
+            >Add to card </Button>
+            <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none'}>
+              <Button
+                variant="dark"
+                onClick={handleAddToCart}
+              >Add to card and checkout</Button>
+            </Link>
           </Card.Body>
         </Col>
       </Card.Body>
       <hr />
       <div className="similarItems">Similar items</div>
       <hr />
-      <ProductListPosts products={newProducts} className="routingImg" />
+      <ProductList products={newProducts} className="routingImg" />
     </Card>
   );
 };
@@ -140,9 +147,8 @@ const mapStateToProps = ({
   propetries,
 });
 const mapDispatchToProps = {
-  productLoaded,
-  productsLoaded,
-  productsRequested,
+  setProduct,
+  productsLoadingStart,
   catalogLoaded,
   sizesLoaded,
   addToCart,

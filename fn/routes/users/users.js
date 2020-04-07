@@ -26,7 +26,22 @@ router.get('/:id', tokenValidation, async (req, res) => {
         if (!user) {
             throw { message: 'User doesnt exist' };
         }
-        res.status(200).send(user);
+        const userName = { name: user.email };
+        const accessToken = generateAccessToken(userName);
+        const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
+
+        user.tokens = [];
+        user.tokens.push(refreshToken);
+        await user.save()
+        const mappedUser = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            date: user.date,
+            tokens: user.tokens,
+            wishlist:user.wishlist,
+        }
+        res.status(200).send({ accessToken, refreshToken, user: mappedUser });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
@@ -54,6 +69,44 @@ router.post('/register', userValidationRules(), validate, async (req, res) => {
         user.tokens.push(refreshToken);
         await user.save();
         res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+});
+
+router.put('/role/:id', async (req, res) => {
+    const { id } = req.params;
+    const { user } = req.body;
+    try {
+        const userToUpdate = await Users.findByIdAndUpdate(id, user);
+        res.status(200).send(userToUpdate);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+// change user data
+router.put('/:id', tokenValidation, async (req, res) => {
+    const { id } = req.params;
+
+    const { firstName, lastName, email,password } = req.body.userToChange;
+
+    try {
+        const user = await Users.findByIdAndUpdate(id, { firstName, lastName, email });
+        if (!user) {
+            throw { message: 'User doesnt exist' };
+        }
+        const comparePassword = await bcrypt.compare(password, user.password);
+        if (!comparePassword) {
+            return res.status(400).send({ errors: [{ msg: 'User password is incorrect.' }] });
+        }
+        const userName = { name: user.email };
+        const accessToken = generateAccessToken(userName);
+        const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
+
+        user.tokens = [];
+        user.tokens.push(refreshToken);
+        await user.save()
+        res.status(200).send({msg:'user data successfully changed'});
     } catch (err) {
         res.status(500).send({ message: err.message });
     }

@@ -14,9 +14,7 @@ const TableContainerRow = ({ dense, id, editHandler, deleteHandler, dispatch, ..
     const classes = useStyles();
     const propetries = { ...rest };
     const tableCells = Object.values(propetries).map((propetry, index) => (
-        <TableCell padding="default" key={index}>
-            {propetry}
-        </TableCell>
+        <TableCell key={index}>{propetry}</TableCell>
     ));
 
     const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;
@@ -24,13 +22,13 @@ const TableContainerRow = ({ dense, id, editHandler, deleteHandler, dispatch, ..
 
     return (
         <TableRow key={id} hover>
-            <TableCell padding="default">
+            <TableCell>
                 <Avatar className={avatarSize}>
                     <ImageIcon fontSize={iconSize} />
                 </Avatar>
             </TableCell>
             {tableCells}
-            <TableCell padding="default">
+            <TableCell>
                 <EditButton size={iconSize} eventHandler={editHandler} />
                 <DeleteButton size={iconSize} eventHandler={deleteHandler} />
             </TableCell>

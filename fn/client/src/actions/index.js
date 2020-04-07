@@ -1,20 +1,21 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
 
 import {
-  productsLoaded,
-  productsRequested,
+  setProducts,
+  productsLoadingStart,
   currencyChange,
   addCurrentPage,
   addPostsPerPage,
   addPagesCount,
   addSortByPrice,
-  productLoaded,
+  setProduct,
   sizesLoaded,
-  currencyIconChange
+  currencyIconChange,
+  productsLoadingStop
 } from './Products-actions';
 
-import {addToCart, increaseToCart, decreaseFromCart, removeFromCart} from './Cart-action'
-import {addToWishlist} from './Wishlist-actions'
+import { addToCart, increaseToCart, decreaseFromCart, removeFromCart } from './Cart-action'
+import { addToWishlist, removeFromWishlist } from './Wishlist-actions'
 
 import {
   catalogsLoaded,
@@ -32,14 +33,19 @@ import {
   filterRemoveBrand,
   filterByName,
   setSearchValue,
+  setCatalogFilter,
 } from './Filter-actions';
 
 import {
   postUserSuccess,
   postUserStarted,
   postUserError,
-  logoutUser
+  logoutUser,
+  postUserLoginSuccess,
+  setUser
 } from './Auth-actions';
+
+import { setShowSnackbar, setSnackbarText } from './Snackbar--actions'
 
 export {
   categoriesRequested,
@@ -47,8 +53,9 @@ export {
   catalogLoaded,
   catalogsLoaded,
   catalogsRequested,
-  productsRequested,
-  productsLoaded,
+  setProducts,
+  productsLoadingStart,
+  productsLoadingStop,
   currencyChange,
   filterAddBrand,
   filterAddCategory,
@@ -57,12 +64,13 @@ export {
   filterRemoveCategory,
   filterRemoveAllCategories,
   filterRemoveColor,
+  setCatalogFilter,
   addCurrentPage,
   addPostsPerPage,
   addPagesCount,
   addSortByPrice,
   filterByName,
-  productLoaded,
+  setProduct,
   sizesLoaded,
   postUserError,
   postUserSuccess,
@@ -74,5 +82,11 @@ export {
   removeFromCart,
   addToWishlist,
   logoutUser,
-  currencyIconChange
+  currencyIconChange,
+  removeFromWishlist,
+  logoutUser,
+  postUserLoginSuccess,
+  setUser,
+  setShowSnackbar,
+  setSnackbarText,
 };

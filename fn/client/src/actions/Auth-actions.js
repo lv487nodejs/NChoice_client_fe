@@ -6,6 +6,14 @@ const postUserSuccess = (data) => ({
   type: 'ADD_USER_RECEIVED',
   payload: data,
 });
+const postUserLoginSuccess = (data) => ({
+  type: 'ADD_USER_LOGIN_RECEIVED',
+  payload: data,
+});
+const setUser = newUser => ({
+  type: 'SET_USER',
+  payload: newUser,
+});
 
 const postUserError = () => ({
   type: 'ADD_USER_ERROR,',
@@ -15,4 +23,4 @@ const logoutUser = () => ({
   type: 'LOGOUT_USER',
 });
 
-export { postUserError, postUserStarted, postUserSuccess, logoutUser };
+export { postUserError, postUserStarted, postUserSuccess, logoutUser, postUserLoginSuccess, setUser };

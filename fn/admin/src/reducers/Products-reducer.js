@@ -1,12 +1,13 @@
-import { FILTER_OPTIONS } from '../config';
+import { config } from '../config';
 
-const filters = FILTER_OPTIONS;
+const { initialFilters } = config.productFilters;
 
 const initialState = {
     product: {},
     productPropetries: [],
     products: [],
-    filters,
+    filters: initialFilters,
+    productEditStatus: true,
     loading: true,
 };
 
@@ -43,6 +44,12 @@ const productsState = (state = initialState, action) => {
             return {
                 ...state,
                 filters: action.payload,
+            };
+
+        case 'SET_PRODUCT_EDIT_STATUS':
+            return {
+                ...state,
+                productEditStatus: action.payload,
             };
 
         default:

@@ -1,12 +1,21 @@
 import axios from 'axios';
 
 export default class StoreService {
-  _apiBase = 'http://localhost:5000/';
+  _apiBase = 'https://stark-headland-06017.herokuapp.com/';
 
   getResource = async (url) => {
     try {
       const catalogs = await axios.get(`${this._apiBase}${url}`);
       return catalogs.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  postData = async (url, dataToSend) => {
+    try {
+      const response = await axios.post(`${this._apiBase}${url}`, dataToSend);
+      return response.data;
     } catch (error) {
       console.error(error);
     }
@@ -47,7 +56,7 @@ export default class StoreService {
     if (catalog) {
       queryString = `${queryString}&catalog=${catalog}`;
     }
-    if (currentPage) {
+    if (currentPage > -1) {
       queryString = `${queryString}&currentpage=${currentPage}`;
     }
     if (postsPerPage) {
@@ -64,8 +73,6 @@ export default class StoreService {
     }
     const products = await this.getResource(queryString);
     return products;
-    // const catalogs = await this.getResource(queryString);
-    // return catalogs;
   };
 
   getAllCatalogs = async () => {
@@ -85,6 +92,7 @@ export default class StoreService {
 
   getCatalogCategories = async (catalogName) => {
     const catalogs = await this.getResource(`catalogs/?catalog=${catalogName}`);
+
     const { categories } = catalogs[0];
     return categories;
   };
@@ -114,6 +122,11 @@ export default class StoreService {
     return catalogs;
   };
 
+  postOrder = async order => {
+    const res = await this.postData('orders', order);
+    return res;
+  };
+
   getProductProperties = async (id) => {
     const product = await this.getResource(`products/${id}`);
     const { propetries } = product[0];
@@ -127,5 +140,11 @@ export default class StoreService {
   getCartById = async (id) => {
     const cart = await this.getResource(`cart/${id}`);
     return cart;
+  };
+  getUserById = async (id, token) => {
+    return axios({ method: 'GET', url: `${this._apiBase}users/${id}`, headers: { "x-auth-token": token } })
+  };
+  sendUserChangedData = async (id, token, data) => {
+    return axios({ method: 'PUT', url: `${this._apiBase}users/${id}`, data, headers: { "x-auth-token": token } })
   };
 }

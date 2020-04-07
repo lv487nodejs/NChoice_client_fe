@@ -1,11 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { config } from '../../config';
 
-import { DRAWER_WIDTH } from '../../config';
+const { drawerWidth } = config.app;
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles(theme => ({
     statsPageContainer: {
-        width: `calc(100% - ${DRAWER_WIDTH}px)`,
-        marginLeft: DRAWER_WIDTH,
-        position: 'static',
+        [theme.breakpoints.up('md')]: {
+            width: `calc(100% - ${drawerWidth}px)`,
+        },
+        marginTop: 65,
+        padding: 20,
+        width: '100%',
     },
 }));

@@ -1,7 +1,9 @@
 import AdminService from './Admin-service';
-import { PRODUCT_OPTION_NAMES } from '../config';
+import { config } from '../config';
 
 import { categoriesService, catalogsService, brandsService, colorsService } from './index';
+
+const { productLabels } = config.product;
 
 class ProductPropetriesService extends AdminService {
     getCheckboxList = (options, name) => {
@@ -26,7 +28,7 @@ class ProductPropetriesService extends AdminService {
 
         let filterOptionsList = {};
         filterOptions.map((option, index) => {
-            const result = this.getCheckboxList(option, PRODUCT_OPTION_NAMES[index]);
+            const result = this.getCheckboxList(option, productLabels[index]);
             filterOptionsList = { ...filterOptionsList, ...result };
             return filterOptionsList;
         });

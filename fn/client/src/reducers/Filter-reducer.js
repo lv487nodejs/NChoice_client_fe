@@ -5,6 +5,7 @@ const instate = {
   products: [],
   category: [],
   color: [],
+  catalogFilter: '',
   receivedBrands: [],
   receivedCategories: [],
   receivedColors: [],
@@ -20,6 +21,13 @@ const filter = (state = instate, action) => {
         brand: [...state.brand, action.payload],
       };
     }
+    case 'SET_CATALOG_FILTER': {
+      return {
+        ...state,
+        catalogFilter: action.payload,
+      };
+    }
+
     case 'FILTER_REMOVE_BRAND': {
       return {
         ...state,
@@ -39,6 +47,7 @@ const filter = (state = instate, action) => {
       return {
         ...state,
         category: [],
+        catalogFilter: action.payload,
       };
     }
     case 'FILTER_ADD_COLOR': {

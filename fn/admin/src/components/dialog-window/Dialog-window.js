@@ -1,17 +1,12 @@
 import React from 'react';
-
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Typography,
-} from '@material-ui/core/';
 import { connect } from 'react-redux';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@material-ui/core/';
+
 import { setDialogStatus } from '../../actions';
+import { StandardButton } from '../buttons';
 
 const CANCEL_TITLE = 'Cancel';
+const ACCEPT_BUTTON_STYLE = 'secondary';
 
 const DialogWindow = ({
     setDialogStatus,
@@ -26,18 +21,18 @@ const DialogWindow = ({
     };
 
     return (
-        <Dialog onClose={handleClose} open={dialogStatus}>
+        <Dialog id="dialog-window" onClose={handleClose} open={dialogStatus}>
             <DialogTitle onClose={handleClose}>{dialogTitle}</DialogTitle>
             <DialogContent dividers>
                 <Typography gutterBottom>{dialogContent}</Typography>
             </DialogContent>
             <DialogActions>
-                <Button autoFocus onClick={handleClose} variant="contained" color="primary">
-                    {CANCEL_TITLE}
-                </Button>
-                <Button onClick={eventHandler} variant="contained" color="success">
-                    {buttonTitle}
-                </Button>
+                <StandardButton title={CANCEL_TITLE} eventHandler={handleClose} />
+                <StandardButton
+                    title={buttonTitle}
+                    eventHandler={eventHandler}
+                    color={ACCEPT_BUTTON_STYLE}
+                />
             </DialogActions>
         </Dialog>
     );
@@ -47,6 +42,6 @@ const mapStateToProps = ({
     dialogWindowState: { dialogStatus, dialogTitle, dialogContent, buttonTitle, eventHandler },
 }) => ({ dialogStatus, dialogTitle, dialogContent, buttonTitle, eventHandler });
 
-const mapDispatchToProps = { setDialogStatus }
+const mapDispatchToProps = { setDialogStatus };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogWindow);
