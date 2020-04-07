@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -19,15 +19,23 @@ const orderForm = {
     paymentMethod: '',
 }
 
-const CheckoutForm = ({ products, storeService }) => {
+const CheckoutForm = ({ cartProducts, storeService }) => {
 
     const [validated, setValidated] = useState(false);
     const [order, setOrder] = useState(orderForm)
     
-    if (products.length === 0) {
+    if (cartProducts.length === 0) {
         return (<Redirect to='/' />)
     }
-    const productsINeed = products.map(product => {
+
+    const storageData = JSON.parse(localStorage.getItem('user'))||{};
+
+    const clearLocalStorage = () => {
+        localStorage.removeItem('cart-numbers')
+        localStorage.removeItem('products-collection')   
+    }
+
+    const productsINeed = cartProducts.map(product => {
         return {
             item: product.id,
             quantity: product.quantity
@@ -38,7 +46,7 @@ const CheckoutForm = ({ products, storeService }) => {
 
     const orderToServer = {
         orderItems: productsINeed,
-        userId: "5e5c066c39d3fa165ca5eb3b", //TODO: change to real auth userID
+        userId: storageData.userId,
         deliveryAddress: {
             country: order.country,
             city: order.city,
@@ -59,6 +67,7 @@ const CheckoutForm = ({ products, storeService }) => {
             setValidated(true);
             return
         }
+        clearLocalStorage();
         storeService.postOrder(orderToServer);
     }
 
@@ -174,8 +183,8 @@ const CheckoutForm = ({ products, storeService }) => {
     )
 }
 
-const mapStateToProps = ({ cartReducer: { products } }) => ({
-    products
+const mapStateToProps = ({ cartReducer: { cartProducts } }) => ({
+    cartProducts
 });
 
 

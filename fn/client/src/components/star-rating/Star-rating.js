@@ -1,16 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Rating from '@material-ui/lab/Rating';
 import withStoreService from '../hoc';
 import './Star-rating.css';
+import Rating from 'react-rating';
 
 
-const rating = 3.45;
+let min = 1;
+let max = 5;
+let rating = min + (Math.random() * (max - min));
+
 const StarRating = () => {
 
     return (
         <div className="star-rating" >
-            <Rating name="half-rating-read" defaultValue={rating} precision={0.25} readOnly />
+            <Rating readonly={true} step={1} initialRating={rating} />
         </div>
     );
 };
