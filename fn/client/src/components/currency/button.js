@@ -5,10 +5,10 @@ import './button.css'
 
 const Button = ({ currencyOptions, currencyChange, currencyIconChange, currencies }) => {
     const onClickHandler = () => {
-        let cof = document.getElementById('currency').value;
+        let coefficient = document.getElementById('currency').value;
         let iconName = document.getElementById('currency').querySelector('option:checked').getAttribute('data-text');
 
-        currencyChange(cof)
+        currencyChange(coefficient)
     
         if(currencies.hasOwnProperty(iconName)){
             currencyIconChange(currencies[iconName])
@@ -18,9 +18,9 @@ const Button = ({ currencyOptions, currencyChange, currencyIconChange, currencie
     return (
         <>
             <select id='currency' onChange={onClickHandler}>
-                <option key='EUR' value='1' data-text='EUR'>EUR</option>
+                {/* <option key='EUR' value='1' data-text='EUR'>EUR</option> */}
                 {currencyOptions.map(item =>(
-                    <option key={item.name} value={item.cof} data-text={item.name}>{item.name}</option>
+                    <option key={item.name} value={item.coefficient} data-text={item.name}>{item.name}</option>
                 ))}
             </select>
         </>

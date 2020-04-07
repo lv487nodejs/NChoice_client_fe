@@ -4,22 +4,27 @@ import Button from './button';
 const BASE_URL = 'https://api.exchangeratesapi.io/latest';
 
 function Currency() {
-    const currencies = {'PLN': '‎zł', 'USD': '$', 'EUR': '€'}
+    const currencies = {'EUR': '€', 'USD': '$', 'PLN': '‎zł'}
+
     const [currencyOptions, setCurrencyOptions] = useState([]);
    
     useEffect(() => {
 
         fetch(BASE_URL)
             .then(res => res.json())
-            .then(data => Object.entries(data.rates))
-            .then(currency => (currency.map(([curr, count]) => {
+            .then(data => {
+                let currenciesArray = Object.entries(data.rates)
+                currenciesArray.unshift(['EUR', 1])
+                return currenciesArray
+            })
+            .then(currency => (currency.map(([currencyName, coefficient]) => {
                 return ({
-                            name: curr,
-                            cof: count
+                            name: currencyName,
+                            coefficient: coefficient
                         })
             }
             )))
-            .then(cur => setCurrencyOptions(cur.filter(i => {
+            .then(currency => setCurrencyOptions(currency.filter(i => {
                 if(currencies.hasOwnProperty(i.name)){
                     return (i.name)
                 }
