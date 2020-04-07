@@ -83,7 +83,6 @@ export {
   decreaseFromCart,
   removeFromCart,
   addToWishlist,
-  logoutUser,
   currencyIconChange,
   removeFromWishlist,
   logoutUser,
