@@ -34,6 +34,10 @@ const filterRemoveAllCategories = (catalog) => ({
   type: 'FILTER_REMOVE_ALL_CATEGORIES',
   payload: catalog,
 });
+const filterRemoveAllColors = (catalog) => ({
+  type: 'FILTER_REMOVE_ALL_COLORS',
+  payload: catalog,
+});
 
 const filterByName = (newSearchTerm) => ({
   type: 'FILTER_BY_NAME',
@@ -52,6 +56,7 @@ export {
   filterRemoveAllBrands,
   filterRemoveCategory,
   filterRemoveAllCategories,
+  filterRemoveAllColors,
   filterRemoveColor,
   filterByName,
   setSearchValue,

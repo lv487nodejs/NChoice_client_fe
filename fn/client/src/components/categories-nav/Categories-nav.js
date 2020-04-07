@@ -9,6 +9,8 @@ import {
   categoriesRequested,
   filterAddCategory,
   filterRemoveAllCategories,
+  filterRemoveAllColors,
+  filterRemoveAllBrands
 } from '../../actions';
 import CategoriesNavItem from '../categories-nav-item';
 import withStoreService from '../hoc';
@@ -23,6 +25,8 @@ const CategoriesNav = ({
   loading,
   filterAddCategory,
   filterRemoveAllCategories,
+  filterRemoveAllBrands,
+  filterRemoveAllColors,
 }) => {
   useEffect(() => {
     categoriesRequested();
@@ -32,6 +36,8 @@ const CategoriesNav = ({
   }, [catalog, categoriesLoaded, categoriesRequested, storeService]);
 
   const filterAddCategoryHandler = (item) => {
+    filterRemoveAllBrands();
+    filterRemoveAllColors();
     filterRemoveAllCategories();
     filterAddCategory(item);
   };
@@ -72,6 +78,8 @@ const mapDispatchToProps = {
   categoriesRequested,
   filterAddCategory,
   filterRemoveAllCategories,
+  filterRemoveAllColors,
+  filterRemoveAllBrands,
 };
 
 export default withStoreService()(

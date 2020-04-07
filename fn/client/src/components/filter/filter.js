@@ -45,9 +45,7 @@ const Filter = ({
   useEffect(() => {
     storeService
       .getCatalogCategories(catalogFilter)
-      .then((response) => {
-        console.log(response);
-        
+      .then((response) => {        
         setCategories(response)
       })
       .catch((err) => console.log(err));

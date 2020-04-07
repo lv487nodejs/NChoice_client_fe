@@ -35,15 +35,11 @@ import {
   filterByName,
   setSearchValue,
   setCatalogFilter,
+  filterRemoveAllColors,
 } from './Filter-actions';
 
 import {
-  postUserSuccess,
-  postUserStarted,
-  postUserError,
-  logoutUser,
-  postUserLoginSuccess,
-  setUser
+  setUserLogged, setUserLoading, setUser
 } from './Auth-actions';
 
 import { setShowSnackbar, setSnackbarText } from './Snackbar--actions'
@@ -74,20 +70,18 @@ export {
   filterByName,
   setProduct,
   sizesLoaded,
-  postUserError,
-  postUserSuccess,
-  postUserStarted,
   setSearchValue,
   addToCart,
   increaseToCart,
   decreaseFromCart,
   removeFromCart,
   addToWishlist,
+  setUserLogged,
+  setUserLoading,
+  setUser,
   currencyIconChange,
   removeFromWishlist,
-  postUserLoginSuccess,
-  setUser,
   setShowSnackbar,
   setSnackbarText,
-  logoutUser
+  filterRemoveAllColors
 };

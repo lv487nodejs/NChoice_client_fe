@@ -4,12 +4,11 @@ import { Button } from 'react-bootstrap'
 import UserChangeData from '../user-page-change-data/user-page-change-data';
 import Cart from '../cart'
 import './user-page.css';
-import {connect} from 'react-redux'
 
 const UserPage = () => {
     const [showValue, setShowValue] = useState(1)
     
-    const storageData = JSON.parse(localStorage.getItem('user'))||{};
+    const storageData = JSON.parse(localStorage.getItem('userId'))||{};
 
     
     const buttonOptions = [
@@ -43,7 +42,7 @@ const UserPage = () => {
                     <Cart />
                 </div>
             </div> : ""
-    if (storageData.userId ) {
+    if (storageData ) {
         return (
             <div className="container">
                 {itemToShow}
@@ -52,7 +51,6 @@ const UserPage = () => {
     }
     return (<Redirect to="/" />)
 }
-const mapStateToProps = ({authReducer:{user}}) =>({user})
 
 
-export default connect(mapStateToProps)(UserPage);
+export default UserPage;

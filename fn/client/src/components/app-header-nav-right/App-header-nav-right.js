@@ -2,55 +2,64 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import './App-header-nav-right.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faUser, faShoppingBasket, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faUser, faShoppingBasket, faSignOutAlt, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import Currency from '../currency';
 import { connect } from 'react-redux';
-import { logoutUser } from "../../actions";
+import { setUserLogged } from "../../actions";
 
-const AppHeaderNavRight = ({ logoutUser, userStatus }) => {
-  let cartNumbers = 0;
-  if (localStorage.getItem("cart-numbers")) {
-    cartNumbers = localStorage.getItem("cart-numbers");
+const AppHeaderNavRight = ({ cartNumbers, setUserLogged , userLogged }) => {
+
+  const handleLogOut = () => {
+    setUserLogged(false)
+    localStorage.clear()
   }
 
   return (
-      <nav className="nav-bar">
-        <ul>
-          <li key="4">
-            <Link to="/wishlist">
-              <FontAwesomeIcon icon={faHeart} />
-            </Link>
-          </li>
-          <li key="5">
-            <span className="currency-button"><Currency /></span>
-          </li>
-          <li key="6">
-            <Link to="/login">
-              <FontAwesomeIcon icon={faUser} />
-            </Link>
-          </li>
-          <li key="7">
-            <Link to="/cart">
-              <FontAwesomeIcon icon={faShoppingBasket} />
-              <span> <sup >{ cartNumbers}</sup> </span>
-            </Link>
-          </li>
+    <nav className="nav-bar">
+      <ul>
+        <li key="4">
+          <Link to="/wishlist">
+            <FontAwesomeIcon icon={faHeart} />
+          </Link>
+        </li>
+        <li key="5">
+          <span className="currency-button"><Currency /></span>
+        </li>
+        <li key="6">
           {
-            userStatus === 'received' ? (
-                <li key="8" onClick={logoutUser}>
-                  <Link to={"/login"}>
-                    <FontAwesomeIcon icon={faSignOutAlt}  />
-                  </Link>
-                </li>
-            ) : null
+            localStorage.getItem('userId') || userLogged ? (
+              <p key="8" >
+                <Link to={"/userpage"}>
+                  <FontAwesomeIcon icon={faUser} />
+                </Link>
+              </p>
+            ) : <Link to="/login">
+                <FontAwesomeIcon icon={faSignInAlt} />
+              </Link>
           }
-        </ul>
-      </nav>
+        </li>
+        <li key="7">
+          <Link to="/cart">
+            <FontAwesomeIcon icon={faShoppingBasket} />
+            <span> <sup>{cartNumbers}</sup> </span>
+          </Link>
+        </li>
+        {
+          localStorage.getItem('userId') || userLogged ? (
+            <li key="8" onClick={handleLogOut}>
+              <Link to={"/login"}>
+                <FontAwesomeIcon icon={faSignOutAlt} />
+              </Link>
+            </li>
+          ) : null
+        }
+      </ul>
+    </nav>
   )
 };
 
-const mapDispatchToProps = {logoutUser};
+const mapDispatchToProps = { setUserLogged };
 
-const mapStateToProps = ({ cartReducer: { cartNumbers }, authReducer: {userStatus}}) => ({ cartNumbers, userStatus });
+const mapStateToProps = ({ cartReducer: { cartNumbers }, authReducer: { userLogged } }) => ({ cartNumbers, userLogged });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppHeaderNavRight);

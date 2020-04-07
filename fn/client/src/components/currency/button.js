@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { currencyChange, currencyIconChange } from '../../actions';
 import './button.css'
 
-const Button = ({ currencyOptions, currencyChange, currencyIconChange, currencies }) => {
+const currencies = {'EUR': '€', 'USD': '$', 'PLN': '‎zł'}
+
+const Button = ({ currencyOptions, currencyChange, currencyIconChange }) => {
     const onClickHandler = () => {
         let coefficient = document.getElementById('currency').value;
         let iconName = document.getElementById('currency').querySelector('option:checked').getAttribute('data-text');

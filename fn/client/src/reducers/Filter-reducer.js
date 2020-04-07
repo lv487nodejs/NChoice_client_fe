@@ -6,9 +6,6 @@ const instate = {
   category: [],
   color: [],
   catalogFilter: '',
-  receivedBrands: [],
-  receivedCategories: [],
-  receivedColors: [],
   searchTerm: '',
   searchValue: '',
 };
@@ -37,7 +34,15 @@ const filter = (state = instate, action) => {
     case 'FILTER_REMOVE_ALL_BRANDS': {
       return {
         ...state,
-        brand: []
+        brand: [],
+        catalogFilter: action.payload,
+      };
+    }
+    case 'FILTER_REMOVE_ALL_COLORS': {
+      return {
+        ...state,
+        brand: [],
+        catalogFilter: action.payload,
       };
     }
     case 'FILTER_ADD_CATEGORY': {

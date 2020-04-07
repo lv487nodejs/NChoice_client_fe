@@ -90,7 +90,15 @@ router.put('/:id',userValidationRules(), tokenValidation, async (req, res) => {
 
     const { firstName, lastName, email,password } = req.body.userToChange;
 
-    try {   
+    try {
+        const foundEmail = await Users.findOne({email})
+        console.log('found',foundEmail);
+        
+        console.log('email',email);
+        
+        if (foundEmail){
+          return  res.status(400).send({msg:'user with such email already exist'})
+        }   
         const user = await Users.findByIdAndUpdate(id, { firstName, lastName, email });
         if (!user) {
            return res.status(404).send({ msg: 'User doesnt exist' });

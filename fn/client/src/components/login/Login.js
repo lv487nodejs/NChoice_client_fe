@@ -1,50 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import { LOGIN_ROUTE } from "../../configs/login-register-config";
 import axios from "axios";
-import { postUserError, postUserStarted, postUserSuccess } from "../../actions";
+import { setUserLogged, setUserLoading } from "../../actions";
 
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import LoadingSpinner from "../Loading-spinner";
 const eye = <FontAwesomeIcon icon={faEye} />;
 
 const addDataToLocalStorage = (token) => {
-    localStorage.setItem('user', JSON.stringify(token));
+    localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
+    localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
+    localStorage.setItem('userId', JSON.stringify(token.userId))
 }
+
 const USER_DATA = {
     email: '',
-    password: '',
+    password: ''
 };
-const passwordRegex = /(?=.*[0-9])/;
-const passwordValidationText = "Password must contain a number.";
-const emailRegEx = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
-const emailValidationText = "Email must be correct. Example: nick@mail.com";
+const emailRegExp = new RegExp(/^([a-z0-9_-]+.)[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+).[a-z]{2,6}$/);
+const emailRegExpMessage = "Email must be correct. Example: nick@mail.com";
+const emailRequiredMessage = "Required";
+const passwordRegExp = new RegExp(/(?=.*[0-9])/);
+const passwordRegExpMessage = "Password must contain a number";
+const passwordRequiredMessage = "No password provided";
+const passwordMinElementCount = 6;
+const passwordMinMessage = `Password is too short - should be ${passwordMinElementCount} chars minimum`;
 
 const SignupSchema = yup.object().shape({
     email: yup.string()
-        .email()
-        .required("Required")
-        .matches(emailRegEx, emailValidationText),
+        .required(emailRequiredMessage)
+        .matches(emailRegExp, emailRegExpMessage),
 
     password: yup.string()
-        .required("No password provided.")
-        .min(8, "Password is too short - should be 8 chars minimum.")
-        .matches(passwordRegex, passwordValidationText)
+        .required(passwordRequiredMessage)
+        .min(passwordMinElementCount, passwordMinMessage)
+        .matches(passwordRegExp, passwordRegExpMessage)
 });
+
 const Login = (props) => {
     const [user, setUser] = useState(USER_DATA);
-    const { postUserStarted, postUserSuccess, postUserError, userStatus } = props;
-    const { register, handleSubmit, errors } = useForm({
+    const [errorMsg, setErrorMsg] = useState('');
+    const { setUserLogged, setUserLoading, userLogged, userLoading } = props;
+    const { register, errors, handleSubmit } = useForm({
         validationSchema: SignupSchema
     });
-
     const [passwordShown, setPasswordShown] = useState(false);
+
+    useEffect(() => {
+        setUserLogged(false)
+    }, [setUserLogged])
 
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
@@ -54,39 +66,40 @@ const Login = (props) => {
         event.persist();
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
     };
-    const postUser = (value, route) => {
-        postUserStarted();
-        axios({
-            method: 'post',
-            url: route,
-            data: value     
-        }).then(response => {
-            const { accessToken, refreshToken, userId } = response.data;
-            return { accessToken, refreshToken, userId };
-        }).then(json => {
-            postUserSuccess(json);
-            addDataToLocalStorage(json);
-        }).catch(e => {
-            postUserError();
-        });
+
+    const postUser = async (value, route) => {
+        try {
+            setUserLoading();
+            const response = await axios.post(route, value);
+            setUserLogged(true);
+            addDataToLocalStorage(response.data);
+        } catch (error) {
+            setUserLogged(false)
+            const {msg} = error.response.data.errors[0]
+            setErrorMsg(msg)
+        }
     }
-    const onSubmit = (event, data) => {
+    const handleOnSubmit = event => {
+        // event.preventDefault();
         postUser(user, LOGIN_ROUTE);
     };
 
-    if (userStatus === 'received') {
-        return <Redirect to='/userpage' />
+    if (userLoading) {
+        return <LoadingSpinner />
     }
+
+    if (userLogged) {
+        return <Redirect to='/' />
+    }
+
+
     return (
-        userStatus === 'loading' ?
-            <div>Loading...</div> : (
                 <div className={'login'}>
-                    <Form onSubmit={handleSubmit(onSubmit)} >
+                    <Form onSubmit={handleSubmit(handleOnSubmit)} >
                         <Form.Label className="lable">Log In</Form.Label>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control
-
                                 type="text"
                                 placeholder="Enter email"
                                 name={'email'}
@@ -104,7 +117,6 @@ const Login = (props) => {
                             <Form.Label>Password</Form.Label>
                             <Form.Group className="pass-wrapper">
                                 <Form.Control
-
                                     type={passwordShown ? "text" : "password"}
                                     placeholder="Password"
                                     name={'password'}
@@ -113,8 +125,9 @@ const Login = (props) => {
                                     ref={register}
                                 />
                                 <i onClick={togglePasswordVisiblity}>{eye}</i>
-                                {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                             </Form.Group>
+                            {errors.password && <p className="errorMessage">{errors.password.message}</p>}
+
                         </Form.Group>
                         <Form.Check
                             type="switch"
@@ -125,6 +138,7 @@ const Login = (props) => {
                             <Button variant="dark" type="submit" block>
                                 LOG IN
                         </Button>
+                        <span>{errorMsg}</span>
                         </Form.Group>
                         <Form.Group className="link">
                             <Link to="/register" className="btn btn-link" >REGISTER</Link>
@@ -132,15 +146,13 @@ const Login = (props) => {
                     </Form>
                 </div>
             )
-    )
 };
 
 
-const mapDispatchToProps = { postUserStarted, postUserSuccess, postUserError };
+const mapDispatchToProps = { setUserLogged, setUserLoading };
 
-const mapStateToProps = ({ authReducer: { userStatus } }) => ({
-    userStatus
+const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({
+    userLogged, userLoading
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
-

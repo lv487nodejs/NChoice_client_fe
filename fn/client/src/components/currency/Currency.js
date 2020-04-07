@@ -5,13 +5,9 @@ const BASE_URL = 'https://api.exchangeratesapi.io/latest';
 const currencies = {'EUR': '€', 'USD': '$', 'PLN': '‎zł'}
 
 function Currency() {
-
     const [currencyOptions, setCurrencyOptions] = useState([]);
    
     useEffect(() => {
-
-
-
         fetch(BASE_URL)
             .then(res => res.json())
             .then(data => {
@@ -26,15 +22,14 @@ function Currency() {
                         })
             }
             )))
-            .then(currency => currency.filter(i => !currencies.hasOwnProperty(i.name)))
+            .then(currency => currency.filter(i => currencies.hasOwnProperty(i.name)))
             .then(currency => {
-                const currencyNames = currency.map(item => item.name);
-                setCurrencyOptions(currencyNames);
+                setCurrencyOptions(currency);
             })
     }, []);
 
     return (
-            <Button currencyOptions={currencyOptions} currencies={currencies}  />
+            <Button currencyOptions={currencyOptions}  />
     );
 }
 

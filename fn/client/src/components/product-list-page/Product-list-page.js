@@ -46,6 +46,8 @@ const ProductListPage = ({
       addPostsPerPage(sessionStorage.getItem('postPerPage'));
     }
   }, [
+    addPostsPerPage,
+    catalog,
     catalogLoaded,
     setCatalogFilter,
   ]);
