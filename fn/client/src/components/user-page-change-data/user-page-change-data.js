@@ -44,9 +44,9 @@ const UserChangeData = ({ user,
     setSnackbarText,
 
 }) => {
-    const local = JSON.parse(localStorage.getItem('user'))
-    const { firstName, lastName, email } = user;
-
+    const userId = JSON.parse(localStorage.getItem('userId'))
+    const accessToken = JSON.parse(localStorage.getItem('accessToken'))
+    
 
     const addUserDataToSTore = useCallback((id, token) => {
         storeService.getUserById(id, token).then((res) => {
@@ -56,8 +56,8 @@ const UserChangeData = ({ user,
     }, [storeService, setUser])
 
     useEffect(() => {
-        addUserDataToSTore(local.userId, local.accessToken)
-    }, [addUserDataToSTore, local.accessToken, local.userId])
+        addUserDataToSTore(userId, accessToken)
+    }, [addUserDataToSTore, accessToken, userId])
 
  
     
@@ -70,8 +70,8 @@ const UserChangeData = ({ user,
         setUser({ ...user, [e.target.name]: e.target.value })
     }
     const submitHandler = (e) => {
-        storeService.sendUserChangedData(local.userId, local.accessToken, { userToChange: user }).then((res) => {
-            addUserDataToSTore(local.userId, local.accessToken)
+        storeService.sendUserChangedData(userId, accessToken, { userToChange: user }).then((res) => {
+            addUserDataToSTore(userId, accessToken)
             console.log(res.data.msg);
             
             snackbarHandler(res.data.msg)
@@ -85,7 +85,7 @@ const UserChangeData = ({ user,
         }, 3000)
     }
     if (user === {}){      
-        addUserDataToSTore(local.userId, local.accessToken)
+        addUserDataToSTore(userId, accessToken)
 }
     if (user) {
         return (
@@ -93,19 +93,19 @@ const UserChangeData = ({ user,
                 <form onSubmit={handleSubmit(submitHandler)}>
                     <label htmlFor="firstname">change your firstname</label>
                     <InputGroup className="mb-3">
-                        <FormControl id="firstname" name="firstName" ref={register} value={firstName}
+                        <FormControl id="firstname" name="firstName" ref={register} value={user.firstName}
                             placeholder="enter firstname..." onChange={changeHandler} />
                     </InputGroup>
                     {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
                     <label htmlFor="lastname">change your lastname</label>
                     <InputGroup>
-                        <FormControl id="lastname" name="lastName" ref={register} value={lastName}
+                        <FormControl id="lastname" name="lastName" ref={register} value={user.lastName}
                             placeholder="enter lastname..." onChange={changeHandler} />
                     </InputGroup>
                     {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
                     <label htmlFor="email">change your email</label>
                     <InputGroup>
-                        <FormControl type="text" name="email" id="email" ref={register} value={email}
+                        <FormControl type="text" name="email" id="email" ref={register} value={user.email}
                             placeholder="enter email..." onChange={changeHandler} />
                     </InputGroup>
                     {errors.email && <p className="errorMessage">{errors.email.message}</p>}

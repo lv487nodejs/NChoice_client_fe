@@ -29,7 +29,7 @@ const AppHeaderNavRight = ({ cartNumbers, setUserLogged , userLogged }) => {
           {
             localStorage.getItem('userId') || userLogged ? (
               <p key="8" >
-                <Link to={"/user"}>
+                <Link to={"/userpage"}>
                   <FontAwesomeIcon icon={faUser} />
                 </Link>
               </p>

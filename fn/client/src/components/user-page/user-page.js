@@ -9,7 +9,7 @@ import {connect} from 'react-redux'
 const UserPage = () => {
     const [showValue, setShowValue] = useState(1)
     
-    const storageData = JSON.parse(localStorage.getItem('user'))||{};
+    const storageData = JSON.parse(localStorage.getItem('userId'))||{};
 
     
     const buttonOptions = [
@@ -43,7 +43,7 @@ const UserPage = () => {
                     <Cart />
                 </div>
             </div> : ""
-    if (storageData.userId ) {
+    if (storageData ) {
         return (
             <div className="container">
                 {itemToShow}

@@ -1,7 +1,11 @@
 const initialState = {
     userLogged: false,
     userLoading: false,
-    user:{}
+    user:{
+        firstName: '',
+        lastName: '',
+        email: ''
+    }
 }
 
 const authReducer = (state = initialState, action) => {    
