@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Button from './button';
 
 const BASE_URL = 'https://api.exchangeratesapi.io/latest';
-const currencies = {'PLN': '‎zł', 'USD': '$', 'EUR': '€'}
 
 function Currency() {
     const currencies = {'PLN': '‎zł', 'USD': '$', 'EUR': '€'}

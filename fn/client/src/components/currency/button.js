@@ -13,7 +13,6 @@ const Button = ({ currencyOptions, currencyChange, currencyIconChange, currencie
         if(currencies.hasOwnProperty(iconName)){
             currencyIconChange(currencies[iconName])
         }
-        
     };
 
     return (
