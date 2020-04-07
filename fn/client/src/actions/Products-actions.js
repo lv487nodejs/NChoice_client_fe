@@ -18,6 +18,10 @@ const currencyChange = newCurrency => ({
     type: 'CURRENCY_CHANGE',
     payload: newCurrency,
 });
+const currencyIconChange = newCurrencyIcon => ({
+    type: 'CURRENCY_ICON_CHANGE',
+    payload: newCurrencyIcon,
+});
 const addCurrentPage = value => ({
     type: 'ADD_CURRENT_PAGE',
     payload: value,
@@ -49,5 +53,6 @@ export {
     addSortByPrice,
     setProduct,
     sizesLoaded,
+    currencyIconChange,
     productsLoadingStop,
 };

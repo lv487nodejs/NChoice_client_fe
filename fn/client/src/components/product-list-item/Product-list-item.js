@@ -5,18 +5,14 @@ import './Product-list-item.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+function ProductListItem({ title, description, id, images, price, mrsp, currency, currencyIcon }) {
 
-
-function ProductListItem({ title, description, id, images, price, mrsp, currency }) {
-    
     const [priceWithRate, setPriceWithRate] = useState();
     const [msrpWithRate, setMsrpWithRate] = useState();
-    const [currencyIcon, setCurrencyIcon] = useState();
 
     useEffect(() => {
         setPriceWithRate(Math.floor(price * currency));
         setMsrpWithRate(Math.floor(mrsp * currency));
-        currency === 1 ? setCurrencyIcon('€') : setCurrencyIcon('$');
     }, [currency, price, mrsp]);
 
     return (
@@ -38,6 +34,6 @@ function ProductListItem({ title, description, id, images, price, mrsp, currency
     );
 }
 
-const mapStateToProps = ({ productsList: { currency } }) => ({ currency });
+const mapStateToProps = ({ productsList: { currency, currencyIcon } }) => ({ currency, currencyIcon });
 
 export default connect(mapStateToProps)(ProductListItem);
