@@ -102,6 +102,11 @@ const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart }) => {
             </Container>
           </li>
         ))}
+        <Link to="/checkout" className={products.length >= 1 ? 'disp-block' : 'disp-none' }>
+              <Button
+                variant="dark"
+              >Go to checkout</Button>
+            </Link>
         <h5>{products.length >= 1 && <em>Total: {total}</em>}</h5>
         <h5>{products.length >= 1 && <em>Sale: {sale}</em>}</h5>
       </ul>
@@ -109,7 +114,6 @@ const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart }) => {
   )
 };
 
-
-const mapStateToProps = ({ cartReducer: { products, cartNumbers } }) => ({ products, cartNumbers });
+const mapStateToProps = ({cartReducer: {cartProducts, cartNumbers}}) => ({cartProducts, cartNumbers});
 
 export default connect(mapStateToProps, { addToCart, increaseToCart, decreaseFromCart, removeFromCart })(Cart);
