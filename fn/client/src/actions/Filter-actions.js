@@ -18,6 +18,9 @@ const filterRemoveBrand = (brand) => ({
   type: 'FILTER_REMOVE_BRAND',
   payload: brand,
 });
+const filterRemoveAllBrands = () => ({
+  type: 'FILTER_REMOVE_ALL_BRANDS'
+});
 const filterRemoveCategory = (category) => ({
   type: 'FILTER_REMOVE_CATEGORY',
   payload: category,
@@ -40,6 +43,7 @@ export {
   filterAddCategory,
   filterAddColor,
   filterRemoveBrand,
+  filterRemoveAllBrands,
   filterRemoveCategory,
   filterRemoveAllCategories,
   filterRemoveColor,

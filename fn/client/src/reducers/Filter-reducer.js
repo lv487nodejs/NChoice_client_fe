@@ -26,6 +26,12 @@ const filter = (state = instate, action) => {
         brand: filterRemoveItems(state.brand, action.payload),
       };
     }
+    case 'FILTER_REMOVE_ALL_BRANDS': {
+      return {
+        ...state,
+        brand: []
+      };
+    }
     case 'FILTER_ADD_CATEGORY': {
       return { ...state, category: [...state.category, action.payload] };
     }
