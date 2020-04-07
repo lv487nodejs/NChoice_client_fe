@@ -6,24 +6,35 @@ import { currencyChange, currencyIconChange } from '../../actions';
 import './button.css'
 
 
-
 const Button = ({ currencyOptions, currency, currencyChange, currencyIconChange }) => {
     const [icon, setIcon] = useState(faEuroSign);
 
-    const onClickHandler = (value) => {
+    const onClickHandler = (sel) => {
         // currency === 1 ? setIcon(faDollarSign) : setIcon(faEuroSign);
-        // currency === 1 ? currencyIconChange('$') : currencyIconChange('€');
-        // currency === 1 ? currencyChange(currencyOptions.USD) : currencyChange(1);
-        value === 'EUR' ? currencyChange(1) :
-        value === 'USD' ? currencyChange(currencyOptions):
-        currencyChange(currencyOptions.PHP)
+        let cof = document.getElementById('currency').value;
+        let iconName = document.getElementById('currency').querySelector('option:checked').getAttribute('data-text');
+
+        currencyChange(cof)
+
+        switch(iconName){
+            case 'USD':
+                currencyIconChange('$')
+                break
+            case 'PLN':
+                currencyIconChange('‎zł ')
+                break
+            default:
+                currencyIconChange('€')
+        }
     };
 
-    console.log(currencyOptions)
     return (
         <>
-            <select onChange={()=>{onClickHandler()}}>
-                <option >{currencyOptions.name}</option>
+            <select id='currency' onChange={onClickHandler}>
+                <option key='EUR' value='1' data-text='EUR'>EUR</option>
+                {currencyOptions.map(item =>(
+                    <option key={item.name} value={item.cof} data-text={item.name}>{item.name}</option>
+                ))}
             </select>
             {/* <FontAwesomeIcon className='currency-icon'  icon={icon} />     */}
         </>

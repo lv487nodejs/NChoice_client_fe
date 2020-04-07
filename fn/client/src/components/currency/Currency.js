@@ -11,14 +11,19 @@ function Currency() {
         fetch(BASE_URL)
             .then(res => res.json())
             .then(data => Object.entries(data.rates))
-            .then(currency => {for (const [curr, count] of currency) {
-                setCurrencyOptions({
-                    name: curr,
-                    cof: count
-                })
-              }})
+            .then(currency => (currency.map(([curr, count]) => {
+                return ({
+                            name: curr,
+                            cof: count
+                        })
+            }
+            )))
+            .then(cur => setCurrencyOptions(cur.filter(i => {
+                if(i.name === 'USD' || i.name === 'PLN'){
+                    return i
+                }
+            })))
     }, []);
-    
 
     return (
             <Button currencyOptions={currencyOptions} />
@@ -26,3 +31,11 @@ function Currency() {
 }
 
 export default Currency;
+
+
+// .then((currency => {for (const [curr, count] of currency) {
+//     return ({
+//         name: curr,
+//         cof: count
+//     })
+//   }}))
