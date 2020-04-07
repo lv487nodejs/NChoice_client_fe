@@ -49,14 +49,11 @@ const ProductDetails = ({
   };
 
   const handleAddToCart = () => {
-    product.propetries.filter((el) => {
-      if (el.size[0] === checkSize) {
-        let productToSend = { ...product, propetries: el };
-        if (checkSize) {
-          addToCart(productToSend);
-        }
-      }
-    })
+    if (!checkSize) return;
+    const size = product.propetries.filter((el) => el.size[0] === checkSize)
+    const productToSend = { ...product, propetries: size[0] }
+    addToCart(productToSend);
+
   };
 
   const sizeItem = getSizes

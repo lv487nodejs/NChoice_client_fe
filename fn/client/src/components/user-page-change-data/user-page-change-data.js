@@ -57,7 +57,7 @@ const UserChangeData = ({ user,
 
     useEffect(() => {
         addUserDataToSTore(local.userId, local.accessToken)
-    }, [addUserDataToSTore])
+    }, [addUserDataToSTore, local.accessToken, local.userId])
 
  
     

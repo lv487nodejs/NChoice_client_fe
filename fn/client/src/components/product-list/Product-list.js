@@ -68,22 +68,16 @@ const ProductList = ({
       addPostsPerPage(sessionStorage.getItem('postPerPage'));
     }
   }, [
+    catalog,
     setProducts,
     productsLoadingStart,
     productsLoadingStop,
     storeService,
     addPostsPerPage,
-    filterAddBrand,
-    filterAddCategory,
-    filterAddColor,
-    filterRemoveBrand,
-    filterRemoveCategory,
-    filterRemoveColor,
     categoriesLoaded,
     addPagesCount,
     addCurrentPage,
     searchTerm,
-    setCatalogFilter,
     catalogLoaded,
     catalogFilter,
     category,

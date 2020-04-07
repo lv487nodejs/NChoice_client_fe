@@ -51,7 +51,7 @@ const CategoriesCarousel = ({ storeService, catalog, filterAddBrand, filterRemov
               to={PRODUCT_LIST_URL + catalog}
               onClick={filterAddBrandHandler(item.brand)}
             >
-              <img className="d-block w-100 img-carousel" src={`/images/products/${item.images[0]}`}/>
+              <img className="d-block w-100 img-carousel" alt={item.images[0]} src={`/images/products/${item.images[0]}`}/>
             </Link>
             <Carousel.Caption> <h2>{item.brand}</h2> </Carousel.Caption>
           </Carousel.Item>
