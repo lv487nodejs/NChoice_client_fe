@@ -13,13 +13,18 @@ const initialState = {
 const productsList = (state = initialState, action) => {
 
     switch (action.type) {
-        case 'PRODUCTS_REQUESTED':
+        case 'PRODUCTS_LOADING_START':
             return {
                 ...state,
                 loading: true,
             };
 
-        case 'PRODUCTS_LOADED':
+        case 'PRODUCTS_LOADING_STOP':
+            return {
+                ...state,
+                loading: false,
+            };
+        case 'SET_PRODUCTS':
             return {
                 ...state,
                 products: action.payload,
@@ -52,7 +57,7 @@ const productsList = (state = initialState, action) => {
                 ...state,
                 sortByPrice: action.payload,
             };
-        case 'PRODUCT_LOADED':
+        case 'SET_PRODUCT':
             return {
                 ...state,
                 product: action.payload,

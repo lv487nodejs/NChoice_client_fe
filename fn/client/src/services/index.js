@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default class StoreService {
-  _apiBase = 'http://localhost:5000/';
+  _apiBase = 'https://stark-headland-06017.herokuapp.com/';
 
   getResource = async (url) => {
     try {
@@ -14,12 +14,12 @@ export default class StoreService {
 
   postData = async (url, dataToSend) => {
     try {
-        const response = await axios.post(`${this._apiBase}${url}`, dataToSend);
-        return response.data;
+      const response = await axios.post(`${this._apiBase}${url}`, dataToSend);
+      return response.data;
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-};
+  };
 
   getAllProducts = async () => {
     const products = await this.getResource('products');
@@ -73,7 +73,7 @@ export default class StoreService {
     }
     const products = await this.getResource(queryString);
     return products;
-     };
+  };
 
   getAllCatalogs = async () => {
     const catalogs = await this.getResource('catalogs');
@@ -125,7 +125,7 @@ export default class StoreService {
   postOrder = async order => {
     const res = await this.postData('orders', order);
     return res;
-};
+  };
 
   getProductProperties = async (id) => {
     const product = await this.getResource(`products/${id}`);

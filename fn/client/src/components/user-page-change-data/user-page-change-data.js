@@ -48,9 +48,8 @@ const UserChangeData = ({ user,
 
 
     const addUserDataToSTore = useCallback((id, token) => {
-        storeService.getUserById(id, token).then((res) => {
-            const { user } = res.data
-            setUser(user)
+        storeService.getUserById(id, token).then((res) => {            
+            setUser(res.data)
         }).catch((error)=>{
             throw new Error(error)
         })

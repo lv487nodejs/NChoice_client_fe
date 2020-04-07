@@ -5,14 +5,13 @@ import './Product-details.css';
 import { Card, Row, Col, Image, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import ProductListPosts from '../product-list-posts';
+import ProductList from '../product-list';
 import StarsRating from '../star-rating';
  
 import withStoreService from '../hoc';
 import {
-  productLoaded,
-  productsLoaded,
-  productsRequested,
+  setProduct,
+  productsLoadingStart,
   catalogLoaded,
   sizesLoaded,
   addToCart,
@@ -22,9 +21,8 @@ import {
 const ProductDetails = ({
   id,
   product,
-  productLoaded,
-  productsLoaded,
-  productsRequested,
+  setProduct,
+  productsLoadingStart,
   storeService,
   products,
   addToCart,
@@ -35,18 +33,13 @@ const ProductDetails = ({
   const [checkSize, setCheckSize] = useState('');
 
   useEffect(() => {
-    productsRequested();
-    storeService.getProductById(id).then((res) => productLoaded(res));
-  }, [productsRequested, storeService, id, productLoaded]);
+    productsLoadingStart();
+    storeService.getProductById(id).then((res) => setProduct(res));
+  }, [productsLoadingStart, storeService, id, setProduct]);
 
   useEffect(() => {
     storeService.getProductProperties(id).then((res) => setSizes(res));
   }, [id, storeService]);
-
-  useEffect(() => {
-    productsRequested();
-    storeService.getAllProducts().then((res) => productsLoaded(res));
-  }, [productsLoaded, productsRequested, storeService]);
 
 
   const newProducts = products.filter(elem => elem.category === product.category).slice(-3)
@@ -56,14 +49,14 @@ const ProductDetails = ({
   };
 
   const handleAddToCart = () => {
-      product.propetries.filter((el) => {
-        if (el.size[0] === checkSize) {
-        let productToSend = {...product, propetries: el};
-          if (checkSize) {
-            addToCart(productToSend);
-          }
+    product.propetries.filter((el) => {
+      if (el.size[0] === checkSize) {
+        let productToSend = { ...product, propetries: el };
+        if (checkSize) {
+          addToCart(productToSend);
         }
-      })
+      }
+    })
   };
 
   const sizeItem = getSizes
@@ -128,7 +121,7 @@ const ProductDetails = ({
             className={checkSize ? 'button' : 'button disabled'}
             onClick={handleAddToCart}
             >Add to card </Button>
-            <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none' }>
+            <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none'}>
               <Button
                 variant="dark"
                 onClick={handleAddToCart}
@@ -140,7 +133,7 @@ const ProductDetails = ({
       <hr />
       <div className="similarItems">Similar items</div>
       <hr />
-      <ProductListPosts products={newProducts} className="routingImg" />
+      <ProductList products={newProducts} className="routingImg" />
     </Card>
   );
 };
@@ -154,9 +147,8 @@ const mapStateToProps = ({
   propetries,
 });
 const mapDispatchToProps = {
-  productLoaded,
-  productsLoaded,
-  productsRequested,
+  setProduct,
+  productsLoadingStart,
   catalogLoaded,
   sizesLoaded,
   addToCart,

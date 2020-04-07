@@ -1,10 +1,10 @@
 import React from 'react';
 import './Product-list-page-container.css';
-import ProductList from '../components/product-list';
+import ProductListPage from '../components/product-list-page';
 
-const ProductListPageContainer = ({catalog}) => (
+const ProductListPageContainer = ({ catalog }) => (
     <div className="product-list-container">
-        <ProductList catalog={catalog}/>
+        <ProductListPage catalog={catalog} />
     </div>
 );
 
