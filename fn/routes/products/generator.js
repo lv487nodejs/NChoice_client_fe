@@ -29,7 +29,6 @@ router.post('/', async (req, res) => {
                 const vero =
                     'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.';
                 const requestedCatalog = { catalog: chance.pick(['men', 'women', 'kids'], 1) };
-                console.log(requestedCatalog);
                 const catalog = await Catalogs.findOne(requestedCatalog);
                 if (!catalog) throw { message: 'Bad catalog name' };
 
@@ -100,7 +99,7 @@ router.post('/', async (req, res) => {
                 const mrspR = chance.integer({ min: 100, max: 1000 });
                 const priceR = parseInt(mrspR * chance.pick([0.8, 0.6, 0.7, 0.9], 1));
                 const rateChance = chance.integer({ min: 1, max: 5 });
-                const rate = parseInt(rateChance * chance.pick([0.8, 0.6, 0.7, 0.9], 1));
+                const rateR = parseInt(rateChance * chance.pick([0.8, 0.6, 0.7, 0.9], 1));
 
                 const props = [
                     {
@@ -133,7 +132,7 @@ router.post('/', async (req, res) => {
                     images: [`${category.category}_${catalog.catalog}.jpg`],
                     mrsp: mrspR,
                     price: priceR,
-                    rate,
+                    rate: rateR,
                     propetries: props,
                 });
 

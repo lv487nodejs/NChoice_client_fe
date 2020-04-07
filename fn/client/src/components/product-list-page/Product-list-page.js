@@ -12,6 +12,7 @@ import {
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
+  addSortByRate,
   setCatalogFilter,
 } from '../../actions';
 import withStoreService from '../hoc';
@@ -24,11 +25,12 @@ const ProductListPage = ({
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
+  addSortByRate,
   pagesCount,
   setCatalogFilter,
   catalog,
 }) => {
-  const sortOptions = [
+  const sortByPriceOptions = [
     {
       text: 'sort by price',
       value: sortAsc,
@@ -38,7 +40,16 @@ const ProductListPage = ({
       toChangeClass: 'fas fa-sort-down',
     },
   ];
-
+  const sortByRateOptions = [
+    {
+      text: 'sort by rate',
+      value: sortAsc,
+      handler: addSortByRate,
+      variant: 'dark',
+      defaultClass: 'fas fa-sort-up',
+      toChangeClass: 'fas fa-sort-down',
+    },
+  ];
   useEffect(() => {
     catalogLoaded(catalog);
     setCatalogFilter(catalog);
@@ -68,7 +79,8 @@ const ProductListPage = ({
       <div className="product-list-page">
         <div className="products-options">
           <SearchBar />
-          <ProductSort options={sortOptions} />
+          <ProductSort options={sortByPriceOptions} />
+          <ProductSort options={sortByRateOptions} />
 
           <ProductListButtonPages
             changeItems={changeItemsMethod}
@@ -98,6 +110,7 @@ const mapDispatchToProps = {
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
+  addSortByRate,
   setCatalogFilter,
 };
 
