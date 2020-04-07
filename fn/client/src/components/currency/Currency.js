@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Button from './button';
 
 const BASE_URL = 'https://api.exchangeratesapi.io/latest';
+const currencies = {'EUR': '€', 'USD': '$', 'PLN': '‎zł'}
 
 function Currency() {
-    const currencies = {'EUR': '€', 'USD': '$', 'PLN': '‎zł'}
 
     const [currencyOptions, setCurrencyOptions] = useState([]);
    
     useEffect(() => {
+
+
 
         fetch(BASE_URL)
             .then(res => res.json())
@@ -24,11 +26,11 @@ function Currency() {
                         })
             }
             )))
-            .then(currency => setCurrencyOptions(currency.filter(i => {
-                if(currencies.hasOwnProperty(i.name)){
-                    return (i.name)
-                }
-            })))
+            .then(currency => currency.filter(i => !currencies.hasOwnProperty(i.name)))
+            .then(currency => {
+                const currencyNames = currency.map(item => item.name);
+                setCurrencyOptions(currencyNames);
+            })
     }, []);
 
     return (
