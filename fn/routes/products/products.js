@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
     postsperpage = postsperpage || 15;
     let skip = currentpage * postsperpage;
     const { sortbyprice } = query;
+    const { sortbyrate } = query;
 
     try {
         const filter = await getFilters(query);
@@ -27,6 +28,7 @@ router.get('/', async (req, res) => {
             .sort(sort)
             .skip(+skip)
             .limit(+postsperpage)
+            .sort({ rate: sortbyrate })
             .sort({ price: sortbyprice })
             .populate('catalog')
             .populate('category')
@@ -37,7 +39,7 @@ router.get('/', async (req, res) => {
             throw { message: 'Products not found ' };
         }
         const productsToSend = prepareProductsToSend(products);
-        const foundProductsNumber = await Products.find(filter).count() ;
+        const foundProductsNumber = await Products.find(filter).count();
 
         if (!foundProductsNumber) {
             throw { message: 'Products not found ' };
@@ -207,6 +209,7 @@ const prepareProductsToSend = products => {
             propetries: product.propetries,
             price: product.price,
             mrsp: product.mrsp,
+            rate: product.rate
         };
 
         if (product.brand) newProduct.brand = product.brand.brand;
@@ -223,6 +226,7 @@ const prepareProductsToUpdate = async product => {
 
     if (product.price) product.price = parseFloat(product.price);
     if (product.mrsp) product.mrsp = parseFloat(product.mrsp);
+    if (product.rate) product.rate = parseFloat(product.rate);
 
     if (product.brand) {
         const brandToSave = await Brands.findOne({ brand });
