@@ -8,6 +8,7 @@ const initialState = {
     postsPerPage: 15,
     pagesCount: 1,
     sortByPrice: 0,
+    sortByRate: 0,
     sizes: [],
 };
 
@@ -64,6 +65,11 @@ const productsList = (state = initialState, action) => {
                 ...state,
                 sortByPrice: action.payload,
             };
+        case 'SORT_BY_RATE':
+            return {
+                ...state,
+                sortByRate: action.payload,
+            }
         case 'SET_PRODUCT':
             return {
                 ...state,
