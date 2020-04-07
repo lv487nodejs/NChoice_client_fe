@@ -18,7 +18,6 @@ const Button = ({ currencyOptions, currencyChange, currencyIconChange, currencie
     return (
         <>
             <select id='currency' onChange={onClickHandler}>
-                {/* <option key='EUR' value='1' data-text='EUR'>EUR</option> */}
                 {currencyOptions.map(item =>(
                     <option key={item.name} value={item.coefficient} data-text={item.name}>{item.name}</option>
                 ))}
