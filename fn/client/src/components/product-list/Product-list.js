@@ -14,6 +14,7 @@ import {
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
+  addSortByRate,
 } from '../../actions';
 import withStoreService from '../hoc';
 import LoadingSpinner from '../Loading-spinner';
@@ -33,12 +34,23 @@ const ProductList = ({
   addCurrentPage,
   pagesCount,
   addSortByPrice,
-}) => {  
-  const sortOptions = [
+  addSortByRate,
+}) => {
+  const sortByPriceOptions = [
     {
       text: 'sort by price',
       value: sortAsc,
       handler: addSortByPrice,
+      variant: 'dark',
+      defaultClass: 'fas fa-sort-up',
+      toChangeClass: 'fas fa-sort-down',
+    },
+  ];
+  const sortByRateOptions = [
+    {
+      text: 'sort by rate',
+      value: sortAsc,
+      handler: addSortByRate,
       variant: 'dark',
       defaultClass: 'fas fa-sort-up',
       toChangeClass: 'fas fa-sort-down',
@@ -64,7 +76,7 @@ const ProductList = ({
   ]);
 
   // Change view
-  const paginateMethod = (value) => addCurrentPage(value-1);
+  const paginateMethod = (value) => addCurrentPage(value - 1);
   const changeItemsMethod = (number) => {
     addPostsPerPage(number);
     sessionStorage.setItem('postPerPage', number);
@@ -81,8 +93,8 @@ const ProductList = ({
       <div className="product-list-page">
         <div className="products-options">
           <SearchBar />
-          <ProductSort options={sortOptions} />
-
+          <ProductSort options={sortByPriceOptions} />
+          <ProductSort options={sortByRateOptions} />
           <ProductListButtonPages
             changeItems={changeItemsMethod}
             changeCurrentPage={changePagination}
@@ -113,6 +125,7 @@ const mapDispatchToProps = {
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
+  addSortByRate,
 };
 
 export default withStoreService()(

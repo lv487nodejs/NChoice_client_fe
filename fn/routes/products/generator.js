@@ -31,7 +31,6 @@ router.post('/', async (req, res) => {
         const requestedCatalog = {
           catalog: chance.pick(['men', 'women', 'kids'], 1),
         };
-        console.log(requestedCatalog);
         const catalog = await Catalogs.findOne(requestedCatalog);
         if (!catalog) throw { message: 'Bad catalog name' };
 

@@ -33,6 +33,7 @@ const Filter = ({
   postsPerPage,
   addPagesCount,
   sortByPrice,
+  sortByRate,
   searchTerm,
 }) => {
   const [getBrands, setBrands] = useState([]);
@@ -69,6 +70,7 @@ const Filter = ({
         currentPage,
         postsPerPage,
         sortByPrice,
+        sortByRate,
         searchTerm,
       })
       .then((res) => {
@@ -86,6 +88,7 @@ const Filter = ({
     postsPerPage,
     addPagesCount,
     sortByPrice,
+    sortByRate,
     searchTerm,
   ]);
 
@@ -133,7 +136,7 @@ const Filter = ({
   );
 };
 const mapStateToProps = ({
-  productsList: { currentPage, postsPerPage, sortByPrice },
+  productsList: { currentPage, postsPerPage, sortByPrice, sortByRate },
   filter: { brand, category, color, searchTerm },
   catalogsList: { catalog },
 }) => ({
@@ -144,6 +147,7 @@ const mapStateToProps = ({
   currentPage,
   postsPerPage,
   sortByPrice,
+  sortByRate,
   searchTerm,
 });
 

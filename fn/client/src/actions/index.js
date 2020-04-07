@@ -8,12 +8,18 @@ import {
   addPostsPerPage,
   addPagesCount,
   addSortByPrice,
+  addSortByRate,
   productLoaded,
   sizesLoaded,
 } from './Products-actions';
 
-import {addToCart, increaseToCart, decreaseFromCart, removeFromCart} from './Cart-action'
-import {addToWishlist, removeFromWishlist} from './Wishlist-actions'
+import {
+  addToCart,
+  increaseToCart,
+  decreaseFromCart,
+  removeFromCart,
+} from './Cart-action';
+import { addToWishlist, removeFromWishlist } from './Wishlist-actions';
 
 import {
   catalogsLoaded,
@@ -39,10 +45,10 @@ import {
   postUserError,
   logoutUser,
   postUserLoginSuccess,
-  setUser
+  setUser,
 } from './Auth-actions';
 
-import {setShowSnackbar, setSnackbarText} from './Snackbar--actions'
+import { setShowSnackbar, setSnackbarText } from './Snackbar--actions';
 
 export {
   categoriesRequested,
@@ -64,6 +70,7 @@ export {
   addPostsPerPage,
   addPagesCount,
   addSortByPrice,
+  addSortByRate,
   filterByName,
   productLoaded,
   sizesLoaded,
