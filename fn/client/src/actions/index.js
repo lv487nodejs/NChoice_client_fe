@@ -86,7 +86,6 @@ export {
   logoutUser,
   currencyIconChange,
   removeFromWishlist,
-  logoutUser,
   postUserLoginSuccess,
   setUser,
   setShowSnackbar,
