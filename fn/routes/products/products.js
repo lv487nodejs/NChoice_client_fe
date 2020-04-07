@@ -22,7 +22,6 @@ router.get('/', async (req, res) => {
   let skip = currentpage * postsperpage;
   const { sortbyprice } = query;
   const { sortbyrate } = query;
-
   try {
     const filter = await getFilters(query);
     const projection = await getProjection(query);
@@ -31,8 +30,8 @@ router.get('/', async (req, res) => {
       .sort(sort)
       .skip(+skip)
       .limit(+postsperpage)
+      .sort({ rate: sortbyrate })
       .sort({ price: sortbyprice })
-      .sort({ mrsp: sortbyrate })
       .populate('catalog')
       .populate('category')
       .populate('color')
@@ -222,6 +221,7 @@ const prepareProductsToSend = (products) => {
       propetries: product.propetries,
       price: product.price,
       mrsp: product.mrsp,
+      rate: product.rate,
     };
 
     if (product.brand) newProduct.brand = product.brand.brand;
@@ -238,6 +238,7 @@ const prepareProductsToUpdate = async (product) => {
 
   if (product.price) product.price = parseFloat(product.price);
   if (product.mrsp) product.mrsp = parseFloat(product.mrsp);
+  if (product.rate) product.rate = parseFloat(product.rate);
 
   if (product.brand) {
     const brandToSave = await Brands.findOne({ brand });
