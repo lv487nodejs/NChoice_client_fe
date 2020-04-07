@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import ProductList from '../product-list';
 import StarsRating from '../star-rating';
- 
+
 import withStoreService from '../hoc';
 import {
   setProduct,
@@ -43,6 +43,7 @@ const ProductDetails = ({
 
 
   const newProducts = products.filter(elem => elem.category === product.category).slice(-3)
+ 
 
   const handleCheck = item => () => {
     setCheckSize(item)
@@ -63,6 +64,11 @@ const ProductDetails = ({
         <span className={item === checkSize ? 'check' : ''}> {item} </span>
       </div>
     ));
+
+
+
+  let rating = 3.75;
+
 
   return (
     <Card className="wrapper">
@@ -100,7 +106,7 @@ const ProductDetails = ({
           </Col>
         </Row>
         <Col className="text">
-          <StarsRating />
+          <StarsRating rating={rating}/>
           <Card.Title className="title">{product.title}</Card.Title>
           <Card.Text className="productDescription">
             {product.description}
@@ -113,10 +119,10 @@ const ProductDetails = ({
           <Card.Body className="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
               onClick={() => addToWishlist(product)} />
-            <Button 
-            variant="dark" 
-            className={checkSize ? 'button' : 'button disabled'}
-            onClick={handleAddToCart}
+            <Button
+              variant="dark"
+              className={checkSize ? 'button' : 'button disabled'}
+              onClick={handleAddToCart}
             >Add to card </Button>
             <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none'}>
               <Button

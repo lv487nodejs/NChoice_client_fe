@@ -92,6 +92,9 @@ const ProductList = ({
     sortByRate
   ]);
 
+
+  let rating = 2;
+
   return (
     <div className="products-items">
       {products.map(({ id, title, description, images, price, mrsp }) => (
@@ -103,6 +106,7 @@ const ProductList = ({
           mrsp={mrsp}
           id={id}
           key={id}
+          rating={rating}
         />
       ))}
     </div>
