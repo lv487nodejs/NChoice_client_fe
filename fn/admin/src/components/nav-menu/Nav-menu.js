@@ -49,8 +49,9 @@ const NavMenu = ({ width, drawerStatus, setDrawerStatus }) => {
     const drawerVariant = checkWidth(width) ? DRAWER_TEMPORARY : DRAWER_PERMANENT;
 
     return (
-        <div>
+
             <Drawer
+                id="menuDrawer"
                 className={classes.drawer}
                 variant={drawerVariant}
                 open={drawerStatus}
@@ -64,7 +65,7 @@ const NavMenu = ({ width, drawerStatus, setDrawerStatus }) => {
                 <List>{menuItems}</List>
                 <Divider />
             </Drawer>
-        </div>
+
     );
 };
 

@@ -1,43 +1,32 @@
 const initialState = {
-    userTokens: {},
-    userStatus: null,
-    popupShown: true
+    userLogged: false,
+    userLoading: false,
+    user:{
+        firstName: '',
+        lastName: '',
+        email: ''
+    }
 }
 
-const authReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case 'ADD_USER_REQUESTED':
+const authReducer = (state = initialState, action) => {    
+    switch (action.type) {
+        case 'SET_USER_LOGGED':
             return {
-                ...state,
-                userStatus: 'loading',
+                userLoading: false,
+                userLogged: action.payload,
             };
-        case 'ADD_USER_RECEIVED':
+        case 'SET_USER_LOADING':
             return {
                 ...state,
-                userTokens: action.payload.data,
-                popupShown: false,
-                popupText: action.payload.type,
-                userStatus: 'received',
+                userLoading: true,
             }
-        case 'ADD_USER_ERROR':
+        case 'SET_USER':
             return {
                 ...state,
-                popupShown: false,
-                popupText: action.payload.type,
-                userStatus: 'failed',
-            }
-
-        case 'LOGOUT_USER':
-            return {...state,
-                userStatus: null
-            }
-        case 'POPUP_SHOWN':
-            return {
-                ...state,
-                popupShown: true
+                user: action.payload
             }
         default:
-            return {...state};
+            return { ...state };
     }
 }
 

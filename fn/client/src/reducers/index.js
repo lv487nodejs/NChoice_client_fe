@@ -6,7 +6,7 @@ import filter from './Filter-reducer';
 import authReducer  from './Auth-reducer'
 import cartReducer from './Cart-reducer';
 import wishlistReducer from './Wishlist-reducer'
-
+import snackbarReducer from './Snackbar-reducer'
 export default combineReducers({
     productsList,
     categoriesList,
@@ -15,4 +15,5 @@ export default combineReducers({
     cartReducer,
     wishlistReducer,
     authReducer,
+    snackbarReducer,
 });

@@ -62,7 +62,7 @@ const LatestSales = ({ setDaysValue, daysValue }) => {
     };
 
     return (
-        <Card className={classes.root}>
+        <Card id="latest-sales" className={classes.root}>
             <CardHeader
                 action={chartDaysOptionsField(DAYS_OPTIONS, CHART_OPTIONS_LABEL)}
                 title={CHART_TITLE}

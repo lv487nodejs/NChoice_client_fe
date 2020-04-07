@@ -50,6 +50,7 @@ const ProductAddPropetriesItem = ({ sizeModel, productModel, name, handleInputCh
             onChange={handleInputChange}
             SelectProps={input.nativeSelect}
             variant={inputVariant}
+            id={name}
         >
             <option value="" />
             {sizeOptions}

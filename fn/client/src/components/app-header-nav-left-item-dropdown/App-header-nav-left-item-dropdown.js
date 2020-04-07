@@ -7,14 +7,14 @@ import { PRODUCT_LIST_URL } from '../../configs/frontend-config';
 
 const AppHeaderNavLeftItemDropDown = ({
   catalog,
-  handler,
+  clickHandler,
   categoryRemover,
 }) => {
   const items = catalog.categories.map((category) => (
     <Nav key={category._id}>
       <Link
         to={PRODUCT_LIST_URL + catalog.catalog}
-        onClick={() => handler(category.category)}
+        onClick={() => clickHandler(category.category, catalog.catalog)}
       >
         {category.category}
       </Link>
@@ -27,7 +27,7 @@ const AppHeaderNavLeftItemDropDown = ({
         to={PRODUCT_LIST_URL + catalog.catalog}
         className="nav-link"
         role="button"
-        onClick={() => categoryRemover()}
+        onClick={() => categoryRemover(catalog.catalog)}
       >
         All Categories
       </Link>

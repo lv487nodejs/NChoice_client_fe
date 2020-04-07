@@ -1,20 +1,22 @@
 import { categoriesLoaded, categoriesRequested } from './Categories-actions';
 
 import {
-  productsLoaded,
-  productsRequested,
+  setProducts,
+  productsLoadingStart,
   currencyChange,
   addCurrentPage,
   addPostsPerPage,
   addPagesCount,
   addSortByPrice,
-  productLoaded,
+  setProduct,
   sizesLoaded,
+  currencyIconChange,
+  productsLoadingStop,
   addSortByRating
 } from './Products-actions';
 
-import {addToCart, increaseToCart, decreaseFromCart, removeFromCart} from './Cart-action'
-import {addToWishlist} from './Wishlist-actions'
+import { addToCart, increaseToCart, decreaseFromCart, removeFromCart } from './Cart-action'
+import { addToWishlist, removeFromWishlist } from './Wishlist-actions'
 
 import {
   catalogsLoaded,
@@ -28,18 +30,19 @@ import {
   filterAddColor,
   filterRemoveCategory,
   filterRemoveAllCategories,
+  filterRemoveAllBrands,
   filterRemoveColor,
   filterRemoveBrand,
   filterByName,
   setSearchValue,
+  setCatalogFilter,
 } from './Filter-actions';
 
 import {
-  postUserSuccess,
-  postUserStarted,
-  postUserError,
-  logoutUser
+  setUserLogged, setUserLoading, setUser
 } from './Auth-actions';
+
+import { setShowSnackbar, setSnackbarText } from './Snackbar--actions'
 
 export {
   categoriesRequested,
@@ -47,32 +50,38 @@ export {
   catalogLoaded,
   catalogsLoaded,
   catalogsRequested,
-  productsRequested,
-  productsLoaded,
+  setProducts,
+  productsLoadingStart,
+  productsLoadingStop,
   currencyChange,
   filterAddBrand,
   filterAddCategory,
   filterAddColor,
   filterRemoveBrand,
+  filterRemoveAllBrands,
   filterRemoveCategory,
   filterRemoveAllCategories,
   filterRemoveColor,
+  setCatalogFilter,
   addCurrentPage,
   addPostsPerPage,
   addPagesCount,
   addSortByPrice,
   filterByName,
-  productLoaded,
+  setProduct,
   sizesLoaded,
-  postUserError,
-  postUserSuccess,
-  postUserStarted,
   setSearchValue,
   addToCart,
   increaseToCart,
   decreaseFromCart,
   removeFromCart,
   addToWishlist,
-  logoutUser,
+  setUserLogged,
+  setUserLoading,
+  setUser,
+  currencyIconChange,
+  removeFromWishlist,
+  setShowSnackbar,
+  setSnackbarText,
   addSortByRating
 };

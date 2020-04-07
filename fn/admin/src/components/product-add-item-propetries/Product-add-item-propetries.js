@@ -55,6 +55,7 @@ const AddProductPropetries = ({ setSizeModel, setProductModel, sizeModel, produc
                 className={classes.button}
                 eventHandler={handleRemoveProperty(item.size)}
                 title={REMOVE_BUTTON_LABEL}
+                id={item.size}
             />
         </Paper>
     ));
@@ -63,7 +64,7 @@ const AddProductPropetries = ({ setSizeModel, setProductModel, sizeModel, produc
         <Paper className={classes.productPropetries}>
             {propetryTextFields}
             <div>
-                <SaveButton title={ADD_BUTTON_LABEL} eventHandler={handleAddPropetries} />
+                <SaveButton id="add" title={ADD_BUTTON_LABEL} eventHandler={handleAddPropetries} />
             </div>
             <div className={classes.addedPropetries}>{addedPropetries}</div>
         </Paper>

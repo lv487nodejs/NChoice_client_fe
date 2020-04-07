@@ -1,133 +1,151 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import ProductsListItem from '../product-list-item';
 import './Product-list.css';
-import ProductListPosts from '../product-list-posts';
-import ProductListPaginator from '../product-list-paginator';
-import ProductListButtonPages from '../product-list-button-pages';
-import Filter from '../filter';
+import withStoreService from '../hoc';
 
-import SearchBar from '../search-bar/search-bar';
 import {
-  productsLoaded,
-  productsRequested,
+  setProducts,
+  productsLoadingStart,
+  productsLoadingStop,
   catalogLoaded,
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
-  addSortByRating
+  addSortByRating,
+  addPagesCount,
+  filterAddBrand,
+  filterAddCategory,
+  categoriesLoaded,
+  filterAddColor,
+  filterRemoveBrand,
+  filterRemoveCategory,
+  filterRemoveColor,
+  setCatalogFilter,
 } from '../../actions';
-import withStoreService from '../hoc';
-import LoadingSpinner from '../Loading-spinner';
-import ProductSort from '../product-sort';
-
-const sortAsc = 1;
 
 const ProductList = ({
-  cartAndStoreService:{storeService},
-  productsLoaded,
-  productsRequested,
-  catalogLoaded,
-  products,
-  loading,
-  catalog,
-  addPostsPerPage,
-  addCurrentPage,
-  pagesCount,
-  addSortByPrice,
-  addSortByRating
-}) => {
-  const sortOptions = [
-    {
-      text: 'sort by price',
-      value: sortAsc,
-      handler: addSortByPrice,
-      variant: 'dark',
-      defaultClass: 'fas fa-sort-up',
-      toChangeClass: 'fas fa-sort-down',
-    }, {
-      text: 'sort by rating',
-      value: sortAsc,
-      handler: addSortByRating,
-      variant: 'dark',
-      defaultClass: 'fas fa-sort-up',
-      toChangeClass: 'fas fa-sort-down'
-    }
-  ];
+                       products,
+                       storeService,
+                       setProducts,
+                       productsLoadingStart,
+                       catalogLoaded,
+                       addPostsPerPage,
+                       addCurrentPage,
+                       categoriesLoaded,
+                       brand,
+                       category,
+                       catalog,
+                       color,
+                       currentPage,
+                       postsPerPage,
+                       addPagesCount,
+                       sortByPrice,
+                       sortByRating,
+                       catalogFilter,
+                       productsLoadingStop,
+                       searchTerm,
+                     }) => {
 
   useEffect(() => {
-    productsRequested();
-    catalogLoaded(catalog);
+    catalogLoaded(catalog)
+    setCatalogFilter(catalog)
     storeService
-      .getProductsByFilter({ catalog })
-      .then((res) => productsLoaded(res.products));
+        .getProductsByFilter({
+          catalog: catalogFilter,
+          brand,
+          color,
+          category,
+          currentPage,
+          postsPerPage,
+          sortByPrice,
+          sortByRating,
+          searchTerm,
+        })
+        .then((res) => {
+          setProducts(res.products);
+          addPagesCount(res.pagesCount);
+          productsLoadingStop();
+        });
     if (sessionStorage.getItem('postPerPage') !== null) {
       addPostsPerPage(sessionStorage.getItem('postPerPage'));
     }
   }, [
-    productsLoaded,
-    productsRequested,
-    storeService,
     catalog,
-    catalogLoaded,
+    setProducts,
+    productsLoadingStart,
+    productsLoadingStop,
+    storeService,
     addPostsPerPage,
+    categoriesLoaded,
+    addPagesCount,
+    addCurrentPage,
+    searchTerm,
+    catalogLoaded,
+    catalogFilter,
+    category,
+    brand,
+    color,
+    currentPage,
+    postsPerPage,
+    sortByPrice,
+    sortByRating
   ]);
 
-  // Change view
-  const paginateMethod = (value) => addCurrentPage(value);
-  const changeItemsMethod = (number) => {
-    addPostsPerPage(number);
-    sessionStorage.setItem('postPerPage', number);
-  };
-  const changePagination = () => addCurrentPage(1);
-
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
   return (
-    <div>
-      <h2 className="catalog-top-name">{catalog} Catalog</h2>
-      <div className="product-list-page">
-        <div className="products-options">
-          <SearchBar />
-          {sortOptions.map(({ value, variant, defaultClass, toChangeClass, handler, text }) => {
-            return  <ProductSort value={value} defaultClass={defaultClass} toChangeClass={toChangeClass} variant={variant} text={text} handler={handler} />
-
-          })}
-
-          <ProductListButtonPages
-            changeItems={changeItemsMethod}
-            changeCurrentPage={changePagination}
-            className="buttonsGroup productListButtons "
-          />
-        </div>
-        <div className="filters">
-          <Filter />
-        </div>
-        <ProductListPosts products={products} />
+      <div className="products-items">
+        {products.map(({ id, title, description, images, price, mrsp }) => (
+            <ProductsListItem
+                title={title}
+                description={description}
+                images={images}
+                price={price}
+                mrsp={mrsp}
+                id={id}
+                key={id}
+            />
+        ))}
       </div>
-      <ProductListPaginator
-        pagesCount={pagesCount}
-        paginate={paginateMethod}
-        className="paginator"
-      />
-    </div>
   );
-};
+}
 
 const mapStateToProps = ({
-  productsList: { products, loading, pagesCount },
-}) => ({ products, loading, pagesCount });
+                           catalogsList: { catalog },
+                           productsList: { products, currentPage, postsPerPage, sortByPrice, sortByRating },
+                           filter: { brand, category, color, searchTerm, catalogFilter },
+
+                         }) => ({
+                              products,
+                              catalog,
+                              brand,
+                              category,
+                              color,
+                              searchTerm,
+                              catalogFilter,
+                              currentPage,
+                              postsPerPage,
+                              sortByPrice,
+                              sortByRating
+                         });
+
 const mapDispatchToProps = {
-  productsLoaded,
-  productsRequested,
+  setProducts,
+  productsLoadingStart,
   catalogLoaded,
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
-  addSortByRating
+  addSortByRating,
+  addPagesCount,
+  filterAddBrand,
+  filterAddCategory,
+  filterAddColor,
+  filterRemoveBrand,
+  filterRemoveCategory,
+  filterRemoveColor,
+  categoriesLoaded,
+  setCatalogFilter,
+  productsLoadingStop,
 };
 
-export default withStoreService()(
-  connect(mapStateToProps, mapDispatchToProps)(ProductList)
-);
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));
