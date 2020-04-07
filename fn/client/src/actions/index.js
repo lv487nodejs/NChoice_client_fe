@@ -89,4 +89,5 @@ export {
   setUser,
   setShowSnackbar,
   setSnackbarText,
+  logoutUser
 };

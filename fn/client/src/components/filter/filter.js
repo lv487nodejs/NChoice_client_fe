@@ -46,6 +46,8 @@ const Filter = ({
     storeService
       .getCatalogCategories(catalogFilter)
       .then((response) => {
+        console.log(response);
+        
         setCategories(response)
       })
       .catch((err) => console.log(err));
@@ -109,6 +111,9 @@ const Filter = ({
     </div>
   );
 };
+const mapStateToProps = ({filter:{catalogFilter}})=>({
+  catalogFilter
+})
 
 const mapDispatchToProps = {
   filterAddBrand,
@@ -120,5 +125,5 @@ const mapDispatchToProps = {
 };
 
 export default withStoreService()(
-  connect(null,mapDispatchToProps)(Filter)
+  connect(mapStateToProps,mapDispatchToProps)(Filter)
 );
