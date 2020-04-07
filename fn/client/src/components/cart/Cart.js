@@ -6,10 +6,10 @@ import { Figure, Button } from 'react-bootstrap'
 import Row from "react-bootstrap/Row";
 import Container from "@material-ui/core/Container/Container";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { increaseToCart, decreaseFromCart, removeFromCart, addToCart } from "../../actions";
 
-const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart}) => {
+const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -43,25 +43,25 @@ const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart}) => {
 
   const salePrices = [];
   const fullPrices = [];
-  products.map(i=>{
+  products.map(i => {
     const price = i.price * i.quantity;
     return salePrices.push(price)
   });
 
-  products.map(i=>{
+  products.map(i => {
     const price = i.msrp * i.quantity;
     return fullPrices.push(price)
   });
 
   const fullPrice =
-   fullPrices.length === 1 ? fullPrices[0] :
-   fullPrices.length > 1 ? fullPrices.reduce((accumulator, currentValue) => accumulator + currentValue) :
-   0;
+    fullPrices.length === 1 ? fullPrices[0] :
+      fullPrices.length > 1 ? fullPrices.reduce((accumulator, currentValue) => accumulator + currentValue) :
+        0;
 
   const total =
-   salePrices.length === 1 ? salePrices[0] :
-   salePrices.length > 1 ? salePrices.reduce((accumulator, currentValue) => accumulator + currentValue) :
-   0;
+    salePrices.length === 1 ? salePrices[0] :
+      salePrices.length > 1 ? salePrices.reduce((accumulator, currentValue) => accumulator + currentValue) :
+        0;
 
   const sale = fullPrice - total;
 
@@ -79,23 +79,23 @@ const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart}) => {
                   {item.title}
                   <p> Price:
                   <span className="price">{item.price * item.quantity} {item.currencyIcon}</span>
-                  <span className="msrp-price">{item.msrp * item.quantity} </span>
+                    <span className="msrp-price">{item.msrp * item.quantity} </span>
                   </p>
                   <p> Size: <span>{item.propetries.size[0]}</span> </p>
                   <div className="quantity-control">
-                  <FontAwesomeIcon
-                    icon = {faMinus}
-                    className="remove-from-cart-button"
-                    onClick={() => handleDecreaseFromCart(item)}/>
-                  <span id="quantity"> {item.quantity} </span>
-                  <FontAwesomeIcon
-                    icon = {faPlus}
-                    className="add-to-cart-button"
-                    onClick ={() => handleIncreaseToCart(item)}/>
-                  <FontAwesomeIcon
-                    icon = {faTrash}
-                    className="delte-cart-button"
-                    onClick={() => handleRemoveFromCart(item)}/>
+                    <FontAwesomeIcon
+                      icon={faMinus}
+                      className="remove-from-cart-button"
+                      onClick={() => handleDecreaseFromCart(item)} />
+                    <span id="quantity"> {item.quantity} </span>
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      className="add-to-cart-button"
+                      onClick={() => handleIncreaseToCart(item)} />
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      className="delte-cart-button"
+                      onClick={() => handleRemoveFromCart(item)} />
                   </div>
                 </Figure.Caption>
               </Row>
@@ -110,6 +110,6 @@ const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart}) => {
 };
 
 
-const mapStateToProps = ({cartReducer: {products, cartNumbers}}) => ({products, cartNumbers});
+const mapStateToProps = ({ cartReducer: { products, cartNumbers } }) => ({ products, cartNumbers });
 
-export default connect(mapStateToProps, {addToCart, increaseToCart, decreaseFromCart, removeFromCart})(Cart);
+export default connect(mapStateToProps, { addToCart, increaseToCart, decreaseFromCart, removeFromCart })(Cart);

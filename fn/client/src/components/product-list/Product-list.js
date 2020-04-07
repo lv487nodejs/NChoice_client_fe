@@ -1,120 +1,140 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import ProductsListItem from '../product-list-item';
 import './Product-list.css';
-import ProductListPosts from '../product-list-posts';
-import ProductListPaginator from '../product-list-paginator';
-import ProductListButtonPages from '../product-list-button-pages';
-import Filter from '../filter';
+import withStoreService from '../hoc';
 
-import SearchBar from '../search-bar/search-bar';
 import {
-  productsLoaded,
-  productsRequested,
+  setProducts,
+  productsLoadingStart,
+  productsLoadingStop,
   catalogLoaded,
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
+  addPagesCount,
+  filterAddBrand,
+  filterAddCategory,
+  categoriesLoaded,
+  filterAddColor,
+  filterRemoveBrand,
+  filterRemoveCategory,
+  filterRemoveColor,
+  setCatalogFilter,
 } from '../../actions';
-import withStoreService from '../hoc';
-import LoadingSpinner from '../Loading-spinner';
-import ProductSort from '../product-sort';
-
-const sortAsc = 1;
 
 const ProductList = ({
-  storeService,
-  productsLoaded,
-  productsRequested,
-  catalogLoaded,
   products,
-  loading,
-  catalog,
+  storeService,
+  setProducts,
+  productsLoadingStart,
+  catalogLoaded,
   addPostsPerPage,
   addCurrentPage,
   pagesCount,
   addSortByPrice,
-}) => {  
-  const sortOptions = [
-    {
-      text: 'sort by price',
-      value: sortAsc,
-      handler: addSortByPrice,
-      variant: 'dark',
-      defaultClass: 'fas fa-sort-up',
-      toChangeClass: 'fas fa-sort-down',
-    },
-  ];
+  categoriesLoaded,
+  brand,
+  category,
+  catalog,
+  color,
+  currentPage,
+  postsPerPage,
+  addPagesCount,
+  sortByPrice,
+  catalogFilter,
+  productsLoadingStop,
+  searchTerm,
+}) => {
 
   useEffect(() => {
-    productsRequested();
-    catalogLoaded(catalog);
+    catalogLoaded(catalog)
+    setCatalogFilter(catalog)
     storeService
-      .getProductsByFilter({ catalog })
-      .then((res) => productsLoaded(res.products));
+      .getProductsByFilter({
+        catalog: catalogFilter,
+        brand,
+        color,
+        category,
+        currentPage,
+        postsPerPage,
+        sortByPrice,
+        searchTerm,
+      })
+      .then((res) => {
+        console.log("here");
+
+        setProducts(res.products);
+        addPagesCount(res.pagesCount);
+        productsLoadingStop();
+      });
     if (sessionStorage.getItem('postPerPage') !== null) {
       addPostsPerPage(sessionStorage.getItem('postPerPage'));
     }
   }, [
-    productsLoaded,
-    productsRequested,
+    setProducts,
+    productsLoadingStart,
+    productsLoadingStop,
     storeService,
-    catalog,
-    catalogLoaded,
     addPostsPerPage,
+    filterAddBrand,
+    filterAddCategory,
+    filterAddColor,
+    filterRemoveBrand,
+    filterRemoveCategory,
+    filterRemoveColor,
+    categoriesLoaded,
+    addPagesCount,
+    addCurrentPage,
+    searchTerm,
+    setCatalogFilter,
+    catalogLoaded,
+    catalogFilter,
+    category,
   ]);
 
-  // Change view
-  const paginateMethod = (value) => addCurrentPage(value-1);
-  const changeItemsMethod = (number) => {
-    addPostsPerPage(number);
-    sessionStorage.setItem('postPerPage', number);
-  };
-  const changePagination = () => addCurrentPage(1);
-
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
   return (
-    <div>
-      <h2 className="catalog-top-name">{catalog} Catalog</h2>
-      <div className="product-list-page">
-        <div className="products-options">
-          <SearchBar />
-          <ProductSort options={sortOptions} />
 
-          <ProductListButtonPages
-            changeItems={changeItemsMethod}
-            changeCurrentPage={changePagination}
-            className="buttonsGroup productListButtons "
-          />
-        </div>
-        <div className="filters">
-          <Filter />
-        </div>
-        <ProductListPosts products={products} />
-      </div>
-      <ProductListPaginator
-        pagesCount={pagesCount}
-        paginate={paginateMethod}
-        className="paginator"
-      />
+    <div className="products-items">
+      {products.map(({ id, title, description, images, price, mrsp }) => (
+        <ProductsListItem
+          title={title}
+          description={description}
+          images={images}
+          price={price}
+          mrsp={mrsp}
+          id={id}
+          key={id}
+        />
+      ))}
     </div>
   );
-};
+}
 
 const mapStateToProps = ({
-  productsList: { products, loading, pagesCount },
-}) => ({ products, loading, pagesCount });
+  catalogsList: { catalog },
+  productsList: { products },
+  filter: { brand, category, color, searchTerm, catalogFilter },
+
+}) => ({ products, catalog, brand, category, color, searchTerm, catalogFilter });
+
 const mapDispatchToProps = {
-  productsLoaded,
-  productsRequested,
+  setProducts,
+  productsLoadingStart,
   catalogLoaded,
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
+  addPagesCount,
+  filterAddBrand,
+  filterAddCategory,
+  filterAddColor,
+  filterRemoveBrand,
+  filterRemoveCategory,
+  filterRemoveColor,
+  categoriesLoaded,
+  setCatalogFilter,
+  productsLoadingStop,
 };
 
-export default withStoreService()(
-  connect(mapStateToProps, mapDispatchToProps)(ProductList)
-);
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));

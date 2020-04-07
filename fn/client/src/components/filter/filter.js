@@ -7,8 +7,9 @@ import {
   filterRemoveColor,
   filterRemoveCategory,
   filterRemoveBrand,
-  productsLoaded,
+  setProducts,
   addPagesCount,
+  catalogLoaded,
 } from '../../actions';
 
 import FilterItem from '../filterItem';
@@ -24,16 +25,8 @@ const Filter = ({
   filterRemoveBrand,
   filterRemoveCategory,
   filterRemoveColor,
-  brand,
-  category,
-  color,
+  catalogLoaded,
   catalog,
-  productsLoaded,
-  currentPage,
-  postsPerPage,
-  addPagesCount,
-  sortByPrice,
-  searchTerm,
 }) => {
   const [getBrands, setBrands] = useState([]);
   const [getCategories, setCategories] = useState([]);
@@ -44,50 +37,20 @@ const Filter = ({
       .getAllBrands()
       .then((response) => setBrands(response))
       .catch((err) => console.log(err));
-  }, [storeService]);
 
-  useEffect(() => {
     storeService
       .getCatalogCategories(catalog)
-      .then((response) => setCategories(response))
+      .then((response) => {
+        setCategories(response)
+      })
       .catch((err) => console.log(err));
-  }, [catalog, storeService]);
-  useEffect(() => {
+
     storeService
       .getAllColors()
       .then((response) => setColors(response))
       .catch((err) => console.log(err));
-  }, [storeService]);
 
-  useEffect(() => {
-    storeService
-      .getProductsByFilter({
-        catalog,
-        brand,
-        color,
-        category,
-        currentPage,
-        postsPerPage,
-        sortByPrice,
-        searchTerm,
-      })
-      .then((res) => {
-        productsLoaded(res.products);
-        addPagesCount(res.pagesCount);
-      });
-  }, [
-    brand,
-    category,
-    catalog,
-    color,
-    storeService,
-    productsLoaded,
-    currentPage,
-    postsPerPage,
-    addPagesCount,
-    sortByPrice,
-    searchTerm,
-  ]);
+  }, [catalogLoaded]);
 
   const filterAddBrandHandler = (e, item) => {
     if (e.target.checked) {
@@ -154,8 +117,9 @@ const mapDispatchToProps = (dispatch) => ({
   filterRemoveBrand: (brand) => dispatch(filterRemoveBrand(brand)),
   filterRemoveCategory: (category) => dispatch(filterRemoveCategory(category)),
   filterRemoveColor: (category) => dispatch(filterRemoveColor(category)),
-  productsLoaded: (products) => dispatch(productsLoaded(products)),
+  setProducts: (products) => dispatch(setProducts(products)),
   addPagesCount: (value) => dispatch(addPagesCount(value)),
+  catalogLoaded: (value) => dispatch(catalogLoaded(value)),
 });
 
 export default withStoreService()(

@@ -1,13 +1,17 @@
-const productsLoaded = newProducts => ({
-    type: 'PRODUCTS_LOADED',
+const setProducts = newProducts => ({
+    type: 'SET_PRODUCTS',
     payload: newProducts,
 });
 
-const productsRequested = () => ({
-    type: 'PRODUCTS_REQUESTED',
+const productsLoadingStart = () => ({
+    type: 'PRODUCTS_LOADING_START',
 });
-const productLoaded = newProduct => ({
-    type: 'PRODUCT_LOADED',
+
+const productsLoadingStop = () => ({
+    type: 'PRODUCTS_LOADING_STOP',
+});
+const setProduct = newProduct => ({
+    type: 'SET_PRODUCT',
     payload: newProduct,
 });
 const currencyChange = newCurrency => ({
@@ -36,13 +40,14 @@ const sizesLoaded = newSize => ({
 });
 
 export {
-    productsLoaded,
-    productsRequested,
+    setProducts,
+    productsLoadingStart,
     currencyChange,
     addCurrentPage,
     addPostsPerPage,
     addPagesCount,
     addSortByPrice,
-    productLoaded,
+    setProduct,
     sizesLoaded,
+    productsLoadingStop,
 };
