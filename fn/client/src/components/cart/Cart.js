@@ -101,7 +101,9 @@ const Cart = ({products, increaseToCart, decreaseFromCart, removeFromCart, curre
   )
 };
 
-const mapStateToProps = ({cartReducer: {products}, productsList: { currency, currencyIcon } }) => ({products, currency, currencyIcon });
+const mapStateToProps = 
+  ({cartReducer: {products}, productsList: { currency, currencyIcon } }) => 
+  ({products, currency, currencyIcon });
 
 export default connect(mapStateToProps, {increaseToCart, decreaseFromCart, removeFromCart})(Cart);
 
