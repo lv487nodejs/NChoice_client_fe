@@ -134,6 +134,7 @@ const Filter = ({
       {
         filterOptions.map(({ items, type, handler }) => {
           return <FilterItem
+          key={type}
             items={items}
             type={type}
             handler={handler}

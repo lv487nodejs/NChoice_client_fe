@@ -8,14 +8,15 @@ import {
 
 import './App-footer.css';
 
-import { Row, Card, Col } from 'react-bootstrap';
+import { Row, Card} from 'react-bootstrap';
 
 const AppFooter = () => (
   <footer className="footer">
     <Card className="footer-inner">
-      <Card.Body className="d-flex flex-column align-items-center">
+      <Card.Body >
+        <Row className="d-flex flex-column align-items-center">
           <Card.Title>Links</Card.Title>
-          <Card.Title className="">
+          <Card.Title>
             <Card.Link href="#">
               <FontAwesomeIcon className="icon" icon={faTelegramPlane} />
             </Card.Link>
@@ -26,6 +27,7 @@ const AppFooter = () => (
               <FontAwesomeIcon className="icon" icon={faFacebook} />
             </Card.Link>
           </Card.Title>
+        </Row>
       </Card.Body>
       <Card.Header>© 2020 Fashion Note</Card.Header>
     </Card>

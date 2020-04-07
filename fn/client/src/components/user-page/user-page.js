@@ -20,7 +20,7 @@ const UserPage = () => {
             variant: 'dark',
         },
         {
-            title: 'Show orders',
+            title: 'Show cart',
             handler: setShowValue,
             value: 2,
             variant: 'dark',
