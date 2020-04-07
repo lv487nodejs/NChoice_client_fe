@@ -116,6 +116,6 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
 
 const mapStateToProps = 
   ({cartReducer: {cartProducts}, productsList: { currency, currencyIcon } }) => 
-  ({products, currency, currencyIcon });
+  ({cartProducts, currency, currencyIcon });
 
 export default connect(mapStateToProps, { addToCart, increaseToCart, decreaseFromCart, removeFromCart })(Cart);
