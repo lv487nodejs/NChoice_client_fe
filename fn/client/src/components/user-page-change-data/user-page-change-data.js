@@ -74,6 +74,10 @@ const UserChangeData = ({ user,
         storeService.sendUserChangedData(local.userId, local.accessToken, { userToChange: user }).then((res) => {
             addUserDataToSTore(local.userId, local.accessToken)
             snackbarHandler(res.data.msg)
+        }).catch((error)=>{
+            console.log(error);
+            
+            snackbarHandler(error.response.data.msg)
         })
     }
     const snackbarHandler = (text) => {
@@ -105,7 +109,7 @@ const UserChangeData = ({ user,
                          onChange={changeHandler} />
                 </InputGroup>
                 {errors.email && <p className="errorMessage">{errors.email.message}</p>}
-                <label htmlFor="password">change your password</label>
+                <label htmlFor="password">enter your password</label>
                 <InputGroup>
                     <FormControl type="password" name="password" id="password" ref={register}
                          onChange={changeHandler} />
