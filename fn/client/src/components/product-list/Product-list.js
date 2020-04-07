@@ -12,6 +12,7 @@ import {
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
+  addSortByRate,
   addPagesCount,
   filterAddBrand,
   filterAddCategory,
@@ -40,6 +41,7 @@ const ProductList = ({
   postsPerPage,
   addPagesCount,
   sortByPrice,
+  sortByRate,
   catalogFilter,
   productsLoadingStop,
   searchTerm,
@@ -57,6 +59,7 @@ const ProductList = ({
         currentPage,
         postsPerPage,
         sortByPrice,
+        sortByRate,
         searchTerm,
       })
       .then((res) => {
@@ -86,6 +89,7 @@ const ProductList = ({
     currentPage,
     postsPerPage,
     sortByPrice,
+    sortByRate
   ]);
 
   return (
@@ -107,10 +111,10 @@ const ProductList = ({
 
 const mapStateToProps = ({
   catalogsList: { catalog },
-  productsList: { products, currentPage, postsPerPage, sortByPrice },
+  productsList: { products, currentPage, postsPerPage, sortByPrice, sortByRate },
   filter: { brand, category, color, searchTerm, catalogFilter },
 
-}) => ({ products, catalog, brand, category, color, searchTerm, catalogFilter, currentPage, postsPerPage, sortByPrice });
+}) => ({ products, catalog, brand, category, color, searchTerm, catalogFilter, currentPage, postsPerPage, sortByPrice, sortByRate });
 
 const mapDispatchToProps = {
   setProducts,
@@ -119,6 +123,7 @@ const mapDispatchToProps = {
   addCurrentPage,
   addPostsPerPage,
   addSortByPrice,
+  addSortByRate,
   addPagesCount,
   filterAddBrand,
   filterAddCategory,
