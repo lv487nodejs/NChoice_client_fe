@@ -26,7 +26,7 @@ const Filter = ({
   filterRemoveCategory,
   filterRemoveColor,
   catalogLoaded,
-  catalog,
+  catalogFilter,
 }) => {
   const [getBrands, setBrands] = useState([]);
   const [getCategories, setCategories] = useState([]);
@@ -39,18 +39,22 @@ const Filter = ({
       .catch((err) => console.log(err));
 
     storeService
-      .getCatalogCategories(catalog)
-      .then((response) => {
-        setCategories(response)
-      })
-      .catch((err) => console.log(err));
-
-    storeService
       .getAllColors()
       .then((response) => setColors(response))
       .catch((err) => console.log(err));
 
-  }, [catalogLoaded]);
+  }, [catalogLoaded, storeService]);
+
+  useEffect(() => {
+    storeService
+      .getCatalogCategories(catalogFilter)
+      .then((response) => {
+        setCategories(response)
+      })
+      .catch((err) => console.log(err));
+  }, [catalogFilter, storeService]);
+
+
 
   const filterAddBrandHandler = (e, item) => {
     if (e.target.checked) {
@@ -97,13 +101,12 @@ const Filter = ({
 };
 const mapStateToProps = ({
   productsList: { currentPage, postsPerPage, sortByPrice },
-  filter: { brand, category, color, searchTerm },
-  catalogsList: { catalog },
+  filter: { brand, category, color, searchTerm, catalogFilter },
 }) => ({
   brand,
   category,
   color,
-  catalog,
+  catalogFilter,
   currentPage,
   postsPerPage,
   sortByPrice,

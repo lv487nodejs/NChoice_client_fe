@@ -31,8 +31,6 @@ const ProductList = ({
   catalogLoaded,
   addPostsPerPage,
   addCurrentPage,
-  pagesCount,
-  addSortByPrice,
   categoriesLoaded,
   brand,
   category,
@@ -62,8 +60,6 @@ const ProductList = ({
         searchTerm,
       })
       .then((res) => {
-        console.log("here");
-
         setProducts(res.products);
         addPagesCount(res.pagesCount);
         productsLoadingStop();
@@ -91,10 +87,14 @@ const ProductList = ({
     catalogLoaded,
     catalogFilter,
     category,
+    brand,
+    color,
+    currentPage,
+    postsPerPage,
+    sortByPrice,
   ]);
 
   return (
-
     <div className="products-items">
       {products.map(({ id, title, description, images, price, mrsp }) => (
         <ProductsListItem
@@ -113,10 +113,10 @@ const ProductList = ({
 
 const mapStateToProps = ({
   catalogsList: { catalog },
-  productsList: { products },
+  productsList: { products, currentPage, postsPerPage, sortByPrice },
   filter: { brand, category, color, searchTerm, catalogFilter },
 
-}) => ({ products, catalog, brand, category, color, searchTerm, catalogFilter });
+}) => ({ products, catalog, brand, category, color, searchTerm, catalogFilter, currentPage, postsPerPage, sortByPrice });
 
 const mapDispatchToProps = {
   setProducts,
