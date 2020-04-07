@@ -19,12 +19,12 @@ const orderForm = {
     paymentMethod: '',
 }
 
-const CheckoutForm = ({ products, storeService }) => {
+const CheckoutForm = ({ cartProducts, storeService }) => {
 
     const [validated, setValidated] = useState(false);
     const [order, setOrder] = useState(orderForm)
     
-    if (products.length === 0) {
+    if (cartProducts.length === 0) {
         return (<Redirect to='/' />)
     }
 
@@ -35,7 +35,7 @@ const CheckoutForm = ({ products, storeService }) => {
         localStorage.removeItem('products-collection')   
     }
 
-    const productsINeed = products.map(product => {
+    const productsINeed = cartProducts.map(product => {
         return {
             item: product.id,
             quantity: product.quantity
@@ -183,8 +183,8 @@ const CheckoutForm = ({ products, storeService }) => {
     )
 }
 
-const mapStateToProps = ({ cartReducer: { products } }) => ({
-    products
+const mapStateToProps = ({ cartReducer: { cartProducts } }) => ({
+    cartProducts
 });
 
 
