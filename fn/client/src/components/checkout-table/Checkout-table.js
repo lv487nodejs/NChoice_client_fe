@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap'
 import { connect } from 'react-redux';
 
 
-const CheckoutTable = ({ products, currency }) => {
+const CheckoutTable = ({ cartProducts, currency }) => {
 
     const [currencyIcon, setCurrencyIcon] = useState('$');
 
@@ -17,7 +17,7 @@ const CheckoutTable = ({ products, currency }) => {
     }, [currency]);
 
     const totalCounter = () => {
-        const row = products.map(product => product.price * product.quantity);
+        const row = cartProducts.map(product => product.price * product.quantity);
         const total = row.reduce((sum, next) => sum + next)
         return (parseFloat(total * currency).toFixed(2))
     }
@@ -36,7 +36,7 @@ const CheckoutTable = ({ products, currency }) => {
                 </tr>
             </thead>
             <tbody>
-                {products.map(productRow =>
+                {cartProducts.map(productRow =>
                     <tr key={productRow.id}>
                         <td>
                             <img
@@ -62,8 +62,8 @@ const CheckoutTable = ({ products, currency }) => {
 
 
 
-const mapStateToProps = ({ cartReducer: { products }, productsList: { currency } }) => ({
-    products,
+const mapStateToProps = ({ cartReducer: { cartProducts }, productsList: { currency } }) => ({
+    cartProducts,
     currency
 });
 

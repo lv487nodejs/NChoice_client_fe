@@ -115,6 +115,6 @@ const Cart = ({ increaseToCart, decreaseFromCart, removeFromCart}) => {
 };
 
 
-const mapStateToProps = ({cartReducer: {products, cartNumbers}}) => ({products, cartNumbers});
+const mapStateToProps = ({cartReducer: {cartProducts, cartNumbers}}) => ({cartProducts, cartNumbers});
 
 export default connect(mapStateToProps, {addToCart, increaseToCart, decreaseFromCart, removeFromCart})(Cart);
