@@ -8,10 +8,11 @@ const initialState = {
     }
 }
 
-const authReducer = (state = initialState, action) => {    
+const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_USER_LOGGED':
             return {
+                ...state,
                 userLoading: false,
                 userLogged: action.payload,
             };
