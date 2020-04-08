@@ -36,6 +36,7 @@ import {
   filterByName,
   setSearchValue,
   setCatalogFilter,
+  filterRemoveAllColors,
 } from './Filter-actions';
 
 import {
@@ -84,4 +85,5 @@ export {
   removeFromWishlist,
   setShowSnackbar,
   setSnackbarText,
+  filterRemoveAllColors
 };

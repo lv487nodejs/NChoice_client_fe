@@ -5,8 +5,8 @@
 }
 
 .user-page-container label {
-    height: 3rem;
     line-height: 1rem;
+    margin-top: 1rem;
 }
 
 .user-page-container .main-cart {

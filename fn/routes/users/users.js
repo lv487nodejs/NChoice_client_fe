@@ -39,7 +39,7 @@ router.get('/:id', tokenValidation, async (req, res) => {
             email: user.email,
             date: user.date,
             tokens: user.tokens,
-            wishlist:user.wishlist,
+            wishlist: user.wishlist,
         }
         res.status(200).send({ accessToken, refreshToken, user: mappedUser });
     } catch (err) {
@@ -85,28 +85,25 @@ router.put('/role/:id', async (req, res) => {
     }
 });
 // change user data
-router.put('/:id', tokenValidation, async (req, res) => {
+router.put('/:id', userValidationRules(), tokenValidation, async (req, res) => {
+
     const { id } = req.params;
 
-    const { firstName, lastName, email,password } = req.body.userToChange;
-
+    const { user } = req.body;
     try {
-        const user = await Users.findByIdAndUpdate(id, { firstName, lastName, email });
-        if (!user) {
-            throw { message: 'User doesnt exist' };
+        const updatedUser = await Users.findByIdAndUpdate(id, { firstName: user.firstName, lastName: user.lastName, email: user.email });
+        if (!updatedUser) {
+            return res.status(404).send({ msg: 'User doesnt exist' });
         }
-        const comparePassword = await bcrypt.compare(password, user.password);
+        const comparePassword = await bcrypt.compare(user.password, updatedUser.password);
         if (!comparePassword) {
             return res.status(400).send({ errors: [{ msg: 'User password is incorrect.' }] });
         }
         const userName = { name: user.email };
         const accessToken = generateAccessToken(userName);
         const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
-
-        user.tokens = [];
-        user.tokens.push(refreshToken);
-        await user.save()
-        res.status(200).send({msg:'user data successfully changed'});
+        await updatedUser.save()
+        res.status(200).send({ msg: 'user data successfully changed', updatedUser, accessToken });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }

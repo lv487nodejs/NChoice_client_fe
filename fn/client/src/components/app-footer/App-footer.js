@@ -5,21 +5,16 @@ import {
   faInstagram,
   faFacebook,
 } from '@fortawesome/free-brands-svg-icons';
-
 import './App-footer.css';
-
-import { Row, Card, Col } from 'react-bootstrap';
+import { Row, Card } from 'react-bootstrap';
 
 const AppFooter = () => (
   <footer className="footer">
     <Card className="footer-inner">
       <Card.Body>
-        <Row>
-          <Col>
-            <Card.Title></Card.Title>
-          </Col>
-          <Col>
-            <Card.Title>Links</Card.Title>
+        <Row className="d-flex flex-column align-items-center">
+          <Card.Title>Links</Card.Title>
+          <Card.Title>
             <Card.Link href="#">
               <FontAwesomeIcon className="icon" icon={faTelegramPlane} />
             </Card.Link>
@@ -29,7 +24,7 @@ const AppFooter = () => (
             <Card.Link href="#">
               <FontAwesomeIcon className="icon" icon={faFacebook} />
             </Card.Link>
-          </Col>
+          </Card.Title>
         </Row>
       </Card.Body>
       <Card.Header>© 2020 Fashion Note</Card.Header>
