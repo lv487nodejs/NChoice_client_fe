@@ -88,29 +88,15 @@ router.put('/role/:id', async (req, res) => {
 router.put('/:id',userValidationRules(), tokenValidation, async (req, res) => {
     const { id } = req.params;
 
-    const { firstName, lastName, email,password } = req.body.userToChange;
-
+    const { firstName,lastName,email,password } = req.body.user;
     try {
-        const foundEmail = await Users.findOne({email})
-        
-        if (foundEmail){
-          return  res.status(400).send({msg:'user with such email already exist'})
-        }   
-        const user = await Users.findByIdAndUpdate(id, { firstName, lastName, email });
-        if (!user) {
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const updatedUser = await Users.findByIdAndUpdate(id, {firstName,lastName,email,password:hashedPassword});
+        if (!updatedUser) {
            return res.status(404).send({ msg: 'User doesnt exist' });
         }
-        const comparePassword = await bcrypt.compare(password, user.password);
-        if (!comparePassword) {
-            return res.status(400).send({ errors: [{ msg: 'User password is incorrect.' }] });
-        }
-        const userName = { name: user.email };
-        const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
-
-        user.tokens = [];
-        user.tokens.push(refreshToken);
-        await user.save()
-        res.status(200).send({msg:'user data successfully changed'});
+        res.status(200).send({msg:'user data successfully changed', updatedUser});
     } catch (err) {
         res.status(500).send({ message: err.message });
     }

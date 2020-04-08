@@ -20,14 +20,14 @@ const emailValidationText = "Email must be correct. Example: nick@mail.com";
 
 const SignupSchema = yup.object().shape({
     firstName: yup.string()
-        .min(6, "firstname is too short - should be 6 chars minimum.")
+        .required("No firstname provided.")
         .matches(firstnameRegex, firstnameValidationText),
     lastName: yup.string()
-        .min(6, "lastname is too short - should be 6 chars minimum.")
+        .required("No lastname provided.")
         .matches(lastnameRegex, lastnameValidationText),
     email: yup.string()
+        .required("No email provided.")
         .email()
-        .required("Required")
         .matches(emailRegEx, emailValidationText),
 
     password: yup.string()
@@ -45,13 +45,13 @@ const UserChangeData = ({ user,
 }) => {
     const userId = JSON.parse(localStorage.getItem('userId'))
     const accessToken = JSON.parse(localStorage.getItem('accessToken'))
-    
+
 
     const addUserDataToSTore = useCallback((id, token) => {
-        storeService.getUserById(id, token).then((res) => {     
-            const {user} = res.data       
+        storeService.getUserById(id, token).then((res) => {
+            const { user } = res.data
             setUser(user)
-        }).catch((error)=>{
+        }).catch((error) => {
             throw new Error(error)
         })
     }, [storeService, setUser])
@@ -71,11 +71,13 @@ const UserChangeData = ({ user,
         setUser({ ...user, [e.target.name]: e.target.value })
     }
     const submitHandler = (e) => {
-        storeService.sendUserChangedData(userId, accessToken, { userToChange: user }).then((res) => {
-            addUserDataToSTore(userId, accessToken)            
+        storeService.sendUserChangedData(userId, accessToken, { user }).then((res) => {
+            console.log(res);
+            
+            addUserDataToSTore(res.data.updatedUser._id, accessToken)
             snackbarHandler(res.data.msg)
-        }).catch((error)=>{
-            console.log(error);            
+        }).catch((error) => {
+            console.log(error);
             snackbarHandler(error.response.data.msg)
         })
     }
@@ -91,27 +93,27 @@ const UserChangeData = ({ user,
         <div>
             <form onSubmit={handleSubmit(submitHandler)}>
                 <label htmlFor="firstname">change your firstname</label>
-                <InputGroup className="mb-3">
+                <InputGroup>
                     <FormControl id="firstname" name="firstName" ref={register} value={user.firstName}
-                         onChange={changeHandler} />
+                        onChange={changeHandler} />
                 </InputGroup>
                 {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
                 <label htmlFor="lastname">change your lastname</label>
                 <InputGroup>
                     <FormControl id="lastname" name="lastName" ref={register} value={user.lastName}
-                         onChange={changeHandler} />
+                        onChange={changeHandler} />
                 </InputGroup>
                 {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
                 <label htmlFor="email">change your email</label>
                 <InputGroup>
                     <FormControl type="text" name="email" id="email" ref={register} value={user.email}
-                         onChange={changeHandler} />
+                        onChange={changeHandler} />               
                 </InputGroup>
                 {errors.email && <p className="errorMessage">{errors.email.message}</p>}
                 <label htmlFor="password">enter your password</label>
                 <InputGroup>
                     <FormControl type="password" name="password" id="password" ref={register}
-                         onChange={changeHandler} />
+                        onChange={changeHandler} />
                     {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                 </InputGroup>
                 <input className="btn btn-dark user-page-button" type="submit" value="send changed data" />
