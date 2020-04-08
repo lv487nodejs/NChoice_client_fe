@@ -117,7 +117,6 @@ const Register = (props) => {
             userToUpdate.cart = newCart._id
             const {accessToken}= response.data
             const updatedUser = await storeService.sendUserChangedData(userId, accessToken, {user: userToUpdate} )
-            console.log(updatedUser)
             setUserLogged(true);
 
         } catch (error) {

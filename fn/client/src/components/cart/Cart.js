@@ -16,22 +16,26 @@ const accessToken = JSON.parse(localStorage.getItem('accessToken'))
 
 const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, currencyIcon, currency, cartAndStoreService:{cartService, storeService} }) => {
   const [products, setProducts] = useState(cartProducts)
+    let cartId
 
   useEffect(
       () => {
         if (localStorage.getItem('userId'))
         {
           storeService.getUserById(userId, accessToken).then((res) => {
-            const { user } = res.data
-            console.log(res)
+            const { cart } = res.data.user
+            cartId = res.data.user.cart._id
+            console.log(cart)
+              console.log('TYT ZAPXATY  V STATE CART')
+              const cartItem = {cartItems: [localStorage.getItem('products-collection')]}
+              cartService.updateCart(cartId, cartItem)
           })
-
         }
         else if (localStorage.getItem('products-collection')) {
       setProducts(JSON.parse(localStorage.getItem('products-collection')));
       const cartItem = {cartItems: [localStorage.getItem('products-collection')]}
       console.log(cartItem)
-      cartService.createCart(userId, cartItem)
+      cartService.updateCart(cartId, cartItem)
     }
   }, []);
 
