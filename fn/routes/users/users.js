@@ -88,7 +88,7 @@ router.put('/role/:id', async (req, res) => {
 router.put('/:id', tokenValidation, async (req, res) => {
     const { id } = req.params;
 
-    const userToUpdate = req.body;
+    const userToUpdate = req.body.user;
 
     try {
         const user = await Users.findByIdAndUpdate(id, userToUpdate);
