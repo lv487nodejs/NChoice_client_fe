@@ -35,7 +35,8 @@ const UserModel = new Schema({
     wishlist: [String],
     cart: {
         type: Schema.Types.ObjectId,
-        ref: 'cart'
+        ref: 'cart',
+        unique: true,
     },
     orders: {
         type: Schema.Types.ObjectId, 

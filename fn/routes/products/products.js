@@ -67,6 +67,21 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.get('/propetries/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const productPropetrie = await Products.findOne({ 'propetries._id': id })
+            .select('propetries');
+        const newProp = productPropetrie.propetries.filter((propetry) => propetry._id.toString() === id);
+        res.send(newProp);
+    } catch (err) {
+        return res.status(500).send({ message: err.message });
+    }
+
+})
+
+
 router.post('/', productValidationRules(), validate, async (req, res) => {
     const { title, description, images, propetries, price, mrsp } = req.body;
 

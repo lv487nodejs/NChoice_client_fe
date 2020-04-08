@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -20,19 +20,40 @@ const orderForm = {
 }
 
 const CheckoutForm = ({ cartProducts, storeService }) => {
+    
+    const notAvaliable = [];
+
+    useEffect(() => {
+        cartProducts.map((product) => {
+            storeService.getOneProductPropertie(product.propetries._id)
+                .then((res) => res[0].available)
+                .then((available) => {
+                    const itemAvailable = {
+                        name: product.title,
+                        available: available
+                    }
+                    if (product.quantity > available) {
+                        notAvaliable.push(itemAvailable)
+                        return
+                    }
+                });
+            return notAvaliable
+        })
+    }, [cartProducts,
+        notAvaliable,
+        storeService]);
 
     const [validated, setValidated] = useState(false);
-    const [order, setOrder] = useState(orderForm)
-    
+    const [order, setOrder] = useState(orderForm);
+
     if (cartProducts.length === 0) {
         return (<Redirect to='/' />)
     }
 
-    const storageData = JSON.parse(localStorage.getItem('user'))||{};
-
+    const storageData = JSON.parse(localStorage.getItem('userId')) || 'unauthorized user';
     const clearLocalStorage = () => {
         localStorage.removeItem('cart-numbers')
-        localStorage.removeItem('products-collection')   
+        localStorage.removeItem('products-collection')
     }
 
     const productsINeed = cartProducts.map(product => {
@@ -60,15 +81,19 @@ const CheckoutForm = ({ cartProducts, storeService }) => {
     }
 
     const handleSubmit = (event) => {
+        console.log(notAvaliable)
         const form = event.currentTarget;
-        if (form.checkValidity() === false || orderToServer.orderItems.length === 0) {
+        if (form.checkValidity() === false || orderToServer.orderItems.length === 0 || notAvaliable.length === 0) {
             event.preventDefault();
             event.stopPropagation();
             setValidated(true);
+            console.log('bad')
             return
         }
         clearLocalStorage();
-        storeService.postOrder(orderToServer);
+        event.preventDefault();
+        console.log('good')
+        // storeService.postOrder(orderToServer);
     }
 
     const handleChange = (event) => {

@@ -39,7 +39,8 @@ router.get('/:id', tokenValidation, async (req, res) => {
             email: user.email,
             date: user.date,
             tokens: user.tokens,
-            wishlist:user.wishlist,
+            wishlist: user.wishlist,
+            cart: user.cart
         }
         res.status(200).send({ accessToken, refreshToken, user: mappedUser });
     } catch (err) {
