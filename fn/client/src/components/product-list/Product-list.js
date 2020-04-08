@@ -45,7 +45,6 @@ const ProductList = ({
   catalogFilter,
   productsLoadingStop,
   searchTerm,
-  products2
 }) => {
 
   useEffect(() => {

@@ -113,28 +113,10 @@ const Register = (props) => {
             addDataToLocalStorage(response.data);
         } catch (error) {
             setUserLogged(false)
-            const {msg} = error.response.data.errors[0]
+            const { msg } = error.response.data.errors[0]
             setErrorMsg(msg)
         }
     }
-    // const postUser = (value, route) => {
-    //     postUserStarted();
-    //     axios({
-    //         method: 'post',
-    //         url: route,
-    //         data: value
-    //     }).then(response => {
-    //         const { accessToken, refreshToken } = response.data;
-    //         return { accessToken, refreshToken };
-    //     }).then(json => {
-    //         postUserSuccess(json);
-    //         addDataToLocalStorage(json);
-    //     }).catch(e => {
-    //         console.log(e);
-    //         postUserError(e);
-    //     });
-    // }
-
     const handleOnSubmit = (event) => {
         postUser(user, REGISTER_ROUTE);
     };
@@ -148,96 +130,97 @@ const Register = (props) => {
     }
 
     return (
-                <Form className="register" onSubmit={handleSubmit(handleOnSubmit)}>
-                    <Form.Label className="lable">Register</Form.Label>
-                    <Form.Group>
-                    <Form.Label>First name</Form.Label>
+        <Form className="register" onSubmit={handleSubmit(handleOnSubmit)}>
+            <Form.Label className="lable">Register</Form.Label>
+            <Form.Group>
+                <Form.Label>First name</Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="First name"
+                    defaultValue="Mark"
+                    name={'firstName'}
+                    value={user.firstName}
+                    onChange={handleChange}
+                    ref={register}
+                />
+                {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Last name</Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="Last name"
+                    defaultValue="Otto"
+                    name={'lastName'}
+                    value={user.lastName}
+                    onChange={handleChange}
+                    ref={register}
+                />
+                {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="Enter email"
+                    name={'email'}
+                    value={user.email}
+                    onChange={handleChange}
+                    ref={register}
+                />
+                {errors.email && <p className="errorMessage">{errors.email.message}</p>}
+                <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
+            </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Group className="pass-wrapper">
                     <Form.Control
-                        type="text"
-                        placeholder="First name"
-                        defaultValue="Mark"
-                        name={'firstName'}
-                        value={user.firstName}
+                        type={passwordShown ? "text" : "password"}
+                        placeholder="Password"
+                        name={'password'}
+                        value={user.password}
                         onChange={handleChange}
                         ref={register}
                     />
-                    {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Last name</Form.Label>
+                    <i onClick={togglePasswordVisiblity}>{eye}</i>
+                </Form.Group>
+            </Form.Group>
+            {errors.password && <p className="errorMessage">{errors.password.message}</p>}
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label> Confirm Password</Form.Label>
+                <Form.Group className="pass-wrapper">
                     <Form.Control
-                        type="text"
-                        placeholder="Last name"
-                        defaultValue="Otto"
-                        name={'lastName'}
-                        value={user.lastName}
-                        onChange={handleChange}
+                        placeholder="Password"
+                        name={'confirmPassword'}
                         ref={register}
+                        type={confirmPasswordShown ? "text" : "password"}
                     />
-                    {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
-                    </Form.Group>
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control
-                            type="email"
-                            placeholder="Enter email"
-                            name={'email'}
-                            value={user.email}
-                            onChange={handleChange}
-                            ref={register}
-                        />
-                        {errors.email && <p className="errorMessage">{errors.email.message}</p>}
-                        <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
-                    </Form.Group>
+                    <i onClick={toggleConfirmPasswordVisiblity}>{eye}</i>
+                </Form.Group>
+                {errors.confirmPassword && <p className="errorMessage">{errors.confirmPassword.message}</p>}
+            </Form.Group>
+            <Form.Group controlId="formBasicCheckbox">
+                <Form.Check
+                    type="switch"
+                    id="custom-switch"
+                    label="I agree to terms"
+                    name={'agreeToTerms'}
+                    ref={register}
+                />
+            </Form.Group>
 
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Group className="pass-wrapper">
-                            <Form.Control
-                                type={passwordShown ? "text" : "password"}
-                                placeholder="Password"
-                                name={'password'}
-                                value={user.password}
-                                onChange={handleChange}
-                                ref={register}
-                            />
-                            <i onClick={togglePasswordVisiblity}>{eye}</i>
-                        </Form.Group>
-                    </Form.Group>
-                    {errors.password && <p className="errorMessage">{errors.password.message}</p>}
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label> Confirm Password</Form.Label>
-                        <Form.Group className="pass-wrapper">
-                        <Form.Control type="password" placeholder="Password"
-                            name={'confirmPassword'}
-                            ref={register}
-                            type={confirmPasswordShown ? "text" : "password"}
-                        />
-                        <i onClick={toggleConfirmPasswordVisiblity}>{eye}</i>
-                        </Form.Group>
-                        {errors.confirmPassword && <p className="errorMessage">{errors.confirmPassword.message}</p>}
-                    </Form.Group>
-                    <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check
-                            type="switch"
-                            id="custom-switch"
-                            label="I agree to terms"
-                            name={'agreeToTerms'}
-                            ref={register}
-                        />
-                    </Form.Group>
-
-                    {errors.agreeToTerms && <p className="errorMessage">{errors.agreeToTerms.message}</p>}
-                    <Form.Group >
-                        <Button variant="dark" type="submit" block>
-                            REGISTER
+            {errors.agreeToTerms && <p className="errorMessage">{errors.agreeToTerms.message}</p>}
+            <Form.Group >
+                <Button variant="dark" type="submit" block>
+                    REGISTER
                         </Button>
-                        <span>{errorMsg}</span>
-                    </Form.Group>
-                    <Form.Group className="link">
-                        <Link to="/login" className="btn btn-link" >LOG IN</Link>
-                    </Form.Group>
-                </Form>
+                <span>{errorMsg}</span>
+            </Form.Group>
+            <Form.Group className="link">
+                <Link to="/login" className="btn btn-link" >LOG IN</Link>
+            </Form.Group>
+        </Form>
 
     );
 }
