@@ -85,7 +85,7 @@ router.put('/role/:id', async (req, res) => {
     }
 });
 // change user data
-router.put('/:id',userValidationRules(), tokenValidation,validate, async (req, res) => {
+router.put('/:id',userValidationRules(), tokenValidation, async (req, res) => {
     const { id } = req.params;
 
     const { firstName, lastName, email,password } = req.body.userToChange;
