@@ -5,15 +5,12 @@ import './Star-rating.css';
 import Rating from 'react-rating';
 
 
-let min = 1;
-let max = 5;
-let rating = min + (Math.random() * (max - min));
-
-const StarRating = () => {
+const StarsRating = ({ rating }) => {
 
     return (
         <div className="star-rating" >
-            <Rating readonly={true} step={1} initialRating={rating} />
+            <Rating readonly={true} step={1} initialRating={rating} emptySymbol="fa fa-star-o fa-2x"
+                fullSymbol="fa fa-star fa-2x" />
         </div>
     );
 };
@@ -22,4 +19,4 @@ const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {};
 
-export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(StarRating));
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(StarsRating));

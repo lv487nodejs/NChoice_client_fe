@@ -94,7 +94,7 @@ const ProductList = ({
 
   return (
     <div className="products-items">
-      {products.map(({ id, title, description, images, price, mrsp }) => (
+      {products.map(({ id, title, description, images, price, mrsp, rate }) => (
         <ProductsListItem
           title={title}
           description={description}
@@ -103,6 +103,7 @@ const ProductList = ({
           mrsp={mrsp}
           id={id}
           key={id}
+          rate={rate}
         />
       ))}
     </div>
