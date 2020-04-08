@@ -7,7 +7,7 @@ import { filterAddBrand, filterRemoveAllBrands} from "../../actions";
 import { PRODUCT_LIST_URL } from "../../configs/frontend-config";
 import { Link } from "react-router-dom";
 
-const CategoriesCarousel = ({ storeService, catalog, filterAddBrand, filterRemoveAllBrands}) => {
+const CategoriesCarousel = ({cartAndStoreService:{storeService}, catalog, filterAddBrand, filterRemoveAllBrands}) => {
   const [getBrands, setBrands] = useState([]);
   const [getProd, setProd] = useState([]);
 

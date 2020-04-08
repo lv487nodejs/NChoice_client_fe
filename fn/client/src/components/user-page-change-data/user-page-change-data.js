@@ -38,7 +38,7 @@ const SignupSchema = yup.object().shape({
 });
 
 const UserChangeData = ({ user,
-    storeService,
+    cartAndStoreService:{storeService},
     setUser,
     setShowSnackbar,
     setSnackbarText,

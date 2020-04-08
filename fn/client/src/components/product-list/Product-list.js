@@ -26,7 +26,7 @@ import {
 
 const ProductList = ({
   products,
-  storeService,
+  cartAndStoreService:{storeService},
   setProducts,
   productsLoadingStart,
   catalogLoaded,

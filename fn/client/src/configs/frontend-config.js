@@ -44,3 +44,5 @@ export const deliveryType = {
     ]
 };
 
+export const SERVER_URL = 'https://stark-headland-06017.herokuapp.com/'
+export const USERID_LOC_STOR = localStorage.getItem('UserId');

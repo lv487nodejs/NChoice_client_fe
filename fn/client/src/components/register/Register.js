@@ -19,7 +19,7 @@ import LoadingSpinner from "../Loading-spinner";
 const addDataToLocalStorage = (token) => {
     localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
     localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
-    localStorage.setItem('userId', JSON.stringify(token.id))
+    localStorage.setItem('userId', JSON.stringify(token.user._id))
 }
 
 const USER_DATA = {

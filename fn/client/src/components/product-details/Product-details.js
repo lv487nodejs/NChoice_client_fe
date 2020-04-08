@@ -23,7 +23,7 @@ const ProductDetails = ({
   product,
   setProduct,
   productsLoadingStart,
-  storeService,
+  cartAndStoreService:{storeService},
   products,
   addToCart,
   addToWishlist

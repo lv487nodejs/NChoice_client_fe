@@ -19,7 +19,7 @@ const orderForm = {
     paymentMethod: '',
 }
 
-const CheckoutForm = ({ cartProducts, storeService }) => {
+const CheckoutForm = ({ cartProducts, cartAndStoreService:{storeService} }) => {
 
     const [validated, setValidated] = useState(false);
     const [order, setOrder] = useState(orderForm)
