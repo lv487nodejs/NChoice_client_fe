@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import SimularProducts from '../simular-products/Simular-products';
 import StarsRating from '../star-rating';
+
 import withStoreService from '../hoc';
 import {
   setProduct,
@@ -71,6 +72,7 @@ const ProductDetails = ({
     ));
 
   return (
+    
     <Card className="wrapper">
       <Card.Body className="cardBody">
         <Row className="justify-content-md-center">
