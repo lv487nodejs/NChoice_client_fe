@@ -49,7 +49,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
   });
 
   products.map(i => {
-    const price = i.msrp * i.quantity;
+    const price = i.mrsp * i.quantity;
     return fullPrices.push(price)
   });
 
@@ -79,7 +79,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
                   {item.title}
                   <p> Price:
                   <span className="price">{item.price * currency * item.quantity} {currencyIcon}</span>
-                  <span className="msrp-price">{item.msrp * currency * item.quantity} {currencyIcon}</span>
+                  <span className="msrp-price">{item.mrsp * currency * item.quantity} {currencyIcon}</span>
                   </p>
                   <p> Size: <span>{item.propetries.size[0]}</span> </p>
                   <div className="quantity-control">
