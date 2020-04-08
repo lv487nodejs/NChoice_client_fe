@@ -85,16 +85,13 @@ router.put('/role/:id', async (req, res) => {
     }
 });
 // change user data
-router.put('/:id',userValidationRules(), tokenValidation, async (req, res) => {
+router.put('/:id',userValidationRules(), tokenValidation,validate, async (req, res) => {
     const { id } = req.params;
 
     const { firstName, lastName, email,password } = req.body.userToChange;
 
     try {
         const foundEmail = await Users.findOne({email})
-        console.log('found',foundEmail);
-        
-        console.log('email',email);
         
         if (foundEmail){
           return  res.status(400).send({msg:'user with such email already exist'})
