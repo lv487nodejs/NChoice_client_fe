@@ -5,13 +5,13 @@ import './Product-details.css';
 import { Card, Row, Col, Image, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import ProductList from '../product-list';
+import SimularProducts from '../simular-products/Simular-products';
 import StarsRating from '../star-rating';
 
- 
 import withStoreService from '../hoc';
 import {
   setProduct,
+  setProducts,
   productsLoadingStart,
   catalogLoaded,
   sizesLoaded,
@@ -23,11 +23,12 @@ const ProductDetails = ({
   id,
   product,
   setProduct,
+  setProducts,
   productsLoadingStart,
   storeService,
   products,
   addToCart,
-  addToWishlist
+  addToWishlist,
 }) => {
 
   const [getSizes, setSizes] = useState([]);
@@ -42,8 +43,13 @@ const ProductDetails = ({
     storeService.getProductProperties(id).then((res) => setSizes(res));
   }, [id, storeService]);
 
+  useEffect(() => {
+    productsLoadingStart();
+    storeService.getAllProducts().then((res) => setProducts(res));
+  }, [productsLoadingStart, setProducts, storeService]);
 
-  const newProducts = products.filter(elem => elem.category === product.category).slice(-3)
+
+  const newProducts = products.filter(elem => elem.catalog === product.catalog).slice(-3)
 
   const handleCheck = item => () => {
     setCheckSize(item)
@@ -102,7 +108,7 @@ const ProductDetails = ({
           </Col>
         </Row>
         <Col className="text">
-          <StarsRating />
+          <StarsRating rating={product.rate} />
           <Card.Title className="title">{product.title}</Card.Title>
           <Card.Text className="productDescription">
             {product.description}
@@ -115,10 +121,10 @@ const ProductDetails = ({
           <Card.Body className="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
               onClick={() => addToWishlist(product)} />
-            <Button 
-            variant="dark" 
-            className={checkSize ? 'button' : 'button disabled'}
-            onClick={handleAddToCart}
+            <Button
+              variant="dark"
+              className={checkSize ? 'button' : 'button disabled'}
+              onClick={handleAddToCart}
             >Add to card </Button>
             <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none'}>
               <Button
@@ -132,8 +138,7 @@ const ProductDetails = ({
       <hr />
       <div className="similarItems">Similar items</div>
       <hr />
-      <ProductList products={newProducts} className="routingImg" />
-   
+      <SimularProducts products={newProducts} className="routingImg" />
     </Card>
   );
 };
@@ -148,6 +153,7 @@ const mapStateToProps = ({
 });
 const mapDispatchToProps = {
   setProduct,
+  setProducts,
   productsLoadingStart,
   catalogLoaded,
   sizesLoaded,
