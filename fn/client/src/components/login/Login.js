@@ -6,14 +6,13 @@ import { connect } from "react-redux";
 import { LOGIN_ROUTE } from "../../configs/login-register-config";
 import axios from "axios";
 import { setUserLogged, setUserLoading } from "../../actions";
-
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "../Loading-spinner";
-const eye = <FontAwesomeIcon icon={faEye} />;
+import { SignupSchemaLogin } from '../../configs/login-register-config'
+
+
 
 const addDataToLocalStorage = (token) => {
     localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
@@ -25,32 +24,14 @@ const USER_DATA = {
     email: '',
     password: ''
 };
-const emailRegExp = new RegExp(/^([a-z0-9_-]+.)[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+).[a-z]{2,6}$/);
-const emailRegExpMessage = "Email must be correct. Example: nick@mail.com";
-const emailRequiredMessage = "Required";
-const passwordRegExp = new RegExp(/(?=.*[0-9])/);
-const passwordRegExpMessage = "Password must contain a number";
-const passwordRequiredMessage = "No password provided";
-const passwordMinElementCount = 6;
-const passwordMinMessage = `Password is too short - should be ${passwordMinElementCount} chars minimum`;
-
-const SignupSchema = yup.object().shape({
-    email: yup.string()
-        .required(emailRequiredMessage)
-        .matches(emailRegExp, emailRegExpMessage),
-
-    password: yup.string()
-        .required(passwordRequiredMessage)
-        .min(passwordMinElementCount, passwordMinMessage)
-        .matches(passwordRegExp, passwordRegExpMessage)
-});
+const eye = <FontAwesomeIcon icon={faEye} />;
 
 const Login = (props) => {
     const [user, setUser] = useState(USER_DATA);
     const [errorMsg, setErrorMsg] = useState('');
     const { setUserLogged, setUserLoading, userLogged, userLoading } = props;
     const { register, errors, handleSubmit } = useForm({
-        validationSchema: SignupSchema
+        validationSchema: SignupSchemaLogin
     });
     const [passwordShown, setPasswordShown] = useState(false);
 
@@ -75,12 +56,11 @@ const Login = (props) => {
             addDataToLocalStorage(response.data);
         } catch (error) {
             setUserLogged(false)
-            const {msg} = error.response.data.errors[0]
+            const { msg } = error.response.data.errors[0]
             setErrorMsg(msg)
         }
     }
     const handleOnSubmit = event => {
-        // event.preventDefault();
         postUser(user, LOGIN_ROUTE);
     };
 
@@ -94,58 +74,59 @@ const Login = (props) => {
 
 
     return (
-                <div className={'login'}>
-                    <Form onSubmit={handleSubmit(handleOnSubmit)} >
-                        <Form.Label className="lable">Log In</Form.Label>
-                        <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter email"
-                                name={'email'}
-                                value={user.email}
-                                onChange={handleChange}
-                                ref={register}
-                            />
-                            {errors.email && <p className="errorMessage">{errors.email.message}</p>}
-                            <Form.Text className="text-muted">
-                                We'll never share your email with anyone else.
+        <div className={'login'}>
+            <Form onSubmit={handleSubmit(handleOnSubmit)} >
+                <Form.Label className="lable">Log In</Form.Label>
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter email"
+                        name={'email'}
+                        value={user.email}
+                        onChange={handleChange}
+                        ref={register}
+                    />
+                    {errors.email && <p className="errorMessage">{errors.email.message}</p>}
+                    <Form.Text className="text-muted">
+                        We'll never share your email with anyone else.
                             </Form.Text>
-                        </Form.Group>
+                </Form.Group>
 
-                        <Form.Group controlId="formBasicPassword" >
-                            <Form.Label>Password</Form.Label>
-                            <Form.Group className="pass-wrapper">
-                                <Form.Control
-                                    type={passwordShown ? "text" : "password"}
-                                    placeholder="Password"
-                                    name={'password'}
-                                    value={user.password}
-                                    onChange={handleChange}
-                                    ref={register}
-                                />
-                                <i onClick={togglePasswordVisiblity}>{eye}</i>
-                            </Form.Group>
-                            {errors.password && <p className="errorMessage">{errors.password.message}</p>}
-
-                        </Form.Group>
-                        <Form.Check
-                            type="switch"
-                            id="custom-switch"
-                            label="Remember me"
+                <Form.Group controlId="formBasicPassword" >
+                    <Form.Label>Password</Form.Label>
+                    <Form.Group className="pass-wrapper">
+                        <Form.Control
+                            type={passwordShown ? "text" : "password"}
+                            placeholder="Password"
+                            name={'password'}
+                            value={user.password}
+                            onChange={handleChange}
+                            ref={register}
+                            autoComplete="on"
                         />
-                        <Form.Group >
-                            <Button variant="dark" type="submit" block>
-                                LOG IN
+                        <i onClick={togglePasswordVisiblity}>{eye}</i>
+                    </Form.Group>
+                    {errors.password && <p className="errorMessage">{errors.password.message}</p>}
+
+                </Form.Group>
+                <Form.Check
+                    type="switch"
+                    id="custom-switch"
+                    label="Remember me"
+                />
+                <Form.Group >
+                    <Button variant="dark" type="submit" block>
+                        LOG IN
                         </Button>
-                        <span>{errorMsg}</span>
-                        </Form.Group>
-                        <Form.Group className="link">
-                            <Link to="/register" className="btn btn-link" >REGISTER</Link>
-                        </Form.Group>
-                    </Form>
-                </div>
-            )
+                    <span className="errorMessage">{errorMsg}</span>
+                </Form.Group>
+                <Form.Group className="link">
+                    <Link to="/register" className="btn btn-link" >REGISTER</Link>
+                </Form.Group>
+            </Form>
+        </div>
+    )
 };
 
 
