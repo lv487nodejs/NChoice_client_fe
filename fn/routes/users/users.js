@@ -22,7 +22,8 @@ router.get('/', async (req, res) => {
 router.get('/:id', tokenValidation, async (req, res) => {
     const { id } = req.params;
     try {
-        const user = await Users.findById(id);
+        const user = await Users.findById(id)
+            .populate('cart');
         if (!user) {
             throw { message: 'User doesnt exist' };
         }
@@ -40,6 +41,7 @@ router.get('/:id', tokenValidation, async (req, res) => {
             date: user.date,
             tokens: user.tokens,
             wishlist:user.wishlist,
+            cart: user.cart
         }
         res.status(200).send({ accessToken, refreshToken, user: mappedUser });
     } catch (err) {
@@ -85,28 +87,17 @@ router.put('/role/:id', async (req, res) => {
     }
 });
 // change user data
-router.put('/:id', tokenValidation, async (req, res) => {
+router.put('/:id', userValidationRules(), tokenValidation, async (req, res) => {
     const { id } = req.params;
-
-    const { firstName, lastName, email,password } = req.body.userToChange;
+    const userToUpdate = req.body.user;
 
     try {
-        const user = await Users.findByIdAndUpdate(id, { firstName, lastName, email });
+        const user = await Users.findByIdAndUpdate(id, userToUpdate);
         if (!user) {
             throw { message: 'User doesnt exist' };
         }
-        const comparePassword = await bcrypt.compare(password, user.password);
-        if (!comparePassword) {
-            return res.status(400).send({ errors: [{ msg: 'User password is incorrect.' }] });
-        }
-        const userName = { name: user.email };
-        const accessToken = generateAccessToken(userName);
-        const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
-
-        user.tokens = [];
-        user.tokens.push(refreshToken);
-        await user.save()
-        res.status(200).send({msg:'user data successfully changed'});
+        await user.save();
+        res.status(200).send({ msg: 'user data successfully changed', user });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }

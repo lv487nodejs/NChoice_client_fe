@@ -151,7 +151,7 @@ export class StoreService {
 }
 
 export class CartService extends ClientService {
-  postCartItem = async cartItem => {
+  createCart = async cartItem => {
     const res = await this.postData('cart', cartItem);
     return res;
   };
@@ -161,7 +161,7 @@ export class CartService extends ClientService {
     return cart;
   };
 
-  putCart = async (id, cartItem) => {
+  updateCart = async (id, cartItem) => {
     const res = await this.putData(`cart/${id}`, { cartItem });
     return res;
   };

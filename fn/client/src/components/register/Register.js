@@ -14,6 +14,7 @@ import * as yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "../Loading-spinner";
+import withStoreService from "../hoc";
 
 
 const addDataToLocalStorage = (token) => {
@@ -81,7 +82,7 @@ const SignupSchema = yup.object().shape({
 });
 const Register = (props) => {
     const [user, setUser] = useState(USER_DATA);
-    const { setUserLogged, setUserLoading, userLogged, userLoading } = props;
+    const { setUserLogged, setUserLoading, userLogged, userLoading, cartAndStoreService:{cartService, storeService} } = props;
     const [errorMsg, setErrorMsg] = useState('');
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchema
@@ -109,31 +110,22 @@ const Register = (props) => {
         try {
             setUserLoading();
             const response = await axios.post(route, value);
-            setUserLogged(true);
             addDataToLocalStorage(response.data);
+            const userId = response.data.user._id
+            const newCart = await cartService.createCart({userId})
+            const userToUpdate = response.data.user
+            userToUpdate.cart = newCart._id
+            const {accessToken}= response.data
+            const updatedUser = await storeService.sendUserChangedData(userId, accessToken, {user: userToUpdate} )
+            console.log(updatedUser)
+            setUserLogged(true);
+
         } catch (error) {
             setUserLogged(false)
-            const {msg} = error.response.data.errors[0]
+            const {msg} = error
             setErrorMsg(msg)
         }
     }
-    // const postUser = (value, route) => {
-    //     postUserStarted();
-    //     axios({
-    //         method: 'post',
-    //         url: route,
-    //         data: value
-    //     }).then(response => {
-    //         const { accessToken, refreshToken } = response.data;
-    //         return { accessToken, refreshToken };
-    //     }).then(json => {
-    //         postUserSuccess(json);
-    //         addDataToLocalStorage(json);
-    //     }).catch(e => {
-    //         console.log(e);
-    //         postUserError(e);
-    //     });
-    // }
 
     const handleOnSubmit = (event) => {
         postUser(user, REGISTER_ROUTE);
@@ -248,6 +240,6 @@ const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({
     userLogged, userLoading
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Register));
 
 

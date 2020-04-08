@@ -10,12 +10,28 @@ import { faTrash, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { increaseToCart, decreaseFromCart, removeFromCart, addToCart } from "../../actions";
 import withStoreService from "../hoc";
 
-const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, currencyIcon, currency}) => {
+const userId = JSON.parse(localStorage.getItem('userId'))
+const accessToken = JSON.parse(localStorage.getItem('accessToken'))
+
+
+const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, currencyIcon, currency, cartAndStoreService:{cartService, storeService} }) => {
   const [products, setProducts] = useState(cartProducts)
 
-  useEffect(() => {
-    if (localStorage.getItem('products-collection')) {
+  useEffect(
+      () => {
+        if (localStorage.getItem('userId'))
+        {
+          storeService.getUserById(userId, accessToken).then((res) => {
+            const { user } = res.data
+            console.log(res)
+          })
+
+        }
+        else if (localStorage.getItem('products-collection')) {
       setProducts(JSON.parse(localStorage.getItem('products-collection')));
+      const cartItem = {cartItems: [localStorage.getItem('products-collection')]}
+      console.log(cartItem)
+      cartService.createCart(userId, cartItem)
     }
   }, []);
 
