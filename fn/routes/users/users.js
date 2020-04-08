@@ -102,7 +102,11 @@ router.put('/:id', userValidationRules(), tokenValidation, async (req, res) => {
         if (!updatedUser) {
             return res.status(404).send({ msg: 'User doesnt exist' });
         }
-        res.status(200).send({ msg: 'user data successfully changed', updatedUser });
+        const userName = { name: user.email };
+        const accessToken = generateAccessToken(userName);
+        const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
+
+        res.status(200).send({ msg: 'user data successfully changed', updatedUser,accessToken });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
