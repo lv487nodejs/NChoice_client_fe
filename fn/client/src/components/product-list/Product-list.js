@@ -45,6 +45,7 @@ const ProductList = ({
   catalogFilter,
   productsLoadingStop,
   searchTerm,
+  products2
 }) => {
 
   useEffect(() => {
@@ -92,12 +93,9 @@ const ProductList = ({
     sortByRate
   ]);
 
-
-  let rating = 2;
-
   return (
     <div className="products-items">
-      {products.map(({ id, title, description, images, price, mrsp }) => (
+      {products.map(({ id, title, description, images, price, mrsp, rate }) => (
         <ProductsListItem
           title={title}
           description={description}
@@ -106,7 +104,7 @@ const ProductList = ({
           mrsp={mrsp}
           id={id}
           key={id}
-          rating={rating}
+          rate={rate}
         />
       ))}
     </div>

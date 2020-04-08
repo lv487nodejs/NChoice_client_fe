@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import StarsRating from '../star-rating';
 
-function ProductListItem({ title, description, id, images, price, mrsp, currency, currencyIcon, rating }) {
+function ProductListItem({ title, description, id, images, price, mrsp, currency, currencyIcon, rate }) {
 
     const [priceWithRate, setPriceWithRate] = useState();
     const [msrpWithRate, setMsrpWithRate] = useState();
@@ -24,7 +24,7 @@ function ProductListItem({ title, description, id, images, price, mrsp, currency
                 </div>
             </Link>
             <Card.Body className="cardWrapper">
-            <StarsRating rating={rating} />
+            <StarsRating rating={rate} />
 
                 <Card.Title className="productName">{title}</Card.Title>
                 <Card.Text className="description">{description}</Card.Text>

@@ -65,11 +65,6 @@ const ProductDetails = ({
       </div>
     ));
 
-
-
-  let rating = 3.75;
-
-
   return (
     <Card className="wrapper">
       <Card.Body className="cardBody">
@@ -106,7 +101,7 @@ const ProductDetails = ({
           </Col>
         </Row>
         <Col className="text">
-          <StarsRating rating={rating}/>
+          <StarsRating rating={product.rate}/>
           <Card.Title className="title">{product.title}</Card.Title>
           <Card.Text className="productDescription">
             {product.description}
