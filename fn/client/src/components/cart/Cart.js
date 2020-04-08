@@ -8,6 +8,7 @@ import Container from "@material-ui/core/Container/Container";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { increaseToCart, decreaseFromCart, removeFromCart, addToCart } from "../../actions";
+import withStoreService from "../hoc";
 
 const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, currencyIcon, currency}) => {
   const [products, setProducts] = useState(cartProducts)
@@ -114,8 +115,9 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
   )
 };
 
+
 const mapStateToProps = 
   ({cartReducer: {cartProducts}, productsList: { currency, currencyIcon } }) => 
   ({cartProducts, currency, currencyIcon });
 
-export default connect(mapStateToProps, { addToCart, increaseToCart, decreaseFromCart, removeFromCart })(Cart);
+export default withStoreService() (connect(mapStateToProps, { addToCart, increaseToCart, decreaseFromCart, removeFromCart })(Cart));
