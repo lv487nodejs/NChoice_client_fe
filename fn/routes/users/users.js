@@ -39,7 +39,7 @@ router.get('/:id', tokenValidation, async (req, res) => {
             email: user.email,
             date: user.date,
             tokens: user.tokens,
-            wishlist:user.wishlist,
+            wishlist: user.wishlist,
         }
         res.status(200).send({ accessToken, refreshToken, user: mappedUser });
     } catch (err) {
@@ -85,18 +85,24 @@ router.put('/role/:id', async (req, res) => {
     }
 });
 // change user data
-router.put('/:id',userValidationRules(), tokenValidation, async (req, res) => {
+router.put('/:id', userValidationRules(), tokenValidation, async (req, res) => {
     const { id } = req.params;
 
-    const { firstName,lastName,email,password } = req.body.user;
-    try {
-        const hashedPassword = await bcrypt.hash(password, 10);
+    const { user } = req.body;
 
-        const updatedUser = await Users.findByIdAndUpdate(id, {firstName,lastName,email,password:hashedPassword});
-        if (!updatedUser) {
-           return res.status(404).send({ msg: 'User doesnt exist' });
+    try {
+        const foundUser = await Users.findOne({ email: user.email });
+
+        const comparePassword = await bcrypt.compare(user.password, foundUser.password);
+        if (!comparePassword) {
+            return res.status(400).send({ errors: [{ msg: 'User password is incorrect.' }] });
         }
-        res.status(200).send({msg:'user data successfully changed', updatedUser});
+
+        const updatedUser = await Users.findByIdAndUpdate(id, {firstName:user.firstName,lastName:user.lastName,email:user.email});
+        if (!updatedUser) {
+            return res.status(404).send({ msg: 'User doesnt exist' });
+        }
+        res.status(200).send({ msg: 'user data successfully changed', updatedUser });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
