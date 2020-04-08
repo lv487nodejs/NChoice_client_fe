@@ -3,10 +3,13 @@ import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { countries, paymentMethods, deliveryType } from '../../configs/frontend-config'
+import { setShowSnackbar, setSnackbarText } from '../../actions'
 import CheckoutTable from '../checkout-table';
 import CheckoutSelect from '../checkout-select';
 import withStoreService from '../hoc';
-import './checkout-form.css'
+import './checkout-form.css';
+import Snackbar from '../snackbar';
+
 
 
 const orderForm = {
@@ -19,10 +22,15 @@ const orderForm = {
     paymentMethod: '',
 }
 
-const CheckoutForm = ({ cartProducts, storeService }) => {
-    
+const CheckoutForm = ({
+    cartProducts,
+    storeService,
+    setShowSnackbar,
+    setSnackbarText }) => {
+
     const notAvaliable = [];
 
+    // Check the database for quantity of products in order
     useEffect(() => {
         cartProducts.map((product) => {
             storeService.getOneProductPropertie(product.propetries._id)
@@ -44,12 +52,12 @@ const CheckoutForm = ({ cartProducts, storeService }) => {
         storeService]);
 
     const [validated, setValidated] = useState(false);
+
     const [order, setOrder] = useState(orderForm);
 
-    if (cartProducts.length === 0) {
-        return (<Redirect to='/' />)
-    }
+    const placeholder = "Type here..."
 
+    // get user's id from localStorage and clear localStorage after submit'
     const storageData = JSON.parse(localStorage.getItem('userId')) || 'unauthorized user';
     const clearLocalStorage = () => {
         localStorage.removeItem('cart-numbers')
@@ -63,8 +71,7 @@ const CheckoutForm = ({ cartProducts, storeService }) => {
         }
     })
 
-    const placeholder = "Type here..."
-
+    // Create object with form data to send to server
     const orderToServer = {
         orderItems: productsINeed,
         userId: storageData.userId,
@@ -80,20 +87,37 @@ const CheckoutForm = ({ cartProducts, storeService }) => {
         status: "pending"
     }
 
+    if (cartProducts.length === 0) {
+        return (<Redirect to='/' />)
+    }
+
+
+    const snackbarHandler = (text) => {
+        setSnackbarText(text)
+        setShowSnackbar(true)
+        // setTimeout(() => {
+        //     setShowSnackbar(false)
+        // }, 10000)
+    }
+
     const handleSubmit = (event) => {
-        console.log(notAvaliable)
+        if (notAvaliable.length !== 0) {
+            const snackbarText = notAvaliable.map((badItem)=>{
+                return (`We dont have anought ${badItem.name}
+                        There are just ${badItem.available}.
+                        Please go to cart and change amount of ${badItem.name}`)
+            })
+            snackbarHandler(snackbarText)
+        }
         const form = event.currentTarget;
-        if (form.checkValidity() === false || orderToServer.orderItems.length === 0 || notAvaliable.length === 0) {
+        if (form.checkValidity() === false || orderToServer.orderItems.length === 0 || notAvaliable.length !== 0) {
             event.preventDefault();
             event.stopPropagation();
             setValidated(true);
-            console.log('bad')
             return
         }
         clearLocalStorage();
-        event.preventDefault();
-        console.log('good')
-        // storeService.postOrder(orderToServer);
+        storeService.postOrder(orderToServer);
     }
 
     const handleChange = (event) => {
@@ -189,6 +213,7 @@ const CheckoutForm = ({ cartProducts, storeService }) => {
                                 variant="dark"
                                 type="submit"
                             >Create order</Button>
+                            <Snackbar className="snackbar"/>
                         </Form>
                     </Jumbotron>
                 </Col>
@@ -201,6 +226,7 @@ const CheckoutForm = ({ cartProducts, storeService }) => {
                                 variant="dark"
                             >Go to cart to make changes</Button>
                         </Link>
+                        <Snackbar className="snackbar"/>
                     </Jumbotron>
                 </Col>
             </Row>
@@ -212,8 +238,10 @@ const mapStateToProps = ({ cartReducer: { cartProducts } }) => ({
     cartProducts
 });
 
-
+const mapDispatchToProps = ({
+    setShowSnackbar, setSnackbarText
+})
 
 export default withStoreService()(
-    connect(mapStateToProps)(CheckoutForm)
+    connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)
 );
