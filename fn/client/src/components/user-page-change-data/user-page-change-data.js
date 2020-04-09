@@ -76,7 +76,7 @@ const UserChangeData = ({ user,
     }
     const submitHandler = (e) => {
         storeService.sendUserChangedData(userId, accessToken, { user }).then((res) => {            
-            addUserDataToSTore(res.data.updatedUser._id, res.data.accessToken)
+            addUserDataToSTore(userId, accessToken)
             snackbarHandler(res.data.msg)
         }).catch((error) => {
             console.log(error);

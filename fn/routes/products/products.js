@@ -28,8 +28,6 @@ router.get('/', async (req, res) => {
             .sort(sort)
             .skip(+skip)
             .limit(+postsperpage)
-            .sort({ rate: sortbyrate })
-            .sort({ price: sortbyprice })
             .populate('catalog')
             .populate('category')
             .populate('color')
@@ -189,12 +187,20 @@ const getProjection = async query => {
 };
 
 const getSort = async query => {
-    const { searchTerm } = query;
+    const { searchTerm,sortbyprice,sortbyrate } = query;
     const sort = {};
 
     if (isNotBlank(searchTerm)) {
         // sort by relevance
         sort.score = { $meta: 'textScore' };
+    }
+    if (isNotBlank(sortbyprice)) {
+        // sort by relevance
+        sort.price =sortbyprice;
+    }
+    if (isNotBlank(sortbyrate)) {
+        // sort by relevance
+        sort.rate =sortbyrate;
     }
     return sort;
 };

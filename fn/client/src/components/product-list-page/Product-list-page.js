@@ -30,11 +30,20 @@ const ProductListPage = ({
   setCatalogFilter,
   catalog,
 }) => {
+
+  const sortByPriceHandler = (value) =>{
+    addSortByRate(0)
+    addSortByPrice(value)
+  }
+  const sortByRateHandler = (value) =>{
+    addSortByPrice(0)
+    addSortByRate(value)
+  }
   const sortByPriceOptions = [
     {
       text: 'sort by price',
       value: sortAsc,
-      handler: addSortByPrice,
+      handler: sortByPriceHandler,
       variant: 'dark',
       defaultClass: 'fas fa-sort-up',
       toChangeClass: 'fas fa-sort-down',
@@ -44,7 +53,7 @@ const ProductListPage = ({
     {
       text: 'sort by rate',
       value: sortAsc,
-      handler: addSortByRate,
+      handler: sortByRateHandler,
       variant: 'dark',
       defaultClass: 'fas fa-sort-up',
       toChangeClass: 'fas fa-sort-down',
@@ -55,6 +64,7 @@ const ProductListPage = ({
     setCatalogFilter(catalog);
     if (sessionStorage.getItem('postPerPage') !== null) {
       addPostsPerPage(sessionStorage.getItem('postPerPage'));
+      addCurrentPage(1);
     }
   }, [
     addPostsPerPage,

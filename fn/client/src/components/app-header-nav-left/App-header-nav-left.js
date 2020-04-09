@@ -9,8 +9,6 @@ import {
   filterRemoveAllCategories,
   filterByName,
   setCatalogFilter,
-  filterRemoveAllBrands,
-  filterRemoveAllColors,
 } from '../../actions';
 import withStoreService from '../hoc';
 import AppHeaderNavLeftItem from '../app-header-nav-left-item';
@@ -25,8 +23,6 @@ const AppHeaderNavLeft = ({
   filterRemoveAllCategories,
   filterByName,
   setCatalogFilter,
-  filterRemoveAllBrands,
-  filterRemoveAllColors,
 }) => {
   const [isShown, setIsShown] = useState('');
 
@@ -36,9 +32,6 @@ const AppHeaderNavLeft = ({
   }, [catalogsLoaded, catalogsRequested, storeService]);
 
   const onEnter = (e, catalog) => {
-    filterRemoveAllCategories();
-    filterRemoveAllBrands();
-    filterRemoveAllColors();
     setIsShown(catalog);
   };
   const onLeave = (e) => {
@@ -88,8 +81,6 @@ const mapDispatchToProps = {
   filterRemoveAllCategories,
   filterByName,
   setCatalogFilter,
-  filterRemoveAllBrands,
-  filterRemoveAllColors,
 };
 
 export default withStoreService()(
