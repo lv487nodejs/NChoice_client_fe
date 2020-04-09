@@ -78,8 +78,8 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
                 <Figure.Caption className='cart-title'>
                   {item.title}
                   <p> Price:
-                  <span className="price">{item.price * currency * item.quantity} {currencyIcon}</span>
-                  <span className="msrp-price">{item.msrp * currency * item.quantity} {currencyIcon}</span>
+                  <span className="price">{Math.floor(item.price * currency * item.quantity)} {currencyIcon}</span>
+                  <span className="msrp-price">{Math.floor(item.mrsp * currency * item.quantity)} {currencyIcon}</span>
                   </p>
                   <p> Size: <span>{item.propetries.size[0]}</span> </p>
                   <div className="quantity-control">

@@ -4,6 +4,7 @@ import { Card } from 'react-bootstrap';
 import './Product-list-item.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {Cart} from '../cart'
 
 function ProductListItem({ title, description, id, images, price, mrsp, currency, currencyIcon }) {
 
