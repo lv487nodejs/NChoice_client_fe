@@ -86,24 +86,16 @@ router.put('/role/:id', async (req, res) => {
 });
 // change user data
 router.put('/:id', userValidationRules(), tokenValidation, async (req, res) => {
-
     const { id } = req.params;
+    const userToUpdate = req.body.user;
 
-    const { user } = req.body;
     try {
-        const updatedUser = await Users.findByIdAndUpdate(id, { firstName: user.firstName, lastName: user.lastName, email: user.email });
-        if (!updatedUser) {
-            return res.status(404).send({ msg: 'User doesnt exist' });
+        const user = await Users.findByIdAndUpdate(id, userToUpdate);
+        if (!user) {
+            throw { message: 'User doesnt exist' };
         }
-        const comparePassword = await bcrypt.compare(user.password, updatedUser.password);
-        if (!comparePassword) {
-            return res.status(400).send({ errors: [{ msg: 'User password is incorrect.' }] });
-        }
-        const userName = { name: user.email };
-        const accessToken = generateAccessToken(userName);
-        const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
-        await updatedUser.save()
-        res.status(200).send({ msg: 'user data successfully changed', updatedUser, accessToken });
+        await user.save();
+        res.status(200).send({ msg: 'user data successfully changed', user });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
