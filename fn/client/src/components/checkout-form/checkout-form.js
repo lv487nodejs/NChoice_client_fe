@@ -213,7 +213,10 @@ const CheckoutForm = ({
                                 variant="dark"
                                 type="submit"
                             >Create order</Button>
+                            <div id="user-page-snackbar" className="col-12">
                             <Snackbar className="snackbar"/>
+                            </div>
+                            
                         </Form>
                     </Jumbotron>
                 </Col>
@@ -226,7 +229,9 @@ const CheckoutForm = ({
                                 variant="dark"
                             >Go to cart to make changes</Button>
                         </Link>
+                        <div id="user-page-snackbar" className="col-12">
                         <Snackbar className="snackbar"/>
+                        </div>
                     </Jumbotron>
                 </Col>
             </Row>
