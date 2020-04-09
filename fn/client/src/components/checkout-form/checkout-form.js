@@ -95,9 +95,9 @@ const CheckoutForm = ({
     const snackbarHandler = (text) => {
         setSnackbarText(text)
         setShowSnackbar(true)
-        // setTimeout(() => {
-        //     setShowSnackbar(false)
-        // }, 10000)
+        setTimeout(() => {
+            setShowSnackbar(false)
+        }, 10000)
     }
 
     const handleSubmit = (event) => {
