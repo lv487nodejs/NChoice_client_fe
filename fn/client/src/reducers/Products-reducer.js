@@ -13,8 +13,7 @@ const initialState = {
 };
 
 const productsList = (state = initialState, action) => {
-console.log(state)
-    switch (action.type) {
+        switch (action.type) {
         case 'PRODUCTS_LOADING_START':
             return {
                 ...state,
