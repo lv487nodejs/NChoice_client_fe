@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import './App-header-nav-right.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +7,11 @@ import Currency from '../currency';
 import { connect } from 'react-redux';
 import { setUserLogged } from "../../actions";
 
-const AppHeaderNavRight = ({ cartNumbers, setUserLogged , userLogged }) => {
+const AppHeaderNavRight = ({ setUserLogged , userLogged }) => {
+  let cartNumbers = 0;
+  if (localStorage.getItem("cart-numbers")) {
+    cartNumbers = localStorage.getItem("cart-numbers");
+  }
 
   const handleLogOut = () => {
     setUserLogged(false)

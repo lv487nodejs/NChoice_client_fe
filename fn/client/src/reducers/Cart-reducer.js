@@ -77,7 +77,8 @@ export default (state = initialState, action) => {
           cartProducts: newItems
         };
       } else {
-        localStorage.setItem("cart-numbers", "0");
+        localStorage.setItem("products-collection", JSON.stringify(newItems));
+        localStorage.setItem("cart-numbers", state.cartNumbers);
         return {
           ...state,
           cartNumbers: 0,
