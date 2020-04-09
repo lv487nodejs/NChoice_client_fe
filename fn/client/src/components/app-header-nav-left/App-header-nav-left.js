@@ -42,7 +42,6 @@ const AppHeaderNavLeft = ({
     filterByName('');
     filterAddCategory(category);
     setCatalogFilter(catalog);
-
   };
   const items = catalogs.map((catalog) => (
     <li
