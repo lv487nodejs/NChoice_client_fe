@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react'
 import { connect } from 'react-redux'
-import { InputGroup, FormControl,Form } from 'react-bootstrap'
+import {  FormControl, Form } from 'react-bootstrap'
 import './user-page-change-data.css';
 import { setUser, setShowSnackbar, setSnackbarText } from '../../actions'
 import { useForm } from 'react-hook-form';
@@ -24,11 +24,11 @@ const SignupSchema = yup.object().shape({
     firstName: yup.string()
         .required("No firstname provided.")
         .matches(firstnameRegex, firstnameValidationText)
-        .min(firstNameMinElementCount,firstNameMinMessage),
+        .min(firstNameMinElementCount, firstNameMinMessage),
     lastName: yup.string()
         .required("No lastname provided.")
         .matches(lastnameRegex, lastnameValidationText)
-        .min(lastNameMinElementCount,lastNameMinMessage),
+        .min(lastNameMinElementCount, lastNameMinMessage),
     email: yup.string()
         .required("No email provided.")
         .email()
@@ -75,7 +75,7 @@ const UserChangeData = ({ user,
         setUser({ ...user, [e.target.name]: e.target.value })
     }
     const submitHandler = (e) => {
-        storeService.sendUserChangedData(userId, accessToken, { user }).then((res) => {            
+        storeService.sendUserChangedData(userId, accessToken, { user }).then((res) => {
             addUserDataToSTore(userId, accessToken)
             snackbarHandler(res.data.msg)
         }).catch((error) => {
@@ -92,37 +92,37 @@ const UserChangeData = ({ user,
     }
 
     return (
-        <div>
+        <div className="relative">
             <Form id="user-form" onSubmit={handleSubmit(submitHandler)}>
-                <label htmlFor="firstname">change your firstname</label>
-                <InputGroup>
+                <Form.Group>
+                <Form.Label htmlFor="firstname">Change your firstname</Form.Label>
                     <FormControl id="firstname" name="firstName" ref={register} value={user.firstName}
                         onChange={changeHandler} />
-                </InputGroup>
+                </Form.Group>
                 {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
-                <label htmlFor="lastname">change your lastname</label>
-                <InputGroup>
+                <Form.Group>
+                <Form.Label htmlFor="lastname">Change your lastname</Form.Label>
                     <FormControl id="lastname" name="lastName" ref={register} value={user.lastName}
                         onChange={changeHandler} />
-                </InputGroup>
+                </Form.Group>
                 {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
-                <label htmlFor="email">change your email</label>
-                <InputGroup>
+                <Form.Group>
+                <Form.Label htmlFor="email">Change your email</Form.Label>
                     <FormControl type="text" name="email" id="email" ref={register} value={user.email}
-                        onChange={changeHandler} />               
-                </InputGroup>
+                        onChange={changeHandler} />
+                </Form.Group>
                 {errors.email && <p className="errorMessage">{errors.email.message}</p>}
-                <label htmlFor="password">enter your password</label>
-                <InputGroup>
+                <Form.Group>
+                <Form.Label htmlFor="password">Enter your password</Form.Label>
                     <FormControl type="password" name="password" id="password" ref={register}
                         onChange={changeHandler} />
                     {errors.password && <p className="errorMessage">{errors.password.message}</p>}
-                </InputGroup>
-                <input className="btn btn-dark user-page-button" type="submit" value="send changed data" />
-            </Form><div id="user-page-snackbar">
-
+                </Form.Group>
+                <input className="btn btn-dark user-page-button" type="submit" value="Send changed data" />
+            <div id="user-page-snackbar" className="col-12">
                 <Snackbar />
             </div>
+            </Form>
         </div>
     )
 

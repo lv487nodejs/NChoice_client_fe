@@ -13,7 +13,7 @@ const UserPage = () => {
     
     const buttonOptions = [
         {
-            title: 'change settings',
+            title: 'Change settings',
             handler: setShowValue,
             value: 1,
             variant: 'dark',
