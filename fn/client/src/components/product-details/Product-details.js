@@ -121,16 +121,16 @@ const ProductDetails = ({
           <Card.Body className="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
               onClick={() => addToWishlist(product)} />
-            <Button
-              variant="dark"
-              className={checkSize ? 'button' : 'button disabled'}
-              onClick={handleAddToCart}
-            >Add to card </Button>
+            <Button 
+            variant="dark" 
+            className={checkSize ? 'button' : 'button disabled'}
+            onClick={handleAddToCart}
+            >Add to cart </Button>
             <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none'}>
               <Button
                 variant="dark"
                 onClick={handleAddToCart}
-              >Add to card and checkout</Button>
+              >Buy now</Button>
             </Link>
           </Card.Body>
         </Col>
