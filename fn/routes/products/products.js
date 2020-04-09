@@ -16,9 +16,7 @@ router.get('/', async (req, res) => {
     let { currentpage, postsperpage } = query;
     currentpage = currentpage || 0;
     postsperpage = postsperpage || 15;
-    let skip = currentpage * postsperpage;
-    const { sortbyprice } = query;
-    const { sortbyrate } = query;
+    let skip = currentpage * postsperpage;  
 
     try {
         const filter = await getFilters(query);

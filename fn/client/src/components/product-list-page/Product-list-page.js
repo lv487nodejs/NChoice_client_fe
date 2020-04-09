@@ -71,6 +71,7 @@ const ProductListPage = ({
     catalog,
     catalogLoaded,
     setCatalogFilter,
+    addCurrentPage,
   ]);
 
   // Change view
