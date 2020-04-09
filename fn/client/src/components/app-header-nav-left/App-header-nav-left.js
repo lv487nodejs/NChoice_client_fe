@@ -44,7 +44,6 @@ const AppHeaderNavLeft = ({
     clearFilter();
     filterAddCategory(category);
     setCatalogFilter(catalog);
-
   };
   const items = catalogs.map((catalog) => (
     <li

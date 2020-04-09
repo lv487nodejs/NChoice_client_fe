@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap'
 
 
 const CheckoutSelect = ({ selectOptions, handleChange }) => (
-    <Form.Group controlId="countryValidate">
+    <Form.Group controlId={`${selectOptions.name}Validate`}>
         <Form.Label>{selectOptions.title}</Form.Label>
         <Form.Control
             required
