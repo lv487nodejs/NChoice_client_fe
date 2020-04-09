@@ -4,9 +4,10 @@ import { Card } from 'react-bootstrap';
 import './Product-list-item.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {Cart} from '../cart'
+import StarsRating from '../star-rating';
 
-function ProductListItem({ title, description, id, images, price, mrsp, currency, currencyIcon }) {
+
+function ProductListItem({ title, description, id, images, price, mrsp, currency, currencyIcon, rate }) {
 
     const [priceWithRate, setPriceWithRate] = useState();
     const [msrpWithRate, setMsrpWithRate] = useState();
@@ -24,6 +25,8 @@ function ProductListItem({ title, description, id, images, price, mrsp, currency
                 </div>
             </Link>
             <Card.Body className="cardWrapper">
+            <StarsRating rating={rate} />
+
                 <Card.Title className="productName">{title}</Card.Title>
                 <Card.Text className="description">{description}</Card.Text>
                 <Card.Body className="bottomElements">

@@ -49,7 +49,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
   });
 
   products.map(i => {
-    const price = i.msrp * i.quantity;
+    const price = i.mrsp * i.quantity;
     return fullPrices.push(price)
   });
 

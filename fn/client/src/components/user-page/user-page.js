@@ -4,7 +4,6 @@ import { Button } from 'react-bootstrap'
 import UserChangeData from '../user-page-change-data/user-page-change-data';
 import Cart from '../cart'
 import './user-page.css';
-import {connect} from 'react-redux'
 
 const UserPage = () => {
     const [showValue, setShowValue] = useState(1)
@@ -14,13 +13,13 @@ const UserPage = () => {
     
     const buttonOptions = [
         {
-            title: 'change settings',
+            title: 'Change settings',
             handler: setShowValue,
             value: 1,
             variant: 'dark',
         },
         {
-            title: 'Show orders',
+            title: 'Show cart',
             handler: setShowValue,
             value: 2,
             variant: 'dark',
@@ -52,7 +51,6 @@ const UserPage = () => {
     }
     return (<Redirect to="/" />)
 }
-const mapStateToProps = ({authReducer:{user}}) =>({user})
 
 
-export default connect(mapStateToProps)(UserPage);
+export default UserPage;

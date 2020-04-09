@@ -30,11 +30,20 @@ const ProductListPage = ({
   setCatalogFilter,
   catalog,
 }) => {
+
+  const sortByPriceHandler = (value) => {
+    addSortByRate(0)
+    addSortByPrice(value)
+  }
+  const sortByRateHandler = (value) => {
+    addSortByPrice(0)
+    addSortByRate(value)
+  }
   const sortByPriceOptions = [
     {
       text: 'sort by price',
       value: sortAsc,
-      handler: addSortByPrice,
+      handler: sortByPriceHandler,
       variant: 'dark',
       defaultClass: 'fas fa-sort-up',
       toChangeClass: 'fas fa-sort-down',
@@ -44,7 +53,7 @@ const ProductListPage = ({
     {
       text: 'sort by rate',
       value: sortAsc,
-      handler: addSortByRate,
+      handler: sortByRateHandler,
       variant: 'dark',
       defaultClass: 'fas fa-sort-up',
       toChangeClass: 'fas fa-sort-down',
@@ -71,7 +80,7 @@ const ProductListPage = ({
     sessionStorage.setItem('postPerPage', number);
   };
 
-  const changePagination = () => addCurrentPage(1);
+  const changePagination = () => addCurrentPage(0);
 
   return (
     <div>
@@ -81,7 +90,6 @@ const ProductListPage = ({
           <SearchBar />
           <ProductSort options={sortByPriceOptions} />
           <ProductSort options={sortByRateOptions} />
-
           <ProductListButtonPages
             changeItems={changeItemsMethod}
             changeCurrentPage={changePagination}

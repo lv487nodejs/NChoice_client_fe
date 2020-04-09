@@ -15,7 +15,7 @@ import {
   addSortByRate,
   addPagesCount,
   filterAddBrand,
-  filterAddCategory,
+  filterAddCategories,
   categoriesLoaded,
   filterAddColor,
   filterRemoveBrand,
@@ -71,7 +71,6 @@ const ProductList = ({
       addPostsPerPage(sessionStorage.getItem('postPerPage'));
     }
   }, [
-    catalog,
     setProducts,
     productsLoadingStart,
     productsLoadingStop,
@@ -94,7 +93,7 @@ const ProductList = ({
 
   return (
     <div className="products-items">
-      {products.map(({ id, title, description, images, price, mrsp }) => (
+      {products.map(({ id, title, description, images, price, mrsp, rate }) => (
         <ProductsListItem
           title={title}
           description={description}
@@ -103,6 +102,7 @@ const ProductList = ({
           mrsp={mrsp}
           id={id}
           key={id}
+          rate={rate}
         />
       ))}
     </div>
@@ -126,7 +126,7 @@ const mapDispatchToProps = {
   addSortByRate,
   addPagesCount,
   filterAddBrand,
-  filterAddCategory,
+  filterAddCategories,
   filterAddColor,
   filterRemoveBrand,
   filterRemoveCategory,

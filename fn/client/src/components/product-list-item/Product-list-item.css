@@ -13,7 +13,7 @@
   position: relative;
   grid-gap: 20px;
   max-width: 17rem;
-  max-height: 550px;
+  max-height: 580px;
   cursor: pointer;
 }
 
@@ -46,9 +46,11 @@
   align-items: center;
   padding: 0;
   justify-self: end;
+  position: absolute;
   right: 0;
   bottom: 10px;
 }
+
 
 .description {
   display: block;
@@ -65,7 +67,7 @@
 }
 
 .cardWrapper {
-  height: 265px;
+  height: 270px;
 
 }
 
@@ -80,4 +82,7 @@
 
 .cart:hover {
   color: green;
+}
+.card-text:last-child {
+  margin: 0;
 }
