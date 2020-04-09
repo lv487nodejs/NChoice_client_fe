@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import {
   filterAddBrand,
   filterAddColor,
-  filterAddCategory,
+  filterAddCategories,
   filterRemoveColor,
   filterRemoveCategory,
-  filterRemoveBrand, 
+  filterRemoveBrand,
 } from '../../actions';
 
 import FilterItem from '../filterItem';
@@ -17,7 +17,7 @@ import './filter.css';
 const Filter = ({
   storeService,
   filterAddBrand,
-  filterAddCategory,
+  filterAddCategories,
   filterAddColor,
   filterRemoveBrand,
   filterRemoveCategory,
@@ -45,7 +45,7 @@ const Filter = ({
   useEffect(() => {
     storeService
       .getCatalogCategories(catalogFilter)
-      .then((response) => {        
+      .then((response) => {
         setCategories(response)
       })
       .catch((err) => console.log(err));
@@ -60,9 +60,9 @@ const Filter = ({
       filterRemoveBrand(item);
     }
   };
-  const filterAddCategoryHandler = (e, item) => {
+  const filterAddCategoriesHandler = (e, item) => {
     if (e.target.checked) {
-      filterAddCategory(item);
+      filterAddCategories(item);
     } else {
       filterRemoveCategory(item);
     }
@@ -84,7 +84,7 @@ const Filter = ({
     {
       items: getCategories,
       type: 'category',
-      handler: filterAddCategoryHandler,
+      handler: filterAddCategoriesHandler,
     },
     {
       items: getColors,
@@ -99,7 +99,7 @@ const Filter = ({
       {
         filterOptions.map(({ items, type, handler }) => {
           return <FilterItem
-          key={type}
+            key={type}
             items={items}
             type={type}
             handler={handler}
@@ -109,19 +109,19 @@ const Filter = ({
     </div>
   );
 };
-const mapStateToProps = ({filter:{catalogFilter}})=>({
+const mapStateToProps = ({ filter: { catalogFilter } }) => ({
   catalogFilter
 })
 
 const mapDispatchToProps = {
   filterAddBrand,
   filterAddColor,
-  filterAddCategory,
+  filterAddCategories,
   filterRemoveBrand,
   filterRemoveCategory,
   filterRemoveColor,
 };
 
 export default withStoreService()(
-  connect(mapStateToProps,mapDispatchToProps)(Filter)
+  connect(mapStateToProps, mapDispatchToProps)(Filter)
 );

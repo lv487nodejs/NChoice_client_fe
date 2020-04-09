@@ -15,7 +15,7 @@ import {
   addSortByRate,
   addPagesCount,
   filterAddBrand,
-  filterAddCategory,
+  filterAddCategories,
   categoriesLoaded,
   filterAddColor,
   filterRemoveBrand,
@@ -71,7 +71,6 @@ const ProductList = ({
       addPostsPerPage(sessionStorage.getItem('postPerPage'));
     }
   }, [
-    catalog,
     setProducts,
     productsLoadingStart,
     productsLoadingStop,
@@ -127,7 +126,7 @@ const mapDispatchToProps = {
   addSortByRate,
   addPagesCount,
   filterAddBrand,
-  filterAddCategory,
+  filterAddCategories,
   filterAddColor,
   filterRemoveBrand,
   filterRemoveCategory,
