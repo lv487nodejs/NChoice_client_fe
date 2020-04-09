@@ -25,6 +25,17 @@ const filter = (state = instate, action) => {
       };
     }
 
+    case 'CLEAR_FILTER': {
+      return {
+        ...state,
+        brand: [],
+        category: [],
+        color: [],
+        searchTerm: '',
+        searchValue: '',
+      }
+    }
+
     case 'FILTER_REMOVE_BRAND': {
       return {
         ...state,
@@ -45,8 +56,18 @@ const filter = (state = instate, action) => {
         catalogFilter: action.payload,
       };
     }
+    case 'FILTER_ADD_CATEGORIES': {
+      return {
+        ...state,
+        category: [...state.category, action.payload]
+      };
+    }
+
     case 'FILTER_ADD_CATEGORY': {
-      return { ...state, category: [...state.category, action.payload] };
+      return {
+        ...state,
+        category: [action.payload]
+      };
     }
     case 'FILTER_REMOVE_CATEGORY': {
       return {

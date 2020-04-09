@@ -26,7 +26,7 @@ import {
 
 import {
   filterAddBrand,
-  filterAddCategory,
+  filterAddCategories,
   filterAddColor,
   filterRemoveCategory,
   filterRemoveAllCategories,
@@ -37,6 +37,8 @@ import {
   setSearchValue,
   setCatalogFilter,
   filterRemoveAllColors,
+  filterAddCategory,
+  clearFilter,
 } from './Filter-actions';
 
 import {
@@ -56,7 +58,7 @@ export {
   productsLoadingStop,
   currencyChange,
   filterAddBrand,
-  filterAddCategory,
+  filterAddCategories,
   filterAddColor,
   filterRemoveBrand,
   filterRemoveAllBrands,
@@ -85,5 +87,7 @@ export {
   removeFromWishlist,
   setShowSnackbar,
   setSnackbarText,
-  filterRemoveAllColors
+  filterRemoveAllColors,
+  filterAddCategory,
+  clearFilter,
 };
