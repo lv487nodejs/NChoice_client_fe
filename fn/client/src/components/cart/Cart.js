@@ -102,20 +102,22 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
             </Container>
           </li>
         ))}
-        <Link to="/checkout" className={products.length >= 1 ? 'disp-block' : 'disp-none' }>
-              <Button
-                variant="dark"
-              >Go to checkout</Button>
-            </Link>
-        <h5>{products.length >= 1 && <em>Total: {total}</em>}</h5>
-        <h5>{products.length >= 1 && <em>Sale: {sale}</em>}</h5>
+        <div className='checkout-wrap'>
+          <h5>{products.length >= 1 && <em>Total: {total} {currencyIcon} </em>} </h5>
+          <h5>{products.length >= 1 && <em>Sale: {sale} {currencyIcon}</em>} </h5>
+          <Link to="/checkout" className={products.length >= 1 ? 'disp-block' : 'disp-none' }>
+            <Button
+              variant="dark"
+            >Go to checkout</Button>
+          </Link>
+        </div>
       </ul>
     </div>
   )
 };
 
-const mapStateToProps = 
-  ({cartReducer: {cartProducts}, productsList: { currency, currencyIcon } }) => 
+const mapStateToProps =
+  ({cartReducer: {cartProducts}, productsList: { currency, currencyIcon } }) =>
   ({cartProducts, currency, currencyIcon });
 
 export default connect(mapStateToProps, { addToCart, increaseToCart, decreaseFromCart, removeFromCart })(Cart);
