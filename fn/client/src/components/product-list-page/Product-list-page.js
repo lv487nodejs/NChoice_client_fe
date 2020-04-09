@@ -31,11 +31,11 @@ const ProductListPage = ({
   catalog,
 }) => {
 
-  const sortByPriceHandler = (value) =>{
+  const sortByPriceHandler = (value) => {
     addSortByRate(0)
     addSortByPrice(value)
   }
-  const sortByRateHandler = (value) =>{
+  const sortByRateHandler = (value) => {
     addSortByPrice(0)
     addSortByRate(value)
   }
@@ -64,14 +64,12 @@ const ProductListPage = ({
     setCatalogFilter(catalog);
     if (sessionStorage.getItem('postPerPage') !== null) {
       addPostsPerPage(sessionStorage.getItem('postPerPage'));
-      addCurrentPage(1);
     }
   }, [
     addPostsPerPage,
     catalog,
     catalogLoaded,
     setCatalogFilter,
-    addCurrentPage,
   ]);
 
   // Change view
@@ -82,7 +80,7 @@ const ProductListPage = ({
     sessionStorage.setItem('postPerPage', number);
   };
 
-  const changePagination = () => addCurrentPage(1);
+  const changePagination = () => addCurrentPage(0);
 
   return (
     <div>
@@ -92,7 +90,6 @@ const ProductListPage = ({
           <SearchBar />
           <ProductSort options={sortByPriceOptions} />
           <ProductSort options={sortByRateOptions} />
-
           <ProductListButtonPages
             changeItems={changeItemsMethod}
             changeCurrentPage={changePagination}
