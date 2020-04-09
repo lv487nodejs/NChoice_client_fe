@@ -3,13 +3,10 @@ import { connect } from 'react-redux';
 import {
   filterAddBrand,
   filterAddColor,
-  filterAddCategory,
+  filterAddCategories,
   filterRemoveColor,
   filterRemoveCategory,
   filterRemoveBrand,
-  setProducts,
-  addPagesCount,
-  catalogLoaded,
 } from '../../actions';
 
 import FilterItem from '../filterItem';
@@ -20,7 +17,7 @@ import './filter.css';
 const Filter = ({
   storeService,
   filterAddBrand,
-  filterAddCategory,
+  filterAddCategories,
   filterAddColor,
   filterRemoveBrand,
   filterRemoveCategory,
@@ -63,9 +60,9 @@ const Filter = ({
       filterRemoveBrand(item);
     }
   };
-  const filterAddCategoryHandler = (e, item) => {
+  const filterAddCategoriesHandler = (e, item) => {
     if (e.target.checked) {
-      filterAddCategory(item);
+      filterAddCategories(item);
     } else {
       filterRemoveCategory(item);
     }
@@ -78,53 +75,52 @@ const Filter = ({
     }
   };
 
+  const filterOptions = [
+    {
+      items: getBrands,
+      type: 'brand',
+      handler: filterAddBrandHandler,
+    },
+    {
+      items: getCategories,
+      type: 'category',
+      handler: filterAddCategoriesHandler,
+    },
+    {
+      items: getColors,
+      type: 'color',
+      handler: filterAddColorHandler,
+    },
+  ]
+
   return (
     <div className="filter-group">
       <span>Filter</span>
-      <FilterItem
-        items={getBrands}
-        type="brand"
-        handler={filterAddBrandHandler}
-      />
-      <FilterItem
-        items={getCategories}
-        type="category"
-        handler={filterAddCategoryHandler}
-      />
-      <FilterItem
-        items={getColors}
-        type="color"
-        handler={filterAddColorHandler}
-      />
+      {
+        filterOptions.map(({ items, type, handler }) => {
+          return <FilterItem
+            key={type}
+            items={items}
+            type={type}
+            handler={handler}
+          />
+        })
+      }
     </div>
   );
 };
-const mapStateToProps = ({
-  productsList: { currentPage, postsPerPage, sortByPrice, sortByRate },
-  filter: { brand, category, color, searchTerm, catalogFilter },
-}) => ({
-  brand,
-  category,
-  color,
-  catalogFilter,
-  currentPage,
-  postsPerPage,
-  sortByPrice,
-  sortByRate,
-  searchTerm,
-});
+const mapStateToProps = ({ filter: { catalogFilter } }) => ({
+  catalogFilter
+})
 
-const mapDispatchToProps = (dispatch) => ({
-  filterAddBrand: (brand) => dispatch(filterAddBrand(brand)),
-  filterAddColor: (color) => dispatch(filterAddColor(color)),
-  filterAddCategory: (category) => dispatch(filterAddCategory(category)),
-  filterRemoveBrand: (brand) => dispatch(filterRemoveBrand(brand)),
-  filterRemoveCategory: (category) => dispatch(filterRemoveCategory(category)),
-  filterRemoveColor: (category) => dispatch(filterRemoveColor(category)),
-  setProducts: (products) => dispatch(setProducts(products)),
-  addPagesCount: (value) => dispatch(addPagesCount(value)),
-  catalogLoaded: (value) => dispatch(catalogLoaded(value)),
-});
+const mapDispatchToProps = {
+  filterAddBrand,
+  filterAddColor,
+  filterAddCategories,
+  filterRemoveBrand,
+  filterRemoveCategory,
+  filterRemoveColor,
+};
 
 export default withStoreService()(
   connect(mapStateToProps, mapDispatchToProps)(Filter)

@@ -16,9 +16,7 @@ router.get('/', async (req, res) => {
     let { currentpage, postsperpage } = query;
     currentpage = currentpage || 0;
     postsperpage = postsperpage || 15;
-    let skip = currentpage * postsperpage;
-    const { sortbyprice } = query;
-    const { sortbyrate } = query;
+    let skip = currentpage * postsperpage;  
 
     try {
         const filter = await getFilters(query);
@@ -28,8 +26,6 @@ router.get('/', async (req, res) => {
             .sort(sort)
             .skip(+skip)
             .limit(+postsperpage)
-            .sort({ rate: sortbyrate })
-            .sort({ price: sortbyprice })
             .populate('catalog')
             .populate('category')
             .populate('color')
@@ -204,12 +200,20 @@ const getProjection = async query => {
 };
 
 const getSort = async query => {
-    const { searchTerm } = query;
+    const { searchTerm,sortbyprice,sortbyrate } = query;
     const sort = {};
 
     if (isNotBlank(searchTerm)) {
         // sort by relevance
         sort.score = { $meta: 'textScore' };
+    }
+    if (isNotBlank(sortbyprice)) {
+        // sort by relevance
+        sort.price =sortbyprice;
+    }
+    if (isNotBlank(sortbyrate)) {
+        // sort by relevance
+        sort.rate =sortbyrate;
     }
     return sort;
 };
