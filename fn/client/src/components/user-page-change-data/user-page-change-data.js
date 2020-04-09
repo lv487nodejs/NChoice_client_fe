@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react'
 import { connect } from 'react-redux'
-import { InputGroup, FormControl } from 'react-bootstrap'
+import { InputGroup, FormControl,Form } from 'react-bootstrap'
 import './user-page-change-data.css';
 import { setUser, setShowSnackbar, setSnackbarText } from '../../actions'
 import { useForm } from 'react-hook-form';
@@ -93,7 +93,7 @@ const UserChangeData = ({ user,
 
     return (
         <div>
-            <form onSubmit={handleSubmit(submitHandler)}>
+            <Form id="user-form" onSubmit={handleSubmit(submitHandler)}>
                 <label htmlFor="firstname">change your firstname</label>
                 <InputGroup>
                     <FormControl id="firstname" name="firstName" ref={register} value={user.firstName}
@@ -119,7 +119,7 @@ const UserChangeData = ({ user,
                     {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                 </InputGroup>
                 <input className="btn btn-dark user-page-button" type="submit" value="send changed data" />
-            </form><div id="user-page-snackbar">
+            </Form><div id="user-page-snackbar">
 
                 <Snackbar />
             </div>
