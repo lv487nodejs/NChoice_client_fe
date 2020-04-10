@@ -74,23 +74,6 @@ const Register = (props) => {
             setErrorMsg(msg)
         }
     }
-    // const postUser = (value, route) => {
-    //     postUserStarted();
-    //     axios({
-    //         method: 'post',
-    //         url: route,
-    //         data: value
-    //     }).then(response => {
-    //         const { accessToken, refreshToken } = response.data;
-    //         return { accessToken, refreshToken };
-    //     }).then(json => {
-    //         postUserSuccess(json);
-    //         addDataToLocalStorage(json);
-    //     }).catch(e => {
-    //         console.log(e);
-    //         postUserError(e);
-    //     });
-    // }
 
     const handleOnSubmit = (event) => {
         postUser(user, REGISTER_ROUTE);

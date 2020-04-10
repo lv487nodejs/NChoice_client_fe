@@ -11,7 +11,6 @@ import { increaseToCart, decreaseFromCart, removeFromCart, addToCart } from "../
 import withStoreService from "../hoc";
 
 const userId = JSON.parse(localStorage.getItem('userId'))
-console.log(userId)
 const accessToken = JSON.parse(localStorage.getItem('accessToken'))
 
 
@@ -43,10 +42,8 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
         else if (localStorage.getItem('products-collection')) {
       setProducts(JSON.parse(localStorage.getItem('products-collection')));
       const cartItem = {cartItems: [localStorage.getItem('products-collection')]}
-      //console.log(cartItem)
-      //cartService.updateCart(cartId, cartItem)
     }
-  }, [cartProducts]);
+  }, []);
 
   const handleIncreaseToCart = (item) => {
     increaseToCart(item);

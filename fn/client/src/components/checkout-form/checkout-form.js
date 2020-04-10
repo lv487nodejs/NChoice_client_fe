@@ -22,7 +22,6 @@ const orderForm = {
     paymentMethod: '',
 }
 
-const CheckoutForm = ({ cartProducts, cartAndStoreService:{storeService} }) => {
 const CheckoutForm = ({
     cartProducts,
     storeService,
@@ -248,6 +247,4 @@ const mapDispatchToProps = ({
     setShowSnackbar, setSnackbarText
 })
 
-export default withStoreService()(
-    connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)
-);
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(CheckoutForm));
