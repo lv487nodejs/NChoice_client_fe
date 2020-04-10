@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from 'react-router-dom';
 import './App-header-nav-right.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

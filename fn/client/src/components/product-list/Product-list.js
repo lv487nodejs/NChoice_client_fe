@@ -49,8 +49,8 @@ const ProductList = ({
 
 
   useEffect(() => {
-    catalogLoaded(catalog)
-    setCatalogFilter(catalog)
+    // catalogLoaded(catalog)
+    // setCatalogFilter(catalog)
     storeService
       .getProductsByFilter({
         catalog: catalogFilter,
@@ -75,6 +75,7 @@ const ProductList = ({
       addPostsPerPage(sessionStorage.getItem('postPerPage'));
     }
   }, [
+    catalog,
     setProducts,
     productsLoadingStart,
     productsLoadingStop,

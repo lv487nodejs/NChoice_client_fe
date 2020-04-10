@@ -103,7 +103,7 @@ const CheckoutForm = ({
     const handleSubmit = (event) => {
         if (notAvaliable.length !== 0) {
             const snackbarText = notAvaliable.map((badItem)=>{
-                return (`We dont have anought ${badItem.name}
+                return (`We dont have enough ${badItem.name}
                         There are just ${badItem.available}.
                         Please go to cart and change amount of ${badItem.name}`)
             })
