@@ -162,7 +162,7 @@ export class CartService extends ClientService {
   };
 
   updateCart = async (id, cartItem) => {
-    const res = await this.putData(`cart/${id}`, { cartItem });
+    const res = await this.putData(`cart/${id}`, {cartItem} );
     return res;
   };
 

@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-import { SERVER_URL } from '../configs/frontend-config';
+import { BASE_ROUTE } from '../configs/login-register-config';
 
 
 export default class ClientService {
     getResource = async url => {
         try {
-            const response = await axios.get(`${SERVER_URL}${url}`);
+            const response = await axios.get(`${BASE_ROUTE}${url}`);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -15,7 +15,7 @@ export default class ClientService {
 
     postData = async (url, dataToSend) => {
         try {
-            const response = await axios.post(`${SERVER_URL}${url}`, dataToSend);
+            const response = await axios.post(`${BASE_ROUTE}${url}`, dataToSend);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -24,7 +24,7 @@ export default class ClientService {
 
     putData = async (url, dataToSend) => {
         try {
-            const response = await axios.put(`${SERVER_URL}${url}`, dataToSend);
+            const response = await axios.put(`${BASE_ROUTE}${url}`, dataToSend);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -33,7 +33,7 @@ export default class ClientService {
 
     deleteResource = async url => {
         try {
-            const response = await axios.delete(`${SERVER_URL}${url}`);
+            const response = await axios.delete(`${BASE_ROUTE}${url}`);
             return response.data;
         } catch (error) {
             console.error(error);

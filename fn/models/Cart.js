@@ -4,7 +4,12 @@ const { Schema } = mongoose;
 
 const CartSchema = new Schema({
     cartItems: [{
-        productSku: {
+        productId:{
+            type: Schema.Types.ObjectId,
+            ref: 'product',
+            required: true
+        },
+        productSizeId: {
             type: String,
             required: true
         },

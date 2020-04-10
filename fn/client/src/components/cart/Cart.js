@@ -11,6 +11,7 @@ import { increaseToCart, decreaseFromCart, removeFromCart, addToCart } from "../
 import withStoreService from "../hoc";
 
 const userId = JSON.parse(localStorage.getItem('userId'))
+console.log(userId)
 const accessToken = JSON.parse(localStorage.getItem('accessToken'))
 
 
@@ -20,24 +21,32 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
 
   useEffect(
       () => {
-        if (localStorage.getItem('userId'))
+        if (userId)
         {
           storeService.getUserById(userId, accessToken).then((res) => {
             const { cart } = res.data.user
             cartId = res.data.user.cart._id
-            console.log(cart)
-              console.log('TYT ZAPXATY  V STATE CART')
-              const cartItem = {cartItems: [localStorage.getItem('products-collection')]}
-              cartService.updateCart(cartId, cartItem)
+              const toBackItems = cartProducts.map(el => {
+                      return {
+                          productId: el.id,
+                          productSizeId: el.propetries._id,
+                          quantity: el.quantity
+                      }
+                  })
+              const readyCartToSend = {
+                cartItems: toBackItems,
+                  userId: userId
+              }
+               cartService.updateCart(cartId, readyCartToSend)
           })
         }
         else if (localStorage.getItem('products-collection')) {
       setProducts(JSON.parse(localStorage.getItem('products-collection')));
       const cartItem = {cartItems: [localStorage.getItem('products-collection')]}
-      console.log(cartItem)
-      cartService.updateCart(cartId, cartItem)
+      //console.log(cartItem)
+      //cartService.updateCart(cartId, cartItem)
     }
-  }, []);
+  }, [cartProducts]);
 
   const handleIncreaseToCart = (item) => {
     increaseToCart(item);
