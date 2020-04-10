@@ -7,49 +7,47 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import SimularProducts from '../simular-products/Simular-products';
 import StarsRating from '../star-rating';
+import LoadingSpinner from '../Loading-spinner';
 
 import withStoreService from '../hoc';
 import {
   setProduct,
   setProducts,
-  productsLoadingStart,
   catalogLoaded,
   sizesLoaded,
   addToCart,
-  addToWishlist
+  addToWishlist,
+  productsLoadingStart,
+  productsLoadingStop
 } from '../../actions';
 
 const ProductDetails = ({
   id,
   product,
+  loading,
   setProduct,
   setProducts,
-  productsLoadingStart,
-  cartAndStoreService:{storeService},
+  storeService,
   products,
   addToCart,
   addToWishlist,
+  productsLoadingStart,
+  productsLoadingStop
 }) => {
 
   const [getSizes, setSizes] = useState([]);
   const [checkSize, setCheckSize] = useState('');
 
   useEffect(() => {
-    productsLoadingStart();
-    storeService.getProductById(id).then((res) => setProduct(res));
-  }, [productsLoadingStart, storeService, id, setProduct]);
-
-  useEffect(() => {
+    productsLoadingStart()
+    if (!products.length) {
+      storeService.getAllProducts().then((res) => setProducts(res))
+    }
     storeService.getProductProperties(id).then((res) => setSizes(res));
-  }, [id, storeService]);
+    storeService.getProductById(id).then((res) => setProduct(res));
+  }, [storeService, id, setProduct, setSizes, productsLoadingStart, productsLoadingStop, setProducts, products.length]);
 
-  useEffect(() => {
-    productsLoadingStart();
-    storeService.getAllProducts().then((res) => setProducts(res));
-  }, [productsLoadingStart, setProducts, storeService]);
-
-
-  const newProducts = products.filter(elem => elem.catalog === product.catalog).slice(-3)
+  const newProducts = products.slice(-3)
 
   const handleCheck = item => () => {
     setCheckSize(item)
@@ -70,6 +68,10 @@ const ProductDetails = ({
         <span className={item === checkSize ? 'check' : ''}> {item} </span>
       </div>
     ));
+
+  if (loading) {
+    return <LoadingSpinner />
+  }
 
   return (
     
@@ -154,11 +156,12 @@ const mapStateToProps = ({
 const mapDispatchToProps = {
   setProduct,
   setProducts,
-  productsLoadingStart,
   catalogLoaded,
   sizesLoaded,
   addToCart,
-  addToWishlist
+  addToWishlist,
+  productsLoadingStart,
+  productsLoadingStop
 };
 
 export default withStoreService()(

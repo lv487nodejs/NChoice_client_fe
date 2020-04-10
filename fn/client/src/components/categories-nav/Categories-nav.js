@@ -10,7 +10,8 @@ import {
   filterAddCategories,
   filterRemoveAllCategories,
   filterRemoveAllColors,
-  filterRemoveAllBrands
+  filterRemoveAllBrands,
+  setCatalogFilter
 } from '../../actions';
 import CategoriesNavItem from '../categories-nav-item';
 import withStoreService from '../hoc';
@@ -80,6 +81,7 @@ const mapDispatchToProps = {
   filterRemoveAllCategories,
   filterRemoveAllColors,
   filterRemoveAllBrands,
+  setCatalogFilter
 };
 
 export default withStoreService()(

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ProductsListItem from '../product-list-item';
 import './Product-list.css';
 import withStoreService from '../hoc';
+import LoadingSpinner from '../Loading-spinner';
 
 import {
   setProducts,
@@ -28,29 +29,23 @@ const ProductList = ({
   products,
   cartAndStoreService:{storeService},
   setProducts,
-  productsLoadingStart,
-  catalogLoaded,
-  addPostsPerPage,
-  addCurrentPage,
-  categoriesLoaded,
   brand,
   category,
-  catalog,
   color,
+  loading,
   currentPage,
   postsPerPage,
   addPagesCount,
   sortByPrice,
   sortByRate,
   catalogFilter,
-  productsLoadingStop,
+  productsLoadingStart,
   searchTerm,
 }) => {
 
 
   useEffect(() => {
-    catalogLoaded(catalog)
-    setCatalogFilter(catalog)
+    productsLoadingStart()
     storeService
       .getProductsByFilter({
         catalog: catalogFilter,
@@ -66,26 +61,17 @@ const ProductList = ({
       .then((res) => {
           setProducts(res.products);
           addPagesCount(res.pagesCount);
-          productsLoadingStop();
       }).catch((error) => {
         console.log(error)
         setProducts([]);
       });
-    if (sessionStorage.getItem('postPerPage') !== null) {
-      addPostsPerPage(sessionStorage.getItem('postPerPage'));
-    }
   }, [
+    catalogFilter,
     setProducts,
     productsLoadingStart,
-    productsLoadingStop,
     storeService,
-    addPostsPerPage,
-    categoriesLoaded,
     addPagesCount,
-    addCurrentPage,
     searchTerm,
-    catalogLoaded,
-    catalogFilter,
     category,
     brand,
     color,
@@ -94,6 +80,10 @@ const ProductList = ({
     sortByPrice,
     sortByRate
   ]);
+
+  if (loading) {
+    return <LoadingSpinner />
+  }
 
   return (
     <div className="products-items">
@@ -115,10 +105,10 @@ const ProductList = ({
 
 const mapStateToProps = ({
   catalogsList: { catalog },
-  productsList: { products, currentPage, postsPerPage, sortByPrice, sortByRate },
+  productsList: { products, currentPage, postsPerPage, sortByPrice, sortByRate, loading },
   filter: { brand, category, color, searchTerm, catalogFilter },
 
-}) => ({ products, catalog, brand, category, color, searchTerm, catalogFilter, currentPage, postsPerPage, sortByPrice, sortByRate });
+}) => ({ products, loading, catalog, brand, category, color, searchTerm, catalogFilter, currentPage, postsPerPage, sortByPrice, sortByRate });
 
 const mapDispatchToProps = {
   setProducts,

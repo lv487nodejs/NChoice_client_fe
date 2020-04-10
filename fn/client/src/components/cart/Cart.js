@@ -47,13 +47,13 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
 
   const handleIncreaseToCart = (item) => {
     increaseToCart(item);
-    let foundIncreaseItems = products.find(value => value.id === item.id);
+    let foundIncreaseItems = products.find(value => value.propetries._id === item.propetries._id);
     foundIncreaseItems.quantity += 1;
   };
 
   const handleDecreaseFromCart = (item) => {
-    let foundIncreaseItems = products.find(value => value.id === item.id);
-    let foundToRemove = products.findIndex(value => value.id === item.id);
+    let foundIncreaseItems = products.find(value => value.propetries._id === item.propetries._id);
+    let foundToRemove = products.findIndex(value => value.propetries._id === item.propetries._id);
     if (foundIncreaseItems.quantity === 1) {
       products.splice(foundToRemove, 1);
     } else {
@@ -64,7 +64,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
 
   const handleRemoveFromCart = (item) => {
     removeFromCart(item);
-    let foundIncreaseItems = products.findIndex(value => value.id === item.id);
+    let foundIncreaseItems = products.findIndex(value => value.propetries._id === item.propetries._id);
     products.splice(foundIncreaseItems, 1)
   };
 
@@ -98,7 +98,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
       <h5>{products.length < 1 && <em> Please add some products to cart.</em>}</h5>
       <ul className='cart-wrap'>
         {products.map((item) => (
-          <li key={item.id} className='cart-item'>
+          <li key={item.propetries._id} className='cart-item'>
             <Container>
               <Row>
                 <Figure.Image src={`/images/products/${item.images[0]}`} className='cart-img' />

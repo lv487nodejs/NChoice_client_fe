@@ -46,14 +46,12 @@ const filter = (state = instate, action) => {
       return {
         ...state,
         brand: [],
-        catalogFilter: action.payload,
       };
     }
     case 'FILTER_REMOVE_ALL_COLORS': {
       return {
         ...state,
         brand: [],
-        catalogFilter: action.payload,
       };
     }
     case 'FILTER_ADD_CATEGORIES': {
@@ -79,7 +77,6 @@ const filter = (state = instate, action) => {
       return {
         ...state,
         category: [],
-        catalogFilter: action.payload,
       };
     }
     case 'FILTER_ADD_COLOR': {
