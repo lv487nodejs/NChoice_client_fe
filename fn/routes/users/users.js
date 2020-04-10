@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', tokenValidation, async (req, res) => {
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const user = await Users.findById(id);
