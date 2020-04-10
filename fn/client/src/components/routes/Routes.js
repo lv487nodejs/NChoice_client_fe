@@ -18,6 +18,7 @@ import Cart from "../cart/Cart";
 import Wishlist from '../wish-list/Wish-list'
 import Login from '../login/Login';
 import UserPage from '../user-page';
+import Thanks from '../thanks-page'
 
 
 const Routes = () => (
@@ -56,6 +57,7 @@ const Routes = () => (
         <Route path="/wishlist" exact component={Wishlist} />
         <Route path="/checkout" exact component={CheckoutContainer} />
         <Route path="/userpage" exact component={UserPage} />
+        <Route path="/thanks" exact component={Thanks} />
       </Switch>
     </div>
     <AppFooter />

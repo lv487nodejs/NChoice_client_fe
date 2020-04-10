@@ -58,9 +58,6 @@ const productValidationRules = () => [
 ];
 
 const orderValidationRules = () => [
-    body('userId', 'user is required')
-        .notEmpty()
-        .isString(),
     body('deliveryType', 'deliveryType is required and has to be one of:"currier","post","delivery servise"')
         .notEmpty()
         .isString(),

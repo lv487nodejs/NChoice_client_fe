@@ -13,6 +13,8 @@ import Snackbar from '../snackbar';
 
 
 const orderForm = {
+    firstName:'',
+    lastName:'',
     country: '',
     city: '',
     street: '',
@@ -55,10 +57,12 @@ const CheckoutForm = ({
 
     const [order, setOrder] = useState(orderForm);
 
+    const [successOrder, setsuccessOrder] = useState(false);
+
     const placeholder = "Type here..."
 
     // get user's id from localStorage and clear localStorage after submit'
-    const storageData = JSON.parse(localStorage.getItem('userId')) || 'unauthorized user';
+    const storageData = JSON.parse(localStorage.getItem('userId'))||'';
     const clearLocalStorage = () => {
         localStorage.removeItem('cart-numbers')
         localStorage.removeItem('products-collection')
@@ -73,6 +77,8 @@ const CheckoutForm = ({
 
     // Create object with form data to send to server
     const orderToServer = {
+        firstName:order.firstName,
+        lastName:order.lastName,
         orderItems: productsINeed,
         userId: storageData.userId,
         deliveryAddress: {
@@ -90,7 +96,10 @@ const CheckoutForm = ({
     if (cartProducts.length === 0) {
         return (<Redirect to='/' />)
     }
-
+    if (successOrder) {
+        return (<Redirect to='/thanks' />)
+    }
+    
 
     const snackbarHandler = (text) => {
         setSnackbarText(text)
@@ -101,6 +110,7 @@ const CheckoutForm = ({
     }
 
     const handleSubmit = (event) => {
+        // event.preventDefault()
         if (notAvaliable.length !== 0) {
             const snackbarText = notAvaliable.map((badItem)=>{
                 return (`We dont have enough ${badItem.name}
@@ -116,8 +126,9 @@ const CheckoutForm = ({
             setValidated(true);
             return
         }
-        clearLocalStorage();
+        clearLocalStorage()
         storeService.postOrder(orderToServer);
+        setsuccessOrder(true)
     }
 
     const handleChange = (event) => {
@@ -133,7 +144,47 @@ const CheckoutForm = ({
                         <h2>Order Form</h2>
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <fieldset className="field">
-                                <h3 className="text-center">Please fill in your address</h3>
+                                <h3 className="text-center">Please fill in your Firstname</h3>
+                                
+                                <Form.Group controlId="firstNameValidate">
+                                    <Form.Label>Firstname</Form.Label>
+                                    <Form.Control
+                                        required
+                                        placeholder={placeholder}
+                                        name={"firstName"}
+                                        onChange={handleChange}
+                                    />
+                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type Your Firstname. This field is required
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group controlId="lastNameValidate">
+                                    <Form.Label>Lastname</Form.Label>
+                                    <Form.Control
+                                        required
+                                        placeholder={placeholder}
+                                        name={"lastName"}
+                                        onChange={handleChange}
+                                    />
+                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type Your Lastname. This field is required
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group controlId="phoneValidate">
+                                    <Form.Label>Contact Phone Number</Form.Label>
+                                    <Form.Control
+                                        required
+                                        placeholder={placeholder}
+                                        name="contactPhone"
+                                        onChange={handleChange}
+                                    />
+                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type Phone number. This field is required
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                                 <Form.Group>
                                     <CheckoutSelect
                                         selectOptions={countries}
@@ -178,19 +229,6 @@ const CheckoutForm = ({
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
                                         Please type your building. This field is required
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                                <Form.Group controlId="phoneValidate">
-                                    <Form.Label>Contact Phone Number</Form.Label>
-                                    <Form.Control
-                                        required
-                                        placeholder={placeholder}
-                                        name="contactPhone"
-                                        onChange={handleChange}
-                                    />
-                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
-                                    <Form.Control.Feedback type="invalid">
-                                        Please type Phone number. This field is required
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </fieldset>

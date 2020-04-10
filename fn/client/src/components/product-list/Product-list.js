@@ -62,7 +62,6 @@ const ProductList = ({
           setProducts(res.products);
           addPagesCount(res.pagesCount);
       }).catch((error) => {
-        console.log(error)
         setProducts([]);
       });
   }, [
@@ -83,6 +82,10 @@ const ProductList = ({
 
   if (loading) {
     return <LoadingSpinner />
+  }
+
+  if (!products.length) {
+    return <h2>No products found</h2>
   }
 
   return (
