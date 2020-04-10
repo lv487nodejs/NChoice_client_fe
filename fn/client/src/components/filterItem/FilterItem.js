@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import FontAwesome from 'react-fontawesome'
 import './FilterItem.css';
+import { connect } from 'react-redux'
 
-export const FilterItem = props => {
+const FilterItem = props => {
     const [isVisible, setIsVisible] = useState(true);
+    
     const listClass = isVisible ? '' : 'hide';
     const { items = [], type, handler } = props;
-    const elements = items.map(item => (
-        <li key={item[type]} >
+
+    const elements = items.map(item => {
+        const checked = props.brand.includes(item[type])||props.category.includes(item[type])||props.color.includes(item[type])
+
+        return (<li key={item[type]} >
             <label className="list-group-item">
-                <input type="checkbox" value={item[type]} onClick={e => handler(e, e.target.value)} />
+                <input type="checkbox" value={item[type]} checked={checked} onChange={e => handler(e, e.target.value)} />
                 {item[type]}
             </label>
-        </li>
-    ));
+        </li>)
+    });
     const changeHandler = () => {
         isVisible ? setIsVisible(false) : setIsVisible(true)
     }
@@ -27,3 +32,7 @@ export const FilterItem = props => {
         </div>
     );
 };
+const mapStateToProps = ({ filter: { brand, category, color } }) => ({
+    brand, category, color
+})
+export default connect(mapStateToProps)(FilterItem)
