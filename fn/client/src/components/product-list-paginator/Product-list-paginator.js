@@ -1,8 +1,8 @@
 import React from 'react';
-
+import { connect } from 'react-redux'
 import './Product-list-paginator.css';
 
-export default function ProductListPaginator({ pagesCount, paginate }) {
+function ProductListPaginator({ pagesCount, paginate, currentPage }) {
     const pageNumbers = [];
     for (let i = 1; i <= pagesCount; i += 1) {
         pageNumbers.push(i);
@@ -10,22 +10,24 @@ export default function ProductListPaginator({ pagesCount, paginate }) {
     return (
         <nav>
             <ul className="pagination">
-                {pageNumbers.map(number => (
-                    <li
-                        key={number}
-                        className="list-group-item-dark page-item page-link paginator-buttons"
-                        onClick={(e) => {
-                            const allButtons = document.querySelectorAll('.paginator-buttons');
-                            allButtons.forEach((elem)=>{
-                                elem.classList.remove('active');
-                            })
-                            e.target.classList.add('active');
-                            paginate(number)}}
-                    >
-                        {number}
-                    </li>
-                ))}
+                {pageNumbers.map(number => {                    
+                    let activeClass = ''
+                    number - 1 === currentPage ? activeClass = 'active' : activeClass = '';
+                    return (
+                        <li
+                            key={number}
+                            className={`list-group-item-dark page-item page-link paginator-buttons ${activeClass}`}
+                            onClick={() => {
+                                paginate(number)
+                            }}
+                        >
+                            {number}
+                        </li>
+                    )
+                })}
             </ul>
         </nav>
     );
 }
+const mapStateToProps = ({ productsList: {currentPage} }) => ({ currentPage })
+export default connect(mapStateToProps)(ProductListPaginator)
