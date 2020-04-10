@@ -8,7 +8,7 @@ import './user-page.css';
 const UserPage = () => {
     const [showValue, setShowValue] = useState(1)
     
-    const storageData = JSON.parse(localStorage.getItem('userId'))||{};
+    const storageData = JSON.parse(localStorage.getItem('userId')) || false;
 
     
     const buttonOptions = [

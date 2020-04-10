@@ -3,11 +3,11 @@ import { Carousel } from "react-bootstrap";
 import "./Categories-carousel.css";
 import withStoreService from "../hoc";
 import connect from "react-redux/es/connect/connect";
-import { filterAddBrand, filterRemoveAllBrands} from "../../actions";
+import { filterAddBrand, filterRemoveAllBrands, setCatalogFilter} from "../../actions";
 import { PRODUCT_LIST_URL } from "../../configs/frontend-config";
 import { Link } from "react-router-dom";
 
-const CategoriesCarousel = ({ storeService, catalog, filterAddBrand, filterRemoveAllBrands}) => {
+const CategoriesCarousel = ({ storeService, catalog, filterAddBrand, filterRemoveAllBrands, setCatalogFilter}) => {
   const [getBrands, setBrands] = useState([]);
   const [getProd, setProd] = useState([]);
 
@@ -21,6 +21,7 @@ const CategoriesCarousel = ({ storeService, catalog, filterAddBrand, filterRemov
 
   let productsArray = [];
   useEffect(() => {
+    setCatalogFilter(catalog)
     brands.forEach((item) => {
       storeService.getProductsByFilter({ catalog, brand: item, postsPerPage: 1 })
         .then((res) => {
@@ -65,6 +66,7 @@ const mapStateToProps = ({ filter: { getBrands } }) => ({ getBrands });
 const mapDispatchToProps = (dispatch) => ({
   filterAddBrand: (brand) => dispatch(filterAddBrand(brand)),
   filterRemoveAllBrands: () =>dispatch(filterRemoveAllBrands()),
+  setCatalogFilter: (catalog) => dispatch(setCatalogFilter(catalog))
 });
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(CategoriesCarousel));

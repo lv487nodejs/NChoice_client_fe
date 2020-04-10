@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   filterAddBrand,
@@ -24,6 +25,7 @@ const Filter = ({
   filterRemoveColor,
   catalogLoaded,
   catalogFilter,
+  match
 }) => {
   const [getBrands, setBrands] = useState([]);
   const [getCategories, setCategories] = useState([]);
@@ -43,13 +45,14 @@ const Filter = ({
   }, [catalogLoaded, storeService]);
 
   useEffect(() => {
+    const catalog = match.params.name
     storeService
-      .getCatalogCategories(catalogFilter)
+      .getCatalogCategories(catalog)
       .then((response) => {
         setCategories(response)
       })
       .catch((err) => console.log(err));
-  }, [catalogFilter, storeService]);
+  }, [storeService, match.params.name]);
 
 
 
@@ -123,5 +126,5 @@ const mapDispatchToProps = {
 };
 
 export default withStoreService()(
-  connect(mapStateToProps, mapDispatchToProps)(Filter)
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(Filter))
 );
