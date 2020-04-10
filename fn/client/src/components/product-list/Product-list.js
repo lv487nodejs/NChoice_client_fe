@@ -47,6 +47,7 @@ const ProductList = ({
   searchTerm,
 }) => {
 
+
   useEffect(() => {
     catalogLoaded(catalog)
     setCatalogFilter(catalog)
@@ -63,9 +64,12 @@ const ProductList = ({
         searchTerm,
       })
       .then((res) => {
-        setProducts(res.products);
-        addPagesCount(res.pagesCount);
-        productsLoadingStop();
+          setProducts(res.products);
+          addPagesCount(res.pagesCount);
+          productsLoadingStop();
+      }).catch((error) => {
+        console.log(error)
+        setProducts([]);
       });
     if (sessionStorage.getItem('postPerPage') !== null) {
       addPostsPerPage(sessionStorage.getItem('postPerPage'));

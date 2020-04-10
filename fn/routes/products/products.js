@@ -63,6 +63,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+
 router.get('/propetries/:id', async (req, res) => {
     const { id } = req.params;
 
