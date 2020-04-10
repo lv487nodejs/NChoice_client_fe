@@ -16,9 +16,7 @@ router.get('/', async (req, res) => {
     let { currentpage, postsperpage } = query;
     currentpage = currentpage || 0;
     postsperpage = postsperpage || 15;
-    let skip = currentpage * postsperpage;
-    const { sortbyprice } = query;
-    const { sortbyrate } = query;
+    let skip = currentpage * postsperpage;  
 
     try {
         const filter = await getFilters(query);
@@ -28,8 +26,6 @@ router.get('/', async (req, res) => {
             .sort(sort)
             .skip(+skip)
             .limit(+postsperpage)
-            .sort({ rate: sortbyrate })
-            .sort({ price: sortbyprice })
             .populate('catalog')
             .populate('category')
             .populate('color')
@@ -66,6 +62,22 @@ router.get('/:id', async (req, res) => {
         return res.status(500).send({ message: err.message });
     }
 });
+
+
+router.get('/propetries/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const productPropetrie = await Products.findOne({ 'propetries._id': id })
+            .select('propetries');
+        const newProp = productPropetrie.propetries.filter((propetry) => propetry._id.toString() === id);
+        res.send(newProp);
+    } catch (err) {
+        return res.status(500).send({ message: err.message });
+    }
+
+})
+
 
 router.post('/', productValidationRules(), validate, async (req, res) => {
     const { title, description, images, propetries, price, mrsp } = req.body;
@@ -189,12 +201,20 @@ const getProjection = async query => {
 };
 
 const getSort = async query => {
-    const { searchTerm } = query;
+    const { searchTerm,sortbyprice,sortbyrate } = query;
     const sort = {};
 
     if (isNotBlank(searchTerm)) {
         // sort by relevance
         sort.score = { $meta: 'textScore' };
+    }
+    if (isNotBlank(sortbyprice)) {
+        // sort by relevance
+        sort.price =sortbyprice;
+    }
+    if (isNotBlank(sortbyrate)) {
+        // sort by relevance
+        sort.rate =sortbyrate;
     }
     return sort;
 };

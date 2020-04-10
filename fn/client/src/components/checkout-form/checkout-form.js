@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { countries, paymentMethods, deliveryType } from '../../configs/frontend-config'
+import { setShowSnackbar, setSnackbarText } from '../../actions'
 import CheckoutTable from '../checkout-table';
 import CheckoutSelect from '../checkout-select';
 import withStoreService from '../hoc';
-import './checkout-form.css'
+import './checkout-form.css';
+import Snackbar from '../snackbar';
+
 
 
 const orderForm = {
@@ -20,19 +23,46 @@ const orderForm = {
 }
 
 const CheckoutForm = ({ cartProducts, cartAndStoreService:{storeService} }) => {
+const CheckoutForm = ({
+    cartProducts,
+    storeService,
+    setShowSnackbar,
+    setSnackbarText }) => {
+
+    const notAvaliable = [];
+
+    // Check the database for quantity of products in order
+    useEffect(() => {
+        cartProducts.map((product) => {
+            storeService.getOneProductPropertie(product.propetries._id)
+                .then((res) => res[0].available)
+                .then((available) => {
+                    const itemAvailable = {
+                        name: product.title,
+                        available: available
+                    }
+                    if (product.quantity > available) {
+                        notAvaliable.push(itemAvailable)
+                        return
+                    }
+                });
+            return notAvaliable
+        })
+    }, [cartProducts,
+        notAvaliable,
+        storeService]);
 
     const [validated, setValidated] = useState(false);
-    const [order, setOrder] = useState(orderForm)
-    
-    if (cartProducts.length === 0) {
-        return (<Redirect to='/' />)
-    }
 
-    const storageData = JSON.parse(localStorage.getItem('user'))||{};
+    const [order, setOrder] = useState(orderForm);
 
+    const placeholder = "Type here..."
+
+    // get user's id from localStorage and clear localStorage after submit'
+    const storageData = JSON.parse(localStorage.getItem('userId')) || 'unauthorized user';
     const clearLocalStorage = () => {
         localStorage.removeItem('cart-numbers')
-        localStorage.removeItem('products-collection')   
+        localStorage.removeItem('products-collection')
     }
 
     const productsINeed = cartProducts.map(product => {
@@ -42,8 +72,7 @@ const CheckoutForm = ({ cartProducts, cartAndStoreService:{storeService} }) => {
         }
     })
 
-    const placeholder = "Type here..."
-
+    // Create object with form data to send to server
     const orderToServer = {
         orderItems: productsINeed,
         userId: storageData.userId,
@@ -59,9 +88,30 @@ const CheckoutForm = ({ cartProducts, cartAndStoreService:{storeService} }) => {
         status: "pending"
     }
 
+    if (cartProducts.length === 0) {
+        return (<Redirect to='/' />)
+    }
+
+
+    const snackbarHandler = (text) => {
+        setSnackbarText(text)
+        setShowSnackbar(true)
+        setTimeout(() => {
+            setShowSnackbar(false)
+        }, 10000)
+    }
+
     const handleSubmit = (event) => {
+        if (notAvaliable.length !== 0) {
+            const snackbarText = notAvaliable.map((badItem)=>{
+                return (`We dont have anought ${badItem.name}
+                        There are just ${badItem.available}.
+                        Please go to cart and change amount of ${badItem.name}`)
+            })
+            snackbarHandler(snackbarText)
+        }
         const form = event.currentTarget;
-        if (form.checkValidity() === false || orderToServer.orderItems.length === 0) {
+        if (form.checkValidity() === false || orderToServer.orderItems.length === 0 || notAvaliable.length !== 0) {
             event.preventDefault();
             event.stopPropagation();
             setValidated(true);
@@ -164,6 +214,10 @@ const CheckoutForm = ({ cartProducts, cartAndStoreService:{storeService} }) => {
                                 variant="dark"
                                 type="submit"
                             >Create order</Button>
+                            <div id="user-page-snackbar" className="col-12">
+                            <Snackbar className="snackbar"/>
+                            </div>
+
                         </Form>
                     </Jumbotron>
                 </Col>
@@ -176,6 +230,9 @@ const CheckoutForm = ({ cartProducts, cartAndStoreService:{storeService} }) => {
                                 variant="dark"
                             >Go to cart to make changes</Button>
                         </Link>
+                        <div id="user-page-snackbar" className="col-12">
+                        <Snackbar className="snackbar"/>
+                        </div>
                     </Jumbotron>
                 </Col>
             </Row>
@@ -187,8 +244,10 @@ const mapStateToProps = ({ cartReducer: { cartProducts } }) => ({
     cartProducts
 });
 
-
+const mapDispatchToProps = ({
+    setShowSnackbar, setSnackbarText
+})
 
 export default withStoreService()(
-    connect(mapStateToProps)(CheckoutForm)
+    connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)
 );

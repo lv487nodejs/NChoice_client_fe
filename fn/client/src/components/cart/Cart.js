@@ -79,7 +79,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
   });
 
   products.map(i => {
-    const price = i.msrp * i.quantity;
+    const price = i.mrsp * i.quantity;
     return fullPrices.push(price)
   });
 
@@ -109,7 +109,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
                   {item.title}
                   <p> Price:
                   <span className="price">{item.price * currency * item.quantity} {currencyIcon}</span>
-                  <span className="msrp-price">{item.msrp * currency * item.quantity} {currencyIcon}</span>
+                  <span className="msrp-price">{item.mrsp * currency * item.quantity} {currencyIcon}</span>
                   </p>
                   <p> Size: <span>{item.propetries.size[0]}</span> </p>
                   <div className="quantity-control">
@@ -132,21 +132,22 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
             </Container>
           </li>
         ))}
-        <Link to="/checkout" className={products.length >= 1 ? 'disp-block' : 'disp-none' }>
-              <Button
-                variant="dark"
-              >Go to checkout</Button>
-            </Link>
-        <h5>{products.length >= 1 && <em>Total: {total}</em>}</h5>
-        <h5>{products.length >= 1 && <em>Sale: {sale}</em>}</h5>
+        <div className='checkout-wrap'>
+          <h5>{products.length >= 1 && <em>Total: {total} {currencyIcon} </em>} </h5>
+          <h5>{products.length >= 1 && <em>Sale: {sale} {currencyIcon}</em>} </h5>
+          <Link to="/checkout" className={products.length >= 1 ? 'disp-block' : 'disp-none' }>
+            <Button
+              variant="dark"
+            >Go to checkout</Button>
+          </Link>
+        </div>
       </ul>
     </div>
   )
 };
 
-
-const mapStateToProps = 
-  ({cartReducer: {cartProducts}, productsList: { currency, currencyIcon } }) => 
+const mapStateToProps =
+  ({cartReducer: {cartProducts}, productsList: { currency, currencyIcon } }) =>
   ({cartProducts, currency, currencyIcon });
 
 export default withStoreService() (connect(mapStateToProps, { addToCart, increaseToCart, decreaseFromCart, removeFromCart })(Cart));

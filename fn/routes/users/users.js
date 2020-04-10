@@ -40,7 +40,7 @@ router.get('/:id', tokenValidation, async (req, res) => {
             email: user.email,
             date: user.date,
             tokens: user.tokens,
-            wishlist:user.wishlist,
+            wishlist: user.wishlist,
             cart: user.cart
         }
         res.status(200).send({ accessToken, refreshToken, user: mappedUser });
@@ -90,8 +90,10 @@ router.put('/role/:id', async (req, res) => {
 router.put('/:id', userValidationRules(), tokenValidation, async (req, res) => {
     const { id } = req.params;
     const userToUpdate = req.body.user;
-
+    const { password } = userToUpdate
     try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        userToUpdate.password = hashedPassword
         const user = await Users.findByIdAndUpdate(id, userToUpdate);
         if (!user) {
             throw { message: 'User doesnt exist' };

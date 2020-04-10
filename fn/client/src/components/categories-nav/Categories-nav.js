@@ -7,8 +7,10 @@ import './Categories-nav.css';
 import {
   categoriesLoaded,
   categoriesRequested,
-  filterAddCategory,
+  filterAddCategories,
   filterRemoveAllCategories,
+  filterRemoveAllColors,
+  filterRemoveAllBrands
 } from '../../actions';
 import CategoriesNavItem from '../categories-nav-item';
 import withStoreService from '../hoc';
@@ -21,8 +23,10 @@ const CategoriesNav = ({
   categories,
   catalog,
   loading,
-  filterAddCategory,
+  filterAddCategories,
   filterRemoveAllCategories,
+  filterRemoveAllBrands,
+  filterRemoveAllColors,
 }) => {
   useEffect(() => {
     categoriesRequested();
@@ -31,9 +35,11 @@ const CategoriesNav = ({
       .then((res) => categoriesLoaded(res));
   }, [catalog, categoriesLoaded, categoriesRequested, storeService]);
 
-  const filterAddCategoryHandler = (item) => {
+  const filterAddCategoriesHandler = (item) => {
+    filterRemoveAllBrands();
+    filterRemoveAllColors();
     filterRemoveAllCategories();
-    filterAddCategory(item);
+    filterAddCategories(item);
   };
   if (loading) {
     return <LoadingSpinner />;
@@ -52,7 +58,7 @@ const CategoriesNav = ({
       {categories.map((category) => (
         <li key={category.category} className="category-item">
           <CategoriesNavItem
-            handler={filterAddCategoryHandler}
+            handler={filterAddCategoriesHandler}
             catalog={catalog}
             name={category.category}
             config={PRODUCT_LIST_URL}
@@ -70,8 +76,10 @@ const mapStateToProps = ({ categoriesList: { categories, loading } }) => ({
 const mapDispatchToProps = {
   categoriesLoaded,
   categoriesRequested,
-  filterAddCategory,
+  filterAddCategories,
   filterRemoveAllCategories,
+  filterRemoveAllColors,
+  filterRemoveAllBrands,
 };
 
 export default withStoreService()(

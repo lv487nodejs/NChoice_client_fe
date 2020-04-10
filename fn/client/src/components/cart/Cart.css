@@ -4,6 +4,12 @@
     border-radius: 2px;
     overflow: hidden;
     position: relative;
+    background-color: #f4f7f6;
+}
+.checkout-wrap{
+    display: inline-block;
+    float: right;
+    padding: 5px;
 }
 .cart-img{
     display: block;

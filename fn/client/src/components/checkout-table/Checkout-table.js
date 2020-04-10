@@ -1,20 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Checkout-table.css';
 import { Table } from 'react-bootstrap'
 import { connect } from 'react-redux';
 
 
-const CheckoutTable = ({ cartProducts, currency }) => {
-
-    const [currencyIcon, setCurrencyIcon] = useState('$');
+const CheckoutTable = ({ cartProducts, currency, currencyIcon}) => {
 
     const tableRowPrice = (price , quantity) => {
         return (parseFloat(price * quantity * currency).toFixed(2))
     }
-
-    useEffect(() => {
-        currency === 1 ? setCurrencyIcon('€') : setCurrencyIcon('$');
-    }, [currency]);
 
     const totalCounter = () => {
         const row = cartProducts.map(product => product.price * product.quantity);
@@ -62,9 +56,10 @@ const CheckoutTable = ({ cartProducts, currency }) => {
 
 
 
-const mapStateToProps = ({ cartReducer: { cartProducts }, productsList: { currency } }) => ({
+const mapStateToProps = ({ cartReducer: { cartProducts }, productsList: { currency, currencyIcon } }) => ({
     cartProducts,
-    currency
+    currency, 
+    currencyIcon 
 });
 
 export default connect(mapStateToProps)(CheckoutTable);

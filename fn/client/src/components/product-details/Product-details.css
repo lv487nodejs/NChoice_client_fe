@@ -1,5 +1,4 @@
 .wrapper {
-  width: 80%;
   margin: auto;
   background-color: rgb(245, 245, 245);
 }
@@ -32,6 +31,7 @@
 }
 .text {
   margin-left: 10%;
+  margin-right: 2rem;
 }
 .color {
   width: 30px;
@@ -66,7 +66,6 @@
 .productDescription {
   font-weight: normal;
   text-align: justify;
-  margin-right: 2rem;
   font-size: unset;
 }
 .buttons {
