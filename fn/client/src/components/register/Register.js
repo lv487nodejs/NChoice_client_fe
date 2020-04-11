@@ -58,11 +58,18 @@ const Register = (props) => {
         try {
             setUserLoading();
             const response = await axios.post(route, value);
-            setUserLogged(true);
             addDataToLocalStorage(response.data);
+            const userId = response.data.user._id
+            const newCart = await storeService.createCart({userId})
+            const userToUpdate = response.data.user
+            userToUpdate.cart = newCart._id
+            const {accessToken}= response.data
+            const updatedUser = await storeService.sendUserChangedData(userId, accessToken, {user: userToUpdate} )
+            setUserLogged(true);
+
         } catch (error) {
             setUserLogged(false)
-            const { msg } = error.response.data.errors[0]
+            const {msg} = error
             setErrorMsg(msg)
         }
     }

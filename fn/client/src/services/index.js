@@ -153,4 +153,12 @@ export default class StoreService {
   sendUserChangedData = async (id, token, data) => {
     return axios({ method: 'PUT', url: `${this._apiBase}users/${id}`, data, headers: { "x-auth-token": token } })
   };
+
+  createCart =  async ( cartItem ) => {
+    return axios({ method: 'POST', url: `${this._apiBase}cart/`, cartItem })
+  };
+
+  updateCart = async ( id, cartItem ) => {
+    return axios({ method: 'PUT', url: `${this._apiBase}cart/${id}`, cartItem })
+  };
 }
