@@ -93,6 +93,13 @@ export default (state = initialState, action) => {
         currency: action.payload
       };
 
+    case "CLEAR_CART":
+      return {
+        ...state,
+        cartProducts: [],
+        cartNumbers: 0
+      };
+
     default:
       return state;
   }
