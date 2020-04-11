@@ -52,31 +52,29 @@ const CategoryAddPage = props => {
         };
     }, [categoryLoadingStatus, catalogsService, setCatalogs, setCategory, categoryUpdateCatalogs]);
 
-    const categorySaveHandler = e => {
+    const categorySaveHandler = async e => {
         e.preventDefault();
         categoryLoadingStatus();
 
         const newCategory = {
             category: categoryName,
         };
-        categoriesService.postCategory(newCategory).then(res => {
-            const newCategoryName = res.category;
-            catalogsToUpdate.forEach(catalogToUpdate => {
-                if (catalogToUpdate.checked) {
-                    if (catalogToUpdate.catalog.categories) {
-                        catalogToUpdate.catalog.categories.push(res._id);
-                    }
+        const createdCategory = await categoriesService.postCategory(newCategory);
 
-                    catalogsService
-                        .putCatalog(catalogToUpdate.catalog._id, catalogToUpdate.catalog)
-                        .then(res => {
-                            setSnackBarSeverity('success');
-                            setSnackBarMessage(`Category ${newCategoryName} succesfully saved!`);
-                            setSnackBarStatus(true);
-                            history.push(`/categories`);
-                        });
+        const newCategoryName = createdCategory.category;
+        catalogsToUpdate.forEach(async catalogToUpdate => {
+            if (catalogToUpdate.checked) {
+                if (catalogToUpdate.catalog.categories) {
+                    catalogToUpdate.catalog.categories.push(createdCategory._id);
                 }
-            });
+
+                await catalogsService.putCatalog(catalogToUpdate.catalog._id, catalogToUpdate.catalog);
+
+                setSnackBarSeverity('success');
+                setSnackBarMessage(`Category ${newCategoryName} succesfully saved!`);
+                setSnackBarStatus(true);
+                history.push(`/categories`);
+            }
         });
     };
 

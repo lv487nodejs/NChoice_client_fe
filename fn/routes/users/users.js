@@ -34,11 +34,13 @@ router.get('/:id', async (req, res) => {
         user.tokens.push(refreshToken);
         await user.save()
         const mappedUser = {
+            _id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
             date: user.date,
             tokens: user.tokens,
+            role: user.role,
             wishlist: user.wishlist,
             cart: user.cart
         }
@@ -80,7 +82,9 @@ router.put('/role/:id', async (req, res) => {
     const { user } = req.body;
     try {
         const userToUpdate = await Users.findByIdAndUpdate(id, user);
-        res.status(200).send(userToUpdate);
+        const updatedUser = await Users.findById(userToUpdate.id);
+        console.log(updatedUser);
+        res.status(200).send(updatedUser);
     } catch (err) {
         res.status(400).send(err);
     }

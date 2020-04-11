@@ -30,7 +30,7 @@ export const config = {
             ['Users', routes.pathToUsers, PeopleAltIcon],
         ],
         routes,
-        serverUrl: 'https://stark-headland-06017.herokuapp.com/',
+        serverUrl: 'http://localhost:5000/',
         drawerWidth: 220,
         snackBarDuration: 4000,
         rowsPerPageOptions: [10, 25, 50, 100],

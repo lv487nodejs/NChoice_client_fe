@@ -55,3 +55,19 @@ Cypress.Commands.add('visitProducts', productsResponse => {
     cy.wait('@brands');
     cy.wait('@colors');
 });
+
+Cypress.Commands.add('visitCategories', categoriesResponse => {
+    cy.server();
+    cy.route('GET', '/categories**', categoriesResponse).as('categories');
+    cy.visit('/categories');
+    cy.wait('@categories');
+});
+
+Cypress.Commands.add('checkCategoryModel', model => {
+    cy.window()
+        .its('store')
+        .invoke('getState')
+        .its('categoryModelState')
+        .its('categoryModel')
+        .should('deep.equal', model);
+});

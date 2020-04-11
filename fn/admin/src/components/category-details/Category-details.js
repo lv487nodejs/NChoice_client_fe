@@ -82,27 +82,27 @@ const CategoryDetails = props => {
             id: category._id,
             name: e.target.categoryName.value,
         };
-        categoriesService.putCategory(categoryToSend).then(res => {
-            setCategory(res);
-            const editedCategoryName = res.category;
-            catalogsToUpdate.forEach(async catalog => {
-                const index = catalog.categories.findIndex(
-                    categoryItem => categoryItem._id === res._id
-                );
 
-                if (index > -1 && !catalog.checked) {
-                    catalog.categories.splice(index, 1);
-                }
-                if (index === -1 && catalog.checked) {
-                    catalog.categories.push({ _id: res._id });
-                }
-                catalogsService.putCatalog(catalog._id, catalog).then(res => {
-                    setSnackBarSeverity('success');
-                    setSnackBarMessage(`Category ${editedCategoryName} succesfully edited!`);
-                    setSnackBarStatus(true);
-                });
-                history.push(`/categories`);
-            });
+        const updatedCategory = await categoriesService.putCategory(categoryToSend);
+        setCategory(updatedCategory);
+        categoryLoadingStatus();
+        const editedCategoryName = updatedCategory.category;
+        catalogsToUpdate.forEach(async catalog => {
+            const index = catalog.categories.findIndex(
+                categoryItem => categoryItem._id === updatedCategory._id
+            );
+
+            if (index > -1 && !catalog.checked) {
+                catalog.categories.splice(index, 1);
+            }
+            if (index === -1 && catalog.checked) {
+                catalog.categories.push({ _id: updatedCategory._id });
+            }
+            await catalogsService.putCatalog(catalog._id, catalog);
+            setSnackBarSeverity('success');
+            setSnackBarMessage(`Category ${editedCategoryName} succesfully edited!`);
+            setSnackBarStatus(true);
+            history.push(`/categories`);
         });
     };
 
