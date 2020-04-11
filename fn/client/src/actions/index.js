@@ -17,6 +17,7 @@ import {
 
 import { addToCart, increaseToCart, decreaseFromCart, removeFromCart, clearCart } from './Cart-action'
 import { addToWishlist, removeFromWishlist } from './Wishlist-actions'
+import { setOrderToStore, clearOrderStore } from './Checkout-actions'
 
 import {
   catalogsLoaded,
@@ -90,5 +91,7 @@ export {
   filterRemoveAllColors,
   filterAddCategory,
   clearFilter,
-  clearCart 
+  clearCart,
+  setOrderToStore,
+  clearOrderStore 
 };

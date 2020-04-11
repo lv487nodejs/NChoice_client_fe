@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { countries, paymentMethods, deliveryType } from '../../configs/frontend-config'
-import { setShowSnackbar, setSnackbarText, clearCart } from '../../actions'
+import { countries, paymentMethods, deliveryType} from '../../configs/frontend-config'
+import { setShowSnackbar, setSnackbarText, clearCart, setOrderToStore } from '../../actions'
 import CheckoutTable from '../checkout-table';
 import CheckoutSelect from '../checkout-select';
 import withStoreService from '../hoc';
@@ -15,6 +15,7 @@ import Snackbar from '../snackbar';
 const orderForm = {
     firstName: '',
     lastName: '',
+    email: '',
     country: '',
     city: '',
     street: '',
@@ -26,10 +27,13 @@ const orderForm = {
 
 const CheckoutForm = ({
     cartProducts,
+    orderStore,
     clearCart,
     storeService,
     setShowSnackbar,
-    setSnackbarText }) => {
+    setSnackbarText,
+    setOrderToStore,
+}) => {
 
     const notAvaliable = [];
 
@@ -82,6 +86,7 @@ const CheckoutForm = ({
         lastName: order.lastName,
         orderItems: productsINeed,
         userId: storageData.userId,
+        email: storageData.email,
         deliveryAddress: {
             country: order.country,
             city: order.city,
@@ -111,6 +116,7 @@ const CheckoutForm = ({
     }
 
     const handleSubmit = (event) => {
+        setOrderToStore(orderToServer)
         if (notAvaliable.length !== 0) {
             const snackbarText = notAvaliable.map((badItem) => {
                 return (`We dont have enough ${badItem.name}
@@ -155,6 +161,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name={"firstName"}
                                         onChange={handleChange}
+                                        defaultValue={orderStore.firstName}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -168,10 +175,26 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name={"lastName"}
                                         onChange={handleChange}
+                                        defaultValue={orderStore.lastName}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
                                         Please type Your Lastname. This field is required
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group controlId="emailValidate">
+                                    <Form.Label>Email</Form.Label>
+                                    <Form.Control
+                                        required
+                                        placeholder={placeholder}
+                                        name={"email"}
+                                        type="email"
+                                        onChange={handleChange}
+                                        defaultValue={orderStore.email}
+                                    />
+                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type Your email. This field is required
                                     </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group controlId="phoneValidate">
@@ -182,6 +205,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name="contactPhone"
                                         onChange={handleChange}
+                                        defaultValue={orderStore.contactPhone}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -202,6 +226,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name={"city"}
                                         onChange={handleChange}
+                                        defaultValue={orderStore.deliveryAddress.city}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -215,6 +240,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name="street"
                                         onChange={handleChange}
+                                        defaultValue={orderStore.deliveryAddress.street}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -228,6 +254,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name="buildingNumber"
                                         onChange={handleChange}
+                                        defaultValue={orderStore.deliveryAddress.buildingNumber}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -280,13 +307,16 @@ const CheckoutForm = ({
     )
 }
 
-const mapStateToProps = ({ cartReducer: { cartProducts } }) => ({
-    cartProducts
-});
+const mapStateToProps = ({
+    cartReducer: { cartProducts },
+    checkoutReduser: { orderStore }
+         }) => ({
+            orderStore,
+            cartProducts,
+        });
 
 const mapDispatchToProps = ({
-    setShowSnackbar, setSnackbarText, clearCart
-})
+    setShowSnackbar, setSnackbarText, clearCart, setOrderToStore })
 
 export default withStoreService()(
     connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)
