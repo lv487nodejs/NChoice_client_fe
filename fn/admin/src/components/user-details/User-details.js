@@ -33,7 +33,7 @@ const UserDetails = ({
     useEffect(() => {
         userLoadingStatus();
         usersService.getUserById(userId).then(res => {
-            setUser(res);
+            setUser(res.user);
         });
     }, [usersService, userId, userLoadingStatus, setUser]);
 
@@ -43,14 +43,13 @@ const UserDetails = ({
         setUser(newUser);
     };
 
-    const submitHandler = e => {
+    const submitHandler = async e => {
         e.preventDefault();
         const newUser = { ...user };
-        usersService.putUserRole(newUser).then(res => {
-            setSnackBarSeverity('success');
-            setSnackBarMessage(`User role succesfully changed to ${newUser.role}!`);
-            setSnackBarStatus(true);
-        });
+        const updatedUser = await usersService.putUserRole(newUser);
+        setSnackBarSeverity('success');
+        setSnackBarMessage(`User role succesfully changed to ${updatedUser.role}!`);
+        setSnackBarStatus(true);
     };
 
     if (loading) {

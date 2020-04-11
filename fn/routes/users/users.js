@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', tokenValidation, async (req, res) => {
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const user = await Users.findById(id);
@@ -34,12 +34,14 @@ router.get('/:id', tokenValidation, async (req, res) => {
         user.tokens.push(refreshToken);
         await user.save()
         const mappedUser = {
+            _id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
             date: user.date,
             tokens: user.tokens,
-            wishlist:user.wishlist,
+            role: user.role,
+            wishlist: user.wishlist,
         }
         res.status(200).send({ accessToken, refreshToken, user: mappedUser });
     } catch (err) {
@@ -79,7 +81,9 @@ router.put('/role/:id', async (req, res) => {
     const { user } = req.body;
     try {
         const userToUpdate = await Users.findByIdAndUpdate(id, user);
-        res.status(200).send(userToUpdate);
+        const updatedUser = await Users.findById(userToUpdate.id);
+        console.log(updatedUser);
+        res.status(200).send(updatedUser);
     } catch (err) {
         res.status(400).send(err);
     }
@@ -88,7 +92,7 @@ router.put('/role/:id', async (req, res) => {
 router.put('/:id', tokenValidation, async (req, res) => {
     const { id } = req.params;
 
-    const { firstName, lastName, email,password } = req.body.userToChange;
+    const { firstName, lastName, email, password } = req.body.userToChange;
 
     try {
         const user = await Users.findByIdAndUpdate(id, { firstName, lastName, email });
@@ -106,7 +110,7 @@ router.put('/:id', tokenValidation, async (req, res) => {
         user.tokens = [];
         user.tokens.push(refreshToken);
         await user.save()
-        res.status(200).send({msg:'user data successfully changed'});
+        res.status(200).send({ msg: 'user data successfully changed' });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }

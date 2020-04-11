@@ -72,7 +72,7 @@ const CategoryList = ({
                 const catalogs = await catalogsService.getAllCatalogs();
 
                 catalogs.forEach(async catalog => {
-                    const categories = catalog.categories.filter(categori => categori._id !== id);
+                    const categories = catalog.categories.filter(category => category._id !== id);
                     catalog.categories = categories;
                     await catalogsService.putCatalog(catalog._id, catalog);
                 });
@@ -111,6 +111,7 @@ const CategoryList = ({
         <div>
             <div className={classes.tableNav}>
                 <Button
+                    id="add-new-category"
                     component={Link}
                     to={pathToAddCategoryPage}
                     variant="contained"
@@ -120,6 +121,7 @@ const CategoryList = ({
                 </Button>
             </div>
             <TableContainerGenerator
+                id="categoriesTable"
                 tableTitles={tableTitles}
                 tableItems={categoryItems}
             />

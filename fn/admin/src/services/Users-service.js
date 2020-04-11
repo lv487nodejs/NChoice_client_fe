@@ -2,13 +2,13 @@ import AdminService from './Admin-service';
 
 class UsersService extends AdminService {
     getAllUsers = async () => {
-        const colors = await this.getResource('users');
-        return colors;
+        const res = await this.getResource('users');
+        return res;
     };
 
     getUserById = async id => {
-        const colors = await this.getResource(`users/${id}`);
-        return colors;
+        const res = await this.getResource(`users/${id}`);
+        return res;
     };
 
     putUser = async user => {
