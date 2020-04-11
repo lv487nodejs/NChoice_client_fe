@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "../Loading-spinner";
 import { SignupSchemaRegister } from '../../configs/login-register-config'
+import withStoreService from "../hoc";
 
 
 const addDataToLocalStorage = (token) => {
@@ -30,7 +31,7 @@ const eye = <FontAwesomeIcon icon={faEye} />;
 
 const Register = (props) => {
     const [user, setUser] = useState(USER_DATA);
-    const { setUserLogged, setUserLoading, userLogged, userLoading } = props;
+    const { setUserLogged, setUserLoading, userLogged, userLoading, storeService } = props;
     const [errorMsg, setErrorMsg] = useState('');
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchemaRegister
@@ -115,70 +116,70 @@ const Register = (props) => {
                 />
                 {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
             </Form.Group>
-           
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
+
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="Enter email"
+                    name={'email'}
+                    value={user.email}
+                    onChange={handleChange}
+                    ref={register}
+                />
+                {errors.email && <p className="errorMessage">{errors.email.message}</p>}
+                <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
+            </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Group className="pass-wrapper">
                     <Form.Control
-                        type="text"
-                        placeholder="Enter email"
-                        name={'email'}
-                        value={user.email}
+                        type={passwordShown ? "text" : "password"}
+                        placeholder="Password"
+                        name={'password'}
+                        value={user.password}
                         onChange={handleChange}
                         ref={register}
+                        autoComplete="on"
                     />
-                    {errors.email && <p className="errorMessage">{errors.email.message}</p>}
-                    <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
+                    <i onClick={togglePasswordVisiblity}>{eye}</i>
                 </Form.Group>
-
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Group className="pass-wrapper">
-                        <Form.Control
-                            type={passwordShown ? "text" : "password"}
-                            placeholder="Password"
-                            name={'password'}
-                            value={user.password}
-                            onChange={handleChange}
-                            ref={register}
-                            autoComplete="on"
-                        />
-                        <i onClick={togglePasswordVisiblity}>{eye}</i>
-                    </Form.Group>
-                </Form.Group>
-                {errors.password && <p className="errorMessage">{errors.password.message}</p>}
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label> Confirm Password</Form.Label>
-                    <Form.Group className="pass-wrapper">
-                        <Form.Control placeholder="Password"
-                            name={'confirmPassword'}
-                            ref={register}
-                            type={confirmPasswordShown ? "text" : "password"}
-                            autoComplete="on"
-                        />
-                        <i onClick={toggleConfirmPasswordVisiblity}>{eye}</i>
-                    </Form.Group>
-                    {errors.confirmPassword && <p className="errorMessage">{errors.confirmPassword.message}</p>}
-                </Form.Group>
-                <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check
-                        type="switch"
-                        id="custom-switch"
-                        label="I agree to terms"
-                        name={'agreeToTerms'}
-                        ref={register}
+            </Form.Group>
+            {errors.password && <p className="errorMessage">{errors.password.message}</p>}
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label> Confirm Password</Form.Label>
+                <Form.Group className="pass-wrapper">
+                    <Form.Control placeholder="Password"
+                                  name={'confirmPassword'}
+                                  ref={register}
+                                  type={confirmPasswordShown ? "text" : "password"}
+                                  autoComplete="on"
                     />
+                    <i onClick={toggleConfirmPasswordVisiblity}>{eye}</i>
                 </Form.Group>
+                {errors.confirmPassword && <p className="errorMessage">{errors.confirmPassword.message}</p>}
+            </Form.Group>
+            <Form.Group controlId="formBasicCheckbox">
+                <Form.Check
+                    type="switch"
+                    id="custom-switch"
+                    label="I agree to terms"
+                    name={'agreeToTerms'}
+                    ref={register}
+                />
+            </Form.Group>
 
-                {errors.agreeToTerms && <p className="errorMessage">{errors.agreeToTerms.message}</p>}
-                <Form.Group>
-                    <Button variant="dark" type="submit" block>
-                        REGISTER
-                        </Button>
-                    <span>{errorMsg}</span>
-                </Form.Group>
-                <Form.Group className="link">
-                    <Link to="/login" className="btn btn-link" >LOG IN</Link>
-                </Form.Group>
+            {errors.agreeToTerms && <p className="errorMessage">{errors.agreeToTerms.message}</p>}
+            <Form.Group>
+                <Button variant="dark" type="submit" block>
+                    REGISTER
+                </Button>
+                <span>{errorMsg}</span>
+            </Form.Group>
+            <Form.Group className="link">
+                <Link to="/login" className="btn btn-link" >LOG IN</Link>
+            </Form.Group>
         </Form>
 
     );
@@ -191,6 +192,6 @@ const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({
     userLogged, userLoading
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Register));
 
 

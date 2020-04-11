@@ -8,7 +8,10 @@ import Container from "@material-ui/core/Container/Container";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { increaseToCart, decreaseFromCart, removeFromCart, addToCart } from "../../actions";
+import withStoreService from "../hoc";
 
+const userId = JSON.parse(localStorage.getItem('userId'))
+const accessToken = JSON.parse(localStorage.getItem('accessToken'))
 
 const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, currencyIcon, currency, storeService}) => {
   const [products, setProducts] = useState(cartProducts)
@@ -19,28 +22,31 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
         if (userId)
         {
           storeService.getUserById(userId, accessToken).then((res) => {
-            cartId = res.data.user.cart._id
+            cartId = res.data.user.cart
             storeService.getCartById(cartId).then((res) => {
+              console.log(res)
               const cartItemRes = res.cartItems
-              console.log(cartItemRes)
-              const productByCartPromises = cartItemRes.map(item => storeService.getProductById(item.productId));
-              Promise.all(productByCartPromises).then(responses => {
-                responses.forEach((item, index) => {
-                  if (cartItemRes && cartItemRes.length) {
-                    const allItemsFromBack = ({...item, propetries: item.propetries.filter(itemProperty => itemProperty['_id'] === cartItemRes[index].productSizeId)[0]})
-                    console.log(allItemsFromBack)
-                  }
+              if (cartItemRes) {
+                const productByCartPromises = cartItemRes.map(item => storeService.getProductById(item.productId));
+                Promise.all(productByCartPromises).then(responses => {
+                  responses.forEach((item, index) => {
+                    if (cartItemRes && cartItemRes.length) {
+                      const allItemsFromBack = ({...item, propetries: item.propetries.filter(itemProperty => itemProperty['_id'] === cartItemRes[index].productSizeId)[0]})
+                      setProducts(allItemsFromBack)
+                    }
+                  });
                 });
-              });
+              }
+
             })
           })
         } else if (localStorage.getItem('products-collection')) {
           setProducts(JSON.parse(localStorage.getItem('products-collection')));
-          const cartItem = {cartItems: [localStorage.getItem('products-collection')]}}
+          }
 
         return () => {
           storeService.getUserById(userId, accessToken).then((res) => {
-            cartId = res.data.user.cart._id
+            cartId = res.data.user.cart
             const toBackItems = cartProducts.map(el => {
               return {
                 productId: el.id,
@@ -161,4 +167,4 @@ const mapStateToProps =
 
 const mapDispatchToProps = { addToCart, increaseToCart, decreaseFromCart, removeFromCart };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default withStoreService() (connect(mapStateToProps, mapDispatchToProps)(Cart));
