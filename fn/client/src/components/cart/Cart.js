@@ -104,7 +104,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
         ))}
         <div className='checkout-wrap'>
           <h5>{products.length >= 1 && <em>Total: {total} {currencyIcon} </em>} </h5>
-          <h5>{products.length >= 1 && <em>Sale: {sale} {currencyIcon}</em>} </h5>
+          <h5>{products.length >= 1 && <em>Sale: {(parseFloat(sale).toFixed(2))} {currencyIcon}</em>} </h5>
           <Link to="/checkout" className={products.length >= 1 ? 'disp-block' : 'disp-none' }>
             <Button
               variant="dark"
