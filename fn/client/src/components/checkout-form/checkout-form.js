@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { countries, paymentMethods, deliveryType } from '../../configs/frontend-config'
-import { setShowSnackbar, setSnackbarText } from '../../actions'
+import { setShowSnackbar, setSnackbarText, clearCart } from '../../actions'
 import CheckoutTable from '../checkout-table';
 import CheckoutSelect from '../checkout-select';
 import withStoreService from '../hoc';
@@ -13,6 +13,8 @@ import Snackbar from '../snackbar';
 
 
 const orderForm = {
+    firstName: '',
+    lastName: '',
     country: '',
     city: '',
     street: '',
@@ -24,6 +26,7 @@ const orderForm = {
 
 const CheckoutForm = ({
     cartProducts,
+    clearCart,
     storeService,
     setShowSnackbar,
     setSnackbarText }) => {
@@ -55,10 +58,12 @@ const CheckoutForm = ({
 
     const [order, setOrder] = useState(orderForm);
 
+    const [successOrder, setsuccessOrder] = useState(false);
+
     const placeholder = "Type here..."
 
     // get user's id from localStorage and clear localStorage after submit'
-    const storageData = JSON.parse(localStorage.getItem('userId')) || 'unauthorized user';
+    const storageData = JSON.parse(localStorage.getItem('userId')) || '';
     const clearLocalStorage = () => {
         localStorage.removeItem('cart-numbers')
         localStorage.removeItem('products-collection')
@@ -73,6 +78,8 @@ const CheckoutForm = ({
 
     // Create object with form data to send to server
     const orderToServer = {
+        firstName: order.firstName,
+        lastName: order.lastName,
         orderItems: productsINeed,
         userId: storageData.userId,
         deliveryAddress: {
@@ -87,10 +94,13 @@ const CheckoutForm = ({
         status: "pending"
     }
 
+    if (successOrder) {
+        return (<Redirect to='/thanks' />)
+    }
+
     if (cartProducts.length === 0) {
         return (<Redirect to='/' />)
     }
-
 
     const snackbarHandler = (text) => {
         setSnackbarText(text)
@@ -102,7 +112,7 @@ const CheckoutForm = ({
 
     const handleSubmit = (event) => {
         if (notAvaliable.length !== 0) {
-            const snackbarText = notAvaliable.map((badItem)=>{
+            const snackbarText = notAvaliable.map((badItem) => {
                 return (`We dont have enough ${badItem.name}
                         There are just ${badItem.available}.
                         Please go to cart and change amount of ${badItem.name}`)
@@ -116,8 +126,11 @@ const CheckoutForm = ({
             setValidated(true);
             return
         }
-        clearLocalStorage();
-        storeService.postOrder(orderToServer);
+        event.preventDefault()
+        storeService.postOrder(orderToServer)
+        setsuccessOrder(true)
+        clearLocalStorage()
+        clearCart()
     }
 
     const handleChange = (event) => {
@@ -133,7 +146,48 @@ const CheckoutForm = ({
                         <h2>Order Form</h2>
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <fieldset className="field">
-                                <h3 className="text-center">Please fill in your address</h3>
+                                <h3 className="text-center">Please tell us about yourself</h3>
+
+                                <Form.Group controlId="firstNameValidate">
+                                    <Form.Label>Firstname</Form.Label>
+                                    <Form.Control
+                                        required
+                                        placeholder={placeholder}
+                                        name={"firstName"}
+                                        onChange={handleChange}
+                                    />
+                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type Your Firstname. This field is required
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group controlId="lastNameValidate">
+                                    <Form.Label>Lastname</Form.Label>
+                                    <Form.Control
+                                        required
+                                        placeholder={placeholder}
+                                        name={"lastName"}
+                                        onChange={handleChange}
+                                    />
+                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type Your Lastname. This field is required
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group controlId="phoneValidate">
+                                    <Form.Label>Contact Phone Number</Form.Label>
+                                    <Form.Control
+                                        required
+                                        type="number"
+                                        placeholder={placeholder}
+                                        name="contactPhone"
+                                        onChange={handleChange}
+                                    />
+                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type Phone number. This field is required
+                                    </Form.Control.Feedback>
+                                </Form.Group>
                                 <Form.Group>
                                     <CheckoutSelect
                                         selectOptions={countries}
@@ -180,19 +234,6 @@ const CheckoutForm = ({
                                         Please type your building. This field is required
                                     </Form.Control.Feedback>
                                 </Form.Group>
-                                <Form.Group controlId="phoneValidate">
-                                    <Form.Label>Contact Phone Number</Form.Label>
-                                    <Form.Control
-                                        required
-                                        placeholder={placeholder}
-                                        name="contactPhone"
-                                        onChange={handleChange}
-                                    />
-                                    <Form.Control.Feedback>Much better now</Form.Control.Feedback>
-                                    <Form.Control.Feedback type="invalid">
-                                        Please type Phone number. This field is required
-                                    </Form.Control.Feedback>
-                                </Form.Group>
                             </fieldset>
                             <Form.Group className="form-space">
                                 <fieldset className="field">
@@ -214,9 +255,9 @@ const CheckoutForm = ({
                                 type="submit"
                             >Create order</Button>
                             <div id="user-page-snackbar" className="col-12">
-                            <Snackbar className="snackbar"/>
+                                <Snackbar className="snackbar" />
                             </div>
-                            
+
                         </Form>
                     </Jumbotron>
                 </Col>
@@ -230,7 +271,7 @@ const CheckoutForm = ({
                             >Go to cart to make changes</Button>
                         </Link>
                         <div id="user-page-snackbar" className="col-12">
-                        <Snackbar className="snackbar"/>
+                            <Snackbar className="snackbar" />
                         </div>
                     </Jumbotron>
                 </Col>
@@ -244,7 +285,7 @@ const mapStateToProps = ({ cartReducer: { cartProducts } }) => ({
 });
 
 const mapDispatchToProps = ({
-    setShowSnackbar, setSnackbarText
+    setShowSnackbar, setSnackbarText, clearCart
 })
 
 export default withStoreService()(
