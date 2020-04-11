@@ -25,9 +25,9 @@ const FilterItem = props => {
     return (
         <div className="filter-item">
 
-            <FontAwesome name="plus" className="btn btn-outline-primary plus-button" onClick={changeHandler}></FontAwesome>
+            <FontAwesome name="plus" className="btn btn-outline-primary plus-button expand-button" onClick={changeHandler}></FontAwesome>
 
-            <p className="filter-name">{type}</p>
+            <p className="filter-name">By {type}:</p>
             <ul className={listClass}>{elements}</ul>
         </div>
     );

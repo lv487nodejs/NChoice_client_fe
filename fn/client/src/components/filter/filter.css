@@ -1,20 +1,12 @@
-.filter-item{
-    text-transform: capitalize;
-    position:relative;
-    padding: 1rem; 
-    margin: 1rem 0;
-    display: flex;
-    flex-direction: column;
-    outline:1px solid black;
-}
-
 .filter-group{
-  outline: 1px solid black;
   font-family: Oswald;
   padding-top: 1rem;
   margin: 2rem;
   text-transform: uppercase;
+  font-size: 1.5rem;
 }
-.filter-group span{
-  padding: 2rem 1rem; 
+
+.filter-title {
+  display: block;
+  margin-bottom: 1rem;
 }

@@ -45,26 +45,24 @@ const ProductListPage = ({
   const clearAllHandler = () => {
     clearFilter()
   }
-  const sortByPriceOptions = [
-    {
-      text: 'sort by price',
+  const sortByPriceOptions = {
+      text: 'PRICE',
       value: sortAsc,
       handler: sortByPriceHandler,
       variant: 'dark',
       defaultClass: 'fas fa-sort-up',
       toChangeClass: 'fas fa-sort-down',
-    },
-  ];
-  const sortByRateOptions = [
+    };
+  const sortByRateOptions =
     {
-      text: 'sort by rate',
+      text: 'RATE',
       value: sortAsc,
       handler: sortByRateHandler,
       variant: 'dark',
       defaultClass: 'fas fa-sort-up',
       toChangeClass: 'fas fa-sort-down',
-    },
-  ];
+    };
+
   useEffect(() => {
     catalogLoaded(catalog);
     setCatalogFilter(catalog);
@@ -91,19 +89,21 @@ const ProductListPage = ({
   return (
     <div>
       <h2 className="catalog-top-name">{catalog} Catalog</h2>
-      <div className="product-list-page">
-        <div className="products-options">
+      <div className="products-options">
           <SearchBar />
-          <Button variant="dark" onClick={clearAllHandler}>Clear filters</Button>
-
-          <ProductSort options={sortByPriceOptions} />
-          <ProductSort options={sortByRateOptions} />
+          <Button className="clear-button" variant="dark" onClick={clearAllHandler}>CLEAR FILTERS</Button>
+          <div className="sort-buttons">
+            <h5>SORT BY:</h5>
+            <ProductSort options={sortByPriceOptions} />
+            <ProductSort options={sortByRateOptions} />
+          </div>
           <ProductListButtonPages
             changeItems={changeItemsMethod}
             changeCurrentPage={changePagination}
             className="buttonsGroup productListButtons "
           />
         </div>
+      <div className="product-list-page">
         <div className="filters">
           <Filter />
         </div>
