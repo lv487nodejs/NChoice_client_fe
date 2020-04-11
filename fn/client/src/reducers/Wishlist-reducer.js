@@ -1,5 +1,7 @@
+const productCollection = JSON.parse(localStorage.getItem("wishlist-collection"));
+
 const initialState = {
-    products: [],
+    products: productCollection || [],
   };
 
   export default (state = initialState, action) => {
