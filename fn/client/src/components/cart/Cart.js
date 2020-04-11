@@ -120,4 +120,6 @@ const mapStateToProps =
   ({cartReducer: {cartProducts}, productsList: { currency, currencyIcon } }) =>
   ({cartProducts, currency, currencyIcon });
 
-export default connect(mapStateToProps, { addToCart, increaseToCart, decreaseFromCart, removeFromCart })(Cart);
+const mapDispatchToProps = { addToCart, increaseToCart, decreaseFromCart, removeFromCart };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
