@@ -178,6 +178,7 @@ const CheckoutForm = ({
                                     <Form.Label>Contact Phone Number</Form.Label>
                                     <Form.Control
                                         required
+                                        type="number"
                                         placeholder={placeholder}
                                         name="contactPhone"
                                         onChange={handleChange}
