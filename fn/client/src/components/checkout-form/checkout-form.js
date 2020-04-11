@@ -146,7 +146,7 @@ const CheckoutForm = ({
                         <h2>Order Form</h2>
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <fieldset className="field">
-                                <h3 className="text-center">Please fill in your Firstname</h3>
+                                <h3 className="text-center">Please tell us about yourself</h3>
 
                                 <Form.Group controlId="firstNameValidate">
                                     <Form.Label>Firstname</Form.Label>
