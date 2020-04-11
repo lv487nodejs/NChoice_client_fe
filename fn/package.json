@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node fn/server.js",
+    "start": "node fn/fn/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "client": "npm run start --prefix client",
