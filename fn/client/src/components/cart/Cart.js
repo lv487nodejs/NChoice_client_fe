@@ -18,45 +18,48 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
   const [products, setProducts] = useState(cartProducts)
     let cartId
 
-  useEffect(
-      () => {
-        if (userId)
-          {
-            storeService.getUserById(userId, accessToken).then((res) => {
-                cartId = res.data.user.cart._id
-                cartService.getCartById(cartId).then((res) => {
-                    const cartItemRes = res.cartItems
-                    console.log(cartItemRes)
-                        cartItemRes.map( el => storeService.getProductById(el.productId)
-                            .then((res) => {const filteredItem = res.propetries.filter((el) => el._id[0] === cartItemRes.productSizeId)
-                    const productToSend = { ...product, propetries: _id[0] }
-                    addToCart(productToSend);))}
+    useEffect(
+        () => {
+            if (userId)
+            {
+                storeService.getUserById(userId, accessToken).then((res) => {
+                    cartId = res.data.user.cart._id
+                    cartService.getCartById(cartId).then((res) => {
+                        const cartItemRes = res.cartItems
+                        console.log(cartItemRes)
+                        const productByCartPromises = cartItemRes.map(item => storeService.getProductById(item.productId));
+                        Promise.all(productByCartPromises).then(responses => {
+                            responses.forEach((item, index) => {
+                                if (cartItemRes && cartItemRes.length) {
+                                    const allItemsFromBack = ({...item, propetries: item.propetries.filter(itemProperty => itemProperty['_id'] === cartItemRes[index].productSizeId)[0]})
+                                    console.log(allItemsFromBack)
+                                }
+                            });
+                        });
+                    })
                 })
+            } else if (localStorage.getItem('products-collection')) {
+                setProducts(JSON.parse(localStorage.getItem('products-collection')));
+                const cartItem = {cartItems: [localStorage.getItem('products-collection')]}}
 
-            })
-        }
-        //     {
-        //       storeService.getUserById(userId, accessToken).then((res) => {
-        //         cartId = res.data.user.cart._id
-        //           const toBackItems = cartProducts.map(el => {
-        //                   return {
-        //                       productId: el.id,
-        //                       productSizeId: el.propetries._id,
-        //                       quantity: el.quantity
-        //                   }
-        //               })
-        //           const readyItemsToBackend = {
-        //             cartItems: toBackItems,
-        //               userId: userId
-        //           }
-        //            cartService.updateCart(cartId, readyItemsToBackend)
-        //       })
-        //     }
-        else if (localStorage.getItem('products-collection')) {
-      setProducts(JSON.parse(localStorage.getItem('products-collection')));
-      const cartItem = {cartItems: [localStorage.getItem('products-collection')]}
-    }
-  }, []);
+            return () => {
+                storeService.getUserById(userId, accessToken).then((res) => {
+                    cartId = res.data.user.cart._id
+                const toBackItems = cartProducts.map(el => {
+                return {
+                    productId: el.id,
+                    productSizeId: el.propetries._id,
+                    quantity: el.quantity
+                }
+                })
+                    const readyItemsToBackend = {
+                        cartItems: toBackItems,
+                        userId: userId
+                    }
+                    cartService.updateCart(cartId, readyItemsToBackend)
+                })
+            }
+        }, []);
 
   const handleIncreaseToCart = (item) => {
     increaseToCart(item);
