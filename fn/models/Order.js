@@ -5,6 +5,10 @@ const { Schema } = mongoose;
 const OrderSchema = new Schema({
     firstName: { type: String },
     lastName: { type: String },
+    email: { 
+        type: String, 
+        required: true
+        },
     orderItems: [{
         item: {
             type: Schema.Types.ObjectId,
