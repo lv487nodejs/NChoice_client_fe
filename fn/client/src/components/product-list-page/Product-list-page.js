@@ -14,9 +14,11 @@ import {
   addSortByPrice,
   addSortByRate,
   setCatalogFilter,
+  clearFilter,
 } from '../../actions';
 import withStoreService from '../hoc';
 import ProductSort from '../product-sort';
+import { Button } from 'react-bootstrap';
 
 const sortAsc = 1;
 
@@ -29,6 +31,7 @@ const ProductListPage = ({
   pagesCount,
   setCatalogFilter,
   catalog,
+  clearFilter,
 }) => {
 
   const sortByPriceHandler = (value) => {
@@ -38,6 +41,9 @@ const ProductListPage = ({
   const sortByRateHandler = (value) => {
     addSortByPrice(0)
     addSortByRate(value)
+  }
+  const clearAllHandler = () => {
+    clearFilter()
   }
   const sortByPriceOptions = [
     {
@@ -88,6 +94,8 @@ const ProductListPage = ({
       <div className="product-list-page">
         <div className="products-options">
           <SearchBar />
+          <Button variant="dark" onClick={clearAllHandler}>Clear filters</Button>
+
           <ProductSort options={sortByPriceOptions} />
           <ProductSort options={sortByRateOptions} />
           <ProductListButtonPages
@@ -120,6 +128,7 @@ const mapDispatchToProps = {
   addSortByPrice,
   addSortByRate,
   setCatalogFilter,
+  clearFilter,
 };
 
 export default withStoreService()(
