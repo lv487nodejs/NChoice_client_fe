@@ -31,7 +31,7 @@ const CheckoutTable = ({ cartProducts, currency, currencyIcon}) => {
             </thead>
             <tbody>
                 {cartProducts.map(productRow =>
-                    <tr key={productRow.id}>
+                    <tr key={productRow.propetries._id}>
                         <td>
                             <img
                                 className="order-tbl-img"

@@ -15,7 +15,7 @@ import {
   productsLoadingStop
 } from './Products-actions';
 
-import { addToCart, increaseToCart, decreaseFromCart, removeFromCart } from './Cart-action'
+import { addToCart, increaseToCart, decreaseFromCart, removeFromCart, clearCart } from './Cart-action'
 import { addToWishlist, removeFromWishlist } from './Wishlist-actions'
 
 import {
@@ -90,4 +90,5 @@ export {
   filterRemoveAllColors,
   filterAddCategory,
   clearFilter,
+  clearCart 
 };

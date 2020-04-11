@@ -21,24 +21,37 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
   useEffect(
       () => {
         if (userId)
-        {
-          storeService.getUserById(userId, accessToken).then((res) => {
-            const { cart } = res.data.user
-            cartId = res.data.user.cart._id
-              const toBackItems = cartProducts.map(el => {
-                      return {
-                          productId: el.id,
-                          productSizeId: el.propetries._id,
-                          quantity: el.quantity
-                      }
-                  })
-              const readyCartToSend = {
-                cartItems: toBackItems,
-                  userId: userId
-              }
-               cartService.updateCart(cartId, readyCartToSend)
-          })
+          {
+            storeService.getUserById(userId, accessToken).then((res) => {
+                cartId = res.data.user.cart._id
+                cartService.getCartById(cartId).then((res) => {
+                    const cartItemRes = res.cartItems
+                    console.log(cartItemRes)
+                        cartItemRes.map( el => storeService.getProductById(el.productId)
+                            .then((res) => {const filteredItem = res.propetries.filter((el) => el._id[0] === cartItemRes.productSizeId)
+                    const productToSend = { ...product, propetries: _id[0] }
+                    addToCart(productToSend);))}
+                })
+
+            })
         }
+        //     {
+        //       storeService.getUserById(userId, accessToken).then((res) => {
+        //         cartId = res.data.user.cart._id
+        //           const toBackItems = cartProducts.map(el => {
+        //                   return {
+        //                       productId: el.id,
+        //                       productSizeId: el.propetries._id,
+        //                       quantity: el.quantity
+        //                   }
+        //               })
+        //           const readyItemsToBackend = {
+        //             cartItems: toBackItems,
+        //               userId: userId
+        //           }
+        //            cartService.updateCart(cartId, readyItemsToBackend)
+        //       })
+        //     }
         else if (localStorage.getItem('products-collection')) {
       setProducts(JSON.parse(localStorage.getItem('products-collection')));
       const cartItem = {cartItems: [localStorage.getItem('products-collection')]}
@@ -47,13 +60,13 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
 
   const handleIncreaseToCart = (item) => {
     increaseToCart(item);
-    let foundIncreaseItems = products.find(value => value.id === item.id);
+    let foundIncreaseItems = products.find(value => value.propetries._id === item.propetries._id);
     foundIncreaseItems.quantity += 1;
   };
 
   const handleDecreaseFromCart = (item) => {
-    let foundIncreaseItems = products.find(value => value.id === item.id);
-    let foundToRemove = products.findIndex(value => value.id === item.id);
+    let foundIncreaseItems = products.find(value => value.propetries._id === item.propetries._id);
+    let foundToRemove = products.findIndex(value => value.propetries._id === item.propetries._id);
     if (foundIncreaseItems.quantity === 1) {
       products.splice(foundToRemove, 1);
     } else {
@@ -64,7 +77,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
 
   const handleRemoveFromCart = (item) => {
     removeFromCart(item);
-    let foundIncreaseItems = products.findIndex(value => value.id === item.id);
+    let foundIncreaseItems = products.findIndex(value => value.propetries._id === item.propetries._id);
     products.splice(foundIncreaseItems, 1)
   };
 
@@ -98,7 +111,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
       <h5>{products.length < 1 && <em> Please add some products to cart.</em>}</h5>
       <ul className='cart-wrap'>
         {products.map((item) => (
-          <li key={item.id} className='cart-item'>
+          <li key={item.propetries._id} className='cart-item'>
             <Container>
               <Row>
                 <Figure.Image src={`/images/products/${item.images[0]}`} className='cart-img' />

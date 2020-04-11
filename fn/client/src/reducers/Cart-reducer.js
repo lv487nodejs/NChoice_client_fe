@@ -8,7 +8,8 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case "ADD_PRODUCT_TO_CART":
       let newProducts = [...state.cartProducts];
-      let foundProduct = newProducts.find(item => action.payload.id === item.id);
+      let foundProduct = newProducts.find(
+        item => (action.payload.id === item.id || action.payload.id === item.productId )&& (action.payload.propetries.size === item.propetries.size || action.payload.propetries._id === item.productSizeId));
       if (foundProduct) {
         foundProduct.quantity++;
       } else {
@@ -25,7 +26,7 @@ export default (state = initialState, action) => {
 
     case "INCREASE_TO_CART":
       let newIncreaseProducts = [...state.cartProducts];
-      let foundIncreaseItems = newIncreaseProducts.find(item => action.payload.id === item.id);
+      let foundIncreaseItems = newIncreaseProducts.find(item => action.payload.propetries._id === item.propetries._id);
       foundIncreaseItems.quantity += 1;
       localStorage.setItem("products-collection", JSON.stringify(newIncreaseProducts));
       localStorage.setItem("cart-numbers", (state.cartNumbers + 1));
@@ -38,11 +39,11 @@ export default (state = initialState, action) => {
 
     case "DECREASE_TO_CART":
       let new_products = [...state.cartProducts];
-      let foundItem = new_products.find(item => action.payload.id === item.id);
+      let foundItem = new_products.find(item => action.payload.propetries._id === item.propetries._id);
 
       //if the quantity == 0 then it should be removed
       if (foundItem.quantity === 1) {
-        let new_items = state.cartProducts.filter(item => action.payload.id !== item.id);
+        let new_items = state.cartProducts.filter(item => item => action.payload.propetries._id === item.propetries._id);
         localStorage.setItem("products-collection", JSON.stringify(new_items));
         localStorage.setItem("cart-numbers", (state.cartNumbers - 1));
 
@@ -64,8 +65,8 @@ export default (state = initialState, action) => {
       }
 
     case "REMOVE_FROM_CART":
-      let newItems = state.cartProducts.filter(item => action.payload.id !== item.id);
-      let itemToRemove = state.cartProducts.find(item => action.payload.id === item.id);
+      let newItems = state.cartProducts.filter(item => action.payload.propetries._id !== item.propetries._id);
+      let itemToRemove = state.cartProducts.find(item => action.payload.propetries._id === item.propetries._id);
       let quantity = 0;
       if (itemToRemove) {
         localStorage.setItem("products-collection", JSON.stringify(newItems));
@@ -90,6 +91,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currency: action.payload
+      };
+
+    case "CLEAR_CART":
+      return {
+        ...state,
+        cartProducts: [],
+        cartNumbers: 0
       };
 
     default:

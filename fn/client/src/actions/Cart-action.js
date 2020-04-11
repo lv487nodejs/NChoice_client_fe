@@ -26,11 +26,18 @@ const removeFromCart = (productName) => {
   }
 };
 
+const clearCart = () => {
+  return{
+      type: 'CLEAR_CART',
+  }
+};
+
 export  {
   addToCart,
   increaseToCart,
   decreaseFromCart,
   removeFromCart,
+  clearCart
 }
 
 
