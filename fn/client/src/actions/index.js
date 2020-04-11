@@ -15,8 +15,9 @@ import {
   productsLoadingStop
 } from './Products-actions';
 
-import { addToCart, increaseToCart, decreaseFromCart, removeFromCart } from './Cart-action'
+import { addToCart, increaseToCart, decreaseFromCart, removeFromCart, clearCart } from './Cart-action'
 import { addToWishlist, removeFromWishlist } from './Wishlist-actions'
+import { setOrderToStore, clearOrderStore } from './Checkout-actions'
 
 import {
   catalogsLoaded,
@@ -26,7 +27,7 @@ import {
 
 import {
   filterAddBrand,
-  filterAddCategory,
+  filterAddCategories,
   filterAddColor,
   filterRemoveCategory,
   filterRemoveAllCategories,
@@ -36,6 +37,9 @@ import {
   filterByName,
   setSearchValue,
   setCatalogFilter,
+  filterRemoveAllColors,
+  filterAddCategory,
+  clearFilter,
 } from './Filter-actions';
 
 import {
@@ -55,7 +59,7 @@ export {
   productsLoadingStop,
   currencyChange,
   filterAddBrand,
-  filterAddCategory,
+  filterAddCategories,
   filterAddColor,
   filterRemoveBrand,
   filterRemoveAllBrands,
@@ -84,4 +88,10 @@ export {
   removeFromWishlist,
   setShowSnackbar,
   setSnackbarText,
+  filterRemoveAllColors,
+  filterAddCategory,
+  clearFilter,
+  clearCart,
+  setOrderToStore,
+  clearOrderStore 
 };

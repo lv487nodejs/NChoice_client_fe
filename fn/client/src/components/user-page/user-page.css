@@ -1,12 +1,13 @@
 .user-page-container {
     display: flex !important;
     flex-direction: row;
+    justify-content: center;
     width: 100%;
 }
 
 .user-page-container label {
-    height: 3rem;
     line-height: 1rem;
+    margin-top: 1rem;
 }
 
 .user-page-container .main-cart {
@@ -19,7 +20,6 @@
     flex-direction: column;
     align-items: stretch;
     flex: 3 1 30%;
-
 }
 
 .user-page-container ul li {
@@ -30,14 +30,28 @@
     width: 100%;
 }
 
-
 @media screen and (max-width:1200px) {
     .user-page-container {
         flex-direction: column;
         align-items: center;
+        width: 100%;
+    }
+    .user-page-container .container {
+        
+        width: 60%;
     }
     .user-page-container ul {
         flex-direction: row;
-        align-items: center;
+        align-items: stretch;
+    }
+}
+@media screen and (max-width:992px) {
+    
+    .user-page-container {
+        justify-content: stretch;
+    }
+    .user-page-container .container {
+        
+        width: 60%;
     }
 }

@@ -1,36 +1,34 @@
 const addToCart = (productName) => {
-  return (dispatch) => {
-    dispatch({
+  return {
       type: 'ADD_PRODUCT_TO_CART',
-      payload: productName
-    })
+      payload: productName    
   }
 };
 
 const increaseToCart = (productName) => {
-  return(dispatch) => {
-    dispatch({
+  return{
       type: 'INCREASE_TO_CART',
-      payload: productName
-    })
+      payload: productName    
   }
 };
 
 const decreaseFromCart = (productName) => {
-  return(dispatch) => {
-    dispatch({
+  return{
       type: 'DECREASE_TO_CART',
-      payload: productName
-    })
+      payload: productName    
   }
 };
 
 const removeFromCart = (productName) => {
-  return(dispatch) => {
-    dispatch({
+  return{
       type: 'REMOVE_FROM_CART',
       payload: productName
-    })
+  }
+};
+
+const clearCart = () => {
+  return{
+      type: 'CLEAR_CART',
   }
 };
 
@@ -39,6 +37,7 @@ export  {
   increaseToCart,
   decreaseFromCart,
   removeFromCart,
+  clearCart
 }
 
 

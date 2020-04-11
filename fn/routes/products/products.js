@@ -17,29 +17,37 @@ router.get('/', async (req, res) => {
     currentpage = currentpage || 0;
     postsperpage = postsperpage || 15;
     let skip = currentpage * postsperpage;
-    const { sortbyprice } = query;
-    const { sortbyrate } = query;
 
-    try {
-        const filter = await getFilters(query);
-        const projection = await getProjection(query);
-        const sort = await getSort(query);
-        const products = await Products.find(filter, projection)
-            .sort(sort)
-            .skip(+skip)
-            .limit(+postsperpage)
-            .sort({ rate: sortbyrate })
-            .sort({ price: sortbyprice })
-            .populate('catalog')
-            .populate('category')
-            .populate('color')
-            .populate('brand');
+  try {
+    const filter = await getFilters(query);
+    const projection = await getProjection(query);
+    const sort = await getSort(query);
+    let products = await Products.find(filter, projection)
+      .sort(sort)
+      .skip(+skip)
+      .limit(+postsperpage)
+      .populate('catalog')
+      .populate('category')
+      .populate('color')
+      .populate('brand');
 
-        if (!products) {
-            throw { message: 'Products not found ' };
-        }
-        const productsToSend = prepareProductsToSend(products);
-        const foundProductsNumber = await Products.find(filter).count();
+    if (products.length === 0 && isNotBlank(query.searchTerm)) {
+      await updateSearchFilter(query, filter);
+
+      products = await Products.find(filter, projection)
+        .sort(sort)
+        .skip(+skip)
+        .limit(+postsperpage)
+        .populate('catalog')
+        .populate('category')
+        .populate('color')
+        .populate('brand');
+    }
+    if (!products) {
+      throw { message: 'Products not found ' };
+    }
+    const productsToSend = prepareProductsToSend(products);
+    const foundProductsNumber = await Products.find(filter).count();
 
         if (!foundProductsNumber) {
             throw { message: 'Products not found ' };
@@ -66,6 +74,22 @@ router.get('/:id', async (req, res) => {
         return res.status(500).send({ message: err.message });
     }
 });
+
+
+router.get('/propetries/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const productPropetrie = await Products.findOne({ 'propetries._id': id })
+            .select('propetries');
+        const newProp = productPropetrie.propetries.filter((propetry) => propetry._id.toString() === id);
+        res.send(newProp);
+    } catch (err) {
+        return res.status(500).send({ message: err.message });
+    }
+
+})
+
 
 router.post('/', productValidationRules(), validate, async (req, res) => {
     const { title, description, images, propetries, price, mrsp } = req.body;
@@ -142,6 +166,17 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+const updateSearchFilter = async (query, filter) => {
+  const { searchTerm } = query;
+
+  delete filter["$text"];
+  let regexp = new RegExp("\.*" + searchTerm.trim() + ".*\i");
+  filter.$or = [
+    { title: regexp },
+    { description: regexp }
+  ];
+};
+
 const getFilters = async query => {
     const { catalog, category, color, brand, searchTerm } = query;
     const filter = {};
@@ -189,14 +224,20 @@ const getProjection = async query => {
 };
 
 const getSort = async query => {
-    const { searchTerm } = query;
+    const { searchTerm,sortbyprice,sortbyrate } = query;
     const sort = {};
 
-    if (isNotBlank(searchTerm)) {
-        // sort by relevance
-        sort.score = { $meta: 'textScore' };
-    }
-    return sort;
+  if (isNotBlank(sortbyrate)) {
+    sort.rate = sortbyrate;
+  }
+  if (isNotBlank(sortbyprice)) {
+    sort.price = sortbyprice;
+  }
+  else if (isNotBlank(searchTerm)) {
+    // sort by relevance
+    sort.score = { $meta: "textScore" };
+  }
+  return sort;
 };
 
 const prepareProductsToSend = products => {

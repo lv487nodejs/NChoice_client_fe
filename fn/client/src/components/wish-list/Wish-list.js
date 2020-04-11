@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Container from "@material-ui/core/Container/Container";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import {removeFromWishlist} from "../../actions";
+import { addToWishlist, removeFromWishlist } from "../../actions";
 
 const Wishlist = ({removeFromWishlist}) => {
 
@@ -33,7 +33,6 @@ const Wishlist = ({removeFromWishlist}) => {
           <li key={item.id} className='wishlist-item'>
             <Container>
               <Row>
-
                 <Figure.Caption className='wishlist-title'>
                   <h2 className="item-title">{item.title}</h2>
                   <p className="item-description"><Figure.Image src={`/images/products/${item.images[0]}`} className='wishlist-img'/>
@@ -55,4 +54,4 @@ const Wishlist = ({removeFromWishlist}) => {
 
 const mapStateToProps = ({wishlistReducer: {products}}) => ({products});
 
-export default connect(mapStateToProps, {removeFromWishlist})(Wishlist);
+export default connect(mapStateToProps, {addToWishlist,removeFromWishlist})(Wishlist);

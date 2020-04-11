@@ -9,6 +9,7 @@ import {
   filterRemoveAllCategories,
   filterByName,
   setCatalogFilter,
+  clearFilter,
 } from '../../actions';
 import withStoreService from '../hoc';
 import AppHeaderNavLeftItem from '../app-header-nav-left-item';
@@ -23,6 +24,7 @@ const AppHeaderNavLeft = ({
   filterRemoveAllCategories,
   filterByName,
   setCatalogFilter,
+  clearFilter,
 }) => {
   const [isShown, setIsShown] = useState('');
 
@@ -38,12 +40,19 @@ const AppHeaderNavLeft = ({
     setIsShown('');
   };
   const filterAddCategoryHandler = (category, catalog) => {
-    filterRemoveAllCategories();
+
     filterByName('');
+    clearFilter();
     filterAddCategory(category);
     setCatalogFilter(catalog);
-
   };
+
+  const filterAddCatalog = (catalog) => () => {
+    filterByName('');
+    clearFilter();
+    setCatalogFilter(catalog);
+  };
+
   const items = catalogs.map((catalog) => (
     <li
       key={catalog._id}
@@ -51,7 +60,7 @@ const AppHeaderNavLeft = ({
       onMouseEnter={(e) => onEnter(e, catalog.catalog)}
       onMouseLeave={onLeave}
     >
-      <AppHeaderNavLeftItem catalog={catalog.catalog} />
+      <AppHeaderNavLeftItem catalog={catalog.catalog} catalogHandler={filterAddCatalog} />
       {isShown === catalog.catalog && (
         <div key={catalog.catalog} className="drop-down-container">
           <AppHeaderNavLeftItemDropDown
@@ -82,6 +91,7 @@ const mapDispatchToProps = {
   filterRemoveAllCategories,
   filterByName,
   setCatalogFilter,
+  clearFilter,
 };
 
 export default withStoreService()(

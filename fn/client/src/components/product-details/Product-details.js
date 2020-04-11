@@ -5,44 +5,49 @@ import './Product-details.css';
 import { Card, Row, Col, Image, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import ProductList from '../product-list';
+import SimularProducts from '../simular-products/Simular-products';
 import StarsRating from '../star-rating';
- 
+import LoadingSpinner from '../Loading-spinner';
+
 import withStoreService from '../hoc';
 import {
   setProduct,
-  productsLoadingStart,
+  setProducts,
   catalogLoaded,
   sizesLoaded,
   addToCart,
-  addToWishlist
+  addToWishlist,
+  productsLoadingStart,
+  productsLoadingStop
 } from '../../actions';
 
 const ProductDetails = ({
   id,
   product,
+  loading,
   setProduct,
-  productsLoadingStart,
+  setProducts,
   storeService,
   products,
   addToCart,
-  addToWishlist
+  addToWishlist,
+  productsLoadingStart,
+  productsLoadingStop
 }) => {
 
   const [getSizes, setSizes] = useState([]);
   const [checkSize, setCheckSize] = useState('');
 
   useEffect(() => {
-    productsLoadingStart();
-    storeService.getProductById(id).then((res) => setProduct(res));
-  }, [productsLoadingStart, storeService, id, setProduct]);
-
-  useEffect(() => {
+    productsLoadingStart()
+    if (!products.length) {
+      storeService.getAllProducts().then((res) => setProducts(res))
+    }
     storeService.getProductProperties(id).then((res) => setSizes(res));
-  }, [id, storeService]);
+    storeService.getProductById(id).then((res) => setProduct(res));
+  }, [storeService, id, setProduct, setSizes, productsLoadingStart, productsLoadingStop, setProducts, products.length]);
 
-
-  const newProducts = products.filter(elem => elem.category === product.category).slice(-3)
+  const newProducts = products.slice(-3)
 
   const handleCheck = item => () => {
     setCheckSize(item)
@@ -64,7 +69,12 @@ const ProductDetails = ({
       </div>
     ));
 
+  if (loading) {
+    return <LoadingSpinner />
+  }
+
   return (
+    
     <Card className="wrapper">
       <Card.Body className="cardBody">
         <Row className="justify-content-md-center">
@@ -100,7 +110,7 @@ const ProductDetails = ({
           </Col>
         </Row>
         <Col className="text">
-          <StarsRating />
+          <StarsRating rating={product.rate} />
           <Card.Title className="title">{product.title}</Card.Title>
           <Card.Text className="productDescription">
             {product.description}
@@ -117,12 +127,12 @@ const ProductDetails = ({
             variant="dark" 
             className={checkSize ? 'button' : 'button disabled'}
             onClick={handleAddToCart}
-            >Add to card </Button>
+            >Add to cart </Button>
             <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none'}>
               <Button
                 variant="dark"
                 onClick={handleAddToCart}
-              >Add to card and checkout</Button>
+              >Buy now</Button>
             </Link>
           </Card.Body>
         </Col>
@@ -130,7 +140,7 @@ const ProductDetails = ({
       <hr />
       <div className="similarItems">Similar items</div>
       <hr />
-      <ProductList products={newProducts} className="routingImg" />
+      <SimularProducts products={newProducts} className="routingImg" />
     </Card>
   );
 };
@@ -145,11 +155,13 @@ const mapStateToProps = ({
 });
 const mapDispatchToProps = {
   setProduct,
-  productsLoadingStart,
+  setProducts,
   catalogLoaded,
   sizesLoaded,
   addToCart,
-  addToWishlist
+  addToWishlist,
+  productsLoadingStart,
+  productsLoadingStop
 };
 
 export default withStoreService()(

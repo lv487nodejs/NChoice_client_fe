@@ -20,13 +20,13 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
 
   const handleIncreaseToCart = (item) => {
     increaseToCart(item);
-    let foundIncreaseItems = products.find(value => value.id === item.id);
+    let foundIncreaseItems = products.find(value => value.propetries._id === item.propetries._id);
     foundIncreaseItems.quantity += 1;
   };
 
   const handleDecreaseFromCart = (item) => {
-    let foundIncreaseItems = products.find(value => value.id === item.id);
-    let foundToRemove = products.findIndex(value => value.id === item.id);
+    let foundIncreaseItems = products.find(value => value.propetries._id === item.propetries._id);
+    let foundToRemove = products.findIndex(value => value.propetries._id === item.propetries._id);
     if (foundIncreaseItems.quantity === 1) {
       products.splice(foundToRemove, 1);
     } else {
@@ -37,7 +37,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
 
   const handleRemoveFromCart = (item) => {
     removeFromCart(item);
-    let foundIncreaseItems = products.findIndex(value => value.id === item.id);
+    let foundIncreaseItems = products.findIndex(value => value.propetries._id === item.propetries._id);
     products.splice(foundIncreaseItems, 1)
   };
 
@@ -49,7 +49,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
   });
 
   products.map(i => {
-    const price = i.msrp * i.quantity;
+    const price = i.mrsp * i.quantity;
     return fullPrices.push(price)
   });
 
@@ -71,7 +71,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
       <h5>{products.length < 1 && <em> Please add some products to cart.</em>}</h5>
       <ul className='cart-wrap'>
         {products.map((item) => (
-          <li key={item.id} className='cart-item'>
+          <li key={item.propetries._id} className='cart-item'>
             <Container>
               <Row>
                 <Figure.Image src={`/images/products/${item.images[0]}`} className='cart-img' />
@@ -79,7 +79,7 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
                   {item.title}
                   <p> Price:
                   <span className="price">{item.price * currency * item.quantity} {currencyIcon}</span>
-                  <span className="msrp-price">{item.msrp * currency * item.quantity} {currencyIcon}</span>
+                  <span className="msrp-price">{item.mrsp * currency * item.quantity} {currencyIcon}</span>
                   </p>
                   <p> Size: <span>{item.propetries.size[0]}</span> </p>
                   <div className="quantity-control">
@@ -102,20 +102,24 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
             </Container>
           </li>
         ))}
-        <Link to="/checkout" className={products.length >= 1 ? 'disp-block' : 'disp-none' }>
-              <Button
-                variant="dark"
-              >Go to checkout</Button>
-            </Link>
-        <h5>{products.length >= 1 && <em>Total: {total}</em>}</h5>
-        <h5>{products.length >= 1 && <em>Sale: {sale}</em>}</h5>
+        <div className='checkout-wrap'>
+          <h5>{products.length >= 1 && <em>Total: {total} {currencyIcon} </em>} </h5>
+          <h5>{products.length >= 1 && <em>Sale: {sale} {currencyIcon}</em>} </h5>
+          <Link to="/checkout" className={products.length >= 1 ? 'disp-block' : 'disp-none' }>
+            <Button
+              variant="dark"
+            >Go to checkout</Button>
+          </Link>
+        </div>
       </ul>
     </div>
   )
 };
 
-const mapStateToProps = 
-  ({cartReducer: {cartProducts}, productsList: { currency, currencyIcon } }) => 
+const mapStateToProps =
+  ({cartReducer: {cartProducts}, productsList: { currency, currencyIcon } }) =>
   ({cartProducts, currency, currencyIcon });
 
-export default connect(mapStateToProps, { addToCart, increaseToCart, decreaseFromCart, removeFromCart })(Cart);
+const mapDispatchToProps = { addToCart, increaseToCart, decreaseFromCart, removeFromCart };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

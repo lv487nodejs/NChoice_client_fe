@@ -7,7 +7,11 @@ import Currency from '../currency';
 import { connect } from 'react-redux';
 import { setUserLogged } from "../../actions";
 
-const AppHeaderNavRight = ({ cartNumbers, setUserLogged , userLogged }) => {
+const AppHeaderNavRight = ({ setUserLogged , userLogged }) => {
+  let cartNumbers = 0;
+  if (localStorage.getItem("cart-numbers")) {
+    cartNumbers = localStorage.getItem("cart-numbers");
+  }
 
   const handleLogOut = () => {
     setUserLogged(false)

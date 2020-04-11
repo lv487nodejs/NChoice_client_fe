@@ -6,9 +6,6 @@ const instate = {
   category: [],
   color: [],
   catalogFilter: '',
-  receivedBrands: [],
-  receivedCategories: [],
-  receivedColors: [],
   searchTerm: '',
   searchValue: '',
 };
@@ -28,6 +25,17 @@ const filter = (state = instate, action) => {
       };
     }
 
+    case 'CLEAR_FILTER': {
+      return {
+        ...state,
+        brand: [],
+        category: [],
+        color: [],
+        searchTerm: '',
+        searchValue: '',
+      }
+    }
+
     case 'FILTER_REMOVE_BRAND': {
       return {
         ...state,
@@ -37,11 +45,27 @@ const filter = (state = instate, action) => {
     case 'FILTER_REMOVE_ALL_BRANDS': {
       return {
         ...state,
-        brand: []
+        brand: [],
       };
     }
+    case 'FILTER_REMOVE_ALL_COLORS': {
+      return {
+        ...state,
+        brand: [],
+      };
+    }
+    case 'FILTER_ADD_CATEGORIES': {
+      return {
+        ...state,
+        category: [...state.category, action.payload]
+      };
+    }
+
     case 'FILTER_ADD_CATEGORY': {
-      return { ...state, category: [...state.category, action.payload] };
+      return {
+        ...state,
+        category: [action.payload]
+      };
     }
     case 'FILTER_REMOVE_CATEGORY': {
       return {
@@ -53,7 +77,6 @@ const filter = (state = instate, action) => {
       return {
         ...state,
         category: [],
-        catalogFilter: action.payload,
       };
     }
     case 'FILTER_ADD_COLOR': {

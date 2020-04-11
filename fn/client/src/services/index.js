@@ -132,6 +132,12 @@ export default class StoreService {
     const { propetries } = product[0];
     return propetries;
   };
+
+  getOneProductPropertie = async (id) => {
+    const productPropertie = await this.getResource(`products/propetries/${id}`);
+    return productPropertie;
+  };
+
   getAllCarts = async () => {
     const carts = await this.getResource('cart');
     return carts;

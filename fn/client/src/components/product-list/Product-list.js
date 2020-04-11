@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ProductsListItem from '../product-list-item';
 import './Product-list.css';
 import withStoreService from '../hoc';
+import LoadingSpinner from '../Loading-spinner';
 
 import {
   setProducts,
@@ -15,7 +16,7 @@ import {
   addSortByRate,
   addPagesCount,
   filterAddBrand,
-  filterAddCategory,
+  filterAddCategories,
   categoriesLoaded,
   filterAddColor,
   filterRemoveBrand,
@@ -28,28 +29,23 @@ const ProductList = ({
   products,
   storeService,
   setProducts,
-  productsLoadingStart,
-  catalogLoaded,
-  addPostsPerPage,
-  addCurrentPage,
-  categoriesLoaded,
   brand,
   category,
-  catalog,
   color,
+  loading,
   currentPage,
   postsPerPage,
   addPagesCount,
   sortByPrice,
   sortByRate,
   catalogFilter,
-  productsLoadingStop,
+  productsLoadingStart,
   searchTerm,
 }) => {
 
+
   useEffect(() => {
-    catalogLoaded(catalog)
-    setCatalogFilter(catalog)
+    productsLoadingStart()
     storeService
       .getProductsByFilter({
         catalog: catalogFilter,
@@ -63,26 +59,18 @@ const ProductList = ({
         searchTerm,
       })
       .then((res) => {
-        setProducts(res.products);
-        addPagesCount(res.pagesCount);
-        productsLoadingStop();
+          setProducts(res.products);
+          addPagesCount(res.pagesCount);
+      }).catch((error) => {
+        setProducts([]);
       });
-    if (sessionStorage.getItem('postPerPage') !== null) {
-      addPostsPerPage(sessionStorage.getItem('postPerPage'));
-    }
   }, [
-    catalog,
+    catalogFilter,
     setProducts,
     productsLoadingStart,
-    productsLoadingStop,
     storeService,
-    addPostsPerPage,
-    categoriesLoaded,
     addPagesCount,
-    addCurrentPage,
     searchTerm,
-    catalogLoaded,
-    catalogFilter,
     category,
     brand,
     color,
@@ -92,9 +80,17 @@ const ProductList = ({
     sortByRate
   ]);
 
+  if (loading) {
+    return <LoadingSpinner />
+  }
+
+  if (!products.length) {
+    return <h2>No products found</h2>
+  }
+
   return (
     <div className="products-items">
-      {products.map(({ id, title, description, images, price, mrsp }) => (
+      {products.map(({ id, title, description, images, price, mrsp, rate }) => (
         <ProductsListItem
           title={title}
           description={description}
@@ -103,6 +99,7 @@ const ProductList = ({
           mrsp={mrsp}
           id={id}
           key={id}
+          rate={rate}
         />
       ))}
     </div>
@@ -111,10 +108,10 @@ const ProductList = ({
 
 const mapStateToProps = ({
   catalogsList: { catalog },
-  productsList: { products, currentPage, postsPerPage, sortByPrice, sortByRate },
+  productsList: { products, currentPage, postsPerPage, sortByPrice, sortByRate, loading },
   filter: { brand, category, color, searchTerm, catalogFilter },
 
-}) => ({ products, catalog, brand, category, color, searchTerm, catalogFilter, currentPage, postsPerPage, sortByPrice, sortByRate });
+}) => ({ products, loading, catalog, brand, category, color, searchTerm, catalogFilter, currentPage, postsPerPage, sortByPrice, sortByRate });
 
 const mapDispatchToProps = {
   setProducts,
@@ -126,7 +123,7 @@ const mapDispatchToProps = {
   addSortByRate,
   addPagesCount,
   filterAddBrand,
-  filterAddCategory,
+  filterAddCategories,
   filterAddColor,
   filterRemoveBrand,
   filterRemoveCategory,
