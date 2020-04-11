@@ -1,3 +1,26 @@
 .currency-icon {
     cursor: pointer;
 }
+
+#currency{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+    font-family: 'Oswald';
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-family: 'Oswald';
+    text-decoration: none;
+    padding: .5rem 1rem;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+#currency:hover{
+    color:black;
+    background-color:white;
+    text-decoration: none;
+}

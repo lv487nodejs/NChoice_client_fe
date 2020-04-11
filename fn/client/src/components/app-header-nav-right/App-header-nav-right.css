@@ -9,7 +9,7 @@
     padding:0;
 }
 
-.nav-bar a, .nav-bar .currency-button {
+.nav-bar a {
     font-family: 'Oswald';
     text-decoration: none;
     font-size: 1.3rem;
@@ -19,7 +19,7 @@
     text-transform: uppercase;
 }
 
-.nav-bar a:hover, .nav-bar .currency-button:hover {
+.nav-bar a:hover {
     color: black;
     background-color: white;
 }

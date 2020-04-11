@@ -44,13 +44,13 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
   const salePrices = [];
   const fullPrices = [];
   products.map(i => {
-    const price = i.price * i.quantity;
+    const price = (parseFloat(i.price * i.quantity).toFixed(2));
     return salePrices.push(price)
   });
 
   products.map(i => {
-    const price = i.mrsp * i.quantity;
-    return fullPrices.push(price)
+    const mrsp = (parseFloat(i.mrsp * i.quantity).toFixed(2));
+    return fullPrices.push(mrsp)
   });
 
   const fullPrice =
@@ -78,8 +78,8 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
                 <Figure.Caption className='cart-title'>
                   {item.title}
                   <p> Price:
-                  <span className="price">{item.price * currency * item.quantity} {currencyIcon}</span>
-                  <span className="msrp-price">{item.mrsp * currency * item.quantity} {currencyIcon}</span>
+                  <span className="price">{(parseFloat(item.price * currency * item.quantity).toFixed(2))} {currencyIcon}</span>
+                  <span className="msrp-price">{(parseFloat(item.mrsp * currency * item.quantity).toFixed(2))} {currencyIcon}</span>
                   </p>
                   <p> Size: <span>{item.propetries.size[0]}</span> </p>
                   <div className="quantity-control">

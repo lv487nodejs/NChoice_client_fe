@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default class StoreService {
-  _apiBase = 'http://localhost:5000/';
+  _apiBase = 'https://lv487node-backend.herokuapp.com/';
 
   getResource = async (url) => {
     try {
