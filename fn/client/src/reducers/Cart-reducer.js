@@ -165,7 +165,7 @@ export default (state = initialState, action) => {
         cartNumbers: action.payload.cartNumbers,
       };
     case "CLEAR_CART":
-
+  
       if(userId) {
         const cart = { cartNumbers: 0, cartProducts: [] }
         saveCart(userId, cart)

@@ -49,16 +49,15 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const postUser = async () => {
         try {
             setUserLoading();
-            const response = await storeService.loginUser(user);
+            const response = await storeService.loginUser(user); 
+            if (!response) throw new Error('Wrong email or password, please try again.')
             const { accessToken, refreshToken, cart, userId } = response
             setUserLogged(true);
             addDataToLocalStorage({ accessToken, refreshToken, userId });
             setCart(cart)
-        } catch (error) {
-            console.log(error)
+        } catch (err) {
             setUserLogged(false)
-            const { msg } = error.response.data.errors[0]
-            setErrorMsg(msg)
+            setErrorMsg(err.message)
         }
     }
     const handleOnSubmit = event => {

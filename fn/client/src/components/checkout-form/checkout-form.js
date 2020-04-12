@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -9,6 +9,10 @@ import CheckoutSelect from '../checkout-select';
 import withStoreService from '../hoc';
 import './checkout-form.css';
 import Snackbar from '../snackbar';
+
+const snackBarMsg = (badItem) => (`We dont have enough ${badItem.name}
+There are just ${badItem.available}.
+Please go to cart and change amount of ${badItem.name}`)
 
 const orderForm = {
     firstName: '',
@@ -32,29 +36,36 @@ const CheckoutForm = ({
     setSnackbarText,
     setOrderToStore,
 }) => {
-
-    const notAvaliable = [];
-
     // Check the database for quantity of products in order
-    useEffect(() => {
-        cartProducts.map((product) => {
-            storeService.getOneProductPropertie(product.propetries._id)
-                .then((res) => res[0].available)
-                .then((available) => {
-                    const itemAvailable = {
-                        name: product.title,
-                        available: available
-                    }
-                    if (product.quantity > available) {
-                        notAvaliable.push(itemAvailable)
-                        return
-                    }
-                });
-            return notAvaliable
+    const applyOrder = async () => {
+
+    const notAvaliable = []
+    const productsPromises = await Promise.all(cartProducts.map(product => storeService.getOneProductPropertie(product.propetries._id)))
+    productsPromises.forEach((product, index) => {
+        const inCart = cartProducts[index];
+        const {available} = product[0];
+        if (inCart.quantity > available) {
+            notAvaliable.push({
+                available,
+                name: inCart.title
+            })
+        }
+        return false
+    });
+
+    if (notAvaliable.length) {
+        const snackbarText = notAvaliable.map((badItem) => {
+            return snackBarMsg(badItem);
         })
-    }, [cartProducts,
-        notAvaliable,
-        storeService]);
+        snackbarHandler(snackbarText)
+        return
+    }
+    
+    clearCart();
+    clearLocalStorage();
+    storeService.postOrder(orderToServer);
+    setsuccessOrder(true);
+}
 
     const [validated, setValidated] = useState(false);
 
@@ -84,7 +95,7 @@ const CheckoutForm = ({
         lastName: order.lastName,
         orderItems: productsINeed,
         userId: storageData.userId,
-        email: storageData.email,
+        email: order.email,
         deliveryAddress: {
             country: order.country,
             city: order.city,
@@ -114,27 +125,20 @@ const CheckoutForm = ({
     }
 
     const handleSubmit = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         setOrderToStore(orderToServer)
-        if (notAvaliable.length !== 0) {
-            const snackbarText = notAvaliable.map((badItem) => {
-                return (`We dont have enough ${badItem.name}
-                        There are just ${badItem.available}.
-                        Please go to cart and change amount of ${badItem.name}`)
-            })
-            snackbarHandler(snackbarText)
-        }
+        
         const form = event.currentTarget;
-        if (form.checkValidity() === false || orderToServer.orderItems.length === 0 || notAvaliable.length !== 0) {
-            event.preventDefault();
-            event.stopPropagation();
+
+        if (!orderToServer.orderItems.length) return;
+        
+        if (!form.checkValidity()) {
             setValidated(true);
             return
         }
-        event.preventDefault()
-        storeService.postOrder(orderToServer)
-        setsuccessOrder(true)
-        clearLocalStorage()
-        clearCart()
+
+        applyOrder();
     }
 
     const handleChange = (event) => {

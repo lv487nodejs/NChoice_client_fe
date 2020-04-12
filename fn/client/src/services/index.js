@@ -148,7 +148,6 @@ export default class StoreService {
     return cart;
   };
   getUserById = async (id) => {
-    console.log("in service")
     return await this.getResource(`users/${id}`)
   };
   sendUserChangedData = async (id, token, data) => {

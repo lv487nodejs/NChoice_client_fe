@@ -1,5 +1,5 @@
 import React from "react";
-import connect from "react-redux/es/connect/connect";
+import { connect } from "react-redux";
 import './Cart.css'
 import { Link } from 'react-router-dom';
 import { Figure, Button } from 'react-bootstrap'
@@ -10,42 +10,34 @@ import { faTrash, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { increaseToCart, decreaseFromCart, removeFromCart, addToCart } from "../../actions";
 
 const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, currencyIcon, currency}) => {
-
-  const handleIncreaseToCart = (item) => {
+  
+  const handleIncreaseToCart = (item) => () =>{
     increaseToCart(item);
   };
 
-  const handleDecreaseFromCart = (item) => {
+  const handleDecreaseFromCart = (item) => () => {
     decreaseFromCart(item);
   };
 
-  const handleRemoveFromCart = (item) => {
+  const handleRemoveFromCart = (item) => () => {
     removeFromCart(item);
   };
 
-  const salePrices = [];
-  const fullPrices = [];
-  cartProducts.map(i => {
-    const price = (parseFloat(i.price * i.quantity).toFixed(2));
-    return salePrices.push(price)
+  const salePrices = cartProducts.map(i => {
+    return i.price * i.quantity * currency;
   });
 
-  cartProducts.map(i => {
-    const mrsp = (parseFloat(i.mrsp * i.quantity).toFixed(2));
-    return fullPrices.push(mrsp)
+  const fullPrices = cartProducts.map(i => {
+    return i.mrsp * i.quantity * currency;
   });
 
-  const fullPrice =
-    fullPrices.length === 1 ? fullPrices[0] :
-      fullPrices.length > 1 ? fullPrices.reduce((accumulator, currentValue) => accumulator + currentValue) :
-        0;
+  const fullPrice = parseFloat(fullPrices.length > 0 ? 
+          fullPrices.reduce((accumulator, currentValue) => accumulator + +currentValue) :
+          0).toFixed(2)
 
-  const total =
-    salePrices.length === 1 ? salePrices[0] :
-      salePrices.length > 1 ? salePrices.reduce((accumulator, currentValue) => accumulator + currentValue) :
-        0;
-
-  const sale = fullPrice - total;
+  const total = parseFloat(salePrices.length > 0 ? 
+          salePrices.reduce((accumulator, currentValue) => accumulator + +currentValue) :
+          0).toFixed(2)
 
   return (
     <div className='main-cart'>
@@ -68,16 +60,16 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
                     <FontAwesomeIcon
                       icon={faMinus}
                       className="remove-from-cart-button"
-                      onClick={() => handleDecreaseFromCart(item)} />
+                      onClick={handleDecreaseFromCart(item)} />
                     <span id="quantity"> {item.quantity} </span>
                     <FontAwesomeIcon
                       icon={faPlus}
                       className="add-to-cart-button"
-                      onClick={() => handleIncreaseToCart(item)} />
+                      onClick={handleIncreaseToCart(item)} />
                     <FontAwesomeIcon
                       icon={faTrash}
                       className="delte-cart-button"
-                      onClick={() => handleRemoveFromCart(item)} />
+                      onClick={handleRemoveFromCart(item)} />
                   </div>
                 </Figure.Caption>
               </Row>
@@ -85,8 +77,8 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
           </li>
         ))}
         <div className='checkout-wrap'>
-          <h5>{cartProducts.length >= 1 && <em>Total: {total} {currencyIcon} </em>} </h5>
-          <h5>{cartProducts.length >= 1 && <em>Save: {(parseFloat(sale).toFixed(2))} {currencyIcon}</em>} </h5>
+          <h5>{cartProducts.length >= 1 && <em>Total: {(parseFloat(total).toFixed(2))} {currencyIcon} </em>} </h5>
+          <h5>{cartProducts.length >= 1 && <em>Save: {(parseFloat(fullPrice - total).toFixed(2))} {currencyIcon}</em>} </h5>
           <Link to="/checkout" className={cartProducts.length >= 1 ? 'disp-block' : 'disp-none' }>
             <Button
               variant="dark"
