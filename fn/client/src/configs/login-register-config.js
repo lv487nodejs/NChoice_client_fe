@@ -1,9 +1,5 @@
 import * as yup from "yup";
 
-export const REGISTER_ROUTE = 'http://localhost:5000/users/register';
-export const LOGIN_ROUTE = 'http://localhost:5000/auth/login';
-export const BASE_ROUTE = 'http://localhost:5000/';
-
 // login and register validation
 export const firstNameRequiredMessage = "No first name provided";
 export const firstNameMinElementCount = 2;

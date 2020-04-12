@@ -98,7 +98,7 @@ const Filter = ({
 
   return (
     <div className="filter-group">
-      <span>Filter</span>
+      <span className="filter-title">Filters</span>
       {
         filterOptions.map(({ items, type, handler }) => {
           return <FilterItem

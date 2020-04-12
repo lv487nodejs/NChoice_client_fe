@@ -5,16 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faUser, faShoppingBasket, faSignOutAlt, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import Currency from '../currency';
 import { connect } from 'react-redux';
-import { setUserLogged } from "../../actions";
+import { setUserLogged, setCart } from "../../actions";
 
-const AppHeaderNavRight = ({ setUserLogged , userLogged }) => {
-  let cartNumbers = 0;
-  if (localStorage.getItem("cart-numbers")) {
-    cartNumbers = localStorage.getItem("cart-numbers");
-  }
+const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart }) => {
 
   const handleLogOut = () => {
     setUserLogged(false)
+    setCart({ cartNumbers: 0, cartProducts: [] })
     localStorage.clear()
   }
 
@@ -62,7 +59,7 @@ const AppHeaderNavRight = ({ setUserLogged , userLogged }) => {
   )
 };
 
-const mapDispatchToProps = { setUserLogged };
+const mapDispatchToProps = { setUserLogged, setCart };
 
 const mapStateToProps = ({ cartReducer: { cartNumbers }, authReducer: { userLogged } }) => ({ cartNumbers, userLogged });
 

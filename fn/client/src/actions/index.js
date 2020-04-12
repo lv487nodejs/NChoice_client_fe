@@ -15,7 +15,7 @@ import {
   productsLoadingStop
 } from './Products-actions';
 
-import { addToCart, increaseToCart, decreaseFromCart, removeFromCart, clearCart } from './Cart-action'
+import { addToCart, increaseToCart, decreaseFromCart, removeFromCart, clearCart, setCart } from './Cart-action'
 import { addToWishlist, removeFromWishlist } from './Wishlist-actions'
 import { setOrderToStore, clearOrderStore } from './Checkout-actions'
 
@@ -93,5 +93,6 @@ export {
   clearFilter,
   clearCart,
   setOrderToStore,
-  clearOrderStore 
+  clearOrderStore,
+  setCart
 };

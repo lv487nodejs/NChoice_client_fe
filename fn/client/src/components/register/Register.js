@@ -3,15 +3,14 @@ import './Register.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
-import { REGISTER_ROUTE } from "../../configs/login-register-config";
-import axios from "axios";
+
 import { setUserLogged, setUserLoading } from "../../actions";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "../Loading-spinner";
 import { SignupSchemaRegister } from '../../configs/login-register-config'
-
+import withStoreService from '../hoc';
 
 const addDataToLocalStorage = (token) => {
     localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
@@ -28,38 +27,42 @@ const USER_DATA = {
 
 const eye = <FontAwesomeIcon icon={faEye} />;
 
-const Register = (props) => {
-    const [user, setUser] = useState(USER_DATA);
-    const { setUserLogged, setUserLoading, userLogged, userLoading } = props;
+const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, cartNumbers, cartProducts }) => {
+    
+    const initialUser = { ...USER_DATA, cart: { cartNumbers, cartProducts } }
+    
+    const [user, setUser] = useState(initialUser);
     const [errorMsg, setErrorMsg] = useState('');
+    const [passwordShown, setPasswordShown] = useState(false);
+    const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
+
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchemaRegister
     });
-    const [passwordShown, setPasswordShown] = useState(false);
-    const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
 
     useEffect(() => {
         setUserLogged(false)
     }, [setUserLogged])
 
     const togglePasswordVisiblity = () => {
-        setPasswordShown(passwordShown ? false : true);
+        setPasswordShown(!passwordShown);
     };
+
     const toggleConfirmPasswordVisiblity = () => {
-        setConfirmPasswordShown(confirmPasswordShown ? false : true);
+        setConfirmPasswordShown(!confirmPasswordShown);
     };
 
     const handleChange = (event) => {
         event.persist();
-        setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
+        setUser({ ...user, [event.target.name]: event.target.value });
     };
 
-    const postUser = async (value, route) => {
+    const postUser = async () => {
         try {
             setUserLoading();
-            const response = await axios.post(route, value);
+            const res = await storeService.registerUser(user);
+            addDataToLocalStorage(res);
             setUserLogged(true);
-            addDataToLocalStorage(response.data);
         } catch (error) {
             setUserLogged(false)
             const { msg } = error.response.data.errors[0]
@@ -67,8 +70,8 @@ const Register = (props) => {
         }
     }
 
-    const handleOnSubmit = (event) => {
-        postUser(user, REGISTER_ROUTE);
+    const handleOnSubmit = () => {
+        postUser();
     };
 
     if (userLoading) {
@@ -180,10 +183,10 @@ const Register = (props) => {
 
 const mapDispatchToProps = { setUserLogged, setUserLoading };
 
-const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({
-    userLogged, userLoading
+const mapStateToProps = ({ authReducer: { userLogged, userLoading }, cartReducer: { cartNumbers, cartProducts } }) => ({
+    userLogged, userLoading, cartNumbers, cartProducts
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Register));
 
 

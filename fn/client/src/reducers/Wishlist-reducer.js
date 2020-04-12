@@ -7,11 +7,10 @@ const initialState = {
   export default (state = initialState, action) => {
     switch (action.type) {
       case 'ADD_PRODUCT_WISHLIST':
-        let newProducts = [...state.products];
-
+        let newProducts = state.products;
         let foundProduct = newProducts.map(value => action.payload.id === value.id);
-        if (foundProduct) {
-          newProducts.push({...action.payload});
+        if (!foundProduct.length) {
+          newProducts.push(action.payload);
         }
         localStorage.setItem("wishlist-collection", JSON.stringify(newProducts));
         return {
