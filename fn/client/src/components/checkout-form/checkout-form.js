@@ -37,7 +37,6 @@ const CheckoutForm = ({
                 name: inCart.title
             })
         }
-        return false
     });
 
     if (notAvaliable.length) {
