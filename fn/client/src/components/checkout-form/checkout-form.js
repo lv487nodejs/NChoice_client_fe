@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -38,7 +38,7 @@ const CheckoutForm = ({
     const notAvaliable = [];
 
     // Check the database for quantity of products in order
-    useEffect(() => {
+    const checkAvaliability = () => {
         cartProducts.map((product) => {
             storeService.getOneProductPropertie(product.propetries._id)
                 .then((res) => res[0].available)
@@ -54,9 +54,7 @@ const CheckoutForm = ({
                 });
             return notAvaliable
         })
-    }, [cartProducts,
-        notAvaliable,
-        storeService]);
+    }
 
     const [validated, setValidated] = useState(false);
 
@@ -106,7 +104,7 @@ const CheckoutForm = ({
     if (cartProducts.length === 0) {
         return (<Redirect to='/' />)
     }
-
+    
     const snackbarHandler = (text) => {
         setSnackbarText(text)
         setShowSnackbar(true)
@@ -116,7 +114,11 @@ const CheckoutForm = ({
     }
 
     const handleSubmit = (event) => {
+        checkAvaliability()
+        setTimeout(() => {
         setOrderToStore(orderToServer)
+        console.log(notAvaliable.length)
+        console.log(notAvaliable)
         if (notAvaliable.length !== 0) {
             const snackbarText = notAvaliable.map((badItem) => {
                 return (`We dont have enough ${badItem.name}
@@ -125,8 +127,9 @@ const CheckoutForm = ({
             })
             snackbarHandler(snackbarText)
         }
+    }, 0)
         const form = event.currentTarget;
-        if (form.checkValidity() === false || orderToServer.orderItems.length === 0 || notAvaliable.length !== 0) {
+        if (form.checkValidity() === false || orderToServer.orderItems.length === 0) {
             event.preventDefault();
             event.stopPropagation();
             setValidated(true);
