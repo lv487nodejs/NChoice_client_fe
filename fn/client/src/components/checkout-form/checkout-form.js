@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { countries, paymentMethods, deliveryType} from '../../configs/frontend-config'
+import { countries, paymentMethods, deliveryType } from '../../configs/frontend-config'
 import { setShowSnackbar, setSnackbarText, clearCart, setOrderToStore } from '../../actions'
 import CheckoutTable from '../checkout-table';
 import CheckoutSelect from '../checkout-select';
@@ -84,7 +84,7 @@ const CheckoutForm = ({
         lastName: order.lastName,
         orderItems: productsINeed,
         userId: storageData.userId,
-        email: storageData.email,
+        email: order.email,
         deliveryAddress: {
             country: order.country,
             city: order.city,
@@ -104,7 +104,7 @@ const CheckoutForm = ({
     if (cartProducts.length === 0) {
         return (<Redirect to='/' />)
     }
-    
+
     const snackbarHandler = (text) => {
         setSnackbarText(text)
         setShowSnackbar(true)
@@ -116,18 +116,17 @@ const CheckoutForm = ({
     const handleSubmit = (event) => {
         checkAvaliability()
         setTimeout(() => {
-        setOrderToStore(orderToServer)
+            setOrderToStore(orderToServer)
+            if (notAvaliable.length !== 0) {
+                const snackbarText = notAvaliable.map((badItem) => {
+                    return (`We dont have enough ${badItem.name}
+                    There are just ${badItem.available}.
+                    Please go to cart and change amount of ${badItem.name}`)
+                })
+                snackbarHandler(snackbarText)
+            }
+        }, 0)    
         console.log(notAvaliable.length)
-        console.log(notAvaliable)
-        if (notAvaliable.length !== 0) {
-            const snackbarText = notAvaliable.map((badItem) => {
-                return (`We dont have enough ${badItem.name}
-                        There are just ${badItem.available}.
-                        Please go to cart and change amount of ${badItem.name}`)
-            })
-            snackbarHandler(snackbarText)
-        }
-    }, 0)
         const form = event.currentTarget;
         if (form.checkValidity() === false || orderToServer.orderItems.length === 0) {
             event.preventDefault();
@@ -135,6 +134,7 @@ const CheckoutForm = ({
             setValidated(true);
             return
         }
+    
         event.preventDefault()
         storeService.postOrder(orderToServer)
         setsuccessOrder(true)
@@ -313,13 +313,14 @@ const CheckoutForm = ({
 const mapStateToProps = ({
     cartReducer: { cartProducts },
     checkoutReduser: { orderStore }
-         }) => ({
-            orderStore,
-            cartProducts,
-        });
+}) => ({
+    orderStore,
+    cartProducts,
+});
 
 const mapDispatchToProps = ({
-    setShowSnackbar, setSnackbarText, clearCart, setOrderToStore })
+    setShowSnackbar, setSnackbarText, clearCart, setOrderToStore
+})
 
 export default withStoreService()(
     connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)
