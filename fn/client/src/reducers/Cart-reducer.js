@@ -11,10 +11,13 @@ const saveCart = async (userId, cart) => {
 }
 
 const setInitial = async () => {
-  try {
     if (userId) {
       const res = await axios.get(`https://lv487node-backend.herokuapp.com/users/${userId}`);
       const { cart } = res.data.user
+      if (!cart) {
+        saveCart(userId, { cartNumbers: 0, cartProducts: [] })
+        return
+      }
       initialState.cartNumbers = cart.cartNumbers
       initialState.cartProducts = cart.cartProducts
       return
@@ -24,9 +27,6 @@ const setInitial = async () => {
       initialState.cartNumbers = localCartNumbers
       initialState.cartProducts = productCollection
     }
-  } catch (error) {
-    
-  }
 };
 
 setInitial()

@@ -1,11 +1,15 @@
 const initialState = {
     orderStore: {
-        deliveryAddress: {
-            country: '',
-            city: '',
-            street: '',
-            buildingNumber: ''
-        },
+        firstName: '',
+        lastName: '',
+        email: '',
+        country: '',
+        city: '',
+        street: '',
+        buildingNumber: '',
+        contactPhone: '',
+        deliveryType: '',
+        paymentMethod: '',
     },
 };
 

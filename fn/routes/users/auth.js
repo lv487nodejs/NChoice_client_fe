@@ -28,9 +28,9 @@ router.post('/login', userLoginValidationRules(), validate, async (req, res) => 
         user.tokens = [];
         user.tokens.push(refreshToken);
         await user.save();
-        res.send({ accessToken, refreshToken, userId:user._id });
+        res.send({ accessToken, refreshToken, userId: user._id, cart: user.cart });
     } catch (err) {
-        req.status(500).send(err.message);
+        req.status(500).send(err);
     }
 });
 
@@ -50,7 +50,7 @@ router.post('/token', async (req, res) => {
             res.send({ accessToken });
         });
     } catch (error) {
-        res.send(error);
+        res.status(500).send(error);
     }
 });
 

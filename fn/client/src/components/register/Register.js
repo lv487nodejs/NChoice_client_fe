@@ -61,12 +61,12 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
         try {
             setUserLoading();
             const res = await storeService.registerUser(user);
+            if (!res) throw new Error('User with such an email already exist.')
             addDataToLocalStorage(res);
             setUserLogged(true);
-        } catch (error) {
+        } catch (err) {
             setUserLogged(false)
-            const { msg } = error.response.data.errors[0]
-            setErrorMsg(msg)
+            setErrorMsg(err.message)
         }
     }
 
@@ -90,7 +90,6 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                 <Form.Control
                     type="text"
                     placeholder="First name"
-                    defaultValue="Mark"
                     name={'firstName'}
                     value={user.firstName}
                     onChange={handleChange}
@@ -103,7 +102,6 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                 <Form.Control
                     type="text"
                     placeholder="Last name"
-                    defaultValue="Otto"
                     name={'lastName'}
                     value={user.lastName}
                     onChange={handleChange}
