@@ -10,7 +10,7 @@ import './index.css';
 
 import store from './store/store';
 
-const storeService = new StoreService();
+export const storeService = new StoreService();
 
 ReactDOM.render(
     <Provider store={store}>

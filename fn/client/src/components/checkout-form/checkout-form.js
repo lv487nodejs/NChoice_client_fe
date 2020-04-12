@@ -10,8 +10,6 @@ import withStoreService from '../hoc';
 import './checkout-form.css';
 import Snackbar from '../snackbar';
 
-
-
 const orderForm = {
     firstName: '',
     lastName: '',
