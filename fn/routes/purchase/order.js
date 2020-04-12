@@ -5,7 +5,7 @@ const { orderValidationRules, validate } = require('../../middleware/validator')
 const router = express.Router();
 
 router.post('/', orderValidationRules(), validate, async (req, res) => {
-    const { orderItems, userId, date, deliveryAddress, deliveryType, contactPhone, paymentMethod, status } = req.body;
+    const { orderItems, userId, date, deliveryAddress, deliveryType, contactPhone, paymentMethod, status, email } = req.body;
     try {
         const newOrder = new Order({
             orderItems,
@@ -16,6 +16,7 @@ router.post('/', orderValidationRules(), validate, async (req, res) => {
             contactPhone,
             paymentMethod,
             status,
+            email,
         });
         await newOrder.save();
         res.status(200).send(newOrder);
