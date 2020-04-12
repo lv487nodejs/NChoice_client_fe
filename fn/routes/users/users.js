@@ -51,7 +51,11 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/register', userValidationRules(), validate, async (req, res) => {
-    const { firstName, lastName, email, password, role } = req.body;
+    const { firstName, lastName, email, password, role, cart } = req.body;
+
+    if (cart) {
+        cart.cartNumbers = parseInt(cart.cartNumbers);
+    }
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -62,6 +66,7 @@ router.post('/register', userValidationRules(), validate, async (req, res) => {
             email,
             role,
             password: hashedPassword,
+            cart,
         });
 
         const userName = { name: user.email };
@@ -74,6 +79,20 @@ router.post('/register', userValidationRules(), validate, async (req, res) => {
         res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
     } catch (err) {
         res.status(500).send({ message: err.message });
+    }
+});
+
+router.put('/cart/:id', async (req, res) => {
+    const { id } = req.params;
+    const { cart } = req.body;
+    try {
+        const userToUpdate = await Users.findById(id);
+        userToUpdate.cart = cart;
+        const updatedUser = await Users.findByIdAndUpdate(id, userToUpdate);
+        const userToSend = await Users.findById(id);
+        res.status(200).send(userToSend);
+    } catch (err) {
+        res.status(400).send(err);
     }
 });
 
