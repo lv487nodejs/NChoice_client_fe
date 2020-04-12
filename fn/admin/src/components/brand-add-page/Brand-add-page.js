@@ -53,7 +53,7 @@ const BrandAddPage = props => {
                         onChange={brandNameHandler}
                         required
                     />
-                    <SaveButton type="submit" title="Save" />
+                    <SaveButton id="save" type="submit" title="Save" />
                 </Paper>
             </FormControl>
         </form>
