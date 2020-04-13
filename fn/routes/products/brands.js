@@ -68,7 +68,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const response = await Brands.findByIdAndDelete({ _id: id });
         if (!response) {
-            return res.status(404).send('Brand does not exist!');
+            throw { message: 'Brand does not exist!' };
         }
         res.status(200).send(`Brand ${response.brand} successfully deleted!`);
     } catch (err) {
