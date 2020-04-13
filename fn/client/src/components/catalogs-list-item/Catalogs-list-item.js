@@ -5,7 +5,14 @@ import { Link } from 'react-router-dom';
 
 const CatalogsListItem = ({ catalog }) => (
     <Link to={`/catalogs/${catalog}`}>
-        <img src={`/images/catalogs/${catalog}.jpg`} alt={`${catalog} categories`} />
+        <div className="card__collection clear-fix">
+            <div className="cards cards--two">
+                <img src={`/images/catalogs2/${catalog}.jpg`} alt={`${catalog} categories`} />
+                <span className="cards--two__rect"></span>
+                <span className="cards--two__tri"></span>
+                <p className="catalogName">{`${catalog}`}</p>
+            </div>
+        </div>
     </Link>
 );
 
