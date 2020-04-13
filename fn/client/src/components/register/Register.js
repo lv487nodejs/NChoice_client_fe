@@ -90,7 +90,6 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                 <Form.Control
                     type="text"
                     placeholder="First name"
-                    defaultValue="Mark"
                     name={'firstName'}
                     value={user.firstName}
                     onChange={handleChange}
@@ -103,7 +102,6 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                 <Form.Control
                     type="text"
                     placeholder="Last name"
-                    defaultValue="Otto"
                     name={'lastName'}
                     value={user.lastName}
                     onChange={handleChange}

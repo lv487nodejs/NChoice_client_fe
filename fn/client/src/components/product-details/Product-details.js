@@ -75,7 +75,7 @@ const ProductDetails = ({
 
   return (
     
-    <Card className="wrapper">
+    <Card className="wrapperDetails">
       <Card.Body className="cardBody">
         <Row className="justify-content-md-center">
           <Col className="images">
