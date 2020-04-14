@@ -98,6 +98,7 @@ const BrandList = ({
         <div>
             <div className={classes.tableNav}>
                 <Button
+                    id="add-brand"
                     component={Link}
                     to={pathToAddBrandPage}
                     variant="contained"
@@ -106,7 +107,7 @@ const BrandList = ({
                     New Brand
                 </Button>
             </div>
-            <TableContainerGenerator tableTitles={tableTitles} tableItems={brandItems} />
+            <TableContainerGenerator id="brandsTable" tableTitles={tableTitles} tableItems={brandItems} />
         </div>
     );
 };

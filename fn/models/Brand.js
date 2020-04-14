@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const BrandSchema = new Schema({
-    brand: { type: String, required: true, unique: true },
+    brand: {
+        type: String,
+        required: true,
+        unique: true
+    },
     images: [Object],
 });
 
