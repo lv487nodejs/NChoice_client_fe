@@ -1,10 +1,22 @@
 header {
+    box-shadow: 0 8px 6px -6px black;
     position: relative;
+    margin-bottom: 2rem;
 }
+
 .logo{
     padding: 1rem;
 background-image: url(/images/logo.svg);
 position: absolute;
-top: 25%;
-right: 50%;
+position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+height: 3rem;
+width: 3rem;
+background-size: cover;
+}
+.bg-dark {
+    padding: 1rem;
 }
