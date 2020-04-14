@@ -17,6 +17,7 @@ const routes = {
     pathToAddBrand: '/brandadd',
     pathToUsers: '/users',
     pathToUserDetails: '/user/:id',
+    pathToLogin: '/login',
 };
 
 export const config = {
