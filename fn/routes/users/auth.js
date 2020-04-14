@@ -30,7 +30,7 @@ router.post('/login', userLoginValidationRules(), validate, async (req, res) => 
         await user.save();
         res.send({ accessToken, refreshToken, userId: user._id, cart: user.cart });
     } catch (err) {
-        req.status(500).send(err);
+        res.status(500).send(err);
     }
 });
 
