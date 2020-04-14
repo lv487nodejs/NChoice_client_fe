@@ -1,16 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
-
-.header {
-    background-color: black;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0rem 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 8px 6px -6px black;
+header {
+    position: relative;
 }
-
-.header .logo {
+.logo{
     padding: 1rem;
-    height: 6rem;
+background-image: url(/images/logo.svg);
+position: absolute;
+top: 25%;
+right: 50%;
 }
