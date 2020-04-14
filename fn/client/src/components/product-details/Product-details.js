@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Product-details.css';
-import { Card, Row, Col, Image, Button } from 'react-bootstrap';
+import { Card, Col, Image, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import SimularProducts from '../simular-products/Simular-products';
@@ -74,41 +74,36 @@ const ProductDetails = ({
   }
 
   return (
-    
+
     <Card className="wrapper">
       <Card.Body className="cardBody">
-        <Row className="justify-content-md-center">
-          <Col className="images">
-            <Col className="zoom">
-              <Image
-                src={`/images/products/${product.images}`}
-                className="img"
-                rounded
-              />
-            </Col>
-            <Col className="zoom">
-              <Image
-                src={`/images/products/${product.images}`}
-                className="img"
-                rounded
-              />
-            </Col>
-            <Col className="zoom">
-              <Image
-                src={`/images/products/${product.images}`}
-                className="img"
-                rounded
-              />
-            </Col>
+        <Col className="images">
+          <Col className="one"><Image
+            src={`/images/products/${product.images}`}
+            className="img"
+            rounded
+          />
           </Col>
-          <Col className="mainImgWrapper">
+          <Col className="two"> <Image
+            src={`/images/products/${product.images}`}
+            className="img"
+            rounded
+          />
+          </Col>
+          <Col className="three"> <Image
+            src={`/images/products/${product.images}`}
+            className="img"
+            rounded
+          />
+          </Col>
+          <Col className="four">
             <Image
               src={`/images/products/${product.images}`}
-              className="mainImg"
+              className="img"
               rounded
             />
-          </Col>
-        </Row>
+            </Col>
+        </Col>
         <Col className="text">
           <StarsRating rating={product.rate} />
           <Card.Title className="title">{product.title}</Card.Title>
@@ -123,10 +118,10 @@ const ProductDetails = ({
           <Card.Body className="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
               onClick={() => addToWishlist(product)} />
-            <Button 
-            variant="dark" 
-            className={checkSize ? 'button' : 'button disabled'}
-            onClick={handleAddToCart}
+            <Button
+              variant="dark"
+              className={checkSize ? 'button' : 'button disabled'}
+              onClick={handleAddToCart}
             >Add to cart </Button>
             <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none'}>
               <Button
