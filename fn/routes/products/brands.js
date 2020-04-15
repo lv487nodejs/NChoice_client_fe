@@ -2,10 +2,11 @@ const express = require('express');
 const { brandValidationRules, validate } = require('../../middleware/validator');
 
 const Brands = require('../../models/Brand');
+const { auth, authorize } = require('../../middleware/auth');
 
 const router = express.Router();
 
-router.post('/', brandValidationRules(), validate, async (req, res) => {
+router.post('/', brandValidationRules(), validate, auth, authorize('admin'), async (req, res) => {
     const { brand, images } = req.body;
     try {
         const newBrand = new Brands({

@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const tokenValidation = require('../../middleware/auth');
+const { auth, authorize } = require('../../middleware/auth');
 
 const Users = require('../../models/User');
 
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth, authorize('admin'), async (req, res) => {
     const { id } = req.params;
     try {
         const user = await Users.findById(id);
@@ -51,7 +51,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/register', userValidationRules(), validate, async (req, res) => {
-    const { firstName, lastName, email, password, role } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -60,7 +60,6 @@ router.post('/register', userValidationRules(), validate, async (req, res) => {
             firstName,
             lastName,
             email,
-            role,
             password: hashedPassword,
         });
 
@@ -90,7 +89,7 @@ router.put('/role/:id', async (req, res) => {
     }
 });
 // change user data
-router.put('/:id', userValidationRules(), tokenValidation, async (req, res) => {
+router.put('/:id', userValidationRules(), auth, async (req, res) => {
     const { id } = req.params;
     const userToUpdate = req.body.user;
     const { password } = userToUpdate
@@ -108,6 +107,6 @@ router.put('/:id', userValidationRules(), tokenValidation, async (req, res) => {
     }
 });
 
-const generateAccessToken = userName => jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
+const generateAccessToken = userName => jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET);
 
 module.exports = router;

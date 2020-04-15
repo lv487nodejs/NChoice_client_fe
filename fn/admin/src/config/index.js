@@ -31,7 +31,7 @@ export const config = {
             ['Users', routes.pathToUsers, PeopleAltIcon],
         ],
         routes,
-        serverUrl: 'https://lv487node-backend.herokuapp.com/',
+        serverUrl: 'http://localhost:5000/',
         drawerWidth: 220,
         snackBarDuration: 4000,
         rowsPerPageOptions: [10, 25, 50, 100],

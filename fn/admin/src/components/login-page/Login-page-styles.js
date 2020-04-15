@@ -2,9 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     login: {
-        gridColumnStart: 4,
-        gridColumnEnd: 10,
-        gridRowStart: 2,
+        margin: '0 auto',
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
@@ -15,9 +13,6 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.secondary.main,
     },
     submit: {
-        margin: theme.spacing(3, 0, 2),
+        margin: theme.spacing(1),
     },
-    input: {
-        width: '300px'
-    }
 }));
