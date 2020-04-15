@@ -8,21 +8,25 @@ import AppHeaderNavLeft from '../app-header-nav-left';
 import AppHeaderNavRight from '../app-header-nav-right';
 
 const AppHeader = () => (
-    <header >
+
+    <header className='header-wrapper'>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Link to="/"><Navbar.Brand className="logo"/></Link>
+
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
                     <AppHeaderNavLeft />
                 </Nav>
-                <Link to="/"><Navbar.Brand className="logo"></Navbar.Brand></Link>
 
-                <Nav>
-                    <AppHeaderNavRight />
-                </Nav>
+
             </Navbar.Collapse>
+          <Nav>
+            <AppHeaderNavRight />
+          </Nav>
         </Navbar>
     </header>
+
 );
 
 export default AppHeader;

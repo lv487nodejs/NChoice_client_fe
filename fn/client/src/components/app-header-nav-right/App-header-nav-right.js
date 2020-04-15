@@ -16,7 +16,7 @@ const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart })
   }
 
   return (
-    <nav className="nav-bar">
+    <nav className="nav-bar nav-right" >
       <ul>
         <li key="4">
           <Link to="/wishlist">

@@ -49,3 +49,34 @@
   color: white;
   background-color: black;
 }
+
+@media only screen and (max-device-width: 768px) {
+    .nav-left {
+        justify-items: center;
+        text-align: center;
+        width: 100vw;
+        margin-top: 40px;
+    }
+
+    nav .nav-left a {
+        color: black;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+
+    .container {
+        margin-top: 40px;
+    }
+
+    .nav-item {
+        position: inherit;
+    }
+
+    .nav-bar .nav-item .drop-down-container .drop-down {
+        top: 80px;
+        left: 0;
+        right: 0;
+        position: absolute;
+        width: 100vw;
+    }
+}

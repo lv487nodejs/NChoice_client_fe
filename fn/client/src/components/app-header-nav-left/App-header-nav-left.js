@@ -74,7 +74,7 @@ const AppHeaderNavLeft = ({
   ));
 
   return (
-    <nav className="nav-bar">
+    <nav className="nav-bar nav-left">
       <ul>{items}</ul>
     </nav>
   );
