@@ -6,6 +6,8 @@ const connectDB = require('./config/db');
 const path = require('path');
 const rfs = require('rotating-file-stream');
 
+const errorHandler = require('./middleware/errorHandler');
+
 const accessLogStream = rfs.createStream('access.log', {
     interval: '3d',
     path: path.join(__dirname, 'logs')
@@ -44,6 +46,7 @@ app.use('/generator', generator);
 app.use('/orders', orders);
 app.use('/cart', cart);
 
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
