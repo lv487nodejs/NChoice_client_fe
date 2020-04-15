@@ -65,7 +65,7 @@ const ProductDetails = ({
     .reduce((accum, { size }) => [...accum, ...size], [])
     .map((item) => (
       <div key={item} className="sizeItem" onClick={handleCheck(item)} >
-        <span className={item === checkSize ? 'check' : ''}> {item} </span>
+        <span className={item === checkSize ? 'check' : ''} id={item}> {item} </span>
       </div>
     ));
 
@@ -75,25 +75,28 @@ const ProductDetails = ({
 
   return (
 
-    <Card className="wrapper">
+    <Card className="wrapper" id="wrapper">
       <Card.Body className="cardBody">
-        <Col className="images">
+        <Col className="images" id="images">
           <Col className="one"><Image
             src={`/images/products/${product.images}`}
             className="img"
             rounded
+            alt={`${product.images}`}
           />
           </Col>
           <Col className="two"> <Image
             src={`/images/products/${product.images}`}
             className="img"
             rounded
+            alt={`${product.images}`}
           />
           </Col>
           <Col className="three"> <Image
             src={`/images/products/${product.images}`}
             className="img"
             rounded
+            alt={`${product.images}`}
           />
           </Col>
           <Col className="four">
@@ -101,32 +104,36 @@ const ProductDetails = ({
               src={`/images/products/${product.images}`}
               className="img"
               rounded
+              alt={`${product.images}`}
             />
-            </Col>
+          </Col>
         </Col>
-        <Col className="text">
+        <Col className="text" id="text">
           <StarsRating rating={product.rate} />
-          <Card.Title className="title">{product.title}</Card.Title>
-          <Card.Text className="productDescription">
+          <Card.Title className="title" id="title">{product.title}</Card.Title>
+          <Card.Text className="productDescription" id="description" >
             {product.description}
           </Card.Text>
           <Card.Text
             style={{ backgroundColor: product.color }}
             className="color"
+            id="color"
           ></Card.Text>
-          <Col className="size">{sizeItem}</Col>
-          <Card.Body className="buttons">
+          <Col className="size" id="size">{sizeItem}</Col>
+          <Card.Body className="buttons" id="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
-              onClick={() => addToWishlist(product)} />
+              onClick={() => addToWishlist(product)} id="heartButton" />
             <Button
               variant="dark"
               className={checkSize ? 'button' : 'button disabled'}
               onClick={handleAddToCart}
+              id="addToCartButton"
             >Add to cart </Button>
-            <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none'}>
+            <Link to="/checkout" id="buyNowButton" className={checkSize ? 'disp-block' : 'disp-none'}>
               <Button
                 variant="dark"
                 onClick={handleAddToCart}
+                
               >Buy now</Button>
             </Link>
           </Card.Body>

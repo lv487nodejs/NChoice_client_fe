@@ -19,8 +19,8 @@ function ProductListItem({ title, description, id, images, price, mrsp, currency
     return (
         <Card key={id} className="productCart">
             <Link key={id} to={`/products/${id}`}>
-                <div className="image-container">
-                    <Card.Img variant="top" src={`/images/products/${images}`} className="cardsImage" />
+                <div className="image-container" >
+                    <Card.Img variant="top" id={id} src={`/images/products/${images}`} className="cardsImage" alt={`${images}`}/>
                 </div>
             </Link>
             <Card.Body className="cardWrapper">
