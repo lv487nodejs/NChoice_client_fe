@@ -1,12 +1,60 @@
-.filter-group{
+.filter-group {
   font-family: Oswald;
   padding-top: 1rem;
   margin: 2rem;
   text-transform: uppercase;
   font-size: 1.5rem;
+  transition: .3s ease-in-out;
 }
 
 .filter-title {
   display: block;
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.filter-button {
+  display: none;
+}
+
+@media screen and (max-width:992px) {
+  .filter-group {
+    width: 20vw;
+    display: none;
+    left: -200%;
+    transition: .3s ease-in-out;
+  }
+
+  .filter-button {
+    display: block;
+    position: fixed;
+    top: 6rem;
+    z-index: 1111;
+  }
+  .show-filter {
+    display: block;
+    left: 0;
+  }
+}
+
+@media screen and (max-width:992px) {
+  .filter-group {
+    width: 20vw;
+    margin: 0;
+  }
+}
+@media screen and (max-width:765px) {
+  .filter-group {
+    width: 40vw;
+  }
+}
+@media screen and (max-width:410px) {
+  .filter-group {
+    width: 100vw;
+  }
+  .filter-button{
+    top: 7rem;
+  }
+
 }

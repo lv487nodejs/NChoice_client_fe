@@ -84,7 +84,9 @@ const ProductListPage = ({
   };
 
   const changePagination = () => addCurrentPage(0);
-
+  const sortButtons = sortOptions.map((item) => {
+    return <ProductSort key={item.text} options={item} />
+  })
   return (
     <div>
       <h2 className="catalog-top-name">{catalog} Catalog</h2>
@@ -92,11 +94,7 @@ const ProductListPage = ({
         <SearchBar />
         <Button className="clear-button" variant="dark" onClick={clearAllHandler}>CLEAR FILTERS</Button>
         <div className="sort-buttons">
-          <h5>SORT BY:</h5>{
-            sortOptions.map((item) => {
-              return <ProductSort key={item.text} options={item} />
-            })
-          }
+          <h5>SORT BY:</h5>{sortButtons}
         </div>
         <ProductListButtonPages
           changeItems={changeItemsMethod}
