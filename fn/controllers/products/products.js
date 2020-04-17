@@ -10,23 +10,30 @@ const {
     prepareProductsToUpdate,
     prepareProductsToSend,
     getSort,
-    getProjection,
     getFilters,
-    updateSearchFilter,
+    searchConfig,
+    isNotBlank,
 } = require('../../utils/productUtils');
 
 const getPrpoducts = asyncHandler(async (req, res) => {
     const { query } = req;
-
+    const { searchTerm } = query;
     let { currentpage, postsperpage } = query;
+
     currentpage = currentpage || 0;
     postsperpage = postsperpage || 15;
-    let skip = currentpage * postsperpage;
+    const skip = currentpage * postsperpage;
+    const projection = {};
 
     const filter = await getFilters(query);
-    const projection = await getProjection(query);
     const sort = await getSort(query);
-    let products = await Products.find(filter, projection)
+
+    if (isNotBlank(searchTerm)) {
+        filter.$or = searchConfig(searchTerm);
+        projection.score = { $meta: 'textScore' };
+    }
+
+    const products = await Products.find(filter, projection)
         .sort(sort)
         .skip(+skip)
         .limit(+postsperpage)
@@ -35,23 +42,12 @@ const getPrpoducts = asyncHandler(async (req, res) => {
         .populate('color')
         .populate('brand');
 
-    if (products.length === 0 && isNotBlank(query.searchTerm)) {
-        updateSearchFilter(query, filter);
-
-        products = await Products.find(filter, projection)
-            .sort(sort)
-            .skip(+skip)
-            .limit(+postsperpage)
-            .populate('catalog')
-            .populate('category')
-            .populate('color')
-            .populate('brand');
-    }
     if (!products) {
         return next(
             new ErrorResponse('Product not found.', 404)
         );
     }
+
     const productsToSend = prepareProductsToSend(products);
     const foundProductsNumber = await Products.find(filter).count();
 
@@ -143,7 +139,6 @@ const createProduct = asyncHandler(async (req, res) => {
 
     const newProduct = await product.save();
     res.status(201).send(newProduct);
-    res.status(400).send({ message: err.message });
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
@@ -175,7 +170,6 @@ const deleteProduct = asyncHandler(
             );
         }
         res.status(200).send(`Product ${response.title} successfully deleted!`);
-        res.status(400).send(err);
     }
 );
 

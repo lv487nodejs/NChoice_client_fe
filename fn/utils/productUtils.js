@@ -1,14 +1,17 @@
-const updateSearchFilter = (searchTerm, filter) => {
-    delete filter["$text"];
-    const regexp = new RegExp("\.*" + searchTerm.trim() + ".*\i");
-    filter.$or = [
-        { title: regexp },
-        { description: regexp }
-    ];
+const Catalogs = require('../models/Catalog');
+const Categories = require('../models/Category');
+const Brands = require('../models/Brand');
+const Colors = require('../models/Color');
+
+const searchConfig = (searchTerm) => {
+    return [
+        { title: { $regex: new RegExp(searchTerm) } },
+        { description: { $regex: new RegExp(searchTerm) } }
+    ]
 };
 
 const getFilters = async query => {
-    const { catalog, category, color, brand, searchTerm } = query;
+    const { catalog, category, color, brand } = query;
     const filter = {};
 
     try {
@@ -32,25 +35,10 @@ const getFilters = async query => {
             colorFilter.forEach((value, i, array) => (array[i] = value.id));
             filter.color = { $in: colorFilter };
         }
-        if (isNotBlank(searchTerm)) {
-            filter.$text = { $search: searchTerm.trim() };
-        }
     } catch (err) {
         throw { message: err.message };
     }
-
     return filter;
-};
-
-const getProjection = async query => {
-    const { searchTerm } = query;
-    const projection = {};
-
-    if (isNotBlank(searchTerm)) {
-        // how much each product is relevant to searchTerm
-        projection.score = { $meta: 'textScore' };
-    }
-    return projection;
 };
 
 const getSort = async query => {
@@ -127,7 +115,7 @@ module.exports = {
     prepareProductsToUpdate,
     prepareProductsToSend,
     getSort,
-    getProjection,
     getFilters,
-    updateSearchFilter,
+    searchConfig,
+    isNotBlank,
 }
