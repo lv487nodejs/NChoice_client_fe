@@ -30,29 +30,41 @@ describe("carousel", () => {
     cy.visit("/catalogs/men").viewport(1280, 720);
     cy.get(".categories-nav > :nth-child(1) > a").click();
   });
+
   it("should display hoodies only", () => {
     cy.visit("/catalogs/men").viewport(1280, 720);
     cy.get(".categories-nav > :nth-child(2) > a").click();
+    cy.get(':nth-child(1) > .cardWrapper > .productName').should('contain', 'hoodies');
   });
+
   it("should display jeans only", () => {
     cy.visit("/catalogs/men").viewport(1280, 720);
     cy.get(".categories-nav > :nth-child(3) > a").click();
+    cy.get(':nth-child(1) > .cardWrapper > .productName').should('contain', 'jeans');
   });
+
   it("should display t-shirts only", () => {
     cy.visit("/catalogs/men").viewport(1280, 720);
     cy.get(".categories-nav > :nth-child(4) > a").click();
+    cy.get(':nth-child(1) > .cardWrapper > .productName').should('contain', 't-shirts');
   });
+
   it("should display shoes only", () => {
     cy.visit("/catalogs/men").viewport(1280, 720);
     cy.get(".categories-nav > :nth-child(5) > a").click();
+    cy.get(':nth-child(1) > .cardWrapper > .productName').should('contain', 'shoes');
   });
+
   it("should display shirts only", () => {
     cy.visit("/catalogs/men").viewport(1280, 720);
     cy.get(".categories-nav > :nth-child(6) > a").click();
+    cy.get(':nth-child(1) > .cardWrapper > .productName').should('contain', 'shirts');
   });
+
   it("should display sweaters only", () => {
     cy.visit("/catalogs/men").viewport(1280, 720);
     cy.get(".categories-nav > :nth-child(7) > a").click();
+    cy.get(':nth-child(1) > .cardWrapper > .productName').should('contain', 'sweaters');
   });
 
 });
