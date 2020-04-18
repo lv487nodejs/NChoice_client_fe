@@ -15,6 +15,7 @@
   max-width: 17rem;
   max-height: 580px;
   cursor: pointer;
+  margin: auto;
 }
 
 .productCart .image-container {

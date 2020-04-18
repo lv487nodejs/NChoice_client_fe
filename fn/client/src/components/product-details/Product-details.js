@@ -47,7 +47,8 @@ const ProductDetails = ({
     storeService.getProductById(id).then((res) => setProduct(res));
   }, [storeService, id, setProduct, setSizes, productsLoadingStart, productsLoadingStop, setProducts, products.length]);
 
-  const newProducts = products.slice(-3)
+  const simularProducts = products.filter(elem => elem.catalog === product.catalog)
+
 
   const handleCheck = item => () => {
     setCheckSize(item)
@@ -102,7 +103,7 @@ const ProductDetails = ({
               className="img"
               rounded
             />
-            </Col>
+          </Col>
         </Col>
         <Col className="text">
           <StarsRating rating={product.rate} />
@@ -135,7 +136,7 @@ const ProductDetails = ({
       <hr />
       <div className="similarItems">Similar items</div>
       <hr />
-      <SimularProducts products={newProducts} className="routingImg" />
+      <SimularProducts products={simularProducts} className="routingImg" />
     </Card>
   );
 };
