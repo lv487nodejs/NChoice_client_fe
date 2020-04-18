@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { countries, paymentMethods, deliveryType} from '../../configs/frontend-config'
+import { countries, paymentMethods, deliveryType, placeholder} from '../../configs/frontend-config'
 import { setShowSnackbar, setSnackbarText, clearCart, setOrderToStore } from '../../actions'
 import CheckoutTable from '../checkout-table';
 import CheckoutSelect from '../checkout-select';
+import CheckoutTextInput from '../checkout-text-input';
 import withStoreService from '../hoc';
 import './checkout-form.css';
 import Snackbar from '../snackbar';
@@ -23,40 +24,12 @@ const CheckoutForm = ({
     setSnackbarText,
     setOrderToStore,
 }) => {
-    // Check the database for quantity of products in order
-    const applyOrder = async () => {
-
-    const notAvaliable = []
-    const productsPromises = await Promise.all(cartProducts.map(product => storeService.getOneProductPropertie(product.propetries._id)))
-    productsPromises.forEach((product, index) => {
-        const inCart = cartProducts[index];
-        const {available} = product[0];
-        if (inCart.quantity > available) {
-            notAvaliable.push({
-                available,
-                name: inCart.title
-            })
-        }
-    });
-
-    if (notAvaliable.length) {
-        const snackbarText = notAvaliable.map((badItem) => {
-            return snackBarMsg(badItem);
-        })
-        snackbarHandler(snackbarText)
-        return
-    }
-    setsuccessOrder(true);
-    clearLocalStorage();
-    clearCart();
-    storeService.postOrder(orderToServer);
-}
 
     const [validated, setValidated] = useState(false);
     const [order, setOrder] = useState(orderStore);
     const [successOrder, setsuccessOrder] = useState(false);
 
-    const placeholder = "Type here..."
+
 
     // get user's id from localStorage and clear localStorage after submit'
     const userId = JSON.parse(localStorage.getItem('userId')) || '';
@@ -65,7 +38,7 @@ const CheckoutForm = ({
         localStorage.removeItem('products-collection')
     }
 
-    const productsINeed = cartProducts.map(product => {
+    const productsForOrder = cartProducts.map(product => {
         return {
             item: product.id,
             quantity: product.quantity
@@ -76,7 +49,7 @@ const CheckoutForm = ({
     const orderToServer = {
         firstName: order.firstName,
         lastName: order.lastName,
-        orderItems: productsINeed,
+        orderItems: productsForOrder,
         userId,
         email: order.email,
         deliveryAddress: {
@@ -109,7 +82,7 @@ const CheckoutForm = ({
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        event.stopPropagation();
+
         setOrderToStore(order)
         
         const form = event.currentTarget;
@@ -124,13 +97,41 @@ const CheckoutForm = ({
         applyOrder();
     }
 
+        // Check the database for quantity of products in order
+        const applyOrder = async () => {
+            const notAvaliable = []
+        const productsPromises = await Promise.all(cartProducts.map(product => storeService.getOneProductPropertie(product.propetries._id)))
+        productsPromises.forEach((product, index) => {
+            const inCart = cartProducts[index];
+            const {available} = product[0];
+            if (inCart.quantity > available) {
+                notAvaliable.push({
+                    available,
+                    name: inCart.title
+                })
+            }
+        });
+    
+        if (notAvaliable.length) {
+            const snackbarText = notAvaliable.map((badItem) => {
+                return snackBarMsg(badItem);
+            })
+            snackbarHandler(snackbarText)
+            return
+        }
+        setsuccessOrder(true);
+        clearLocalStorage();
+        clearCart();
+        storeService.postOrder(orderToServer);
+    }
+    
+
     const handleChange = (event) => {
         event.persist();
         setOrder({ ...order, [event.target.name]: event.target.value });
         setOrderToStore(order)
     }
 
-    
 
     return (
         <Container fluid>
@@ -141,7 +142,11 @@ const CheckoutForm = ({
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <fieldset className="field">
                                 <h3 className="text-center">Please tell us about yourself</h3>
-
+                                {/* <CheckoutTextInput 
+                                inputName = "Firstname"
+                                setOrder = {setOrder}
+                                onChange={handleChange}
+                                value = {order.firstName}/> */}
                                 <Form.Group controlId="firstNameValidate">
                                     <Form.Label>Firstname</Form.Label>
                                     <Form.Control
