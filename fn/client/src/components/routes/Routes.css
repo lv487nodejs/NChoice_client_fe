@@ -1,3 +1,4 @@
 .container {
+    max-width: 100%!important;
     min-height: 70vh;
 }
