@@ -88,7 +88,7 @@ const ProductDetails = ({
     .reduce((accum, { size }) => [...accum, ...size], [])
     .map((item) => (
       <div key={item} className="sizeItem" onClick={handleCheck(item)} >
-        <span className={item === checkSize ? 'check' : ''}> {item} </span>
+        <span className={item === checkSize ? 'check' : ''} id={item}> {item} </span>
       </div>
     ));
 
@@ -99,7 +99,7 @@ const ProductDetails = ({
   return (
     <Card className="wrapperDetails">
       <Card.Body className="cardBody">
-        <Col className="images">
+        <Col className="images" id="images">
           <Col className="one"><Image
             src={`/images/products/${product.images}`}
             className="img"
@@ -108,6 +108,7 @@ const ProductDetails = ({
               setIsOpen(true)
               setCurrImg(0)
             }}
+            alt={`${product.images}`}
           />
           </Col>
           <Col className="two"> <Image
@@ -118,6 +119,7 @@ const ProductDetails = ({
               setIsOpen(true)
               setCurrImg(1)
             }}
+            alt={`${product.images}`}
           />
           </Col>
           <Col className="three"> <Image
@@ -128,6 +130,7 @@ const ProductDetails = ({
               setIsOpen(true)
               setCurrImg(2)
             }}
+            alt={`${product.images}`}
           />
           </Col>
           <Col className="four">
@@ -139,6 +142,7 @@ const ProductDetails = ({
                 setIsOpen(true)
                 setCurrImg(3)
               }}
+              alt={`${product.images}`}
             />
           </Col>
           <ImgsViewer
@@ -151,34 +155,37 @@ const ProductDetails = ({
             onClickThumbnail={index => setCurrImg(index)}
             onClose={e => setIsOpen(false)}
           />
-        </Col>
-        <Col className="text">
+          </Col>
+        <Col className="text" id="text">
           <StarsRating rating={product.rate} />
-          <Card.Title className="title">{product.title}</Card.Title>
-          <Card.Text className="productDescription">
+          <Card.Title className="title" id="title">{product.title}</Card.Title>
+          <Card.Text className="productDescription" id="description" >
             {product.description}
           </Card.Text>
           <Card.Text
             style={{ backgroundColor: product.color }}
             className="color"
+            id="color"
           ></Card.Text>
             <Row className="pdpPrice">
                     <Card.Text className="cardPrice">{(parseFloat(product.price * currency).toFixed(2))} {currencyIcon}</Card.Text>
                     <Card.Text className="cardPrice msrp-price">{(parseFloat(product.mrsp * currency).toFixed(2))} {currencyIcon}</Card.Text>
                 </Row>
-          <Col className="size">{sizeItem}</Col>
-          <Card.Body className="buttons">
+          <Col className="size" id="size">{sizeItem}</Col>
+          <Card.Body className="buttons" id="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
-              onClick={() => addToWishlist(product)} />
+              onClick={() => addToWishlist(product)} id="heartButton" />
             <Button
               variant="dark"
               className={checkSize ? 'button' : 'button disabled'}
               onClick={handleAddToCart}
+              id="addToCartButton"
             >Add to cart </Button>
-            <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none'}>
+            <Link to="/checkout" id="buyNowButton" className={checkSize ? 'disp-block' : 'disp-none'}>
               <Button
                 variant="dark"
                 onClick={handleAddToCart}
+                
               >Buy now</Button>
             </Link>
           </Card.Body>

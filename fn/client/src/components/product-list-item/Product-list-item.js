@@ -19,7 +19,7 @@ function ProductListItem({ title, id, images, price, mrsp, currency, currencyIco
         <div className="wrapper" key={id} >
             <div className="productCard"><img  alt={`${images}`} src={`/images/products/${images}`} />
                 <Link key={id} to={`/products/${id}`}>
-                    <div className="info">
+                    <div className="info" id={id}>
                         <StarsRating rating={rate} />
                         <p className="productName">{title}</p>
                         <div className="bottomElements">
