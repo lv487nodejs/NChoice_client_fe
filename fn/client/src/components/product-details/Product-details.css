@@ -10,7 +10,7 @@
 }
 .images{
   display: grid;
-  grid-template-columns: 9rem 25rem;
+  grid-template-columns: 8rem 25rem;
   grid-template-rows: 11rem 11rem 11rem;
   grid-auto-flow: column;
   grid-gap: 2rem;
@@ -73,6 +73,10 @@
 .sizeItem:hover {
   color: white;
   background-color: black;
+}
+.pdpPrice{
+  justify-content: space-between;
+  width: 12rem;
 }
 .title {
   text-transform: uppercase;

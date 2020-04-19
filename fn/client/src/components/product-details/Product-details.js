@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Product-details.css';
-import { Card, Col, Image, Button } from 'react-bootstrap';
+import { Card, Col, Image, Button, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import SimularProducts from '../simular-products/Simular-products';
 import StarsRating from '../star-rating';
 import LoadingSpinner from '../Loading-spinner';
+import ImgsViewer from 'react-images-viewer'
 
 import withStoreService from '../hoc';
 import {
@@ -32,11 +33,32 @@ const ProductDetails = ({
   addToCart,
   addToWishlist,
   productsLoadingStart,
-  productsLoadingStop
+  productsLoadingStop,
+  currency,
+  currencyIcon
 }) => {
 
   const [getSizes, setSizes] = useState([]);
   const [checkSize, setCheckSize] = useState('');
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [currImg, setCurrImg] = useState(0);
+
+  const imgUrl = `/images/products/${product.images}`
+  const imgs = [
+    {
+      src: imgUrl
+    },
+    {
+      src: imgUrl
+    },
+    {
+      src: imgUrl
+    },
+    {
+      src: imgUrl
+    }
+  ]
 
   useEffect(() => {
     productsLoadingStart()
@@ -83,18 +105,30 @@ const ProductDetails = ({
             src={`/images/products/${product.images}`}
             className="img"
             rounded
+            onClick={e => {
+              setIsOpen(true)
+              setCurrImg(0)
+            }}
           />
           </Col>
           <Col className="two"> <Image
             src={`/images/products/${product.images}`}
             className="img"
             rounded
+            onClick={e => {
+              setIsOpen(true)
+              setCurrImg(1)
+            }}
           />
           </Col>
           <Col className="three"> <Image
             src={`/images/products/${product.images}`}
             className="img"
             rounded
+            onClick={e => {
+              setIsOpen(true)
+              setCurrImg(2)
+            }}
           />
           </Col>
           <Col className="four">
@@ -102,8 +136,22 @@ const ProductDetails = ({
               src={`/images/products/${product.images}`}
               className="img"
               rounded
+              onClick={e => {
+                setIsOpen(true)
+                setCurrImg(3)
+              }}
             />
           </Col>
+          <ImgsViewer
+            imgs={imgs}
+            currImg={currImg}
+            showThumbnails={true}
+            isOpen={isOpen}
+            onClickPrev={e => setCurrImg(currImg - 1)}
+            onClickNext={e => setCurrImg(currImg + 1)}
+            onClickThumbnail={index => setCurrImg(index)}
+            onClose={e => setIsOpen(false)}
+          />
         </Col>
         <Col className="text">
           <StarsRating rating={product.rate} />
@@ -115,6 +163,10 @@ const ProductDetails = ({
             style={{ backgroundColor: product.color }}
             className="color"
           ></Card.Text>
+            <Row className="pdpPrice">
+                    <Card.Text className="cardPrice">{(parseFloat(product.price * currency).toFixed(2))} {currencyIcon}</Card.Text>
+                    <Card.Text className="cardPrice msrp-price">{(parseFloat(product.mrsp * currency).toFixed(2))} {currencyIcon}</Card.Text>
+                </Row>
           <Col className="size">{sizeItem}</Col>
           <Card.Body className="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
@@ -142,12 +194,14 @@ const ProductDetails = ({
 };
 
 const mapStateToProps = ({
-  productsList: { product, products, loading, propetries },
+  productsList: { product, products, loading, propetries, currency, currencyIcon },
 }) => ({
   products,
   product,
   loading,
   propetries,
+  currency,
+  currencyIcon
 });
 const mapDispatchToProps = {
   setProduct,
