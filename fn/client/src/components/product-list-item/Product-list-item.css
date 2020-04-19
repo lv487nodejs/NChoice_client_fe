@@ -29,9 +29,8 @@
 }
 .wrapper {
   display: flex;
-  width: 90%;
   justify-content: space-around;
-  justify-self: center;
+  margin: auto;
 }
 
 .productCard {
@@ -103,4 +102,7 @@
 .productCard .info a:hover {
   text-decoration: underline black;
 
+}
+a{
+  text-decoration: none!important;
 }

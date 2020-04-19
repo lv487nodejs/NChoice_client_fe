@@ -16,10 +16,10 @@ function ProductListItem({ title, id, images, price, mrsp, currency, currencyIco
     }, [currency, price, mrsp]);
 
     return (
-        <div class="wrapper" key={id} >
-            <div class="productCard"><img  alt={`${images}`} src={`/images/products/${images}`} />
+        <div className="wrapper" key={id} >
+            <div className="productCard"><img  alt={`${images}`} src={`/images/products/${images}`} />
                 <Link key={id} to={`/products/${id}`}>
-                    <div class="info">
+                    <div className="info">
                         <StarsRating rating={rate} />
                         <p className="productName">{title}</p>
                         <div className="bottomElements">
