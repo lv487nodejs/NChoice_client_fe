@@ -1,4 +1,4 @@
-.wrapper {
+.wrapperDetails {
   margin: auto;
   background-color: rgb(245, 245, 245);
 }
@@ -111,4 +111,7 @@
 }
 .disp-block { 
   display:block;
+}
+a{
+  text-decoration: none!important;
 }
