@@ -67,8 +67,7 @@ describe('Check information about product', () => {
 describe('Check simmular products block', () => {
     it('Check simmular products', () => {
         cy.visit('/products/5e8da1fcd9a7af033c9b1bce');
-        cy.get('#simularProducts').children().should('have.length', 3);
-        cy.get('#5e8da204d9a7af033c9b1bee').click();
+        cy.get('#5e8da1fed9a7af033c9b1bd6').click();
         cy.request('/products/5e8da1fcd9a7af033c9b1bce')
 
     });

@@ -97,7 +97,7 @@ const ProductDetails = ({
   }
 
   return (
-    <Card className="wrapperDetails">
+    <Card className="wrapperDetails" id="wrapper">
       <Card.Body className="cardBody">
         <Col className="images" id="images">
           <Col className="one"><Image

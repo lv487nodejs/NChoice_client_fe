@@ -14,17 +14,17 @@ function ProductListItem({ title, id, images, price, mrsp, currency, currencyIco
         setPriceWithRate(Math.floor(price * currency));
         setMsrpWithRate(Math.floor(mrsp * currency));
     }, [currency, price, mrsp]);
-
+console.log(currencyIcon)
     return (
-        <div className="wrapper" key={id} >
-            <div className="productCard"><img  alt={`${images}`} src={`/images/products/${images}`} />
-                <Link key={id} to={`/products/${id}`}>
+        <div className="wrapper" id="wrapper" key={id} >
+            <div className="productCard" id="productCard"><img id="productImg" alt={`${images}`} src={`/images/products/${images}`} />
+                <Link id="productLink"key={id} to={`/products/${id}`}>
                     <div className="info" id={id}>
                         <StarsRating rating={rate} />
-                        <p className="productName">{title}</p>
-                        <div className="bottomElements">
-                            <div className="cardPrice">{`${priceWithRate} ${currencyIcon}`}</div>
-                            <div className="cardPrice msrp-price">{`${msrpWithRate} ${currencyIcon}`}</div>
+                        <p className="productName" id="productName">{title}</p>
+                        <div className="bottomElements" id="bottomElements">
+                            <div className="cardPrice"id="realPrice">{`${priceWithRate} ${currencyIcon}`}</div>
+                            <div className="cardPrice msrp-price" id="msrpPrice">{`${msrpWithRate} ${currencyIcon}`}</div>
                         </div>
                     </div>
                 </Link>
