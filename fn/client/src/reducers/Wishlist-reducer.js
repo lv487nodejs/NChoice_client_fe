@@ -1,4 +1,7 @@
+import { setWishlistLS } from "../services/localStor";
+
 const productCollection = JSON.parse(localStorage.getItem("wishlist-collection"));
+
 
 const initialState = {
     products: productCollection || [],
@@ -13,6 +16,7 @@ const initialState = {
           newProducts.push(action.payload);
         }
         localStorage.setItem("wishlist-collection", JSON.stringify(newProducts));
+        setWishlistLS(newProducts)
         return {
           ...state,
           products: newProducts,

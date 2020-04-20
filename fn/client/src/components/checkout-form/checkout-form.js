@@ -10,6 +10,7 @@ import CheckoutSelect from '../checkout-select';
 import withStoreService from '../hoc';
 import './checkout-form.css';
 import Snackbar from '../snackbar';
+import { getUserIdLS } from '../../services/localStor';
 
 const snackBarMsg = (badItem) => (`We dont have enough ${badItem.name}
 There are just ${badItem.available}.
@@ -32,7 +33,8 @@ const CheckoutForm = ({
 
 
     // get user's id from localStorage and clear localStorage after submit'
-    const userId = JSON.parse(localStorage.getItem('userId')) || '';
+    const userId = getUserIdLS()
+
     const clearLocalStorage = () => {
         localStorage.removeItem('cart-numbers')
         localStorage.removeItem('products-collection')
