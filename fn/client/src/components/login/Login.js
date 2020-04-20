@@ -14,19 +14,15 @@ import { SignupSchemaLogin } from '../../configs/login-register-config'
 import withStoreService from '../hoc';
 
 const addDataToLocalStorage = (token) => {
-// mine________________________________________________________________
-    const user = {
+    const nChoice = {
         accessToken: token.accessToken,
         refreshToken: token.refreshToken,
         userId: token.userId,
+        wishlist_collection:'',
+        products_collection:'',
+        cart_numbers:''
     }
-    localStorage.setItem('nChoice', JSON.stringify(user))
-
-// mine________________________________________________________________
-
-    // localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
-    // localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
-    // localStorage.setItem('userId', JSON.stringify(token.userId))
+    localStorage.setItem('nChoice', JSON.stringify(nChoice))
 }
 
 const USER_DATA = {

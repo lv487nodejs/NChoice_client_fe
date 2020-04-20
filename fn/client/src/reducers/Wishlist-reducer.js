@@ -1,6 +1,6 @@
-import { setWishlistLS } from "../services/localStor";
+import { setWishlistLS, getWishlistLS } from "../services/localStor";
 
-const productCollection = JSON.parse(localStorage.getItem("wishlist-collection"));
+const productCollection = () => getWishlistLS();
 
 
 const initialState = {
@@ -12,10 +12,9 @@ const initialState = {
       case 'ADD_PRODUCT_WISHLIST':
         let newProducts = state.products;
         let foundProduct = newProducts.map(value => action.payload.id === value.id);
-        if (!foundProduct.length) {
+        if (foundProduct.length) {
           newProducts.push(action.payload);
         }
-        localStorage.setItem("wishlist-collection", JSON.stringify(newProducts));
         setWishlistLS(newProducts)
         return {
           ...state,
@@ -24,8 +23,7 @@ const initialState = {
 
       case "REMOVE_FROM_WISHLIST":
         let newItems = state.products.filter(item => action.payload.id !== item.id);
-        localStorage.setItem("wishlist-collection", JSON.stringify(newItems));
-
+        setWishlistLS(newItems)
         return {
           ...state,
           products: newItems

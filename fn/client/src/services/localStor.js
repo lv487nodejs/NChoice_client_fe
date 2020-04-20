@@ -1,20 +1,47 @@
+const nChoice = {
+    accessToken: '',
+    refreshToken: '',
+    userId: '',
+    wishlist_collection:'',
+    products_collection:'',
+    cart_numbers:''
+}
+localStorage.setItem('nChoice', JSON.stringify(nChoice))
+
+const localObject = JSON.parse(localStorage.getItem("nChoice"));
+
 export const getUserIdLS = () => {
-    const localObject = JSON.parse(localStorage.getItem("nChoice"));
     return localObject.userId
 }
 
 export const getAccessTokenLS = () => {
-    const localObject = JSON.parse(localStorage.getItem("nChoice"));
     return localObject.accessToken
 }
 
-// export const getaccessTokenLS = () => {
-//     const localObject = JSON.parse(localStorage.getItem("nChoice"));
-//     return localObject.accessToken
-// }
+export const getCartProductsLS = () => {
+    return localObject.products_collection
+}
+
+export const getCartNumbersLS = () => {
+    return localObject.cart_numbers
+}
+
+export const getWishlistLS = () => {
+    return localObject.wishlist_collection
+}
 
 export const setWishlistLS = (item) => {
-    const localObject = JSON.parse(localStorage.getItem("nChoice"));
     localObject.wishlist_collection = item
     localStorage.setItem("nChoice", JSON.stringify(localObject))
 }
+
+export const setCartProductsLS = (item) => {
+    localObject.products_collection = item
+    localStorage.setItem("nChoice", JSON.stringify(localObject))
+}
+
+export const setCartNumbersLS = (item) => {
+    localObject.cart_numbers = item
+    localStorage.setItem("nChoice", JSON.stringify(localObject))
+}
+
