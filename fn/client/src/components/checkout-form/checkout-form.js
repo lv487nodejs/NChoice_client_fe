@@ -6,7 +6,7 @@ import { countries, paymentMethods, deliveryType, placeholder} from '../../confi
 import { setShowSnackbar, setSnackbarText, clearCart, setOrderToStore } from '../../actions'
 import CheckoutTable from '../checkout-table';
 import CheckoutSelect from '../checkout-select';
-import CheckoutTextInput from '../checkout-text-input';
+// import CheckoutTextInput from '../checkout-text-input';
 import withStoreService from '../hoc';
 import './checkout-form.css';
 import Snackbar from '../snackbar';
