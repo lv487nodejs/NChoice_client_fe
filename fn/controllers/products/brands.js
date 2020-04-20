@@ -2,7 +2,7 @@ const Brands = require('../../models/Brand');
 const asyncHandler = require('../../middleware/async');
 const ErrorResponse = require('../../utils/errorResponse');
 
-const getBrands = asyncHandler(async (req, res, next) => {
+const createBrand = asyncHandler(async (req, res, next) => {
     const { brand, images } = req.body;
     try {
         const newBrand = new Brands({
@@ -16,7 +16,7 @@ const getBrands = asyncHandler(async (req, res, next) => {
     }
 });
 
-const createBrand = asyncHandler(async (req, res, next) => {
+const getBrands = asyncHandler(async (req, res, next) => {
     const { brand } = req.query;
     let brands;
     // check if object query is not empty

@@ -1,12 +1,9 @@
-require('dotenv').config();
-
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 const Users = require('../../models/User');
 const ErrorResponse = require('../../utils/errorResponse');
 const asyncHandler = require('../../middleware/async');
-
+const { generateRefreshToken,  generateAccessToken } = require('../../utils/token');
 
 const loginUser = asyncHandler(async (req, res, next) => {
     const { password, email } = req.body;
@@ -25,7 +22,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
     }
     const userName = { name: user.email };
     const accessToken = generateAccessToken(userName);
-    const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
+    const refreshToken = generateRefreshToken(userName);
 
     user.tokens = [];
     user.tokens.push(refreshToken);
@@ -53,9 +50,9 @@ const loginAdmin = asyncHandler(async (req, res, next) => {
             new ErrorResponse('User password is incorrect.', 401)
         );
     }
-    const name = user.email;
-    const accessToken = generateAccessToken({ name });
-    const refreshToken = jwt.sign({ name }, process.env.REFRESH_TOKEN_SECRET);
+    const userName = { name: user.email };
+    const accessToken = generateAccessToken(userName);
+    const refreshToken = generateRefreshToken(userName);
     res.status(200).send({ accessToken, refreshToken, user });
 });
 
@@ -95,8 +92,6 @@ const logout = asyncHandler(async (req, res, next) => {
     await user.save();
     res.sendStatus(204);
 });
-
-const generateAccessToken = userName => jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
 
 module.exports = {
     loginUser,

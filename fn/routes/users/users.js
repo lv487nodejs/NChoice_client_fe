@@ -22,7 +22,7 @@ router.get('/:id', auth, authorize('admin', 'user'), getUser);
 router.put('/:id', authorize('user'), updateUser);
 
 // update user role
-router.put('/role/:id', authorize('admin'), updateUserRole);
+router.put('/role/:id', auth, authorize('admin'), updateUserRole);
 
 // register user
 router.post('/register', userValidationRules(), validate, registerUser);

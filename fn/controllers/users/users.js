@@ -1,10 +1,9 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 const Users = require('../../models/User');
 const asyncHandler = require('../../middleware/async');
 const ErrorResponse = require('../../utils/errorResponse');
-
+const { generateRefreshToken,  generateAccessToken } = require('../../utils/token');
 
 const getUsers = asyncHandler(async (req, res, next) => {
     const user = await Users.find();
@@ -22,23 +21,13 @@ const getUser = asyncHandler(async (req, res, next) => {
 
     const userName = { name: user.email };
     const accessToken = generateAccessToken(userName);
-    const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
+    const refreshToken = generateRefreshToken(userName);
 
     user.tokens = [];
     user.tokens.push(refreshToken);
     await user.save()
-    const mappedUser = {
-        _id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        date: user.date,
-        tokens: user.tokens,
-        role: user.role,
-        wishlist: user.wishlist,
-        cart: user.cart
-    }
-    res.status(200).send({ accessToken, refreshToken, user: mappedUser });
+
+    res.status(200).send({ accessToken, refreshToken, user });
 });
 
 const registerUser = asyncHandler(async (req, res, next) => {
@@ -55,7 +44,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
     const userName = { name: user.email };
     const accessToken = generateAccessToken(userName);
-    const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
+    const refreshToken = generateRefreshToken(userName);
 
     user.tokens = [];
     user.tokens.push(refreshToken);
@@ -91,8 +80,6 @@ const updateUser = asyncHandler(async (req, res, next) => {
     await user.save();
     res.status(200).send({ msg: 'user data successfully changed', user });
 });
-
-const generateAccessToken = userName => jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET);
 
 module.exports = {
     updateUser,

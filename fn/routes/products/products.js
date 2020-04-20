@@ -22,6 +22,6 @@ router.route('/:id')
     .put(auth, authorize('admin'), updateProduct)
     .delete(auth, authorize('admin'), deleteProduct);
 
-router.get('/propetries', getPropetriesById);
+router.get('/propetries/:id', getPropetriesById);
 
 module.exports = router;
