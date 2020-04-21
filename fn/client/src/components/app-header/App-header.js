@@ -18,15 +18,12 @@ const AppHeader = () => (
                 <Nav className="mr-auto">
                     <AppHeaderNavLeft />
                 </Nav>
-
-
             </Navbar.Collapse>
           <Nav>
             <AppHeaderNavRight />
           </Nav>
         </Navbar>
     </header>
-
 );
 
 export default AppHeader;

@@ -1,6 +1,7 @@
 .wrapper {
   margin: auto;
   background-color: rgb(245, 245, 245);
+  max-width: 1000px;
 }
 .cardBody {
   display: flex;
@@ -109,6 +110,6 @@
 .disp-none {
   display: none;
 }
-.disp-block { 
+.disp-block {
   display:block;
 }

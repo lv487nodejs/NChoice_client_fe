@@ -33,4 +33,11 @@ header {
         top: 48px;
         left: 0;
     }
+    header{
+        box-shadow: none;
+        border-bottom: 1px solid #e1e4e8;
+        background-color: #fafbfc;
+        margin-bottom: 0;
+
+    }
 }

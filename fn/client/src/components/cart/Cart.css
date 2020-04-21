@@ -4,7 +4,7 @@
     border-radius: 2px;
     overflow: hidden;
     position: relative;
-    background-color: #f4f7f6;
+    background-color: rgb(245, 245, 245);
 }
 .checkout-wrap{
     display: inline-block;
@@ -55,7 +55,7 @@ p {
 .add-to-cart-button,
 .remove-from-cart-button {
   font-size: 1.7rem;
-  margin: 0rem 1.3rem
+  margin: 0 1.3rem
 }
 
 .delte-cart-button:hover,
