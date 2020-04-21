@@ -13,6 +13,11 @@ const router = express.Router();
 // user login
 router.post('/login', userLoginValidationRules(), validate, loginUser);
 
+//google login
+router.get('google/login', userLoginValidationRules(), validate, googleAuth);
+
+router.get('/google/redirect', googleRedirect)
+
 // admin login
 router.post('/admin/login', userLoginValidationRules(), validate, loginAdmin);
 

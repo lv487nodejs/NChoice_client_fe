@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
-
+const passport = require('passport')
+const passportSetup = require('../../config/passport-config')
 const Users = require('../../models/User');
 const ErrorResponse = require('../../utils/errorResponse');
 const asyncHandler = require('../../middleware/async');
@@ -94,9 +95,18 @@ const logout = asyncHandler(async (req, res, next) => {
     res.sendStatus(204);
 });
 
+const googleAuth = asyncHandler(passport.authenticate('google', {
+    scope: ['profile']
+}))
+
+const googleRedirect = asyncHandler(async (req, res) => {
+    res.send('you reached callback url')
+})
+
 module.exports = {
     loginUser,
     loginAdmin,
     getToken,
     logout,
+    googleAuth
 };
