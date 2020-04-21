@@ -4,6 +4,7 @@ const Users = require('../../models/User');
 const ErrorResponse = require('../../utils/errorResponse');
 const asyncHandler = require('../../middleware/async');
 const { generateRefreshToken,  generateAccessToken } = require('../../utils/token');
+require('dotenv').config();
 
 const loginUser = asyncHandler(async (req, res, next) => {
     const { password, email } = req.body;
@@ -99,4 +100,3 @@ module.exports = {
     getToken,
     logout,
 };
-

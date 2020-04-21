@@ -23,4 +23,3 @@ router.post('/token', getToken);
 router.delete('/logout', logout);
 
 module.exports = router;
-

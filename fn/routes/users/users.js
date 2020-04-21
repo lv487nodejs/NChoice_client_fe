@@ -28,4 +28,3 @@ router.put('/role/:id', auth, authorize('admin'), updateUserRole);
 router.post('/register', userValidationRules(), validate, registerUser);
 
 module.exports = router;
-
