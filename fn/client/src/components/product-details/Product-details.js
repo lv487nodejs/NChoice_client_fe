@@ -95,6 +95,7 @@ const ProductDetails = ({
   if (loading) {
     return <LoadingSpinner />
   }
+  // console.log(product.rate)
 
   return (
     <Card className="wrapperDetails" id="wrapper">

@@ -6,10 +6,13 @@ import Rating from 'react-rating';
 
 
 const StarsRating = ({ rating }) => {
-
+    const ratingChanged = (newRating) => {
+        console.log(newRating)
+      }
+      
     return (
         <div className="star-rating" id="starRating" rating={rating} >
-            <Rating readonly={true} id="stars" step={1} initialRating={rating} emptySymbol="fa fa-star-o fa-2x"
+            <Rating readonly={false} onChange={ratingChanged} id="stars" step={1} initialRating={rating} emptySymbol="fa fa-star-o fa-2x"
                 fullSymbol="fa fa-star fa-2x" />
         </div>
     );

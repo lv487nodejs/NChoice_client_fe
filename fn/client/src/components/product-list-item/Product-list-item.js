@@ -14,7 +14,6 @@ function ProductListItem({ title, id, images, price, mrsp, currency, currencyIco
         setPriceWithRate(Math.floor(price * currency));
         setMsrpWithRate(Math.floor(mrsp * currency));
     }, [currency, price, mrsp]);
-console.log(currencyIcon)
     return (
         <div className="wrapper" id="wrapper" key={id} >
             <div className="productCard" id="productCard"><img id="productImg" alt={`${images}`} src={`/images/products/${images}`} />
