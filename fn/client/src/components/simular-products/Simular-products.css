@@ -1,3 +1,17 @@
 .simular-products-items {
     margin: 30px 0;
 }
+
+@media (min-width: 950px) {
+    .secondSimularProducts{
+        display: none!important;
+    }
+}
+@media (max-width: 950px) {
+    .simular-products-items{
+        display: none!important;
+    }
+    .simular-products-items-small{
+        display: block!important;
+    }
+}

@@ -156,7 +156,7 @@ const ProductDetails = ({
             onClickThumbnail={index => setCurrImg(index)}
             onClose={e => setIsOpen(false)}
           />
-          </Col>
+        </Col>
         <Col className="text" id="text">
           <StarsRating rating={product.rate} />
           <Card.Title className="title" id="title">{product.title}</Card.Title>
@@ -168,10 +168,10 @@ const ProductDetails = ({
             className="color"
             id="color"
           ></Card.Text>
-            <Row className="pdpPrice">
-                    <Card.Text className="cardPrice">{(parseFloat(product.price * currency).toFixed(2))} {currencyIcon}</Card.Text>
-                    <Card.Text className="cardPrice msrp-price">{(parseFloat(product.mrsp * currency).toFixed(2))} {currencyIcon}</Card.Text>
-                </Row>
+          <Row className="pdpPrice">
+            <Card.Text className="cardPrice">{(parseFloat(product.price * currency).toFixed(2))} {currencyIcon}</Card.Text>
+            <Card.Text className="cardPrice msrp-price">{(parseFloat(product.mrsp * currency).toFixed(2))} {currencyIcon}</Card.Text>
+          </Row>
           <Col className="size" id="size">{sizeItem}</Col>
           <Card.Body className="buttons" id="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
@@ -186,7 +186,7 @@ const ProductDetails = ({
               <Button
                 variant="dark"
                 onClick={handleAddToCart}
-                
+
               >Buy now</Button>
             </Link>
           </Card.Body>
