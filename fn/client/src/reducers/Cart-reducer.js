@@ -3,9 +3,9 @@ import { getUserIdLS, getCartProductsLS, getCartNumbersLS, setCartProductsLS, se
 
 const initialState = { cartNumbers: 0, cartProducts: [] }
 
-const userId = () => getUserIdLS();
-const productCollection = () => getCartProductsLS()
-const localCartNumbers = () => getCartNumbersLS();
+const userId = getUserIdLS();
+const productCollection = getCartProductsLS()
+const localCartNumbers = getCartNumbersLS();
 
 const saveCart = async (userId, cart) => {
   axios.put(`https://lv487node-backend.herokuapp.com/users/cart/${userId}`, { cart });

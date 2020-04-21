@@ -1,6 +1,6 @@
 import { setWishlistLS, getWishlistLS } from "../services/localStor";
 
-const productCollection = () => getWishlistLS();
+const productCollection = getWishlistLS();
 
 
 const initialState = {

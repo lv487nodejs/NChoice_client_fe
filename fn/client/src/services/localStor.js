@@ -1,10 +1,10 @@
 const nChoice = {
-    accessToken: '',
-    refreshToken: '',
-    userId: '',
-    wishlist_collection:'',
-    products_collection:'',
-    cart_numbers:''
+    accessToken: null,
+    refreshToken: null,
+    userId: null,
+    wishlist_collection:null,
+    products_collection:null,
+    cart_numbers:null
 }
 localStorage.setItem('nChoice', JSON.stringify(nChoice))
 

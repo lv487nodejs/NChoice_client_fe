@@ -6,6 +6,7 @@ import { faHeart, faUser, faShoppingBasket, faSignOutAlt, faSignInAlt } from '@f
 import Currency from '../currency';
 import { connect } from 'react-redux';
 import { setUserLogged, setCart } from "../../actions";
+import { getUserIdLS } from "../../services/localStor";
 
 const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart }) => {
 
@@ -28,7 +29,7 @@ const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart })
         </li>
         <li key="6">
           {
-            localStorage.getItem('userId') || userLogged ? (
+            getUserIdLS() || userLogged ? (
               <p key="8" >
                 <Link to={"/userpage"}>
                   <FontAwesomeIcon icon={faUser} />
@@ -46,7 +47,7 @@ const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart })
           </Link>
         </li>
         {
-          localStorage.getItem('userId') || userLogged ? (
+          getUserIdLS() || userLogged ? (
             <li key="8" onClick={handleLogOut}>
               <Link to={"/login"}>
                 <FontAwesomeIcon icon={faSignOutAlt} />
