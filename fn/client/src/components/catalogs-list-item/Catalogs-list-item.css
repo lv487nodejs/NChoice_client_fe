@@ -19,7 +19,7 @@
   transition: all .6s ease;
 }
 .card__collection .cards--two:hover p {
-  left: 8%;
+  left: 13%;
   text-transform: uppercase;
   font-family: "Ostwald";
 }
@@ -59,8 +59,8 @@
   transition-delay: .2s;
 }
 .card__collection .cards--two__rect {
-  width: 750px;
-  height: 200px;
+  width: 874px;
+  height: 400px;
   background: #fff;
   display: block;
   position: absolute;
@@ -82,4 +82,25 @@
   z-index: 2;
   transition: all .3s ease-in-out;
   transition-delay: .1s;
+}
+
+@media (max-width: 1500px) {
+  .card__collection .cards--two:hover .cards--two__rect {
+    top: 78%!important;
+  }
+}
+@media (max-width: 1400px) {
+  .cards--two__tri{
+    display: none!important;
+  }
+}
+@media (max-width: 1260px) {
+  .card__collection .cards--two__rect {
+    width: 565px;
+    height: 400px;
+  }
+
+  .card__collection .cards {
+    height: 100%
+  }
 }
