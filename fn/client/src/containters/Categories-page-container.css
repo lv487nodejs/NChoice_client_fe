@@ -1,10 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
 
 .categories {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 20px;
-    width: 1000px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -32,4 +29,11 @@
 .category-item:hover a {
     color: white;
     background-color: black;
+}
+
+@media only screen and (max-device-width: 768px) {
+    .categories {
+        max-width: 768px;
+        margin: 15px auto;
+    }
 }
