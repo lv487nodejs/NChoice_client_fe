@@ -29,7 +29,7 @@
   .filter-button {
     display: block;
     position: fixed;
-    top: 6rem;
+    top: 7rem;
     z-index: 1111;
   }
   .show-filter {
