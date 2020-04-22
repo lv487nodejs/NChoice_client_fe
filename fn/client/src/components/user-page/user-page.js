@@ -11,7 +11,7 @@ const UserPage = () => {
     
     const userId = getUserIdLS()
 
-    if (!storageData) {
+    if (!userId) {
         return <Redirect to="/" />
     }
     const buttonOptions = [

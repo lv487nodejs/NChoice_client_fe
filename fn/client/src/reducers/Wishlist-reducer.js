@@ -11,8 +11,8 @@ const initialState = {
     switch (action.type) {
       case 'ADD_PRODUCT_WISHLIST':
         let newProducts = state.products;
-        let foundProduct = newProducts.map(value => action.payload.id === value.id);
-        if (foundProduct.length) {
+        let foundProduct = newProducts.filter(value => action.payload.id === value.id);
+        if (!foundProduct.length) {
           newProducts.push(action.payload);
         }
         setWishlistLS(newProducts)
