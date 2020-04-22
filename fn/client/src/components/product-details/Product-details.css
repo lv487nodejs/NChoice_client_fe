@@ -1,9 +1,10 @@
 .wrapperDetails {
   margin: auto;
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(245, 245, 245);  
   padding: 0 2rem;
   width: 75%;
 }
+
 .cardBody {
   display: grid;
   grid-template-columns: 57% 43%;
@@ -121,7 +122,7 @@
 .disp-none {
   display: none;
 }
-.disp-block { 
+.disp-block {
   display:block;
 }
 

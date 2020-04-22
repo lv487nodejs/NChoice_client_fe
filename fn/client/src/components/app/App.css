@@ -1,0 +1,22 @@
+html, body {
+    height: 100%;
+    position: relative;
+}
+
+.App {
+    display: grid;
+    /*grid-template-columns: [column1] 100% [column1-end];*/
+    /*grid-template-rows: [row1] 1fr [row1-end row2] auto [row2-end row3] 1fr [row3-end];*/
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto;
+    overflow: hidden;
+}
+
+@media only screen and (max-device-width: 991px) {
+    .App {
+        grid-template-rows: [row1] 2fr [row1-end row2] auto [row2-end row3] 5fr [row3-end];
+    }
+}
+
+
+

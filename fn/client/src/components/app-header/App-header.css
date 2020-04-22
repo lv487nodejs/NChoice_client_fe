@@ -1,22 +1,43 @@
 header {
     box-shadow: 0 8px 6px -6px black;
-    position: relative;
+    /*position: relative;*/
     margin-bottom: 2rem;
 }
 
-.logo{
+.logo {
     padding: 1rem;
-background-image: url(/images/logo.svg);
-position: absolute;
-position: absolute;
+    background-image: url(/images/logo.svg);
+    position: absolute;
     top: 50%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-height: 3rem;
-width: 3rem;
-background-size: cover;
+    height: 3rem;
+    width: 3rem;
+    background-size: cover;
 }
 .bg-dark {
     padding: 1rem;
+}
+
+.navbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: black!important;
+}
+
+@media only screen and (max-device-width: 991px) {
+    .navbar-collapse {
+        position: absolute;
+        top: 48px;
+        left: 0;
+    }
+    header{
+        box-shadow: none;
+        border-bottom: 1px solid #e1e4e8;
+        background-color: #fafbfc;
+        margin-bottom: 0;
+
+    }
 }

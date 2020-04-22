@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from "react";
 import Nav from 'react-bootstrap/Nav';
 
 import './App-header-nav-left-item-dropdown.css';
@@ -21,19 +21,24 @@ const AppHeaderNavLeftItemDropDown = ({
     </Nav>
   ));
 
+  let changeHandler = () => {
+    categoryRemover(catalog.catalog);
+  };
+
   return (
     <Nav defaultActiveKey="/home" className="flex-column drop-down">
       <Link
         to={PRODUCT_LIST_URL + catalog.catalog}
         className="nav-link"
         role="button"
-        onClick={() => categoryRemover(catalog.catalog)}
+        onClick={changeHandler}
       >
         All Categories
       </Link>
       {items}
+
     </Nav>
   );
-};
 
+};
 export default AppHeaderNavLeftItemDropDown;

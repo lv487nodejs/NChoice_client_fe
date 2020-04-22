@@ -4,7 +4,7 @@
     border-radius: 2px;
     overflow: hidden;
     position: relative;
-    background-color: #f4f7f6;
+    background-color: rgb(245, 245, 245);
 }
 .checkout-wrap{
     display: inline-block;
@@ -26,6 +26,7 @@
     max-width: 900px;
     min-height: 200px;
     margin: 0 auto;
+    padding: 20px;
 }
 .cart-item{
     min-height: 84px;
@@ -54,7 +55,7 @@ p {
 .add-to-cart-button,
 .remove-from-cart-button {
   font-size: 1.7rem;
-  margin: 0rem 1.3rem
+  margin: 0 1.3rem
 }
 
 .delte-cart-button:hover,

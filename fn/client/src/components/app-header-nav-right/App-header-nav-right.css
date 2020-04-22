@@ -1,3 +1,11 @@
+.nav-right{
+    right: 0;
+    position: absolute;
+    align-items: center;
+    top: 0;
+    bottom: 0;
+}
+
 .nav-bar ul {
     padding: 0;
     margin: 0;
@@ -22,4 +30,14 @@
 .nav-bar a:hover {
     color: black;
     background-color: white;
+}
+
+@media only screen and (max-device-width: 768px) {
+    .nav-bar a{
+        font-size: 1.2rem;
+    }
+
+    #currency{
+        display: none;
+    }
 }
