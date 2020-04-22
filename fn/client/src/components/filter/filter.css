@@ -44,14 +44,14 @@
   }
   .filter-button {
     transform: rotate(90deg);
-    top: 40vh;
+    top: 39vh;
     left: -1rem;
   }
 }
 
 @media screen and (max-width:768px) {
   .filter-group {
-    width: 40vw;
+    width: 30vw;
   }
 }
 
