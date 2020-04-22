@@ -97,6 +97,5 @@
         overflow: auto;
         height: 100vh;
         transition: .3s ease-in-out;
-        outline: 1px solid red;
     }
 }
