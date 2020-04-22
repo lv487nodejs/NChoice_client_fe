@@ -52,9 +52,7 @@ const addToCart = (state, payload) => {
   }
   setCartProductsLS(newProducts)
   setCartNumbersLS(state.cartNumbers + 1)
-  // localStorage.setItem("products-collection", JSON.stringify(newProducts));
-  // localStorage.setItem("cart-numbers", (state.cartNumbers + 1));
-
+  
   return {
     ...state,
     cartNumbers: state.cartNumbers + 1,

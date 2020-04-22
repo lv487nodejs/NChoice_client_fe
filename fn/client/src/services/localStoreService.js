@@ -1,12 +1,14 @@
-const nChoice = {
-    accessToken: null,
-    refreshToken: null,
-    userId: null,
-    wishlist_collection:null,
-    products_collection:null,
-    cart_numbers:null
+if(!localStorage.getItem('nChoice')){
+    const nChoice = {
+        accessToken: null,
+        refreshToken: null,
+        userId: null,
+        wishlist_collection:null,
+        products_collection:null,
+        cart_numbers:null
+    }
+    localStorage.setItem('nChoice', JSON.stringify(nChoice))    
 }
-localStorage.setItem('nChoice', JSON.stringify(nChoice))
 
 export const getUserIdLS = () => {
     const localObject = JSON.parse(localStorage.getItem("nChoice"));
@@ -48,6 +50,24 @@ export const setCartProductsLS = (item) => {
 export const setCartNumbersLS = (item) => {
     const localObject = JSON.parse(localStorage.getItem("nChoice"));
     localObject.cart_numbers = item
+    localStorage.setItem("nChoice", JSON.stringify(localObject))
+}
+
+export const setUserIdLS = (item) => {
+    const localObject = JSON.parse(localStorage.getItem("nChoice"));
+    localObject.userId = item
+    localStorage.setItem("nChoice", JSON.stringify(localObject))
+}
+
+export const setAccessTokenLS = (item) => {
+    const localObject = JSON.parse(localStorage.getItem("nChoice"));
+    localObject.accessToken = item
+    localStorage.setItem("nChoice", JSON.stringify(localObject))
+}
+
+export const setRefreshTokenLS = (item) => {
+    const localObject = JSON.parse(localStorage.getItem("nChoice"));
+    localObject.refreshToken = item
     localStorage.setItem("nChoice", JSON.stringify(localObject))
 }
 

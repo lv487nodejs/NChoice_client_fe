@@ -125,7 +125,7 @@ const CheckoutForm = ({
         clearLocalStorage();
         clearCart();
         console.log(orderToServer)
-        // storeService.postOrder(orderToServer);
+        storeService.postOrder(orderToServer);
     }
 
 
