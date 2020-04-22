@@ -11,6 +11,9 @@ const UserPage = () => {
     
     const userId = getUserIdLS()
 
+    if (!storageData) {
+        return <Redirect to="/" />
+    }
     const buttonOptions = [
         {
             title: 'Change settings',
@@ -25,6 +28,7 @@ const UserPage = () => {
             variant: 'dark',
         }
     ]
+    
     const buttons = buttonOptions.map(({ title, handler, value, variant }) => {
 
         return <li key={title}><Button variant={variant} value={value} onClick={() => handler(value)}>{title}</Button></li>
@@ -42,14 +46,11 @@ const UserPage = () => {
                     <Cart />
                 </div>
             </div> : ""
-    if (userId ) {
         return (
             <div className="container">
                 {itemToShow}
             </div>
         )
-    }
-    return (<Redirect to="/" />)
 }
 
 

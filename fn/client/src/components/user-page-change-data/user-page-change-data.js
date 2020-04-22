@@ -18,7 +18,7 @@ const UserChangeData = ({ user,
 }) => {
     const userId = getUserIdLS()
     const accessToken = getAccessTokenLS()
-// mine________________________________________________________________
+
     const addUserDataToSTore = useCallback((id, token) => {
         storeService.getUserById(id, token).then((res) => {
             const { user } = res
@@ -29,8 +29,8 @@ const UserChangeData = ({ user,
     }, [storeService, setUser])
 
     useEffect(() => {
-        addUserDataToSTore(userId, accessToken)
-    }, [addUserDataToSTore, accessToken, userId])
+        addUserDataToSTore(userId)
+    }, [addUserDataToSTore, userId])
 
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchema
@@ -41,11 +41,11 @@ const UserChangeData = ({ user,
     }
     const submitHandler = (e) => {
         storeService.sendUserChangedData(userId, accessToken, { user }).then((res) => {
-            addUserDataToSTore(userId, accessToken)
+            addUserDataToSTore(userId)
             snackbarHandler(res.data.msg)
         }).catch((error) => {
             console.log(error);
-            snackbarHandler(error.response.data.msg)
+            snackbarHandler(error.message)
         })
     }
     const snackbarHandler = (text) => {
