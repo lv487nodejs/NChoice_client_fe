@@ -37,7 +37,6 @@
         width: 100%;
     }
     .user-page-container .container {
-        
         width: 60%;
     }
     .user-page-container ul {
@@ -45,13 +44,18 @@
         align-items: stretch;
     }
 }
+
 @media screen and (max-width:992px) {
-    
     .user-page-container {
         justify-content: stretch;
     }
     .user-page-container .container {
-        
         width: 60%;
+    }
+}
+
+@media screen and (max-width:410px) {
+    .user-page-container .container {
+        width: 100%;
     }
 }
