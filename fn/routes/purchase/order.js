@@ -1,7 +1,6 @@
 const express = require('express');
 const { orderValidationRules, validate } = require('../../middleware/validator');
 const { auth, authorize } = require('../../middleware/auth');
-
 const {
     deleteOrder,
     updateOrder,

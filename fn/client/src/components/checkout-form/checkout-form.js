@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -10,20 +10,9 @@ import withStoreService from '../hoc';
 import './checkout-form.css';
 import Snackbar from '../snackbar';
 
-
-
-const orderForm = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    country: '',
-    city: '',
-    street: '',
-    buildingNumber: '',
-    contactPhone: '',
-    deliveryType: '',
-    paymentMethod: '',
-}
+const snackBarMsg = (badItem) => (`We dont have enough ${badItem.name}
+There are just ${badItem.available}.
+Please go to cart and change amount of ${badItem.name}`)
 
 const CheckoutForm = ({
     cartProducts,
@@ -34,40 +23,43 @@ const CheckoutForm = ({
     setSnackbarText,
     setOrderToStore,
 }) => {
-
-    const notAvaliable = [];
-
     // Check the database for quantity of products in order
-    useEffect(() => {
-        cartProducts.map((product) => {
-            storeService.getOneProductPropertie(product.propetries._id)
-                .then((res) => res[0].available)
-                .then((available) => {
-                    const itemAvailable = {
-                        name: product.title,
-                        available: available
-                    }
-                    if (product.quantity > available) {
-                        notAvaliable.push(itemAvailable)
-                        return
-                    }
-                });
-            return notAvaliable
+    const applyOrder = async () => {
+
+    const notAvaliable = []
+    const productsPromises = await Promise.all(cartProducts.map(product => storeService.getOneProductPropertie(product.propetries._id)))
+    productsPromises.forEach((product, index) => {
+        const inCart = cartProducts[index];
+        const {available} = product[0];
+        if (inCart.quantity > available) {
+            notAvaliable.push({
+                available,
+                name: inCart.title
+            })
+        }
+    });
+
+    if (notAvaliable.length) {
+        const snackbarText = notAvaliable.map((badItem) => {
+            return snackBarMsg(badItem);
         })
-    }, [cartProducts,
-        notAvaliable,
-        storeService]);
+        snackbarHandler(snackbarText)
+        return
+    }
+    setsuccessOrder(true);
+    clearLocalStorage();
+    clearCart();
+    storeService.postOrder(orderToServer);
+}
 
     const [validated, setValidated] = useState(false);
-
-    const [order, setOrder] = useState(orderForm);
-
+    const [order, setOrder] = useState(orderStore);
     const [successOrder, setsuccessOrder] = useState(false);
 
     const placeholder = "Type here..."
 
     // get user's id from localStorage and clear localStorage after submit'
-    const storageData = JSON.parse(localStorage.getItem('userId')) || '';
+    const userId = JSON.parse(localStorage.getItem('userId')) || '';
     const clearLocalStorage = () => {
         localStorage.removeItem('cart-numbers')
         localStorage.removeItem('products-collection')
@@ -85,8 +77,8 @@ const CheckoutForm = ({
         firstName: order.firstName,
         lastName: order.lastName,
         orderItems: productsINeed,
-        userId: storageData.userId,
-        email: storageData.email,
+        userId,
+        email: order.email,
         deliveryAddress: {
             country: order.country,
             city: order.city,
@@ -116,33 +108,29 @@ const CheckoutForm = ({
     }
 
     const handleSubmit = (event) => {
-        setOrderToStore(orderToServer)
-        if (notAvaliable.length !== 0) {
-            const snackbarText = notAvaliable.map((badItem) => {
-                return (`We dont have enough ${badItem.name}
-                        There are just ${badItem.available}.
-                        Please go to cart and change amount of ${badItem.name}`)
-            })
-            snackbarHandler(snackbarText)
-        }
+        event.preventDefault();
+        event.stopPropagation();
+        setOrderToStore(order)
+        
         const form = event.currentTarget;
-        if (form.checkValidity() === false || orderToServer.orderItems.length === 0 || notAvaliable.length !== 0) {
-            event.preventDefault();
-            event.stopPropagation();
+
+        if (!orderToServer.orderItems.length) return;
+        
+        if (!form.checkValidity()) {
             setValidated(true);
             return
         }
-        event.preventDefault()
-        storeService.postOrder(orderToServer)
-        setsuccessOrder(true)
-        clearLocalStorage()
-        clearCart()
+
+        applyOrder();
     }
 
     const handleChange = (event) => {
         event.persist();
-        setOrder(prevOrder => ({ ...prevOrder, [event.target.name]: event.target.value }));
+        setOrder({ ...order, [event.target.name]: event.target.value });
+        setOrderToStore(order)
     }
+
+    
 
     return (
         <Container fluid>
@@ -161,7 +149,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name={"firstName"}
                                         onChange={handleChange}
-                                        defaultValue={orderStore.firstName}
+                                        value={order.firstName}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -175,7 +163,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name={"lastName"}
                                         onChange={handleChange}
-                                        defaultValue={orderStore.lastName}
+                                        value={order.lastName}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -190,7 +178,7 @@ const CheckoutForm = ({
                                         name={"email"}
                                         type="email"
                                         onChange={handleChange}
-                                        defaultValue={orderStore.email}
+                                        value={order.email}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -205,7 +193,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name="contactPhone"
                                         onChange={handleChange}
-                                        defaultValue={orderStore.contactPhone}
+                                        value={order.contactPhone}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -226,7 +214,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name={"city"}
                                         onChange={handleChange}
-                                        defaultValue={orderStore.deliveryAddress.city}
+                                        value={order.city}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -240,7 +228,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name="street"
                                         onChange={handleChange}
-                                        defaultValue={orderStore.deliveryAddress.street}
+                                        value={order.street}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -254,7 +242,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name="buildingNumber"
                                         onChange={handleChange}
-                                        defaultValue={orderStore.deliveryAddress.buildingNumber}
+                                        value={order.buildingNumber}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">

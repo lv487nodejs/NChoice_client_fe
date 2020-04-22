@@ -3,7 +3,11 @@
     grid-template-columns: 300px 1fr 1fr 1fr;
     grid-gap: 1em;
     grid-template-rows: auto;
-    grid-template-areas: "options options options options" "filters productlist productlist productlist" ".  . . pages";
+    grid-template-areas: "filters productlist productlist productlist" ".  . . pages";
+}
+
+.clear-button {
+    font-weight: 600;
 }
 
 .catalog-top-name {
@@ -19,9 +23,17 @@
 }
 
 .products-options {
-    grid-area: options;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sort-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.sort-buttons h5 {
+    margin: 0;
 }
 
 .filters {

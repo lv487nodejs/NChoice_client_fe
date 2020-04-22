@@ -1,11 +1,35 @@
+import axios from "axios";
+
+const initialState = { cartNumbers: 0, cartProducts: [] }
+
+const userId = JSON.parse(localStorage.getItem("userId"));
 const productCollection = JSON.parse(localStorage.getItem("products-collection"));
 const localCartNumbers = JSON.parse(localStorage.getItem("cart-numbers"));
 
-const initialState = {
-  cartNumbers: +localCartNumbers || 0,
-  cartProducts: productCollection || [],
-  currency: 1
+const saveCart = async (userId, cart) => {
+  axios.put(`https://lv487node-backend.herokuapp.com/users/cart/${userId}`, { cart });
+}
+
+const setInitial = async () => {
+    if (userId) {
+      const res = await axios.get(`https://lv487node-backend.herokuapp.com/users/${userId}`);
+      const { cart } = res.data.user
+      if (!cart) {
+        saveCart(userId, { cartNumbers: 0, cartProducts: [] })
+        return
+      }
+      initialState.cartNumbers = cart.cartNumbers
+      initialState.cartProducts = cart.cartProducts
+      return
+    }
+
+    if (productCollection && localCartNumbers) {
+      initialState.cartNumbers = localCartNumbers
+      initialState.cartProducts = productCollection
+    }
 };
+
+setInitial()
 
 const addToCart = (state, payload) => {
   let newProducts = [...state.cartProducts];
@@ -16,6 +40,12 @@ const addToCart = (state, payload) => {
   } else {
     newProducts.push({ ...payload, quantity: 1 });
   }
+
+  if(userId) {
+    const cart = { cartNumbers: state.cartNumbers + 1, cartProducts: newProducts }
+    saveCart(userId, cart)
+  }
+
   localStorage.setItem("products-collection", JSON.stringify(newProducts));
   localStorage.setItem("cart-numbers", (state.cartNumbers + 1));
 
@@ -30,6 +60,12 @@ const increaseToCart = (state, payload) => {
   let newIncreaseProducts = [...state.cartProducts];
   let foundIncreaseItems = newIncreaseProducts.find(item => payload.propetries._id === item.propetries._id);
   foundIncreaseItems.quantity += 1;
+
+  if(userId) {
+    const cart = { cartNumbers: state.cartNumbers + 1, cartProducts: newIncreaseProducts }
+    saveCart(userId, cart)
+  }
+
   localStorage.setItem("products-collection", JSON.stringify(newIncreaseProducts));
   localStorage.setItem("cart-numbers", (state.cartNumbers + 1));
   return {
@@ -46,6 +82,12 @@ const decreaseToCart = (state, payload) => {
   //if the quantity == 0 then it should be removed
   if (foundItem.quantity === 1) {
     let new_items = state.cartProducts.filter(item => payload.propetries._id !== item.propetries._id);
+
+    if(userId) {
+      const cart = { cartNumbers: state.cartNumbers - 1, cartProducts: new_items }
+      saveCart(userId, cart)
+    }
+
     localStorage.setItem("products-collection", JSON.stringify(new_items));
     localStorage.setItem("cart-numbers", (state.cartNumbers - 1));
 
@@ -75,6 +117,12 @@ const removeFromCart = (state, payload) => {
     localStorage.setItem("products-collection", JSON.stringify(newItems));
     quantity = itemToRemove.quantity;
     localStorage.setItem("cart-numbers", (state.cartNumbers - quantity));
+
+    if(userId) {
+      const cart = { cartNumbers: state.cartNumbers - quantity, cartProducts: newItems }
+      saveCart(userId, cart)
+    }
+
     return {
       ...state,
       cartNumbers: state.cartNumbers - quantity,
@@ -83,6 +131,12 @@ const removeFromCart = (state, payload) => {
   } else {
     localStorage.setItem("products-collection", JSON.stringify(newItems));
     localStorage.setItem("cart-numbers", state.cartNumbers);
+
+    if(userId) {
+      const cart = { cartNumbers: state.cartNumbers, cartProducts: newItems }
+      saveCart(userId, cart)
+    }
+
     return {
       ...state,
       cartNumbers: 0,
@@ -90,7 +144,6 @@ const removeFromCart = (state, payload) => {
     };
   }
 };
-
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -106,15 +159,19 @@ export default (state = initialState, action) => {
     case "REMOVE_FROM_CART":
       return removeFromCart(state, action.payload);
 
-    case "CURRENCY_CHANGE_CART":
+    case "SET_CART":
       return {
-        ...state,
-        currency: action.payload
+        cartProducts: action.payload.cartProducts,
+        cartNumbers: action.payload.cartNumbers,
       };
-
     case "CLEAR_CART":
+  
+      if(userId) {
+        const cart = { cartNumbers: 0, cartProducts: [] }
+        saveCart(userId, cart)
+      }
+
       return {
-        ...state,
         cartProducts: [],
         cartNumbers: 0
       };

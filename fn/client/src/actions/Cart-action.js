@@ -5,6 +5,13 @@ const addToCart = (productName) => {
   }
 };
 
+const setCart = newCart => {
+  return {
+    type: 'SET_CART',
+    payload: newCart
+  }
+}
+
 const increaseToCart = (productName) => {
   return{
       type: 'INCREASE_TO_CART',
@@ -34,6 +41,7 @@ const clearCart = () => {
 
 export  {
   addToCart,
+  setCart,
   increaseToCart,
   decreaseFromCart,
   removeFromCart,
