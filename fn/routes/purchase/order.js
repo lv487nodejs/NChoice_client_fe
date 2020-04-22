@@ -14,7 +14,7 @@ const router = express.Router();
 router
     .route('/')
     .get(auth, authorize('admin', 'user'), getOrders)
-    .post(auth, authorize('admin', 'user'), orderValidationRules(), validate, createOrder);
+    .post(orderValidationRules(), validate, createOrder);
 
 router
     .route('/:id')
