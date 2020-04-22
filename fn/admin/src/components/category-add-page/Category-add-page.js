@@ -69,21 +69,20 @@ const CategoryAddPage = props => {
                 }
 
                 await catalogsService.putCatalog(catalogToUpdate.catalog._id, catalogToUpdate.catalog);
-
-                setSnackBarSeverity('success');
-                setSnackBarMessage(`Category ${newCategoryName} succesfully saved!`);
-                setSnackBarStatus(true);
-                history.push(`/categories`);
             }
         });
+        setSnackBarSeverity('success');
+        setSnackBarMessage(`Category ${newCategoryName} succesfully saved!`);
+        setSnackBarStatus(true);
+        history.push(`/categories`);
     };
 
     const catalogsToUpdateHandler = catalog => e => {
-        const index = catalogsToUpdate.findIndex(element => element.catalog._id === catalog._id);
         const catalogToUpdate = {
             catalog,
             checked: e.target.checked,
         };
+        const index = catalogsToUpdate.findIndex(element => element.catalog._id === catalog._id);
         if (index > -1) {
             catalogsToUpdate[index] = catalogToUpdate;
         } else {

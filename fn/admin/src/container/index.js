@@ -6,6 +6,7 @@ import BrandsPageContainer from './brand-page-container';
 import CategoriesPageContainer from './categories-page-container';
 import CategoryDetailsPageContainer from './category-details-page-container';
 import ProductDetailsPage from './product-details-container';
+import LoginPageContainer from './login-page-container';
 
 export {
     ProductsPageContainer,
@@ -16,4 +17,5 @@ export {
     CategoriesPageContainer,
     CategoryDetailsPageContainer,
     ProductDetailsPage,
+    LoginPageContainer,
 };

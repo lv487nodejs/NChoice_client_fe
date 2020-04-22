@@ -20,6 +20,15 @@ class UsersService extends AdminService {
         const res = await this.putData(`users/role/${user._id}`, { user });
         return res;
     };
+
+    loginAdmin = async user => {
+        try {
+            const res = await this.postData(`auth/admin/login`, user);
+            return res;
+        } catch (err) {
+            throw err;
+        }
+    }
 }
 
 const usersService = new UsersService();

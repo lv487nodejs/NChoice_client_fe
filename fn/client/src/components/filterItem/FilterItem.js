@@ -5,12 +5,12 @@ import { connect } from 'react-redux'
 
 const FilterItem = props => {
     const [isVisible, setIsVisible] = useState(true);
-    
+
     const listClass = isVisible ? '' : 'hide';
     const { items = [], type, handler } = props;
 
     const elements = items.map(item => {
-        const checked = props.brand.includes(item[type])||props.category.includes(item[type])||props.color.includes(item[type])
+        const checked = props.brand.includes(item[type]) || props.category.includes(item[type]) || props.color.includes(item[type])
 
         return (<li key={item[type]} >
             <label className="list-group-item">
@@ -24,9 +24,7 @@ const FilterItem = props => {
     }
     return (
         <div className="filter-item">
-
             <FontAwesome name="plus" className="btn btn-outline-primary plus-button expand-button" onClick={changeHandler}></FontAwesome>
-
             <p className="filter-name">By {type}:</p>
             <ul className={listClass}>{elements}</ul>
         </div>

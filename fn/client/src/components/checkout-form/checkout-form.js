@@ -37,7 +37,6 @@ const CheckoutForm = ({
                 name: inCart.title
             })
         }
-        return false
     });
 
     if (notAvaliable.length) {
@@ -47,11 +46,10 @@ const CheckoutForm = ({
         snackbarHandler(snackbarText)
         return
     }
-    
-    clearCart();
-    clearLocalStorage();
-    storeService.postOrder(orderToServer);
     setsuccessOrder(true);
+    clearLocalStorage();
+    clearCart();
+    storeService.postOrder(orderToServer);
 }
 
     const [validated, setValidated] = useState(false);
@@ -61,7 +59,7 @@ const CheckoutForm = ({
     const placeholder = "Type here..."
 
     // get user's id from localStorage and clear localStorage after submit'
-    const storageData = JSON.parse(localStorage.getItem('userId')) || '';
+    const userId = JSON.parse(localStorage.getItem('userId')) || '';
     const clearLocalStorage = () => {
         localStorage.removeItem('cart-numbers')
         localStorage.removeItem('products-collection')
@@ -79,7 +77,7 @@ const CheckoutForm = ({
         firstName: order.firstName,
         lastName: order.lastName,
         orderItems: productsINeed,
-        userId: storageData.userId,
+        userId,
         email: order.email,
         deliveryAddress: {
             country: order.country,
@@ -129,7 +127,10 @@ const CheckoutForm = ({
     const handleChange = (event) => {
         event.persist();
         setOrder({ ...order, [event.target.name]: event.target.value });
+        setOrderToStore(order)
     }
+
+    
 
     return (
         <Container fluid>

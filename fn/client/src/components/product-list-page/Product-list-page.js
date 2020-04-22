@@ -45,23 +45,22 @@ const ProductListPage = ({
   const clearAllHandler = () => {
     clearFilter()
   }
-  const sortByPriceOptions = {
-      text: 'PRICE',
-      value: sortAsc,
-      handler: sortByPriceHandler,
-      variant: 'dark',
-      defaultClass: 'fas fa-sort-up',
-      toChangeClass: 'fas fa-sort-down',
-    };
-  const sortByRateOptions =
-    {
-      text: 'RATE',
-      value: sortAsc,
-      handler: sortByRateHandler,
-      variant: 'dark',
-      defaultClass: 'fas fa-sort-up',
-      toChangeClass: 'fas fa-sort-down',
-    };
+  const sortOptions = [{
+    text: 'PRICE',
+    value: sortAsc,
+    handler: sortByPriceHandler,
+    variant: 'dark',
+    defaultClass: 'fas fa-sort-up',
+    toChangeClass: 'fas fa-sort-down',
+  },
+  {
+    text: 'RATE',
+    value: sortAsc,
+    handler: sortByRateHandler,
+    variant: 'dark',
+    defaultClass: 'fas fa-sort-up',
+    toChangeClass: 'fas fa-sort-down',
+  }]
 
   useEffect(() => {
     catalogLoaded(catalog);
@@ -85,24 +84,24 @@ const ProductListPage = ({
   };
 
   const changePagination = () => addCurrentPage(0);
-
+  const sortButtons = sortOptions.map((item) => {
+    return <ProductSort key={item.text} options={item} />
+  })
   return (
     <div>
       <h2 className="catalog-top-name">{catalog} Catalog</h2>
       <div className="products-options">
-          <SearchBar />
-          <Button className="clear-button" variant="dark" onClick={clearAllHandler}>CLEAR FILTERS</Button>
-          <div className="sort-buttons">
-            <h5>SORT BY:</h5>
-            <ProductSort options={sortByPriceOptions} />
-            <ProductSort options={sortByRateOptions} />
-          </div>
-          <ProductListButtonPages
-            changeItems={changeItemsMethod}
-            changeCurrentPage={changePagination}
-            className="buttonsGroup productListButtons "
-          />
+        <SearchBar />
+        <Button className="clear-button" variant="dark" onClick={clearAllHandler}>CLEAR FILTERS</Button>
+        <div className="sort-buttons">
+          <h5>SORT BY:</h5>{sortButtons}
         </div>
+        <ProductListButtonPages
+          changeItems={changeItemsMethod}
+          changeCurrentPage={changePagination}
+          className="buttonsGroup productListButtons "
+        />
+      </div>
       <div className="product-list-page">
         <div className="filters">
           <Filter />

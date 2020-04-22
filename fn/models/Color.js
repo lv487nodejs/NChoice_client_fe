@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const ColorSchema = new Schema({
-    color: { type: String, required: true, unique: true },
+    color: {
+        type: String,
+        required: true,
+        unique: true
+    },
     images: [String],
 });
 

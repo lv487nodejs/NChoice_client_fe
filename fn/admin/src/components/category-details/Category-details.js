@@ -107,12 +107,13 @@ const CategoryDetails = props => {
     };
 
     const catalogsToUpdateHandler = catalogCheckbox => e => {
-        const index = catalogsToUpdate.findIndex(element => element._id === catalogCheckbox._id);
-
         const catalogToUpdate = {
             ...catalogCheckbox,
             checked: e.target.checked,
         };
+
+        const index = catalogsToUpdate.findIndex(element => element._id === catalogCheckbox._id);
+
         const newCatalogsToUpdate = [...catalogsToUpdate];
         if (index > -1) {
             newCatalogsToUpdate[index] = catalogToUpdate;
