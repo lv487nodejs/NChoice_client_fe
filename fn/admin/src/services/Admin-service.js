@@ -19,7 +19,7 @@ export default class AdminService {
             const response = await axios.post(`${serverUrl}${url}`, dataToSend);
             return response.data;
         } catch (error) {
-            console.error(error);
+            throw error;
         }
     };
 
