@@ -32,7 +32,6 @@ const Filter = ({
   const [isVisible, setIsVisible] = useState(false)
 
   const showFilterClass = isVisible ? 'show-filter' : ''
-  const buttonClass = isVisible ? 'fa fa-angle-left' : 'fa fa-angle-right'
 
   useEffect(() => {
     storeService
@@ -111,7 +110,7 @@ const Filter = ({
   })
   return (
     <div>
-      <Button variant="dark" className={`filter-button ${buttonClass}`} onClick={showHandler}></Button>
+      <Button variant="dark" className='filter-button' onClick={showHandler}>Filters</Button>
       <div className={`filter-group ${showFilterClass}`}>
         <span className="filter-title">Filters</span>
         {itemsToShow}

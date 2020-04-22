@@ -42,25 +42,38 @@
     width: 20vw;
     margin: 0;
   }
+  .filter-button {
+    transform: rotate(90deg);
+    top: 40vh;
+    left: -1rem;
+  }
 }
 
-@media screen and (max-width:765px) {
+@media screen and (max-width:768px) {
   .filter-group {
     width: 40vw;
   }
 }
 
-@media screen and (max-width:410px) {
+@media screen and (max-width:414px) {
   .filter-group {
     width: 100vw;
   }
-  .filter-button {
-    top: 7rem;
-  }
 }
 
+@media screen and (max-width:375px) {
+  .filter-group {
+    width: 100vw;
+    padding-left: 1rem;
+  }
+}
 @media screen and (max-width:360px) {
   .filter-group {
-    width: 82vw;
+    width: 100vw;
+  }
+}
+@media screen and (max-width:320px) {
+  .filter-group {
+    width: 100vw;
   }
 }
