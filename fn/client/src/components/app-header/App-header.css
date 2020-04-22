@@ -27,7 +27,7 @@ header {
     background: black!important;
 }
 
-@media only screen and (max-device-width: 768px) {
+@media only screen and (max-device-width: 991px) {
     .navbar-collapse {
         position: absolute;
         top: 48px;

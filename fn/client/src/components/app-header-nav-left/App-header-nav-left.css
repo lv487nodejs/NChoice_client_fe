@@ -50,7 +50,7 @@
   background-color: black;
 }
 
-@media only screen and (max-device-width: 768px) {
+@media only screen and (max-device-width: 991px) {
     .nav-left {
         justify-items: center;
         text-align: center;

@@ -12,9 +12,11 @@ html, body {
     overflow: hidden;
 }
 
-@media only screen and (max-device-width: 768px) {
+@media only screen and (max-device-width: 991px) {
     .App {
         grid-template-rows: [row1] 2fr [row1-end row2] auto [row2-end row3] 5fr [row3-end];
     }
 }
+
+
 

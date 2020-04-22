@@ -27,6 +27,12 @@ const AppHeaderNavLeft = ({
   clearFilter,
 }) => {
   const [isShown, setIsShown] = useState('');
+  // const [shawCatalogsNames, setCatalogsName] = useState(true);
+  window.addEventListener("resize", function() {
+    console.log(window.innerWidth);
+    return window.innerWidth;
+  });
+
 
   useEffect(() => {
     catalogsRequested();
@@ -40,18 +46,28 @@ const AppHeaderNavLeft = ({
     setIsShown('');
   };
   const filterAddCategoryHandler = (category, catalog) => {
-
     filterByName('');
     clearFilter();
     filterAddCategory(category);
     setCatalogFilter(catalog);
+    setIsShown('');
+    // shawCatalogsHandler()
   };
+
+  const filterRemoveCategoriesHandler = () =>{
+    filterRemoveAllCategories();
+    setIsShown('')
+  }
 
   const filterAddCatalog = (catalog) => () => {
     filterByName('');
     clearFilter();
     setCatalogFilter(catalog);
   };
+
+  // const shawCatalogsHandler  = () => {
+  //   setCatalogsName(!shawCatalogsNames)
+  // };
 
   const items = catalogs.map((catalog) => (
     <li
@@ -66,7 +82,7 @@ const AppHeaderNavLeft = ({
           <AppHeaderNavLeftItemDropDown
             catalog={catalog}
             clickHandler={filterAddCategoryHandler}
-            categoryRemover={filterRemoveAllCategories}
+            categoryRemover={filterRemoveCategoriesHandler}
           />
         </div>
       )}

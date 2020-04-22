@@ -30,7 +30,13 @@
     color: white;
     background-color: black;
 }
-
+@media only screen and (max-device-width: 991px) {
+    .categories {
+        max-width: 991px;
+        /*margin: 15px auto;*/
+        padding-top: 15px;
+    }
+}
 @media only screen and (max-device-width: 768px) {
     .categories {
         max-width: 768px;
