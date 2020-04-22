@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Product-details.css';
-import { Card, Row, Col, Image, Button } from 'react-bootstrap';
+import { Card, Col, Image, Button, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import SimularProducts from '../simular-products/Simular-products';
 import StarsRating from '../star-rating';
 import LoadingSpinner from '../Loading-spinner';
+import ImgsViewer from 'react-images-viewer'
 
 import withStoreService from '../hoc';
 import {
@@ -32,13 +33,40 @@ const ProductDetails = ({
   addToCart,
   addToWishlist,
   productsLoadingStart,
-  productsLoadingStop
+  productsLoadingStop,
+  currency,
+  currencyIcon
 }) => {
 
   const [getSizes, setSizes] = useState([]);
   const [checkSize, setCheckSize] = useState('');
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [currImg, setCurrImg] = useState(0);
+
+  const imgUrl = `/images/products/${product.images}`
+  const imgs = [
+    {
+      src: imgUrl
+    },
+    {
+      src: imgUrl
+    },
+    {
+      src: imgUrl
+    },
+    {
+      src: imgUrl
+    }
+  ]
+
   useEffect(() => {
+    // if(products.length){
+    //   const index = products.findIndex(item => item.id === id)
+    //   setProduct(products[index])
+    //   setSizes(products[index].propetries)
+    //   return
+    // }
     productsLoadingStart()
     if (!products.length) {
       storeService.getAllProducts().then((res) => setProducts(res))
@@ -47,7 +75,8 @@ const ProductDetails = ({
     storeService.getProductById(id).then((res) => setProduct(res));
   }, [storeService, id, setProduct, setSizes, productsLoadingStart, productsLoadingStop, setProducts, products.length]);
 
-  const newProducts = products.slice(-3)
+  const simularProducts = products.filter(elem => elem.catalog === product.catalog)
+
 
   const handleCheck = item => () => {
     setCheckSize(item)
@@ -65,73 +94,105 @@ const ProductDetails = ({
     .reduce((accum, { size }) => [...accum, ...size], [])
     .map((item) => (
       <div key={item} className="sizeItem" onClick={handleCheck(item)} >
-        <span className={item === checkSize ? 'check' : ''}> {item} </span>
+        <span className={item === checkSize ? 'check' : ''} id={item}> {item} </span>
       </div>
     ));
 
   if (loading) {
     return <LoadingSpinner />
   }
+  // console.log(product.rate)
 
   return (
-    
-    <Card className="wrapper">
+    <Card className="wrapperDetails" id="wrapper">
       <Card.Body className="cardBody">
-        <Row className="justify-content-md-center">
-          <Col className="images">
-            <Col className="zoom">
-              <Image
-                src={`/images/products/${product.images}`}
-                className="img"
-                rounded
-              />
-            </Col>
-            <Col className="zoom">
-              <Image
-                src={`/images/products/${product.images}`}
-                className="img"
-                rounded
-              />
-            </Col>
-            <Col className="zoom">
-              <Image
-                src={`/images/products/${product.images}`}
-                className="img"
-                rounded
-              />
-            </Col>
+        <Col className="images" id="images">
+          <Col className="one"><Image
+            src={`/images/products/${product.images}`}
+            className="img"
+            rounded
+            onClick={e => {
+              setIsOpen(true)
+              setCurrImg(0)
+            }}
+            alt={`${product.images}`}
+          />
           </Col>
-          <Col className="mainImgWrapper">
+          <Col className="two"> <Image
+            src={`/images/products/${product.images}`}
+            className="img"
+            rounded
+            onClick={e => {
+              setIsOpen(true)
+              setCurrImg(1)
+            }}
+            alt={`${product.images}`}
+          />
+          </Col>
+          <Col className="three"> <Image
+            src={`/images/products/${product.images}`}
+            className="img"
+            rounded
+            onClick={e => {
+              setIsOpen(true)
+              setCurrImg(2)
+            }}
+            alt={`${product.images}`}
+          />
+          </Col>
+          <Col className="four">
             <Image
               src={`/images/products/${product.images}`}
-              className="mainImg"
+              className="img"
               rounded
+              onClick={e => {
+                setIsOpen(true)
+                setCurrImg(3)
+              }}
+              alt={`${product.images}`}
             />
           </Col>
-        </Row>
-        <Col className="text">
+          <ImgsViewer
+            imgs={imgs}
+            currImg={currImg}
+            showThumbnails={true}
+            isOpen={isOpen}
+            onClickPrev={e => setCurrImg(currImg - 1)}
+            onClickNext={e => setCurrImg(currImg + 1)}
+            onClickThumbnail={index => setCurrImg(index)}
+            onClose={e => setIsOpen(false)}
+          />
+        </Col>
+        <Col className="text" id="text">
           <StarsRating rating={product.rate} />
-          <Card.Title className="title">{product.title}</Card.Title>
-          <Card.Text className="productDescription">
+          <Card.Title className="title" id="title">{product.title}</Card.Title>
+          <Card.Text className="productDescription" id="description" >
             {product.description}
           </Card.Text>
           <Card.Text
             style={{ backgroundColor: product.color }}
             className="color"
+            id="color"
           ></Card.Text>
-          <Col className="size">{sizeItem}</Col>
-          <Card.Body className="buttons">
+          <Row className="pdpPrice">
+            <Card.Text className="cardPrice">{(parseFloat(product.price * currency).toFixed(2))} {currencyIcon}</Card.Text>
+            <Card.Text className="cardPrice msrp-price">{(parseFloat(product.mrsp * currency).toFixed(2))} {currencyIcon}</Card.Text>
+          </Row>
+          <Col className="size" id="size">{sizeItem}</Col>
+          <Card.Body className="buttons" id="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
-              onClick={() => addToWishlist(product)} />
-            <Button 
-            variant="dark" 
-            className={checkSize ? 'button' : 'button disabled'}
-            onClick={handleAddToCart}
+              onClick={() => addToWishlist(product)} id="heartButton" />
+            <Button
+              variant="dark"
+              className={checkSize ? 'button' : 'button disabled'}
+              onClick={handleAddToCart}
+              id="addToCartButton"
             >Add to cart </Button>
-            <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none'}>
+            <Link to="/checkout" id="buyNowButton" className={checkSize ? 'disp-block' : 'disp-none'}>
               <Button
                 variant="dark"
                 onClick={handleAddToCart}
+
               >Buy now</Button>
             </Link>
           </Card.Body>
@@ -140,18 +201,20 @@ const ProductDetails = ({
       <hr />
       <div className="similarItems">Similar items</div>
       <hr />
-      <SimularProducts products={newProducts} className="routingImg" />
+      <SimularProducts products={simularProducts} className="routingImg" />
     </Card>
   );
 };
 
 const mapStateToProps = ({
-  productsList: { product, products, loading, propetries },
+  productsList: { product, products, loading, propetries, currency, currencyIcon },
 }) => ({
   products,
   product,
   loading,
   propetries,
+  currency,
+  currencyIcon
 });
 const mapDispatchToProps = {
   setProduct,
