@@ -1,27 +1,30 @@
 import React from 'react';
 import ProductListItem from '../product-list-item';
 import './Simular-products.css';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 3,
-  slidesToScroll: 1
-};
-const settings2 = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+
+const responsive = {
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3
+  },
+  tablet: {
+    breakpoint: { max: 1146, min: 464 },
+    items: 2
+  },
+  mobile: {
+    breakpoint: { max: 810, min: 0 },
+    items: 1
+  }
 };
 const SimularProducts = ({ products }) => (
-  <>
-    <Slider {...settings} className="simular-products-items">
+    <Carousel responsive={responsive}>
       {products.map(({ id, title, description, images, price, mrsp, rate }) => (
         <ProductListItem
           title={title}
@@ -34,22 +37,7 @@ const SimularProducts = ({ products }) => (
           rate={rate}
         />
       ))}
-    </Slider>
-    <Slider {...settings2} className="secondSimularProducts">
-      {products.map(({ id, title, description, images, price, mrsp, rate }) => (
-        <ProductListItem
-          title={title}
-          description={description}
-          images={images}
-          price={price}
-          mrsp={mrsp}
-          id={id}
-          key={id}
-          rate={rate}
-        />
-      ))}
-    </Slider>
-  </>
+    </Carousel>
 );
 
 export default SimularProducts;
