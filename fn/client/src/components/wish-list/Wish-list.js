@@ -7,7 +7,7 @@ import Container from "@material-ui/core/Container/Container";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { addToWishlist, removeFromWishlist } from "../../actions";
-import { getWishlistLS } from "../../services/localStor";
+import { getWishlistLS } from "../../services/localStoreService";
 
 const Wishlist = ({removeFromWishlist}) => {
 

@@ -1,4 +1,4 @@
-import { setWishlistLS, getWishlistLS } from "../services/localStor";
+import { setWishlistLS, getWishlistLS } from "../services/localStoreService";
 
 const productCollection = getWishlistLS();
 

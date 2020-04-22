@@ -1,5 +1,9 @@
 import axios from "axios";
-import { getUserIdLS, getCartProductsLS, getCartNumbersLS, setCartProductsLS, setCartNumbersLS } from "../services/localStor";
+import { getUserIdLS,
+   getCartProductsLS,
+   getCartNumbersLS,
+   setCartProductsLS,
+   setCartNumbersLS } from "../services/localStoreService";
 
 const initialState = { cartNumbers: 0, cartProducts: [] }
 

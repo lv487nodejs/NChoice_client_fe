@@ -31,16 +31,19 @@ export const getWishlistLS = () => {
 }
 
 export const setWishlistLS = (item) => {
+    const localObject = JSON.parse(localStorage.getItem("nChoice"));
     localObject.wishlist_collection = item
     localStorage.setItem("nChoice", JSON.stringify(localObject))
 }
 
 export const setCartProductsLS = (item) => {
+    const localObject = JSON.parse(localStorage.getItem("nChoice"));
     localObject.products_collection = item
     localStorage.setItem("nChoice", JSON.stringify(localObject))
 }
 
 export const setCartNumbersLS = (item) => {
+    const localObject = JSON.parse(localStorage.getItem("nChoice"));
     localObject.cart_numbers = item
     localStorage.setItem("nChoice", JSON.stringify(localObject))
 }

@@ -6,7 +6,7 @@ import { faHeart, faUser, faShoppingBasket, faSignOutAlt, faSignInAlt } from '@f
 import Currency from '../currency';
 import { connect } from 'react-redux';
 import { setUserLogged, setCart } from "../../actions";
-import { getUserIdLS } from "../../services/localStor";
+import { getUserIdLS } from "../../services/localStoreService";
 
 const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart }) => {
 
