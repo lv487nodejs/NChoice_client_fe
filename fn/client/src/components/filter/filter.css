@@ -22,10 +22,9 @@
   .filter-group {
     width: 20vw;
     display: none;
-    left: -200%;
+    transform: translateX(-120%);
     transition: .3s ease-in-out;
   }
-
   .filter-button {
     display: block;
     position: fixed;
@@ -34,7 +33,7 @@
   }
   .show-filter {
     display: block;
-    left: 0;
+    transform: translateX(0);
   }
 }
 
@@ -44,17 +43,24 @@
     margin: 0;
   }
 }
+
 @media screen and (max-width:765px) {
   .filter-group {
     width: 40vw;
   }
 }
+
 @media screen and (max-width:410px) {
   .filter-group {
     width: 100vw;
   }
-  .filter-button{
+  .filter-button {
     top: 7rem;
   }
+}
 
+@media screen and (max-width:360px) {
+  .filter-group {
+    width: 82vw;
+  }
 }
