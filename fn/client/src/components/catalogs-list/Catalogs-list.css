@@ -1,13 +1,22 @@
 .catalogs {
     display: flex;
     align-items: center;
-    margin: 0 auto;
+    margin: 3rem auto;
     justify-content: space-around;
-    max-width: 1000px
+    max-width: 1200px;
+    min-height: 50vh;
 }
 
 .catalogs img {
     display: block;
     width: 100%;
 }
+
+@media (max-width: 768px) {
+    .catalogs {
+     flex-direction: column;
+     width: 80%;
+    }
+}
+
 
