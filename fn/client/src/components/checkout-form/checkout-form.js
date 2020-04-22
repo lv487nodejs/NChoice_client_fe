@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { countries, paymentMethods, deliveryType, placeholder} from '../../configs/frontend-config'
+import { countries, paymentMethods, deliveryType, placeholder } from '../../configs/frontend-config'
 import { setShowSnackbar, setSnackbarText, clearCart, setOrderToStore } from '../../actions'
 import CheckoutTable from '../checkout-table';
 import CheckoutSelect from '../checkout-select';
@@ -52,7 +52,7 @@ const CheckoutForm = ({
         firstName: order.firstName,
         lastName: order.lastName,
         orderItems: productsForOrder,
-        userId,
+        userId: userId,
         email: order.email,
         deliveryAddress: {
             country: order.country,
@@ -86,26 +86,26 @@ const CheckoutForm = ({
         event.preventDefault();
 
         setOrderToStore(order)
-        
+
         const form = event.currentTarget;
 
         if (!orderToServer.orderItems.length) return;
-        
+
         if (!form.checkValidity()) {
             setValidated(true);
             return
         }
-
+        
         applyOrder();
     }
 
-        // Check the database for quantity of products in order
-        const applyOrder = async () => {
-            const notAvaliable = []
+    // Check the database for quantity of products in order
+    const applyOrder = async () => {
+        const notAvaliable = []
         const productsPromises = await Promise.all(cartProducts.map(product => storeService.getOneProductPropertie(product.propetries._id)))
         productsPromises.forEach((product, index) => {
             const inCart = cartProducts[index];
-            const {available} = product[0];
+            const { available } = product[0];
             if (inCart.quantity > available) {
                 notAvaliable.push({
                     available,
@@ -113,7 +113,7 @@ const CheckoutForm = ({
                 })
             }
         });
-    
+
         if (notAvaliable.length) {
             const snackbarText = notAvaliable.map((badItem) => {
                 return snackBarMsg(badItem);
@@ -124,9 +124,10 @@ const CheckoutForm = ({
         setsuccessOrder(true);
         clearLocalStorage();
         clearCart();
-        storeService.postOrder(orderToServer);
+        console.log(orderToServer)
+        // storeService.postOrder(orderToServer);
     }
-    
+
 
     const handleChange = (event) => {
         event.persist();
@@ -305,13 +306,14 @@ const CheckoutForm = ({
 const mapStateToProps = ({
     cartReducer: { cartProducts },
     checkoutReduser: { orderStore }
-         }) => ({
-            orderStore,
-            cartProducts,
-        });
+}) => ({
+    orderStore,
+    cartProducts,
+});
 
 const mapDispatchToProps = ({
-    setShowSnackbar, setSnackbarText, clearCart, setOrderToStore })
+    setShowSnackbar, setSnackbarText, clearCart, setOrderToStore
+})
 
 export default withStoreService()(
     connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)
