@@ -19,7 +19,7 @@ router.get('/', auth, authorize('admin'), getUsers);
 router.get('/:id', auth, authorize('admin', 'user'), getUser);
 
 // update user
-router.put('/:id', authorize('user'), updateUser);
+router.put('/:id', auth, authorize('user'), updateUser);
 
 // update user role
 router.put('/role/:id', auth, authorize('admin'), updateUserRole);
