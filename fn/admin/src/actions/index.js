@@ -2,8 +2,6 @@ export { setCatalog, setCatalogs, catalogLoadingStatus } from './Catalogs-action
 
 export { setBrand, setBrands, brandLoadingStatus } from './Brand-actions';
 
-export { setAdmin } from './Auth-actions';
-
 export {
     setCategory,
     setCategories,

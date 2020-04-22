@@ -1,22 +1,72 @@
-const express = require('express');
-const { userLoginValidationRules, validate } = require('../../middleware/validator');
+require('dotenv').config();
 
-const {
-    loginUser,
-    loginAdmin,
-    getToken,
-    logout,
-} = require('../../controllers/users/auth')
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+const Users = require('../../models/User');
+const { userLoginValidationRules, validate } = require('../../middleware/validator');
 
 const router = express.Router();
 
-// user login
-router.post('/login', userLoginValidationRules(), validate, loginUser);
+router.post('/login', userLoginValidationRules(), validate, async (req, res) => {
+    const { password, email } = req.body;
+    try {
+        const user = await Users.findOne({ email });
+        if (!user) {
+            return res.status(400).send({ errors: [{ msg: 'Cannot find user with such email.' }] });
+        }
 
-// get token
-router.post('/token', getToken);
+        const comparePassword = await bcrypt.compare(password, user.password);
+        if (!comparePassword) {
+            return res.status(400).send({ errors: [{ msg: 'User password is incorrect.' }] });
+        }
+        const userName = { name: user.email };
+        const accessToken = generateAccessToken(userName);
+        const refreshToken = jwt.sign(userName, process.env.REFRESH_TOKEN_SECRET);
 
-// logout
-router.delete('/logout', logout);
+        user.tokens = [];
+        user.tokens.push(refreshToken);
+        await user.save();
+        res.send({ accessToken, refreshToken, userId: user._id, cart: user.cart });
+    } catch (err) {
+        req.status(500).send(err);
+    }
+});
+
+router.post('/token', async (req, res) => {
+    const refreshToken = req.body.token;
+    const { email } = req.body;
+
+    try {
+        const user = await Users.findOne({ email });
+
+        if (refreshToken == null) return res.sendStatus(401);
+        if (!user.tokens.includes(refreshToken)) return res.sendStatus(403);
+
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, err => {
+            if (err) return res.sendStatus(403);
+            const accessToken = generateAccessToken({ name: email });
+            res.send({ accessToken });
+        });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+router.delete('/logout', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await Users.findOne({ email });
+        user.tokens = [];
+        await user.save();
+        res.sendStatus(204);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+const generateAccessToken = userName => jwt.sign(userName, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
 
 module.exports = router;
+

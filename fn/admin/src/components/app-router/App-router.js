@@ -10,7 +10,6 @@ import {
     CategoriesPageContainer,
     CategoryDetailsPageContainer,
     ProductDetailsPage,
-    LoginPageContainer,
 } from '../../container';
 
 import { config } from '../../config';
@@ -40,12 +39,15 @@ const AppRouter = () => (
             <Route path={routes.pathToProductDetails} exact component={ProductDetailsPage} />
             <Route path={routes.pathToBrands} exact component={BrandsPageContainer} />
             <Route path={routes.pathToCategories} exact component={CategoriesPageContainer} />
-            <Route path={routes.pathToCategoryDetails} exact component={CategoryDetailsPageContainer} />
+            <Route
+                path={routes.pathToCategoryDetails}
+                exact
+                component={CategoryDetailsPageContainer}
+            />
             <Route path={routes.pathToAddCategory} exact component={CategoryAddPage} />
             <Route path={routes.pathToAddProduct} exact component={ProductAddPage} />
             <Route path={routes.pathToAddBrand} exact component={BrandAddPage} />
             <Route path={routes.pathToBrandDetails} exact component={BrandDetails} />
-            <Route path={routes.pathToLogin} exact component={LoginPageContainer} />
             <Redirect to={routes.pathToOrders} />
         </Switch>
         <DialogWindow />
