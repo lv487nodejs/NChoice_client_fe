@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import './App-footer.css';
 import { Row, Card } from 'react-bootstrap';
+import { socialNerworksURL } from '../../configs/frontend-config'
 
 const AppFooter = () => (
   <footer className="footer">
@@ -15,13 +16,13 @@ const AppFooter = () => (
         <Row className="d-flex flex-column align-items-center">
           <Card.Title>Links</Card.Title>
           <Card.Title>
-            <Card.Link href="#">
+            <Card.Link href={socialNerworksURL.telegram} target='_blank'>
               <FontAwesomeIcon className="icon" icon={faTelegramPlane} />
             </Card.Link>
-            <Card.Link href="#">
+            <Card.Link href={socialNerworksURL.instagram} target='_blank'>
               <FontAwesomeIcon className="icon" icon={faInstagram} />
             </Card.Link>
-            <Card.Link href="#">
+            <Card.Link href={socialNerworksURL.facebook} target='_blank'>
               <FontAwesomeIcon className="icon" icon={faFacebook} />
             </Card.Link>
           </Card.Title>

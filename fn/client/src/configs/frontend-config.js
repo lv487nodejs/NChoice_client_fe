@@ -44,3 +44,8 @@ export const deliveryType = {
     ]
 };
 
+export const socialNerworksURL = {
+    telegram: 'https://web.telegram.org',
+    facebook: 'https://www.facebook.com',
+    instagram: 'https://www.instagram.com/'
+};
