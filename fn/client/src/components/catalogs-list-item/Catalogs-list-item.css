@@ -111,12 +111,6 @@
     }
 }
 
-@media only screen and (max-device-width: 768px) {
-    .card__collection .cards {
-        height: 500px;
-    }
-}
-
 @media only screen and (max-device-width: 520px) {
     .card__collection .cards {
         height: 400px;
