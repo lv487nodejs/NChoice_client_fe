@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import withStoreService from '../hoc'
 import Snackbar from '../snackbar';
 import { SignupSchema } from './validation';
-import { getUserIdLS, getAccessTokenLS } from '../../services/localStoreService';
+import { getFromLocalStorage } from '../../services/localStoreService';
 
 const UserChangeData = ({ user,
     storeService,
@@ -16,8 +16,8 @@ const UserChangeData = ({ user,
     setSnackbarText,
 
 }) => {
-    const userId = getUserIdLS()
-    const accessToken = getAccessTokenLS()
+    const userId = getFromLocalStorage('userId')
+    const accessToken = getFromLocalStorage('accessToken')
 
     const addUserDataToSTore = useCallback((id, token) => {
         storeService.getUserById(id, token).then((res) => {

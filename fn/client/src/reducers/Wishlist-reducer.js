@@ -1,35 +1,35 @@
-import { setWishlistLS, getWishlistLS } from "../services/localStoreService";
+import { getFromLocalStorage, setToLocalStorage } from "../services/localStoreService";
 
-const productCollection = getWishlistLS();
+const productCollection = getFromLocalStorage('wishlist_collection');
 
 
 const initialState = {
-    products: productCollection || [],
-  };
+  products: productCollection || [],
+};
 
-  export default (state = initialState, action) => {
-    switch (action.type) {
-      case 'ADD_PRODUCT_WISHLIST':
-        let newProducts = state.products;
-        let foundProduct = newProducts.filter(value => action.payload.id === value.id);
-        if (!foundProduct.length) {
-          newProducts.push(action.payload);
-        }
-        setWishlistLS(newProducts)
-        return {
-          ...state,
-          products: newProducts,
-        };
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case 'ADD_PRODUCT_WISHLIST':
+      let newProducts = state.products;
+      let foundProduct = newProducts.filter(value => action.payload.id === value.id);
+      if (!foundProduct.length) {
+        newProducts.push(action.payload);
+      }
+      setToLocalStorage('wishlist_collection', newProducts)
+      return {
+        ...state,
+        products: newProducts,
+      };
 
-      case "REMOVE_FROM_WISHLIST":
-        let newItems = state.products.filter(item => action.payload.id !== item.id);
-        setWishlistLS(newItems)
-        return {
-          ...state,
-          products: newItems
-        };
+    case "REMOVE_FROM_WISHLIST":
+      let newItems = state.products.filter(item => action.payload.id !== item.id);
+      setToLocalStorage('wishlist_collection', newItems)
+      return {
+        ...state,
+        products: newItems
+      };
 
-      default:
-        return state
-    }
+    default:
+      return state
   }
+}

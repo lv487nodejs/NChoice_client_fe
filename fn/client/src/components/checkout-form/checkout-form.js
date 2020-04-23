@@ -10,7 +10,7 @@ import CheckoutSelect from '../checkout-select';
 import withStoreService from '../hoc';
 import './checkout-form.css';
 import Snackbar from '../snackbar';
-import { getUserIdLS, setCartProductsLS, setCartNumbersLS } from '../../services/localStoreService';
+import { getFromLocalStorage, setToLocalStorage } from '../../services/localStoreService';
 
 const snackBarMsg = (badItem) => (`We dont have enough ${badItem.name}
 There are just ${badItem.available}.
@@ -30,14 +30,11 @@ const CheckoutForm = ({
     const [order, setOrder] = useState(orderStore);
     const [successOrder, setsuccessOrder] = useState(false);
 
-
-
-    // get user's id from localStorage and clear localStorage after submit'
-    const userId = getUserIdLS()
+    const userId = getFromLocalStorage('userId')
 
     const clearLocalStorage = () => {
-        setCartProductsLS(null)
-        setCartNumbersLS(null)
+        setToLocalStorage('cart_numbers',null)
+        setToLocalStorage('products_collection',null)
     }
 
     const productsForOrder = cartProducts.map(product => {

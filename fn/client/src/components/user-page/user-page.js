@@ -4,12 +4,12 @@ import { Button } from 'react-bootstrap'
 import UserChangeData from '../user-page-change-data/user-page-change-data';
 import Cart from '../cart'
 import './user-page.css';
-import { getUserIdLS } from '../../services/localStoreService';
+import { getFromLocalStorage } from '../../services/localStoreService';
 
 const UserPage = () => {
     const [showValue, setShowValue] = useState(1)
     
-    const userId = getUserIdLS()
+    const userId = getFromLocalStorage('userId')
 
     if (!userId) {
         return <Redirect to="/" />

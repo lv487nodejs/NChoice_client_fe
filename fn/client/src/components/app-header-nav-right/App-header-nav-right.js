@@ -6,14 +6,14 @@ import { faHeart, faUser, faShoppingBasket, faSignOutAlt, faSignInAlt } from '@f
 import Currency from '../currency';
 import { connect } from 'react-redux';
 import { setUserLogged, setCart } from "../../actions";
-import { getUserIdLS } from "../../services/localStoreService";
+import { clearLocalStorage, getFromLocalStorage } from "../../services/localStoreService";
 
 const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart }) => {
 
   const handleLogOut = () => {
     setUserLogged(false)
     setCart({ cartNumbers: 0, cartProducts: [] })
-    localStorage.clear()
+    clearLocalStorage()
   }
 
   return (
@@ -29,7 +29,7 @@ const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart })
         </li>
         <li key="6">
           {
-            getUserIdLS() || userLogged ? (
+            getFromLocalStorage('userId') || userLogged ? (
               <p key="8" >
                 <Link to={"/userpage"}>
                   <FontAwesomeIcon icon={faUser} />
@@ -47,7 +47,7 @@ const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart })
           </Link>
         </li>
         {
-          getUserIdLS() || userLogged ? (
+          getFromLocalStorage('userId') || userLogged ? (
             <li key="8" onClick={handleLogOut}>
               <Link to={"/login"}>
                 <FontAwesomeIcon icon={faSignOutAlt} />

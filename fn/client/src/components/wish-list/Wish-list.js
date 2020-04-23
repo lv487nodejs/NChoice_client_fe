@@ -7,15 +7,15 @@ import Container from "@material-ui/core/Container/Container";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { addToWishlist, removeFromWishlist } from "../../actions";
-import { getWishlistLS } from "../../services/localStoreService";
+import { getFromLocalStorage } from "../../services/localStoreService";
 
 const Wishlist = ({removeFromWishlist}) => {
 
   const [products, setProducts] = useState([]);
-
+  
   useEffect(() => {
-    if (getWishlistLS()) {
-      setProducts(getWishlistLS());
+    if (getFromLocalStorage('wishlist_collection')) {
+      setProducts(getFromLocalStorage('wishlist_collection'));
     }
   }, []);
 

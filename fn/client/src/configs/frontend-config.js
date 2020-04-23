@@ -5,6 +5,7 @@ export const countries = {
     title: 'Country',
     name: 'country',
     value: [
+        "",
         "Ukraine",
         "Italy",
         "Netherlands",
