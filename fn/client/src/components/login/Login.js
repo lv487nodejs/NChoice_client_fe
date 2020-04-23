@@ -50,7 +50,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const setInitialCart = (res) => {
         const { accessToken, refreshToken, userId } = res
         const cart = { cartNumbers: 0, cartProducts: [] }
-        axios.put(`https://lv487node-backend.herokuapp.com/users/cart/${userId}`, { cart });
+        axios.put(`http://localhost:5000/users/cart/${userId}`, { cart, "x-auth-token": accessToken });
         setUserLogged(true);
         addDataToLocalStorage({ accessToken, refreshToken, userId });
         setCart(cart)
@@ -59,7 +59,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const postUser = async () => {
         try {
             setUserLoading();
-            const response = await storeService.loginUser(user); 
+            const response = await storeService.loginUser(user);
             if (!response) throw new Error('Wrong email or password, please try again.')
             const { accessToken, refreshToken, cart, userId } = response
             if (cart.cartNumbers === undefined || !cart.cartProducts) {

@@ -18,9 +18,9 @@ const UserChangeData = ({ user,
     const userId = JSON.parse(localStorage.getItem('userId'))
     const accessToken = JSON.parse(localStorage.getItem('accessToken'))
 
-    const addUserDataToSTore = useCallback((id) => {
-        storeService.getUserById(id).then((res) => {
-            const { user } = res
+    const addUserDataToSTore = useCallback((id,token) => {
+        storeService.getUserById(id,token).then((res) => {            
+            const { user } = res.data
             setUser(user)
         }).catch((error) => {
             throw new Error(error)
@@ -28,8 +28,8 @@ const UserChangeData = ({ user,
     }, [storeService, setUser])
 
     useEffect(() => {
-        addUserDataToSTore(userId)
-    }, [addUserDataToSTore, userId])
+        addUserDataToSTore(userId,accessToken)
+    }, [addUserDataToSTore, userId, accessToken])
 
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchema
@@ -40,7 +40,7 @@ const UserChangeData = ({ user,
     }
     const submitHandler = (e) => {
         storeService.sendUserChangedData(userId, accessToken, { user }).then((res) => {
-            addUserDataToSTore(userId)
+            addUserDataToSTore(userId,accessToken)
             snackbarHandler(res.data.msg)
         }).catch((error) => {
             console.log(error);
