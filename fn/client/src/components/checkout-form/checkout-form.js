@@ -6,7 +6,6 @@ import { countries, paymentMethods, deliveryType, placeholder } from '../../conf
 import { setShowSnackbar, setSnackbarText, clearCart, setOrderToStore } from '../../actions'
 import CheckoutTable from '../checkout-table';
 import CheckoutSelect from '../checkout-select';
-// import CheckoutTextInput from '../checkout-text-input';
 import withStoreService from '../hoc';
 import './checkout-form.css';
 import Snackbar from '../snackbar';
@@ -141,11 +140,6 @@ const CheckoutForm = ({
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <fieldset className="field">
                                 <h3 className="text-center">Please tell us about yourself</h3>
-                                {/* <CheckoutTextInput 
-                                inputName = "Firstname"
-                                setOrder = {setOrder}
-                                onChange={handleChange}
-                                value = {order.firstName}/> */}
                                 <Form.Group controlId="firstNameValidate">
                                     <Form.Label>Firstname</Form.Label>
                                     <Form.Control
