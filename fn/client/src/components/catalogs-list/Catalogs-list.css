@@ -12,6 +12,21 @@
     width: 100%;
 }
 
+@media (max-width: 768px) {
+    .catalogs {
+        flex-direction: column;
+        width: 80%;
+    }
+}
+
+@media (max-width: 520px) {
+    .catalogs{
+        margin: 1rem auto;
+        width: 90%;
+    }
+
+}
+
 @media (max-width: 425px) {
     .catalogs {
       flex-direction: column;
