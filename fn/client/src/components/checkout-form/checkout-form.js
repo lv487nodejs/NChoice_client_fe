@@ -121,7 +121,6 @@ const CheckoutForm = ({
         setsuccessOrder(true);
         clearLocalStorage();
         clearCart();
-        console.log(orderToServer)
         storeService.postOrder(orderToServer);
     }
 
