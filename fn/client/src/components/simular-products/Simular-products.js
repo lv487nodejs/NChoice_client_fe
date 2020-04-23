@@ -24,7 +24,7 @@ const responsive = {
   }
 };
 const SimularProducts = ({ products }) => (
-    <Carousel responsive={responsive}>
+    <Carousel responsive={responsive}  swipeable={false}>
       {products.map(({ id, title, description, images, price, mrsp, rate }) => (
         <ProductListItem
           title={title}

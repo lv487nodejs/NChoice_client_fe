@@ -61,12 +61,6 @@ const ProductDetails = ({
   ]
 
   useEffect(() => {
-    // if(products.length){
-    //   const index = products.findIndex(item => item.id === id)
-    //   setProduct(products[index])
-    //   setSizes(products[index].propetries)
-    //   return
-    // }
     productsLoadingStart()
     if (!products.length) {
       storeService.getAllProducts().then((res) => setProducts(res))
@@ -101,7 +95,6 @@ const ProductDetails = ({
   if (loading) {
     return <LoadingSpinner />
   }
-  // console.log(product.rate)
 
   return (
     <Card className="wrapperDetails" id="wrapper">

@@ -9,8 +9,8 @@
     font-size: 10px!important;
 }
 .react-multiple-carousel__arrow--right{
-    right: calc(2% + 1px)!important;
+    right: 1rem !important;
 }
 .react-multiple-carousel__arrow--left {
-    left: calc(2% + 1px)!important;
+    left: 1rem !important;
 }

@@ -13,7 +13,7 @@
 }
 
 @media (max-width: 768px) {
-    .catalogs {
+   .catalogs {
      flex-direction: column;
      width: 80%;
     }
