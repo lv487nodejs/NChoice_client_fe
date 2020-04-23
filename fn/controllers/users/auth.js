@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const loginUser = asyncHandler(async (req, res, next) => {
     const { password, email } = req.body;
-    const user = await Users.findOne({ email }).populate('cart');
+    const user = await Users.findOne({ email });
     if (!user) {
         return next(
             new ErrorResponse('Cannot find user with such email.', 404)
