@@ -27,9 +27,9 @@ const AppHeaderNavLeft = ({
   clearFilter,
 }) => {
   const [isShown, setIsShown] = useState('');
-  window.addEventListener("resize", function() {
-    return window.innerWidth;
-  });
+  // window.addEventListener("resize", function() {
+  //   return window.innerWidth;
+  // });
 
 
   useEffect(() => {
