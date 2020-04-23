@@ -185,7 +185,6 @@ const ProductDetails = ({
               <Button
                 variant="dark"
                 onClick={handleAddToCart}
-
               >Buy now</Button>
             </Link>
           </Card.Body>

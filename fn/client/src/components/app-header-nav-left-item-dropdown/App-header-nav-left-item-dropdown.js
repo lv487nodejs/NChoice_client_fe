@@ -21,7 +21,7 @@ const AppHeaderNavLeftItemDropDown = ({
     </Nav>
   ));
 
-  let changeHandler = () => {
+  let categoryRemoverHandler = () => {
     categoryRemover(catalog.catalog);
   };
 
@@ -31,14 +31,13 @@ const AppHeaderNavLeftItemDropDown = ({
         to={PRODUCT_LIST_URL + catalog.catalog}
         className="nav-link"
         role="button"
-        onClick={changeHandler}
+        onClick={categoryRemoverHandler}
       >
         All Categories
       </Link>
       {items}
 
     </Nav>
-  );
-
+  )
 };
 export default AppHeaderNavLeftItemDropDown;
