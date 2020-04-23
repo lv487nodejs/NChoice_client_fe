@@ -48,3 +48,15 @@ header {
 
     }
 }
+
+@media only screen and (max-device-width: 520px) {
+    .logo{
+        height: 2.5rem;
+        width: 2.5rem;
+    }
+    .navbar-toggler{
+        padding: .2rem .6rem;
+        font-size: 1rem;
+        line-height: 1;
+    }
+}

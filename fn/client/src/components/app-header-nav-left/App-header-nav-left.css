@@ -1,53 +1,53 @@
 .nav-bar ul {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .nav-bar li {
-  display: inline-block;
-  margin: 0;
-  padding: 0;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-bar a {
-  font-family: "Oswald";
-  text-decoration: none;
-  font-size: 1.3rem;
-  color: white;
-  padding: 0.5rem 1rem;
-  transition: all 0.3s;
-  text-transform: uppercase;
+    font-family: "Oswald";
+    text-decoration: none;
+    font-size: 1.3rem;
+    color: white;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s;
+    text-transform: uppercase;
 }
 
 .nav-bar a:hover {
-  color: black;
-  background-color: white;
+    color: black;
+    background-color: white;
 }
 
 .nav-item {
-  position: relative;
+    position: relative;
 }
 
 .nav-bar .nav-item .drop-down-container .drop-down {
-  display: block;
-  width: 30rem;
-  position: absolute;
-  color: black;
-  top: 38px;
-  z-index: 1000;
+    display: block;
+    width: 30rem;
+    position: absolute;
+    color: black;
+    top: 38px;
+    z-index: 1000;
 }
 
 .nav-bar .nav-item .drop-down-container .drop-down a {
-  width: 100%;
-  color: black;
-  background-color: white;
-  padding-left: 0.3rem;
-  transition: all 0.3s;
+    width: 100%;
+    color: black;
+    background-color: white;
+    padding-left: 0.3rem;
+    transition: all 0.3s;
 }
 
 .nav-bar .nav-item .drop-down-container .drop-down a:hover {
-  color: white;
-  background-color: black;
+    color: white;
+    background-color: black;
 }
 
 @media only screen and (max-device-width: 991px) {
@@ -55,7 +55,7 @@
         justify-items: center;
         text-align: center;
         width: 100vw;
-        margin-top: 35px;
+        margin-top: 30px;
     }
 
     nav .nav-left a {
@@ -63,7 +63,6 @@
         font-weight: 700;
         font-size: 1.5rem;
         letter-spacing: 0.1rem;
-
     }
 
     .container {
@@ -81,4 +80,18 @@
         position: absolute;
         width: 100vw;
     }
+}
+
+@media only screen and (max-device-width: 520px) {
+    .drop-down-container {
+        display: none;
+    }
+
+    nav .nav-left a {
+        color: black;
+        font-weight: 700;
+        font-size: 1.3rem;
+        letter-spacing: 0.1rem;
+    }
+
 }
