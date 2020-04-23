@@ -28,7 +28,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
     user.tokens = [];
     user.tokens.push(refreshToken);
     await user.save();
-    res.send({ accessToken, refreshToken, userId: user._id });
+    res.send({ accessToken, refreshToken, userId: user._id, cart: user.cart });
 });
 
 const loginAdmin = asyncHandler(async (req, res, next) => {
