@@ -26,12 +26,25 @@ header {
 }
 
 @media only screen and (max-device-width: 991px) {
-    .catalogs {
-        display: flex;
-        align-items: center;
-        margin: 0 auto;
-        justify-content: space-around;
-        max-width: 1200px;
-        min-height: 60vh;
+    /*.catalogs {*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*margin: 0 auto;*/
+        /*justify-content: space-around;*/
+        /*max-width: 1200px;*/
+        /*min-height: 60vh;*/
+    /*}*/
+
+    .navbar-collapse {
+        position: absolute;
+        top: 48px;
+        left: 0;
+    }
+    header{
+        box-shadow: none;
+        border-bottom: 1px solid #e1e4e8;
+        background-color: #fafbfc;
+        margin-bottom: 0;
+
     }
 }
