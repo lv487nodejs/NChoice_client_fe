@@ -24,31 +24,21 @@
     display: none;
     transform: translateX(-120%);
     transition: .3s ease-in-out;
+    margin: 0;
   }
   .filter-button {
     display: block;
     position: fixed;
-    top: 7rem;
     z-index: 1111;
+    transform: rotate(90deg);
+    top: 39vh;
+    left: -1rem;
   }
   .show-filter {
     display: block;
     transform: translateX(0);
   }
 }
-
-@media screen and (max-width:992px) {
-  .filter-group {
-    width: 20vw;
-    margin: 0;
-  }
-  .filter-button {
-    transform: rotate(90deg);
-    top: 39vh;
-    left: -1rem;
-  }
-}
-
 @media screen and (max-width:768px) {
   .filter-group {
     width: 30vw;
