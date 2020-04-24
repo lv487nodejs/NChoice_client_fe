@@ -11,9 +11,9 @@ import './checkout-form.css';
 import Snackbar from '../snackbar';
 import { getFromLocalStorage, setToLocalStorage } from '../../services/localStoreService';
 
-const snackBarMsg = (badItem) => (`We dont have enough ${badItem.name}
-There are just ${badItem.available}.
-Please go to cart and change amount of ${badItem.name}`)
+const snackBarMsg = (notAvailableItem) => (`We dont have enough ${notAvailableItem.name}
+There are just ${notAvailableItem.available}.
+Please go to cart and change amount of ${notAvailableItem.name}`)
 
 const CheckoutForm = ({
     cartProducts,
@@ -109,15 +109,15 @@ const CheckoutForm = ({
                 })
             }
         });
-
-        if (notAvaliable.length) {
-            const snackbarText = notAvaliable.map((badItem) => {
-                return snackBarMsg(badItem);
+        
+        if (notAvailable.length) {
+            const snackbarMessages = notAvailable.map((notAvailableItem) => {
+                return snackBarMsg(notAvailableItem);
             })
-            snackbarHandler(snackbarText)
+            snackbarHandler(snackbarMessages)
             return
         }
-        setsuccessOrder(true);
+        setSuccessOrder(true);
         clearLocalStorage();
         clearCart();
         storeService.postOrder(orderToServer);
@@ -127,7 +127,7 @@ const CheckoutForm = ({
     const handleChange = (event) => {
         event.persist();
         setOrder({ ...order, [event.target.name]: event.target.value });
-        setOrderToStore(order)
+        setOrderToStore(order);
     }
 
 

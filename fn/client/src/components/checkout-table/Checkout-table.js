@@ -8,15 +8,15 @@ const CheckoutTable = ({ cartProducts, currency, currencyIcon}) => {
 
     // Count one row total price
     const tableRowPrice = (price , quantity) => {
-        return (parseFloat(price * quantity * currency).toFixed(2))
-    }
+        return (parseFloat(price * quantity * currency).toFixed(2));
+    };
 
     // Count total price
     const totalCounter = () => {
         const row = cartProducts.map(product => product.price * product.quantity);
-        const total = row.reduce((sum, next) => sum + next)
-        return (parseFloat(total * currency).toFixed(2))
-    }
+        const total = row.reduce((sum, next) => sum + next);
+        return (parseFloat(total * currency).toFixed(2));
+    };
 
     // Creating table rows
     const tableRows = cartProducts.map(productRow =>
