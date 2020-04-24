@@ -109,11 +109,33 @@
         height: 100%;
         margin: 5px;
     }
+
+    .catalogName {
+        top: 50% !important;
+        left: 50% !important;
+        font-size: 35px !important;
+        transform: translateX(-50%);
+        opacity: 0.7;
+        font-weight: 300;
+        letter-spacing: 0.7rem;
+        background-color: #fafbfc;
+        color: black !important;
+        padding: 5px 20px;
+    }
 }
 
 @media only screen and (max-device-width: 768px) {
     .card__collection .cards {
         height: 500px;
+    }
+
+    .catalogName {
+        top: 80% !important;
+        opacity: 0.5;
+        border-radius: 3px;
+        padding: 5px 40px;
+        font-size: 45px !important;
+
     }
 }
 
