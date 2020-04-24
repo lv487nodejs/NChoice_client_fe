@@ -40,14 +40,23 @@
 }
 @media only screen and (max-device-width: 520px) {
     .nav-bar a{
-        font-size: 1rem;
+        font-size: 0.9rem;
         padding: .5rem .5rem;
     }
 
     #currency{
-        font-size: 1rem!important;
+        font-size: 0.9rem!important;
         padding: .5rem .5rem !important;
-
     }
 
+}
+
+@media only screen and (max-device-width: 375px) {
+    .nav-bar a{
+        padding: .5rem .3rem;
+    }
+
+    #currency{
+        padding: .5rem .3rem !important;
+    }
 }
