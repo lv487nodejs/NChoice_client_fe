@@ -134,7 +134,7 @@ const ProductDetails = ({
             className={checkSize ? 'button' : 'button disabled'}
             onClick={handleAddToCart}
             >Add to cart </Button>
-            <Link to="/checkout" className={checkSize ? 'disp-block' : 'disp-none'}>
+            <Link to="/checkout" id="buyNow" className={checkSize ? 'disp-block' : 'disp-none'}>
               <Button
                 variant="dark"
                 onClick={handleAddToCart}

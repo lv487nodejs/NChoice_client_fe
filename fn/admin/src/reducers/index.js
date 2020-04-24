@@ -16,7 +16,7 @@ import dialogWindowState from './Dialog-window-reducer';
 import snackbarState from './Snackbar-reducer';
 import chartsState from './Charts-reducer';
 import ordersState from './Orders-reducer';
-
+import adminState from './Auth-reducer';
 export default combineReducers({
     catalogsState,
     categoriesState,
@@ -34,4 +34,5 @@ export default combineReducers({
     snackbarState,
     chartsState,
     ordersState,
+    adminState,
 });

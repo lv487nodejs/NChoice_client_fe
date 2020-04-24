@@ -4,6 +4,7 @@
     grid-gap: 1em;
     grid-template-rows: auto;
     grid-template-areas: "filters productlist productlist productlist" ".  . . pages";
+    position: relative;
 }
 
 .clear-button {
@@ -71,4 +72,30 @@
 
 .list>div.paginator {
     background-color: rgb(175, 115, 127);
+}
+@media screen and (max-width:992px){
+    .product-list-page {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-gap: 1em;
+        grid-template-rows: auto;
+        grid-template-areas: "productlist productlist productlist productlist" ".  . . pages";
+    }
+    .filters{
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1111;
+        background-color: white;
+        overflow: auto;
+        height: 100vh;
+        transition: .3s ease-in-out;
+    }
+}
+
+@media screen and (max-width:410px){
+    .filters{
+        overflow: auto;
+        height: 100vh;
+        transition: .3s ease-in-out;
+    }
 }
