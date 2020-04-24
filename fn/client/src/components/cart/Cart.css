@@ -86,6 +86,7 @@ p {
 
     .cart-title {
         font-size: 1.3rem;
+        margin: auto;
     }
 
     .cart-title p{
@@ -97,6 +98,11 @@ p {
     .delte-cart-button, .add-to-cart-button, .remove-from-cart-button{
         font-size: 1.3rem;
         margin: 0 1rem;
+    }
+
+    .cart-img{
+        margin: auto;
+        width: 200px;
     }
 
 }
