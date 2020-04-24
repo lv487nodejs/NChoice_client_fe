@@ -8,7 +8,7 @@ function ProductListPaginator({ pagesCount, paginate, currentPage }) {
         pageNumbers.push(i);
     };
     const pageNumbersView = pageNumbers.map(number => {                    
-        let activeClass = ''
+        let activeClass = '';
         number - 1 === currentPage ? activeClass = 'active' : activeClass = '';
         return (
             <li

@@ -1,6 +1,6 @@
 import React from 'react';
 import './Checkout-table.css';
-import { Table } from 'react-bootstrap'
+import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 

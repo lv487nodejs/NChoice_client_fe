@@ -27,21 +27,21 @@ const CheckoutForm = ({
 
     const [validated, setValidated] = useState(false);
     const [order, setOrder] = useState(orderStore);
-    const [successOrder, setsuccessOrder] = useState(false);
+    const [successOrder, setSuccessOrder] = useState(false);
 
-    const userId = getFromLocalStorage('userId')
+    const userId = getFromLocalStorage('userId');
 
     const clearLocalStorage = () => {
-        setToLocalStorage('cart_numbers',null)
-        setToLocalStorage('products_collection',null)
-    }
+        setToLocalStorage('cart_numbers',null);
+        setToLocalStorage('products_collection',null);
+    };
 
     const productsForOrder = cartProducts.map(product => {
         return {
             item: product.id,
             quantity: product.quantity
         }
-    })
+    });
 
     // Create object with form data to send to server
     const orderToServer = {
@@ -60,28 +60,28 @@ const CheckoutForm = ({
         contactPhone: order.contactPhone,
         paymentMethod: order.paymentMethod,
         status: "pending"
-    }
+    };
 
     if (successOrder) {
         return (<Redirect to='/thanks' />)
-    }
+    };
 
     if (cartProducts.length === 0) {
         return (<Redirect to='/' />)
-    }
+    };
 
     const snackbarHandler = (text) => {
-        setSnackbarText(text)
-        setShowSnackbar(true)
+        setSnackbarText(text);
+        setShowSnackbar(true);
         setTimeout(() => {
             setShowSnackbar(false)
-        }, 10000)
-    }
+        }, 10000);
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        setOrderToStore(order)
+        setOrderToStore(order);
 
         const form = event.currentTarget;
 
@@ -90,45 +90,45 @@ const CheckoutForm = ({
         if (!form.checkValidity()) {
             setValidated(true);
             return
-        }
+        };
         
         applyOrder();
     }
 
     // Check the database for quantity of products in order
     const applyOrder = async () => {
-        const notAvaliable = []
-        const productsPromises = await Promise.all(cartProducts.map(product => storeService.getOneProductPropertie(product.propetries._id)))
+        const notAvailable = [];
+        const productsPromises = await Promise.all(cartProducts.map(product => storeService.getOneProductPropertie(product.propetries._id)));
         productsPromises.forEach((product, index) => {
             const inCart = cartProducts[index];
             const { available } = product[0];
             if (inCart.quantity > available) {
-                notAvaliable.push({
+                notAvailable.push({
                     available,
                     name: inCart.title
-                })
-            }
+                });
+            };
         });
         
         if (notAvailable.length) {
             const snackbarMessages = notAvailable.map((notAvailableItem) => {
                 return snackBarMsg(notAvailableItem);
-            })
-            snackbarHandler(snackbarMessages)
+            });
+            snackbarHandler(snackbarMessages);
             return
-        }
+        };
         setSuccessOrder(true);
         clearLocalStorage();
         clearCart();
         storeService.postOrder(orderToServer);
-    }
+    };
 
 
     const handleChange = (event) => {
         event.persist();
         setOrder({ ...order, [event.target.name]: event.target.value });
         setOrderToStore(order);
-    }
+    };
 
 
     return (
