@@ -12,8 +12,8 @@ function ProductListItem({ title, description, id, images, price, mrsp, currency
     const [msrpWithRate, setMsrpWithRate] = useState();
 
     useEffect(() => {
-        setPriceWithRate(Math.floor(price * currency));
-        setMsrpWithRate(Math.floor(mrsp * currency));
+        setPriceWithRate(parseFloat(price * currency).toFixed(2));
+        setMsrpWithRate(parseFloat(mrsp * currency).toFixed(2));
     }, [currency, price, mrsp]);
 
     return (
