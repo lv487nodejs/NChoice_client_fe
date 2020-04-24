@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import connect from "react-redux/es/connect/connect";
+import { Link } from 'react-router-dom';
 import './Wishlist.css'
 import {Figure} from 'react-bootstrap'
 import Row from "react-bootstrap/Row";
@@ -24,29 +25,33 @@ const Wishlist = ({removeFromWishlist}) => {
     products.splice(foundIncreaseItems, 1)
   };
 
+  const wishlistProducts = products.map((item) => (
+    <li key={item.id} className='wishlist-item'>
+      <Container>
+        <Row>
+          <Figure.Caption className='wishlist-title'>
+            <span className="item-description">
+            <Link style={{ textDecoration: 'none' }} key={item.id} to={`/products/${item.id}`}>
+              <h2 className="item-title">{item.title}</h2>
+              <Figure.Image src={`/images/products/${item.images[0]}`} className='wishlist-img'/>
+            </Link>
+            {item.description}
+            </span>
+            <FontAwesomeIcon
+              icon = {faTrash}
+              className="delte-wishlist-button"
+              onClick={() => {handleRemoveFromWishlist(item)}}/>
+          </Figure.Caption>
+        </Row>
+      </Container>
+    </li>
+  ))
+
   return (
     <div className='main-wishlist'>
-      <h3>Wishlist</h3>
       <h5>{products.length < 1 && <em> No products in Wishlist</em>}</h5>
       <ul className='wishlist-wrap'>
-        {products.map((item) => (
-          <li key={item.id} className='wishlist-item'>
-            <Container>
-              <Row>
-                <Figure.Caption className='wishlist-title'>
-                  <h2 className="item-title">{item.title}</h2>
-                  <p className="item-description"><Figure.Image src={`/images/products/${item.images[0]}`} className='wishlist-img'/>
-                  {item.description}
-                  </p>
-                  <FontAwesomeIcon
-                    icon = {faTrash}
-                    className="delte-wishlist-button"
-                    onClick={() => {handleRemoveFromWishlist(item)}}/>
-                </Figure.Caption>
-              </Row>
-            </Container>
-          </li>
-        ))}
+        {wishlistProducts}
       </ul>
     </div>
   )

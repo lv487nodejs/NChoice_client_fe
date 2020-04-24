@@ -8,9 +8,9 @@ const initialState = {
     switch (action.type) {
       case 'ADD_PRODUCT_WISHLIST':
         let newProducts = state.products;
-        let foundProduct = newProducts.map(value => action.payload.id === value.id);
-        if (!foundProduct.length) {
-          newProducts.push(action.payload);
+        let foundProduct = newProducts.find(value => action.payload.id === value.id);
+        if (!foundProduct) {
+          newProducts.unshift(action.payload);
         }
         localStorage.setItem("wishlist-collection", JSON.stringify(newProducts));
         return {

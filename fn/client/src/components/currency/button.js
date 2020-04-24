@@ -6,24 +6,25 @@ import './button.css'
 const currencies = {'EUR': '€', 'USD': '$', 'PLN': '‎zł'}
 
 const Button = ({ currencyOptions, currencyChange, currencyIconChange }) => {
-    const onClickHandler = () => {
-        let coefficient = document.getElementById('currency').value;
-        let iconName = document.getElementById('currency').querySelector('option:checked').getAttribute('data-text');
-
-        currencyChange(coefficient)
-    
-        if(currencies.hasOwnProperty(iconName)){
-            currencyIconChange(currencies[iconName])
-        }
+    const selectCurrency = (val) => {
+        currencyChange(val.coefficient)
+        currencyIconChange(currencies[val.name])
     };
+
+    const onClickHandler = (item) => () => {
+        selectCurrency(item)
+    }
 
     return (
         <>
-            <select id='currency' onChange={onClickHandler}>
+            <div className="dropdown">
+            <button className="curr"><img className='img-curr' src='/images/dollar.png'></img></button>
+            <ul className="currency">
                 {currencyOptions.map(item =>(
-                    <option key={item.name} value={item.coefficient} data-text={item.name}>{item.name}</option>
+                    <li key={item.name}><button className='button-currency' onClick={onClickHandler(item)}>{item.name}</button></li>
                 ))}
-            </select>
+            </ul>
+            </div>
         </>
     );
 };
