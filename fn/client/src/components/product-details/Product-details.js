@@ -32,7 +32,9 @@ const ProductDetails = ({
   addToCart,
   addToWishlist,
   productsLoadingStart,
-  productsLoadingStop
+  productsLoadingStop,
+  currencyIcon,
+  currency
 }) => {
 
   const [getSizes, setSizes] = useState([]);
@@ -115,6 +117,10 @@ const ProductDetails = ({
           <Card.Text className="productDescription">
             {product.description}
           </Card.Text>
+          <div className='prices'>
+          <Card.Text className="cardPrice">{`${(parseFloat(product.price * currency).toFixed(2))} ${currencyIcon}`}</Card.Text>
+          <Card.Text className="cardPrice msrp-price">{`${(parseFloat(product.mrsp * currency).toFixed(2))} ${currencyIcon}`}</Card.Text>
+          </div>
           <Card.Text
             style={{ backgroundColor: product.color }}
             className="color"
@@ -146,12 +152,14 @@ const ProductDetails = ({
 };
 
 const mapStateToProps = ({
-  productsList: { product, products, loading, propetries },
+  productsList: { product, products, loading, propetries, currencyIcon, currency },
 }) => ({
   products,
   product,
   loading,
   propetries,
+  currencyIcon,
+  currency
 });
 const mapDispatchToProps = {
   setProduct,
