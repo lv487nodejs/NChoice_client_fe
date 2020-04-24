@@ -7,6 +7,7 @@
   justify-content: space-between;
   margin: 0;
   padding: 2rem 0;
+  position: inline;
 }
 .images {
   display: grid;
@@ -111,4 +112,13 @@
 }
 .disp-block { 
   display:block;
+}
+
+.prices{
+  display: flex;
+  padding: 0;
+}
+
+.msrp-price{
+  padding-left: 1.3rem;
 }

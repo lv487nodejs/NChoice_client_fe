@@ -18,13 +18,20 @@ const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart })
   return (
     <nav className="nav-bar">
       <ul>
+        
+        <li key="5">
+          <span className="currency-button"><Currency /></span>
+        </li>
         <li key="4">
           <Link to="/wishlist">
             <FontAwesomeIcon icon={faHeart} />
           </Link>
         </li>
-        <li key="5">
-          <span className="currency-button"><Currency /></span>
+        <li key="7">
+          <Link to="/cart">
+            <FontAwesomeIcon icon={faShoppingBasket} />
+            <span> <sup>{cartNumbers}</sup> </span>
+          </Link>
         </li>
         <li key="6">
           {
@@ -38,12 +45,6 @@ const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart })
                 <FontAwesomeIcon icon={faSignInAlt} />
               </Link>
           }
-        </li>
-        <li key="7">
-          <Link to="/cart">
-            <FontAwesomeIcon icon={faShoppingBasket} />
-            <span> <sup>{cartNumbers}</sup> </span>
-          </Link>
         </li>
         {
           localStorage.getItem('userId') || userLogged ? (
