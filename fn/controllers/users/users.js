@@ -84,10 +84,13 @@ const updateUser = asyncHandler(async (req, res, next) => {
 
 const updateCart = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
+    console.log(id)
     const { user } = req;
+    console.log(user)
    
-    const user = await Users.findByIdAndUpdate(id, user);
-    if (!user) {
+    const newUser = await Users.findByIdAndUpdate(id, user);
+    console.log(newUser, '!!!!!!!!!!!!!!!!!!!!!!')
+    if (!newUser) {
         return next(
             new ErrorResponse('User doesnt exist.', 404)
         );
