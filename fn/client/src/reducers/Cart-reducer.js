@@ -8,9 +8,9 @@ const productCollection = JSON.parse(localStorage.getItem("products-collection")
 const localCartNumbers = JSON.parse(localStorage.getItem("cart-numbers"));
 
 const saveCart = async (userId, data, token) => {
-  console.log(token)
-  console.log(data, 'DATA')
-  console.log(userId)
+  // console.log(token)
+  // console.log(data, 'DATA')
+  // console.log(userId)
   // const user = await axios({ method: 'GET', url: `http://localhost:5000/users/${userId}`, headers: { "x-auth-token": token } })
   // const newUserCart = {  ...user }
   // console.log(newUserCart, 'newUserCart')
@@ -55,6 +55,8 @@ const addToCart = (state, payload) => {
   if(userId) {
     const cart = { cartNumbers: state.cartNumbers + 1, cartProducts: newProducts }
     saveCart(userId, cart, token)
+    console.log(cart);
+    
   }
 
   localStorage.setItem("products-collection", JSON.stringify(newProducts));
