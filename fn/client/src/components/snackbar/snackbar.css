@@ -25,6 +25,6 @@ input[type=number]::-webkit-outer-spin-button {
 @media screen and (max-width:1200px) {
 
     #user-page-snackbar {
-        width: 60%;
+        width: 100%;
     }
 }

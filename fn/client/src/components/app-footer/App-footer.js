@@ -10,8 +10,7 @@ import { Row, Card } from 'react-bootstrap';
 
 const AppFooter = () => (
   <footer className="footer">
-    <Card className="footer-inner">
-      <Card.Body>
+    <div className="footer-inner">
         <Row className="d-flex flex-column align-items-center">
           <Card.Title>Links</Card.Title>
           <Card.Title>
@@ -26,9 +25,7 @@ const AppFooter = () => (
             </Card.Link>
           </Card.Title>
         </Row>
-      </Card.Body>
-      <Card.Header>© 2020 Fashion Note</Card.Header>
-    </Card>
+    </div>
   </footer>
 );
 

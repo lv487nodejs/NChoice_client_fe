@@ -1,5 +1,6 @@
 export const itemsPerPage = [15, 30, 60];
 export const PRODUCT_LIST_URL = '/productlist/';
+export const placeholder = "Type here..."
 export const countries = {
     title: 'Country',
     name: 'country',

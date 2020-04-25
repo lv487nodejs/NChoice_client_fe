@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom';
 import './App-header-nav-left-item.css';
 
 
-const AppHeaderNavLeftItem = ( { catalog, catalogHandler } ) => {
-
-
+const AppHeaderNavLeftItem = ({ catalog, catalogHandler }) => {
   return (
-    <Link key={catalog} onClick={catalogHandler(catalog)} to={`/catalogs/${catalog}`}>{ catalog }</Link>
+    <Link key={catalog} onClick={catalogHandler(catalog)} to={`/catalogs/${catalog}`}>
+      {catalog}
+    </Link>
+  );
+};
 
-  )
-}
-
-export default AppHeaderNavLeftItem
+export default AppHeaderNavLeftItem;
