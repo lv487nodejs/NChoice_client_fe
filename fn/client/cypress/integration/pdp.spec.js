@@ -49,8 +49,8 @@ describe('Check information about product', () => {
         cy.get('#addToCartButton').should('exist');
         cy.get('#addToCartButton').should('have.attr', 'class', 'button disabled btn btn-dark');
 
-        cy.get('#buyNowButton').should('have.attr', 'class', 'disp-none');
-        cy.get('#buyNowButton').should('be.not.visible');
+        cy.get('#buyNow').should('have.attr', 'class', 'disp-none');
+        cy.get('#buyNow').should('be.not.visible');
 
         cy.get('#S').click();
         cy.get('#addToCartButton').should('have.attr', 'class', 'button btn btn-dark');
@@ -58,8 +58,8 @@ describe('Check information about product', () => {
             expect(localStorage.getItem('products-collection')).to.eq(productsCollection)
             expect(localStorage.getItem('cart-numbers')).to.eq('1')
         })
-        cy.get('#buyNowButton').should('have.attr', 'class', 'disp-block');
-        cy.get('#buyNowButton').should('be.visible');
+        cy.get('#buyNow').should('have.attr', 'class', 'disp-block');
+        cy.get('#buyNow').should('be.visible');
         cy.visit('/checkout');
     });
 })
