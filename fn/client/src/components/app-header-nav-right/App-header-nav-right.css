@@ -44,7 +44,7 @@
         padding: .5rem .5rem;
     }
 
-    #currency{
+    .currency-button{
         font-size: 0.9rem!important;
         padding: .5rem .5rem !important;
     }
@@ -56,7 +56,7 @@
         padding: .5rem .3rem;
     }
 
-    #currency{
+    .currency-button{
         padding: .5rem .3rem !important;
     }
 }

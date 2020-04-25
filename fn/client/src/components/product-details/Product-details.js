@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Product-details.css';
-import { Card, Col, Image, Button, Row } from 'react-bootstrap';
+import { Card, Col, Image, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import SimularProducts from '../simular-products/Simular-products';
@@ -163,18 +163,14 @@ const ProductDetails = ({
             {product.description}
           </Card.Text>
           <div className='prices'>
-          <Card.Text className="cardPrice">{`${(parseFloat(product.price * currency).toFixed(2))} ${currencyIcon}`}</Card.Text>
-          <Card.Text className="cardPrice msrp-price">{`${(parseFloat(product.mrsp * currency).toFixed(2))} ${currencyIcon}`}</Card.Text>
+          <span className="cardPrice">{`${(parseFloat(product.price * currency).toFixed(2))} ${currencyIcon}`}</span>
+          <span className="cardPrice msrp-price">{`${(parseFloat(product.mrsp * currency).toFixed(2))} ${currencyIcon}`}</span>
           </div>
           <Card.Text
             style={{ backgroundColor: product.color }}
             className="color"
             id="color"
           ></Card.Text>
-          <Row className="pdpPrice">
-            <Card.Text className="cardPrice">{(parseFloat(product.price * currency).toFixed(2))} {currencyIcon}</Card.Text>
-            <Card.Text className="cardPrice msrp-price">{(parseFloat(product.mrsp * currency).toFixed(2))} {currencyIcon}</Card.Text>
-          </Row>
           <Col className="size" id="size">{sizeItem}</Col>
           <Card.Body className="buttons" id="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
