@@ -19,7 +19,7 @@ import Wishlist from '../wish-list/Wish-list'
 import Login from '../login/Login';
 import UserPage from '../user-page';
 import Thanks from '../thanks-page'
-import OopsPage from '../oops-page';
+import ErrorPage from '../error-page';
 
 
 const Routes = () => (
@@ -59,7 +59,7 @@ const Routes = () => (
         <Route path="/checkout" exact component={CheckoutContainer} />
         <Route path="/userpage" exact component={UserPage} />
         <Route path="/thanks" exact component={Thanks} />
-        <Route path="/oops" exact component={OopsPage} />
+        <Route path="/errorPage" exact component={ErrorPage} />
       </Switch>
     </div>
     <AppFooter />
