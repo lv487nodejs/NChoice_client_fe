@@ -132,10 +132,10 @@ const CheckoutForm = ({
 
 
     return (
-        <Container fluid>
+        <Container>
             <Row>
                 <Col>
-                    <Jumbotron>
+                    <Jumbotron className="jumbo">
                         <h2>Order Form</h2>
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <fieldset className="field">
@@ -275,7 +275,7 @@ const CheckoutForm = ({
                     </Jumbotron>
                 </Col>
                 <Col>
-                    <Jumbotron>
+                    <Jumbotron className="jumbo">
                         <h2>Your Items</h2>
                         <CheckoutTable />
                         <Link to="/cart">
