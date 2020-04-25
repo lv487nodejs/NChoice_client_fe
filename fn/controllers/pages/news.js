@@ -4,7 +4,7 @@ const ErrorResponse = require('../../utils/errorResponse');
 
 const createNews = asyncHandler(async (req, res, next) => {
     const { title, text, newsImage, date, newsVideo, author, authorPhoto, } = req.body;
-    const newNews = new Order({
+    const newNews = new News({
         title,
         text,
         date,
@@ -18,8 +18,7 @@ const createNews = asyncHandler(async (req, res, next) => {
 });
 
 const getNews = asyncHandler(async (req, res, next) => {
-    let orders;
-    news = await News.find()
+    let news = await News.find()
         .sort('-date')
 
     if (!news || news.length === 0) {
