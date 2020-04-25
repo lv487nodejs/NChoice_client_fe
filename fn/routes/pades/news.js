@@ -14,7 +14,7 @@ const router = express.Router();
 router
     .route('/')
     .get(auth, authorize('admin', 'user'), getNews)
-    .post(orderValidationRules(), validate, createNews);
+    .post(newsValidationRules(), validate, createNews);
 
 router
     .route('/:id')

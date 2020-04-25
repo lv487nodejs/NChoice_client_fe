@@ -20,8 +20,7 @@ const NewsSchema = new Schema({
         required: true
     },
     newsVideo: {
-        type: String, 
-        required: true
+        type: String,
     },
     author: {
         type: String, 
@@ -29,7 +28,6 @@ const NewsSchema = new Schema({
     },
     authorPhoto: {
         type: String, 
-        required: true
     }
 
 });
