@@ -1,16 +1,62 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
-
-.header {
-    background-color: black;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0rem 1.5rem;
-    margin-bottom: 2rem;
+header {
     box-shadow: 0 8px 6px -6px black;
 }
 
-.header .logo {
+.logo {
     padding: 1rem;
-    height: 6rem;
+    background-image: url(/images/logo.svg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    height: 3rem;
+    width: 3rem;
+    background-size: cover;
+}
+.bg-dark {
+    padding: 1rem;
+}
+
+.navbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: black!important;
+}
+
+@media only screen and (max-device-width: 991px) {
+    /*.catalogs {*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*margin: 0 auto;*/
+        /*justify-content: space-around;*/
+        /*max-width: 1200px;*/
+        /*min-height: 60vh;*/
+    /*}*/
+
+    .navbar-collapse {
+        position: absolute;
+        top: 48px;
+        left: 0;
+    }
+    header{
+        box-shadow: none;
+        border-bottom: 1px solid #e1e4e8;
+        background-color: #fafbfc;
+        margin-bottom: 0;
+
+    }
+}
+
+@media only screen and (max-device-width: 520px) {
+    .logo{
+        height: 2.5rem;
+        width: 2.5rem;
+    }
+    .navbar-toggler{
+        padding: .2rem .6rem;
+        font-size: 1rem;
+        line-height: 1;
+    }
 }

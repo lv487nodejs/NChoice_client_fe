@@ -25,7 +25,7 @@ import ErrorPage from '../error-page';
 const Routes = () => (
   <Router>
     <AppHeader />
-    <div className='container'>
+    <div>
       <Switch>
         <Route path="/" exact component={HomePageContainer} />
         <Route

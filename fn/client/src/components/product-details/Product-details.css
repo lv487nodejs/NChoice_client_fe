@@ -1,38 +1,55 @@
-.wrapper {
-  margin: auto;
-  background-color: rgb(245, 245, 245);
+
+.wrapperDetails {
+  margin: 3rem auto;
+  background-color: rgb(245, 245, 245);  
+  padding: 0 2rem;
+  width: 75%;
 }
+
 .cardBody {
-  display: flex;
-  justify-content: space-between;
-  margin: 0;
-  padding: 2rem 0;
-  position: inline;
-}
-.images {
   display: grid;
-  grid-gap: 5px;
-  padding-right: 0;
-  align-items: center;
+  grid-template-columns: 57% 43%;
+  padding: 2rem 0; 
+}
+.images{
+  display: grid;
+  grid-template-columns: 8rem 25rem;
+  grid-template-rows: 11rem 11rem 11rem;
+  grid-auto-flow: column;
+  grid-gap: 2rem;
+  overflow: hidden;
+}
+
+.images img {
+    transition: all 0.3s;
+    transform: scale(1);
+}
+.images img:hover {
+  transform: scale(1.1);
+}
+.one, .two, .three{
+  grid-column: 1;
+  grid-row: 1;
+}
+.two{
+  grid-column: 1;
+  grid-row: 2;
+}
+.three{
+  grid-column: 1;
+  grid-row: 3;
+}
+.four {
+  grid-column: 2;
+  grid-row: 1 / 4;
 }
 .img {
-  display: grid;
-  align-self: stretch;
-  width: 120px;
-  height: 150px;
-}
-.mainImg {
-  padding-left: 0;
-  width: 350px;
+  width: 100%;
   height: 100%;
+  padding: 0;
 }
-.mainImgWrapper,
-.mainImg {
-  padding-left: 0;
-}
-.text {
-  margin-left: 10%;
-  margin-right: 2rem;
+.col{
+  padding: 0;
 }
 .color {
   width: 30px;
@@ -60,6 +77,10 @@
   color: white;
   background-color: black;
 }
+.pdpPrice{
+  justify-content: space-between;
+  width: 12rem;
+}
 .title {
   text-transform: uppercase;
   font-family: "Oswald";
@@ -80,15 +101,7 @@
 .button{
   margin-right: 1rem;
 }
-.zoom {
-  overflow: hidden;
-}
-.zoom img {
-  transition: 1s;
-}
-.zoom img:hover {
-  transform: scale(1.2);
-}
+
 .similarItems{
     text-align: center;
     font-size: 24;
@@ -110,15 +123,51 @@
 .disp-none {
   display: none;
 }
-.disp-block { 
+.disp-block {
   display:block;
 }
 
-.prices{
-  display: flex;
-  padding: 0;
+@media (max-width: 1480px) {
+  .cardBody {
+    grid-template-columns: 51% 47%;
+}
+  .images {
+    grid-template-columns: 6rem 18rem;
+    grid-template-rows: 8rem 8rem 8rem;
+}
 }
 
-.msrp-price{
-  padding-left: 1.3rem;
+@media (max-width: 1300px) {
+  .cardBody {
+    grid-template-columns: 51% 49%;
+}
+  .images {
+    grid-template-columns: 5rem 15rem;
+    grid-template-rows: 7rem 7rem 7rem;
+    grid-gap:1rem
+}
+.productDescription {
+  font-size: 14px;
+}
+}
+@media (max-width: 1150px) {
+  .cardBody {
+    display: block;
+  }
+  .images {
+    justify-content: space-around;  
+    grid-template-columns: 11rem 27rem;
+    grid-template-rows: 14rem 14rem 14rem;
+    grid-gap:10px
+  }
+}
+@media (max-width: 950px) {
+.one, .two, .three{
+  display: none;
+}
+.images {
+  grid-template-columns: 0;
+  grid-gap: 0;
+  grid-template-rows: 14rem;
+}
 }

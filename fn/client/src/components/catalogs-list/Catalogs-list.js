@@ -19,11 +19,13 @@ const CatalogsList = ({ storeService, catalogsLoaded, catalogsRequested, catalog
         return <LoadingSpinner />;
     }
 
+    const items = catalogs.map(catalog => (
+      <CatalogsListItem key={catalog._id} catalog={catalog.catalog} />
+    ));
+
     return (
         <div className="catalogs">
-            {catalogs.map(catalog => (
-                <CatalogsListItem key={catalog._id} catalog={catalog.catalog} />
-            ))}
+            {items}
         </div>
     );
 };
