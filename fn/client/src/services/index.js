@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default class StoreService {
-  _apiBase = 'http://lv487node-backend.herokuapp.com/';
+  _apiBase = 'http://localhost:5000/';
 
   getResource = async (url) => {
     try {
@@ -147,7 +147,7 @@ export default class StoreService {
     const cart = await this.getResource(`cart/${id}`);
     return cart;
   };
-  getUserById = async (id,token) => {
+  getUserById = async (id, token) => {
     return axios({ method: 'GET', url: `${this._apiBase}users/${id}`, headers: { "x-auth-token": token } })
   };
   sendUserChangedData = async (id, token, data) => {
@@ -160,5 +160,8 @@ export default class StoreService {
 
   loginUser = async (user) => {
     return await this.postData('auth/login', user);
+  }
+  putToCart = async (id, data, token) => {
+    return await axios.put(`${this._apiBase}users/cart/${id}`, { data, "x-auth-token": token });
   }
 }

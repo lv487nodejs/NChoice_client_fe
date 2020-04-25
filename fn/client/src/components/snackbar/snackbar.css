@@ -21,10 +21,3 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: center;
     width: 100%;
 }
-
-@media screen and (max-width:1200px) {
-
-    #user-page-snackbar {
-        width: 60%;
-    }
-}
