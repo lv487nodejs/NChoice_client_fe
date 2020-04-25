@@ -4,13 +4,16 @@ import { Button } from 'react-bootstrap'
 import UserChangeData from '../user-page-change-data/user-page-change-data';
 import Cart from '../cart'
 import './user-page.css';
+import { getFromLocalStorage } from '../../services/localStoreService';
 
 const UserPage = () => {
     const [showValue, setShowValue] = useState(1)
     
-    const storageData = JSON.parse(localStorage.getItem('userId')) || false;
+    const userId = getFromLocalStorage('userId')
 
-    
+    if (!userId) {
+        return <Redirect to="/" />
+    }
     const buttonOptions = [
         {
             title: 'Change settings',
@@ -25,6 +28,7 @@ const UserPage = () => {
             variant: 'dark',
         }
     ]
+    
     const buttons = buttonOptions.map(({ title, handler, value, variant }) => {
 
         return <li key={title}><Button variant={variant} value={value} onClick={() => handler(value)}>{title}</Button></li>
@@ -42,14 +46,11 @@ const UserPage = () => {
                     <Cart />
                 </div>
             </div> : ""
-    if (storageData ) {
         return (
             <div className="container">
                 {itemToShow}
             </div>
         )
-    }
-    return (<Redirect to="/" />)
 }
 
 

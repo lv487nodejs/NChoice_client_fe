@@ -34,12 +34,14 @@ const UserModel = new Schema({
     tokens: [String],
     wishlist: [String],
     cart: {
-        type: Schema.Types.ObjectId,
-        ref: 'cart',
-        unique: true,
+        cartProducts: Array,
+        cartNumbers: {
+            type: Number,
+            default: 0,
+        },
     },
     orders: {
-        type: Schema.Types.ObjectId, 
+        type: Schema.Types.ObjectId,
         ref: 'order'
     }
 });

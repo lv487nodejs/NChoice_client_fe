@@ -6,29 +6,37 @@ import { faHeart, faUser, faShoppingBasket, faSignOutAlt, faSignInAlt } from '@f
 import Currency from '../currency';
 import { connect } from 'react-redux';
 import { setUserLogged, setCart } from "../../actions";
+import { clearLocalStorage, getFromLocalStorage } from "../../services/localStoreService";
 
 const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart }) => {
 
   const handleLogOut = () => {
     setUserLogged(false)
     setCart({ cartNumbers: 0, cartProducts: [] })
-    localStorage.clear()
+    clearLocalStorage()
   }
 
   return (
     <nav className="nav-bar nav-right" >
       <ul>
+        
+        <li key="5">
+          <span className="currency-button"><Currency /></span>
+        </li>
         <li key="4">
           <Link to="/wishlist">
             <FontAwesomeIcon icon={faHeart} />
           </Link>
         </li>
-        <li key="5">
-          <span className="currency-button"><Currency /></span>
+        <li key="7">
+          <Link to="/cart">
+            <FontAwesomeIcon icon={faShoppingBasket} />
+            <span> <sup>{cartNumbers}</sup> </span>
+          </Link>
         </li>
         <li key="6">
           {
-            localStorage.getItem('userId') || userLogged ? (
+            getFromLocalStorage('userId') || userLogged ? (
               <p key="8" >
                 <Link to={"/userpage"}>
                   <FontAwesomeIcon icon={faUser} />
@@ -39,14 +47,8 @@ const AppHeaderNavRight = ({ setUserLogged , userLogged, cartNumbers, setCart })
               </Link>
           }
         </li>
-        <li key="7">
-          <Link to="/cart">
-            <FontAwesomeIcon icon={faShoppingBasket} />
-            <span> <sup>{cartNumbers}</sup> </span>
-          </Link>
-        </li>
         {
-          localStorage.getItem('userId') || userLogged ? (
+          getFromLocalStorage('userId') || userLogged ? (
             <li key="8" onClick={handleLogOut}>
               <Link to={"/login"}>
                 <FontAwesomeIcon icon={faSignOutAlt} />

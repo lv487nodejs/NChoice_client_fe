@@ -34,8 +34,8 @@ const ProductDetails = ({
   addToWishlist,
   productsLoadingStart,
   productsLoadingStop,
-  currency,
-  currencyIcon
+  currencyIcon,
+  currency
 }) => {
 
   const [getSizes, setSizes] = useState([]);
@@ -162,6 +162,10 @@ const ProductDetails = ({
           <Card.Text className="productDescription" id="description" >
             {product.description}
           </Card.Text>
+          <div className='prices'>
+          <Card.Text className="cardPrice">{`${(parseFloat(product.price * currency).toFixed(2))} ${currencyIcon}`}</Card.Text>
+          <Card.Text className="cardPrice msrp-price">{`${(parseFloat(product.mrsp * currency).toFixed(2))} ${currencyIcon}`}</Card.Text>
+          </div>
           <Card.Text
             style={{ backgroundColor: product.color }}
             className="color"
@@ -181,7 +185,7 @@ const ProductDetails = ({
               onClick={handleAddToCart}
               id="addToCartButton"
             >Add to cart </Button>
-            <Link to="/checkout" id="buyNowButton" className={checkSize ? 'disp-block' : 'disp-none'}>
+            <Link to="/checkout" id="buyNow" className={checkSize ? 'disp-block' : 'disp-none'}>
               <Button
                 variant="dark"
                 onClick={handleAddToCart}
@@ -205,8 +209,8 @@ const mapStateToProps = ({
   product,
   loading,
   propetries,
-  currency,
-  currencyIcon
+  currencyIcon,
+  currency
 });
 const mapDispatchToProps = {
   setProduct,

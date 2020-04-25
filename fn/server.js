@@ -6,10 +6,7 @@ const connectDB = require('./config/db');
 const path = require('path');
 const rfs = require('rotating-file-stream');
 
-const accessLogStream = rfs.createStream('access.log', {
-    interval: '3d',
-    path: path.join(__dirname, 'logs')
-});
+const errorHandler = require('./middleware/errorHandler');
 
 const auth = require('./routes/users/auth');
 const users = require('./routes/users/users');
@@ -20,8 +17,13 @@ const brands = require('./routes/products/brands');
 const colors = require('./routes/products/colors');
 const generator = require('./routes/products/generator');
 const orders = require('./routes/purchase/order');
-const cart = require('./routes/purchase/cart');
 
+require('dotenv').config();
+
+const accessLogStream = rfs.createStream('access.log', {
+    interval: '3d',
+    path: path.join(__dirname, 'logs')
+});
 
 const app = express();
 app.use(cors());
@@ -42,8 +44,8 @@ app.use('/brands', brands);
 app.use('/colors', colors);
 app.use('/generator', generator);
 app.use('/orders', orders);
-app.use('/cart', cart);
 
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 

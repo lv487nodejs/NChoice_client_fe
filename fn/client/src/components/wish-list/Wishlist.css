@@ -17,7 +17,7 @@
     margin-left: 2rem;
 }
 .main-wishlist{
-    max-width: 900px;
+    max-width: 1200px;
     min-height: 200px;
     margin: 0 auto;
     padding: 20px;
@@ -35,7 +35,8 @@ p {
 .delte-wishlist-button {
   font-size: 1.7rem;
   margin: 1rem;
-  float: right
+  float: right;
+  
 }
 .delte-wishlist-button:hover{
     color: black;
@@ -43,11 +44,12 @@ p {
 .item-title{
     color: crimson;
     font-size: 2rem;
+    text-align: left;
 }
 
 @media only screen and (max-device-width: 600px){
     .wishlist-title{
-        .margin-left: 0;
+        margin-left: 0;
     }
 
     .item-title{
@@ -63,3 +65,7 @@ p {
     }
 
 }
+    
+
+
+

@@ -2,30 +2,18 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { countries, paymentMethods, deliveryType} from '../../configs/frontend-config'
+import { countries, paymentMethods, deliveryType, placeholder } from '../../configs/frontend-config'
 import { setShowSnackbar, setSnackbarText, clearCart, setOrderToStore } from '../../actions'
 import CheckoutTable from '../checkout-table';
 import CheckoutSelect from '../checkout-select';
 import withStoreService from '../hoc';
 import './checkout-form.css';
 import Snackbar from '../snackbar';
+import { getFromLocalStorage, setToLocalStorage } from '../../services/localStoreService';
 
-const snackBarMsg = (badItem) => (`We dont have enough ${badItem.name}
-There are just ${badItem.available}.
-Please go to cart and change amount of ${badItem.name}`)
-
-const orderForm = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    country: '',
-    city: '',
-    street: '',
-    buildingNumber: '',
-    contactPhone: '',
-    deliveryType: '',
-    paymentMethod: '',
-}
+const snackBarMsg = (notAvailableItem) => (`We dont have enough ${notAvailableItem.name}
+There are just ${notAvailableItem.available}.
+Please go to cart and change amount of ${notAvailableItem.name}`)
 
 const CheckoutForm = ({
     cartProducts,
@@ -36,65 +24,31 @@ const CheckoutForm = ({
     setSnackbarText,
     setOrderToStore,
 }) => {
-    // Check the database for quantity of products in order
-    const applyOrder = async () => {
-
-    const notAvaliable = []
-    const productsPromises = await Promise.all(cartProducts.map(product => storeService.getOneProductPropertie(product.propetries._id)))
-    productsPromises.forEach((product, index) => {
-        const inCart = cartProducts[index];
-        const {available} = product[0];
-        if (inCart.quantity > available) {
-            notAvaliable.push({
-                available,
-                name: inCart.title
-            })
-        }
-        return false
-    });
-
-    if (notAvaliable.length) {
-        const snackbarText = notAvaliable.map((badItem) => {
-            return snackBarMsg(badItem);
-        })
-        snackbarHandler(snackbarText)
-        return
-    }
-    
-    clearCart();
-    clearLocalStorage();
-    storeService.postOrder(orderToServer);
-    setsuccessOrder(true);
-}
 
     const [validated, setValidated] = useState(false);
+    const [order, setOrder] = useState(orderStore);
+    const [successOrder, setSuccessOrder] = useState(false);
 
-    const [order, setOrder] = useState(orderForm);
+    const userId = getFromLocalStorage('userId');
 
-    const [successOrder, setsuccessOrder] = useState(false);
-
-    const placeholder = "Type here..."
-
-    // get user's id from localStorage and clear localStorage after submit'
-    const storageData = JSON.parse(localStorage.getItem('userId')) || '';
     const clearLocalStorage = () => {
-        localStorage.removeItem('cart-numbers')
-        localStorage.removeItem('products-collection')
-    }
+        setToLocalStorage('cart_numbers',null);
+        setToLocalStorage('products_collection',null);
+    };
 
-    const productsINeed = cartProducts.map(product => {
+    const productsForOrder = cartProducts.map(product => {
         return {
             item: product.id,
             quantity: product.quantity
         }
-    })
+    });
 
     // Create object with form data to send to server
     const orderToServer = {
         firstName: order.firstName,
         lastName: order.lastName,
-        orderItems: productsINeed,
-        userId: storageData.userId,
+        orderItems: productsForOrder,
+        userId: userId,
         email: order.email,
         deliveryAddress: {
             country: order.country,
@@ -106,45 +60,76 @@ const CheckoutForm = ({
         contactPhone: order.contactPhone,
         paymentMethod: order.paymentMethod,
         status: "pending"
-    }
+    };
 
     if (successOrder) {
         return (<Redirect to='/thanks' />)
-    }
+    };
 
     if (cartProducts.length === 0) {
         return (<Redirect to='/' />)
-    }
+    };
 
     const snackbarHandler = (text) => {
-        setSnackbarText(text)
-        setShowSnackbar(true)
+        setSnackbarText(text);
+        setShowSnackbar(true);
         setTimeout(() => {
             setShowSnackbar(false)
-        }, 10000)
-    }
+        }, 10000);
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        event.stopPropagation();
-        setOrderToStore(orderToServer)
-        
+
+        setOrderToStore(order);
+
         const form = event.currentTarget;
 
         if (!orderToServer.orderItems.length) return;
-        
+
         if (!form.checkValidity()) {
             setValidated(true);
             return
-        }
-
+        };
+        
         applyOrder();
     }
 
+    // Check the database for quantity of products in order
+    const applyOrder = async () => {
+        const notAvailable = [];
+        const productsPromises = await Promise.all(cartProducts.map(product => storeService.getOneProductPropertie(product.propetries._id)));
+        productsPromises.forEach((product, index) => {
+            const inCart = cartProducts[index];
+            const { available } = product[0];
+            if (inCart.quantity > available) {
+                notAvailable.push({
+                    available,
+                    name: inCart.title
+                });
+            };
+        });
+        
+        if (notAvailable.length) {
+            const snackbarMessages = notAvailable.map((notAvailableItem) => {
+                return snackBarMsg(notAvailableItem);
+            });
+            snackbarHandler(snackbarMessages);
+            return
+        };
+        setSuccessOrder(true);
+        clearLocalStorage();
+        clearCart();
+        storeService.postOrder(orderToServer);
+    };
+
+
     const handleChange = (event) => {
         event.persist();
-        setOrder(prevOrder => ({ ...prevOrder, [event.target.name]: event.target.value }));
-    }
+        setOrder({ ...order, [event.target.name]: event.target.value });
+        setOrderToStore(order);
+    };
+
 
     return (
         <Container fluid>
@@ -155,7 +140,6 @@ const CheckoutForm = ({
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <fieldset className="field">
                                 <h3 className="text-center">Please tell us about yourself</h3>
-
                                 <Form.Group controlId="firstNameValidate">
                                     <Form.Label>Firstname</Form.Label>
                                     <Form.Control
@@ -163,7 +147,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name={"firstName"}
                                         onChange={handleChange}
-                                        defaultValue={orderStore.firstName}
+                                        value={order.firstName}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -177,7 +161,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name={"lastName"}
                                         onChange={handleChange}
-                                        defaultValue={orderStore.lastName}
+                                        value={order.lastName}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -192,7 +176,7 @@ const CheckoutForm = ({
                                         name={"email"}
                                         type="email"
                                         onChange={handleChange}
-                                        defaultValue={orderStore.email}
+                                        value={order.email}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -207,7 +191,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name="contactPhone"
                                         onChange={handleChange}
-                                        defaultValue={orderStore.contactPhone}
+                                        value={order.contactPhone}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -228,7 +212,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name={"city"}
                                         onChange={handleChange}
-                                        defaultValue={orderStore.deliveryAddress.city}
+                                        value={order.city}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -242,7 +226,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name="street"
                                         onChange={handleChange}
-                                        defaultValue={orderStore.deliveryAddress.street}
+                                        value={order.street}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -256,7 +240,7 @@ const CheckoutForm = ({
                                         placeholder={placeholder}
                                         name="buildingNumber"
                                         onChange={handleChange}
-                                        defaultValue={orderStore.deliveryAddress.buildingNumber}
+                                        value={order.buildingNumber}
                                     />
                                     <Form.Control.Feedback>Much better now</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
@@ -312,13 +296,14 @@ const CheckoutForm = ({
 const mapStateToProps = ({
     cartReducer: { cartProducts },
     checkoutReduser: { orderStore }
-         }) => ({
-            orderStore,
-            cartProducts,
-        });
+}) => ({
+    orderStore,
+    cartProducts,
+});
 
 const mapDispatchToProps = ({
-    setShowSnackbar, setSnackbarText, clearCart, setOrderToStore })
+    setShowSnackbar, setSnackbarText, clearCart, setOrderToStore
+})
 
 export default withStoreService()(
     connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)

@@ -56,18 +56,9 @@ Cypress.Commands.add('visitProducts', productsResponse => {
     cy.wait('@colors');
 });
 
-Cypress.Commands.add('visitCategories', categoriesResponse => {
+Cypress.Commands.add('visitBrands', brandsResponse => {
     cy.server();
-    cy.route('GET', '/categories**', categoriesResponse).as('categories');
-    cy.visit('/categories');
-    cy.wait('@categories');
-});
-
-Cypress.Commands.add('checkCategoryModel', model => {
-    cy.window()
-        .its('store')
-        .invoke('getState')
-        .its('categoryModelState')
-        .its('categoryModel')
-        .should('deep.equal', model);
+    cy.route('GET', '/brands**', brandsResponse).as('brands');
+    cy.visit('/brands');
+    cy.wait('@brands');
 });

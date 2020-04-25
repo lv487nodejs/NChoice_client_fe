@@ -3,6 +3,7 @@ import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
+import axios from 'axios';
 
 import { setUserLogged, setUserLoading, setCart } from "../../actions";
 import { useForm } from "react-hook-form";
@@ -11,11 +12,12 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "../Loading-spinner";
 import { SignupSchemaLogin } from '../../configs/login-register-config'
 import withStoreService from '../hoc';
+import { setToLocalStorage  } from '../../services/localStoreService';
 
 const addDataToLocalStorage = (token) => {
-    localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
-    localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
-    localStorage.setItem('userId', JSON.stringify(token.userId))
+    setToLocalStorage('userId',token.userId)
+    setToLocalStorage('accessToken',token.accessToken)
+    setToLocalStorage('refreshToken',token.refreshToken)
 }
 
 const USER_DATA = {
@@ -46,12 +48,25 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
     };
 
+    const setInitialCart = (res) => {
+        const { accessToken, refreshToken, userId } = res
+        const cart = { cartNumbers: 0, cartProducts: [] }
+        axios.put(`https://lv487node-backend.herokuapp.com/users/cart/${userId}`, { cart });
+        setUserLogged(true);
+        addDataToLocalStorage({ accessToken, refreshToken, userId });
+        setCart(cart)
+    }
+
     const postUser = async () => {
         try {
             setUserLoading();
             const response = await storeService.loginUser(user); 
             if (!response) throw new Error('Wrong email or password, please try again.')
             const { accessToken, refreshToken, cart, userId } = response
+            if (cart.cartNumbers === undefined || !cart.cartProducts) {
+                setInitialCart(response);
+                return
+            }
             setUserLogged(true);
             addDataToLocalStorage({ accessToken, refreshToken, userId });
             setCart(cart)

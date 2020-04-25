@@ -6,10 +6,17 @@
 }
 
 .cardBody {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 2rem 0;
+  position: inline;
+}
+/* .images {
   display: grid;
   grid-template-columns: 57% 43%;
   padding: 2rem 0; 
-}
+} */
 .images{
   display: grid;
   grid-template-columns: 8rem 25rem;
@@ -169,4 +176,12 @@
   grid-gap: 0;
   grid-template-rows: 14rem;
 }
+}
+.prices{
+  display: flex;
+  padding: 0;
+}
+
+.msrp-price{
+  padding-left: 1.3rem;
 }

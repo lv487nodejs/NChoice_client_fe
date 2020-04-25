@@ -11,8 +11,8 @@ function ProductListItem({ title, id, images, price, mrsp, currency, currencyIco
     const [msrpWithRate, setMsrpWithRate] = useState();
 
     useEffect(() => {
-        setPriceWithRate(Math.floor(price * currency));
-        setMsrpWithRate(Math.floor(mrsp * currency));
+        setPriceWithRate(parseFloat(price * currency).toFixed(2));
+        setMsrpWithRate(parseFloat(mrsp * currency).toFixed(2));
     }, [currency, price, mrsp]);
     return (
         <div className="wrapper" id="wrapper" key={id} >
