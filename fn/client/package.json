@@ -39,7 +39,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "cypress" : "cypress open"
+    "cypress": "cypress open"
   },
   "eslintConfig": {},
   "browserslist": {

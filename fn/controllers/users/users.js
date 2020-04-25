@@ -67,11 +67,12 @@ const updateUserRole = asyncHandler(async (req, res, next) => {
 
 const updateUser = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const userToUpdate = req.body.user;
+    const userToUpdate = req.user;
     const { password } = userToUpdate
     const hashedPassword = await bcrypt.hash(password, 10);
     userToUpdate.password = hashedPassword
     const user = await Users.findByIdAndUpdate(id, userToUpdate);
+    console.log('NEED TO BE HERE!!!!!!!1111111111111')
     if (!user) {
         return next(
             new ErrorResponse('User doesnt exist.', 404)
@@ -81,10 +82,32 @@ const updateUser = asyncHandler(async (req, res, next) => {
     res.status(200).send({ msg: 'user data successfully changed', user });
 });
 
+const updateCart = asyncHandler(async (req, res, next) => {
+    console.log(req)
+    const { id } = req.params
+    const { cart } = req.user
+    const userToUpdate = await Users.findById(id);
+    console.log(userToUpdate)
+    userToUpdate.cart = cart
+    console.log(userToUpdate, 'UPDATING THIS')
+    const user = await Users.findByIdAndUpdate(id, userToUpdate);
+    if (!user) {
+        return next(
+            new ErrorResponse('User doesnt exist.', 404)
+        );
+    }
+    console.log(user, 'NEED TO BE HERE!!!!!!!1111111111111')
+    await user.save();
+    res.status(200).send({ msg: 'user data successfully changed', user });
+
+});
+
+
 module.exports = {
     updateUser,
     updateUserRole,
     registerUser,
     getUser,
     getUsers,
+    updateCart
 };
