@@ -10,6 +10,7 @@ const App = () => (
                 <div>
                         <ScrollUpButton ToggledStyle={{right: 30}}/>
                 </div>
+
         </div>
 );
 

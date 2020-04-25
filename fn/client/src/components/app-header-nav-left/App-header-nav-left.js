@@ -40,12 +40,17 @@ const AppHeaderNavLeft = ({
     setIsShown('');
   };
   const filterAddCategoryHandler = (category, catalog) => {
-
     filterByName('');
     clearFilter();
     filterAddCategory(category);
     setCatalogFilter(catalog);
+    setIsShown('');
   };
+
+  const filterRemoveCategoriesHandler = () =>{
+    filterRemoveAllCategories();
+    setIsShown('')
+  }
 
   const filterAddCatalog = (catalog) => () => {
     filterByName('');
@@ -66,7 +71,7 @@ const AppHeaderNavLeft = ({
           <AppHeaderNavLeftItemDropDown
             catalog={catalog}
             clickHandler={filterAddCategoryHandler}
-            categoryRemover={filterRemoveAllCategories}
+            categoryRemover={filterRemoveCategoriesHandler}
           />
         </div>
       )}
@@ -74,7 +79,7 @@ const AppHeaderNavLeft = ({
   ));
 
   return (
-    <nav className="nav-bar">
+    <nav className="nav-bar nav-left">
       <ul>{items}</ul>
     </nav>
   );
