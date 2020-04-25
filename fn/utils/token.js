@@ -11,7 +11,13 @@ const generateRefreshToken = payload => {
     return token;
 };
 
+const generateEmailToken = payload => {
+    const token = jwt.sign(payload, process.env.EMAIL_TOKEN_SECRET, { expiresIn: '1d' });
+    return token;
+};
+
 module.exports = {
     generateRefreshToken,
     generateAccessToken,
+    generateEmailToken,
 };

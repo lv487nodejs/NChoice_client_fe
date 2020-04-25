@@ -24,6 +24,14 @@ const UserModel = new Schema({
         enum: ['user', 'admin'],
         default: 'user',
     },
+    confirmedEmail: {
+        type: Boolean,
+        default: false,
+    },
+    emailToken: {
+        type: String,
+        required: true,
+    },
     avatar: {
         type: String,
     },
