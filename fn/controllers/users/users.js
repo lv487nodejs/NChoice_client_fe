@@ -83,23 +83,18 @@ const updateUser = asyncHandler(async (req, res, next) => {
 });
 
 const updateCart = asyncHandler(async (req, res, next) => {
-    console.log(req)
-    const { id } = req.params
-    const { cart } = req.user
-    const userToUpdate = await Users.findById(id);
-    console.log(userToUpdate)
-    userToUpdate.cart = cart
-    console.log(userToUpdate, 'UPDATING THIS')
-    const user = await Users.findByIdAndUpdate(id, userToUpdate);
+    const { id } = req.params;
+    const { user } = req;
+   
+    const user = await Users.findByIdAndUpdate(id, user);
     if (!user) {
         return next(
             new ErrorResponse('User doesnt exist.', 404)
         );
     }
-    console.log(user, 'NEED TO BE HERE!!!!!!!1111111111111')
-    await user.save();
-    res.status(200).send({ msg: 'user data successfully changed', user });
-
+    const updatedUser = Users.findById(id);
+    
+    res.status(200).send({ msg: 'user data successfully changed', updatedUser });
 });
 
 
