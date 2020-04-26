@@ -8,19 +8,11 @@ const ErrorPage = () => {
     const date = new Date().toLocaleDateString("en-US", options)
     return (
         <Card className=" text-center">
-            <Card.Header className=" bg-dark text-white">
-                <Image className="thanks-logo bg-danger" src="/images/logo.svg" />
-            </Card.Header>
-            <Card.Body >
-                <Card.Title >Warning!</Card.Title>
-                <Card.Text className="text">
-                    <h2><pre>Oops! Something went wrong!</pre></h2>
-                </Card.Text>
-                <Link to="/" >
-                    <Button className="thanks-button" variant="dark">Go to home page</Button>
-                </Link>
-            </Card.Body>
-            <Card.Footer className="bg-dark text-white">{date}</Card.Footer>
+            <Image className="thanks-logo" src="/images/oops.jpg" />
+            <Link to="/" >
+                <Button className="thanks-button" variant="dark">Go to home page</Button>
+            </Link>
+            <h3>{date}</h3>
         </Card>
     )
 }
