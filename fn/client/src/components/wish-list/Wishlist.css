@@ -9,18 +9,20 @@
     display: block;
     width: 210px;
     overflow: hidden;
-    float:left; 
-    margin: 7px 7px 7px 0; 
+    float:left;
+    margin: 7px 7px 7px 0;
 }
 .wishlist-title{
     font-size: 1.5rem;
     margin-left: 2rem;
 }
 .main-wishlist{
-    max-width: 900px;
+    max-width: 1200px;
     min-height: 200px;
     margin: 0 auto;
+    padding: 20px;
 }
+
 .wishlist-item{
     min-height: 84px;
     border-bottom: 1px solid #e0e0e0;
@@ -33,7 +35,8 @@ p {
 .delte-wishlist-button {
   font-size: 1.7rem;
   margin: 1rem;
-  float: right
+  float: right;
+  
 }
 .delte-wishlist-button:hover{
     color: black;
@@ -41,4 +44,28 @@ p {
 .item-title{
     color: crimson;
     font-size: 2rem;
+    text-align: left;
 }
+
+@media only screen and (max-device-width: 600px){
+    .wishlist-title{
+        margin-left: 0;
+    }
+
+    .item-title{
+        color: black;
+        font-size: 1.3rem;
+    }
+
+    .item-description{
+        font-size: 1rem;
+    }
+    .delte-wishlist-button{
+        font-size: 1.2rem;
+    }
+
+}
+    
+
+
+

@@ -12,11 +12,12 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "../Loading-spinner";
 import { SignupSchemaLogin } from '../../configs/login-register-config'
 import withStoreService from '../hoc';
+import { setToLocalStorage  } from '../../services/localStoreService';
 
 const addDataToLocalStorage = (token) => {
-    localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
-    localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
-    localStorage.setItem('userId', JSON.stringify(token.userId))
+    setToLocalStorage('userId',token.userId)
+    setToLocalStorage('accessToken',token.accessToken)
+    setToLocalStorage('refreshToken',token.refreshToken)
 }
 
 const USER_DATA = {

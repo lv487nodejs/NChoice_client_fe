@@ -39,43 +39,57 @@ const Cart = ({cartProducts, increaseToCart, decreaseFromCart, removeFromCart, c
           salePrices.reduce((accumulator, currentValue) => accumulator + +currentValue) :
           0).toFixed(2)
 
+  const cartUI = cartProducts.map((item) => (
+    <li key={item.propetries._id} className='cart-item'>
+      <Container>
+        <Row>
+          <Link style={{ textDecoration: 'none' }} key={item.id} to={`/products/${item.id}`}>
+            <Figure.Image src={`/images/products/${item.images[0]}`} className='cart-img' />
+          </Link>
+          <Figure.Caption className='cart-title'>
+          <Link style={{ textDecoration: 'none' }} key={item.id} to={`/products/${item.id}`}>
+            <h1 className='item-title-cart'>{item.title}</h1>
+          </Link>
+            <p> Price:
+            <span className="price">{(parseFloat(item.price * currency * item.quantity).toFixed(2))} {currencyIcon}</span>
+            <span className="msrp-price">{(parseFloat(item.mrsp * currency * item.quantity).toFixed(2))} {currencyIcon}</span>
+            </p>
+            <p> Size: <span>{item.propetries.size[0]}</span> </p>
+            <div className="quantity-control">
+              <FontAwesomeIcon
+                icon={faMinus}
+                className="remove-from-cart-button"
+                onClick={handleDecreaseFromCart(item)} />
+              <span id="quantity"> {item.quantity} </span>
+              <FontAwesomeIcon
+                icon={faPlus}
+                className="add-to-cart-button"
+                onClick={handleIncreaseToCart(item)} />
+              <FontAwesomeIcon
+                icon={faTrash}
+                className="delte-cart-button"
+                onClick={handleRemoveFromCart(item)} />
+            </div>
+          </Figure.Caption>
+        </Row>
+      </Container>
+    </li>
+  ))
+
   return (
     <div className='main-cart'>
       <h3>Cart</h3>
-      <h5>{cartProducts.length < 1 && <em> Please add some products to cart.</em>}</h5>
+      <h5>
+      {cartProducts.length < 1 && 
+      <div>
+        <em>Your cart is empty.</em>
+        <Link style={{ textDecoration: 'none' }} key='shop-now' to={`/`}>
+        <button>Shop Now</button>
+        </Link>
+      </div>
+      }</h5>
       <ul className='cart-wrap'>
-        {cartProducts.map((item) => (
-          <li key={item.propetries._id} className='cart-item'>
-            <Container>
-              <Row>
-                <Figure.Image src={`/images/products/${item.images[0]}`} className='cart-img' />
-                <Figure.Caption className='cart-title'>
-                  {item.title}
-                  <p> Price:
-                  <span className="price">{(parseFloat(item.price * currency * item.quantity).toFixed(2))} {currencyIcon}</span>
-                  <span className="msrp-price">{(parseFloat(item.mrsp * currency * item.quantity).toFixed(2))} {currencyIcon}</span>
-                  </p>
-                  <p> Size: <span>{item.propetries.size[0]}</span> </p>
-                  <div className="quantity-control">
-                    <FontAwesomeIcon
-                      icon={faMinus}
-                      className="remove-from-cart-button"
-                      onClick={handleDecreaseFromCart(item)} />
-                    <span id="quantity"> {item.quantity} </span>
-                    <FontAwesomeIcon
-                      icon={faPlus}
-                      className="add-to-cart-button"
-                      onClick={handleIncreaseToCart(item)} />
-                    <FontAwesomeIcon
-                      icon={faTrash}
-                      className="delte-cart-button"
-                      onClick={handleRemoveFromCart(item)} />
-                  </div>
-                </Figure.Caption>
-              </Row>
-            </Container>
-          </li>
-        ))}
+        {cartUI}
         <div className='checkout-wrap'>
           <h5>{cartProducts.length >= 1 && <em>Total: {(parseFloat(total).toFixed(2))} {currencyIcon} </em>} </h5>
           <h5>{cartProducts.length >= 1 && <em>Save: {(parseFloat(fullPrice - total).toFixed(2))} {currencyIcon}</em>} </h5>

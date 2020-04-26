@@ -1,9 +1,9 @@
 import React from 'react'
-import './Oops-page.css';
+import './Error-page.css';
 import { Link } from 'react-router-dom';
 import { Button, Card, Image } from 'react-bootstrap'
 
-const OopsPage = () => {
+const ErrorPage = () => {
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date().toLocaleDateString("en-US", options)
     return (
@@ -17,7 +17,7 @@ const OopsPage = () => {
                     <h2><pre>Oops! Something went wrong!</pre></h2>
                 </Card.Text>
                 <Link to="/" >
-                    <Button className="thanks-button" variant="dark">Lets go shop some more!</Button>
+                    <Button className="thanks-button" variant="dark">Go to home page</Button>
                 </Link>
             </Card.Body>
             <Card.Footer className="bg-dark text-white">{date}</Card.Footer>
@@ -25,4 +25,4 @@ const OopsPage = () => {
     )
 }
 
-export default OopsPage
+export default ErrorPage

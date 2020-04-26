@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { countries, paymentMethods, deliveryType} from '../../configs/frontend-config'
+import { countries, paymentMethods, deliveryType, placeholder } from '../../configs/frontend-config'
 import { setShowSnackbar, setSnackbarText, clearCart, setOrderToStore } from '../../actions'
 import CheckoutTable from '../checkout-table';
 import CheckoutSelect from '../checkout-select';
 import withStoreService from '../hoc';
 import './checkout-form.css';
 import Snackbar from '../snackbar';
+import { getFromLocalStorage, setToLocalStorage } from '../../services/localStoreService';
 
-const snackBarMsg = (badItem) => (`We dont have enough ${badItem.name}
-There are just ${badItem.available}.
-Please go to cart and change amount of ${badItem.name}`)
+const snackBarMsg = (notAvailableItem) => (`We dont have enough ${notAvailableItem.name}
+There are just ${notAvailableItem.available}.
+Please go to cart and change amount of ${notAvailableItem.name}`)
 
 const CheckoutForm = ({
     cartProducts,
@@ -23,61 +24,31 @@ const CheckoutForm = ({
     setSnackbarText,
     setOrderToStore,
 }) => {
-    // Check the database for quantity of products in order
-    const applyOrder = async () => {
-
-    const notAvaliable = []
-    const productsPromises = await Promise.all(cartProducts.map(product => storeService.getOneProductPropertie(product.propetries._id)))
-    productsPromises.forEach((product, index) => {
-        const inCart = cartProducts[index];
-        const {available} = product[0];
-        if (inCart.quantity > available) {
-            notAvaliable.push({
-                available,
-                name: inCart.title
-            })
-        }
-    });
-
-    if (notAvaliable.length) {
-        const snackbarText = notAvaliable.map((badItem) => {
-            return snackBarMsg(badItem);
-        })
-        snackbarHandler(snackbarText)
-        return
-    }
-    setsuccessOrder(true);
-    clearLocalStorage();
-    clearCart();
-    storeService.postOrder(orderToServer);
-}
 
     const [validated, setValidated] = useState(false);
     const [order, setOrder] = useState(orderStore);
-    const [successOrder, setsuccessOrder] = useState(false);
+    const [successOrder, setSuccessOrder] = useState(false);
 
-    const placeholder = "Type here..."
+    const userId = getFromLocalStorage('userId');
 
-    // get user's id from localStorage and clear localStorage after submit'
-    const userId = JSON.parse(localStorage.getItem('userId')) || '';
     const clearLocalStorage = () => {
-        localStorage.removeItem('cart-numbers')
-        localStorage.removeItem('products-collection')
-    }
+        setToLocalStorage('cart_numbers',null);
+        setToLocalStorage('products_collection',null);
+    };
 
-    const productsINeed = cartProducts.map(product => {
+    const productsForOrder = cartProducts.map(product => {
         return {
             item: product.id,
             quantity: product.quantity
         }
-    })
+    });
 
     // Create object with form data to send to server
     const orderToServer = {
         firstName: order.firstName,
         lastName: order.lastName,
-        orderItems: productsINeed,
-        userId,
+        orderItems: productsForOrder,
+        userId: userId,
         email: order.email,
         deliveryAddress: {
             country: order.country,
@@ -89,59 +60,86 @@ const CheckoutForm = ({
         contactPhone: order.contactPhone,
         paymentMethod: order.paymentMethod,
         status: "pending"
-    }
+    };
 
     if (successOrder) {
         return (<Redirect to='/thanks' />)
-    }
+    };
 
     if (cartProducts.length === 0) {
         return (<Redirect to='/' />)
-    }
+    };
 
     const snackbarHandler = (text) => {
-        setSnackbarText(text)
-        setShowSnackbar(true)
+        setSnackbarText(text);
+        setShowSnackbar(true);
         setTimeout(() => {
             setShowSnackbar(false)
-        }, 10000)
-    }
+        }, 10000);
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        event.stopPropagation();
-        setOrderToStore(order)
-        
+
+        setOrderToStore(order);
+
         const form = event.currentTarget;
 
         if (!orderToServer.orderItems.length) return;
-        
+
         if (!form.checkValidity()) {
             setValidated(true);
             return
-        }
-
+        };
+        
         applyOrder();
     }
+
+    // Check the database for quantity of products in order
+    const applyOrder = async () => {
+        const notAvailable = [];
+        const productsPromises = await Promise.all(cartProducts.map(product => storeService.getOneProductPropertie(product.propetries._id)));
+        productsPromises.forEach((product, index) => {
+            const inCart = cartProducts[index];
+            const { available } = product[0];
+            if (inCart.quantity > available) {
+                notAvailable.push({
+                    available,
+                    name: inCart.title
+                });
+            };
+        });
+        
+        if (notAvailable.length) {
+            const snackbarMessages = notAvailable.map((notAvailableItem) => {
+                return snackBarMsg(notAvailableItem);
+            });
+            snackbarHandler(snackbarMessages);
+            return
+        };
+        setSuccessOrder(true);
+        clearLocalStorage();
+        clearCart();
+        storeService.postOrder(orderToServer);
+    };
+
 
     const handleChange = (event) => {
         event.persist();
         setOrder({ ...order, [event.target.name]: event.target.value });
-        setOrderToStore(order)
-    }
+        setOrderToStore(order);
+    };
 
-    
 
     return (
-        <Container fluid>
+        <Container>
             <Row>
                 <Col>
-                    <Jumbotron>
+                    <Jumbotron className="jumbo">
                         <h2>Order Form</h2>
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <fieldset className="field">
                                 <h3 className="text-center">Please tell us about yourself</h3>
-
                                 <Form.Group controlId="firstNameValidate">
                                     <Form.Label>Firstname</Form.Label>
                                     <Form.Control
@@ -277,7 +275,7 @@ const CheckoutForm = ({
                     </Jumbotron>
                 </Col>
                 <Col>
-                    <Jumbotron>
+                    <Jumbotron className="jumbo">
                         <h2>Your Items</h2>
                         <CheckoutTable />
                         <Link to="/cart">
@@ -298,13 +296,14 @@ const CheckoutForm = ({
 const mapStateToProps = ({
     cartReducer: { cartProducts },
     checkoutReduser: { orderStore }
-         }) => ({
-            orderStore,
-            cartProducts,
-        });
+}) => ({
+    orderStore,
+    cartProducts,
+});
 
 const mapDispatchToProps = ({
-    setShowSnackbar, setSnackbarText, clearCart, setOrderToStore })
+    setShowSnackbar, setSnackbarText, clearCart, setOrderToStore
+})
 
 export default withStoreService()(
     connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)
