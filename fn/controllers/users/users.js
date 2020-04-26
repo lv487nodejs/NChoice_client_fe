@@ -72,7 +72,6 @@ const updateUser = asyncHandler(async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     userToUpdate.password = hashedPassword
     const user = await Users.findByIdAndUpdate(id, userToUpdate);
-    console.log('NEED TO BE HERE!!!!!!!1111111111111')
     if (!user) {
         return next(
             new ErrorResponse('User doesnt exist.', 404)
@@ -84,7 +83,6 @@ const updateUser = asyncHandler(async (req, res, next) => {
 
 const updateCart = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    console.log(id)
     const cart  = req.body;
    
     const userToUpdate = await Users.findById(id);
