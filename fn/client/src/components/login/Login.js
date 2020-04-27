@@ -62,12 +62,12 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
             const response = await storeService.loginUser(user);
             if (!response) throw new Error('Wrong email or password, please try again.')
             const { accessToken, refreshToken, cart, userId } = response
-            if (cart.cartNumbers === undefined || !cart.cartProducts) {
-                setInitialCart(response);
-                return
-            }
+            // if (cart.cartNumbers === undefined || !cart.cartProducts) {
+            //     setInitialCart(response);
+            //     return
+            // }
             setUserLogged(true);
-            addDataToLocalStorage({ accessToken, refreshToken, userId });
+            addDataToLocalStorage({ accessToken, refreshToken, userId })
             setCart(cart)
         } catch (err) {
             setUserLogged(false)
