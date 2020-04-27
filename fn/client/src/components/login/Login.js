@@ -47,25 +47,12 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
     };
 
-    const setInitialCart = (res) => {
-        const { accessToken, refreshToken, userId } = res
-        const cart = { cartNumbers: 0, cartProducts: [] }
-        storeService.putToCart(userId, cart, accessToken)
-        setUserLogged(true);
-        addDataToLocalStorage({ accessToken, refreshToken, userId });
-        setCart(cart)
-    }
-
     const postUser = async () => {
         try {
             setUserLoading();
             const response = await storeService.loginUser(user);
             if (!response) throw new Error('Wrong email or password, please try again.')
             const { accessToken, refreshToken, cart, userId } = response
-            // if (cart.cartNumbers === undefined || !cart.cartProducts) {
-            //     setInitialCart(response);
-            //     return
-            // }
             setUserLogged(true);
             addDataToLocalStorage({ accessToken, refreshToken, userId })
             setCart(cart)
