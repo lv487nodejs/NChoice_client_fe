@@ -143,4 +143,10 @@
     .card__collection .cards {
         height: 400px;
     }
+
+    .catalogName {
+        top: 80% !important;
+        font-size: 35px !important;
+
+    }
 }
