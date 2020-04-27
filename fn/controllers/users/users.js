@@ -1,9 +1,12 @@
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 const Users = require('../../models/User');
 const asyncHandler = require('../../middleware/async');
 const ErrorResponse = require('../../utils/errorResponse');
-const { generateRefreshToken,  generateAccessToken } = require('../../utils/token');
+const sendEmail = require('../../utils/sendEmail');
+
+const { generateRefreshToken, generateAccessToken, generateEmailToken } = require('../../utils/token');
 
 const getUsers = asyncHandler(async (req, res, next) => {
     const user = await Users.find();
@@ -45,11 +48,26 @@ const registerUser = asyncHandler(async (req, res, next) => {
     const userName = { name: user.email };
     const accessToken = generateAccessToken(userName);
     const refreshToken = generateRefreshToken(userName);
+    const emailToken = generateEmailToken(userName);
+    const url = `${process.env.CONFIRM_URL}${emailToken}`;
+
+    const emailMessage = {
+        to: user.email,
+        subject: 'Confirm Email',
+        html: `Please click this link to confirm your email: <a href="${url}">${url}</a>`,
+    };
+
+
+    user.emailToken = emailToken;
 
     user.tokens = [];
     user.tokens.push(refreshToken);
-    await user.save();
-    res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
+
+    sendEmail(emailMessage, async () => {
+        await user.save();
+        res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
+    });
+
 });
 
 const updateUserRole = asyncHandler(async (req, res, next) => {

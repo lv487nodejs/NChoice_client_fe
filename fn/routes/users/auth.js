@@ -6,6 +6,7 @@ const {
     loginAdmin,
     getToken,
     logout,
+    emailConfirmation,
 } = require('../../controllers/users/auth')
 
 const router = express.Router();
@@ -15,6 +16,8 @@ router.post('/login', userLoginValidationRules(), validate, loginUser);
 
 // get token
 router.post('/token', getToken);
+
+router.get('/confirmation/:token', emailConfirmation);
 
 // logout
 router.delete('/logout', logout);

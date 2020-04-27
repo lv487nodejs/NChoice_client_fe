@@ -3,21 +3,20 @@ import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
-import axios from 'axios';
 
 import { setUserLogged, setUserLoading, setCart } from "../../actions";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "../Loading-spinner";
-import { SignupSchemaLogin } from '../../configs/login-register-config'
+import { SignupSchemaLogin } from '../../configs/login-register-config';
 import withStoreService from '../hoc';
-import { setToLocalStorage  } from '../../services/localStoreService';
+import { setToLocalStorage } from '../../services/localStoreService';
 
 const addDataToLocalStorage = (token) => {
-    setToLocalStorage('userId',token.userId)
-    setToLocalStorage('accessToken',token.accessToken)
-    setToLocalStorage('refreshToken',token.refreshToken)
+    setToLocalStorage('userId', token.userId)
+    setToLocalStorage('accessToken', token.accessToken)
+    setToLocalStorage('refreshToken', token.refreshToken)
 }
 
 const USER_DATA = {
@@ -51,7 +50,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const setInitialCart = (res) => {
         const { accessToken, refreshToken, userId } = res
         const cart = { cartNumbers: 0, cartProducts: [] }
-        axios.put(`https://lv487node-backend.herokuapp.com/users/cart/${userId}`, { cart });
+        storeService.putToCart(userId, cart, accessToken)
         setUserLogged(true);
         addDataToLocalStorage({ accessToken, refreshToken, userId });
         setCart(cart)
@@ -60,7 +59,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const postUser = async () => {
         try {
             setUserLoading();
-            const response = await storeService.loginUser(user); 
+            const response = await storeService.loginUser(user);
             if (!response) throw new Error('Wrong email or password, please try again.')
             const { accessToken, refreshToken, cart, userId } = response
             if (cart.cartNumbers === undefined || !cart.cartProducts) {

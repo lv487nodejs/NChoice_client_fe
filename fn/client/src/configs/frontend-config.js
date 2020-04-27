@@ -44,4 +44,4 @@ export const deliveryType = {
         "delivery servise"
     ]
 };
-
+export const _baseUrl = 'http://localhost:5000/';
