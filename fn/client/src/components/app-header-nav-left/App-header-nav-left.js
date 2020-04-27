@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App-header-nav-left.css';
+import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import {
@@ -80,7 +81,10 @@ const AppHeaderNavLeft = ({
 
   return (
     <nav className="nav-bar nav-left">
-      <ul>{items}</ul>
+      <ul>
+        {items}
+        <li><Link to="/news" >News</Link></li>
+        </ul>
     </nav>
   );
 };
