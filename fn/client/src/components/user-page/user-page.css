@@ -45,16 +45,10 @@
     }
 }
 
-@media screen and (max-width:992px) {
+@media screen and (max-width:768px) {
     .user-page-container {
         justify-content: stretch;
     }
-    .user-page-container .container {
-        width: 60%;
-    }
-}
-
-@media screen and (max-width:410px) {
     .user-page-container .container {
         width: 100%;
     }
