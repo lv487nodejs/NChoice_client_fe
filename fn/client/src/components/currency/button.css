@@ -1,7 +1,6 @@
 .curr{
     -moz-appearance: none;
     -webkit-appearance: none;
-    appearance: none;
     outline: none;
     border: none;
     font-family: 'Oswald';
@@ -13,7 +12,7 @@
     background-color: transparent;
     cursor: pointer;
   }
-  
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -35,7 +34,7 @@
 }
 
 
-  
+
 .currency li {
     color: black;
     text-decoration: none;
@@ -85,31 +84,30 @@
   filter: invert(10);
 }
 
-button, 
-button:active, 
+button,
+button:active,
 button:focus {
     outline: none;
 }
-
+@media only screen and (max-device-width: 768px) {
+    .curr {
+        padding: .5rem .8rem !important;
+    }
+}
 @media only screen and (max-device-width: 520px) {
-  .currency-button{
-      font-size: 0.9rem!important;
+    .img-curr {
+        width: 1.5rem
+    }
 
-      padding: .5rem .3rem !important;
-  }
-  .img-curr{
-    width: 1.1rem
-  }
-  .curr{
-    padding: .5rem .3rem !important;
-  }
-
+    .curr {
+        padding: .5rem .3rem !important;
+    }
 }
 
 @media only screen and (max-device-width: 375px) {
-  .curr{
-      padding: .5rem .3rem !important;
-  }
+    .img-curr {
+        width: 1.1rem
+    }
 }
 
 

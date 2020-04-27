@@ -27,7 +27,7 @@ const SearchBar = ({ filterByName, setSearchValue, searchValue, }) => {
     };
 
     return (
-        <Form>
+
             <Form.Control
                 type="searchTerm"
                 className="search-bar"
@@ -37,7 +37,6 @@ const SearchBar = ({ filterByName, setSearchValue, searchValue, }) => {
                 value={searchValue}
                 onKeyUp={handleChange}
             />
-        </Form>
     );
 };
 
