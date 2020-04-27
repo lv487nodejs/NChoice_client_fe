@@ -45,3 +45,20 @@ export const deliveryType = {
     ]
 };
 export const _baseUrl = 'http://localhost:5000/';
+
+export const socialNerworksURL = {
+    telegram: 'https://web.telegram.org',
+    facebook: 'https://www.facebook.com',
+    instagram: 'https://www.instagram.com/'
+};
+export const policiesFooter = {
+    title: 'About us',
+    aboutUs: 'About us',
+    termsAndConditions: 'Terms and Conditions',
+    privacyAndPolicy: 'Privacy Policy'
+};
+export const contactInformationFooter = {
+    title: 'Contacts',
+    email: 'FashionNote@gmail.com',
+    phoneNumber: '+380630123456'
+}
