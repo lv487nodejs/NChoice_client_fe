@@ -64,3 +64,13 @@ i:hover {
   color: #737575;
   cursor: pointer;
 }
+
+@media screen and (max-width: 520px) {
+  .login{
+    width: 45%;
+  }
+
+  .lable{
+    font-size: 32px;
+  }
+}
