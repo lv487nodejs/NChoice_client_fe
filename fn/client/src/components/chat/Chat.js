@@ -3,7 +3,7 @@ import CustomerChat from 'react-customer-chat';
 
 const Chat = () => {
     return (
-        <CustomerChat pageId="100318745007370" />
+        <CustomerChat pageId="100171608356044" />
     )
 }
 
