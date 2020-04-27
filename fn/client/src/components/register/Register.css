@@ -53,7 +53,7 @@ label:hover {
     display: flex;
     margin-bottom: 14px;
   }
-  
+
   i {
     position: absolute;
     top: 20%;
@@ -63,4 +63,13 @@ label:hover {
     color: #737575;
     cursor: pointer;
   }
-  
+
+@media screen and (max-width: 520px) {
+    .register{
+        width: 45%;
+    }
+
+    .lable{
+        font-size: 35px;
+    }
+}
