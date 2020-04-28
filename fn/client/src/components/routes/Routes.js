@@ -61,7 +61,7 @@ const Routes = () => (
         <Route path="/checkout" exact component={CheckoutContainer} />
         <Route path="/userpage" exact component={UserPage} />
         <Route path="/thanks" exact component={Thanks} />
-        <Route path="/errorPage" exact component={ErrorPage} />
+        <Route path="/error-page" exact component={ErrorPage} />
         <Route path="/news" exact component={NewsContainer} />
         <Route path="/welcome" exact component={Welcome} />
       </Switch>
