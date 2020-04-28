@@ -13,7 +13,7 @@ const router = express.Router();
 
 router
     .route('/')
-    .get(auth, authorize('admin', 'user'), getNews)
+    .get(getNews)
     .post(newsValidationRules(), validate, createNews);
 
 router
