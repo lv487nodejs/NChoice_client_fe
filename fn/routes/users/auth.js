@@ -6,6 +6,7 @@ const {
     loginAdmin,
     getToken,
     logout,
+    emailConfirmation,
     googleAuth,
     googleRedirect
 } = require('../../controllers/users/auth')
@@ -20,11 +21,10 @@ router.get('google/login', googleAuth);
 
 router.get('/google/redirect', googleRedirect)
 
-// admin login
-router.post('/admin/login', userLoginValidationRules(), validate, loginAdmin);
-
 // get token
 router.post('/token', getToken);
+
+router.get('/confirmation/:token', emailConfirmation);
 
 // logout
 router.delete('/logout', logout);

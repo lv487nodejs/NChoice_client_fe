@@ -1,13 +1,36 @@
 .catalogs {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
     align-items: center;
-    width: 1000px;
-    margin: 0 auto;
-
+    margin: 3rem auto;
+    justify-content: space-around;
+    max-width: 1200px;
+    /* min-height: 50vh; */
 }
 
 .catalogs img {
     display: block;
-    height: 70%;
+    width: 100%;
 }
+
+@media (max-width: 768px) {
+    .catalogs {
+        flex-direction: column;
+        width: 80%;
+    }
+}
+
+@media (max-width: 520px) {
+    .catalogs{
+        margin: 1rem auto;
+        width: 90%;
+    }
+
+}
+
+@media (max-width: 425px) {
+    .catalogs {
+      flex-direction: column;
+      width: 80%;
+      margin: 0 auto;
+     }
+ }

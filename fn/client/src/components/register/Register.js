@@ -3,20 +3,21 @@ import './Register.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
-import { REGISTER_ROUTE } from "../../configs/login-register-config";
-import axios from "axios";
+
 import { setUserLogged, setUserLoading } from "../../actions";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "../Loading-spinner";
 import { SignupSchemaRegister } from '../../configs/login-register-config'
+import withStoreService from '../hoc';
+import { setToLocalStorage } from '../../services/localStoreService';
 
 
 const addDataToLocalStorage = (token) => {
-    localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
-    localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
-    localStorage.setItem('userId', JSON.stringify(token.user._id))
+    setToLocalStorage('userId', token.userId)
+    setToLocalStorage('accessToken', token.accessToken)
+    setToLocalStorage('refreshToken', token.refreshToken)
 }
 
 const USER_DATA = {
@@ -28,47 +29,51 @@ const USER_DATA = {
 
 const eye = <FontAwesomeIcon icon={faEye} />;
 
-const Register = (props) => {
-    const [user, setUser] = useState(USER_DATA);
-    const { setUserLogged, setUserLoading, userLogged, userLoading } = props;
+const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, cartNumbers, cartProducts }) => {
+
+    const initialUser = { ...USER_DATA, cart: { cartNumbers, cartProducts } }
+
+    const [user, setUser] = useState(initialUser);
     const [errorMsg, setErrorMsg] = useState('');
+    const [passwordShown, setPasswordShown] = useState(false);
+    const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
+
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchemaRegister
     });
-    const [passwordShown, setPasswordShown] = useState(false);
-    const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
 
     useEffect(() => {
         setUserLogged(false)
     }, [setUserLogged])
 
     const togglePasswordVisiblity = () => {
-        setPasswordShown(passwordShown ? false : true);
+        setPasswordShown(!passwordShown);
     };
+
     const toggleConfirmPasswordVisiblity = () => {
-        setConfirmPasswordShown(confirmPasswordShown ? false : true);
+        setConfirmPasswordShown(!confirmPasswordShown);
     };
 
     const handleChange = (event) => {
         event.persist();
-        setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
+        setUser({ ...user, [event.target.name]: event.target.value });
     };
 
-    const postUser = async (value, route) => {
+    const postUser = async () => {
         try {
             setUserLoading();
-            const response = await axios.post(route, value);
+            const res = await storeService.registerUser(user);
+            if (!res) throw new Error('User with such an email already exist.')
+            addDataToLocalStorage(res);
             setUserLogged(true);
-            addDataToLocalStorage(response.data);
-        } catch (error) {
+        } catch (err) {
             setUserLogged(false)
-            const { msg } = error.response.data.errors[0]
-            setErrorMsg(msg)
+            setErrorMsg(err.message)
         }
     }
 
-    const handleOnSubmit = (event) => {
-        postUser(user, REGISTER_ROUTE);
+    const handleOnSubmit = () => {
+        postUser();
     };
 
     if (userLoading) {
@@ -87,7 +92,6 @@ const Register = (props) => {
                 <Form.Control
                     type="text"
                     placeholder="First name"
-                    defaultValue="Mark"
                     name={'firstName'}
                     value={user.firstName}
                     onChange={handleChange}
@@ -100,7 +104,6 @@ const Register = (props) => {
                 <Form.Control
                     type="text"
                     placeholder="Last name"
-                    defaultValue="Otto"
                     name={'lastName'}
                     value={user.lastName}
                     onChange={handleChange}
@@ -108,70 +111,70 @@ const Register = (props) => {
                 />
                 {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
             </Form.Group>
-           
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
+
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="Enter email"
+                    name={'email'}
+                    value={user.email}
+                    onChange={handleChange}
+                    ref={register}
+                />
+                {errors.email && <p className="errorMessage">{errors.email.message}</p>}
+                <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
+            </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Group className="pass-wrapper">
                     <Form.Control
-                        type="text"
-                        placeholder="Enter email"
-                        name={'email'}
-                        value={user.email}
+                        type={passwordShown ? "text" : "password"}
+                        placeholder="Password"
+                        name={'password'}
+                        value={user.password}
                         onChange={handleChange}
                         ref={register}
+                        autoComplete="on"
                     />
-                    {errors.email && <p className="errorMessage">{errors.email.message}</p>}
-                    <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
+                    <i onClick={togglePasswordVisiblity}>{eye}</i>
                 </Form.Group>
-
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Group className="pass-wrapper">
-                        <Form.Control
-                            type={passwordShown ? "text" : "password"}
-                            placeholder="Password"
-                            name={'password'}
-                            value={user.password}
-                            onChange={handleChange}
-                            ref={register}
-                            autoComplete="on"
-                        />
-                        <i onClick={togglePasswordVisiblity}>{eye}</i>
-                    </Form.Group>
-                </Form.Group>
-                {errors.password && <p className="errorMessage">{errors.password.message}</p>}
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label> Confirm Password</Form.Label>
-                    <Form.Group className="pass-wrapper">
-                        <Form.Control placeholder="Password"
-                            name={'confirmPassword'}
-                            ref={register}
-                            type={confirmPasswordShown ? "text" : "password"}
-                            autoComplete="on"
-                        />
-                        <i onClick={toggleConfirmPasswordVisiblity}>{eye}</i>
-                    </Form.Group>
-                    {errors.confirmPassword && <p className="errorMessage">{errors.confirmPassword.message}</p>}
-                </Form.Group>
-                <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check
-                        type="switch"
-                        id="custom-switch"
-                        label="I agree to terms"
-                        name={'agreeToTerms'}
+            </Form.Group>
+            {errors.password && <p className="errorMessage">{errors.password.message}</p>}
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label> Confirm Password</Form.Label>
+                <Form.Group className="pass-wrapper">
+                    <Form.Control placeholder="Password"
+                        name={'confirmPassword'}
                         ref={register}
+                        type={confirmPasswordShown ? "text" : "password"}
+                        autoComplete="on"
                     />
+                    <i onClick={toggleConfirmPasswordVisiblity}>{eye}</i>
                 </Form.Group>
+                {errors.confirmPassword && <p className="errorMessage">{errors.confirmPassword.message}</p>}
+            </Form.Group>
+            <Form.Group controlId="formBasicCheckbox">
+                <Form.Check
+                    type="switch"
+                    id="custom-switch"
+                    label="I agree to terms"
+                    name={'agreeToTerms'}
+                    ref={register}
+                />
+            </Form.Group>
 
-                {errors.agreeToTerms && <p className="errorMessage">{errors.agreeToTerms.message}</p>}
-                <Form.Group>
-                    <Button variant="dark" type="submit" block>
-                        REGISTER
+            {errors.agreeToTerms && <p className="errorMessage">{errors.agreeToTerms.message}</p>}
+            <Form.Group>
+                <Button variant="dark" type="submit" block>
+                    REGISTER
                         </Button>
-                    <span>{errorMsg}</span>
-                </Form.Group>
-                <Form.Group className="link">
-                    <Link to="/login" className="btn btn-link" >LOG IN</Link>
-                </Form.Group>
+                <span>{errorMsg}</span>
+            </Form.Group>
+            <Form.Group className="link">
+                <Link to="/login" className="btn btn-link" >LOG IN</Link>
+            </Form.Group>
         </Form>
 
     );
@@ -180,10 +183,10 @@ const Register = (props) => {
 
 const mapDispatchToProps = { setUserLogged, setUserLoading };
 
-const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({
-    userLogged, userLoading
+const mapStateToProps = ({ authReducer: { userLogged, userLoading }, cartReducer: { cartNumbers, cartProducts } }) => ({
+    userLogged, userLoading, cartNumbers, cartProducts
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Register));
 
 

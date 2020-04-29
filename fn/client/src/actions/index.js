@@ -15,7 +15,7 @@ import {
   productsLoadingStop
 } from './Products-actions';
 
-import { addToCart, increaseToCart, decreaseFromCart, removeFromCart, clearCart } from './Cart-action'
+import { addToCart, increaseToCart, decreaseFromCart, removeFromCart, clearCart, setCart } from './Cart-action'
 import { addToWishlist, removeFromWishlist } from './Wishlist-actions'
 import { setOrderToStore, clearOrderStore } from './Checkout-actions'
 
@@ -47,6 +47,8 @@ import {
 } from './Auth-actions';
 
 import { setShowSnackbar, setSnackbarText } from './Snackbar--actions'
+import { storeSetNews } from './News-actions'
+
 
 export {
   categoriesRequested,
@@ -93,5 +95,7 @@ export {
   clearFilter,
   clearCart,
   setOrderToStore,
-  clearOrderStore 
+  clearOrderStore,
+  setCart,
+  storeSetNews
 };

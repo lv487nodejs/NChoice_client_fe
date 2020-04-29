@@ -1,3 +1,11 @@
+.nav-right{
+    right: 0;
+    position: absolute;
+    align-items: center;
+    top: 0;
+    bottom: 0;
+}
+
 .nav-bar ul {
     padding: 0;
     margin: 0;
@@ -9,7 +17,7 @@
     padding:0;
 }
 
-.nav-bar a, .nav-bar .currency-button {
+.nav-bar a{
     font-family: 'Oswald';
     text-decoration: none;
     font-size: 1.3rem;
@@ -19,7 +27,33 @@
     text-transform: uppercase;
 }
 
-.nav-bar a:hover, .nav-bar .currency-button:hover {
+.nav-bar a:hover {
     color: black;
     background-color: white;
+}
+
+@media only screen and (max-device-width: 768px) {
+    .nav-bar a{
+        font-size: 1.2rem;
+        padding: .5rem .8rem;
+    }
+}
+
+@media only screen and (max-device-width: 520px) {
+    .nav-bar a{
+        font-size: 1rem;
+        padding: .5rem .5rem;
+    }
+}
+
+@media only screen and (max-device-width: 425px) {
+    .nav-bar a {
+        padding: .5rem .3rem;
+    }
+}
+
+@media only screen and (max-device-width: 375px) {
+    .nav-bar a{
+       font-size: .9rem;
+    }
 }

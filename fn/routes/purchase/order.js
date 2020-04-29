@@ -1,7 +1,6 @@
 const express = require('express');
 const { orderValidationRules, validate } = require('../../middleware/validator');
 const { auth, authorize } = require('../../middleware/auth');
-
 const {
     deleteOrder,
     updateOrder,
@@ -15,7 +14,7 @@ const router = express.Router();
 router
     .route('/')
     .get(auth, authorize('admin', 'user'), getOrders)
-    .post(auth, authorize('admin', 'user'), orderValidationRules(), validate, createOrder);
+    .post(orderValidationRules(), validate, createOrder);
 
 router
     .route('/:id')

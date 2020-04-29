@@ -8,6 +8,7 @@ const {
     registerUser,
     getUser,
     getUsers,
+    updateCart
 } = require('../../controllers/users/users');
 
 const router = express.Router();
@@ -19,7 +20,10 @@ router.get('/', auth, authorize('admin'), getUsers);
 router.get('/:id', auth, authorize('admin', 'user'), getUser);
 
 // update user
-router.put('/:id', authorize('user'), updateUser);
+router.put('/:id', auth, authorize('user'), updateUser);
+
+// update cart
+router.put('/cart/:id', auth, authorize('user'), updateCart);
 
 // update user role
 router.put('/role/:id', auth, authorize('admin'), updateUserRole);

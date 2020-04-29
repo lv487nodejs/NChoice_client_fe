@@ -88,40 +88,7 @@ const filter = (state = instate, action) => {
         color: filterRemoveItems(state.color, action.payload),
       };
     }
-    case 'FETCH_SUCCESS_BRANDS': {
-      return { ...state, receivedBrands: action.payload };
-    }
-    case 'FETCH_SUCCESS_CATEGORIES': {
-      return { ...state, receivedCategories: action.payload };
-    }
-    case 'FETCH_SUCCESS_COLORS': {
-      return { ...state, receivedColors: action.payload };
-    }
-    case 'COMPOSE_FILTERS': {
-      const brand = [...new Set(state.brand)];
-      const color = [...new Set(state.color)];
-      const category = [...new Set(state.category)];
-      return {
-        ...state,
-        color: [...color],
-        brand: [...brand],
-        category: [...category],
-      };
-    }
-    case 'COMPOSE_RECEIVED_DATA': {
-      const productsUnique = [
-        ...new Set(
-          state.receivedBrands,
-          ...state.receivedCategories,
-          ...state.receivedColors
-        ),
-      ];
-
-      return {
-        ...state,
-        products: [...productsUnique],
-      };
-    }
+ 
     case 'FILTER_BY_NAME': {
       return {
         ...state,

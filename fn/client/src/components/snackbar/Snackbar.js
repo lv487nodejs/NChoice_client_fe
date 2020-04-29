@@ -1,7 +1,7 @@
 import React from 'react'
 import { Toast, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
-
+import './snackbar.css';
 const Snackbar = ({ showSnackbar, snackbarText }) => {
 
     return (

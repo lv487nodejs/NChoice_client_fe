@@ -4,3 +4,11 @@
   justify-content: flex-end;
 }
 
+@media (max-width: 1024px){
+  .fa-2x {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+}
+

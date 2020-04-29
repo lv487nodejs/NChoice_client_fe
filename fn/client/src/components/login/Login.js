@@ -3,21 +3,20 @@ import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
-import { LOGIN_ROUTE } from "../../configs/login-register-config";
-import axios from "axios";
-import { setUserLogged, setUserLoading } from "../../actions";
+
+import { setUserLogged, setUserLoading, setCart } from "../../actions";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "../Loading-spinner";
-import { SignupSchemaLogin } from '../../configs/login-register-config'
-
-
+import { SignupSchemaLogin } from '../../configs/login-register-config';
+import withStoreService from '../hoc';
+import { setToLocalStorage } from '../../services/localStoreService';
 
 const addDataToLocalStorage = (token) => {
-    localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
-    localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
-    localStorage.setItem('userId', JSON.stringify(token.userId))
+    setToLocalStorage('userId', token.userId)
+    setToLocalStorage('accessToken', token.accessToken)
+    setToLocalStorage('refreshToken', token.refreshToken)
 }
 
 const USER_DATA = {
@@ -26,10 +25,10 @@ const USER_DATA = {
 };
 const eye = <FontAwesomeIcon icon={faEye} />;
 
-const Login = (props) => {
+const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
     const [user, setUser] = useState(USER_DATA);
     const [errorMsg, setErrorMsg] = useState('');
-    const { setUserLogged, setUserLoading, userLogged, userLoading } = props;
+
     const { register, errors, handleSubmit } = useForm({
         validationSchema: SignupSchemaLogin
     });
@@ -40,7 +39,7 @@ const Login = (props) => {
     }, [setUserLogged])
 
     const togglePasswordVisiblity = () => {
-        setPasswordShown(passwordShown ? false : true);
+        setPasswordShown(!passwordShown);
     };
 
     const handleChange = (event) => {
@@ -48,20 +47,22 @@ const Login = (props) => {
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
     };
 
-    const postUser = async (value, route) => {
+    const postUser = async () => {
         try {
             setUserLoading();
-            const response = await axios.post(route, value);
+            const response = await storeService.loginUser(user);
+            if (!response) throw new Error('Wrong email or password, please try again.')
+            const { accessToken, refreshToken, cart, userId } = response
             setUserLogged(true);
-            addDataToLocalStorage(response.data);
-        } catch (error) {
+            addDataToLocalStorage({ accessToken, refreshToken, userId })
+            setCart(cart)
+        } catch (err) {
             setUserLogged(false)
-            const { msg } = error.response.data.errors[0]
-            setErrorMsg(msg)
+            setErrorMsg(err.message)
         }
     }
     const handleOnSubmit = event => {
-        postUser(user, LOGIN_ROUTE);
+        postUser();
     };
 
     if (userLoading) {
@@ -130,10 +131,10 @@ const Login = (props) => {
 };
 
 
-const mapDispatchToProps = { setUserLogged, setUserLoading };
+const mapDispatchToProps = { setUserLogged, setUserLoading, setCart };
 
 const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({
     userLogged, userLoading
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Login));

@@ -10,7 +10,7 @@ import './index.css';
 
 import store from './store/store';
 
-const storeService = new StoreService();
+export const storeService = new StoreService();
 
 ReactDOM.render(
     <Provider store={store}>
@@ -20,3 +20,6 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root')
 );
+if (window.Cypress) {
+    window.store = store;
+}

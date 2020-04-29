@@ -153,4 +153,19 @@ export default class StoreService {
   sendUserChangedData = async (id, token, data) => {
     return axios({ method: 'PUT', url: `${this._apiBase}users/${id}`, data, headers: { "x-auth-token": token } })
   };
+
+  registerUser = async (user) => {
+    return await this.postData('users/register', user);
+  }
+
+  loginUser = async (user) => {
+    return await this.postData('auth/login', user);
+  }
+  putToCart = async (id, data, token) => {
+    return await axios.put(`${this._apiBase}users/cart/${id}`, { data, "x-auth-token": token });
+  }
+  getAllNews = async () => {
+    const news = await this.getResource('news');
+    return news;
+  };
 }

@@ -12,7 +12,7 @@ import {
 
 import FilterItem from '../filterItem';
 import withStoreService from '../hoc';
-
+import { Button } from 'react-bootstrap';
 import './filter.css';
 
 const Filter = ({
@@ -24,12 +24,14 @@ const Filter = ({
   filterRemoveCategory,
   filterRemoveColor,
   catalogLoaded,
-  catalogFilter,
   match
 }) => {
   const [getBrands, setBrands] = useState([]);
   const [getCategories, setCategories] = useState([]);
   const [getColors, setColors] = useState([]);
+  const [isVisible, setIsVisible] = useState(false)
+
+  const showFilterClass = isVisible ? 'show-filter' : ''
 
   useEffect(() => {
     storeService
@@ -77,6 +79,9 @@ const Filter = ({
       filterRemoveColor(item);
     }
   };
+  const showHandler = () => {
+    setIsVisible(!isVisible)
+  }
 
   const filterOptions = [
     {
@@ -95,26 +100,24 @@ const Filter = ({
       handler: filterAddColorHandler,
     },
   ]
-
+  const itemsToShow = filterOptions.map(({ items, type, handler }) => {
+    return <FilterItem
+      key={type}
+      items={items}
+      type={type}
+      handler={handler}
+    />
+  })
   return (
-    <div className="filter-group">
-      <span>Filter</span>
-      {
-        filterOptions.map(({ items, type, handler }) => {
-          return <FilterItem
-            key={type}
-            items={items}
-            type={type}
-            handler={handler}
-          />
-        })
-      }
+    <div>
+      <Button variant="dark" className='filter-button' onClick={showHandler}>Filters</Button>
+      <div className={`filter-group ${showFilterClass}`}>
+        <span className="filter-title">Filters</span>
+        {itemsToShow}
+      </div>
     </div>
   );
 };
-const mapStateToProps = ({ filter: { catalogFilter } }) => ({
-  catalogFilter
-})
 
 const mapDispatchToProps = {
   filterAddBrand,
@@ -126,5 +129,5 @@ const mapDispatchToProps = {
 };
 
 export default withStoreService()(
-  connect(mapStateToProps, mapDispatchToProps)(withRouter(Filter))
+  connect(null, mapDispatchToProps)(withRouter(Filter))
 );

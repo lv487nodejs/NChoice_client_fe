@@ -37,21 +37,11 @@
         width: 100%;
     }
     .user-page-container .container {
-        
-        width: 60%;
+        width: 100%;
     }
     .user-page-container ul {
         flex-direction: row;
         align-items: stretch;
     }
 }
-@media screen and (max-width:992px) {
-    
-    .user-page-container {
-        justify-content: stretch;
-    }
-    .user-page-container .container {
-        
-        width: 60%;
-    }
-}
+
