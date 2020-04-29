@@ -36,11 +36,11 @@ setInitial(accessToken)
 const addToCart = (state, payload) => {
   let newProducts = [...state.cartProducts];
   let foundProduct = newProducts.find(
-    item => payload.id === item.id && payload.propetries.size === item.propetries.size);
+    item => payload.propetries._id === item.propetries._id && payload.propetries._size === item.propetries._size);
   if (foundProduct) {
     foundProduct.quantity++;
   } else {
-    newProducts.push({ ...payload, quantity: 1 });
+    newProducts.unshift({ ...payload, quantity: 1 });
   }
 
   if (userId) {

@@ -81,7 +81,6 @@ const ProductDetails = ({
     const size = product.propetries.filter((el) => el.size[0] === checkSize)
     const productToSend = { ...product, propetries: size[0] }
     addToCart(productToSend);
-
   };
 
   const sizeItem = getSizes
@@ -163,7 +162,7 @@ const ProductDetails = ({
             {product.description}
           </Card.Text>
           <div className='prices'>
-          <span className="cardPrice">{`${(parseFloat(product.price * currency).toFixed(2))} ${currencyIcon}`}</span>
+          <span className="cardPrice price-pdp">{`${(parseFloat(product.price * currency).toFixed(2))} ${currencyIcon}`}</span>
           <span className="cardPrice msrp-price">{`${(parseFloat(product.mrsp * currency).toFixed(2))} ${currencyIcon}`}</span>
           </div>
           <Card.Text

@@ -103,10 +103,10 @@
 }
 
 .similarItems{
-    text-align: center;
-    font-size: 24;
-    font-family: "Oswald";
-    text-transform: uppercase;
+  text-align: center;
+  font-size: 24;
+  font-family: "Oswald";
+  text-transform: uppercase;
 }
 .productCart {
   justify-self: center;
@@ -125,6 +125,15 @@
 }
 .disp-block {
   display:block;
+}
+
+.price-pdp,
+.msrp-price{
+  color: #6c757d;
+}
+
+.price-pdp{
+  margin-left: 0;
 }
 
 @media (max-width: 1480px) {
