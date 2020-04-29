@@ -136,6 +136,21 @@
   margin-left: 0;
 }
 
+.heart{
+  font-size: 1.5rem;
+}
+
+.heart:hover{
+  transform: scale(1.1);
+  color: rgb(182, 1, 1);
+}
+
+.heart-active{
+  color: rgb(182, 1, 1);
+}
+
+
+
 @media (max-width: 1480px) {
   .cardBody {
     grid-template-columns: 51% 47%;
