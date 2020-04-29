@@ -44,7 +44,7 @@ const ProductDetails = ({
   const [isOpen, setIsOpen] = useState(false);
   const [currImg, setCurrImg] = useState(0);
 
-  const imgUrl = `/images/products/${product.images}`
+  const imgUrl = `/images/products2/${product.images}`
   const imgs = [
     {
       src: imgUrl
@@ -101,7 +101,7 @@ const ProductDetails = ({
       <Card.Body className="cardBody">
         <Col className="images" id="images">
           <Col className="one"><Image
-            src={`/images/products/${product.images}`}
+            src={imgUrl}
             className="img"
             rounded
             onClick={e => {
@@ -112,7 +112,7 @@ const ProductDetails = ({
           />
           </Col>
           <Col className="two"> <Image
-            src={`/images/products/${product.images}`}
+            src={imgUrl}
             className="img"
             rounded
             onClick={e => {
@@ -123,7 +123,7 @@ const ProductDetails = ({
           />
           </Col>
           <Col className="three"> <Image
-            src={`/images/products/${product.images}`}
+            src={imgUrl}
             className="img"
             rounded
             onClick={e => {
@@ -135,7 +135,7 @@ const ProductDetails = ({
           </Col>
           <Col className="four">
             <Image
-              src={`/images/products/${product.images}`}
+              src={imgUrl}
               className="img"
               rounded
               onClick={e => {
