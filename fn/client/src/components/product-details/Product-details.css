@@ -179,9 +179,11 @@
   .images {
     grid-template-columns: 6rem 18rem;
     grid-template-rows: 8rem 8rem 8rem;
-#heartButton {
-    font-size: 1.5rem;
+  }
 }
+/* #heartButton {
+    font-size: 1.5rem;
+} */
 
 @media (max-width: 1480px) {
     .cardBody {
