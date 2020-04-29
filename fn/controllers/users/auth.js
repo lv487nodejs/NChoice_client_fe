@@ -108,5 +108,6 @@ module.exports = {
     loginAdmin,
     getToken,
     logout,
-    googleAuth
+    googleAuth,
+    googleRedirect
 };

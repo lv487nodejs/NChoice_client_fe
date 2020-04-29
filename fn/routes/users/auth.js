@@ -6,6 +6,8 @@ const {
     loginAdmin,
     getToken,
     logout,
+    googleAuth,
+    googleRedirect
 } = require('../../controllers/users/auth')
 
 const router = express.Router();
@@ -14,7 +16,7 @@ const router = express.Router();
 router.post('/login', userLoginValidationRules(), validate, loginUser);
 
 //google login
-router.get('google/login', userLoginValidationRules(), validate, googleAuth);
+router.get('google/login', googleAuth);
 
 router.get('/google/redirect', googleRedirect)
 
