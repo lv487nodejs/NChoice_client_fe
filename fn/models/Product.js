@@ -31,7 +31,7 @@ const ProductSchema = new Schema({
   },
   material: {
     type: String,
-    enum: ['cotton, jute, silk, ramie, wool, recycled']
+    enum: ['cotton', 'jute', 'silk', 'ramie', 'wool', 'recycled']
   },
   mrsp: { 
     type: Number, 
