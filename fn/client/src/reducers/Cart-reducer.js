@@ -68,7 +68,7 @@ const increaseToCart = (state, payload) => {
   }
   setToLocalStorage('products_collection', newIncreaseProducts)
   setToLocalStorage('cart_numbers', state.cartNumbers + 1)
-
+  
   return {
     ...state,
     cartProducts: newIncreaseProducts,

@@ -22,12 +22,6 @@ router.post('/', async (req, res) => {
     try {
         setInterval(async () => {
             try {
-                const lorem =
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-                const sed =
-                    'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.';
-                const vero =
-                    'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.';
                 const requestedCatalog = { catalog: chance.pick(['men', 'women', 'kids'], 1) };
                 const catalog = await Catalogs.findOne(requestedCatalog);
                 if (!catalog) throw { message: 'Bad catalog name' };
@@ -99,7 +93,7 @@ router.post('/', async (req, res) => {
                 const mrspR = chance.integer({ min: 100, max: 1000 });
                 const priceR = parseInt(mrspR * chance.pick([0.8, 0.6, 0.7, 0.9], 1));
                 const rateR = chance.floating({ min: 2, max: 5, fixed: 2 })
-
+                const imageNumber = chance.integer({ min: 1, max: 19 });
                 const props = [
                     {
                         size: requestedCategory.category === 'shoes' ? sizeShoesSmall : sizeWearSmall,
@@ -118,17 +112,46 @@ router.post('/', async (req, res) => {
                     },
                 ];
 
+                let description;
+                switch (category.category) {
+                    case 'dresses':
+                        description = chance.pick(['A dress with thin straps. Featuring a semi-sheer matching lace top appliqué. Passementerie appliqué on the hem with contrast beads and side vents. Side zip fastening hidden in the seam.', 'High neck dress with long sleeves and elastic cuffs. Featuring gathered detailing at the waist and lining.', 'Dress with a high neck and long sleeves. Lining. Ruffled hem. Button fastening on the front.'], 1);
+                        break;
+                    case 'sweaters':
+                        description = `Comfort can't be overlooked. Take care of yourself through every phase of your workout. This sweatshirt has a soft, cozy feel and a convenient pullover style. Has a supportive contoured feel for a full range of motion.`;
+                        break;
+                    case 'jeans':
+                        description = `Faded five-pocket carrot jeans. Turn-up hems. Front button fastening in comfort stretch with zip fly, high waist and relaxed tapered leg. These are our most soft and comfy fits with authentic denim look.`;
+                        break;
+                    case 't-shirts': 
+                        description = `Life has its puzzling moments. Getting ready in the morning shouldn't be one of them. Find your moment of clarity when you throw on this easy, cool t-shirt. The colourful graphic is as bright as your personality. Feel confident in tackling whatever is outside your front door.`;
+                        break;
+                    case 'shoes': 
+                        description = `Feel confident, whatever the conditions. These shoes feature a knit upper with a structured collar for a form-fitting and stable feel. The rubber outsole provides traction, whether you are walking, running or working. High-density Boost gives you endless energy return and superior cushioning with low-to-the ground stability`;
+                        break;
+                    case 'hoodies': 
+                        description = chance.pick([`A clean-cut essential. Its loose-fitting hoodie with an adjustable hood and long sleeves. Featuring a front pouch pocket and ribbed trims. The sweatshirt is a blank canvas. If it looks good and feels great, let it ride.`, 'Knit hoodie with an adjustable drawstring hood and long sleeves.', 'Textured hoodie featuring an adjustable drawstring hood, long sleeves with elastic cuffs, welt hip pockets and ribbed hem.'], 1);
+                        break;
+                    case 'shirts': 
+                        description = chance.pick(['Relaxed fit shirt made from a flowing linen blend. Featuring a camp collar and long sleeves, side slits at the hem and a front button fastening.', 'Slim fit collared shirt featuring long sleeves with buttoned cuffs and a button-up front.', 'Collared shirt featuring long sleeves with contrast buttoned cuffs and an asymmetric hem. Button-up front hidden by a placket.'], 1);
+                    default:
+                        break;
+                }
+
+                const material = chance.pick(['cotton', 'jute', 'silk', 'ramie', 'wool', 'recycled'], 1);
+
                 const gentitle = `${requestedCategory.category} ${requestedBrand.brand} ${chance
-                    .sentence({ words: 3 })
+                    .sentence({ words: 1 })
                     .toLowerCase()}`;
                 const product = new Products({
                     catalog,
                     category,
                     brand,
+                    material,
                     title: gentitle,
-                    description: chance.pick([lorem, sed, vero], 1),
+                    description,
                     color,
-                    images: [`${category.category}_${catalog.catalog}.jpg`],
+                    images: [`${category.category}_${catalog.catalog}${imageNumber}.jpg`],
                     mrsp: mrspR,
                     price: priceR,
                     rate: rateR,

@@ -16,5 +16,9 @@ html, body {
     }
 }
 
-
-
+@media only screen and (max-device-width: 520px) {
+    .ScrollUpButton__Container{
+        height: 40px !important;
+        width: 40px !important;
+    }
+}
