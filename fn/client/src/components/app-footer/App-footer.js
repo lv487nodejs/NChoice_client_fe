@@ -8,40 +8,45 @@ import {
 import './App-footer.css';
 import { Row, Card, CardDeck } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { socialNerworksURL, contactInformationFooter, policiesFooter } from '../../configs/frontend-config'
+import { socialNetworksURL, contactInformationFooter, policiesFooter, catalogsFooter, CATALOGS_URL } from '../../configs/frontend-config'
+
+const catalogs = catalogsFooter.items.map((item) => (
+  <Row key={item.item}><Link to={CATALOGS_URL + item.url}>{item.item}</Link></Row>
+))
+const policies = policiesFooter.items.map((item, index) =>
+  (<Row key={index}><Card.Link >{item}</Card.Link></Row>
+  ))
+const contacts = contactInformationFooter.items.map((item, index) =>
+  (<Row key={index}><Card.Link>{item}</Card.Link></Row>
+  ))
 
 const AppFooter = () => (
   <footer className="footer">
     <div className="footer-inner">
       <CardDeck>
         <Card.Body>
-          <Card.Title>Catalogs</Card.Title>
-          <Row><Link to="/catalogs/men">Men</Link></Row>
-          <Row><Link to="/catalogs/women">Women</Link></Row>
-          <Row><Link to="/catalogs/kids">Kids</Link></Row>
+          <Card.Title>{catalogsFooter.title}</Card.Title>
+          {catalogs}
         </Card.Body>
         <Card.Body>
           <Card.Title>{policiesFooter.title}</Card.Title>
-          <Row><Card.Link>{policiesFooter.aboutUs}</Card.Link></Row>
-          <Row><Card.Link>{policiesFooter.termsAndConditions}</Card.Link></Row>
-          <Row><Card.Link>{policiesFooter.privacyAndPolicy}</Card.Link></Row>
+          {policies}
         </Card.Body>
         <Card.Body>
           <Card.Title>{contactInformationFooter.title}</Card.Title>
-          <Row><Card.Link>{contactInformationFooter.email}</Card.Link></Row>
-          <Row><Card.Link>{contactInformationFooter.phoneNumber}</Card.Link></Row>
+          {contacts}
         </Card.Body>
         <Card.Body>
           <Row className="d-flex flex-column align-items-center">
             <Card.Title>Links</Card.Title>
             <Card.Title>
-              <Card.Link href={socialNerworksURL.telegram} target='_blank'>
+              <Card.Link href={socialNetworksURL.telegram} target='_blank'>
                 <FontAwesomeIcon className="icon" icon={faTelegramPlane} />
               </Card.Link>
-              <Card.Link href={socialNerworksURL.instagram} target='_blank'>
+              <Card.Link href={socialNetworksURL.instagram} target='_blank'>
                 <FontAwesomeIcon className="icon" icon={faInstagram} />
               </Card.Link>
-              <Card.Link href={socialNerworksURL.facebook} target='_blank'>
+              <Card.Link href={socialNetworksURL.facebook} target='_blank'>
                 <FontAwesomeIcon className="icon" icon={faFacebook} />
               </Card.Link>
             </Card.Title>
