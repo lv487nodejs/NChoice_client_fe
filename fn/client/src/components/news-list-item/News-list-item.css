@@ -1,8 +1,36 @@
+.article {
+    height: 25rem;
+    overflow: hidden;
+}
+
 .card-img{
+    width: 20rem;
     transition: 2s;
     transform: scale(1);
 }
 
 .card-img:hover {
     transform: scale(1.1);
+}
+
+.images-container{
+    height: 20rem;
+    overflow: hidden;
+    border-radius: 5px;
+    margin-left: 7%
+}
+
+.card-title{
+    height: 4.5rem;
+}
+
+.news-footer{
+    display: flex;
+    justify-content:space-around;
+}
+.footer-image{
+    width:4rem
+}
+.news-card{
+    width:100%;
 }

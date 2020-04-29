@@ -5,5 +5,8 @@
     margin-right: auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(18rem, auto));
-    grid-gap: 2rem;
+    grid-gap: 5rem;
 };
+.news{
+    margin:5rem auto;
+}

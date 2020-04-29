@@ -18,14 +18,25 @@ const NewsList = ({ storeService, loading, storeSetNews, news }) => {
         })
     }, [storeService,storeSetNews])
 
-    // console.log(news)
-    // const newsItems = news.map(newsItem =>{
-    //     <NewsListItem />
-    // })
+    const newsItems = news.map(({ _id, text, title, newsImage, authorPhoto, date, author }) => (
+        <NewsListItem
+          title={title}
+          text={text}
+          newsImage={newsImage}
+          key={_id}
+          author={author}
+          authorPhoto = {authorPhoto}
+          date = {date}
+        />
+      ))
+
     return (
+        <React.Fragment>
+        <h2 className="text-center">News</h2>
         <div className="news-cardDeck">
-            <NewsListItem />
+            {newsItems}
         </div>
+        </React.Fragment>
     )
 }
 

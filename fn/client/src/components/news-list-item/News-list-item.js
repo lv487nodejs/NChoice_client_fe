@@ -2,57 +2,29 @@ import React from 'react'
 import './News-list-item.css';
 import { Card, Image } from 'react-bootstrap'
 
-const NewsListItem = () => {
-    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const date = new Date().toLocaleDateString("en-US", options)
+const NewsListItem = ({ text, title, newsImage, authorPhoto, date, author }) => {
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+    const date1 = new Date(date)
+    const dateNews = date1.toLocaleString("en-US", options)
+
     return (
-        <>
-        <section className="news-card">
-            <Card.Img className="card-img" variant="top" src="/images/oops.jpg" />
-            <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                    This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This content is a little bit longer.
-                    </Card.Text>
-            </Card.Body>
-                <div>
-                    <small id="loading" className="author">by Volodymyr Trach</small>
-                    <Image src="images/dollar.png" roundedCircle />
+            <section className="news-card">
+                <div className="images-container">
+                <Card.Img className="card-img" variant="top" src={`/images/news/${newsImage}`} />
                 </div>
-                <small className="text-muted">{date}</small>
-        </section>
-        <section className="news-card">
-            <Card.Img className="card-img" variant="top" src="/images/oops.jpg" />
-            <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                    This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This content is a little bit longer.
+                <hr/>
+                <small className="text-muted">{dateNews}</small>
+                <Card.Body>
+                    <Card.Title className="card-title">{title}</Card.Title>
+                    <Card.Text className = "article">
+                        {text}
                     </Card.Text>
-            </Card.Body>
-                <div>
-                    <small id="loading" className="author">by Volodymyr Trach</small>
-                    <Image src="images/dollar.png" roundedCircle />
+                </Card.Body>
+                <div className="news-footer">
+                    <small id="loading" className="author">by {author}</small>
+                    <Image className="footer-image" src={`/images/news-authors/${authorPhoto}`} roundedCircle />
                 </div>
-                <small className="text-muted">{date}</small>
-        </section>
-        <section className="news-card">
-            <Card.Img className="card-img" variant="top" src="/images/oops.jpg" />
-            <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                    This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This content is a little bit longer.
-                    </Card.Text>
-            </Card.Body>
-                <div>
-                    <small id="loading" className="author">by Volodymyr Trach</small>
-                    <Image src="images/dollar.png" roundedCircle />
-                </div>
-                <small className="text-muted">{date}</small>
-        </section>
-        </>
+            </section>
     )
 }
 
