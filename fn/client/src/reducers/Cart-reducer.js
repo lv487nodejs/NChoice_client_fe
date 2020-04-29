@@ -40,7 +40,7 @@ const addToCart = (state, payload) => {
   if (foundProduct) {
     foundProduct.quantity++;
   } else {
-    newProducts.push({ ...payload, quantity: 1 });
+    newProducts.unshift({ ...payload, quantity: 1 });
   }
 
   if (userId) {

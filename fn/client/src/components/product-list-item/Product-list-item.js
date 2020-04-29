@@ -23,7 +23,7 @@ function ProductListItem({ title, id, images, price, mrsp, currency, currencyIco
                         <p className="productName" id="productName">{title}</p>
                         <div className="bottomElements" id="bottomElements">
                             <div className="cardPrice"id="realPrice">{`${priceWithRate} ${currencyIcon}`}</div>
-                            <div className="cardPrice msrp-price" id="msrpPrice">{`${msrpWithRate} ${currencyIcon}`}</div>
+                            <div className="cardPrice msp-price" id="msrpPrice">{`${msrpWithRate} ${currencyIcon}`}</div>
                         </div>
                     </div>
                 </Link>

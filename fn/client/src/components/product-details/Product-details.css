@@ -148,6 +148,37 @@
     display: block;
 }
 
+.price-pdp,
+.msrp-price{
+  color: #6c757d;
+}
+
+.price-pdp{
+  margin-left: 0;
+}
+
+.heart{
+  font-size: 1.5rem;
+}
+
+.heart:hover{
+  transform: scale(1.1);
+  color: rgb(182, 1, 1);
+}
+
+.heart-active{
+  color: rgb(182, 1, 1);
+}
+
+
+
+@media (max-width: 1480px) {
+  .cardBody {
+    grid-template-columns: 51% 47%;
+}
+  .images {
+    grid-template-columns: 6rem 18rem;
+    grid-template-rows: 8rem 8rem 8rem;
 #heartButton {
     font-size: 1.5rem;
 }
