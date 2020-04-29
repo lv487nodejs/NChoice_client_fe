@@ -27,7 +27,7 @@ import Welcome from '../welcome-page';
 const Routes = () => (
   <Router>
     <AppHeader />
-    <div>
+    <div className='box'>
       <Switch>
         <Route path="/" exact component={HomePageContainer} />
         <Route
