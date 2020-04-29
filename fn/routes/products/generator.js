@@ -99,7 +99,7 @@ router.post('/', async (req, res) => {
                 const mrspR = chance.integer({ min: 100, max: 1000 });
                 const priceR = parseInt(mrspR * chance.pick([0.8, 0.6, 0.7, 0.9], 1));
                 const rateR = chance.floating({ min: 2, max: 5, fixed: 2 })
-
+                const imageNumber = chance.integer({ min: 1, max: 19 });
                 const props = [
                     {
                         size: requestedCategory.category === 'shoes' ? sizeShoesSmall : sizeWearSmall,
@@ -118,6 +118,8 @@ router.post('/', async (req, res) => {
                     },
                 ];
 
+                const material = chance.pick(['cotton, jute, silk, ramie, wool, recycled'], 1);
+
                 const gentitle = `${requestedCategory.category} ${requestedBrand.brand} ${chance
                     .sentence({ words: 3 })
                     .toLowerCase()}`;
@@ -125,10 +127,11 @@ router.post('/', async (req, res) => {
                     catalog,
                     category,
                     brand,
+                    material,
                     title: gentitle,
                     description: chance.pick([lorem, sed, vero], 1),
                     color,
-                    images: [`${category.category}_${catalog.catalog}.jpg`],
+                    images: [`${category.category}_${catalog.catalog}${imageNumber}.jpg`],
                     mrsp: mrspR,
                     price: priceR,
                     rate: rateR,
