@@ -4,7 +4,6 @@
     margin: 3rem auto;
     justify-content: space-around;
     max-width: 1200px;
-    /* min-height: 50vh; */
 }
 
 .catalogs img {
@@ -15,7 +14,9 @@
 @media (max-width: 768px) {
     .catalogs {
         flex-direction: column;
-        width: 80%;
+        width: 90%;
+        margin: 2rem auto;
+
     }
 }
 
@@ -31,6 +32,14 @@
     .catalogs {
       flex-direction: column;
       width: 80%;
-      margin: 0 auto;
+      margin: 1rem auto;
      }
  }
+
+@media (max-width: 360px) {
+    .catalogs {
+        flex-direction: column;
+        width: 100%;
+        margin: 1rem auto;
+    }
+}
