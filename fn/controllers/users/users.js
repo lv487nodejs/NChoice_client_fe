@@ -85,7 +85,7 @@ const updateUserRole = asyncHandler(async (req, res, next) => {
 
 const updateUser = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const userToUpdate = req.body.user;
+    const userToUpdate = req.user;
     const { password } = userToUpdate
     const hashedPassword = await bcrypt.hash(password, 10);
     userToUpdate.password = hashedPassword
@@ -99,10 +99,28 @@ const updateUser = asyncHandler(async (req, res, next) => {
     res.status(200).send({ msg: 'user data successfully changed', user });
 });
 
+const updateCart = asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+    const cart  = req.body;
+   
+    const userToUpdate = await Users.findById(id);
+    if (!userToUpdate) {
+        return next(
+            new ErrorResponse('User doesnt exist.', 404)
+        );
+    }
+    userToUpdate.cart = cart;
+
+    await userToUpdate.save();
+    res.status(200).send({ msg: 'user data successfully changed', userToUpdate });
+});
+
+
 module.exports = {
     updateUser,
     updateUserRole,
     registerUser,
     getUser,
     getUsers,
+    updateCart
 };
