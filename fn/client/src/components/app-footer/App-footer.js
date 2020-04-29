@@ -13,9 +13,11 @@ import { socialNetworksURL, contactInformationFooter, policiesFooter, catalogsFo
 const catalogs = catalogsFooter.items.map((item) => (
   <Row key={item.item}><Link to={CATALOGS_URL + item.url}>{item.item}</Link></Row>
 ))
+
 const policies = policiesFooter.items.map((item, index) =>
   (<Row key={index}><Card.Link >{item}</Card.Link></Row>
   ))
+
 const contacts = contactInformationFooter.items.map((item, index) =>
   (<Row key={index}><Card.Link>{item}</Card.Link></Row>
   ))
