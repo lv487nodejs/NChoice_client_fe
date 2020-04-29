@@ -44,7 +44,7 @@ const ProductDetails = ({
   const [isOpen, setIsOpen] = useState(false);
   const [currImg, setCurrImg] = useState(0);
 
-  const imgUrl = `/images/products2/${product.images}`
+  const imgUrl = `/images/products/${product.images}`
   const imgs = [
     {
       src: imgUrl
