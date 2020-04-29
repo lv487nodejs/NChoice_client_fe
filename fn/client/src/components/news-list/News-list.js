@@ -5,19 +5,23 @@ import NewsListItem from '../news-list-item/News-list-item';
 import withStoreService from '../hoc';
 import {
     productsLoadingStart,
-    productsLoadingStop
+    productsLoadingStop,
+    storeSetNews
 } from '../../actions';
 
 
-const NewsList = ({ storeService, loading }) => {
+const NewsList = ({ storeService, loading, storeSetNews, news }) => {
     useEffect(() => {
         productsLoadingStart()
-        storeService.getAllNews().then(news => {
-            console.log(news);   
+        storeService.getAllNews().then(newsArray => {
+            storeSetNews(newsArray);   
         })
-    }, [storeService])
+    }, [storeService,storeSetNews])
 
-
+    // console.log(news)
+    // const newsItems = news.map(newsItem =>{
+    //     <NewsListItem />
+    // })
     return (
         <div className="news-cardDeck">
             <NewsListItem />
@@ -27,12 +31,15 @@ const NewsList = ({ storeService, loading }) => {
 
 const mapStateToProps = ({
     productsList: { loading },
+    newsReduser: {news}
 }) => ({
-    loading
+    loading,
+    news
 });
 const mapDispatchToProps = {
     productsLoadingStart,
-    productsLoadingStop
+    productsLoadingStop,
+    storeSetNews
 };
 
 export default withStoreService()(

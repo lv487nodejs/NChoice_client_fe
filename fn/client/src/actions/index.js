@@ -47,6 +47,8 @@ import {
 } from './Auth-actions';
 
 import { setShowSnackbar, setSnackbarText } from './Snackbar--actions'
+import { storeSetNews } from './News-actions'
+
 
 export {
   categoriesRequested,
@@ -94,5 +96,6 @@ export {
   clearCart,
   setOrderToStore,
   clearOrderStore,
-  setCart
+  setCart,
+  storeSetNews
 };
