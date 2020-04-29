@@ -9,6 +9,7 @@ import {
   ProductListPageContainer,
   ProductDetailsContainer,
   CheckoutContainer,
+  NewsContainer
 } from '../../containters';
 
 import AppHeader from '../app-header';
@@ -20,6 +21,7 @@ import Login from '../login/Login';
 import UserPage from '../user-page';
 import Thanks from '../thanks-page'
 import ErrorPage from '../error-page';
+import Welcome from '../welcome-page';
 
 
 const Routes = () => (
@@ -59,7 +61,9 @@ const Routes = () => (
         <Route path="/checkout" exact component={CheckoutContainer} />
         <Route path="/userpage" exact component={UserPage} />
         <Route path="/thanks" exact component={Thanks} />
-        <Route path="/errorPage" exact component={ErrorPage} />
+        <Route path="/error-page" exact component={ErrorPage} />
+        <Route path="/news" exact component={NewsContainer} />
+        <Route path="/welcome" exact component={Welcome} />
       </Switch>
     </div>
     <AppFooter />
