@@ -10,7 +10,7 @@ import {
 } from '../../actions';
 
 
-const NewsList = ({ storeService, loading, storeSetNews, news }) => {
+const NewsList = ({ storeService, loading, storeSetNews, news=[] }) => {
     useEffect(() => {
         productsLoadingStart()
         storeService.getAllNews().then(newsArray => {
