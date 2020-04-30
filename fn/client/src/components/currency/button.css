@@ -91,7 +91,7 @@ button:focus {
 }
 @media only screen and (max-device-width: 768px) {
     .curr {
-        padding: .5rem .8rem !important;
+        padding: .5rem .7rem !important;
     }
 }
 @media only screen and (max-device-width: 520px) {

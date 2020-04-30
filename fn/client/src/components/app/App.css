@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     position: relative;
 }
@@ -12,12 +13,27 @@ html, body {
 
 @media only screen and (max-device-width: 991px) {
     .App {
-        grid-template-rows: [row1] 2fr [row1-end row2] auto [row2-end row3] 2fr [row3-end];
+        grid-template-rows: [row1] 1.6fr [row1-end row2] auto [row2-end row3] 3fr [row3-end];
+    }
+}
+@media only screen and (max-device-width: 768px) {
+    .App {
+        grid-template-rows: [row1] 1.2fr [row1-end row2] auto [row2-end row3] 4fr [row3-end];
+    }
+}
+
+@media only screen and (max-device-width: 575px) {
+    .App {
+        grid-template-rows: [row1] 1fr [row1-end row2] auto [row2-end row3] 6fr [row3-end];
     }
 }
 
 @media only screen and (max-device-width: 520px) {
-    .ScrollUpButton__Container{
+    .App {
+        grid-template-rows: [row1] 1fr [row1-end row2] auto [row2-end row3] 7fr [row3-end];
+    }
+
+    .ScrollUpButton__Container {
         height: 40px !important;
         width: 40px !important;
     }

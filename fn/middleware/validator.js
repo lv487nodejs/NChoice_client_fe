@@ -73,6 +73,20 @@ const cartValidationRules = () => [
         .notEmpty()
         .isString(),
 ];
+const newsValidationRules = () => [
+    body('title', 'title is required')
+        .notEmpty()
+        .isString(),
+    body('text', 'text is required')
+        .notEmpty()
+        .isString(),
+    body('newsImage', 'newsImage is required')
+        .notEmpty()
+        .isString(),
+    body('author', 'author is required')
+        .notEmpty()
+        .isString(),
+]
 
 
 const validate = (req, res, next) => {
@@ -95,5 +109,6 @@ module.exports = {
     categoryValidationRules,
     orderValidationRules,
     cartValidationRules,
+    newsValidationRules,
     validate,
 };
