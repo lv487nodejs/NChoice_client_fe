@@ -98,6 +98,10 @@ const decreaseToCart = (state, payload) => {
     };
   } else {
     foundItem.quantity -= 1;
+    if (userId) {
+      const cart = { cartNumbers: state.cartNumbers - 1, cartProducts: new_products }
+      saveCart(userId, cart, accessToken)
+    }
     setToLocalStorage('products_collection', new_products)
     setToLocalStorage('cart_numbers', state.cartNumbers - 1)
 
