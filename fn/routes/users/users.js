@@ -8,7 +8,8 @@ const {
     registerUser,
     getUser,
     getUsers,
-    updateCart
+    updateCart,
+    updateWishList
 } = require('../../controllers/users/users');
 
 const router = express.Router();
@@ -24,6 +25,9 @@ router.put('/:id', auth, authorize('user'), updateUser);
 
 // update cart
 router.put('/cart/:id', auth, authorize('user'), updateCart);
+
+// update wishlist
+router.put('/wish/:id', auth, authorize('user'), updateWishList);
 
 // update user role
 router.put('/role/:id', auth, authorize('admin'), updateUserRole);

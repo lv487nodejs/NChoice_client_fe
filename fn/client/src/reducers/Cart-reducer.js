@@ -17,7 +17,7 @@ const setInitial = async () => {
     const res = await axios({ method: 'GET', url: `${_baseUrl}users/${userId}`, headers: { "x-auth-token": accessToken } });
     const { cart } = res.data.user
     if (!cart) {
-      saveCart(userId, { cartNumbers: 0, cartProducts: [] })
+      saveCart(userId, { cartNumbers: 0, cartProducts: [] }, accessToken)
       return
     }
     initialState.cartNumbers = cart.cartNumbers
