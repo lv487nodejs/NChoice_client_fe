@@ -27,8 +27,6 @@
     "react-fontawesome": "^1.7.1",
     "react-redux": "^7.2.0",
     "react-select": "^3.1.0",
-    "read-more-react": "^1.0.10",
-    "readmore-js": "^2.2.1",
     "redux": "^4.0.5",
     "rotating-file-stream": "^2.0.2"
   },
