@@ -16,7 +16,7 @@ const UserModel = new Schema({
     },
     password: {
         type: String,
-        minlength: 6,
+        minlength: 8,
         required: true,
     },
     role: {
@@ -53,6 +53,14 @@ const UserModel = new Schema({
         ref: 'order'
     }
 });
+
+UserModel.methods.isValidPassword = async function(newPassword) {
+    try {
+        return await bcrypt.compare( newPassword, this.password)
+    } catch {
+        throw new Error(error)
+    }
+}
 
 const Users = mongoose.model('user', UserModel);
 module.exports = Users;

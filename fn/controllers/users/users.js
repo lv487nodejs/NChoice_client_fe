@@ -67,6 +67,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
         await user.save();
         res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
     });
+    next()
 
 });
 

@@ -9,12 +9,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { addToWishlist, removeFromWishlist } from "../../actions";
 import { getFromLocalStorage } from "../../services/localStoreService";
+import withStoreService from "../hoc";
 
-const Wishlist = ({removeFromWishlist}) => {
+const Wishlist = ({removeFromWishlist, storeService}) => {
 
   const [products, setProducts] = useState([]);
   
   useEffect(() => {
+    if (getFromLocalStorage('userId') && getFromLocalStorage('accessToken')){
+       const user = storeService.getUserById(getFromLocalStorage('userId'), getFromLocalStorage('accessToken'))
+      console.log(user)
+    }
     if (getFromLocalStorage('wishlist_collection')) {
       setProducts(getFromLocalStorage('wishlist_collection'));
     }
@@ -85,4 +90,4 @@ const Wishlist = ({removeFromWishlist}) => {
 
 const mapStateToProps = ({wishlistReducer: {products}}) => ({products});
 
-export default connect(mapStateToProps, {addToWishlist,removeFromWishlist})(Wishlist);
+export default  withStoreService()(connect(mapStateToProps, {addToWishlist,removeFromWishlist})(Wishlist));
