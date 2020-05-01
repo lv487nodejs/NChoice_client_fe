@@ -23,7 +23,7 @@
 .news-card-title{
     height: 4.5rem;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 770px) {
     .card-title {
         margin-top:2.5rem
     }
