@@ -181,9 +181,6 @@
     grid-template-rows: 8rem 8rem 8rem;
   }
 }
-/* #heartButton {
-    font-size: 1.5rem;
-} */
 
 @media (max-width: 1480px) {
     .cardBody {
@@ -244,6 +241,9 @@
     #addToCartButton{
         padding: .2rem .7rem;
         font-size: 1rem;
+    }
+    .button{
+        margin-right: 0;
     }
 
 }
