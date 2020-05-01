@@ -15,7 +15,7 @@ const NewsListItem = ({ text, title, newsImage, authorPhoto, date, author }) => 
                 <hr/>
                 <small className="text-muted">{dateNews}</small>
                 <Card.Body>
-                    <Card.Title className="card-title">{title}</Card.Title>
+                    <Card.Title className="news-card-title">{title}</Card.Title>
                     <Card.Text className = "article">
                         {text}
                     </Card.Text>

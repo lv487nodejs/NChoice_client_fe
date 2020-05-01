@@ -20,8 +20,13 @@
     margin-left: 7%
 }
 
-.card-title{
+.news-card-title{
     height: 4.5rem;
+}
+@media only screen and (max-width: 768px) {
+    .card-title {
+        margin-top:2.5rem
+    }
 }
 
 .news-footer{
