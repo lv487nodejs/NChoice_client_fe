@@ -24,6 +24,14 @@ const UserModel = new Schema({
         enum: ['user', 'admin'],
         default: 'user',
     },
+    confirmedEmail: {
+        type: Boolean,
+        default: false,
+    },
+    emailToken: {
+        type: String,
+        required: true,
+    },
     avatar: {
         type: String,
     },
@@ -35,7 +43,10 @@ const UserModel = new Schema({
     wishlist: [String],
     cart: {
         cartProducts: Array,
-        cartNumbers: Number,
+        cartNumbers: {
+            type: Number,
+            default: 0,
+        },
     },
     orders: {
         type: Schema.Types.ObjectId,

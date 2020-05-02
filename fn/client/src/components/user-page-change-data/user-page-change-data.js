@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import withStoreService from '../hoc'
 import Snackbar from '../snackbar';
 import { SignupSchema } from './validation';
+import { getFromLocalStorage } from '../../services/localStoreService';
 
 const UserChangeData = ({ user,
     storeService,
@@ -15,12 +16,12 @@ const UserChangeData = ({ user,
     setSnackbarText,
 
 }) => {
-    const userId = JSON.parse(localStorage.getItem('userId'))
-    const accessToken = JSON.parse(localStorage.getItem('accessToken'))
+    const userId = getFromLocalStorage('userId')
+    const accessToken = getFromLocalStorage('accessToken')
 
-    const addUserDataToSTore = useCallback((id, token) => {
-        storeService.getUserById(id, token).then((res) => {
-            const { user } = res
+    const addUserDataToSTore = useCallback((id,token) => {
+        storeService.getUserById(id,token).then((res) => {            
+            const { user } = res.data
             setUser(user)
         }).catch((error) => {
             throw new Error(error)
@@ -28,8 +29,8 @@ const UserChangeData = ({ user,
     }, [storeService, setUser])
 
     useEffect(() => {
-        addUserDataToSTore(userId, accessToken)
-    }, [addUserDataToSTore, accessToken, userId])
+        addUserDataToSTore(userId,accessToken)
+    }, [addUserDataToSTore, userId, accessToken])
 
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchema
@@ -40,11 +41,11 @@ const UserChangeData = ({ user,
     }
     const submitHandler = (e) => {
         storeService.sendUserChangedData(userId, accessToken, { user }).then((res) => {
-            addUserDataToSTore(userId, accessToken)
+            addUserDataToSTore(userId,accessToken)
             snackbarHandler(res.data.msg)
         }).catch((error) => {
             console.log(error);
-            snackbarHandler(error.response.data.msg)
+            snackbarHandler(error.message)
         })
     }
     const snackbarHandler = (text) => {

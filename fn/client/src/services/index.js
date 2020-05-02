@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default class StoreService {
-  _apiBase = 'https://lv487node-backend.herokuapp.com/';
+  _apiBase = 'http://localhost:5000/';
 
   getResource = async (url) => {
     try {
@@ -9,6 +9,7 @@ export default class StoreService {
       return catalogs.data;
     } catch (error) {
       console.error(error);
+      throw error;
     }
   };
 
@@ -147,8 +148,8 @@ export default class StoreService {
     const cart = await this.getResource(`cart/${id}`);
     return cart;
   };
-  getUserById = async (id) => {
-    return await this.getResource(`users/${id}`)
+  getUserById = async (id, token) => {
+    return axios({ method: 'GET', url: `${this._apiBase}users/${id}`, headers: { "x-auth-token": token } })
   };
   sendUserChangedData = async (id, token, data) => {
     return axios({ method: 'PUT', url: `${this._apiBase}users/${id}`, data, headers: { "x-auth-token": token } })
@@ -161,5 +162,21 @@ export default class StoreService {
   loginUser = async (user) => {
     return await this.postData('auth/login', user);
   }
-  
+  putToCart = async (id, data, token) => {
+    return await axios.put(`${this._apiBase}users/cart/${id}`, { data, "x-auth-token": token });
+  }
+  getAllNews = async () => {
+    const news = await this.getResource('news');
+    return news;
+  };
+
+  confirmEmail = async token => {
+    try {
+      const res = await this.getResource(`auth/confirmation/${token}`)
+      return res;
+    } catch (error) {
+      throw error;
+    }
+    
+  }
 }

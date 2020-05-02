@@ -23,6 +23,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.0",
     "morgan": "^1.9.1",
+    "nodemailer": "^6.4.6",
     "react-fontawesome": "^1.7.1",
     "react-redux": "^7.2.0",
     "react-select": "^3.1.0",
@@ -41,7 +42,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.3",
     "prettier": "^1.19.1"
   }
 }

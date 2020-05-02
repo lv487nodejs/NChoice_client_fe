@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import './Categories-nav.css';
-
 import {
   categoriesLoaded,
   categoriesRequested,
@@ -15,7 +13,6 @@ import {
 } from '../../actions';
 import CategoriesNavItem from '../categories-nav-item';
 import withStoreService from '../hoc';
-import LoadingSpinner from '../Loading-spinner';
 import { PRODUCT_LIST_URL } from '../../configs/frontend-config';
 const CategoriesNav = ({
   storeService,
@@ -23,7 +20,6 @@ const CategoriesNav = ({
   categoriesRequested,
   categories,
   catalog,
-  loading,
   filterAddCategories,
   filterRemoveAllCategories,
   filterRemoveAllBrands,
@@ -42,38 +38,38 @@ const CategoriesNav = ({
     filterRemoveAllCategories();
     filterAddCategories(item);
   };
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+
+  const filterRemoveCategoriesHandler = () => {
+   filterRemoveAllCategories()
+  };
+
+  const items = categories.map((category) => (
+    <li key={category.category} className="category-item">
+      <CategoriesNavItem
+        handler={filterAddCategoriesHandler}
+        catalog={catalog}
+        name={category.category}
+        config={PRODUCT_LIST_URL}
+      />
+    </li>
+  ));
 
   return (
     <ul className="categories-nav">
       <li key="all" className="category-item">
         <Link
           to={PRODUCT_LIST_URL + catalog}
-          onClick={() => filterRemoveAllCategories()}
+          onClick={filterRemoveCategoriesHandler}
         >
           All Categories
         </Link>
       </li>
-      {categories.map((category) => (
-        <li key={category.category} className="category-item">
-          <CategoriesNavItem
-            handler={filterAddCategoriesHandler}
-            catalog={catalog}
-            name={category.category}
-            config={PRODUCT_LIST_URL}
-          />
-        </li>
-      ))}
+      {items}
     </ul>
   );
 };
 
-const mapStateToProps = ({ categoriesList: { categories, loading } }) => ({
-  categories,
-  loading,
-});
+const mapStateToProps = ({ categoriesList: { categories } }) => ({ categories });
 const mapDispatchToProps = {
   categoriesLoaded,
   categoriesRequested,

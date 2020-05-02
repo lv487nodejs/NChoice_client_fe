@@ -1,6 +1,10 @@
+.wishlist-title{
+    min-height:23rem;
+}
+
 .wishlist-wrap {
-    margin: 1rem 0 1rem 0;
-    border: 1px solid #e0e0e0;
+    padding: 1rem;
+    border-bottom: 1px solid #e0e0e0;
     border-radius: 2px;
     overflow: hidden;
     position: relative;
@@ -9,22 +13,29 @@
     display: block;
     width: 210px;
     overflow: hidden;
-    float:left; 
-    margin: 7px 7px 7px 0; 
+    float:left;
+    margin-right: 2rem;
+    transition: all 2s;
+    transform: scale(1);
 }
-.wishlist-title{
-    font-size: 1.5rem;
-    margin-left: 2rem;
+
+.wishlist-img:hover,
+.item-title:hover{
+    transform: scale(1.02);
+    transition: 2s;
 }
+
 .main-wishlist{
-    max-width: 900px;
-    min-height: 200px;
+    max-width: 85%;
+    min-height: 250px;
     margin: 0 auto;
+    padding: 20px;
 }
+
 .wishlist-item{
-    min-height: 84px;
+    min-height: 300px;
     border-bottom: 1px solid #e0e0e0;
-    padding: 10px 20px;
+    padding: 2rem;
 }
 p {
     margin: 0;
@@ -33,12 +44,112 @@ p {
 .delte-wishlist-button {
   font-size: 1.7rem;
   margin: 1rem;
-  float: right
+  margin-top: 0rem;
+  float: right;
+  color:  #6c757d;
+  
 }
 .delte-wishlist-button:hover{
     color: black;
 }
 .item-title{
-    color: crimson;
+    margin: 2rem;
+    margin-left: 0;
+    color: rgb(160, 160, 160);
     font-size: 2rem;
+    text-align: left;
+    transition: all 2s;
+    transform: scale(1);
 }
+
+.item-description{
+    display: inline;
+    font-size: 1.5rem;
+}
+
+.full-description-wishlist{
+    display: block;
+}
+
+.displayed-text{
+    display: none;
+}
+
+@media only screen and (max-device-width: 769px){
+    .main-wishlist,
+    .wishlist-wrap{
+        max-width: 100%;
+        padding: .5rem;
+    }
+
+    .main-wishlist{
+        padding: 0;
+    }
+
+    .item-description{
+        font-size: 1.1rem;
+    }
+
+    .item-title,
+    .delte-wishlist-button{
+        font-size: 1.3rem;
+    }
+
+}
+
+
+@media only screen and (max-device-width: 600px){
+
+    .wishlist-img{
+        float: none;
+        text-align: center;
+    }
+
+    .item-description{
+        display: block;
+        font-size: .8rem;
+    }
+
+    .wishlist-title{
+        margin-left: 0;
+    }
+
+    .item-title{
+        font-size: 1.1rem;
+    }
+
+    .delte-wishlist-button{
+        font-size: 1.1rem;
+    }
+
+    .wishlist-img{
+        float: none;
+        width: 160px;
+        display: inline-block;
+        text-align: center;
+        margin: 0;
+    }
+
+    .wishlist-title{
+        display: block;
+        text-align: center;
+    }
+
+    .item-title{
+        margin: .5rem;
+        text-align: center;
+    }
+
+    .displayed-text{
+        display: block;
+    }
+
+    .full-description-wishlist{
+        display: none;
+    }
+    
+}
+    
+
+
+

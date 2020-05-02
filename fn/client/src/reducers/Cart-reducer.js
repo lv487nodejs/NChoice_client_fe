@@ -1,53 +1,54 @@
 import axios from "axios";
-
+import { getFromLocalStorage, setToLocalStorage } from "../services/localStoreService";
+import { _baseUrl } from '../configs/frontend-config';
 const initialState = { cartNumbers: 0, cartProducts: [] }
 
-const userId = JSON.parse(localStorage.getItem("userId"));
-const productCollection = JSON.parse(localStorage.getItem("products-collection"));
-const localCartNumbers = JSON.parse(localStorage.getItem("cart-numbers"));
+const userId = getFromLocalStorage('userId');
+const productCollection = getFromLocalStorage('products_collection');
+const localCartNumbers = getFromLocalStorage('cart_numbers');
+const accessToken = getFromLocalStorage('accessToken');
 
-const saveCart = async (userId, cart) => {
-  axios.put(`https://lv487node-backend.herokuapp.com/users/cart/${userId}`, { cart });
+const saveCart = async (userId, data, token) => {
+  axios({ method: 'PUT', url: `${_baseUrl}users/cart/${userId}`, data, headers: { "x-auth-token": token } });
 }
 
 const setInitial = async () => {
-    if (userId) {
-      const res = await axios.get(`https://lv487node-backend.herokuapp.com/users/${userId}`);
-      const { cart } = res.data.user
-      if (!cart) {
-        saveCart(userId, { cartNumbers: 0, cartProducts: [] })
-        return
-      }
-      initialState.cartNumbers = cart.cartNumbers
-      initialState.cartProducts = cart.cartProducts
+  if (userId) {
+    const res = await axios({ method: 'GET', url: `${_baseUrl}users/${userId}`, headers: { "x-auth-token": accessToken } });
+    const { cart } = res.data.user
+    if (!cart) {
+      saveCart(userId, { cartNumbers: 0, cartProducts: [] })
       return
     }
+    initialState.cartNumbers = cart.cartNumbers
+    initialState.cartProducts = cart.cartProducts
+    return
+  }
 
-    if (productCollection && localCartNumbers) {
-      initialState.cartNumbers = localCartNumbers
-      initialState.cartProducts = productCollection
-    }
+  if (productCollection && localCartNumbers) {
+    initialState.cartNumbers = localCartNumbers
+    initialState.cartProducts = productCollection
+  }
 };
 
-setInitial()
+setInitial(accessToken)
 
 const addToCart = (state, payload) => {
   let newProducts = [...state.cartProducts];
   let foundProduct = newProducts.find(
-    item => payload.id === item.id && payload.propetries.size === item.propetries.size);
+    item => payload.propetries._id === item.propetries._id && payload.propetries._size === item.propetries._size);
   if (foundProduct) {
     foundProduct.quantity++;
   } else {
-    newProducts.push({ ...payload, quantity: 1 });
+    newProducts.unshift({ ...payload, quantity: 1 });
   }
 
-  if(userId) {
+  if (userId) {
     const cart = { cartNumbers: state.cartNumbers + 1, cartProducts: newProducts }
-    saveCart(userId, cart)
+    saveCart(userId, cart, accessToken)
   }
-
-  localStorage.setItem("products-collection", JSON.stringify(newProducts));
-  localStorage.setItem("cart-numbers", (state.cartNumbers + 1));
+  setToLocalStorage('products_collection', newProducts)
+  setToLocalStorage('cart_numbers', state.cartNumbers + 1)
 
   return {
     ...state,
@@ -61,13 +62,13 @@ const increaseToCart = (state, payload) => {
   let foundIncreaseItems = newIncreaseProducts.find(item => payload.propetries._id === item.propetries._id);
   foundIncreaseItems.quantity += 1;
 
-  if(userId) {
+  if (userId) {
     const cart = { cartNumbers: state.cartNumbers + 1, cartProducts: newIncreaseProducts }
-    saveCart(userId, cart)
+    saveCart(userId, cart, accessToken)
   }
-
-  localStorage.setItem("products-collection", JSON.stringify(newIncreaseProducts));
-  localStorage.setItem("cart-numbers", (state.cartNumbers + 1));
+  setToLocalStorage('products_collection', newIncreaseProducts)
+  setToLocalStorage('cart_numbers', state.cartNumbers + 1)
+  
   return {
     ...state,
     cartProducts: newIncreaseProducts,
@@ -83,13 +84,12 @@ const decreaseToCart = (state, payload) => {
   if (foundItem.quantity === 1) {
     let new_items = state.cartProducts.filter(item => payload.propetries._id !== item.propetries._id);
 
-    if(userId) {
+    if (userId) {
       const cart = { cartNumbers: state.cartNumbers - 1, cartProducts: new_items }
-      saveCart(userId, cart)
+      saveCart(userId, cart, accessToken)
     }
-
-    localStorage.setItem("products-collection", JSON.stringify(new_items));
-    localStorage.setItem("cart-numbers", (state.cartNumbers - 1));
+    setToLocalStorage('products_collection', new_items)
+    setToLocalStorage('cart_numbers', state.cartNumbers - 1)
 
     return {
       ...state,
@@ -98,8 +98,12 @@ const decreaseToCart = (state, payload) => {
     };
   } else {
     foundItem.quantity -= 1;
-    localStorage.setItem("products-collection", JSON.stringify(new_products));
-    localStorage.setItem("cart-numbers", (state.cartNumbers - 1));
+    if (userId) {
+      const cart = { cartNumbers: state.cartNumbers - 1, cartProducts: new_products }
+      saveCart(userId, cart, accessToken)
+    }
+    setToLocalStorage('products_collection', new_products)
+    setToLocalStorage('cart_numbers', state.cartNumbers - 1)
 
     return {
       ...state,
@@ -114,13 +118,13 @@ const removeFromCart = (state, payload) => {
   let itemToRemove = state.cartProducts.find(item => payload.propetries._id === item.propetries._id);
   let quantity = 0;
   if (itemToRemove) {
-    localStorage.setItem("products-collection", JSON.stringify(newItems));
+    setToLocalStorage('products_collection', newItems)
     quantity = itemToRemove.quantity;
-    localStorage.setItem("cart-numbers", (state.cartNumbers - quantity));
+    setToLocalStorage('cart_numbers', state.cartNumbers - quantity)
 
-    if(userId) {
+    if (userId) {
       const cart = { cartNumbers: state.cartNumbers - quantity, cartProducts: newItems }
-      saveCart(userId, cart)
+      saveCart(userId, cart, accessToken)
     }
 
     return {
@@ -129,12 +133,12 @@ const removeFromCart = (state, payload) => {
       cartProducts: newItems
     };
   } else {
-    localStorage.setItem("products-collection", JSON.stringify(newItems));
-    localStorage.setItem("cart-numbers", state.cartNumbers);
+    setToLocalStorage('products_collection', newItems)
+    setToLocalStorage('cart_numbers', state.cartNumbers)
 
-    if(userId) {
+    if (userId) {
       const cart = { cartNumbers: state.cartNumbers, cartProducts: newItems }
-      saveCart(userId, cart)
+      saveCart(userId, cart, accessToken)
     }
 
     return {
@@ -165,10 +169,10 @@ export default (state = initialState, action) => {
         cartNumbers: action.payload.cartNumbers,
       };
     case "CLEAR_CART":
-  
-      if(userId) {
+
+      if (userId) {
         const cart = { cartNumbers: 0, cartProducts: [] }
-        saveCart(userId, cart)
+        saveCart(userId, cart, accessToken)
       }
 
       return {

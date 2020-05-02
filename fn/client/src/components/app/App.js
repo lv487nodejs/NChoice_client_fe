@@ -3,13 +3,14 @@ import './App.css';
 
 import Routes from '../routes';
 import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
-
+import Chat from '../chat';
 const App = () => (
         <div className="App">
                 <Routes />
                 <div>
-                        <ScrollUpButton ToggledStyle={{right: 30}}/>
+                        <ScrollUpButton ToggledStyle={{ right: 30 }} />
                 </div>
+                <Chat />
         </div>
 );
 

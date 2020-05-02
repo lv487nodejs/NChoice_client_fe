@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Register.css';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Modal } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 
@@ -8,14 +8,15 @@ import { setUserLogged, setUserLoading } from "../../actions";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-import LoadingSpinner from "../Loading-spinner";
 import { SignupSchemaRegister } from '../../configs/login-register-config'
 import withStoreService from '../hoc';
+import { setToLocalStorage } from '../../services/localStoreService';
+
 
 const addDataToLocalStorage = (token) => {
-    localStorage.setItem('accessToken', JSON.stringify(token.accessToken));
-    localStorage.setItem('refreshToken', JSON.stringify(token.refreshToken));
-    localStorage.setItem('userId', JSON.stringify(token.user._id))
+    setToLocalStorage('userId', token.userId)
+    setToLocalStorage('accessToken', token.accessToken)
+    setToLocalStorage('refreshToken', token.refreshToken)
 }
 
 const USER_DATA = {
@@ -28,13 +29,14 @@ const USER_DATA = {
 const eye = <FontAwesomeIcon icon={faEye} />;
 
 const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, cartNumbers, cartProducts }) => {
-    
+
     const initialUser = { ...USER_DATA, cart: { cartNumbers, cartProducts } }
-    
+
     const [user, setUser] = useState(initialUser);
     const [errorMsg, setErrorMsg] = useState('');
     const [passwordShown, setPasswordShown] = useState(false);
     const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
+    const [show, setShow] = useState(false);
 
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchemaRegister
@@ -57,13 +59,16 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
         setUser({ ...user, [event.target.name]: event.target.value });
     };
 
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     const postUser = async () => {
         try {
             setUserLoading();
             const res = await storeService.registerUser(user);
             if (!res) throw new Error('User with such an email already exist.')
             addDataToLocalStorage(res);
-            setUserLogged(true);
+            handleShow();
         } catch (err) {
             setUserLogged(false)
             setErrorMsg(err.message)
@@ -74,42 +79,39 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
         postUser();
     };
 
-    if (userLoading) {
-        return <LoadingSpinner />
-    }
-
     if (userLogged) {
         return <Redirect to='/' />
     }
 
     return (
-        <Form className="register" onSubmit={handleSubmit(handleOnSubmit)}>
-            <Form.Label className="lable">Register</Form.Label>
-            <Form.Group>
-                <Form.Label>First name</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="First name"
-                    name={'firstName'}
-                    value={user.firstName}
-                    onChange={handleChange}
-                    ref={register}
-                />
-                {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Last name</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Last name"
-                    name={'lastName'}
-                    value={user.lastName}
-                    onChange={handleChange}
-                    ref={register}
-                />
-                {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
-            </Form.Group>
-           
+        <>
+            <Form className="register" onSubmit={handleSubmit(handleOnSubmit)}>
+                <Form.Label className="lable">Register</Form.Label>
+                <Form.Group>
+                    <Form.Label>First name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="First name"
+                        name={'firstName'}
+                        value={user.firstName}
+                        onChange={handleChange}
+                        ref={register}
+                    />
+                    {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Last name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Last name"
+                        name={'lastName'}
+                        value={user.lastName}
+                        onChange={handleChange}
+                        ref={register}
+                    />
+                    {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
+                </Form.Group>
+
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
@@ -173,8 +175,20 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                 <Form.Group className="link">
                     <Link to="/login" className="btn btn-link" >LOG IN</Link>
                 </Form.Group>
-        </Form>
+            </Form>
 
+            <Modal show={show} onHide={handleClose} animation>
+                <Modal.Header closeButton>
+                    <Modal.Title>Registred!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>You have successefully registred! Please confirm your email</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 }
 

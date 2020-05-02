@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App-header-nav-left.css';
+import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import {
@@ -40,12 +41,17 @@ const AppHeaderNavLeft = ({
     setIsShown('');
   };
   const filterAddCategoryHandler = (category, catalog) => {
-
     filterByName('');
     clearFilter();
     filterAddCategory(category);
     setCatalogFilter(catalog);
+    setIsShown('');
   };
+
+  const filterRemoveCategoriesHandler = () =>{
+    filterRemoveAllCategories();
+    setIsShown('')
+  }
 
   const filterAddCatalog = (catalog) => () => {
     filterByName('');
@@ -66,7 +72,7 @@ const AppHeaderNavLeft = ({
           <AppHeaderNavLeftItemDropDown
             catalog={catalog}
             clickHandler={filterAddCategoryHandler}
-            categoryRemover={filterRemoveAllCategories}
+            categoryRemover={filterRemoveCategoriesHandler}
           />
         </div>
       )}
@@ -74,8 +80,11 @@ const AppHeaderNavLeft = ({
   ));
 
   return (
-    <nav className="nav-bar">
-      <ul>{items}</ul>
+    <nav className="nav-bar nav-left">
+      <ul>
+        {items}
+        <li><Link to="/news" >News</Link></li>
+        </ul>
     </nav>
   );
 };
