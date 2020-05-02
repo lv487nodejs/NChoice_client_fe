@@ -8,7 +8,7 @@ const App = () => (
         <div className="App">
                 <Routes />
                 <div>
-                        <ScrollUpButton ToggledStyle={{ right: 30 }} />
+                        <ScrollUpButton ToggledStyle={{ left: 30 }} />
                 </div>
                 <Chat />
         </div>
