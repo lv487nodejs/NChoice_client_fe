@@ -238,10 +238,13 @@
     #heartButton {
         font-size: 1.3rem;
     }
-    #addToCartButton{
+    #buyNow .btn, #addToCartButton{
         padding: .2rem .7rem;
         font-size: 1rem;
+        margin-top: 7px;
+        width:8rem
     }
+    
     .button{
         margin-right: 0;
     }
