@@ -63,7 +63,7 @@ const Routes = () => (
         <Route path="/thanks" exact component={Thanks} />
         <Route path="/error-page" exact component={ErrorPage} />
         <Route path="/news" exact component={NewsContainer} />
-        <Route path="/welcome" exact component={Welcome} />
+        <Route path="/welcome/:token" exact component={Welcome} />
       </Switch>
     </div>
     <AppFooter />
