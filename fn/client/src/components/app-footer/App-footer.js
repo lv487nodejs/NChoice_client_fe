@@ -25,8 +25,8 @@ const contacts = contactInformationFooter.items.map((item, index) =>
 const AppFooter = () => (
   <footer className="footer">
     <div className="footer-inner">
-      <CardDeck>
-        <Card.Body>
+      <CardDeck id="footer-card">
+        <Card.Body >
           <Card.Title>{catalogsFooter.title}</Card.Title>
           {catalogs}
         </Card.Body>
