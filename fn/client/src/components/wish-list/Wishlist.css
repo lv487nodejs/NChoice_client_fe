@@ -1,3 +1,7 @@
+.wishlist-title{
+    min-height:23rem;
+}
+
 .wishlist-wrap {
     padding: 1rem;
     border-bottom: 1px solid #e0e0e0;
