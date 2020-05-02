@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 const FilterItem = props => {
     const [isVisible, setIsVisible] = useState(true);
+    const [filterIcon, setFilterIcon] = useState('minus');
 
     const listClass = isVisible ? '' : 'hide';
     const { items = [], type, handler } = props;
@@ -21,10 +22,11 @@ const FilterItem = props => {
     });
     const changeHandler = () => {
         isVisible ? setIsVisible(false) : setIsVisible(true)
+        isVisible ? setFilterIcon('plus') : setFilterIcon('minus') 
     }
     return (
         <div className="filter-item">
-            <FontAwesome name="plus" className="btn btn-outline-primary plus-button expand-button" onClick={changeHandler}></FontAwesome>
+            <FontAwesome name={filterIcon} className="btn btn-outline-primary plus-button expand-button" onClick={changeHandler}></FontAwesome>
             <p className="filter-name">By {type}:</p>
             <ul className={listClass}>{elements}</ul>
         </div>
