@@ -18,6 +18,7 @@ const colors = require('./routes/products/colors');
 const generator = require('./routes/products/generator');
 const orders = require('./routes/purchase/order');
 const news = require('./routes/pages/news');
+const comments = require('./routes/comments/comments');
 
 require('dotenv').config();
 
@@ -47,6 +48,7 @@ app.use('/colors', colors);
 app.use('/generator', generator);
 app.use('/orders', orders);
 app.use('/news', news);
+app.use('/comments', comments);
 
 app.use(errorHandler);
 
