@@ -123,7 +123,13 @@ const LatestOrders = ({
 
     const tableHeaders = tableTitles.map(title => <TableCell key={title}>{title}</TableCell>);
 
-    const tableRows = orders.map(order => (
+    const tableRows = orders.map(order => {
+        if(!order.userId) {
+            order.userId = {
+                email: '',
+            };
+        }
+        return (
         <TableRow hover key={order._id}>
             <TableCell>{order._id}</TableCell>
             <TableCell>{order.userId.email}</TableCell>
@@ -139,7 +145,7 @@ const LatestOrders = ({
                 </div>
             </TableCell>
         </TableRow>
-    ));
+    )});
 
     return (
         <Card id="latest-orders" className={classes.root}>

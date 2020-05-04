@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { Toolbar, AppBar, Typography, IconButton } from '@material-ui/core';
@@ -42,7 +43,10 @@ const NavBar = ({ drawerStatus, darkMode, setThemeMode, setDrawerStatus }) => {
                 <IconButton id="themeToggler" onClick={themeChangeHandler}>
                     {themeButton}
                 </IconButton>
-                <AccountCircle id="profileButton" />
+                <IconButton component={Link} to={'/login'}>
+                    <AccountCircle id="profileButton"  />
+                </IconButton>
+                
             </Toolbar>
         </AppBar>
     );
