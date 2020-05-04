@@ -30,9 +30,9 @@
     display: block;
     position: fixed;
     z-index: 1111;
-    transform: rotate(90deg);
-    top: 39vh;
-    left: -1rem;
+    /* transform: rotate(90deg); */
+    top: 50vh;
+    /* left: -2.3rem; */
   }
   .show-filter {
     display: block;
