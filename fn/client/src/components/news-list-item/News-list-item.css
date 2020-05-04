@@ -27,7 +27,8 @@
     justify-content:space-around;
 }
 .footer-image{
-    max-height:5rem
+    max-height: 73px;
+    width: 55px;
 }
 .news-card{
     width:100%;
