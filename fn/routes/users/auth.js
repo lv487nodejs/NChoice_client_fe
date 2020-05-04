@@ -14,6 +14,8 @@ const router = express.Router();
 // user login
 router.post('/login', userLoginValidationRules(), validate, loginUser);
 
+router.post('/admin/login', loginAdmin);
+
 // get token
 router.post('/token', getToken);
 
