@@ -11,7 +11,6 @@
 
 @media only screen and (max-device-width: 768px) {
     .carousel-item {
-        /*display: block;*/
         float: none;
         display: flex!important;
         transition: none!important;

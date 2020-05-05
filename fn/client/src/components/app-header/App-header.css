@@ -26,14 +26,6 @@ header {
 }
 
 @media only screen and (max-device-width: 991px) {
-    /*.catalogs {*/
-        /*display: flex;*/
-        /*align-items: center;*/
-        /*margin: 0 auto;*/
-        /*justify-content: space-around;*/
-        /*max-width: 1200px;*/
-        /*min-height: 60vh;*/
-    /*}*/
 
     .navbar-collapse {
         position: absolute;

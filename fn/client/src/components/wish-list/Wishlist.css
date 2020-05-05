@@ -1,14 +1,7 @@
-.wishlist-title{
-    min-height:23rem;
+.figure-caption{
+    min-height: 390px;
 }
 
-.wishlist-wrap {
-    padding: 1rem;
-    border-bottom: 1px solid #e0e0e0;
-    border-radius: 2px;
-    overflow: hidden;
-    position: relative;
-}
 .wishlist-img{
     display: block;
     width: 210px;
@@ -21,32 +14,31 @@
 
 .wishlist-img:hover,
 .item-title:hover{
-    transform: scale(1.02);
+    transform: scale(1.09);
     transition: 2s;
 }
 
 .main-wishlist{
-    max-width: 85%;
+    max-width: 97%;
     min-height: 250px;
     margin: 0 auto;
     padding: 20px;
 }
 
 .wishlist-item{
-    min-height: 300px;
     border-bottom: 1px solid #e0e0e0;
-    padding: 2rem;
 }
+
 p {
     margin: 0;
     font-size: 1.2rem;
 }
+
 .delte-wishlist-button {
   font-size: 1.7rem;
-  margin: 1rem;
-  margin-top: 0rem;
   float: right;
   color:  #6c757d;
+  margin-top: -2rem;
   
 }
 .delte-wishlist-button:hover{
@@ -65,21 +57,46 @@ p {
 .item-description{
     display: inline;
     font-size: 1.5rem;
+    vertical-align: middle;
 }
 
 .full-description-wishlist{
-    display: block;
+    display: inline;
+    vertical-align: middle;
 }
 
 .displayed-text{
     display: none;
 }
 
+
+.wishlist-wrap{
+    width:100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40rem, auto));
+    grid-gap: 0rem 4rem;
+}
+
+
 @media only screen and (max-device-width: 769px){
+    .figure-caption{
+        min-height: 250px;
+    }
+
     .main-wishlist,
     .wishlist-wrap{
         max-width: 100%;
         padding: .5rem;
+    }
+
+
+    .wishlist-wrap {
+        padding: 1rem;
+        overflow: hidden;
+        position: relative;
+        display: block;
     }
 
     .main-wishlist{
@@ -95,44 +112,44 @@ p {
         font-size: 1.3rem;
     }
 
+    .wishlist-img{
+        width: 120px;
+    }
+
+    
+
 }
 
 
 @media only screen and (max-device-width: 600px){
 
-    .wishlist-img{
-        float: none;
-        text-align: center;
+    .wishlist-wrap{
+        padding: .5rem;
+        padding-bottom: 2rem;
     }
 
     .item-description{
         display: block;
-        font-size: .8rem;
-    }
-
-    .wishlist-title{
-        margin-left: 0;
-    }
-
-    .item-title{
-        font-size: 1.1rem;
+        font-size: .9rem;
     }
 
     .delte-wishlist-button{
-        font-size: 1.1rem;
+        font-size: .9rem;
+        margin-top: -1rem;
     }
 
     .wishlist-img{
         float: none;
-        width: 160px;
+        width: 130px;
         display: inline-block;
         text-align: center;
         margin: 0;
     }
 
-    .wishlist-title{
+    .figure-caption{
         display: block;
         text-align: center;
+        padding: 1rem .1rem;
     }
 
     .item-title{

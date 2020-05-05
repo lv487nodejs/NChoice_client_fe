@@ -142,4 +142,7 @@
         height: 100vh;
         transition: .3s ease-in-out;
     }
+    .sort-buttons h5{
+        display: none;
+    }
 }

@@ -53,7 +53,7 @@ const CategoriesNav = ({
       />
     </li>
   ));
-
+  window.scrollTo(0,0)
   return (
     <ul className="categories-nav">
       <li key="all" className="category-item">

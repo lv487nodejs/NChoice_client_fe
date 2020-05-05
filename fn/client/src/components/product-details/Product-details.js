@@ -63,6 +63,7 @@ const ProductDetails = ({
 
   useEffect(() => {
     productsLoadingStart()
+    window.scrollTo(0,0)
     if (!products.length) {
       storeService.getAllProducts().then((res) => setProducts(res))
     }
@@ -95,7 +96,6 @@ const ProductDetails = ({
   if (loading) {
     return <LoadingSpinner />
   }
-
   return (
     <Card className="wrapperDetails" id="wrapper">
       <Card.Body className="cardBody">
