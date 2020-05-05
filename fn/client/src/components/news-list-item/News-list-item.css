@@ -20,11 +20,13 @@
 
 .news-card-title{
     height: 4.5rem;
+    min-width: 19rem;
 }
 
 .news-footer{
     display: flex;
     justify-content:space-around;
+    margin-bottom: 2rem;
 }
 .footer-image{
     max-height: 73px;

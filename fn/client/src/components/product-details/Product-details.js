@@ -163,7 +163,7 @@ const ProductDetails = ({
           </Card.Text>
           <div className='prices'>
           <span className="cardPrice price-pdp">{`${(parseFloat(product.price * currency).toFixed(2))} ${currencyIcon}`}</span>
-          <span className="cardPrice msrp-price">{`${(parseFloat(product.mrsp * currency).toFixed(2))} ${currencyIcon}`}</span>
+          <span id="msrp-price" className="cardPrice">{`${(parseFloat(product.mrsp * currency).toFixed(2))} ${currencyIcon}`}</span>
           </div>
           <Card.Text
             style={{ backgroundColor: product.color }}
