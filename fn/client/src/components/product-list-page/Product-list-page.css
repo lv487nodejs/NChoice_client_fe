@@ -103,6 +103,10 @@
         transition: .3s ease-in-out;
     }
 }
+.jumbo .table {
+    flex-direction: column;
+    align-items: center;
+}
 
 @media only screen and (max-device-width: 768px) {
     .catalog-top-name {
@@ -125,6 +129,7 @@
     }
 }
 
+
 @media screen and (max-width: 650px) {
     .products-options {
         flex-direction: column;
@@ -133,6 +138,9 @@
 
     .search-wrapp{
         margin-bottom: 1rem;
+    }
+    .sort-buttons h5{
+        display: none;
     }
 }
 

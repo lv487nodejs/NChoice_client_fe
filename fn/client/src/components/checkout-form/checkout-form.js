@@ -142,7 +142,11 @@ const CheckoutForm = ({
                 <Col>
                     <Jumbotron className="jumbo">
                         <h2>Order Form</h2>
-                        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                        <Form 
+                        noValidate
+                        validated={validated}
+                        onSubmit={handleSubmit}
+                        id="checkout-form">
                             <fieldset className="field">
                                 <h3 className="text-center">Please tell us about yourself</h3>
                                 <Form.Group controlId="firstNameValidate">
@@ -280,7 +284,7 @@ const CheckoutForm = ({
                     </Jumbotron>
                 </Col>
                 <Col>
-                    <Jumbotron className="jumbo">
+                    <Jumbotron className="jumbo" id="checkout-table">
                         <h2>Your Items</h2>
                         <CheckoutTable />
                         <Link to="/cart">
