@@ -48,7 +48,7 @@ import {
 
 import { setShowSnackbar, setSnackbarText } from './Snackbar--actions'
 import { storeSetNews } from './News-actions'
-
+import {setComments, removeComments} from "./comments-action";
 
 export {
   categoriesRequested,
@@ -97,5 +97,7 @@ export {
   setOrderToStore,
   clearOrderStore,
   setCart,
-  storeSetNews
+  storeSetNews,
+  setComments,
+  removeComments
 };

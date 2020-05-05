@@ -170,6 +170,21 @@ export default class StoreService {
     return news;
   };
 
+  getAllComments = async () => {
+    const comments = await this.getResource('comments');
+    return comments;
+  };
+
+  getCommentsById = async (id) => {
+    const comments = await this.getResource(`comments/${id}`);
+    return comments;
+  };
+
+  postComments = async comment => {
+    const res = await this.postData('comments', comment);
+    return res;
+  };
+
   confirmEmail = async token => {
     try {
       const res = await this.getResource(`auth/confirmation/${token}`)
@@ -177,6 +192,6 @@ export default class StoreService {
     } catch (error) {
       throw error;
     }
-    
+
   }
 }
