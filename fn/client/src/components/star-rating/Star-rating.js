@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import withStoreService from '../hoc';
 import './Star-rating.css';
 import Rating from 'react-rating';
 
 
-const StarsRating = ({ rating }) => {
+const StarsRating = ({ rating,id }) => {
+    const [rate,setRate] = useState(0)
+
     const ratingChanged = (newRating) => {
+        setRate(newRating);
       }   
     return (
         <div className="star-rating" id="starRating" rating={rating} >
