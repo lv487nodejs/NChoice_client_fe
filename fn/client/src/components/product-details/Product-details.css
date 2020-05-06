@@ -147,9 +147,11 @@
 .disp-block {
     display: block;
 }
+#msrp-price{
+    text-decoration: line-through;
+}
 
-.price-pdp,
-.msrp-price{
+.price-pdp {
   color: #6c757d;
 }
 
