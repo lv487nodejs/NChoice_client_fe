@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import withStoreService from '../hoc';
 import './Star-rating.css';
 import Rating from 'react-rating';
+import { getFromLocalStorage } from '../../services/localStoreService';
 
+const accessToken = getFromLocalStorage('accessToken');
 
-const StarsRating = ({ rating,id }) => {
-    const [rate,setRate] = useState(0)
+const StarsRating = ({ rating, id, storeService }) => {
+    const [rate, setRate] = useState(0);
 
     const ratingChanged = (newRating) => {
-        setRate(newRating);
-      }   
+        setRate(newRating);        
+        storeService.updateRate(id, rate, accessToken);
+    }
     return (
         <div className="star-rating" id="starRating" rating={rating} >
             <Rating readonly={false} onChange={ratingChanged} id="stars" step={1} initialRating={rating} emptySymbol="fa fa-star-o fa-2x"
@@ -19,8 +21,6 @@ const StarsRating = ({ rating,id }) => {
     );
 };
 
-const mapStateToProps = () => ({});
 
-const mapDispatchToProps = {};
 
-export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(StarsRating));
+export default withStoreService()(StarsRating);

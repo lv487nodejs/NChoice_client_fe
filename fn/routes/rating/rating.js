@@ -4,5 +4,5 @@ const { updateRating } = require('../../controllers/rating/rating');
 const router = express.Router();
 router
 .route('/:id')
-.put(auth,updateRating)
+.put(auth, updateRating)
 module.exports = router;

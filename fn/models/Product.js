@@ -43,8 +43,8 @@ const ProductSchema = new Schema({
     min: 0 
   },
   rate: { 
-    type: Number, 
-    default: 0 
+    type: Array, 
+    default: [] 
   },
   images: [String],
   propetries: [PropetriesSchema],

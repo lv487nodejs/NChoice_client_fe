@@ -169,14 +169,16 @@ export default class StoreService {
     const news = await this.getResource('news');
     return news;
   };
-
+  
   confirmEmail = async token => {
     try {
       const res = await this.getResource(`auth/confirmation/${token}`)
       return res;
     } catch (error) {
       throw error;
-    }
-    
+    }    
+  }
+  updateRate = async (id, data, token) => {
+    return await axios.put(`${_apiBase}rating/${id}`, { data, "x-auth-token": token });
   }
 }

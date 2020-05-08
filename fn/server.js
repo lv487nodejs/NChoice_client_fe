@@ -47,7 +47,7 @@ app.use('/colors', colors);
 app.use('/generator', generator);
 app.use('/orders', orders);
 app.use('/news', news);
-// app.use('/rating', rating);
+app.use('/rating', rating);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
