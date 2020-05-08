@@ -45,7 +45,7 @@ export const deliveryType = {
         "delivery servise"
     ]
 };
-export const _apiBase = 'https://lv487node-backend.herokuapp.com/';
+export const _apiBase = 'http://localhost:5000/';
 
 export const socialNetworksURL = {
     telegram: 'https://web.telegram.org',
