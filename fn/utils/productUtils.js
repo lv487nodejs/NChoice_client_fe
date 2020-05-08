@@ -68,7 +68,7 @@ const prepareProductsToSend = products => {
             propetries: product.propetries,
             price: product.price,
             mrsp: product.mrsp,
-            rate: product.rate.reduce((total, item, index) => total + item)/product.rate.length
+            rate: product.rate.reduce((sum,item)=>sum+item,0)/product.rate.length
         };
 
         if (product.brand) newProduct.brand = product.brand.brand;

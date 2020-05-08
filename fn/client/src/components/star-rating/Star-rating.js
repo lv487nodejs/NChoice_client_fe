@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import withStoreService from '../hoc';
 import './Star-rating.css';
 import Rating from 'react-rating';
@@ -7,10 +7,12 @@ import { getFromLocalStorage } from '../../services/localStoreService';
 const accessToken = getFromLocalStorage('accessToken');
 
 const StarsRating = ({ rating, id, storeService }) => {
-    const [rate, setRate] = useState(0);
+    const [rate, setRate] = useState(1);
 
+    
+    
     const ratingChanged = (newRating) => {
-        setRate(newRating);        
+        setRate(newRating);  
         storeService.updateRate(id, rate, accessToken);
     }
     return (
