@@ -9,11 +9,14 @@ const accessToken = getFromLocalStorage('accessToken');
 const StarsRating = ({ rating, id, storeService }) => {
     const [rate, setRate] = useState(1);
 
-    
+    const changeRating = useCallback(()=>{
+        storeService.updateRate(id, rate, accessToken);
+
+    },[rate, storeService]);
     
     const ratingChanged = (newRating) => {
         setRate(newRating);  
-        storeService.updateRate(id, rate, accessToken);
+        changeRating();
     }
     return (
         <div className="star-rating" id="starRating" rating={rating} >

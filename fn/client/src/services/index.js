@@ -169,7 +169,7 @@ export default class StoreService {
     const news = await this.getResource('news');
     return news;
   };
-
+  
   confirmEmail = async token => {
     try {
       const res = await this.getResource(`auth/confirmation/${token}`)
@@ -178,7 +178,7 @@ export default class StoreService {
       throw error;
     }
   }
-  updateRate = async (id, data, token) => {
-    return axios({ method: 'PUT', url: `${_apiBase}rating/${id}`, data, headers: { "x-auth-token": token } });
+  updateRate = async (id, rate, token) => {    
+    return await axios.put(`${_apiBase}rating/${id}`, { rate, "x-auth-token": token });
   }
 }
