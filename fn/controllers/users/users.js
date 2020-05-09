@@ -34,11 +34,9 @@ const getUser = asyncHandler(async (req, res, next) => {
 });
 
 const registerUser = asyncHandler(async (req, res, next) => {
-    try{
-        const { firstName, lastName, email, password } = req.body;
-        
+
+        const { firstName, lastName, email, password } = req.body;        
         const hashedPassword = await bcrypt.hash(password, 10);
-        
         const user = new Users({
             firstName,
             lastName,
@@ -57,25 +55,15 @@ const registerUser = asyncHandler(async (req, res, next) => {
             subject: 'Confirm Email',
             html: `Please click this link to confirm your email: <a href="${url}">${url}</a>`,
         };
-        
-        
         user.emailToken = emailToken;
-        
         user.tokens = [];
         user.tokens.push(refreshToken);
-        
         sendEmail(emailMessage, async () => {
             await user.save();
-            res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
         });
-        
-        
-            }
-            catch(e){
-                throw new Error(e);  
-            }
+        res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
     });
-    
+
     const updateUserRole = asyncHandler(async (req, res, next) => {
         const { id } = req.params;
         const { user } = req.body;

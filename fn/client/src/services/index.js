@@ -15,7 +15,7 @@ export default class StoreService {
 
   postData = async (url, dataToSend) => {
     try {
-      const response = await axios.post(`${_apiBase}${url}`, dataToSend);
+      const response = await axios.post(`${_apiBase}${url}`, dataToSend);      
       return response.data;
     } catch (error) {
       console.error(error);
@@ -154,11 +154,11 @@ export default class StoreService {
   sendUserChangedData = async (id, token, data) => {
     return axios({ method: 'PUT', url: `${_apiBase}users/${id}`, data, headers: { "x-auth-token": token } })
   };
-
+  
   registerUser = async (user) => {
     return await this.postData('users/register', user);
   }
-
+  
   loginUser = async (user) => {
     return await this.postData('auth/login', user);
   }
@@ -178,7 +178,8 @@ export default class StoreService {
       throw error;
     }
   }
-  updateRate = async (id, rate, token) => {    
-    return await axios.put(`${_apiBase}rating/${id}`, { rate, "x-auth-token": token });
+  updateRate = async (id, rate, token) => {        
+    return await axios.put(`${_apiBase}rating/${id}`,{rate}, { headers: { 'x-auth-token': token}}
+    );
   }
 }

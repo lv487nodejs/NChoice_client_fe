@@ -9,6 +9,7 @@ import wishlistReducer from './Wishlist-reducer'
 import snackbarReducer from './Snackbar-reducer'
 import checkoutReduser from './Checkout-reducer'
 import newsReduser from './News-reduser'
+import ratingReducer from './Rating-reducer';
 export default combineReducers({
     productsList,
     categoriesList,
@@ -19,5 +20,6 @@ export default combineReducers({
     authReducer,
     snackbarReducer,
     checkoutReduser,
-    newsReduser
+    newsReduser,
+    ratingReducer,
 })

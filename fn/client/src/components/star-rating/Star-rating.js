@@ -1,21 +1,21 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import withStoreService from '../hoc';
 import './Star-rating.css';
 import Rating from 'react-rating';
 import { getFromLocalStorage } from '../../services/localStoreService';
+import { addRatingToStore } from '../../actions';
+import { connect } from 'react-redux';
 
 const accessToken = getFromLocalStorage('accessToken');
 
-const StarsRating = ({ rating, id, storeService }) => {
-    const [rate, setRate] = useState(1);
-
-    const changeRating = useCallback(()=>{
+const StarsRating = ({ rating, id, storeService, addRatingToStore, rate }) => {
+    
+    const changeRating = useCallback(() => {
         storeService.updateRate(id, rate, accessToken);
-
-    },[rate, storeService]);
+    }, [id, rate, storeService]);    
     
     const ratingChanged = (newRating) => {
-        setRate(newRating);  
+        addRatingToStore(newRating)
         changeRating();
     }
     return (
@@ -25,7 +25,12 @@ const StarsRating = ({ rating, id, storeService }) => {
         </div>
     );
 };
+const mapStateToProps = ({ ratingReducer: { rate } }) => ({ rate });
+
+const mapDispatchToProps = {
+    addRatingToStore
+}
 
 
 
-export default withStoreService()(StarsRating);
+export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(StarsRating));
