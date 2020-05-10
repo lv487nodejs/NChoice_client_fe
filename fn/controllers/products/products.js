@@ -49,7 +49,7 @@ const getPrpoducts = asyncHandler(async (req, res) => {
     }
 
     const productsToSend = prepareProductsToSend(products);
-    const foundProductsNumber = await Products.find(filter).count();
+    const foundProductsNumber = await Products.find(filter).countDocuments();
 
     const pagesCount = Math.ceil(foundProductsNumber / postsperpage);
     res.status(200).send({ products: productsToSend, pagesCount, foundProductsNumber });

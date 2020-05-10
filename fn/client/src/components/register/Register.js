@@ -3,15 +3,11 @@ import './Register.css';
 import { Form, Button, Modal } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
-
 import { setUserLogged, setUserLoading } from "../../actions";
 import { useForm } from "react-hook-form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { SignupSchemaRegister } from '../../configs/login-register-config'
 import withStoreService from '../hoc';
 import { setToLocalStorage } from '../../services/localStoreService';
-
 
 const addDataToLocalStorage = (token) => {
     setToLocalStorage('userId', token.userId)
@@ -26,18 +22,20 @@ const USER_DATA = {
     password: '',
 }
 
-const eye = <FontAwesomeIcon icon={faEye} />;
 
 const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, cartNumbers, cartProducts }) => {
-
+    
     const initialUser = { ...USER_DATA, cart: { cartNumbers, cartProducts } }
-
+    
     const [user, setUser] = useState(initialUser);
     const [errorMsg, setErrorMsg] = useState('');
     const [passwordShown, setPasswordShown] = useState(false);
     const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
     const [show, setShow] = useState(false);
 
+    const passwordEye = passwordShown?'fa fa-eye':'fa fa-eye-slash';
+    const confirmedPasswordEye = confirmPasswordShown?'fa fa-eye':'fa fa-eye-slash';
+    
     const { register, handleSubmit, errors } = useForm({
         validationSchema: SignupSchemaRegister
     });
@@ -138,7 +136,7 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                             ref={register}
                             autoComplete="on"
                         />
-                        <i onClick={togglePasswordVisiblity}>{eye}</i>
+                        <i className={passwordEye} onClick={togglePasswordVisiblity} />
                     </Form.Group>
                 </Form.Group>
                 {errors.password && <p className="errorMessage">{errors.password.message}</p>}
@@ -151,7 +149,7 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                             type={confirmPasswordShown ? "text" : "password"}
                             autoComplete="on"
                         />
-                        <i onClick={toggleConfirmPasswordVisiblity}>{eye}</i>
+                        <i className={confirmedPasswordEye} onClick={toggleConfirmPasswordVisiblity} />
                     </Form.Group>
                     {errors.confirmPassword && <p className="errorMessage">{errors.confirmPassword.message}</p>}
                 </Form.Group>
@@ -179,9 +177,9 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
 
             <Modal show={show} onHide={handleClose} animation>
                 <Modal.Header closeButton>
-                    <Modal.Title>Registred!</Modal.Title>
+                    <Modal.Title>Registered!</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>You have successefully registred! Please confirm your email</Modal.Body>
+                <Modal.Body>You have successfully registered! Please confirm your email</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close

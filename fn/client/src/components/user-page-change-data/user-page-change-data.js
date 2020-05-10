@@ -8,10 +8,7 @@ import withStoreService from '../hoc'
 import Snackbar from '../snackbar';
 import { SignupSchema } from './validation';
 import { getFromLocalStorage } from '../../services/localStoreService';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
 
-const eye = <FontAwesomeIcon icon={faEye} />;
 
 const UserChangeData = ({ user,
     storeService,
@@ -21,7 +18,7 @@ const UserChangeData = ({ user,
 
 }) => {
     const [passwordShown, setPasswordShown] = useState(false);
-
+    const eyeClassName = passwordShown?'fa fa-eye':'fa fa-eye-slash';
     const userId = getFromLocalStorage('userId')
     const accessToken = getFromLocalStorage('accessToken')
 
@@ -98,7 +95,7 @@ const UserChangeData = ({ user,
                             ref={register}
                             autoComplete="on"
                         />
-                        <i onClick={togglePasswordVisiblity}>{eye}</i>
+                        <i className={eyeClassName} onClick={togglePasswordVisiblity} />
                         {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                     </Form.Group>
                 </Form.Group>
