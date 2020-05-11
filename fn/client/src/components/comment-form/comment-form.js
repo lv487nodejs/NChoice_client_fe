@@ -17,13 +17,16 @@ const CommentForm = ({productId, setComments, storeService, comments}) => {
   const accessToken = getFromLocalStorage('accessToken');
   useEffect(() => {
     if (productId && userId) {
-      storeService.getCommentsByProductId(productId).then((res) => setReviews(res));
+      storeService.getCommentsByProductId(productId).then((res) => setReviews(res)
+      // setComments(res)}
+      )
+
       storeService.getUserById(userId, accessToken)
         .then((res) => receivedUser = `${res.data.user.firstName}`)
     }
   }, [comments, userId, accessToken, storeService, productId]);
+  console.log(reviews)
 
-  console.log(reviews);
   const addComment = (e) => {
     e.preventDefault();
     setComments({text, productId, user: receivedUser});
@@ -59,9 +62,10 @@ const CommentForm = ({productId, setComments, storeService, comments}) => {
       <CommentItem key={comment._id}
                    text={comment.text}
                    date={comment.date}
-                   firstName={comment.user.firstName}/>
+                   reviewerName={comment.user.firstName}
+                   id={comment._id}/>
     )
-  );
+  ).sort((a, b) => b.date - a.date).reverse();
 
   return (
     <div>
@@ -79,7 +83,7 @@ const CommentForm = ({productId, setComments, storeService, comments}) => {
 };
 
 const mapStateToProps = ({commentsReduser: {comments}}) => ({comments});
-const mapDispatchToProps = ({setComments});
+const mapDispatchToProps = {setComments};
 
 export default withStoreService()(
   connect(mapStateToProps, mapDispatchToProps)(CommentForm)

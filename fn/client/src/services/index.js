@@ -185,6 +185,10 @@ export default class StoreService {
     return res;
   };
 
+  deleteComment = async (id, token) => {
+    return await axios.delete(`${_apiBase}comments/${id}`, {headers: { "x-auth-token": token }})
+  };
+
   confirmEmail = async token => {
     try {
       const res = await this.getResource(`auth/confirmation/${token}`)

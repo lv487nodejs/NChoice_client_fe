@@ -3,6 +3,7 @@ const initialState = {
 };
 
 const commentsReduser = (state = initialState, action) => {
+  console.log(state)
   switch (action.type) {
     case 'SET_COMMENTS':
       let newComments = [...state.comments];
@@ -13,9 +14,11 @@ const commentsReduser = (state = initialState, action) => {
       };
 
     case 'REMOVE_COMMENTS':
+      let a = [...state.comments.filter(item => item._id !== action.payload)]
+      console.log(a);
       return {
         ...state,
-        comments: state.comments.filter(item => item._id !== action.payload)
+        comments: a
       };
 
     default:
