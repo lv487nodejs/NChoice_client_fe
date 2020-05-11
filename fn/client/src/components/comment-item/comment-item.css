@@ -1,0 +1,24 @@
+.review-items {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.review-field {
+    border: 1px solid #e9e9e9;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1.2rem;
+}
+
+.review-text{
+    font-size: 1rem;
+}
+
+@media only screen and (max-device-width: 425px) {
+
+    .review-text {
+        line-height: 1.3rem;
+        font-size: 1rem;
+    }
+}

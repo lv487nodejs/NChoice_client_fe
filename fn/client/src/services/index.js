@@ -175,8 +175,8 @@ export default class StoreService {
     return comments;
   };
 
-  getCommentsById = async (id) => {
-    const comments = await this.getResource(`comments/${id}`);
+  getCommentsByProductId = async (productId) => {
+    const comments = await this.getResource(`comments?productId=${productId}`);
     return comments;
   };
 

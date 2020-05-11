@@ -1,6 +1,6 @@
-const setComments = (productId) => ({
+const setComments = (comments) => ({
   type: 'SET_COMMENTS',
-  payload: productId
+  payload: comments
 });
 
 const removeComments = commentId => ({
