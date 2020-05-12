@@ -8,32 +8,28 @@ import CommentItem from "../comment-item/comment-item";
 import { Link } from 'react-router-dom';
 import StarsRating from "../star-rating";
 
-let receivedUser={};
-
 const CommentForm = ({ productId, setComments, storeService, comments }) => {
   const [text, setText] = useState('');
-  const [reviews, setReviews] = useState([]);
   const userId = getFromLocalStorage('userId');
   const accessToken = getFromLocalStorage('accessToken');
+const [tempText,setTempText] = useState(null);
 
   const getComments = useCallback(() => {
     if (productId && userId) {
       storeService.getCommentsByProductId(productId).then((res) => {
-        setReviews(res)
         setComments(res)
       });
-      storeService.getUserById(userId, accessToken)
-        .then((res) => receivedUser = `${res.data.user.firstName}`)
     }
-  }, [comments, userId, accessToken, storeService, productId]);
+  }, [userId, accessToken, storeService, productId]);
 
   useEffect(() => {
     getComments();
-  }, [text]);
+  }, [tempText]);
 
   const addComment = (e) => {
     e.preventDefault();
     storeService.postComments({ text, productId, user: userId });
+    setTempText(text)
     setText('');
   };
 
