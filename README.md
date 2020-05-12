@@ -1,4 +1,38 @@
-# fn
+# Nature Choice(NChoice)
+# 1. About the project
+“Nature choice” is the e-commerce online shop with ecological clothes. This application is an exciting place for the whole family to shop. We provide an exceptional style for everybody that made of eco-friendly or recycled materials. In our website customers can register, login and have a great shopping experience. Сustomer’s wish list and cart are stored at the database, so if the user will Log out – all data will be waiting for him to come back. 
+The admin part of the application designed for managers of the project to maintain orders, products, and user accounts. 
+NChoice – Look exclusive and save the Planet!  
+
+# 2. Main parts of the project and technologies.
+This project contains  4 main parts: client frontend, admin portal frontend, backend, and database. All parts of the project are at **https://github.com/lv487nodejs/fn**
+
+Let's take a closer look at the technologies of each part.
+
+**Client Frontend** - using React, Redux, Bootstrap-React
+
+**Admin Portal Frontend**  - using React, Redux, Material UI
+
+**Backend** - using Node.js, Nodemon, Axios, Mongoose, Express.js, JWT.
+
+**Database** -  MongoDB and hosted on MongoDB Atlas: **https://cloud.mongodb.com/v2/5e486810c56c98378081f5b5#clusters**
+
+# 3. How to contribute
+You're encouraged to contribute to our project if you've found any issues or missing functionality that you would want to see. Here you can see the list of issues and here you can create a new issue.
+Before sending any pull request, please discuss requirements/changes to be implemented using an existing issue or by creating a new one. All pull requests should be done into the development branch.
+
+# 4. How to start the project locally.
+4.1. Clone or download the project from **https://github.com/lv487nodejs/fn.git**
+
+4.2. Before running the project, make sure that you downloaded all dependencies.
+
+4.2.1. Run "npm install" at fn/fn folder to download dependencies for backend.
+
+4.2.2. Run "npm install" at fn/fn/admin folder to download dependencies for admin portal.
+
+4.2.3. Run "npm install" at fn/fn/client folder to download dependencies for client page.
+
+4.3. Run "npm run dev" at fn/fn folder to run aplication at http://localhost:3000/
 
 ## User:
 POST:
