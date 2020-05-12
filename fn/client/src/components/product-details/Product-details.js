@@ -8,7 +8,9 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import SimularProducts from '../simular-products/Simular-products';
 import StarsRating from '../star-rating';
 import LoadingSpinner from '../Loading-spinner';
-import ImgsViewer from 'react-images-viewer'
+import ImgsViewer from 'react-images-viewer';
+
+import ProductMaterial from '../product-material'
 
 import withStoreService from '../hoc';
 import {
@@ -171,6 +173,7 @@ const ProductDetails = ({
             id="color"
           ></Card.Text>
           <Col className="size" id="size">{sizeItem}</Col>
+          <ProductMaterial/>
           <Card.Body className="buttons" id="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
               onClick={() => addToWishlist(product)} />
