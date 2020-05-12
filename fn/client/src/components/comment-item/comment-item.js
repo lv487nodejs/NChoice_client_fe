@@ -3,11 +3,11 @@ import Moment from 'react-moment';
 import './comment-item.css'
 import withStoreService from "../hoc";
 import connect from "react-redux/es/connect/connect";
-
-const CommentItem = ({text, date, reviewerName, comments, id, storeService}) => {
-  console.log(comments)
+import { removeComments } from '../../actions';
+const CommentItem = ({text, date, reviewerName, id, storeService, removeComments}) => {
   const deleteHandler = (id) => {
-    storeService.deleteComment(id)
+    storeService.deleteComment(id);
+    removeComments(id);
   };
   return (
     <div>
@@ -16,7 +16,7 @@ const CommentItem = ({text, date, reviewerName, comments, id, storeService}) => 
           <h6>{reviewerName}</h6>
           <div className='review-date'>
             <Moment format="YYYY/MM/DD ">{date}</Moment>
-            <button onClick={deleteHandler(id)} >DELETE</button>
+            <button onClick={()=>deleteHandler(id)} >DELETE</button>
           </div>
 
         </div>
@@ -28,7 +28,10 @@ const CommentItem = ({text, date, reviewerName, comments, id, storeService}) => 
 };
 const mapStateToProps = ({commentsReduser: {comments}}) => ({comments});
 
+const mapDispatchToProps = {
+  removeComments
+}
 // export default (CommentItem)
 export default withStoreService()(
-  connect(mapStateToProps)(CommentItem)
+  connect(mapStateToProps, mapDispatchToProps)(CommentItem)
 );
