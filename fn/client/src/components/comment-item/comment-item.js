@@ -3,12 +3,17 @@ import Moment from 'react-moment';
 import './comment-item.css'
 import withStoreService from "../hoc";
 import connect from "react-redux/es/connect/connect";
-import { removeComments } from '../../actions';
-const CommentItem = ({text, date, reviewerName, id, storeService, removeComments}) => {
-  const deleteHandler = (id) => {
-    storeService.deleteComment(id);
-    removeComments(id);
+import {removeComments} from '../../actions';
+import {getFromLocalStorage} from "../../services/localStoreService";
+
+const CommentItem = ({text, date, reviewerName, reviewerId, commentId, storeService, removeComments}) => {
+
+  const userId = getFromLocalStorage('userId');
+  const deleteHandler = (commentId) => () => {
+    storeService.deleteComment(commentId);
+    removeComments(commentId);
   };
+
   return (
     <div>
       <div className='review-field'>
@@ -16,22 +21,21 @@ const CommentItem = ({text, date, reviewerName, id, storeService, removeComments
           <h6>{reviewerName}</h6>
           <div className='review-date'>
             <Moment format="YYYY/MM/DD ">{date}</Moment>
-            <button onClick={()=>deleteHandler(id)} >DELETE</button>
           </div>
-
         </div>
-        <p className='my-1 review-text'> {text} </p>
-
+        <div className='review-items' >
+          <p className='my-1 review-text'> {text} </p>
+          {userId === reviewerId && (
+            <button onClick={deleteHandler(commentId)}>x</button>
+          )}
+        </div>
       </div>
     </div>
   )
 };
-const mapStateToProps = ({commentsReduser: {comments}}) => ({comments});
 
-const mapDispatchToProps = {
-  removeComments
-}
-// export default (CommentItem)
+const mapDispatchToProps = {removeComments};
+
 export default withStoreService()(
-  connect(mapStateToProps, mapDispatchToProps)(CommentItem)
+  connect(null, mapDispatchToProps)(CommentItem)
 );

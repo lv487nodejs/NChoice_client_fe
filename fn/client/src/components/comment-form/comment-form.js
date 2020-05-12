@@ -1,26 +1,25 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { connect } from 'react-redux';
+import React, {useEffect, useState, useCallback} from 'react'
+import {connect} from 'react-redux';
 import './comment-form.css'
-import { setComments } from "../../actions";
+import {setComments} from "../../actions";
 import withStoreService from "../hoc";
-import { getFromLocalStorage } from "../../services/localStoreService";
+import {getFromLocalStorage} from "../../services/localStoreService";
 import CommentItem from "../comment-item/comment-item";
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import StarsRating from "../star-rating";
 
-const CommentForm = ({ productId, setComments, storeService, comments }) => {
+const CommentForm = ({productId, setComments, storeService, comments}) => {
   const [text, setText] = useState('');
   const userId = getFromLocalStorage('userId');
-  const accessToken = getFromLocalStorage('accessToken');
-const [tempText,setTempText] = useState(null);
+  const [tempText, setTempText] = useState(null);
 
   const getComments = useCallback(() => {
-    if (productId && userId) {
+    if (productId) {
       storeService.getCommentsByProductId(productId).then((res) => {
         setComments(res)
       });
     }
-  }, [userId, accessToken, storeService, productId]);
+  }, [tempText, userId, storeService, productId]);
 
   useEffect(() => {
     getComments();
@@ -28,25 +27,25 @@ const [tempText,setTempText] = useState(null);
 
   const addComment = (e) => {
     e.preventDefault();
-    storeService.postComments({ text, productId, user: userId });
-    setTempText(text)
+    storeService.postComments({text, productId, user: userId});
     setText('');
+    setTempText(text);
   };
 
   const logged = (
     <form className='form my-1 comments-form'
-      onSubmit={addComment}
+          onSubmit={addComment}
     >
       <h3> Leave a comment </h3>
-      <div className='star'><h6 className='rate'> Rate the product: </h6> <StarsRating /></div>
+      <div className='star'><h6 className='rate'> Rate the product: </h6> <StarsRating/></div>
       <textarea className='feedback-form'
-        name='text'
-        value={text}
-        onChange={e => setText(e.target.value)}
-        placeholder="Share your thoughts with other customers"
-        required
+                name='text'
+                value={text}
+                onChange={e => setText(e.target.value)}
+                placeholder="Share your thoughts with other customers"
+                required
       />
-      <input type='submit' value='Add a comment' className='comment-submit' />
+      <input type='submit' value='Add a comment' className='comment-submit'/>
     </form>
   );
 
@@ -57,14 +56,17 @@ const [tempText,setTempText] = useState(null);
     </div>
   );
 
-  const items = comments.map(comment => {
-    return <CommentItem key={comment._id}
-      text={comment.text}
-      date={comment.date}
-      reviewerName={comment.user.firstName}
-      id={comment._id} />
-  }
+  const items = comments.filter(comment => comment.user != null).map(comment => {
+      return <CommentItem key={comment._id}
+                          text={comment.text}
+                          date={comment.date}
+                          reviewerName={comment.user.firstName}
+                          reviewerId={comment.user._id}
+                          commentId={comment._id} />
+    }
   ).sort((a, b) => b.date - a.date).reverse();
+
+  let comentsNumber = comments.filter(comment => comment.user != null).length;
 
   return (
     <div>
@@ -75,14 +77,14 @@ const [tempText,setTempText] = useState(null);
         {userId !== null && logged}
       </div>
       <h3 className='review-title'>Customer reviews
-        <span className='review-length'> {comments.length} </span></h3>
+        <span className='review-length'> {comentsNumber} </span></h3>
       {items}
     </div>
   )
 };
 
-const mapStateToProps = ({ commentsReduser: { comments } }) => ({ comments });
-const mapDispatchToProps = { setComments };
+const mapStateToProps = ({commentsReduser: {comments}}) => ({comments});
+const mapDispatchToProps = {setComments};
 
 export default withStoreService()(
   connect(mapStateToProps, mapDispatchToProps)(CommentForm)
