@@ -4,8 +4,7 @@ import './comment-item.css'
 import withStoreService from "../hoc";
 import connect from "react-redux/es/connect/connect";
 
-const CommentItem = ({text, date, reviewerName, comments, id, storeService}) => {
-  console.log(comments)
+const CommentItem = ({text, date, reviewerName, id, storeService}) => {
   const deleteHandler = (id) => {
     storeService.deleteComment(id)
   };
@@ -16,7 +15,7 @@ const CommentItem = ({text, date, reviewerName, comments, id, storeService}) => 
           <h6>{reviewerName}</h6>
           <div className='review-date'>
             <Moment format="YYYY/MM/DD ">{date}</Moment>
-            <button onClick={deleteHandler(id)} >DELETE</button>
+            <button onClick={()=>deleteHandler(id)} >DELETE</button>
           </div>
 
         </div>

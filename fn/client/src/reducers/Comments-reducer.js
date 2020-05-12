@@ -1,21 +1,22 @@
 const initialState = {
-  comments: [],
+  comments: []
 };
 
 const commentsReduser = (state = initialState, action) => {
-  console.log(state)
+
+  let x = [...state.comments]
+  console.log(x);
+  console.log(action.payload);
+  
   switch (action.type) {
     case 'SET_COMMENTS':
-      let newComments = [...state.comments];
-      newComments.unshift(action.payload);
       return {
         ...state,
-        comments: newComments,
+        comments: [...state.comments, action.payload],
       };
 
     case 'REMOVE_COMMENTS':
       let a = [...state.comments.filter(item => item._id !== action.payload)]
-      console.log(a);
       return {
         ...state,
         comments: a
