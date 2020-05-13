@@ -32,7 +32,11 @@ Before sending any pull request, please discuss requirements/changes to be imple
 
 4.2.3. Run "npm install" at fn/fn/client folder to download dependencies for client page.
 
-4.3. Run "npm run dev" at fn/fn folder to run aplication at http://localhost:3000/
+4.3. Run "npm run dev" at fn/fn folder to run client and backend aplication at http://localhost:3000/.
+
+4.4. Run "npm start" at fn/fn/ folder to run backend(by it self at http://localhost:5000/ or for admin portal) aplication at http://localhost:3000/.
+
+4.4. Run "npm start" at fn/fn/admin folder to run aplication at http://localhost:3000/.
 
 ## User:
 POST:
