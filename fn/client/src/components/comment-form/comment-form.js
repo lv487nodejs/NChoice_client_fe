@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react'
+import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux';
 import './comment-form.css'
 import {setComments} from "../../actions";
@@ -13,17 +13,13 @@ const CommentForm = ({productId, setComments, storeService, comments}) => {
   const userId = getFromLocalStorage('userId');
   const [tempText, setTempText] = useState(null);
 
-  const getComments = useCallback(() => {
+  useEffect(() => {
     if (productId) {
       storeService.getCommentsByProductId(productId).then((res) => {
         setComments(res)
       });
     }
-  }, [tempText, userId, storeService, productId]);
-
-  useEffect(() => {
-    getComments();
-  }, [tempText]);
+  }, [tempText, userId, storeService, productId, setComments]);
 
   const addComment = (e) => {
     e.preventDefault();
