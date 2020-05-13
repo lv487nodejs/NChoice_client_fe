@@ -21,6 +21,7 @@ Let's take a closer look at the technologies of each part.
 
 # 3. How to contribute
 You're encouraged to contribute to our project if you've found any issues or missing functionality that you would want to see. Here **https://github.com/lv487nodejs/fn/issues** you can see the list of issues and here **https://github.com/lv487nodejs/fn/issues/new** you can create a new issue.
+
 Before sending any pull request, please discuss requirements/changes to be implemented using an existing issue or by creating a new one. All pull requests should be done into the development branch.
 
 # 4. How to start the project locally.
