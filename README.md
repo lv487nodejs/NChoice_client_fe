@@ -37,10 +37,13 @@ Before sending any pull request, please discuss requirements/changes to be imple
 
 4.3. Run "npm run dev" at fn/fn folder to run client and backend aplication at http://localhost:3000/.
 
-4.4. Run "npm start" at fn/fn/ folder to run backend(by it self at http://localhost:5000/ or for admin portal) aplication at http://localhost:3000/.
+4.4. Run "npm start" at fn/fn/ folder to run backend(by itself at http://localhost:5000/ or for admin portal) aplication at http://localhost:3000/.
 
-4.4. Run "npm start" at fn/fn/admin folder to run aplication at http://localhost:3000/.
+4.5. Run "npm start" at fn/fn/admin folder to run aplication at http://localhost:3000/.
 
+4.6. Run "npm run cypress" at fn/fn/admin folder to run end-to-end tests.
+
+# 5. Project API
 ## User:
 POST:
 
