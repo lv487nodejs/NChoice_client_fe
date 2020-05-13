@@ -8,7 +8,7 @@ describe('App initialization', () => {
   });
 
   it('Should have a header', () => {
-    cy.get('.header').should('be.visible')
+    cy.get('header').should('be.visible')
   });
 
   it("should have logo", () => {

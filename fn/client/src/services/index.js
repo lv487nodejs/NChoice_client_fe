@@ -170,6 +170,25 @@ export default class StoreService {
     return news;
   };
 
+  getAllComments = async () => {
+    const comments = await this.getResource('comments');
+    return comments;
+  };
+
+  getCommentsByProductId = async (productId) => {
+    const comments = await this.getResource(`comments?productId=${productId}`);
+    return comments;
+  };
+
+  postComments = async comment => {
+    const res = await this.postData('comments', comment);
+    return res;
+  };
+
+  deleteComment = async (id, token) => {
+    return await axios.delete(`${_apiBase}comments/${id}`, { headers: { "x-auth-token": token }})
+  };
+
   confirmEmail = async token => {
     try {
       const res = await this.getResource(`auth/confirmation/${token}`)
@@ -177,6 +196,6 @@ export default class StoreService {
     } catch (error) {
       throw error;
     }
-    
+
   }
 }
