@@ -51,7 +51,7 @@
 }
 
 .img {
-    height: 100%;
+    width: 100%;
     padding: 0;
 }
 
@@ -71,6 +71,7 @@
     display: flex;
     padding-left: 0;
     margin: 1rem 0;
+    justify-content: center;
 }
 
 .sizeItem {
@@ -173,20 +174,9 @@
 
 
 
-
-@media (max-width: 1480px) {
-  .cardBody {
-    grid-template-columns: 51% 47%;
-}
-  .images {
-    grid-template-columns: 6rem 18rem;
-    grid-template-rows: 8rem 8rem 8rem;
-  }
-}
-
 @media (max-width: 1480px) {
     .cardBody {
-        grid-template-columns: 51% 47%;
+        grid-template-columns: 21% 47%;
     }
 
     .images {
@@ -248,7 +238,8 @@
     }
     .wrapperDetails {
         margin:0;
-        width:100%
+        width:100%;
+        padding: 0.5rem;
     }
     
     .button{
