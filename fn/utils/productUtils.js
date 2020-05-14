@@ -46,10 +46,10 @@ const getSort = async query => {
     const sort = {};
 
     if (isNotBlank(sortbyrate)) {
-        sort.rate = sortbyrate;
+        sort.avgRating = +sortbyrate;
     }
     if (isNotBlank(sortbyprice)) {
-        sort.price = sortbyprice;
+        sort.price = +sortbyprice;
     }
     else if (isNotBlank(searchTerm)) {
         // sort by relevance
@@ -61,14 +61,15 @@ const getSort = async query => {
 const prepareProductsToSend = products => {
     const productsToSend = products.map(product => {
         const newProduct = {
-            id: product.id,
+            id: product._id,
             title: product.title,
             images: product.images,
             description: product.description,
             propetries: product.propetries,
             price: product.price,
             mrsp: product.mrsp,
-            rate: product.rate.reduce((sum, item) => sum + item,0) / product.rate.length
+            rate: product.rate.reduce((sum, item) => sum + item,0) / product.rate.length,
+            material: product.material,
         };
 
         if (product.brand) newProduct.brand = product.brand.brand;

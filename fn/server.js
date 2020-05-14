@@ -19,6 +19,8 @@ const generator = require('./routes/products/generator');
 const orders = require('./routes/purchase/order');
 const news = require('./routes/pages/news');
 const rating = require('./routes/rating/rating');
+const comments = require('./routes/comments/comments');
+
 require('dotenv').config();
 
 const accessLogStream = rfs.createStream('access.log', {
@@ -48,6 +50,8 @@ app.use('/generator', generator);
 app.use('/orders', orders);
 app.use('/news', news);
 app.use('/rating', rating);
+app.use('/comments', comments);
+
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;

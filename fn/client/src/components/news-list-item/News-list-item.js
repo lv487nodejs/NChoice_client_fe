@@ -4,8 +4,8 @@ import { Card, Image } from 'react-bootstrap'
 
 const NewsListItem = ({ text, title, newsImage, authorPhoto, date, author }) => {
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-    const date1 = new Date(date)
-    const dateNews = date1.toLocaleString("en-US", options)
+    const dateToShow = new Date(date)
+    const dateNews = dateToShow.toLocaleString("en-US", options)
 
     return (
             <section className="news-card">
