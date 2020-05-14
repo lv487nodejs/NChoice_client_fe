@@ -12,14 +12,10 @@ const emailRegEx = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a
 const emailValidationText = "Email must be correct. Example: nick@mail.com";
 
 export const SignupSchema = yup.object().shape({
-    firstName: yup.string()
-        .required("No firstname provided.")
-        .matches(firstnameRegex, firstnameValidationText)
-        .min(firstNameMinElementCount, firstNameMinMessage),
-    lastName: yup.string()
-        .required("No lastname provided.")
-        .matches(lastnameRegex, lastnameValidationText)
-        .min(lastNameMinElementCount, lastNameMinMessage),
+    firstName: yup.string(),
+    
+    lastName: yup.string(),
+
     email: yup.string()
         .required("No email provided.")
         .email()
