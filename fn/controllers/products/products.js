@@ -33,18 +33,15 @@ const getPrpoducts = asyncHandler(async (req, res) => {
         projection.score = { $meta: 'textScore' };
     }
 
-    const products = await Products.aggregate([
+    const products = await Products.find(filter, projection)
+        .sort(sort)
+        .skip(+skip)
+        .limit(+postsperpage)
+        .populate('catalog')
+        .populate('category')
+        .populate('color')
+        .populate('brand');
 
-        {
-            $match: filter
-        },
-        { $addFields: { avgRating: { $avg: "$rate" } } },
-        { $sort: sort },
-        { $skip: skip },
-        { $limit: +postsperpage }
-
-    ]);
-    
     if (!products) {
         return next(
             new ErrorResponse('Product not found.', 404)

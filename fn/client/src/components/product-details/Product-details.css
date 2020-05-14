@@ -71,7 +71,6 @@
     display: flex;
     padding-left: 0;
     margin: 1rem 0;
-    justify-content: center;
 }
 
 .sizeItem {
@@ -227,6 +226,9 @@
 }
 
 @media (max-width: 600px) {
+    .size {
+        justify-content: center;
+    }
     #heartButton {
         font-size: 1.3rem;
     }
