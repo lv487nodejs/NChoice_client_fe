@@ -34,10 +34,13 @@ const getUser = asyncHandler(async (req, res, next) => {
 });
 
 const registerUser = asyncHandler(async (req, res, next) => {
+
     const { firstName, lastName, email, password } = req.body;
-
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    const checkedUser =await Users.findOne({email})    
+    if (checkedUser) {
+        return next(new ErrorResponse('user already exist', 403))
+    }
     const user = new Users({
         firstName,
         lastName,
@@ -49,26 +52,22 @@ const registerUser = asyncHandler(async (req, res, next) => {
     const accessToken = generateAccessToken(userName);
     const refreshToken = generateRefreshToken(userName);
     const emailToken = generateEmailToken(userName);
-    const url = `${process.env.CONFIRM_URL}${emailToken}`;
+    const url = `${process.env.CONFIRM_URL_OLD}${emailToken}`;
 
     const emailMessage = {
         to: user.email,
         subject: 'Confirm Email',
         html: `Please click this link to confirm your email: <a href="${url}">${url}</a>`,
     };
-
-
     user.emailToken = emailToken;
-
     user.tokens = [];
     user.tokens.push(refreshToken);
-
-    sendEmail(emailMessage, async () => {
-        await user.save();
-        res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
+    sendEmail(emailMessage, async() => {
+      await  user.save();
+        return res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
     });
+})
 
-});
 
 const updateUserRole = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
@@ -85,7 +84,7 @@ const updateUserRole = asyncHandler(async (req, res, next) => {
 
 const updateUser = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const userToUpdate = req.user;
+    const userToUpdate = req.body.user;
     const { password } = userToUpdate
     const hashedPassword = await bcrypt.hash(password, 10);
     userToUpdate.password = hashedPassword
@@ -101,8 +100,8 @@ const updateUser = asyncHandler(async (req, res, next) => {
 
 const updateCart = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const cart  = req.body;
-   
+    const cart = req.body;
+
     const userToUpdate = await Users.findById(id);
     if (!userToUpdate) {
         return next(

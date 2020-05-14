@@ -1,0 +1,409 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kotta+One&display=swap');
+
+.header-page-materials-title,
+.about-materials-h2,
+.materials-h2,
+.recycled-p{
+    font-family: 'Staatliches', cursive;
+    margin:0;
+}
+
+.materials-h3{
+    font-family: 'Kotta One', serif;
+}
+
+.materials-h2{
+    padding: 0;
+    justify-self: center;
+    align-self: flex-end;
+    text-align: center;
+    color:#82594A;
+    font-size: 40px;
+    letter-spacing: .5rem; 
+}
+
+.materials-h3{
+    text-align: center;
+    color: #422B21;
+    font-size: 25px;
+}
+
+.wool-bottom > .materials-h2{
+    align-self: center;
+    padding-top: 0;
+}
+
+.header-page-materials{
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    height: 100%;
+    min-height: 600px;
+}
+
+.material-title{
+    display: grid;
+    min-height: 450px; 
+    background-color: #F8F8F8;
+    position: relative;
+}
+
+.header-page-materials{
+    background-image: url('/images/materials-photo/big-leaves.jpg');
+}
+
+.header-page-materials-title{
+    font-size: 50px;
+    color: #F0F1EF;
+    text-align: center;
+    padding-top: 10%;
+    letter-spacing: 1.2rem;
+}
+
+.header-page-materials-title::after{
+    border-top: 2px solid #fefefe;
+    content: "";
+    display: block;
+    margin: 1.25em auto 0;
+    padding-bottom: 1.25em;
+    position: relative;
+    width: 1.25em;
+}
+
+.header-page-materials::after{
+    background-image: url('/images/materials-photo/paint.png');
+    bottom: -5rem;
+}
+
+.recycled::after{
+    background-image: url('/images/materials-photo/paint-small.png');
+}
+
+.header-page-materials:after,
+.recycled:after{
+    background-repeat: no-repeat;
+    background-size: contain;
+    content: "";
+    height: 50%;
+    position: absolute;
+    width: 80%;
+    bottom: -3rem;
+}
+
+.material-title::before{
+    background-position: 100%;
+    height: 100%;
+    right: 0;
+    width: 30%;
+    top: 0;
+}
+
+.about-materials{
+    height: 400px;
+    background-color: white;
+}
+
+.about-materials-h2{
+    padding-top: 8%;
+    text-align: center;
+    font-size: 40px;
+    letter-spacing: .5rem;
+}
+
+.about-materials-p{
+    text-align: center;
+    padding: 20%;
+    padding-top: 2rem;
+}
+
+
+.material-img{
+    background-size: 100%;
+    margin-top: 9rem;
+    margin-bottom: 4rem;
+
+    position: relative;
+    display: inline-block;
+    width: 90%;
+    height: 675px;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    justify-self: center;
+    align-self: center;
+}
+
+.cotton-description{
+    font-size: 1.2rem;
+    color: #F0F1EF;
+    background-color: rgb(47, 26, 17, 0.6);
+    padding-bottom: 1rem;
+    height: 80px;
+    width: 100%;
+    position:absolute;
+    bottom: 0;
+    transform: scale(1);
+    transition: 1s;
+}
+
+.cotton-description:hover{
+    transform: scale(1);
+    transition: 1s;
+    background-color: rgb(47, 26, 17);
+}
+
+.wool-description{
+    height: 260px; 
+    padding-top: 3rem;
+}
+
+
+
+.hemp-img{
+    display: grid;
+    width: 100%;
+    height: 800px;
+    background-size: cover;
+    background-repeat: no-repeat;   
+}
+
+.hemp-description{
+    display: grid;
+    font-size: 1.2rem;
+    color: #F0F1EF;
+    background-color: rgb(47, 26, 17, 0.3);
+    padding-bottom: 1rem;
+    height: 100%;
+    width: 100%;
+    transform: scale(1);
+    transition: 1s;
+}
+
+.hemp-p{
+    width: 50%;
+    padding:3rem;
+    padding-left: 7rem;
+    font-size: 1.4rem;
+    align-self: center;
+}
+
+.bold-text{
+    font-size: 5rem;
+}
+
+.silk-images,
+.wool-bottom,
+.cotton-images{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1vw;
+}
+
+.silk-images > .material-img,
+.wool-bottom > .wool-img{
+    width: 100%;
+    margin: 0;
+}
+
+.recycled-images{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1vw;
+    height: 700px;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+.recycled-images > .recycled-img{
+    display: grid;
+    width: 80%;
+    height: 25vh;
+    margin: 0;
+    text-align: center;
+    background-color: rgb(232,232,232, 0.9);
+    justify-self: center;
+    align-self: center;
+}
+
+.recycled-p{
+    font-size: 1.3rem;
+    letter-spacing: .3rem;
+    justify-self: center;
+    align-self: center;
+    padding: 0 2rem;
+}
+
+.wool-bottom > .material-img{
+    width: 99%;
+    margin: 0;
+}
+
+
+@media (max-width: 1350px){
+    .wool-bottom{
+        display: grid;
+        grid-template-rows: 1fr 300px 1fr;
+        grid-template-columns: 1fr;
+        grid-gap: 2vw;
+    }
+}
+
+@media (max-width: 1110px){
+    .header-page-materials{
+        min-height: 350px;
+    }
+
+    .material-title{
+        min-height: 250px;
+    }
+
+    .silk-images,
+    .cotton-images,
+    .recycled-images{
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: 1fr;
+        grid-gap: 1vw;
+    }
+
+    .recycled-images{
+        height: 450px;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+    }
+
+    .recycled-images > .recycled-img{
+        height: 18vh;
+    }
+
+    .recycled-img{
+        height: 100px;
+    }
+
+    .material-img{
+        margin: 0;
+        height: 330px;
+    }
+
+    .hemp-p{
+        width: 70%;
+    }
+
+    .recycled-images > .recycled-img{
+        height: 15vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-page-materials{
+        min-height: 300px;
+    }
+
+    .material-title:after,
+    .header-page-materials::after{
+        display: none;
+    }
+
+    .material-title{
+        min-height: 200px;
+    }
+
+    .about-materials{
+        height: 340px;
+    }
+
+    .about-materials-h2{
+        padding-top: 4%;
+    }
+
+    .hemp-p{
+        width: 100%;
+        padding: 0;
+        padding-top: 10%;
+    }
+
+    .header-page-materials-title{
+        font-size: 30px;
+    }
+
+    .about-materials-h2,
+    .materials-h2{
+        font-size: 30px;
+    }
+
+    .materials-h3{
+        font-size: 25px;
+    }
+
+    .about-materials-p,
+    .cotton-description,
+    .hemp-p,
+    .recycled-p{
+        font-size: .9rem;
+    }
+
+    .hemp-description,
+    .hemp-img{
+        height: 450px;
+    }
+
+    .bold-text{
+        font-size: 3rem;
+    }
+
+
+}
+
+@media (max-width: 425px){
+    .about-materials-p{
+        padding: 3%;
+    }
+
+    .about-materials{
+        height: 220px;
+    }
+
+    .silk-images,
+    .wool-bottom,
+    .cotton-images{
+        grid-gap: 1vw;
+    }
+
+
+    .recycled-images > .recycled-img{
+        height: 20vh;
+        width: 95%;
+    }
+
+    .header-page-materials-title{
+        padding-top:15%;
+        font-size: 25px;
+        letter-spacing: 1rem;
+    }
+
+    .about-materials-h2,
+    .materials-h2{
+        font-size: 25px;
+    }
+
+    .materials-h3{
+        font-size: 20px;
+    }
+
+    .wool-bottom > .materials-h2 {
+        font-size: 1rem;
+    }
+
+    .material-img {
+        height: 280px;
+    }
+
+    .wool-bottom{
+        grid-template-rows: 1fr 250px 1fr;
+    }
+}

@@ -1,0 +1,30 @@
+[data-tooltip] {
+    position: relative;
+   }
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    width: 100px;
+    left: 2em; top: 0;
+    background: #a2a2a3;
+    color: #fff;
+    padding: 0.5em;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
+    pointer-events: none;
+    opacity: 0;
+    transition: 0.7s; 
+} 
+[data-tooltip]:hover::after {
+    opacity: 1; 
+    left: 3em;
+}
+
+.material-icon{
+    margin: 1em;
+    margin-left: 0;
+    width:35px;
+}
+
+.material-icon-img{
+    width:35px;
+}

@@ -45,7 +45,7 @@ export const deliveryType = {
         "delivery servise"
     ]
 };
-export const _apiBase = 'https://lv487node-backend.herokuapp.com/';
+export const _apiBase = 'http://localhost:5000/';
 
 export const socialNetworksURL = {
     telegram: 'https://web.telegram.org',
@@ -54,9 +54,11 @@ export const socialNetworksURL = {
 };
 export const policiesFooter = {
     title: 'About us',
-    items: ['About us',
-        'Terms and Conditions',
-        'Privacy Policy']
+    items: [
+        { id: 1, url: '#', item: 'About us' },
+        { id: 2, url: '#', item: 'Terms and Conditions' },
+        { id: 3, url: '#', item: 'Privacy Policy' },
+        { id: 4, url: '/materials', item: 'Materials' }]
 };
 export const contactInformationFooter = {
     title: 'Contacts',

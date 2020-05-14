@@ -8,7 +8,9 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import SimularProducts from '../simular-products/Simular-products';
 import StarsRating from '../star-rating';
 import LoadingSpinner from '../Loading-spinner';
-import ImgsViewer from 'react-images-viewer'
+import ImgsViewer from 'react-images-viewer';
+
+import ProductMaterial from '../product-material'
 
 import withStoreService from '../hoc';
 import {
@@ -21,6 +23,7 @@ import {
   productsLoadingStart,
   productsLoadingStop
 } from '../../actions';
+import CommentForm from "../comment-form/comment-form";
 
 const ProductDetails = ({
   id,
@@ -71,7 +74,6 @@ const ProductDetails = ({
   }, [storeService, id, setProduct, setSizes, productsLoadingStart, productsLoadingStop, setProducts, products.length]);
 
   const simularProducts = products.filter(elem => elem.catalog === product.catalog)
-
 
   const handleCheck = item => () => {
     setCheckSize(item)
@@ -156,7 +158,7 @@ const ProductDetails = ({
           />
         </Col>
         <Col className="text" id="text">
-          <StarsRating rating={product.rate} />
+          <StarsRating rating={product.rate} id={product.id} />
           <Card.Title className="title" id="title">{product.title}</Card.Title>
           <Card.Text className="productDescription" id="description" >
             {product.description}
@@ -170,6 +172,7 @@ const ProductDetails = ({
             className="color"
             id="color"
           ></Card.Text>
+          <Link to='/materials'><ProductMaterial/></Link>
           <Col className="size" id="size">{sizeItem}</Col>
           <Card.Body className="buttons" id="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
@@ -193,6 +196,8 @@ const ProductDetails = ({
       <div className="similarItems">Similar items</div>
       <hr />
       <SimularProducts products={simularProducts} className="routingImg" />
+      <hr />
+      <CommentForm productId={product.id} rate={product.rate} />
     </Card>
   );
 };

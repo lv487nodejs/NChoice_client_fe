@@ -10,6 +10,11 @@
 .productName {
   font-family: "Oswald";
   text-transform: uppercase;
+  text-align: center;
+}
+
+.star-rating{
+  justify-content: center;
 }
 
 .cardPrice {
@@ -34,10 +39,9 @@
 }
 
 .productCard {
-  width: 250px;
-  height: 360px;
+  width: 95%;
   border-radius: 1%;
-  padding: 1.5rem;
+
   background: white;
   position: relative;
   display: -webkit-box;
@@ -46,6 +50,7 @@
           align-items: flex-end;
   -webkit-transition: 0.4s ease-out;
   transition: 0.4s ease-out;
+ 
 }
 .productCard:hover {
   -webkit-transform: translateY(5px);
@@ -79,7 +84,6 @@
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  position: absolute;
   top: 0;
   left: 0;
   border-radius: 1%;
@@ -89,8 +93,8 @@
   z-index: 3;
   color: white;
   opacity: 0;
-  -webkit-transform: translateY(30px);
-          transform: translateY(30px);
+  -webkit-transform: translateY(10px);
+          transform: translateY(10px);
   -webkit-transition: 0.5s;
   transition: 0.5s;
 }

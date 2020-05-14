@@ -3,9 +3,9 @@ const Catalogs = require('../../models/Catalog');
 const Categories = require('../../models/Category');
 const Brands = require('../../models/Brand');
 const Colors = require('../../models/Color');
-
 const asyncHandler = require('../../middleware/async');
 const ErrorResponse = require('../../utils/errorResponse');
+const mongoose = require('mongoose');
 const {
     prepareProductsToUpdate,
     prepareProductsToSend,
@@ -49,7 +49,7 @@ const getPrpoducts = asyncHandler(async (req, res) => {
     }
 
     const productsToSend = prepareProductsToSend(products);
-    const foundProductsNumber = await Products.find(filter).count();
+    const foundProductsNumber = await Products.find(filter).countDocuments();
 
     const pagesCount = Math.ceil(foundProductsNumber / postsperpage);
     res.status(200).send({ products: productsToSend, pagesCount, foundProductsNumber });

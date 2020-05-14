@@ -1,14 +1,14 @@
 describe('check buttons posts per page', ()=>{
     it ('check 15 button', ()=>{
         cy.visit('/productlist/kids')
-        cy.get('div.productCart').
+        cy.get('.wrapper').
         should('have.length',15);
     })
 
     it ('check 30 button', ()=>{
         cy.visit('/productlist/kids')
         cy.get('.btn-group > :nth-child(2)').click()
-        cy.get('div.productCart').
+        cy.get('.wrapper').
         should('have.length',30);
     })
 
@@ -21,7 +21,7 @@ describe('check buttons posts per page', ()=>{
     it ('check 60 button', ()=>{
         cy.visit('/productlist/kids')
         cy.get('.btn-group > :nth-child(3)').click()
-        cy.get('div.productCart').
+        cy.get('.wrapper').
         should('have.length', 60);
     })
 
