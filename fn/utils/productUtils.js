@@ -46,7 +46,7 @@ const getSort = async query => {
     const sort = {};
 
     if (isNotBlank(sortbyrate)) {
-        sort.avgRating = +sortbyrate;
+        sort.rate = +sortbyrate;
     }
     if (isNotBlank(sortbyprice)) {
         sort.price = +sortbyprice;

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { _apiBase } from '../configs/frontend-config'
 
 export default class StoreService {
-  // _apiBase = 'https://lv487node-backend.herokuapp.com/';
+  
   getResource = async (url) => {
     try {
       const catalogs = await axios.get(`${_apiBase}${url}`);
