@@ -54,9 +54,11 @@ export const socialNetworksURL = {
 };
 export const policiesFooter = {
     title: 'About us',
-    items: ['About us',
-        'Terms and Conditions',
-        'Privacy Policy']
+    items: [
+        { id: 1, url: '#', item: 'About us' },
+        { id: 2, url: '#', item: 'Terms and Conditions' },
+        { id: 3, url: '#', item: 'Privacy Policy' },
+        { id: 4, url: '/materials', item: 'Materials' }]
 };
 export const contactInformationFooter = {
     title: 'Contacts',
