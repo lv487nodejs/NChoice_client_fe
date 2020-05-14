@@ -5,7 +5,7 @@ The admin part of the application designed for managers of the project to mainta
 NChoice – Look exclusive and save the Planet!  
 
 # 2. Main parts of the project and technologies.
-This project contains  4 main parts: client frontend, admin portal frontend, backend, and database. All parts of the project are at **https://github.com/lv487nodejs/fn**
+This project contains  4 main parts: client frontend, admin portal frontend, backend, and database. All parts of the project are at **https://github.com/lv487nodejs/NChoice**
 
 Let's take a closer look at the technologies of each part.
 
@@ -20,12 +20,12 @@ Let's take a closer look at the technologies of each part.
 **End-to-end testing** - Cypress
 
 # 3. How to contribute
-You're encouraged to contribute to our project if you've found any issues or missing functionality that you would want to see. Here **https://github.com/lv487nodejs/fn/issues** you can see the list of issues and here **https://github.com/lv487nodejs/fn/issues/new** you can create a new issue.
+You're encouraged to contribute to our project if you've found any issues or missing functionality that you would want to see. Here **https://github.com/lv487nodejs/NChoice/issues** you can see the list of issues and here **https://github.com/lv487nodejs/NChoice/issues/new** you can create a new issue.
 
 Before sending any pull request, please discuss requirements/changes to be implemented using an existing issue or by creating a new one. All pull requests should be done into the development branch.
 
 # 4. How to start the project locally.
-4.1. Clone or download the project from **https://github.com/lv487nodejs/fn.git**
+4.1. Clone or download the project from **https://github.com/lv487nodejs/NChoice.git**
 
 4.2. Before running the project, make sure that you downloaded all dependencies.
 
