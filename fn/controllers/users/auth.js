@@ -115,9 +115,6 @@ const googleAuth = asyncHandler( async (req, res, next) => {
     res.send({ accessToken, refreshToken, userId: user._id, cart: user.cart });
 })
 
-const googleRedirect = asyncHandler(async (req, res) => {
-    res.send('you reached callback url')
-})
 
 const facebookAuth = asyncHandler( async (req, res, next) => {
     const { email } = req.user
@@ -160,6 +157,5 @@ module.exports = {
     logout,
     emailConfirmation,
     googleAuth,
-    googleRedirect,
     facebookAuth
 };

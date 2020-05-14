@@ -14,24 +14,23 @@ const UserModel = new Schema({
         required: true,
         unique: true,
     },
-    // password: {
-    //     type: String,
-    //     minlength: 6,
-    //     required: true,
-    // },
+    password: {
+        type: String,
+        minlength: 6,
+        required: true,
+    },
     role: {
         type: String,
         enum: ['user', 'admin'],
         default: 'user',
     },
-    // confirmedEmail: {
-    //     type: Boolean,
-    //     default: false,
-    // },
-    // emailToken: {
-    //     type: String,
-    //     required: true,
-    // },
+    confirmedEmail: {
+        type: Boolean,
+        default: false,
+    },
+    emailToken: {
+        type: String
+    },
     avatar: {
         type: String,
     },
@@ -55,34 +54,15 @@ const UserModel = new Schema({
     googleID: String,
     facebookID: String
 
-    // method:{
-    //     type: String,
-    //     enum: ['local', 'google', 'facebook']
-    //     },
-    // google: {
-    //     id: { type:String },
-    //     email: {
-    //         type: String,
-    //         lowercase: true
-    //     }
-    // },
-    // facebook: {
-    //     id: { type:String },
-    //     email: {
-    //         type: String,
-    //         lowercase: true
-    //     }
-    // }
-
 });
 
-// UserModel.methods.isValidPassword = async function(newPassword) {
-//     try {
-//         return await bcrypt.compare( newPassword, this.password)
-//     } catch {
-//         throw new Error(error)
-//     }
-// }
+UserModel.methods.isValidPassword = async function(newPassword) {
+    try {
+        return await bcrypt.compare( newPassword, this.password)
+    } catch {
+        throw new Error(error)
+    }
+}
 
 const Users = mongoose.model('user2', UserModel);
 module.exports = Users;

@@ -76,7 +76,6 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     }
 
     const responseGoogle = async (res) => {
-        console.log('Google', res.accessToken)
         const userFromApi = await storeService.oauthGoogle({access_token: res.accessToken})
         const { accessToken, refreshToken, cart, userId } = userFromApi
         setUserLogged(true);
@@ -87,7 +86,6 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     }
 
     const responseFacebook = async (res) => {
-        console.log('FB', res)
         const userFromAPI = await storeService.oauthFacebook({access_token: res.accessToken})
         const { accessToken, refreshToken, cart, userId } = userFromAPI
         setUserLogged(true);
@@ -147,18 +145,20 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     <Link to="/register" className="btn btn-link" >REGISTER</Link>
                 </Form.Group>
             </Form>
-            <FacebookLogin
-            appId={'1189412381401260'}
-            textButton={'Facebook'}
-            fields={'name, email, picture'}
-            callback={responseFacebook}
-            />
-            <GoogleLogin
-                clientId = {'303875330429-u4510uka1kogr1k4lqcgpr1eree7p20r.apps.googleusercontent.com'}
-                buttonText={'Google'}
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-            />
+            <div className='login-wrapper'>
+                <FacebookLogin
+                    appId={'1189412381401260'}
+                    textButton={'Facebook'}
+                    fields={'name, email, picture'}
+                    callback={responseFacebook}
+                />
+                <GoogleLogin
+                    clientId = {'303875330429-u4510uka1kogr1k4lqcgpr1eree7p20r.apps.googleusercontent.com'}
+                    buttonText={'Google'}
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                />
+            </div>
         </div>
     )
 };
