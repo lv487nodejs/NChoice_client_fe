@@ -1,6 +1,6 @@
 .product-list-page {
     display: grid;
-    grid-template-columns: 390px 1fr 1fr 1fr;
+    grid-template-columns: 320px 1fr 1fr 1fr;
     grid-gap: 1em;
     grid-template-rows: auto;
     grid-template-areas: "filters productlist productlist productlist" ".  . . pages";
@@ -57,7 +57,7 @@
     grid-gap: 2rem 0;
     display: grid;
     align-content: flex-start;
-    grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(33%, 1fr));
     grid-area: productlist;
 }
 

@@ -21,7 +21,7 @@ const MaterialsPage = () => {
         </div>
         <div className='cotton-container'>
             <div className='material-title'>
-                <h2 className='materials-h2'>COTTON <img width='35px' src='../images/materials/cotton.svg'></img></h2>
+                <h2 className='materials-h2'>COTTON <img width='35px' src='../images/materials/cotton.svg' alt='cotton'></img></h2>
                 <p className='materials-h3'>FROM CERTIFIED ORGANIC FARMS OR RECYCLED COTTON</p>
             </div>
             <div className='cotton-images'>
@@ -37,7 +37,7 @@ const MaterialsPage = () => {
             </div>
 
             <div className='material-title'>
-                <h2 className='materials-h2'>JUTE <img width='35px' src='../images/materials/jute.svg'></img></h2>
+                <h2 className='materials-h2'>JUTE <img width='35px' src='../images/materials/jute.svg' alt='jute'></img></h2>
                 <p className='materials-h3'>IT GROWN IN THE BENGAL AREA</p>
                 
             </div>
@@ -51,7 +51,7 @@ const MaterialsPage = () => {
 
 
             <div className='material-title'>
-                <h2 className='materials-h2'>WOOL <img width='35px' src='../images/materials/wool.svg'></img></h2>
+                <h2 className='materials-h2'>WOOL <img width='35px' src='../images/materials/wool.svg' alt='wool'></img></h2>
                 <p className='materials-h3'>FROM FARMS WITH ANIMAL WELFARE CERTIFICATION</p>
             </div>
             
@@ -63,7 +63,7 @@ const MaterialsPage = () => {
             
 
             <div className='material-title'>
-                <h2 className='materials-h2'>HEMP <img width='35px' src='../images/materials/ramie.svg'></img></h2>
+                <h2 className='materials-h2'>HEMP <img width='35px' src='../images/materials/ramie.svg' alt='ramie'></img></h2>
                 <p className='materials-h3'>THE NATURAL AMONG THE FABRICS</p>
             </div>
 
@@ -79,7 +79,7 @@ const MaterialsPage = () => {
             
             
             <div className='material-title'>
-                <h2 className='materials-h2'>SILK <img width='35px' src='../images/materials/silk.svg'></img></h2>
+                <h2 className='materials-h2'>SILK <img width='35px' src='../images/materials/silk.svg' alt='silk'></img></h2>
                 <p className='materials-h3'>PRODUCED IN GOTS-CERTIFIED FACTORIES</p>
             </div>
             <div className='silk-images'>
@@ -96,7 +96,7 @@ const MaterialsPage = () => {
             
 
             <div className='material-title recycled'>
-                <h2 className='materials-h2'>RECYCLED POLYESTER <img width='35px' src='../images/materials/recycled.svg'></img></h2>
+                <h2 className='materials-h2'>RECYCLED POLYESTER <img width='35px' src='../images/materials/recycled.svg' alt='recycled'></img></h2>
                 <p className='materials-h3'>IT IS MADE ENTIRELY FROM USED PLASTIC BOTTLES</p>
             </div>
             <div className='recycled-images'  style={{backgroundImage: 'url(/images/materials-photo/recycled1.jpg)'}}>
