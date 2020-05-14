@@ -175,7 +175,7 @@
 
 @media (max-width: 1480px) {
     .cardBody {
-        grid-template-columns: 21% 47%;
+        grid-template-columns: 50% 47%;
     }
 
     .images {
