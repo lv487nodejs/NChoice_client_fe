@@ -20,6 +20,11 @@
 }
 
 .material-icon{
-    margin: 2em;
+    margin: 1em;
     margin-left: 0;
+    width:35px;
+}
+
+.material-icon-img{
+    width:35px;
 }

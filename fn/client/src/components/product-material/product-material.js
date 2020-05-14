@@ -9,22 +9,22 @@ const ProductMaterial = ({ product }) => {
 
     switch(product.material){
         case 'cotton':
-            material = <div className="material-icon" data-tooltip="cotton"><img width='35px' src='../images/materials/cotton.svg'></img></div>
+            material = <div className="material-icon" data-tooltip="cotton"><img className="material-icon-img" src='../images/materials/cotton.svg'></img></div>
             break
         case 'jute':
-            material = <div className="material-icon" data-tooltip="jute"><img width='35px' src='../images/materials/jute.svg'></img></div>
+            material = <div className="material-icon" data-tooltip="jute"><img className="material-icon-img" src='../images/materials/jute.svg'></img></div>
             break
         case 'silk':
-            material = <div className="material-icon" data-tooltip="silk"><img width='35px' src='../images/materials/silk.svg'></img></div>
+            material = <div className="material-icon" data-tooltip="silk"><img className="material-icon-img" src='../images/materials/silk.svg'></img></div>
             break
         case 'wool':
-            material = <div className="material-icon" data-tooltip="wool"><img width='35px' src='../images/materials/wool.svg'></img></div>
+            material = <div className="material-icon" data-tooltip="wool"><img className="material-icon-img" src='../images/materials/wool.svg'></img></div>
             break
         case 'ramie':
-            material = <div className="material-icon" data-tooltip="ramie"><img width='35px' src='../images/materials/ramie.svg'></img></div>
+            material = <div className="material-icon" data-tooltip="ramie"><img className="material-icon-img" src='../images/materials/ramie.svg'></img></div>
             break
         case 'recycled':
-            material = <div className="material-icon" data-tooltip="recycled"><img width='35px' src='../images/materials/recycled.svg'></img></div>
+            material = <div className="material-icon" data-tooltip="recycled"><img className="material-icon-img" src='../images/materials/recycled.svg'></img></div>
             break      
     }
 

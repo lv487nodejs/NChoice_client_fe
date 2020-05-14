@@ -172,8 +172,8 @@ const ProductDetails = ({
             className="color"
             id="color"
           ></Card.Text>
+          <Link to='/materials'><ProductMaterial/></Link>
           <Col className="size" id="size">{sizeItem}</Col>
-          <ProductMaterial/>
           <Card.Body className="buttons" id="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
               onClick={() => addToWishlist(product)} />

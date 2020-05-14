@@ -10,6 +10,11 @@
 .productName {
   font-family: "Oswald";
   text-transform: uppercase;
+  text-align: center;
+}
+
+.star-rating{
+  justify-content: center;
 }
 
 .cardPrice {
@@ -34,7 +39,7 @@
 }
 
 .productCard {
-  width: 90%;
+  width: 85%;
   border-radius: 1%;
 
   background: white;
