@@ -24,10 +24,6 @@
     "mongoose": "^5.9.0",
     "morgan": "^1.9.1",
     "nodemailer": "^6.4.6",
-    "react-fontawesome": "^1.7.1",
-    "react-redux": "^7.2.0",
-    "react-select": "^3.1.0",
-    "redux": "^4.0.5",
     "rotating-file-stream": "^2.0.2"
   },
   "devDependencies": {

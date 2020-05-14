@@ -3,9 +3,9 @@ const Catalogs = require('../../models/Catalog');
 const Categories = require('../../models/Category');
 const Brands = require('../../models/Brand');
 const Colors = require('../../models/Color');
-
 const asyncHandler = require('../../middleware/async');
 const ErrorResponse = require('../../utils/errorResponse');
+const mongoose = require('mongoose');
 const {
     prepareProductsToUpdate,
     prepareProductsToSend,
@@ -33,15 +33,18 @@ const getPrpoducts = asyncHandler(async (req, res) => {
         projection.score = { $meta: 'textScore' };
     }
 
-    const products = await Products.find(filter, projection)
-        .sort(sort)
-        .skip(+skip)
-        .limit(+postsperpage)
-        .populate('catalog')
-        .populate('category')
-        .populate('color')
-        .populate('brand');
+    const products = await Products.aggregate([
 
+        {
+            $match: filter
+        },
+        { $addFields: { avgRating: { $avg: "$rate" } } },
+        { $sort: sort },
+        { $skip: skip },
+        { $limit: +postsperpage }
+
+    ]);
+    
     if (!products) {
         return next(
             new ErrorResponse('Product not found.', 404)
@@ -49,7 +52,7 @@ const getPrpoducts = asyncHandler(async (req, res) => {
     }
 
     const productsToSend = prepareProductsToSend(products);
-    const foundProductsNumber = await Products.find(filter).count();
+    const foundProductsNumber = await Products.find(filter).countDocuments();
 
     const pagesCount = Math.ceil(foundProductsNumber / postsperpage);
     res.status(200).send({ products: productsToSend, pagesCount, foundProductsNumber });

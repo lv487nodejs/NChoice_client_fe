@@ -7,7 +7,7 @@ const initialState = {
     currentPage: 0,
     postsPerPage: 15,
     pagesCount: 1,
-    sortByPrice: 0,
+    sortByPrice: 1,
     sortByRate: 0,
     sizes: [],
 };

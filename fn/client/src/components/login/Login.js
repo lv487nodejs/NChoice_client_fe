@@ -6,8 +6,6 @@ import { connect } from "react-redux";
 
 import { setUserLogged, setUserLoading, setCart } from "../../actions";
 import { useForm } from "react-hook-form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "../Loading-spinner";
 import { SignupSchemaLogin } from '../../configs/login-register-config';
 import withStoreService from '../hoc';
@@ -23,7 +21,6 @@ const USER_DATA = {
     email: '',
     password: ''
 };
-const eye = <FontAwesomeIcon icon={faEye} />;
 
 const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
     const [user, setUser] = useState(USER_DATA);
@@ -33,6 +30,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         validationSchema: SignupSchemaLogin
     });
     const [passwordShown, setPasswordShown] = useState(false);
+    const eyeClassName = passwordShown?'fa fa-eye':'fa fa-eye-slash';
 
     useEffect(() => {
         setUserLogged(false)
@@ -106,7 +104,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                             ref={register}
                             autoComplete="on"
                         />
-                        <i onClick={togglePasswordVisiblity}>{eye}</i>
+                        <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
                     {errors.password && <p className="errorMessage">{errors.password.message}</p>}
 

@@ -156,7 +156,7 @@ const ProductDetails = ({
           />
         </Col>
         <Col className="text" id="text">
-          <StarsRating rating={product.rate} />
+          <StarsRating rating={product.rate} id={product.id} />
           <Card.Title className="title" id="title">{product.title}</Card.Title>
           <Card.Text className="productDescription" id="description" >
             {product.description}
@@ -194,7 +194,7 @@ const ProductDetails = ({
       <hr />
       <SimularProducts products={simularProducts} className="routingImg" />
       <hr />
-      <CommentForm productId={product.id} />
+      <CommentForm productId={product.id} rate={product.rate} />
     </Card>
   );
 };

@@ -10,6 +10,7 @@ import snackbarReducer from './Snackbar-reducer'
 import checkoutReduser from './Checkout-reducer'
 import newsReduser from './News-reduser'
 import commentsReduser from './Comments-reducer'
+import ratingReducer from './Rating-reducer';
 
 export default combineReducers({
   productsList,
@@ -22,5 +23,6 @@ export default combineReducers({
   snackbarReducer,
   checkoutReduser,
   newsReduser,
-  commentsReduser
+  commentsReduser,
+  ratingReducer,
 })
