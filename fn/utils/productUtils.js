@@ -2,7 +2,6 @@ const Catalogs = require('../models/Catalog');
 const Categories = require('../models/Category');
 const Brands = require('../models/Brand');
 const Colors = require('../models/Color');
-const mongoose = require('mongoose');
 const searchConfig = (searchTerm) => {
     return [
         { title: { $regex: new RegExp(searchTerm) } },
