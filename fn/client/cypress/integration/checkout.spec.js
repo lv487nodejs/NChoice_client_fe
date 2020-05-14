@@ -1,3 +1,4 @@
+
 const form = {
     firstName: 'Volodymyr',
     lastName: 'Trach',
@@ -11,10 +12,13 @@ const form = {
     paymentMethod: 'cash',
 }
 
+beforeEach(() => {
+    cy.localStorage()
+  })
+
 describe('check root for checkout', () => {
     it('add to cart and visit checkout', () => {
-        cy.visit('/productlist/kids')
-        cy.get(':nth-child(1) > a > .image-container > .card-img-top').click()
+        cy.visit('/products/5ea9a730d34cc7194801d5a0')
         cy.get('#buyNow').
             should('not.be.visible')
         cy.get('.size > :nth-child(1) > span').
@@ -32,7 +36,7 @@ describe('check root for checkout', () => {
     })
 
     it('check all elements (header)', () => {
-        cy.get('h1.text-center').
+        cy.get('h2.text-center').
             should('exist').
             and('be.visible')
     })
@@ -54,12 +58,12 @@ describe('check root for checkout', () => {
 describe('add to many items', () => {
     it('check table before adding items', () => {
         cy.get('tbody > :nth-child(1) > :nth-child(3)').
-            should('contain', '1')
+        should('contain', '1')
     })
     it('go to cart and add to many items', () => {
         cy.get('a > .btn').click()
         cy.get('.fa-plus > path').click().click()
-        cy.get('.btn').click()
+        cy.get('[href="/checkout"] > .cart-btns').click()
     })
     it('cy.location() - get window.location', () => {
         cy.location().should((location) => {
@@ -71,6 +75,8 @@ describe('add to many items', () => {
             should('contain', '3')
     })
 })
+
+
 
 describe('check validation before form', () => {
     it('check error validation', () => {
@@ -117,7 +123,7 @@ describe('check validation after form has been filled', () => {
 describe('check form values still in after changing page', () => {
     it('check inputs', () => {
         cy.get('a > .btn').click()
-        cy.get('.btn').click()
+        cy.get('[href="/checkout"] > .cart-btns').click()
         cy.get('#firstNameValidate').
             should('have.value', form.firstName)
         cy.get('#lastNameValidate').
@@ -132,5 +138,5 @@ describe('check form values still in after changing page', () => {
             should('have.value', form.street)
         cy.get('#buildingValidate').
             should('have.value', form.buildingNumber)
-    })
+     })
 })

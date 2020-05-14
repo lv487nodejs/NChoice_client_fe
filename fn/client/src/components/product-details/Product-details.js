@@ -23,6 +23,7 @@ import {
   productsLoadingStart,
   productsLoadingStop
 } from '../../actions';
+import CommentForm from "../comment-form/comment-form";
 
 const ProductDetails = ({
   id,
@@ -73,7 +74,6 @@ const ProductDetails = ({
   }, [storeService, id, setProduct, setSizes, productsLoadingStart, productsLoadingStop, setProducts, products.length]);
 
   const simularProducts = products.filter(elem => elem.catalog === product.catalog)
-
 
   const handleCheck = item => () => {
     setCheckSize(item)
@@ -158,7 +158,7 @@ const ProductDetails = ({
           />
         </Col>
         <Col className="text" id="text">
-          <StarsRating rating={product.rate} />
+          <StarsRating rating={product.rate} id={product.id} />
           <Card.Title className="title" id="title">{product.title}</Card.Title>
           <Card.Text className="productDescription" id="description" >
             {product.description}
@@ -196,6 +196,8 @@ const ProductDetails = ({
       <div className="similarItems">Similar items</div>
       <hr />
       <SimularProducts products={simularProducts} className="routingImg" />
+      <hr />
+      <CommentForm productId={product.id} rate={product.rate} />
     </Card>
   );
 };

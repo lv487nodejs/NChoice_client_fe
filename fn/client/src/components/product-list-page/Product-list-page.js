@@ -23,16 +23,16 @@ import { Button } from "react-bootstrap";
 const sortAsc = 1;
 
 const ProductListPage = ({
-                           catalogLoaded,
-                           addCurrentPage,
-                           addPostsPerPage,
-                           addSortByPrice,
-                           addSortByRate,
-                           pagesCount,
-                           setCatalogFilter,
-                           catalog,
-                           clearFilter
-                         }) => {
+  catalogLoaded,
+  addCurrentPage,
+  addPostsPerPage,
+  addSortByPrice,
+  addSortByRate,
+  pagesCount,
+  setCatalogFilter,
+  catalog,
+  clearFilter
+}) => {
 
   const sortByPriceHandler = (value) => {
     addSortByRate(0);
@@ -53,14 +53,14 @@ const ProductListPage = ({
     defaultClass: "fas fa-sort-up",
     toChangeClass: "fas fa-sort-down"
   },
-    {
-      text: "RATE",
-      value: sortAsc,
-      handler: sortByRateHandler,
-      variant: "dark",
-      defaultClass: "fas fa-sort-up",
-      toChangeClass: "fas fa-sort-down"
-    }];
+  {
+    text: "RATE",
+    value: sortAsc,
+    handler: sortByRateHandler,
+    variant: "dark",
+    defaultClass: "fas fa-sort-up",
+    toChangeClass: "fas fa-sort-down"
+  }];
 
   useEffect(() => {
     catalogLoaded(catalog);
@@ -85,14 +85,14 @@ const ProductListPage = ({
 
   const changePagination = () => addCurrentPage(0);
   const sortButtons = sortOptions.map((item) => {
-    return <ProductSort key={item.text} options={item}/>;
+    return <ProductSort key={item.text} options={item} />;
   });
   return (
     <div>
       <h2 className="catalog-top-name">{catalog} Catalog</h2>
       <div className="products-options">
         <div className='search-wrapp'>
-          <SearchBar/>
+          <SearchBar />
           <Button className="clear-button" variant="dark" onClick={clearAllHandler}>CLEAR FILTERS</Button>
         </div>
         <div className='sort-wrapp'>
@@ -108,9 +108,9 @@ const ProductListPage = ({
       </div>
       <div className="product-list-page">
         <div className="filters">
-          <Filter/>
+          <Filter />
         </div>
-        <ProductList/>
+        <ProductList />
       </div>
       <ProductListPaginator
         pagesCount={pagesCount}
@@ -122,8 +122,8 @@ const ProductListPage = ({
 };
 
 const mapStateToProps = ({
-                           productsList: { pagesCount }
-                         }) => ({ pagesCount });
+  productsList: { pagesCount }
+}) => ({ pagesCount });
 const mapDispatchToProps = {
   catalogLoaded,
   addCurrentPage,
