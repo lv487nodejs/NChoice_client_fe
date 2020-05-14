@@ -47,8 +47,8 @@ const UserChangeData = ({ user,
             addUserDataToSTore(userId, accessToken)
             snackbarHandler(res.data.msg)
         }).catch((error) => {
-            console.log(error);
             snackbarHandler(error.message)
+            throw new Error(error);
         })
     }
     const snackbarHandler = (text) => {
@@ -96,8 +96,8 @@ const UserChangeData = ({ user,
                             autoComplete="on"
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity} />
-                        {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                     </Form.Group>
+                        {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                 </Form.Group>
                 <input className="btn btn-dark user-page-button" type="submit" value="Send changed data" />
                 <div id="user-page-snackbar" className="col-12">

@@ -14,7 +14,6 @@ import FilterItem from '../filterItem';
 import withStoreService from '../hoc';
 import { Button } from 'react-bootstrap';
 import './filter.css';
-import { compose } from 'redux';
 
 const Filter = ({
   storeService,
@@ -39,12 +38,12 @@ const Filter = ({
     storeService
       .getAllBrands()
       .then((response) => setBrands(response))
-      .catch((err) => console.log(err));
+      .catch((err) => {throw new Error(err)});
 
     storeService
       .getAllColors()
       .then((response) => setColors(response))
-      .catch((err) => console.log(err));
+      .catch((err) => {throw new Error(err)});
 
   }, [catalogLoaded, storeService]);
 
@@ -55,7 +54,7 @@ const Filter = ({
       .then((response) => {
         setCategories(response)
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {throw new Error(err)});
   }, [storeService, match.params.name]);
 
 

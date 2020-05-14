@@ -29,15 +29,11 @@ export const SignupSchemaLogin = yup.object().shape({
         .matches(passwordRegExp, passwordRegExpMessage)
 });
 
-export  const SignupSchemaRegister = yup.object().shape({
+export const SignupSchemaRegister = yup.object().shape({
     firstName: yup
-        .string()
-        .required(firstNameRequiredMessage)
-        .min(firstNameMinElementCount, firstNameMinMessage),
+        .string(),
     lastName: yup
-        .string()
-        .required(lastNameRequiredMessage)
-        .min(lastNameMinElementCount, lastNameMinMessage),
+        .string(),
     email: yup
         .string()
         .required(emailRequiredMessage)

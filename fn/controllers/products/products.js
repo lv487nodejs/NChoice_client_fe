@@ -44,6 +44,7 @@ const getPrpoducts = asyncHandler(async (req, res) => {
         { $limit: +postsperpage }
 
     ]);
+    
     if (!products) {
         return next(
             new ErrorResponse('Product not found.', 404)

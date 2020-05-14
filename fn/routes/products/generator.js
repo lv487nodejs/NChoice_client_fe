@@ -157,7 +157,6 @@ router.post('/', async (req, res) => {
                     rate: rateR,
                     propetries: props,
                 });
-                console.log(product);
                 await product.save();
                 res.status(201).send(product);
             } catch (err) {
