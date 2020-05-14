@@ -194,7 +194,7 @@ const ProductDetails = ({
       <hr />
       <SimularProducts products={simularProducts} className="routingImg" />
       <hr />
-      <CommentForm productId={product.id} />
+      <CommentForm productId={product.id} rate={product.rate} />
     </Card>
   );
 };

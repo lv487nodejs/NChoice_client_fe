@@ -8,7 +8,7 @@ import CommentItem from "../comment-item/comment-item";
 import {Link} from 'react-router-dom';
 import StarsRating from "../star-rating";
 
-const CommentForm = ({productId, setComments, storeService, comments}) => {
+const CommentForm = ({productId, setComments, storeService, comments, rate}) => {
   const [text, setText] = useState('');
   const userId = getFromLocalStorage('userId');
   const [tempText, setTempText] = useState(null);
@@ -33,7 +33,7 @@ const CommentForm = ({productId, setComments, storeService, comments}) => {
           onSubmit={addComment}
     >
       <h3> Leave a comment </h3>
-      <div className='star'><h6 className='rate'> Rate the product: </h6> <StarsRating/></div>
+      <div className='star'><h6 className='rate'> Rate the product: </h6> <StarsRating rating={rate} id={productId}/></div>
       <textarea className='feedback-form'
                 name='text'
                 value={text}
