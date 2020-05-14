@@ -1,7 +1,5 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const passport = require('passport')
-const passportSetup = require('../../config/passport-config')
 const Users = require('../../models/User');
 const ErrorResponse = require('../../utils/errorResponse');
 const asyncHandler = require('../../middleware/async');
@@ -103,12 +101,36 @@ const logout = asyncHandler(async (req, res, next) => {
     res.sendStatus(204);
 });
 
-const googleAuth = asyncHandler(passport.authenticate('google', {
-    scope: ['profile']
-}))
+const googleAuth = asyncHandler( async (req, res, next) => {
+    const { email } = req.user
+    const user = await Users.findOne({ email });
+    const userName = { name: user.email }
+    console.log(req.user)
+    const accessToken = generateAccessToken(userName);
+    const refreshToken = generateRefreshToken(userName);
+    user.tokens = [];
+    user.tokens.push(refreshToken)
+    await user.save();
+
+    res.send({ accessToken, refreshToken, userId: user._id, cart: user.cart });
+})
 
 const googleRedirect = asyncHandler(async (req, res) => {
     res.send('you reached callback url')
+})
+
+const facebookAuth = asyncHandler( async (req, res, next) => {
+    const { email } = req.user
+    const user = await Users.findOne({ email });
+    const userName = { name: user.email }
+    console.log(req.user)
+    const accessToken = generateAccessToken(userName);
+    const refreshToken = generateRefreshToken(userName);
+    user.tokens = [];
+    user.tokens.push(refreshToken)
+    await user.save();
+
+    res.send({ accessToken, refreshToken, userId: user._id, cart: user.cart });
 })
 
 const emailConfirmation = asyncHandler(async (req, res, next) => {
@@ -138,5 +160,6 @@ module.exports = {
     logout,
     emailConfirmation,
     googleAuth,
-    googleRedirect
+    googleRedirect,
+    facebookAuth
 };

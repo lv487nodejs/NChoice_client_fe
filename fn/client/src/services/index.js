@@ -168,4 +168,13 @@ export default class StoreService {
     const news = await this.getResource('news');
     return news;
   };
+
+  oauthGoogle = async (token) => {
+    const res = await this.postData('auth/oauth/google', token)
+    return res
+  }
+  oauthFacebook = async (token) => {
+    const res = await this.postData('auth/oauth/facebook', token)
+    return res
+  }
 }

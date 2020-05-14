@@ -24,8 +24,7 @@
     "mongoose": "^5.9.0",
     "morgan": "^1.9.1",
     "nodemailer": "^6.4.6",
-    "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0",
+    "passport-google-token": "^0.1.2",
     "react-customer-chat": "^1.0.2",
     "react-fontawesome": "^1.7.1",
     "react-images-viewer": "^1.6.2",
@@ -38,7 +37,6 @@
     "rotating-file-stream": "^2.0.2"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
     "chance": "^1.1.4",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
@@ -51,8 +49,9 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "nodemon": "^2.0.3",
     "passport": "^0.4.1",
-    "passport-google-oauth": "^2.0.0",
-    "passport-google-oauth20": "^2.0.0",
-    "prettier": "^1.19.1"
+    "passport-facebook-token": "^3.3.0",
+    "prettier": "^1.19.1",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.1.19"
   }
 }

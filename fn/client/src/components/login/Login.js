@@ -12,6 +12,8 @@ import LoadingSpinner from "../Loading-spinner";
 import { SignupSchemaLogin } from '../../configs/login-register-config';
 import withStoreService from '../hoc';
 import { setToLocalStorage } from '../../services/localStoreService';
+import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login"
 
 const addDataToLocalStorage = (token) => {
     setToLocalStorage('userId', token.userId)
@@ -73,6 +75,25 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         return <Redirect to='/' />
     }
 
+    const responseGoogle = async (res) => {
+        console.log('Google', res.accessToken)
+        const userFromApi = await storeService.oauthGoogle({access_token: res.accessToken})
+        const { accessToken, refreshToken, cart, userId } = userFromApi
+        setUserLogged(true);
+        addDataToLocalStorage({ accessToken, refreshToken, userId })
+        setCart(cart)
+
+
+    }
+
+    const responseFacebook = async (res) => {
+        console.log('FB', res)
+        const userFromAPI = await storeService.oauthFacebook({access_token: res.accessToken})
+        const { accessToken, refreshToken, cart, userId } = userFromAPI
+        setUserLogged(true);
+        addDataToLocalStorage({ accessToken, refreshToken, userId })
+        setCart(cart)
+    }
 
     return (
         <div className={'login'}>
@@ -126,6 +147,18 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     <Link to="/register" className="btn btn-link" >REGISTER</Link>
                 </Form.Group>
             </Form>
+            <FacebookLogin
+            appId={'1189412381401260'}
+            textButton={'Facebook'}
+            fields={'name, email, picture'}
+            callback={responseFacebook}
+            />
+            <GoogleLogin
+                clientId = {'303875330429-u4510uka1kogr1k4lqcgpr1eree7p20r.apps.googleusercontent.com'}
+                buttonText={'Google'}
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+            />
         </div>
     )
 };
