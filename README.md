@@ -43,7 +43,15 @@ Before sending any pull request, please discuss requirements/changes to be imple
 
 4.6. Run "npm run cypress" at fn/fn/admin folder to run end-to-end tests.
 
-# 5. Project API
+# 5. Project Deploy
+
+5.1. Our client page deployed at **https://lv487node-client.herokuapp.com/**
+
+5.2. Our admin portal deployed at **https://lv487node-admin.herokuapp.com/**
+
+5.2. Our backend deployed at **https://lv487node-backend.herokuapp.com/**
+
+# 6. Project API
 ## User:
 POST:
 
