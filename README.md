@@ -1,5 +1,5 @@
-![Image alt](https://github.com/lv487nodejs/NChoice/blob/master/NChoice.PNG)
 # Nature Choice(NChoice)
+![Image alt](https://github.com/lv487nodejs/NChoice/blob/master/NChoice.PNG)
 # 1. About the project
 “Nature choice” is the e-commerce online shop with ecological clothes. This application is an exciting place for the whole family to shop. We provide an exceptional style for everybody that made of eco-friendly or recycled materials. In our website customers can register, login and have a great shopping experience. Сustomer’s wish list and cart are stored at the database, so if the user will Log out – all data will be waiting for him to come back. 
 The admin part of the application designed for managers of the project to maintain orders, products, and user accounts. 
