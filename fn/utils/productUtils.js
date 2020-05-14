@@ -67,7 +67,7 @@ const prepareProductsToSend = products => {
             propetries: product.propetries,
             price: product.price,
             mrsp: product.mrsp,
-            rate: product.rate.reduce((sum, item) => sum + item,0) / product.rate.length,
+            rate: product.rate,
             material: product.material,
         };
 
