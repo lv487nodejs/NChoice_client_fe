@@ -1,22 +1,24 @@
 #user-form {
-    width: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
 }
 
 .user-page-button {
     margin-top: 1rem;
 }
-
-
-
+/* eye */
+.pass-wrapper {
+    position: relative;
+    display: flex;
+    margin-bottom: 14px;
+  }
 
 @media screen and (max-width:1200px) {
     #user-form {
         width: 100%;
-    }
-   
+    }   
 }
 
 @media screen and (max-width:992px) {

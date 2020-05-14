@@ -4,8 +4,8 @@ import { Card, Image } from 'react-bootstrap'
 
 const NewsListItem = ({ text, title, newsImage, authorPhoto, date, author }) => {
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-    const date1 = new Date(date)
-    const dateNews = date1.toLocaleString("en-US", options)
+    const dateToShow = new Date(date)
+    const dateNews = dateToShow.toLocaleString("en-US", options)
 
     return (
             <section className="news-card">
@@ -15,7 +15,7 @@ const NewsListItem = ({ text, title, newsImage, authorPhoto, date, author }) => 
                 <hr/>
                 <small className="text-muted">{dateNews}</small>
                 <Card.Body>
-                    <Card.Title className="card-title">{title}</Card.Title>
+                    <Card.Title className="news-card-title">{title}</Card.Title>
                     <Card.Text className = "article">
                         {text}
                     </Card.Text>

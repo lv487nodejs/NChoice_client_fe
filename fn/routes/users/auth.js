@@ -12,7 +12,8 @@ const {
     logout,
     emailConfirmation,
     googleAuth,
-    facebookAuth
+    facebookAuth,
+    loginAdmin
 } = require('../../controllers/users/auth')
 
 const router = express.Router();
@@ -29,6 +30,8 @@ router.post(
 router.post('/oauth/google', passportGoogleIndus, googleAuth)
 
 router.post('/oauth/facebook', passportFacebookIndus, facebookAuth)
+
+router.post('/admin/login', loginAdmin);
 
 // get token
 router.post('/token', getToken);

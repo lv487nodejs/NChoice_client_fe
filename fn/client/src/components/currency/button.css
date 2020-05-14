@@ -93,6 +93,10 @@ button:focus {
     .curr {
         padding: .5rem .7rem !important;
     }
+
+    .button-currency {
+      font-size: .9rem;
+    }
 }
 @media only screen and (max-device-width: 520px) {
     .img-curr {

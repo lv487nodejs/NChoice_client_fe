@@ -1,20 +1,21 @@
 import axios from 'axios';
+import { _apiBase } from '../configs/frontend-config'
 
 export default class StoreService {
-  _apiBase = 'http://localhost:5000/';
 
   getResource = async (url) => {
     try {
-      const catalogs = await axios.get(`${this._apiBase}${url}`);
+      const catalogs = await axios.get(`${_apiBase}${url}`);
       return catalogs.data;
     } catch (error) {
       console.error(error);
+      throw error;
     }
   };
 
   postData = async (url, dataToSend) => {
     try {
-      const response = await axios.post(`${this._apiBase}${url}`, dataToSend);
+      const response = await axios.post(`${_apiBase}${url}`, dataToSend);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -148,10 +149,10 @@ export default class StoreService {
     return cart;
   };
   getUserById = async (id, token) => {
-    return axios({ method: 'GET', url: `${this._apiBase}users/${id}`, headers: { "x-auth-token": token } })
+    return axios({ method: 'GET', url: `${_apiBase}users/${id}`, headers: { "x-auth-token": token } })
   };
   sendUserChangedData = async (id, token, data) => {
-    return axios({ method: 'PUT', url: `${this._apiBase}users/${id}`, data, headers: { "x-auth-token": token } })
+    return axios({ method: 'PUT', url: `${_apiBase}users/${id}`, data, headers: { "x-auth-token": token } })
   };
 
   registerUser = async (user) => {
@@ -162,12 +163,44 @@ export default class StoreService {
     return await this.postData('auth/login', user);
   }
   putToCart = async (id, data, token) => {
-    return await axios.put(`${this._apiBase}users/cart/${id}`, { data, "x-auth-token": token });
+    return await axios.put(`${_apiBase}users/cart/${id}`, { data, "x-auth-token": token });
   }
   getAllNews = async () => {
     const news = await this.getResource('news');
     return news;
   };
+
+  getAllComments = async () => {
+    const comments = await this.getResource('comments');
+    return comments;
+  };
+
+  getCommentsByProductId = async (productId) => {
+    const comments = await this.getResource(`comments?productId=${productId}`);
+    return comments;
+  };
+
+  postComments = async comment => {
+    const res = await this.postData('comments', comment);
+    return res;
+  };
+
+  deleteComment = async (id, token) => {
+    return await axios.delete(`${_apiBase}comments/${id}`, { headers: { "x-auth-token": token }})
+  };
+
+  confirmEmail = async token => {
+    try {
+      const res = await this.getResource(`auth/confirmation/${token}`)
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
+  updateRate = async (id, rate, token) => {
+    return await axios.put(`${_apiBase}rating/${id}`,{rate}, { headers: { 'x-auth-token': token}}
+    );
+  }
 
   oauthGoogle = async (token) => {
     const res = await this.postData('auth/oauth/google', token)

@@ -6,6 +6,17 @@
 .form-space{
     margin-top: 2rem;
 }
+#checkout-form{
+  display: flex;
+  flex-direction: column;  
+}
+
+#checkout-table{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
@@ -14,4 +25,10 @@ input[type=number]::-webkit-outer-spin-button {
 
 .jumbo{
   margin: 1rem
+}
+
+@media (max-width:426px){
+  #checkout-row{
+    flex-direction:column-reverse;
+  }
 }

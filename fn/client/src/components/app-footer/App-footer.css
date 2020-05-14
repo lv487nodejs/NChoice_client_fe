@@ -28,21 +28,13 @@ a:hover {
   color: white;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 700px) {
   .card-body {
-    display: flex;
     min-height: 1px;
     padding: 1.25rem;
-    flex-direction: column;
-    align-items: center;
   }
+  
   .footer .icon {
     font-size: 2.5rem;
-  }
-}
-
-@media only screen and (min-width: 576px) and (max-width: 768px) {
-  .card-body {
-    width: 30%;
   }
 }

@@ -8,7 +8,9 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import SimularProducts from '../simular-products/Simular-products';
 import StarsRating from '../star-rating';
 import LoadingSpinner from '../Loading-spinner';
-import ImgsViewer from 'react-images-viewer'
+import ImgsViewer from 'react-images-viewer';
+
+import ProductMaterial from '../product-material'
 
 import withStoreService from '../hoc';
 import {
@@ -21,6 +23,7 @@ import {
   productsLoadingStart,
   productsLoadingStop
 } from '../../actions';
+import CommentForm from "../comment-form/comment-form";
 
 const ProductDetails = ({
   id,
@@ -62,6 +65,7 @@ const ProductDetails = ({
 
   useEffect(() => {
     productsLoadingStart()
+    window.scrollTo(0,0)
     if (!products.length) {
       storeService.getAllProducts().then((res) => setProducts(res))
     }
@@ -70,7 +74,6 @@ const ProductDetails = ({
   }, [storeService, id, setProduct, setSizes, productsLoadingStart, productsLoadingStop, setProducts, products.length]);
 
   const simularProducts = products.filter(elem => elem.catalog === product.catalog)
-
 
   const handleCheck = item => () => {
     setCheckSize(item)
@@ -94,7 +97,6 @@ const ProductDetails = ({
   if (loading) {
     return <LoadingSpinner />
   }
-
   return (
     <Card className="wrapperDetails" id="wrapper">
       <Card.Body className="cardBody">
@@ -156,20 +158,21 @@ const ProductDetails = ({
           />
         </Col>
         <Col className="text" id="text">
-          <StarsRating rating={product.rate} />
+          <StarsRating rating={product.rate} id={product.id} />
           <Card.Title className="title" id="title">{product.title}</Card.Title>
           <Card.Text className="productDescription" id="description" >
             {product.description}
           </Card.Text>
           <div className='prices'>
           <span className="cardPrice price-pdp">{`${(parseFloat(product.price * currency).toFixed(2))} ${currencyIcon}`}</span>
-          <span className="cardPrice msrp-price">{`${(parseFloat(product.mrsp * currency).toFixed(2))} ${currencyIcon}`}</span>
+          <span id="msrp-price" className="cardPrice">{`${(parseFloat(product.mrsp * currency).toFixed(2))} ${currencyIcon}`}</span>
           </div>
           <Card.Text
             style={{ backgroundColor: product.color }}
             className="color"
             id="color"
           ></Card.Text>
+          <Link to='/materials'><ProductMaterial/></Link>
           <Col className="size" id="size">{sizeItem}</Col>
           <Card.Body className="buttons" id="buttons">
             <FontAwesomeIcon icon={faHeart} className="heart button"
@@ -193,6 +196,8 @@ const ProductDetails = ({
       <div className="similarItems">Similar items</div>
       <hr />
       <SimularProducts products={simularProducts} className="routingImg" />
+      <hr />
+      <CommentForm productId={product.id} rate={product.rate} />
     </Card>
   );
 };

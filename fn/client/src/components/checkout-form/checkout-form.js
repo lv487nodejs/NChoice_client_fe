@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -24,6 +24,11 @@ const CheckoutForm = ({
     setSnackbarText,
     setOrderToStore,
 }) => {
+
+    useEffect(() => {
+        window.scrollTo(0,0)
+      }, []);
+    
 
     const [validated, setValidated] = useState(false);
     const [order, setOrder] = useState(orderStore);
@@ -133,11 +138,15 @@ const CheckoutForm = ({
 
     return (
         <Container>
-            <Row>
+            <Row id="checkout-row">
                 <Col>
                     <Jumbotron className="jumbo">
                         <h2>Order Form</h2>
-                        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                        <Form 
+                        noValidate
+                        validated={validated}
+                        onSubmit={handleSubmit}
+                        id="checkout-form">
                             <fieldset className="field">
                                 <h3 className="text-center">Please tell us about yourself</h3>
                                 <Form.Group controlId="firstNameValidate">
@@ -275,7 +284,7 @@ const CheckoutForm = ({
                     </Jumbotron>
                 </Col>
                 <Col>
-                    <Jumbotron className="jumbo">
+                    <Jumbotron className="jumbo" id="checkout-table">
                         <h2>Your Items</h2>
                         <CheckoutTable />
                         <Link to="/cart">

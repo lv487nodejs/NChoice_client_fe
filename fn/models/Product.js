@@ -42,10 +42,8 @@ const ProductSchema = new Schema({
     required: true, 
     min: 0 
   },
-  rate: { 
-    type: Number, 
-    default: 0 
-  },
+  rate: Number,
+  avgRate:Number,
   images: [String],
   propetries: [PropetriesSchema],
   modified: { 

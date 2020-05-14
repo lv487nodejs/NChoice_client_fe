@@ -32,17 +32,18 @@ const Filter = ({
   const [isVisible, setIsVisible] = useState(false)
 
   const showFilterClass = isVisible ? 'show-filter' : ''
+  const filterButtonIcon = isVisible ? 'fa fa-close' : 'fa fa-filter';
 
   useEffect(() => {
     storeService
       .getAllBrands()
       .then((response) => setBrands(response))
-      .catch((err) => console.log(err));
+      .catch((err) => {throw new Error(err)});
 
     storeService
       .getAllColors()
       .then((response) => setColors(response))
-      .catch((err) => console.log(err));
+      .catch((err) => {throw new Error(err)});
 
   }, [catalogLoaded, storeService]);
 
@@ -53,7 +54,7 @@ const Filter = ({
       .then((response) => {
         setCategories(response)
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {throw new Error(err)});
   }, [storeService, match.params.name]);
 
 
@@ -110,22 +111,22 @@ const Filter = ({
   })
   return (
     <div>
-      <Button variant="dark" className='filter-button' onClick={showHandler}>Filters</Button>
+      <Button variant="dark" className={`filter-button ${filterButtonIcon}`} onClick={showHandler}></Button>
       <div className={`filter-group ${showFilterClass}`}>
         <span className="filter-title">Filters</span>
         {itemsToShow}
       </div>
-    </div>
+      </div>
   );
 };
 
 const mapDispatchToProps = {
-  filterAddBrand,
-  filterAddColor,
-  filterAddCategories,
-  filterRemoveBrand,
-  filterRemoveCategory,
-  filterRemoveColor,
+        filterAddBrand,
+        filterAddColor,
+        filterAddCategories,
+        filterRemoveBrand,
+        filterRemoveCategory,
+        filterRemoveColor,
 };
 
 export default withStoreService()(

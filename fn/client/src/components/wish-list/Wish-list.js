@@ -49,13 +49,13 @@ const Wishlist = ({removeFromWishlist, storeService}) => {
             
         <span className='full-description-wishlist'>{item.description}</span>
 
-        <FontAwesomeIcon
+        </span>
+      </Figure.Caption>
+      
+      <FontAwesomeIcon
           icon = {faTrash}
           className="delte-wishlist-button"
           onClick={() => {handleRemoveFromWishlist(item)}}/>
-        </span>
-        
-      </Figure.Caption>
     </li>
   ))
 

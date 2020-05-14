@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect}from 'react'
 import './Thanks.css';
 import { Link } from 'react-router-dom';
 import { Button, Card } from 'react-bootstrap'
@@ -6,6 +6,10 @@ import { Button, Card } from 'react-bootstrap'
 const Thanks = () => {
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date().toLocaleDateString("en-US", options)
+
+    useEffect(() => {
+        window.scrollTo(0,0)
+      }, []);
 
     const message = `Dear Customer, \n
     Thank you for visiting us and making your first purchase!

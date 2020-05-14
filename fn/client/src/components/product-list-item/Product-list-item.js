@@ -4,7 +4,9 @@ import './Product-list-item.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import StarsRating from '../star-rating';
+import { getFromLocalStorage } from '../../services/localStoreService';
 
+const accessToken = getFromLocalStorage('accessToken');
 function ProductListItem({ title, id, images, price, mrsp, currency, currencyIcon, rate }) {
 
     const [priceWithRate, setPriceWithRate] = useState();
@@ -17,13 +19,15 @@ function ProductListItem({ title, id, images, price, mrsp, currency, currencyIco
     return (
         <div className="wrapper" id="wrapper" key={id} >
             <div className="productCard" id="productCard"><img id="productImg" alt={`${images}`} src={`/images/products/${images}`} />
-                <Link id="productLink"key={id} to={`/products/${id}`}>
+                <Link id="productLink" key={id} to={`/products/${id}`}>
                     <div className="info" id={id}>
-                        <StarsRating rating={rate} />
+
+                        <StarsRating rating={rate} id={id} accessToken={accessToken}/>
+
                         <p className="productName" id="productName">{title}</p>
                         <div className="bottomElements" id="bottomElements">
-                            <div className="cardPrice"id="realPrice">{`${priceWithRate} ${currencyIcon}`}</div>
-                            <div className="cardPrice msp-price" id="msrpPrice">{`${msrpWithRate} ${currencyIcon}`}</div>
+                            <div className="cardPrice" id="realPrice">{`${priceWithRate} ${currencyIcon}`}</div>
+                            <div className="cardPrice msrp-price" id="msrpPrice">{`${msrpWithRate} ${currencyIcon}`}</div>
                         </div>
                     </div>
                 </Link>

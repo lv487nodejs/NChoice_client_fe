@@ -4,7 +4,6 @@
 }
 
 .card-img{
-    width: 20rem;
     transition: 2s;
     transform: scale(1);
 }
@@ -17,19 +16,22 @@
     height: 20rem;
     overflow: hidden;
     border-radius: 5px;
-    margin-left: 7%
 }
 
-.card-title{
+.news-card-title{
     height: 4.5rem;
+    min-width: 17rem;
+    margin-bottom: 2rem;
 }
 
 .news-footer{
     display: flex;
     justify-content:space-around;
+    margin-bottom: 2rem;
 }
 .footer-image{
-    width:4rem
+    max-height: 73px;
+    width: 55px;
 }
 .news-card{
     width:100%;

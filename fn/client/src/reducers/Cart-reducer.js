@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getFromLocalStorage, setToLocalStorage } from "../services/localStoreService";
-import { _baseUrl } from '../configs/frontend-config';
+import { _apiBase } from '../configs/frontend-config';
 const initialState = { cartNumbers: 0, cartProducts: [] }
 
 const userId = getFromLocalStorage('userId');
@@ -9,12 +9,12 @@ const localCartNumbers = getFromLocalStorage('cart_numbers');
 const accessToken = getFromLocalStorage('accessToken');
 
 const saveCart = async (userId, data, token) => {
-  axios({ method: 'PUT', url: `${_baseUrl}users/cart/${userId}`, data, headers: { "x-auth-token": token } });
+  axios({ method: 'PUT', url: `${_apiBase}users/cart/${userId}`, data, headers: { "x-auth-token": token } });
 }
 
 const setInitial = async () => {
   if (userId) {
-    const res = await axios({ method: 'GET', url: `${_baseUrl}users/${userId}`, headers: { "x-auth-token": accessToken } });
+    const res = await axios({ method: 'GET', url: `${_apiBase}users/${userId}`, headers: { "x-auth-token": accessToken } });
     const { cart } = res.data.user
     if (!cart) {
       saveCart(userId, { cartNumbers: 0, cartProducts: [] })

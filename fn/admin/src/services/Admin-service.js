@@ -5,9 +5,11 @@ import { config } from '../config';
 const { serverUrl } = config.app;
 
 export default class AdminService {
+
+    token = localStorage.getItem('accessToken');
     getResource = async url => {
         try {
-            const response = await axios.get(`${serverUrl}${url}`);
+            const response = await axios.get(`${serverUrl}${url}`, { headers: { 'x-auth-token': this.token}});
             return response.data;
         } catch (error) {
             console.error(error);
@@ -16,7 +18,7 @@ export default class AdminService {
 
     postData = async (url, dataToSend) => {
         try {
-            const response = await axios.post(`${serverUrl}${url}`, dataToSend);
+            const response = await axios.post(`${serverUrl}${url}`, dataToSend, { headers: { 'x-auth-token': this.token}});
             return response.data;
         } catch (error) {
             throw error;
@@ -25,7 +27,7 @@ export default class AdminService {
 
     putData = async (url, dataToSend) => {
         try {
-            const response = await axios.put(`${serverUrl}${url}`, dataToSend);
+            const response = await axios.put(`${serverUrl}${url}`, dataToSend, { headers: { 'x-auth-token': this.token}});
             return response.data;
         } catch (error) {
             console.error(error);
@@ -34,7 +36,7 @@ export default class AdminService {
 
     deleteResource = async url => {
         try {
-            const response = await axios.delete(`${serverUrl}${url}`);
+            const response = await axios.delete(`${serverUrl}${url}`, { headers: { 'x-auth-token': this.token}});
             return response.data;
         } catch (error) {
             console.error(error);

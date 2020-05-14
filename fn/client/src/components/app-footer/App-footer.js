@@ -14,8 +14,8 @@ const catalogs = catalogsFooter.items.map((item) => (
   <Row key={item.item}><Link to={CATALOGS_URL + item.url}>{item.item}</Link></Row>
 ))
 
-const policies = policiesFooter.items.map((item, index) =>
-  (<Row key={index}><Card.Link >{item}</Card.Link></Row>
+const policies = policiesFooter.items.map((item) =>
+  (<Row key={item.item}><Link to={item.url}>{item.item}</Link></Row>
   ))
 
 const contacts = contactInformationFooter.items.map((item, index) =>
@@ -25,8 +25,8 @@ const contacts = contactInformationFooter.items.map((item, index) =>
 const AppFooter = () => (
   <footer className="footer">
     <div className="footer-inner">
-      <CardDeck>
-        <Card.Body>
+      <CardDeck id="footer-card">
+        <Card.Body >
           <Card.Title>{catalogsFooter.title}</Card.Title>
           {catalogs}
         </Card.Body>
