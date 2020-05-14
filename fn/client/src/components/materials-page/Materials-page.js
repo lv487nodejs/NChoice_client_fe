@@ -38,8 +38,7 @@ const MaterialsPage = () => {
 
             <div className='material-title'>
                 <h2 className='materials-h2'>JUTE <img width='35px' src='../images/materials/jute.svg' alt='jute'></img></h2>
-                <p className='materials-h3'>IT GROWN IN THE BENGAL AREA</p>
-                
+                <p className='materials-h3'>IT GROWN IN THE BENGAL AREA</p> 
             </div>
             <div className='hemp-img' style={{backgroundImage: 'url(/images/materials-photo/jute2.jpg)'}}>
                 <div className='hemp-description'>
@@ -76,8 +75,7 @@ const MaterialsPage = () => {
                     </div>
                 </div>
             </div>
-            
-            
+
             <div className='material-title'>
                 <h2 className='materials-h2'>SILK <img width='35px' src='../images/materials/silk.svg' alt='silk'></img></h2>
                 <p className='materials-h3'>PRODUCED IN GOTS-CERTIFIED FACTORIES</p>
