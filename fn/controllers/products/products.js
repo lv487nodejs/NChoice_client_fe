@@ -3,9 +3,9 @@ const Catalogs = require('../../models/Catalog');
 const Categories = require('../../models/Category');
 const Brands = require('../../models/Brand');
 const Colors = require('../../models/Color');
-
 const asyncHandler = require('../../middleware/async');
 const ErrorResponse = require('../../utils/errorResponse');
+const mongoose = require('mongoose');
 const {
     prepareProductsToUpdate,
     prepareProductsToSend,
@@ -33,14 +33,25 @@ const getPrpoducts = asyncHandler(async (req, res) => {
         projection.score = { $meta: 'textScore' };
     }
 
-    const products = await Products.find(filter, projection)
-        .sort(sort)
-        .skip(+skip)
-        .limit(+postsperpage)
-        .populate('catalog')
-        .populate('category')
-        .populate('color')
-        .populate('brand');
+    const products = await Products.aggregate([
+
+        {
+            $match: filter
+        },
+        { $addFields: { avgRating: { $avg: "$rate" } } },
+        { $sort: { avgRating: +sort.rate}},
+        {$limit: +postsperpage}
+
+    ]);
+
+    // const products = await Products.find(filter, projection)
+    //     .sort(sort)
+    //     .skip(+skip)
+    //     .limit(+postsperpage)
+    //     .populate('catalog')
+    //     .populate('category')
+    //     .populate('color')
+    //     .populate('brand');
 
     if (!products) {
         return next(

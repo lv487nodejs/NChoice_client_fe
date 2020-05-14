@@ -2,7 +2,7 @@ const Catalogs = require('../models/Catalog');
 const Categories = require('../models/Category');
 const Brands = require('../models/Brand');
 const Colors = require('../models/Color');
-
+const mongoose = require('mongoose');
 const searchConfig = (searchTerm) => {
     return [
         { title: { $regex: new RegExp(searchTerm) } },
@@ -18,22 +18,22 @@ const getFilters = async query => {
         if (catalog) {
             const catalogItems = await Catalogs.find({ catalog: { $in: catalog.split(',') } });
             catalogItems.forEach((value, i, array) => (array[i] = value.id));
-            filter.catalog = { $in: catalogItems };
+            filter.catalog = { $in: [ mongoose.Types.ObjectId(catalogItems.toString())] };
         }
         if (category) {
             const categoryItems = await Categories.find({ category: { $in: category.split(',') } });
             categoryItems.forEach((value, i, array) => (array[i] = value.id));
-            filter.category = { $in: categoryItems };
+            filter.category = { $in: [ mongoose.Types.ObjectId(categoryItems.toString())] };
         }
         if (brand) {
             const brandItems = await Brands.find({ brand: { $in: brand.split(',') } });
             brandItems.forEach((value, i, array) => (array[i] = value.id));
-            filter.brand = { $in: brandItems };
+            filter.brand = { $in: [ mongoose.Types.ObjectId(brandItems.toString())] };
         }
         if (color) {
             const colorFilter = await Colors.find({ color: { $in: color.split(',') } });
             colorFilter.forEach((value, i, array) => (array[i] = value.id));
-            filter.color = { $in: colorFilter };
+            filter.color = { $in: [ mongoose.Types.ObjectId(colorFilter.toString())] };
         }
     } catch (err) {
         throw { message: err.message };
@@ -68,7 +68,7 @@ const prepareProductsToSend = products => {
             propetries: product.propetries,
             price: product.price,
             mrsp: product.mrsp,
-            rate: product.rate.reduce((sum, item) => sum + item, 1) / product.rate.length
+            rate: product.rate.reduce((sum, item) => sum + item,0) / product.rate.length
         };
 
         if (product.brand) newProduct.brand = product.brand.brand;

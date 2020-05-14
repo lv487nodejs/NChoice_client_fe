@@ -92,7 +92,7 @@ router.post('/', async (req, res) => {
                 }
                 const mrspR = chance.integer({ min: 100, max: 1000 });
                 const priceR = parseInt(mrspR * chance.pick([0.8, 0.6, 0.7, 0.9], 1));
-                const rateR = chance.floating({ min: 2, max: 5, fixed: 2 })
+                const rateR = chance.floating( [{min: 2, max: 5, fixed: 2 }])
                 const imageNumber = chance.integer({ min: 1, max: 19 });
                 const props = [
                     {

@@ -35,11 +35,11 @@ const ProductListPage = ({
                          }) => {
 
   const sortByPriceHandler = (value) => {
-    addSortByRate(0);
+    // addSortByRate(0);
     addSortByPrice(value);
   };
   const sortByRateHandler = (value) => {
-    addSortByPrice(0);
+    // addSortByPrice(0);
     addSortByRate(value);
   };
   const clearAllHandler = () => {

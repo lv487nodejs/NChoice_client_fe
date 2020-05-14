@@ -14,6 +14,7 @@ import FilterItem from '../filterItem';
 import withStoreService from '../hoc';
 import { Button } from 'react-bootstrap';
 import './filter.css';
+import { compose } from 'redux';
 
 const Filter = ({
   storeService,

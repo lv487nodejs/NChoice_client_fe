@@ -52,7 +52,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
     const accessToken = generateAccessToken(userName);
     const refreshToken = generateRefreshToken(userName);
     const emailToken = generateEmailToken(userName);
-    const url = `${process.env.CONFIRM_URL}${emailToken}`;
+    const url = `${process.env.CONFIRM_URL_OLD}${emailToken}`;
 
     const emailMessage = {
         to: user.email,
@@ -62,8 +62,8 @@ const registerUser = asyncHandler(async (req, res, next) => {
     user.emailToken = emailToken;
     user.tokens = [];
     user.tokens.push(refreshToken);
-    sendEmail(emailMessage).then(() => {
-        user.save();
+    sendEmail(emailMessage, async() => {
+      await  user.save();
         return res.status(200).send({ message: 'User saved', user, accessToken, refreshToken });
     });
 })

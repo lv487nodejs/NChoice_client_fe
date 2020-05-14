@@ -43,6 +43,7 @@ const ProductSchema = new Schema({
     min: 0 
   },
   rate: [Number],
+  avgRate:Number,
   images: [String],
   propetries: [PropetriesSchema],
   modified: { 
