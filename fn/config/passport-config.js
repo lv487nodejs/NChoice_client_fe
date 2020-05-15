@@ -7,8 +7,8 @@ require('dotenv').config();
 
 
 passport.use('googleToken', new GooglePlusTokenStrategy({
-    clientID: '303875330429-u4510uka1kogr1k4lqcgpr1eree7p20r.apps.googleusercontent.com',
-    clientSecret: 'aGN94UJdFyRfIt_dp_TTAg2x'
+    clientID: process.env.GOOGLE_CLIENT_ID ,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET
 }, async (accessToken, refreshToken, profile, done) =>{
     try{
         // check whether the user exists

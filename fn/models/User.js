@@ -50,9 +50,7 @@ const UserModel = new Schema({
     orders: {
         type: Schema.Types.ObjectId,
         ref: 'order'
-    },
-    googleID: String,
-    facebookID: String
+    }
 
 });
 
