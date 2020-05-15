@@ -17,7 +17,7 @@ const Thanks = () => {
     It is our goal that you are always happy with what you bought from us,
     so please let us know if your buying experience was anything short of excellent.
     We look forward to seeing you again.Have a great day!\n
-    Best Regards, Your friends at FN`;
+    Best Regards, Your friends at NChoice`;
 
     return (
         <Card className=" text-center">
