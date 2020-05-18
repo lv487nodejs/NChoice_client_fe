@@ -1,0 +1,42 @@
+html,
+body {
+    height: 100%;
+    position: relative;
+}
+
+.App {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto;
+    overflow: hidden;
+}
+
+@media only screen and (max-device-width: 991px) {
+    .App {
+    grid-template-rows: [row1] 2.2fr [row1-end row2] auto [row2-end row3] 3fr [row3-end];    }
+}
+@media only screen and (max-device-width: 768px) {
+    .App {
+        grid-template-rows: [row1] 4fr [row1-end row2] auto [row2-end row3] 5fr [row3-end];    }
+}
+
+@media only screen and (max-device-width: 700px){
+.App {
+    grid-template-rows: [row1] 1.5fr [row1-end row2] auto [row2-end row3] 7fr [row3-end];
+}
+}
+@media only screen and (max-device-width: 575px) {
+    .App {
+        grid-template-rows: [row1] 1.2fr [row1-end row2] auto [row2-end row3] 6fr [row3-end];
+    }
+}
+
+@media only screen and (max-device-width: 520px) {
+    .App {
+        grid-template-rows: [row1] 1.5fr [row1-end row2] auto [row2-end row3] 7fr [row3-end];
+    }
+
+    .ScrollUpButton__Container {
+        display: none;
+    }
+}

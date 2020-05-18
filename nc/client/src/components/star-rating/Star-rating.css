@@ -1,0 +1,16 @@
+.star-rating {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+#stars{
+  font-size: 0.7rem!important;
+}
+@media (max-width: 1024px){
+  .fa-2x {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+}
+

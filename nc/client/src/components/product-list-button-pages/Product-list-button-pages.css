@@ -1,0 +1,16 @@
+.buttonsGroup {
+    display: grid;
+    justify-items: right;
+    font-family: "Oswald";
+  }
+
+@media only screen and (max-device-width: 768px) {
+    .buttonsGroup button{
+        font-size: .7rem;
+    }
+    .sort-buttons{
+        margin-right: 1rem;
+    }
+
+
+}

@@ -1,0 +1,16 @@
+.page-item {
+    cursor: pointer;
+    /* align-self: center; */
+    font-family: "Oswald";
+  }
+  nav {
+    display: grid;
+    justify-items: center;
+  }
+  .active{
+    z-index: 2;
+    color: #0056b3;
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+  }

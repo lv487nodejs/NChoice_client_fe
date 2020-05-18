@@ -1,0 +1,38 @@
+.article {
+    height: 25rem;
+    overflow: hidden;
+}
+
+.card-img{
+    transition: 2s;
+    transform: scale(1);
+}
+
+.card-img:hover {
+    transform: scale(1.1);
+}
+
+.images-container{
+    height: 20rem;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.news-card-title{
+    height: 4.5rem;
+    min-width: 17rem;
+    margin-bottom: 2rem;
+}
+
+.news-footer{
+    display: flex;
+    justify-content:space-around;
+    margin-bottom: 2rem;
+}
+.footer-image{
+    max-height: 73px;
+    width: 55px;
+}
+.news-card{
+    width:100%;
+}
