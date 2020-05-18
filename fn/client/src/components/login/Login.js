@@ -5,9 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 
 import { setUserLogged, setUserLoading, setCart } from "../../actions";
-import { useForm } from "react-hook-form";
 import LoadingSpinner from "../Loading-spinner";
-import { SignupSchemaLogin } from '../../configs/login-register-config';
 import withStoreService from '../hoc';
 import { setToLocalStorage } from '../../services/localStoreService';
 
@@ -26,9 +24,6 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const [user, setUser] = useState(USER_DATA);
     const [errorMsg, setErrorMsg] = useState('');
 
-    const { register, errors, handleSubmit } = useForm({
-        validationSchema: SignupSchemaLogin
-    });
     const [passwordShown, setPasswordShown] = useState(false);
     const eyeClassName = passwordShown?'fa fa-eye':'fa fa-eye-slash';
 
@@ -74,7 +69,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
 
     return (
         <div className={'login'}>
-            <Form onSubmit={handleSubmit(handleOnSubmit)} >
+            <Form onSubmit={handleOnSubmit} >
                 <Form.Label className="lable">Log In</Form.Label>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
@@ -84,9 +79,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                         name={'email'}
                         value={user.email}
                         onChange={handleChange}
-                        ref={register}
                     />
-                    {errors.email && <p className="errorMessage">{errors.email.message}</p>}
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                             </Form.Text>
@@ -101,13 +94,9 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                             name={'password'}
                             value={user.password}
                             onChange={handleChange}
-                            ref={register}
-                            autoComplete="on"
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
-                    {errors.password && <p className="errorMessage">{errors.password.message}</p>}
-
                 </Form.Group>
                 <Form.Check
                     type="switch"

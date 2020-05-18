@@ -3,7 +3,7 @@ import './News-list-item.css';
 import { Card, Image } from 'react-bootstrap'
 
 const NewsListItem = ({ text, title, newsImage, authorPhoto, date, author }) => {
-    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+    const options = {  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
     const dateToShow = new Date(date)
     const dateNews = dateToShow.toLocaleString("en-US", options)
 

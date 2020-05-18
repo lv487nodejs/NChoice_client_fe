@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Form, Button, Col, Row, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -26,9 +26,9 @@ const CheckoutForm = ({
 }) => {
 
     useEffect(() => {
-        window.scrollTo(0,0)
-      }, []);
-    
+        window.scrollTo(0, 0)
+    }, []);
+
 
     const [validated, setValidated] = useState(false);
     const [order, setOrder] = useState(orderStore);
@@ -37,8 +37,8 @@ const CheckoutForm = ({
     const userId = getFromLocalStorage('userId');
 
     const clearLocalStorage = () => {
-        setToLocalStorage('cart_numbers',null);
-        setToLocalStorage('products_collection',null);
+        setToLocalStorage('cart_numbers', null);
+        setToLocalStorage('products_collection', null);
     };
 
     const productsForOrder = cartProducts.map(product => {
@@ -96,15 +96,16 @@ const CheckoutForm = ({
             setValidated(true);
             return
         };
-        
+
         applyOrder();
     }
 
     // Check the database for quantity of products in order
     const applyOrder = async () => {
         const notAvailable = [];
-        const productsPromises = await Promise.all(cartProducts.map(product => storeService.getOneProductPropertie(product.propetries._id)));
-        productsPromises.forEach((product, index) => {
+        const productsPromises = await Promise.all(cartProducts.map(product =>
+            storeService.getOneProductPropertie(product.propetries._id)));
+            productsPromises.forEach((product, index) => {
             const inCart = cartProducts[index];
             const { available } = product[0];
             if (inCart.quantity > available) {
@@ -114,7 +115,7 @@ const CheckoutForm = ({
                 });
             };
         });
-        
+
         if (notAvailable.length) {
             const snackbarMessages = notAvailable.map((notAvailableItem) => {
                 return snackBarMsg(notAvailableItem);
@@ -142,11 +143,11 @@ const CheckoutForm = ({
                 <Col>
                     <Jumbotron className="jumbo">
                         <h2>Order Form</h2>
-                        <Form 
-                        noValidate
-                        validated={validated}
-                        onSubmit={handleSubmit}
-                        id="checkout-form">
+                        <Form
+                            noValidate
+                            validated={validated}
+                            onSubmit={handleSubmit}
+                            id="checkout-form">
                             <fieldset className="field">
                                 <h3 className="text-center">Please tell us about yourself</h3>
                                 <Form.Group controlId="firstNameValidate">

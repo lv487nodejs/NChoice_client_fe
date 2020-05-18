@@ -22,7 +22,7 @@ const routes = {
 
 export const config = {
     app: {
-        title: 'FN Admin Portal',
+        title: 'NChoice Admin Portal',
         menuCategories: [
             ['Orders', routes.pathToOrders, AssessmentIcon],
             ['Products', routes.pathToProducts, ShoppingBasketIcon],

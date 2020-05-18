@@ -29,7 +29,7 @@ const getUser = asyncHandler(async (req, res, next) => {
     user.tokens = [];
     user.tokens.push(refreshToken);
     await user.save()
-
+    user.password = ''
     res.status(200).send({ accessToken, refreshToken, user });
 });
 
@@ -52,7 +52,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
     const accessToken = generateAccessToken(userName);
     const refreshToken = generateRefreshToken(userName);
     const emailToken = generateEmailToken(userName);
-    const url = `${process.env.CONFIRM_URL_OLD}${emailToken}`;
+    const url = `${process.env.CONFIRM_URL}${emailToken}`;
 
     const emailMessage = {
         to: user.email,
