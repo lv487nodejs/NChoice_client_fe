@@ -6,8 +6,6 @@ import { setUser, setShowSnackbar, setSnackbarText } from '../../actions'
 import withStoreService from '../hoc'
 import Snackbar from '../snackbar';
 import { getFromLocalStorage } from '../../services/localStoreService';
-import { placeholder } from '../../configs/frontend-config';
-
 
 const UserChangeData = ({ user,
     storeService,
