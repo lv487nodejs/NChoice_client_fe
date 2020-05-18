@@ -98,7 +98,7 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                         name={'lastName'}
                         value={user.lastName}
                         onChange={handleChange}
-                        lastName="Enter lastname..."
+                        placeholder="Enter lastname..."
                     />
                 </Form.Group>
 
