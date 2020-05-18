@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { currencyChange, currencyIconChange } from '../../actions';
 import './button.css'
 
-const currencies = {'EUR': '€', 'USD': '$', 'PLN': '‎zł'}
+const currencies = {'EUR': '€', 'USD': '$', 'UAH': '₴'}
 
 const Button = ({ currencyOptions, currencyChange, currencyIconChange }) => {
     const selectCurrency = (val) => {
