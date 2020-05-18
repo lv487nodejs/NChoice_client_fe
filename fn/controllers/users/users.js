@@ -29,7 +29,7 @@ const getUser = asyncHandler(async (req, res, next) => {
     user.tokens = [];
     user.tokens.push(refreshToken);
     await user.save()
-
+    user.password = ''
     res.status(200).send({ accessToken, refreshToken, user });
 });
 
