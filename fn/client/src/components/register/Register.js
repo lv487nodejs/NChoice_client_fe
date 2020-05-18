@@ -85,7 +85,6 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                     <Form.Label>First name</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="First name"
                         name={'firstName'}
                         value={user.firstName}
                         onChange={handleChange}
@@ -96,7 +95,6 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                     <Form.Label>Last name</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Last name"
                         name={'lastName'}
                         value={user.lastName}
                         onChange={handleChange}
@@ -108,7 +106,6 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter email"
                         name={'email'}
                         value={user.email}
                         onChange={handleChange}
