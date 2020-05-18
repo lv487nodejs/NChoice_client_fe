@@ -3,11 +3,10 @@ import { connect } from 'react-redux'
 import { FormControl, Form } from 'react-bootstrap'
 import './user-page-change-data.css';
 import { setUser, setShowSnackbar, setSnackbarText } from '../../actions'
-import { useForm } from 'react-hook-form';
 import withStoreService from '../hoc'
 import Snackbar from '../snackbar';
-import { SignupSchema } from './validation';
 import { getFromLocalStorage } from '../../services/localStoreService';
+import { placeholder } from '../../configs/frontend-config';
 
 
 const UserChangeData = ({ user,
@@ -18,7 +17,7 @@ const UserChangeData = ({ user,
 
 }) => {
     const [passwordShown, setPasswordShown] = useState(false);
-    const eyeClassName = passwordShown?'fa fa-eye':'fa fa-eye-slash';
+    const eyeClassName = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
     const userId = getFromLocalStorage('userId')
     const accessToken = getFromLocalStorage('accessToken')
 
@@ -35,14 +34,11 @@ const UserChangeData = ({ user,
         addUserDataToSTore(userId, accessToken)
     }, [addUserDataToSTore, userId, accessToken])
 
-    const { register, handleSubmit, errors } = useForm({
-        validationSchema: SignupSchema
-    })
-
     const changeHandler = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
     const submitHandler = (e) => {
+        e.preventDefault()
         storeService.sendUserChangedData(userId, accessToken, { user }).then((res) => {
             addUserDataToSTore(userId, accessToken)
             snackbarHandler(res.data.msg)
@@ -65,39 +61,54 @@ const UserChangeData = ({ user,
 
     return (
         <div className="relative">
-            <Form id="user-form" onSubmit={handleSubmit(submitHandler)}>
+            <Form id="user-form" onSubmit={submitHandler}>
                 <Form.Group>
                     <Form.Label htmlFor="firstname">Change your firstname</Form.Label>
-                    <FormControl id="firstname" name="firstName" ref={register} value={user.firstName}
-                        onChange={changeHandler} />
+                    <FormControl
+                        id="firstname"
+                        name="firstName"
+                        value={user.firstName}
+                        onChange={changeHandler}
+                        placeholder="Enter firstname..."
+                    />
                 </Form.Group>
-                {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
                 <Form.Group>
                     <Form.Label htmlFor="lastname">Change your lastname</Form.Label>
-                    <FormControl id="lastname" name="lastName" ref={register} value={user.lastName}
-                        onChange={changeHandler} />
+                    <FormControl
+                        id="lastname"
+                        name="lastName"
+                        value={user.lastName}
+                        onChange={changeHandler}
+                        placeholder="Enter lastname..." />
                 </Form.Group>
-                {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
                 <Form.Group>
                     <Form.Label htmlFor="email">Change your email</Form.Label>
-                    <FormControl type="text" name="email" id="email" ref={register} value={user.email}
+                    <FormControl
+                        type="text"
+                        name="email"
+                        id="email"
+                        value={user.email}
+                        placeholder="Enter email"
+                        required
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        title="example@gmail.com"
                         onChange={changeHandler} />
                 </Form.Group>
-                {errors.email && <p className="errorMessage">{errors.email.message}</p>}
                 <Form.Group>
                     <Form.Label htmlFor="password">Enter your password</Form.Label>
                     <Form.Group className="pass-wrapper">
                         <Form.Control
                             type={passwordShown ? "text" : "password"}
-                            placeholder="Password"
                             name={'password'}
                             onChange={changeHandler}
-                            ref={register}
-                            autoComplete="on"
+                            required
+                            pattern=".{8,}"
+                            title="Eight or more characters"
+                            placeholder="Enter password..."
+                            value={user.password}
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity} />
                     </Form.Group>
-                        {errors.password && <p className="errorMessage">{errors.password.message}</p>}
                 </Form.Group>
                 <input className="btn btn-dark user-page-button" type="submit" value="Send changed data" />
                 <div id="user-page-snackbar" className="col-12">
