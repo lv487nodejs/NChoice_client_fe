@@ -5,7 +5,7 @@ const Brands = require('../../models/Brand');
 const Colors = require('../../models/Color');
 const asyncHandler = require('../../middleware/async');
 const ErrorResponse = require('../../utils/errorResponse');
-const mongoose = require('mongoose');
+
 const {
     prepareProductsToUpdate,
     prepareProductsToSend,
@@ -32,15 +32,27 @@ const getPrpoducts = asyncHandler(async (req, res) => {
         filter.$or = searchConfig(searchTerm);
         projection.score = { $meta: 'textScore' };
     }
+    let x = []
+    for (let key in filter) {
+        console.log(key);
 
-    const products = await Products.find(filter, projection)
-        .sort(sort)
-        .skip(+skip)
-        .limit(+postsperpage)
-        .populate('catalog')
-        .populate('category')
-        .populate('color')
-        .populate('brand');
+        x.push({ [key]: filter[key] })
+    }
+
+    const products = await Products.aggregate([
+
+        {
+            $match: {
+                $and:
+                    x
+            }
+        },
+        { $addFields: { avgRating: { $avg: "$rate" } } },
+        { $sort: sort },
+        { $skip: skip },
+        { $limit: +postsperpage }
+
+    ]);
 
     if (!products) {
         return next(

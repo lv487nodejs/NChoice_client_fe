@@ -86,7 +86,7 @@ const UserChangeData = ({ user,
                         name="email"
                         id="email"
                         value={user.email}
-                        placeholder="Enter email"
+                        placeholder="Enter email..."
                         required
                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                         title="example@gmail.com"

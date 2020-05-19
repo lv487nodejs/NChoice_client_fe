@@ -9,7 +9,7 @@ const updateRating = asyncHandler(async (req, res, next) => {
     if (!productToUpdate) {
         return next(new ErrorResponse('Product not found', 404));
     }
-    productToUpdate.rate = rate;
+    productToUpdate.rate.push(rate);
     productToUpdate.save();
     res.status(200).send('rating updated');
 })

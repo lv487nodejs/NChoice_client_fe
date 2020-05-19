@@ -4,3 +4,4 @@ node_modules/
 .vscode
 request.rest
 bash.exe.stackdump
+debug.log

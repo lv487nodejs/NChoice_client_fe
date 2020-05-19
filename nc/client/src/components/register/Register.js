@@ -98,7 +98,7 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                         name={'lastName'}
                         value={user.lastName}
                         onChange={handleChange}
-                        lastName="Enter lastname..."
+                        placeholder="Enter lastname..."
                     />
                 </Form.Group>
 
@@ -127,55 +127,56 @@ const Register = ({ storeService, setUserLogged, setUserLoading, userLogged, use
                             onChange={handleChange}
                             required
                             pattern=".{8,}" title="Eight or more characters"
-                            />
+                        />
                         <i className={passwordEye} onClick={togglePasswordVisiblity} />
                     </Form.Group>
-                    </Form.Group>
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label> Confirm Password</Form.Label>
-                        <Form.Group className="pass-wrapper">
-                            <Form.Control placeholder="Password"
-                                name={'confirmPassword'}
-                                type={confirmPasswordShown ? "text" : "password"}
-                                required
-                                pattern=".{8,}" title="Eight or more characters"
+                </Form.Group>
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label> Confirm Password</Form.Label>
+                    <Form.Group className="pass-wrapper">
+                        <Form.Control
+                            placeholder="Enter password..."
+                            name={'confirmPassword'}
+                            type={confirmPasswordShown ? "text" : "password"}
+                            required
+                            pattern=".{8,}" title="Eight or more characters"
 
-                                />
+                        />
                         <i className={confirmedPasswordEye} onClick={toggleConfirmPasswordVisiblity} />
                     </Form.Group>
-                        </Form.Group>
-                        <Form.Group>
-                            <Button variant="dark" type="submit" block>
-                                REGISTER
+                </Form.Group>
+                <Form.Group>
+                    <Button variant="dark" type="submit" block>
+                        REGISTER
                         </Button>
-                            <span>{errorMsg}</span>
-                        </Form.Group>
-                        <Form.Group className="link">
-                            <Link to="/login" className="btn btn-link" >LOG IN</Link>
-                        </Form.Group>
+                    <span>{errorMsg}</span>
+                </Form.Group>
+                <Form.Group className="link">
+                    <Link to="/login" className="btn btn-link" >LOG IN</Link>
+                </Form.Group>
             </Form>
 
-                    <Modal show={show} onHide={handleClose} animation>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Registered!</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>You have successfully registered! Please confirm your email</Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Close
+            <Modal show={show} onHide={handleClose} animation>
+                <Modal.Header closeButton>
+                    <Modal.Title>Registered!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>You have successfully registered! Please confirm your email</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
                     </Button>
-                        </Modal.Footer>
-                    </Modal>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 }
 
 
-const mapDispatchToProps = {setUserLogged, setUserLoading};
+const mapDispatchToProps = { setUserLogged, setUserLoading };
 
-const mapStateToProps = ({authReducer: {userLogged, userLoading}, cartReducer: {cartNumbers, cartProducts} }) => ({
-                    userLogged, userLoading, cartNumbers, cartProducts
-                });
+const mapStateToProps = ({ authReducer: { userLogged, userLoading }, cartReducer: { cartNumbers, cartProducts } }) => ({
+    userLogged, userLoading, cartNumbers, cartProducts
+});
 
 export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Register));
 

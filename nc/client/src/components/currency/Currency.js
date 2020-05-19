@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Button from './button';
 
-const BASE_URL = 'https://api.exchangeratesapi.io/latest';
-const currencies = {'EUR': '€', 'USD': '$', 'PLN': '‎zł'}
+const API_KEY = '33903dccae5ac0b7de7910fc7a178078'
+const BASE_URL = `http://data.fixer.io/api/latest?access_key=${API_KEY}`;
+
+const currencies = {'EUR': '€', 'USD': '$', 'UAH': '₴'}
 
 function Currency() {
     const [currencyOptions, setCurrencyOptions] = useState([]);
@@ -12,7 +14,6 @@ function Currency() {
             .then(res => res.json())
             .then(data => {
                 let currenciesArray = Object.entries(data.rates)
-                currenciesArray.unshift(['EUR', 1])
                 return currenciesArray
             })
             .then(currency => (currency.map(([currencyName, coefficient]) => {
