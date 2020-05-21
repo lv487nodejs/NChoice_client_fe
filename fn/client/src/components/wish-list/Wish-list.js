@@ -18,7 +18,6 @@ const Wishlist = ({removeFromWishlist, storeService}) => {
   useEffect(() => {
     if (getFromLocalStorage('userId') && getFromLocalStorage('accessToken')){
        const user = storeService.getUserById(getFromLocalStorage('userId'), getFromLocalStorage('accessToken'))
-      console.log(user)
     }
     if (getFromLocalStorage('wishlist_collection')) {
       setProducts(getFromLocalStorage('wishlist_collection'));

@@ -17,7 +17,7 @@ passport.use('googleToken', new GooglePlusTokenStrategy({
             return done(null, existingUser);
         }
 
-        //If new acc
+        //If dont exist, creating new user account
 
         const newUser = new User({
             password: profile.id,
@@ -45,7 +45,7 @@ passport.use('facebookToken', new FacebookTokenStrategy({
                 return done(null, existingUser);
             }
 
-        //If new acc
+        //If dont exist, creating new user account
         const newUser = new User({
             email: `${ searchBy }`,
             confirmedEmail: true,
