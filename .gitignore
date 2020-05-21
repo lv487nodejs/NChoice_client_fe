@@ -1,6 +1,0 @@
-access.log
-logs/
-node_modules/
-.vscode
-request.rest
-bash.exe.stackdump
