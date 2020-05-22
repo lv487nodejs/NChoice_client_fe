@@ -1,36 +1,27 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import withStoreService from '../hoc';
 import './Star-rating.css';
-import Rating from 'react-rating';
 import { getFromLocalStorage } from '../../services/localStoreService';
-import { addRatingToStore } from '../../actions';
-import { connect } from 'react-redux';
-
+import StarRatings from 'react-star-ratings';
 const accessToken = getFromLocalStorage('accessToken');
 
-const StarsRating = ({ rating, id, storeService, addRatingToStore, rate }) => {
-    
-    const changeRating = useCallback(() => {
+const StarsRating = ({ rating, id, storeService, color, isSelectable }) => {
+
+    const changeRating = (rate)=>{
         storeService.updateRate(id, rate, accessToken);
-    }, [id, rate, storeService]);    
-    
-    const ratingChanged = (newRating) => {
-        addRatingToStore(newRating)
-        changeRating();
+    }   
+
+    const ratingChanging = (newRating) => {
+        changeRating(newRating);
     }
     return (
-        <div className="star-rating" id="starRating" rating={rating} >
-            <Rating readonly={false} onChange={ratingChanged} id="stars" step={1} initialRating={rating} emptySymbol="fa fa-star-o fa-2x"
-                fullSymbol="fa fa-star fa-2x" />
+        <div className="star-rating" id="starRating" rating={rating}>
+            <StarRatings id="starRating" rating={rating} changeRating={ratingChanging} numberOfStars={5} starRatedColor={color} starDimension="25px" isSelectable={isSelectable} />
         </div>
     );
 };
-const mapStateToProps = ({ ratingReducer: { rate } }) => ({ rate });
-
-const mapDispatchToProps = {
-    addRatingToStore
-}
 
 
 
-export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(StarsRating));
+
+export default withStoreService()(StarsRating);

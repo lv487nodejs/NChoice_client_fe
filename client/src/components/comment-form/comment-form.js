@@ -33,7 +33,7 @@ const CommentForm = ({productId, setComments, storeService, comments, rate}) => 
           onSubmit={addComment}
     >
       <h3> Leave a comment </h3>
-      <div className='star'><h6 className='rate'> Rate the product: </h6> <StarsRating rating={rate} id={productId}/></div>
+      <div className='star'><h6 className='rate'> Rate the product: </h6> <StarsRating rating={rate} id={productId} readonly={false} color="black" isSelectable={true}/></div>
       <textarea className='feedback-form'
                 name='text'
                 value={text}

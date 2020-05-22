@@ -1,4 +1,4 @@
-import {getFromLocalStorage} from "../../../src/services/localStoreService";
+import {getFromLocalStorage} from "../../src/services/localStoreService";
 
 describe("Check cart", () => {
   it("should be empty when your open cart at the first time", () => {
