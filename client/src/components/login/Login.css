@@ -64,6 +64,17 @@ i:hover {
   color: #737575;
   cursor: pointer;
 }
+.login-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+.login-wrapper > button {
+  padding: 2px 25px !important ;
+}
+.kep-login-facebook {
+  padding: 11px 27px !important;
+}
 
 @media screen and (max-width: 520px) {
   .login{
