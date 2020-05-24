@@ -17,7 +17,7 @@ import {
 import withStoreService from '../hoc';
 import AppHeaderNavLeftItem from '../app-header-nav-left-item';
 import AppHeaderNavLeftItemDropDown from '../app-header-nav-left-item-dropdown';
-import { getFromLocalStorage } from '../../services/localStoreService';
+import { getFromLocalStorage, setToLocalStorage } from '../../services/localStoreService';
 
 const userId = getFromLocalStorage('userId');
 const accessToken = getFromLocalStorage('accessToken');
@@ -34,16 +34,31 @@ const AppHeaderNavLeft = ({
   setCatalogFilter,
   clearFilter,
   setUser,
+  email,
 }) => {
   const [isShown, setIsShown] = useState('');
+
+
 
   useEffect(() => {
     catalogsRequested();
     storeService.getAllCatalogs().then((res) => catalogsLoaded(res));
     if (userId && refreshToken) {
-      storeService.getUserById(userId, accessToken).then((res) => setUser(res.data.user))
+      storeService.getUserById(userId, accessToken).then((res) => {
+        console.log('by id', res);
+        setUser(res.data.user)
+      })
+
     }
-  }, [catalogsLoaded, catalogsRequested, storeService, setUser]);
+  }, [catalogsLoaded, catalogsRequested, storeService, setUser, email]);
+
+  useEffect(() => {
+
+    storeService.refreshAccessToken({ email, token: refreshToken }).then((res) => {
+      setToLocalStorage('accessToken', res.data.accessToken);
+    })
+  }, [email, storeService])
+
 
   const onEnter = (e, catalog) => {
     setIsShown(catalog);
@@ -100,9 +115,11 @@ const AppHeaderNavLeft = ({
   );
 };
 
-const mapStateToProps = ({ catalogsList: { catalogs, loading } }) => ({
+
+const mapStateToProps = ({ catalogsList: { catalogs, loading }, authReducer: { user: { email } } }) => ({
   catalogs,
   loading,
+  email,
 });
 const mapDispatchToProps = {
   catalogsLoaded,
