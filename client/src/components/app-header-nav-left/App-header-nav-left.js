@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import './App-header-nav-left.css';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import "./App-header-nav-left.css";
+import { Link } from "react-router-dom";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import {
   catalogsLoaded,
   catalogsRequested,
@@ -12,16 +12,18 @@ import {
   setCatalogFilter,
   clearFilter,
   setUser,
-} from '../../actions';
+} from "../../actions";
 
-import withStoreService from '../hoc';
-import AppHeaderNavLeftItem from '../app-header-nav-left-item';
-import AppHeaderNavLeftItemDropDown from '../app-header-nav-left-item-dropdown';
-import { getFromLocalStorage, setToLocalStorage } from '../../services/localStoreService';
+import withStoreService from "../hoc";
+import AppHeaderNavLeftItem from "../app-header-nav-left-item";
+import AppHeaderNavLeftItemDropDown from "../app-header-nav-left-item-dropdown";
+import {
+  getFromLocalStorage,
+  setToLocalStorage,
+} from "../../services/localStoreService";
 
-const userId = getFromLocalStorage('userId');
-const accessToken = getFromLocalStorage('accessToken');
-const refreshToken = getFromLocalStorage('refreshToken');
+const userId = getFromLocalStorage("userId");
+const accessToken = getFromLocalStorage("accessToken");
 
 const AppHeaderNavLeft = ({
   storeService,
@@ -34,53 +36,42 @@ const AppHeaderNavLeft = ({
   setCatalogFilter,
   clearFilter,
   setUser,
-  email,
 }) => {
-  const [isShown, setIsShown] = useState('');
-
-
+  const [isShown, setIsShown] = useState("");
 
   useEffect(() => {
     catalogsRequested();
     storeService.getAllCatalogs().then((res) => catalogsLoaded(res));
-    if (userId && refreshToken) {
+    if (userId) {
       storeService.getUserById(userId, accessToken).then((res) => {
-        console.log('by id', res);
-        setUser(res.data.user)
-      })
-
+        setUser(res.data.user);
+        setToLocalStorage("accessToken", res.data.accessToken);
+        setToLocalStorage("refreshToken", res.data.refreshToken);
+      });
     }
-  }, [catalogsLoaded, catalogsRequested, storeService, setUser, email]);
-
-  useEffect(() => {
-
-    storeService.refreshAccessToken({ email, token: refreshToken }).then((res) => {
-      setToLocalStorage('accessToken', res.data.accessToken);
-    })
-  }, [email, storeService])
-
+  }, [catalogsLoaded, catalogsRequested, storeService, setUser]);
 
   const onEnter = (e, catalog) => {
     setIsShown(catalog);
   };
   const onLeave = (e) => {
-    setIsShown('');
+    setIsShown("");
   };
   const filterAddCategoryHandler = (category, catalog) => {
-    filterByName('');
+    filterByName("");
     clearFilter();
     filterAddCategory(category);
     setCatalogFilter(catalog);
-    setIsShown('');
+    setIsShown("");
   };
 
   const filterRemoveCategoriesHandler = () => {
     filterRemoveAllCategories();
-    setIsShown('')
-  }
+    setIsShown("");
+  };
 
   const filterAddCatalog = (catalog) => () => {
-    filterByName('');
+    filterByName("");
     clearFilter();
     setCatalogFilter(catalog);
   };
@@ -92,7 +83,10 @@ const AppHeaderNavLeft = ({
       onMouseEnter={(e) => onEnter(e, catalog.catalog)}
       onMouseLeave={onLeave}
     >
-      <AppHeaderNavLeftItem catalog={catalog.catalog} catalogHandler={filterAddCatalog} />
+      <AppHeaderNavLeftItem
+        catalog={catalog.catalog}
+        catalogHandler={filterAddCatalog}
+      />
       {isShown === catalog.catalog && (
         <div key={catalog.catalog} className="drop-down-container">
           <AppHeaderNavLeftItemDropDown
@@ -109,17 +103,17 @@ const AppHeaderNavLeft = ({
     <nav className="nav-bar nav-left">
       <ul>
         {items}
-        <li><Link to="/news" >News</Link></li>
+        <li>
+          <Link to="/news">News</Link>
+        </li>
       </ul>
     </nav>
   );
 };
 
-
-const mapStateToProps = ({ catalogsList: { catalogs, loading }, authReducer: { user: { email } } }) => ({
+const mapStateToProps = ({ catalogsList: { catalogs, loading } }) => ({
   catalogs,
   loading,
-  email,
 });
 const mapDispatchToProps = {
   catalogsLoaded,
