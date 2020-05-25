@@ -5,10 +5,10 @@ import { getFromLocalStorage } from '../../services/localStoreService';
 import StarRatings from 'react-star-ratings';
 const accessToken = getFromLocalStorage('accessToken');
 
-const StarsRating = ({ rating, id, storeService, color, isSelectable }) => {
+const StarsRating = ({ rating, id, userId, storeService, color, isSelectable }) => {
 
     const changeRating = (rate)=>{
-        storeService.updateRate(id, rate, accessToken);
+        storeService.updateRate(id, userId, rate, accessToken);
     }   
 
     const ratingChanging = (newRating) => {
@@ -16,7 +16,7 @@ const StarsRating = ({ rating, id, storeService, color, isSelectable }) => {
     }
     return (
         <div className="star-rating" id="starRating" rating={rating}>
-            <StarRatings id="starRating" rating={rating} changeRating={ratingChanging} numberOfStars={5} starRatedColor={color} starDimension="25px" isSelectable={isSelectable} />
+            <StarRatings id="starRating" rating={rating} changeRating={ratingChanging} starSpacing="0" numberOfStars={5} starRatedColor={color} starDimension="25px" isSelectable={isSelectable} />
         </div>
     );
 };
