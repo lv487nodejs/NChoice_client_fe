@@ -6,55 +6,54 @@ import {
   faFacebook,
 } from '@fortawesome/free-brands-svg-icons';
 import './App-footer.css';
-import { Row, Card, CardDeck } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { socialNetworksURL, contactInformationFooter, policiesFooter, catalogsFooter, CATALOGS_URL } from '../../configs/frontend-config'
 
 const catalogs = catalogsFooter.items.map((item) => (
-  <Row key={item.item}><Link to={CATALOGS_URL + item.url}>{item.item}</Link></Row>
+  <div key={item.item}><Link to={CATALOGS_URL + item.url}>{item.item}</Link></div>
 ))
 
 const policies = policiesFooter.items.map((item) =>
-  (<Row key={item.item}><Link to={item.url}>{item.item}</Link></Row>
+  (<div key={item.item}><Link to={item.url}>{item.item}</Link></div>
   ))
 
 const contacts = contactInformationFooter.items.map((item, index) =>
-  (<Row key={index}><Card.Link>{item}</Card.Link></Row>
+  (<div key={index}>{item}</div>
   ))
 
 const AppFooter = () => (
   <footer className="footer">
     <div className="footer-inner">
-      <CardDeck id="footer-card">
-        <Card.Body >
-          <Card.Title>{catalogsFooter.title}</Card.Title>
+      <div className='footer-card-deck' id="footer-card">
+        <div className='footer-card-body' >
+          <div className='footer-card-title'>{catalogsFooter.title}</div>
           {catalogs}
-        </Card.Body>
-        <Card.Body>
-          <Card.Title>{policiesFooter.title}</Card.Title>
+        </div>
+        <div className='footer-card-body'>
+          <div className='footer-card-title'>{policiesFooter.title}</div>
           {policies}
-        </Card.Body>
-        <Card.Body>
-          <Card.Title>{contactInformationFooter.title}</Card.Title>
+        </div>
+        <div className='footer-card-body'>
+          <div className='footer-card-title'>{contactInformationFooter.title}</div>
           {contacts}
-        </Card.Body>
-        <Card.Body>
-          <Row className="d-flex flex-column align-items-center">
-            <Card.Title>Links</Card.Title>
-            <Card.Title>
-              <Card.Link href={socialNetworksURL.telegram} target='_blank'>
+        </div>
+        <div className='footer-card-body'>
+          <div className='footer-icons-box'>
+            <div className='footer-card-title'>Links</div>
+            <div>
+              <Link className='footer-icon' href={socialNetworksURL.telegram} target='_blank'>
                 <FontAwesomeIcon className="icon" icon={faTelegramPlane} />
-              </Card.Link>
-              <Card.Link href={socialNetworksURL.instagram} target='_blank'>
+              </Link>
+              <Link className='footer-icon' href={socialNetworksURL.instagram} target='_blank'>
                 <FontAwesomeIcon className="icon" icon={faInstagram} />
-              </Card.Link>
-              <Card.Link href={socialNetworksURL.facebook} target='_blank'>
+              </Link>
+              <Link className='footer-icon' href={socialNetworksURL.facebook} target='_blank'>
                 <FontAwesomeIcon className="icon" icon={faFacebook} />
-              </Card.Link>
-            </Card.Title>
-          </Row>
-        </Card.Body>
-      </CardDeck>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </footer>
 );
