@@ -7,7 +7,7 @@ const CatalogsListItem = ({ catalog }) => (
     <Link to={`/catalogs/${catalog}`}>
         <div className="card__collection clear-fix">
             <div className="cards cards--two">
-                <img src={`/images/catalogs/${catalog}.jpg`} alt={`${catalog} categories`} />
+                <img src={`/images/catalogs/${catalog}.webp`} alt={`${catalog} categories`} />
                 <span className="cards--two__rect"></span>
                 <span className="cards--two__tri"></span>
                 <p className="catalogName">{`${catalog}`}</p>

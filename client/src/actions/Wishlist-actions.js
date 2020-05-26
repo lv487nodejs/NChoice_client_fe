@@ -12,5 +12,6 @@ const removeFromWishlist = (productName) => {
   };
 };
 
+
 export { addToWishlist, removeFromWishlist };
 
