@@ -98,6 +98,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                         name={'email'}
                         value={user.email}
                         onChange={handleChange}
+                        
                     />
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -113,6 +114,8 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                             name={'password'}
                             value={user.password}
                             onChange={handleChange}
+                            pattern=".{8,16}"
+                            title="min length 8 max 16 characters"
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
