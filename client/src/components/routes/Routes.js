@@ -22,8 +22,8 @@ import UserPage from '../user-page';
 import Thanks from '../thanks-page'
 import ErrorPage from '../error-page';
 import Welcome from '../welcome-page';
-import MaterialsPage from '../materials-page'
-import {AboutUsPage} from '../about-us-page'
+import { MaterialsPage } from '../materials-page'
+import { AboutUsPage } from '../about-us-page'
 
 
 const Routes = () => (
