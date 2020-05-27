@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import "./App-header-nav-left.css";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import './App-header-nav-left.css';
+import { Link } from 'react-router-dom';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import {
   catalogsLoaded,
   catalogsRequested,
@@ -11,19 +11,22 @@ import {
   filterByName,
   setCatalogFilter,
   clearFilter,
-  setUser,
-} from "../../actions";
+  setUser
+} from '../../actions';
 
-import withStoreService from "../hoc";
-import AppHeaderNavLeftItem from "../app-header-nav-left-item";
-import AppHeaderNavLeftItemDropDown from "../app-header-nav-left-item-dropdown";
+import withStoreService from '../hoc';
+import AppHeaderNavLeftItem from '../app-header-nav-left-item';
+import AppHeaderNavLeftItemDropDown from '../app-header-nav-left-item-dropdown';
 import {
   getFromLocalStorage,
-  setToLocalStorage,
-} from "../../services/localStoreService";
+  setToLocalStorage
+} from '../../services/localStoreService';
 
-const userId = getFromLocalStorage("userId");
-const accessToken = getFromLocalStorage("accessToken");
+const userId = getFromLocalStorage('userId');
+const accessToken = getFromLocalStorage('accessToken');
+
+const LINK_FOR_NEWS = '/news';
+const NEWS_LINK_TITLE = 'News';
 
 const AppHeaderNavLeft = ({
   storeService,
@@ -35,9 +38,9 @@ const AppHeaderNavLeft = ({
   filterByName,
   setCatalogFilter,
   clearFilter,
-  setUser,
+  setUser
 }) => {
-  const [isShown, setIsShown] = useState("");
+  const [isShown, setIsShown] = useState('');
 
   useEffect(() => {
     catalogsRequested();
@@ -45,8 +48,8 @@ const AppHeaderNavLeft = ({
     if (userId) {
       storeService.getUserById(userId, accessToken).then((res) => {
         setUser(res.data.user);
-        setToLocalStorage("accessToken", res.data.accessToken);
-        setToLocalStorage("refreshToken", res.data.refreshToken);
+        setToLocalStorage('accessToken', res.data.accessToken);
+        setToLocalStorage('refreshToken', res.data.refreshToken);
       });
     }
   }, [catalogsLoaded, catalogsRequested, storeService, setUser]);
@@ -55,23 +58,23 @@ const AppHeaderNavLeft = ({
     setIsShown(catalog);
   };
   const onLeave = (e) => {
-    setIsShown("");
+    setIsShown('');
   };
   const filterAddCategoryHandler = (category, catalog) => {
-    filterByName("");
+    filterByName('');
     clearFilter();
     filterAddCategory(category);
     setCatalogFilter(catalog);
-    setIsShown("");
+    setIsShown('');
   };
 
   const filterRemoveCategoriesHandler = () => {
     filterRemoveAllCategories();
-    setIsShown("");
+    setIsShown('');
   };
 
   const filterAddCatalog = (catalog) => () => {
-    filterByName("");
+    filterByName('');
     clearFilter();
     setCatalogFilter(catalog);
   };
@@ -104,7 +107,7 @@ const AppHeaderNavLeft = ({
       <ul>
         {items}
         <li>
-          <Link to="/news">News</Link>
+          <Link to={LINK_FOR_NEWS}>{NEWS_LINK_TITLE}</Link>
         </li>
       </ul>
     </nav>
@@ -113,7 +116,7 @@ const AppHeaderNavLeft = ({
 
 const mapStateToProps = ({ catalogsList: { catalogs, loading } }) => ({
   catalogs,
-  loading,
+  loading
 });
 const mapDispatchToProps = {
   catalogsLoaded,
@@ -123,7 +126,7 @@ const mapDispatchToProps = {
   filterByName,
   setCatalogFilter,
   clearFilter,
-  setUser,
+  setUser
 };
 
 export default withStoreService()(

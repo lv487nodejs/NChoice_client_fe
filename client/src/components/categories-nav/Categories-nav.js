@@ -23,7 +23,7 @@ const CategoriesNav = ({
   filterAddCategories,
   filterRemoveAllCategories,
   filterRemoveAllBrands,
-  filterRemoveAllColors,
+  filterRemoveAllColors
 }) => {
   useEffect(() => {
     categoriesRequested();
@@ -40,7 +40,7 @@ const CategoriesNav = ({
   };
 
   const filterRemoveCategoriesHandler = () => {
-   filterRemoveAllCategories()
+    filterRemoveAllCategories();
   };
 
   const items = categories.map((category) => (
@@ -53,7 +53,7 @@ const CategoriesNav = ({
       />
     </li>
   ));
-  window.scrollTo(0,0)
+  window.scrollTo(0, 0);
   return (
     <ul className="categories-nav">
       <li key="all" className="category-item">
@@ -69,7 +69,9 @@ const CategoriesNav = ({
   );
 };
 
-const mapStateToProps = ({ categoriesList: { categories } }) => ({ categories });
+const mapStateToProps = ({ categoriesList: { categories } }) => ({
+  categories
+});
 const mapDispatchToProps = {
   categoriesLoaded,
   categoriesRequested,
