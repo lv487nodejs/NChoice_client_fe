@@ -10,6 +10,13 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { addToWishlist, removeFromWishlist } from "../../actions";
 import { getFromLocalStorage } from "../../services/localStoreService";
 
+const MIN = 60;
+const IDEAL = 100;
+const MAX = 10000;
+const EMPTY_CART_ALT = 'Your cart is empty';
+const WISHLIST_TITLE = 'Wish Now';
+const EMPTY_WISHLIST_TITLE = 'Your wishlist is empty.'
+
 const Wishlist = ({ removeFromWishlist }) => {
 
   const [products, setProducts] = useState([]);
@@ -37,9 +44,9 @@ const Wishlist = ({ removeFromWishlist }) => {
 
         <span className="item-description">
           <ReadMoreReact text={item.description}
-            min={60}
-            ideal={100}
-            max={10000}
+            min={MIN}
+            ideal={IDEAL}
+            max={MAX}
             readMoreText="..." />
 
           <span className='full-description-wishlist'>{item.description}</span>
@@ -60,17 +67,17 @@ const Wishlist = ({ removeFromWishlist }) => {
         {products.length < 1 &&
           <div>
             <p className='empty-cart-p'>
-              Your wishlist is empty.
-            <Link style={{ textDecoration: 'none' }} key='shop-now' to={`/`}>
-                <span className='shop-now'>Wish Now </span>
+              {EMPTY_WISHLIST_TITLE}
+              <Link style={{ textDecoration: 'none' }} key='shop-now' to={`/`}>
+                <span className='shop-now'>{WISHLIST_TITLE}</span>
               </Link>
             </p>
-            <div className='empty-cart'><img src='/images/empty-basket.png' alt='Your cart is empty'></img><br />
+            <div className='empty-cart'><img src='/images/empty-basket.png' alt={EMPTY_CART_ALT}></img><br />
               <Link style={{ textDecoration: 'none' }} key='shop-now-btn' to={`/`}>
                 <Button
                   variant="dark"
                   className='cart-btns shop-now-btn'
-                ><span>Wish Now</span>
+                ><span>{WISHLIST_TITLE}</span>
                 </Button>
               </Link>
             </div>
