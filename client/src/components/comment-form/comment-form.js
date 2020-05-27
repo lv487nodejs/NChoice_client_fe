@@ -8,7 +8,13 @@ import CommentItem from "../comment-item/comment-item";
 import {Link} from 'react-router-dom';
 import StarsRating from "../star-rating";
 
-const CommentForm = ({productId, setComments, storeService, comments, rate}) => {
+const CommentForm = ({
+  productId, 
+  setComments, 
+  storeService, 
+  comments, 
+  rate
+}) => {
   const [text, setText] = useState('');
   const userId = getFromLocalStorage('userId');
   const [tempText, setTempText] = useState(null);
@@ -53,12 +59,13 @@ const CommentForm = ({productId, setComments, storeService, comments, rate}) => 
   );
 
   const items = comments.filter(comment => comment.user != null).map(comment => {
-      return <CommentItem key={comment._id}
-                          text={comment.text}
-                          date={comment.date}
-                          reviewerName={comment.user.firstName}
-                          reviewerId={comment.user._id}
-                          commentId={comment._id} />
+    return <CommentItem 
+      key={comment._id}
+      text={comment.text}
+      date={comment.date}
+      reviewerName={comment.user.firstName}
+      reviewerId={comment.user._id}
+      commentId={comment._id} />
     }
   ).sort((a, b) => b.date - a.date).reverse();
 
