@@ -43,7 +43,6 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
 
         const form = event.currentTarget
-        console.log(form)
 
         if (!form.checkValidity()) {  
             setValidated(true);
