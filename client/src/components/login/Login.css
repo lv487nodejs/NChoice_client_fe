@@ -48,6 +48,16 @@ label:hover {
   font-size: 15px;
 }
 
+/* radio */
+.custom-control-label {
+  color: black !important;
+}
+
+.custom-control-label:before {
+  border-color: black !important;
+}
+
+
 /* eye */
 .pass-wrapper {
   position: relative;
