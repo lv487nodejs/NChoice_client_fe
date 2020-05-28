@@ -201,7 +201,13 @@ export default class StoreService {
     return await axios.put(`${_apiBase}rating/${id}`, { rate }, { headers: { 'x-auth-token': token } }
     );
   }
-  refreshAccessToken = async (data) => {
-    return await axios.post(`${_apiBase}auth/token`, data)
+
+  oauthGoogle = async (token) => {
+    const res = await this.postData('auth/oauth/google', token)
+    return res
+  }
+  oauthFacebook = async (token) => {
+    const res = await this.postData('auth/oauth/facebook', token)
+    return res
   }
 }

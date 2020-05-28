@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
+import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login";
 
 import { setUserLogged, setUserLoading, setCart, setUser } from '../../actions';
 import LoadingSpinner from '../Loading-spinner';
@@ -74,6 +76,7 @@ const Login = ({
       setErrorMsg(err.message);
     }
   };
+
   const handleOnSubmit = (event) => {
     postUser();
   };
@@ -86,52 +89,87 @@ const Login = ({
     return <Redirect to="/" />;
   }
 
-  return (
-    <div className={'login'}>
-      <Form onSubmit={handleOnSubmit}>
-        <Form.Label className="lable">Log In</Form.Label>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter email"
-            name={'email'}
-            value={user.email}
-            onChange={handleChange}
-          />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
 
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Group className="pass-wrapper">
-            <Form.Control
-              type={passwordShown ? 'text' : 'password'}
-              placeholder="Password"
-              name={'password'}
-              value={user.password}
-              onChange={handleChange}
-            />
-            <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
-          </Form.Group>
-        </Form.Group>
-        <Form.Check type="switch" id="custom-switch" label="Remember me" />
-        <Form.Group>
-          <Button variant="dark" type="submit" block>
-            LOG IN
-          </Button>
-          <span className="errorMessage">{errorMsg}</span>
-        </Form.Group>
-        <Form.Group className="link">
-          <Link to="/register" className="btn btn-link">
-            REGISTER
-          </Link>
-        </Form.Group>
-      </Form>
-    </div>
-  );
+    const responseGoogle = async (res) => {
+        const userFromApi = await storeService.oauthGoogle({access_token: res.accessToken})
+        const { accessToken, refreshToken, cart, userId } = userFromApi
+        setUserLogged(true);
+        addDataToLocalStorage({ accessToken, refreshToken, userId })
+        setCart(cart)
+
+
+    }
+
+    const responseFacebook = async (res) => {
+        const userFromAPI = await storeService.oauthFacebook({access_token: res.accessToken})
+        const { accessToken, refreshToken, cart, userId } = userFromAPI
+        setUserLogged(true);
+        addDataToLocalStorage({ accessToken, refreshToken, userId })
+        setCart(cart)
+    }
+
+    return (
+        <div className={'login'}>
+            <Form onSubmit={handleOnSubmit} >
+                <Form.Label className="lable">Log In</Form.Label>
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter email"
+                        name={'email'}
+                        value={user.email}
+                        onChange={handleChange}
+                    />
+                    <Form.Text className="text-muted">
+                        We'll never share your email with anyone else.
+                            </Form.Text>
+                </Form.Group>
+
+                <Form.Group controlId="formBasicPassword" >
+                    <Form.Label>Password</Form.Label>
+                    <Form.Group className="pass-wrapper">
+                        <Form.Control
+                            type={passwordShown ? "text" : "password"}
+                            placeholder="Password"
+                            name={'password'}
+                            value={user.password}
+                            onChange={handleChange}
+                        />
+                        <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
+                    </Form.Group>
+                </Form.Group>
+                <Form.Check
+                    type="switch"
+                    id="custom-switch"
+                    label="Remember me"
+                />
+                <Form.Group >
+                    <Button variant="dark" type="submit" block>
+                        LOG IN
+                        </Button>
+                    <span className="errorMessage">{errorMsg}</span>
+                </Form.Group>
+                <Form.Group className="link">
+                    <Link to="/register" className="btn btn-link" >REGISTER</Link>
+                </Form.Group>
+            </Form>
+            <div className='login-wrapper'>
+                <FacebookLogin
+                    appId={'1189412381401260'}
+                    textButton={'Facebook'}
+                    fields={'name, email, picture'}
+                    callback={responseFacebook}
+                />
+                <GoogleLogin
+                    clientId = {'303875330429-u4510uka1kogr1k4lqcgpr1eree7p20r.apps.googleusercontent.com'}
+                    buttonText={'Google'}
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                />
+            </div>
+        </div>
+    )
 };
 
 const mapDispatchToProps = {

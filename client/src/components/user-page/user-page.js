@@ -29,9 +29,9 @@ const UserPage = () => {
     }
   ];
 
-  const buttons = buttonOptions.map(({ title, handler, value, variant }) => {
+  const buttons = buttonOptions.map(({ title, handler, value, variant }, i) => {
     return (
-      <li key={title}>
+      <li key={title} className={`user-page-button-${i}`}>
         <Button variant={variant} value={value} onClick={() => handler(value)}>
           {title}
         </Button>
