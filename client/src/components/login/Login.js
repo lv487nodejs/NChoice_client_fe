@@ -41,6 +41,15 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const handleChange = (event) => {
         event.persist();
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
+
+        const form = event.currentTarget
+        console.log(form)
+
+        if (!form.checkValidity()) {  
+            setValidated(true);
+            return
+        };
+        
     };
 
     const postUser = async () => {
@@ -59,16 +68,6 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     }
     const handleOnSubmit = event => {
         event.preventDefault()
-
-        const form = event.currentTarget
-
-        //if (!orderToServer.orderItems.length) return;
-
-        if (!form.checkValidity()) {
-            setValidated(true);
-            return
-        };
-
         postUser();
     };
 
@@ -112,6 +111,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                         placeholder="Enter email"
                         name={'email'}
                         value={user.email}
+                        pattern=".{8,16}"
                         onChange={handleChange}
                         
                     />
@@ -133,17 +133,17 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                             title="min length 8 max 16 characters"
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
-
                     </Form.Group>
+                    
                     <Form.Control.Feedback type="invalid">
                     Please type Your Firstname. This field is required
                 </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Check
-                    type="switch"
-                    id="custom-switch"
-                    label="Remember me"
-                />
+                    <Form.Check
+                        type="switch"
+                        id="custom-switch"
+                        label="Remember me"
+                    />
                 <Form.Group >
                     <Button variant="dark" type="submit" block>
                         LOG IN
