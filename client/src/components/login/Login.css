@@ -65,7 +65,8 @@ i:hover {
   cursor: pointer;
 }
 .login-wrapper {
-  display: flex;
+
+  display: none;
   justify-content: space-between;
   align-content: center;
 }

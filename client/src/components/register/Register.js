@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import './Register.css';
-import { Form, Button, Modal } from 'react-bootstrap';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { setUserLogged, setUserLoading } from '../../actions';
-import withStoreService from '../hoc';
-import { setToLocalStorage } from '../../services/localStoreService';
+import React, { useEffect, useState } from "react";
+import "./Register.css";
+import { Form, Button, Modal } from "react-bootstrap";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUserLogged, setUserLoading } from "../../actions";
+import withStoreService from "../hoc";
+import { setToLocalStorage } from "../../services/localStoreService";
 
 const addDataToLocalStorage = (token) => {
-  setToLocalStorage('userId', token.userId);
-  setToLocalStorage('accessToken', token.accessToken);
-  setToLocalStorage('refreshToken', token.refreshToken);
+  setToLocalStorage("userId", token.userId);
+  setToLocalStorage("accessToken", token.accessToken);
+  setToLocalStorage("refreshToken", token.refreshToken);
 };
 
 const USER_DATA = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  confirmPassword: ''
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
 };
 
 const Register = ({
@@ -28,31 +28,31 @@ const Register = ({
   userLogged,
   userLoading,
   cartNumbers,
-  cartProducts
+  cartProducts,
 }) => {
   const initialUser = { ...USER_DATA, cart: { cartNumbers, cartProducts } };
 
   const [user, setUser] = useState(initialUser);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
   const [show, setShow] = useState(false);
 
   const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
   const [confirmPasswordError, setconfirmPasswordError] = useState(true);
-
+  const [emailiError, setEmailError] = useState(false);
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
 
   const confirmPasswordErrorMessage = confirmPasswordError
-    ? 'Please confirm password'
-    : '';
+    ? "Please confirm password"
+    : "";
   const agreeWithTermsErrorMessage = agreedWithTerms
-  ? ''
-  : 'Please agree with terms';
-
-  const passwordEye = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
+    ? ""
+    : "Please agree with terms";
+  const emailErrorMessage = emailiError ? "Please enter email" : "";
+  const passwordEye = passwordShown ? "fa fa-eye" : "fa fa-eye-slash";
   const confirmedPasswordEye = confirmPasswordShown
-    ? 'fa fa-eye'
-    : 'fa fa-eye-slash';
+    ? "fa fa-eye"
+    : "fa fa-eye-slash";
 
   useEffect(() => {
     setUserLogged(false);
@@ -65,13 +65,12 @@ const Register = ({
   const toggleConfirmPasswordVisiblity = () => {
     setConfirmPasswordShown(!confirmPasswordShown);
   };
-const validateConfirmPassword = ()=>{
-  setconfirmPasswordError(true);
-  if (user.password === user.confirmPassword) {
-    setconfirmPasswordError(false);
-  }
-
-}
+  const validateConfirmPassword = () => {
+    setconfirmPasswordError(true);
+    if (user.password === user.confirmPassword) {
+      setconfirmPasswordError(false);
+    }
+  };
   const handleChange = (event) => {
     event.persist();
     setUser({ ...user, [event.target.name]: event.target.value });
@@ -86,7 +85,7 @@ const validateConfirmPassword = ()=>{
       setUserLoading();
       user.confirmPassword = undefined;
       const res = await storeService.registerUser(user);
-      if (!res) throw new Error('User with such an email already exist.');
+      if (!res) throw new Error("User with such an email already exist.");
       addDataToLocalStorage(res);
       handleShow();
     } catch (err) {
@@ -97,6 +96,7 @@ const validateConfirmPassword = ()=>{
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+
     if (user.password === user.confirmPassword && agreedWithTerms) {
       postUser();
     }
@@ -105,97 +105,88 @@ const validateConfirmPassword = ()=>{
   if (userLogged) {
     return <Redirect to="/" />;
   }
-
+  const checkEmail = () => {
+    setEmailError(true);    
+    if (user.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$/)) {
+      setEmailError(false);
+    }
+  };
   return (
     <>
-      <Form
-          className="register"
-          onSubmit={handleOnSubmit}
-      >
+      <Form className="register" onSubmit={handleOnSubmit}>
         <Form.Label className="lable">Register</Form.Label>
         <Form.Group>
           <Form.Label>First name</Form.Label>
           <Form.Control
             type="text"
-            name={'firstName'}
+            name={"firstName"}
             value={user.firstName}
             onChange={handleChange}
             placeholder="Enter firstname..."
-            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=ˆ&*(){}|~<>;:[\]]{2,20}$"
+            pattern={"^[A-Za-z]+((s)?(('|-)?([A-Za-z])+))*{2,30}$"}
           />
-          <Form.Control.Feedback type="invalid">
-            Please type Your Name. This field is required
-          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group>
           <Form.Label>Last name</Form.Label>
           <Form.Control
             type="text"
-            name={'lastName'}
+            name={"lastName"}
             value={user.lastName}
             onChange={handleChange}
             placeholder="Enter lastname..."
-            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=ˆ&*(){}|~<>;:[\]]{2,20}$"
+            pattern={"^[A-Za-z]+((s)?(('|-)?([A-Za-z])+))*{2,30}$"}
           />
-          <Form.Control.Feedback type="invalid">
-            Please type Your Lastname. This field is required
-          </Form.Control.Feedback>
-
         </Form.Group>
 
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
             type="text"
-            name={'email'}
+            name={"email"}
             value={user.email}
             onChange={handleChange}
+            onBlur={checkEmail}
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             title="example@gmail.com"
             placeholder="Enter email..."
+            required
           />
+          <i className="text-danger position-static">{emailErrorMessage}</i>
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
-          <Form.Control.Feedback type="invalid">
-            Please type Your Email. This field is required
-          </Form.Control.Feedback>
         </Form.Group>
-
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Group className="pass-wrapper">
             <Form.Control
-              type={passwordShown ? 'text' : 'password'}
+              type={passwordShown ? "text" : "password"}
               placeholder="Enter password..."
-              name={'password'}
+              name={"password"}
               value={user.password}
               onChange={handleChange}
               required
-              pattern=".{8,16}"
-              title="min length 8 max 16 characters"
+              pattern=".{8,30}"
+              title="min length 8 max 30 characters"
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>
-          <Form.Control.Feedback type="invalid">
-            Please type Your Lastname. This field is required
-          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label> Confirm Password</Form.Label>
           <Form.Group className="pass-wrapper">
             <Form.Control
-              type={confirmPasswordShown ? 'text' : 'password'}
+              type={confirmPasswordShown ? "text" : "password"}
               placeholder="Enter password..."
-              name={'confirmPassword'}
+              name={"confirmPassword"}
               value={user.confirmPassword}
               onChange={handleChange}
               onBlur={validateConfirmPassword}
               required
-              pattern=".{8,16}"
-              title="min length 8 max 16 characters"
+              pattern=".{8,30}"
+              title="min length 8 max 30 characters"
             />
             <i
               className={confirmedPasswordEye}
@@ -214,8 +205,10 @@ const validateConfirmPassword = ()=>{
             label="Agree with term"
             onChange={handleAgree}
           />
+          <i className="text-danger position-static">
+            {agreeWithTermsErrorMessage}
+          </i>
         </Form.Group>
-        <i className="text-danger position-static">{agreeWithTermsErrorMessage}</i>
         <Form.Group>
           <Button variant="dark" type="submit" block>
             REGISTER
@@ -251,12 +244,12 @@ const mapDispatchToProps = { setUserLogged, setUserLoading };
 
 const mapStateToProps = ({
   authReducer: { userLogged, userLoading },
-  cartReducer: { cartNumbers, cartProducts }
+  cartReducer: { cartNumbers, cartProducts },
 }) => ({
   userLogged,
   userLoading,
   cartNumbers,
-  cartProducts
+  cartProducts,
 });
 
 export default withStoreService()(

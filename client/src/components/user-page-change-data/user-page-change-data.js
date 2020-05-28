@@ -113,8 +113,8 @@ const UserChangeData = ({
               name={"password"}
               onChange={changeHandler}
               required
-              pattern=".{8,16}"
-              title="min length 8 max 16 characters"
+              pattern=".{8,30}"
+              title="min length 8 max 30 characters"
               placeholder="Enter password..."
               value={user.password}
             />
