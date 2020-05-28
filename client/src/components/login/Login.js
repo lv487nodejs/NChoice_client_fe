@@ -161,12 +161,13 @@ const Login = ({
                     fields={'name, email, picture'}
                     callback={responseFacebook}
                 />
+
                 <GoogleLogin
                     clientId = {'303875330429-u4510uka1kogr1k4lqcgpr1eree7p20r.apps.googleusercontent.com'}
                     buttonText={'Google'}
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
-                />
+                    />
             </div>
         </div>
     )
