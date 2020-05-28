@@ -97,6 +97,7 @@ const CheckoutForm = ({
             return
         };
 
+
         applyOrder();
     }
 
@@ -260,7 +261,7 @@ const CheckoutForm = ({
                             </fieldset>
                             <Form.Group className="form-space">
                                 <fieldset className="field">
-                                    <h3 className="text-center">Please coose delivery type and payment method</h3>
+                                    <h3 className="text-center">Please choose delivery type and payment method</h3>
                                     <CheckoutSelect
                                         selectOptions={deliveryType}
                                         handleChange={handleChange}

@@ -25,6 +25,7 @@ const USER_DATA = {
 const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
     const [user, setUser] = useState(USER_DATA);
     const [errorMsg, setErrorMsg] = useState('');
+    const [validated, setValidated] = useState(false);
 
     const [passwordShown, setPasswordShown] = useState(false);
     const eyeClassName = passwordShown?'fa fa-eye':'fa fa-eye-slash';
@@ -40,6 +41,15 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const handleChange = (event) => {
         event.persist();
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
+
+        const form = event.currentTarget
+        console.log(form)
+
+        if (!form.checkValidity()) {  
+            setValidated(true);
+            return
+        };
+        
     };
 
     const postUser = async () => {
@@ -57,6 +67,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         }
     }
     const handleOnSubmit = event => {
+        event.preventDefault()
         postUser();
     };
 
@@ -74,8 +85,6 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         setUserLogged(true);
         addDataToLocalStorage({ accessToken, refreshToken, userId })
         setCart(cart)
-
-
     }
 
     const responseFacebook = async (res) => {
@@ -88,21 +97,27 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
 
     return (
         <div className={'login'}>
-            <Form onSubmit={handleOnSubmit} >
+            <Form
+                noValidate
+                validated={validated}
+                onSubmit={handleOnSubmit}
+            >
                 <Form.Label className="lable">Log In</Form.Label>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
+                        required
                         type="text"
                         placeholder="Enter email"
                         name={'email'}
                         value={user.email}
+                        pattern=".{8,16}"
                         onChange={handleChange}
                         
                     />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                            </Form.Text>
+                    <Form.Control.Feedback type="invalid">
+                        Please type Your XXXXXXXXXX. This field is required
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword" >
@@ -119,12 +134,16 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
+                    
+                    <Form.Control.Feedback type="invalid">
+                    Please type Your Firstname. This field is required
+                </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Check
-                    type="switch"
-                    id="custom-switch"
-                    label="Remember me"
-                />
+                    <Form.Check
+                        type="switch"
+                        id="custom-switch"
+                        label="Remember me"
+                    />
                 <Form.Group >
                     <Button variant="dark" type="submit" block>
                         LOG IN
@@ -146,7 +165,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     clientId = {'303875330429-u4510uka1kogr1k4lqcgpr1eree7p20r.apps.googleusercontent.com'}
                     buttonText={'Google'}
                     onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
+                    onFailure={undefined}
                 />
             </div>
         </div>

@@ -39,7 +39,6 @@ const Register = ({
 
   const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
   const [confirmPasswordError, setconfirmPasswordError] = useState(true);
-  console.log(confirmPasswordError);
 
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
 
@@ -109,7 +108,10 @@ const validateConfirmPassword = ()=>{
 
   return (
     <>
-      <Form className="register" onSubmit={handleOnSubmit}>
+      <Form
+          className="register"
+          onSubmit={handleOnSubmit}
+      >
         <Form.Label className="lable">Register</Form.Label>
         <Form.Group>
           <Form.Label>First name</Form.Label>
@@ -121,6 +123,9 @@ const validateConfirmPassword = ()=>{
             placeholder="Enter firstname..."
             pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=ˆ&*(){}|~<>;:[\]]{2,20}$"
           />
+          <Form.Control.Feedback type="invalid">
+            Please type Your Name. This field is required
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group>
           <Form.Label>Last name</Form.Label>
@@ -132,6 +137,10 @@ const validateConfirmPassword = ()=>{
             placeholder="Enter lastname..."
             pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=ˆ&*(){}|~<>;:[\]]{2,20}$"
           />
+          <Form.Control.Feedback type="invalid">
+            Please type Your Lastname. This field is required
+          </Form.Control.Feedback>
+
         </Form.Group>
 
         <Form.Group controlId="formBasicEmail">
@@ -148,7 +157,11 @@ const validateConfirmPassword = ()=>{
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
+          <Form.Control.Feedback type="invalid">
+            Please type Your Email. This field is required
+          </Form.Control.Feedback>
         </Form.Group>
+
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
@@ -165,6 +178,9 @@ const validateConfirmPassword = ()=>{
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>
+          <Form.Control.Feedback type="invalid">
+            Please type Your Lastname. This field is required
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
