@@ -12,6 +12,7 @@ const CommentForm = ({productId, setComments, storeService, comments, rate}) => 
   const [text, setText] = useState('');
   const userId = getFromLocalStorage('userId');
   const [tempText, setTempText] = useState(null);
+  const [isTextareaFilled, setTextareaFilled] = useState(false);
 
   useEffect(() => {
     if (productId) {
@@ -21,12 +22,33 @@ const CommentForm = ({productId, setComments, storeService, comments, rate}) => 
     }
   }, [tempText, userId, storeService, productId, setComments]);
 
+
+  let textarea = document.querySelector('textarea.feedback-form');
+
   const addComment = (e) => {
     e.preventDefault();
+
+    if (!text.trim() && !isTextareaFilled) {
+      textarea.classList.add('error')
+      textarea.focus()
+      setTextareaFilled(true)
+      return;
+    }
+
     storeService.postComments({text, productId, user: userId});
     setText('');
     setTempText(text);
   };
+
+  const onChangeTextarea = (e) => {
+    const targetValue = e.target.value;
+
+    setText(targetValue);
+    if (targetValue) {
+      textarea.classList.remove('error');
+      setTextareaFilled(false);
+    }
+  }
 
   const logged = (
     <form className='form my-1 comments-form'
@@ -37,10 +59,10 @@ const CommentForm = ({productId, setComments, storeService, comments, rate}) => 
       <textarea className='feedback-form'
                 name='text'
                 value={text}
-                onChange={e => setText(e.target.value)}
+                onChange={onChangeTextarea}
                 placeholder="Share your thoughts with other customers"
-                required
       />
+      {isTextareaFilled && <span className='error-message'>Please, leave your comment</span>}
       <input type='submit' value='Add a comment' className='comment-submit'/>
     </form>
   );
