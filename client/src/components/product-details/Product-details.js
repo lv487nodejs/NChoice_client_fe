@@ -25,6 +25,8 @@ import {
 } from '../../actions';
 import CommentForm from '../comment-form/comment-form';
 
+const ratingColor = 'black';
+
 const ProductDetails = ({
   id,
   product,
@@ -176,7 +178,11 @@ const ProductDetails = ({
           />
         </Col>
         <Col className="text" id="text">
-          <StarsRating rating={product.rate} id={product.id} />
+          <StarsRating
+            rating={product.rate}
+            color={ratingColor}
+            isSelectable={false}
+          />
           <Card.Title className="title" id="title">
             {product.title}
           </Card.Title>

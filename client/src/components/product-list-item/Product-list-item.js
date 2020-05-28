@@ -4,9 +4,7 @@ import './Product-list-item.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import StarsRating from '../star-rating';
-import { getFromLocalStorage } from '../../services/localStoreService';
 
-const accessToken = getFromLocalStorage('accessToken');
 function ProductListItem({
   title,
   id,
@@ -24,6 +22,7 @@ function ProductListItem({
     setPriceWithRate(parseFloat(price * currency).toFixed(2));
     setMsrpWithRate(parseFloat(mrsp * currency).toFixed(2));
   }, [currency, price, mrsp]);
+
   return (
     <div className="wrapper" id="wrapper" key={id}>
       <div className="productCard" id="productCard">
@@ -34,7 +33,7 @@ function ProductListItem({
         />
         <Link id="productLink" key={id} to={`/products/${id}`}>
           <div className="info" id={id}>
-            <StarsRating rating={rate} id={id} accessToken={accessToken} />
+            <StarsRating rating={rate} id={id} />
 
             <p className="productName" id="productName">
               {title}

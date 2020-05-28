@@ -73,6 +73,7 @@ i:hover {
   display: flex;
   justify-content: space-around;
   align-items: stretch;
+  margin-bottom: 1rem;
 }
 @media screen and (max-width: 520px) {
   .login {

@@ -88,6 +88,7 @@ const Register = ({
             value={user.firstName}
             onChange={handleChange}
             placeholder="Enter firstname..."
+            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,20}$"
           />
         </Form.Group>
         <Form.Group>
@@ -98,6 +99,8 @@ const Register = ({
             value={user.lastName}
             onChange={handleChange}
             placeholder="Enter lastname..."
+            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,20}$"
+
           />
         </Form.Group>
 
@@ -127,8 +130,8 @@ const Register = ({
               value={user.password}
               onChange={handleChange}
               required
-              pattern=".{8,}"
-              title="Eight or more characters"
+              pattern=".{8,16}"
+              title="password must be from 8 to 16 characters long"
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>

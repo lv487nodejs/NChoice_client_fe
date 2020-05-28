@@ -107,7 +107,8 @@ const Login = ({
         addDataToLocalStorage({ accessToken, refreshToken, userId })
         setCart(cart)
     }
-
+    window.scrollTo(0, 0);
+    
     return (
         <div className={'login'}>
             <Form onSubmit={handleOnSubmit} >
@@ -116,10 +117,12 @@ const Login = ({
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter email"
+                        placeholder="Enter email..."
                         name={'email'}
                         value={user.email}
                         onChange={handleChange}
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        title="example@gmail.com"
                     />
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -131,10 +134,12 @@ const Login = ({
                     <Form.Group className="pass-wrapper">
                         <Form.Control
                             type={passwordShown ? "text" : "password"}
-                            placeholder="Password"
+                            placeholder="Enter password..."
                             name={'password'}
                             value={user.password}
                             onChange={handleChange}
+                            pattern=".{8,16}"
+                            title="password must be from 8 to 16 characters long"
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
