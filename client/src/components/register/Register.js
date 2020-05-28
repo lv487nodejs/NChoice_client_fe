@@ -36,15 +36,12 @@ const Register = ({
   const [errorMsg, setErrorMsg] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
   const [show, setShow] = useState(false);
+  const [validated, setValidated] = useState(false);
 
   const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
   const [confirmPasswordError, setconfirmPasswordError] = useState(true);
   
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
-  
-  const confirmPasswordErrorMessage = confirmPasswordError
-    ? "Please confirm password"
-    : "";
 
   const passwordEye = passwordShown ? "fa fa-eye" : "fa fa-eye-slash";
   const confirmedPasswordEye = confirmPasswordShown
@@ -91,7 +88,7 @@ const Register = ({
   
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    
+
       if (!user.password === user.confirmPassword) {
         setconfirmPasswordError(true);
       }
@@ -106,7 +103,11 @@ const Register = ({
 
   return (
     <>
-      <Form className="register" onSubmit={handleOnSubmit}>
+      <Form
+          validated={validated}
+          className="register"
+          onSubmit={handleOnSubmit}
+      >
         <Form.Label className="lable">Register</Form.Label>
         <Form.Group>
           <Form.Label>First name</Form.Label>
@@ -118,6 +119,9 @@ const Register = ({
             placeholder="Enter firstname..."
             pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,20}$"
           />
+          <Form.Control.Feedback type="invalid">
+            Please type Your Name. This field is required
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group>
           <Form.Label>Last name</Form.Label>
@@ -129,6 +133,10 @@ const Register = ({
             placeholder="Enter lastname..."
             pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,20}$"
           />
+          <Form.Control.Feedback type="invalid">
+            Please type Your Lastname. This field is required
+          </Form.Control.Feedback>
+
         </Form.Group>
 
         <Form.Group controlId="formBasicEmail">
@@ -145,7 +153,11 @@ const Register = ({
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
+          <Form.Control.Feedback type="invalid">
+            Please type Your Email. This field is required
+          </Form.Control.Feedback>
         </Form.Group>
+
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
@@ -162,6 +174,9 @@ const Register = ({
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>
+          <Form.Control.Feedback type="invalid">
+            Please type Your Lastname. This field is required
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
@@ -169,7 +184,7 @@ const Register = ({
           <Form.Group className="pass-wrapper">
             <Form.Control
               type={confirmPasswordShown ? "text" : "password"}
-              placeholder="Enter password..."
+              placeholder="Confirm password..."
               name={"confirmPassword"}
               value={user.confirmPassword}
               onChange={handleChange}
@@ -182,7 +197,9 @@ const Register = ({
               onClick={toggleConfirmPasswordVisiblity}
             />
           </Form.Group>
-          <i className="text-danger">{confirmPasswordErrorMessage}</i>
+          <Form.Control.Feedback type="invalid">
+            Confirm password
+          </Form.Control.Feedback>
         </Form.Group>
 
           <Form.Group>
@@ -192,6 +209,9 @@ const Register = ({
               label="Agree with term"
               onChange={handleAgree}
               />
+            <Form.Control.Feedback type="invalid">
+              You should agree with term
+            </Form.Control.Feedback>
           </Form.Group>
         <Form.Group>
           <Button variant="dark" type="submit" block>
