@@ -48,7 +48,6 @@ import {
 
 import { setShowSnackbar, setSnackbarText } from './Snackbar--actions';
 import { storeSetNews } from './News-actions';
-import addRatingToStore from './Rating-actions';
 import {setComments, removeComments} from "./comments-action";
 
 export {
@@ -99,7 +98,6 @@ export {
   clearOrderStore,
   setCart,
   storeSetNews,
-  addRatingToStore,
   setComments,
   removeComments
 };

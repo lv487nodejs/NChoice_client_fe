@@ -26,11 +26,11 @@ const AppHeaderNavLeftItemDropDown = ({
   };
 
   return (
-    <Nav defaultActiveKey="/home" className="flex-column drop-down">
+    <Nav defaultActiveKey='/home' className='flex-column drop-down'>
       <Link
         to={PRODUCT_LIST_URL + catalog.catalog}
-        className="nav-link"
-        role="button"
+        className='nav-link'
+        role='button'
         onClick={categoryRemoverHandler}
       >
         All Categories
