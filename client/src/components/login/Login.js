@@ -25,11 +25,19 @@ const USER_DATA = {
 const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
     const [user, setUser] = useState(USER_DATA);
     const [errorMsg, setErrorMsg] = useState('');
-    const [validated, setValidated] = useState(false);
+    const [emailError, setEmailError] = useState(true);
+    const [passwordError, setPasswordError] = useState(true);
+
 
     const [passwordShown, setPasswordShown] = useState(false);
     const eyeClassName = passwordShown?'fa fa-eye':'fa fa-eye-slash';
 
+    const emailErrorMessage = emailError
+    ? ''
+    : 'Please enter correct email';
+    const passwordErrorMessage = passwordError
+    ? ''
+    : 'Please enter correct password';
     useEffect(() => {
         setUserLogged(false)
     }, [setUserLogged])
@@ -41,15 +49,6 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const handleChange = (event) => {
         event.persist();
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
-
-        const form = event.currentTarget
-        console.log(form)
-
-        if (!form.checkValidity()) {  
-            setValidated(true);
-            return
-        };
-        
     };
 
     const postUser = async () => {
@@ -66,6 +65,31 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
             setErrorMsg(err.message)
         }
     }
+
+    const handlePasswordChange = event => {
+        event.preventDefault()
+        if(event.target.value.length >= 8 && event.target.value.length <= 30){
+            setPasswordError(true)
+            return
+        }
+        else{
+            setPasswordError(false)
+            return
+        }
+    }
+
+    const handleEmailChange = event => {
+        event.preventDefault()
+        if(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(event.target.value)){
+            setEmailError(true)
+            return
+        }
+        else{
+            setEmailError(false)
+            return
+        }
+    }
+
     const handleOnSubmit = event => {
         event.preventDefault()
         postUser();
@@ -99,7 +123,6 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         <div className={'login'}>
             <Form
                 noValidate
-                validated={validated}
                 onSubmit={handleOnSubmit}
             >
                 <Form.Label className="lable">Log In</Form.Label>
@@ -111,13 +134,10 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                         placeholder="Enter email"
                         name={'email'}
                         value={user.email}
-                        pattern=".{8,16}"
                         onChange={handleChange}
-                        
+                        onBlur={handleEmailChange}
                     />
-                    <Form.Control.Feedback type="invalid">
-                        Please type Your XXXXXXXXXX. This field is required
-                    </Form.Control.Feedback>
+                    <i className="text-danger position-static">{emailErrorMessage}</i>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword" >
@@ -129,15 +149,14 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                             name={'password'}
                             value={user.password}
                             onChange={handleChange}
-                            pattern=".{8,16}"
-                            title="min length 8 max 16 characters"
+                            onBlur={handlePasswordChange}
+                            title="min length 8 max 30 characters"
+                            pattern=".{8,30}"
+
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
-                    
-                    <Form.Control.Feedback type="invalid">
-                    Please type Your Firstname. This field is required
-                </Form.Control.Feedback>
+                    <i className="text-danger position-static">{passwordErrorMessage}</i>
                 </Form.Group>
                     <Form.Check
                         type="switch"

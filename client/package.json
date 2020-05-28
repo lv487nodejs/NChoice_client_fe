@@ -78,6 +78,7 @@
     ]
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
     "cypress": "^4.4.0",
     "husky": "^4.2.5",
     "prettier": "^2.0.5"
