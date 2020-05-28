@@ -13,6 +13,12 @@ const addDataToLocalStorage = (token) => {
   setToLocalStorage('refreshToken', token.refreshToken);
 };
 
+const formRegExp = {
+  email: '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
+  name: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
+  password: '.{8,30}'
+}
+
 const USER_DATA = {
   firstName: '',
   lastName: '',
@@ -120,11 +126,9 @@ const validateConfirmPassword = ()=>{
             value={user.firstName}
             onChange={handleChange}
             placeholder="Enter firstname..."
-            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=ˆ&*(){}|~<>;:[\]]{2,20}$"
+            // pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=ˆ&*(){}|~<>;:[\]]{2,30}$"
           />
-          <Form.Control.Feedback type="invalid">
-            Please type Your Name. This field is required
-          </Form.Control.Feedback>
+
         </Form.Group>
         <Form.Group>
           <Form.Label>Last name</Form.Label>
@@ -134,12 +138,8 @@ const validateConfirmPassword = ()=>{
             value={user.lastName}
             onChange={handleChange}
             placeholder="Enter lastname..."
-            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=ˆ&*(){}|~<>;:[\]]{2,20}$"
+            // pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=ˆ&*(){}|~<>;:[\]]{2,30}$"
           />
-          <Form.Control.Feedback type="invalid">
-            Please type Your Lastname. This field is required
-          </Form.Control.Feedback>
-
         </Form.Group>
 
         <Form.Group controlId="formBasicEmail">
@@ -149,16 +149,13 @@ const validateConfirmPassword = ()=>{
             name={'email'}
             value={user.email}
             onChange={handleChange}
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            // pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             title="example@gmail.com"
             placeholder="Enter email..."
           />
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
-          <Form.Control.Feedback type="invalid">
-            Please type Your Email. This field is required
-          </Form.Control.Feedback>
         </Form.Group>
 
 
@@ -172,14 +169,12 @@ const validateConfirmPassword = ()=>{
               value={user.password}
               onChange={handleChange}
               required
-              pattern=".{8,16}"
+              // pattern=".{8,16}"
               title="min length 8 max 16 characters"
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>
-          <Form.Control.Feedback type="invalid">
-            Please type Your Lastname. This field is required
-          </Form.Control.Feedback>
+
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
@@ -193,7 +188,7 @@ const validateConfirmPassword = ()=>{
               onChange={handleChange}
               onBlur={validateConfirmPassword}
               required
-              pattern=".{8,16}"
+              // pattern=".{8,16}"
               title="min length 8 max 16 characters"
             />
             <i

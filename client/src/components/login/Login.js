@@ -17,13 +17,17 @@ const addDataToLocalStorage = (token) => {
     setToLocalStorage('refreshToken', token.refreshToken)
 }
 
+const formRegExp = {
+    email: '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
+    name: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
+    password: '.{8,30}'
+}
+
+
 const USER_DATA = {
     email: '',
     password: ''
 };
-
-
-
 
 
 const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
@@ -54,14 +58,6 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         event.persist();
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
 
-        // const form = event.currentTarget
-        // console.log(form)
-
-        // if (!form.checkValidity()) {  
-        //     setValidated(true);
-        //     return
-        // };
-        
     };
 
     const postUser = async () => {
@@ -81,7 +77,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
 
     const handlePasswordChange = event => {
         event.preventDefault()
-        if(event.target.value.length >= 8 && event.target.value.length <= 16){
+        if(event.target.value.match(formRegExp.password)){
             setPasswordError(true)
             return
         }
@@ -93,7 +89,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
 
     const handleEmailChange = event => {
         event.preventDefault()
-        if(event.target.value.length >= 8 && event.target.value.length <= 16){
+        if(event.target.value.match(formRegExp.email)){
             setEmailError(true)
             return
         }
