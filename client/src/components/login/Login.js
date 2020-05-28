@@ -22,64 +22,78 @@ const USER_DATA = {
   password: ''
 };
 
-const Login = ({
-  storeService,
-  setUserLogged,
-  setUserLoading,
-  userLogged,
-  userLoading,
-  setCart,
-  setUser
-}) => {
-  const [user, setUserData] = useState(USER_DATA);
-  const [errorMsg, setErrorMsg] = useState('');
+const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
+    const [user, setUser] = useState(USER_DATA);
+    const [errorMsg, setErrorMsg] = useState('');
+    const [emailError, setEmailError] = useState(true);
+    const [passwordError, setPasswordError] = useState(true);
 
-  const [passwordShown, setPasswordShown] = useState(false);
-  const eyeClassName = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
 
-  useEffect(() => {
-    setUserLogged(false);
-  }, [setUserLogged]);
+    const [passwordShown, setPasswordShown] = useState(false);
+    const eyeClassName = passwordShown?'fa fa-eye':'fa fa-eye-slash';
 
-  const togglePasswordVisiblity = () => {
-    setPasswordShown(!passwordShown);
-  };
+    const emailErrorMessage = emailError
+    ? ''
+    : 'Please enter correct email';
+    const passwordErrorMessage = passwordError
+    ? ''
+    : 'Please enter correct password';
+    useEffect(() => {
+        setUserLogged(false)
+    }, [setUserLogged])
 
-  const handleChange = (event) => {
-    event.persist();
-    setUserData((prevUser) => ({
-      ...prevUser,
-      [event.target.name]: event.target.value
-    }));
-  };
+    const togglePasswordVisiblity = () => {
+        setPasswordShown(!passwordShown);
+    };
 
-  const postUser = async () => {
-    try {
-      setUserLoading();
-      const response = await storeService.loginUser(user);
-      if (!response)
-        throw new Error('Wrong email or password, please try again.');
-      const {
-        accessToken,
-        refreshToken,
-        cart,
-        userId,
-        user: receivedUser
-      } = response;
+    const handleChange = (event) => {
+        event.persist();
+        setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
+    };
 
-      setUserLogged(true);
-      addDataToLocalStorage({ accessToken, refreshToken, userId });
-      setUser(receivedUser);
-      setCart(cart);
-    } catch (err) {
-      setUserLogged(false);
-      setErrorMsg(err.message);
+    const postUser = async () => {
+        try {
+            setUserLoading();
+            const response = await storeService.loginUser(user);
+            if (!response) throw new Error('Wrong email or password, please try again.')
+            const { accessToken, refreshToken, cart, userId } = response
+            setUserLogged(true);
+            addDataToLocalStorage({ accessToken, refreshToken, userId })
+            setCart(cart)
+        } catch (err) {
+            setUserLogged(false)
+            setErrorMsg(err.message)
+        }
     }
-  };
 
-  const handleOnSubmit = (event) => {
-    postUser();
-  };
+    const handlePasswordChange = event => {
+        event.preventDefault()
+        if(event.target.value.length >= 8 && event.target.value.length <= 30){
+            setPasswordError(true)
+            return
+        }
+        else{
+            setPasswordError(false)
+            return
+        }
+    }
+
+    const handleEmailChange = event => {
+        event.preventDefault()
+        if(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(event.target.value)){
+            setEmailError(true)
+            return
+        }
+        else{
+            setEmailError(false)
+            return
+        }
+    }
+
+    const handleOnSubmit = event => {
+        event.preventDefault()
+        postUser();
+    };
 
   if (userLoading) {
     return <LoadingSpinner />;
@@ -96,8 +110,6 @@ const Login = ({
         setUserLogged(true);
         addDataToLocalStorage({ accessToken, refreshToken, userId })
         setCart(cart)
-
-
     }
 
     const responseFacebook = async (res) => {
@@ -111,11 +123,15 @@ const Login = ({
     
     return (
         <div className={'login'}>
-            <Form onSubmit={handleOnSubmit} >
+            <Form
+                noValidate
+                onSubmit={handleOnSubmit}
+            >
                 <Form.Label className="lable">Log In</Form.Label>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
+                        required
                         type="text"
                         placeholder="Enter email..."
                         name={'email'}
@@ -123,10 +139,9 @@ const Login = ({
                         onChange={handleChange}
                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                         title="example@gmail.com"
+                        onBlur={handleEmailChange}
                     />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                            </Form.Text>
+                    <i className="text-danger position-static">{emailErrorMessage}</i>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword" >
@@ -138,17 +153,20 @@ const Login = ({
                             name={'password'}
                             value={user.password}
                             onChange={handleChange}
-                            pattern=".{8,16}"
-                            title="password must be from 8 to 16 characters long"
+                            onBlur={handlePasswordChange}
+                            title="min length 8 max 30 characters"
+                            pattern=".{8,30}"
+
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
+                    <i className="text-danger position-static">{passwordErrorMessage}</i>
                 </Form.Group>
-                <Form.Check
-                    type="switch"
-                    id="custom-switch"
-                    label="Remember me"
-                />
+                    <Form.Check
+                        type="switch"
+                        id="custom-switch"
+                        label="Remember me"
+                    />
                 <Form.Group >
                     <Button variant="dark" type="submit" block>
                         LOG IN

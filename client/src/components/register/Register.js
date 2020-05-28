@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import './Register.css';
-import { Form, Button, Modal } from 'react-bootstrap';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { setUserLogged, setUserLoading } from '../../actions';
-import withStoreService from '../hoc';
-import { setToLocalStorage } from '../../services/localStoreService';
+import React, { useEffect, useState } from "react";
+import "./Register.css";
+import { Form, Button, Modal } from "react-bootstrap";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUserLogged, setUserLoading } from "../../actions";
+import withStoreService from "../hoc";
+import { setToLocalStorage } from "../../services/localStoreService";
 
 const addDataToLocalStorage = (token) => {
-  setToLocalStorage('userId', token.userId);
-  setToLocalStorage('accessToken', token.accessToken);
-  setToLocalStorage('refreshToken', token.refreshToken);
+  setToLocalStorage("userId", token.userId);
+  setToLocalStorage("accessToken", token.accessToken);
+  setToLocalStorage("refreshToken", token.refreshToken);
 };
 
 const USER_DATA = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: ''
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
 };
 
 const Register = ({
@@ -32,11 +33,26 @@ const Register = ({
   const initialUser = { ...USER_DATA, cart: { cartNumbers, cartProducts } };
 
   const [user, setUser] = useState(initialUser);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
   const [show, setShow] = useState(false);
 
-  const passwordEye = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
+  const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
+  const [confirmPasswordError, setconfirmPasswordError] = useState(true);
+  const [emailiError, setEmailError] = useState(false);
+  const [agreedWithTerms, setAgreedWithTerms] = useState(false);
+
+  const confirmPasswordErrorMessage = confirmPasswordError
+    ? "Please confirm password"
+    : "";
+  const agreeWithTermsErrorMessage = agreedWithTerms
+    ? ""
+    : "Please agree with terms";
+  const emailErrorMessage = emailiError ? "Please enter email" : "";
+  const passwordEye = passwordShown ? "fa fa-eye" : "fa fa-eye-slash";
+  const confirmedPasswordEye = confirmPasswordShown
+    ? "fa fa-eye"
+    : "fa fa-eye-slash";
 
   useEffect(() => {
     setUserLogged(false);
@@ -46,6 +62,15 @@ const Register = ({
     setPasswordShown(!passwordShown);
   };
 
+  const toggleConfirmPasswordVisiblity = () => {
+    setConfirmPasswordShown(!confirmPasswordShown);
+  };
+  const validateConfirmPassword = () => {
+    setconfirmPasswordError(true);
+    if (user.password === user.confirmPassword) {
+      setconfirmPasswordError(false);
+    }
+  };
   const handleChange = (event) => {
     event.persist();
     setUser({ ...user, [event.target.name]: event.target.value });
@@ -53,12 +78,14 @@ const Register = ({
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleAgree = () => setAgreedWithTerms(!agreedWithTerms);
 
   const postUser = async () => {
     try {
       setUserLoading();
+      user.confirmPassword = undefined;
       const res = await storeService.registerUser(user);
-      if (!res) throw new Error('User with such an email already exist.');
+      if (!res) throw new Error("User with such an email already exist.");
       addDataToLocalStorage(res);
       handleShow();
     } catch (err) {
@@ -69,13 +96,21 @@ const Register = ({
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    postUser();
+
+    if (user.password === user.confirmPassword && agreedWithTerms) {
+      postUser();
+    }
   };
 
   if (userLogged) {
     return <Redirect to="/" />;
   }
-
+  const checkEmail = () => {
+    setEmailError(true);    
+    if (/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$/.test(user.email)) {
+      setEmailError(false);
+    }
+  };
   return (
     <>
       <Form className="register" onSubmit={handleOnSubmit}>
@@ -84,23 +119,22 @@ const Register = ({
           <Form.Label>First name</Form.Label>
           <Form.Control
             type="text"
-            name={'firstName'}
+            name={"firstName"}
             value={user.firstName}
             onChange={handleChange}
             placeholder="Enter firstname..."
-            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,20}$"
+            pattern={"^[A-Za-z]+((s)?(('|-)?([A-Za-z])+))*{2,30}$"}
           />
         </Form.Group>
         <Form.Group>
           <Form.Label>Last name</Form.Label>
           <Form.Control
             type="text"
-            name={'lastName'}
+            name={"lastName"}
             value={user.lastName}
             onChange={handleChange}
             placeholder="Enter lastname..."
-            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,20}$"
-
+            pattern={"^[A-Za-z]+((s)?(('|-)?([A-Za-z])+))*{2,30}$"}
           />
         </Form.Group>
 
@@ -108,13 +142,16 @@ const Register = ({
           <Form.Label>Email address</Form.Label>
           <Form.Control
             type="text"
-            name={'email'}
+            name={"email"}
             value={user.email}
             onChange={handleChange}
+            onBlur={checkEmail}
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             title="example@gmail.com"
             placeholder="Enter email..."
+            required
           />
+          <i className="text-danger position-static">{emailErrorMessage}</i>
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
@@ -124,25 +161,61 @@ const Register = ({
           <Form.Label>Password</Form.Label>
           <Form.Group className="pass-wrapper">
             <Form.Control
-              type={passwordShown ? 'text' : 'password'}
+              type={passwordShown ? "text" : "password"}
               placeholder="Enter password..."
-              name={'password'}
+              name={"password"}
               value={user.password}
               onChange={handleChange}
               required
-              pattern=".{8,16}"
-              title="password must be from 8 to 16 characters long"
+              pattern=".{8,30}"
+              title="min length 8 max 30 characters"
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>
         </Form.Group>
 
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label> Confirm Password</Form.Label>
+          <Form.Group className="pass-wrapper">
+            <Form.Control
+              type={confirmPasswordShown ? "text" : "password"}
+              placeholder="Enter password..."
+              name={"confirmPassword"}
+              value={user.confirmPassword}
+              onChange={handleChange}
+              onBlur={validateConfirmPassword}
+              required
+              pattern=".{8,30}"
+              title="min length 8 max 30 characters"
+            />
+            <i
+              className={confirmedPasswordEye}
+              onClick={toggleConfirmPasswordVisiblity}
+            />
+          </Form.Group>
+          <i className="text-danger position-static">
+            {confirmPasswordErrorMessage}
+          </i>
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Check
+            type="switch"
+            id="custom-switch"
+            label="Agree with term"
+            onChange={handleAgree}
+          />
+          <i className="text-danger position-static">
+            {agreeWithTermsErrorMessage}
+          </i>
+        </Form.Group>
         <Form.Group>
           <Button variant="dark" type="submit" block>
             REGISTER
           </Button>
           <span>{errorMsg}</span>
         </Form.Group>
+
         <Form.Group className="link">
           <Link to="/login" className="btn btn-link">
             LOG IN
@@ -171,12 +244,12 @@ const mapDispatchToProps = { setUserLogged, setUserLoading };
 
 const mapStateToProps = ({
   authReducer: { userLogged, userLoading },
-  cartReducer: { cartNumbers, cartProducts }
+  cartReducer: { cartNumbers, cartProducts },
 }) => ({
   userLogged,
   userLoading,
   cartNumbers,
-  cartProducts
+  cartProducts,
 });
 
 export default withStoreService()(
