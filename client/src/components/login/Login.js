@@ -23,12 +23,10 @@ const formRegExp = {
     password: '.{8,30}'
 }
 
-
 const USER_DATA = {
     email: '',
     password: ''
-}
-
+};
 
 const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
     const [user, setUser] = useState(USER_DATA);
@@ -159,7 +157,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                             value={user.password}
                             onChange={handleChange}
                             onBlur={handlePasswordChange}
-                            title="min length 8 max 16 characters"
+                            title="min length 8 max 30 characters"
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
@@ -203,7 +201,7 @@ const mapDispatchToProps = {
   setUserLogged,
   setUserLoading,
   setCart,
-    setUser
+  setUser
 };
 
 const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({

@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import './Register.css';
-import { Form, Button, Modal } from 'react-bootstrap';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { setUserLogged, setUserLoading } from '../../actions';
-import withStoreService from '../hoc';
-import { setToLocalStorage } from '../../services/localStoreService';
+import React, { useEffect, useState } from "react";
+import "./Register.css";
+import { Form, Button, Modal } from "react-bootstrap";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUserLogged, setUserLoading } from "../../actions";
+import withStoreService from "../hoc";
+import { setToLocalStorage } from "../../services/localStoreService";
 
 const addDataToLocalStorage = (token) => {
-  setToLocalStorage('userId', token.userId);
-  setToLocalStorage('accessToken', token.accessToken);
-  setToLocalStorage('refreshToken', token.refreshToken);
+  setToLocalStorage("userId", token.userId);
+  setToLocalStorage("accessToken", token.accessToken);
+  setToLocalStorage("refreshToken", token.refreshToken);
 };
 
 const formRegExp = {
@@ -54,9 +54,7 @@ const Register = ({
   const agreeWithTermsErrorMessage = agreedWithTerms
   ? ''
   : 'Please agree with terms';
-
   const emailErrorMessage = emailError ? "Please enter email" : "";
-
   const passwordEye = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
   const confirmedPasswordEye = confirmPasswordShown
     ? 'fa fa-eye'
@@ -95,7 +93,7 @@ const Register = ({
       setUserLoading();
       user.confirmPassword = undefined;
       const res = await storeService.registerUser(user);
-      if (!res) throw new Error("User with such an email already exist.");
+      if (!res) throw new Error('User with such an email already exist.');
       addDataToLocalStorage(res);
       handleShow();
     } catch (err) {
@@ -157,11 +155,11 @@ const Register = ({
             name={'email'}
             value={user.email}
             onChange={handleChange}
-            onBlur = {checkEmail}
+            onBlur={checkEmail}
             title="example@gmail.com"
             placeholder="Enter email..."
           />
-          <i className="text-danger position-static"> {emailErrorMessage} </i>
+          <i className="text-danger position-static">{emailErrorMessage}</i>
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
@@ -183,7 +181,7 @@ const Register = ({
 
         </Form.Group>
 
-        <Form.Group controlId="formSecondPassword">
+        <Form.Group controlId="formBasicPassword">
           <Form.Label> Confirm Password</Form.Label>
           <Form.Group className="pass-wrapper">
             <Form.Control
@@ -251,7 +249,7 @@ const mapDispatchToProps = { setUserLogged, setUserLoading };
 
 const mapStateToProps = ({
   authReducer: { userLogged, userLoading },
-  cartReducer: { cartNumbers, cartProducts }
+  cartReducer: { cartNumbers, cartProducts },
 }) => ({
   userLogged,
   userLoading,
