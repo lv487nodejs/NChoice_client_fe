@@ -1,13 +1,21 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './App-footer.css';
+import {
+  contactInformationFooter,
+  policiesFooter,
+  catalogsFooter,
+  CATALOGS_URL,
+  socialNetworksURL
+} from '../../configs/frontend-config';
 import {
   faTelegramPlane,
   faInstagram,
   faFacebook,
 } from '@fortawesome/free-brands-svg-icons';
-import './App-footer.css';
 import { Link } from 'react-router-dom';
-import { socialNetworksURL, contactInformationFooter, policiesFooter, catalogsFooter, CATALOGS_URL } from '../../configs/frontend-config'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const LINKS_TITLE = 'Links';
 
 const catalogs = catalogsFooter.items.map((item) => (
   <div key={item.item}><Link to={CATALOGS_URL + item.url}>{item.item}</Link></div>
@@ -20,6 +28,22 @@ const policies = policiesFooter.items.map((item) =>
 const contacts = contactInformationFooter.items.map((item, index) =>
   (<div key={index}>{item}</div>
   ))
+
+const Links = () => {
+  return (
+    <>
+      <Link className='footer-icon' href={socialNetworksURL.telegram} target='_blank'>
+        <FontAwesomeIcon className="icon" icon={faTelegramPlane} />
+      </Link>
+      <Link className='footer-icon' href={socialNetworksURL.instagram} target='_blank'>
+        <FontAwesomeIcon className="icon" icon={faInstagram} />
+      </Link>
+      <Link className='footer-icon' href={socialNetworksURL.facebook} target='_blank'>
+        <FontAwesomeIcon className="icon" icon={faFacebook} />
+      </Link>
+    </>
+  );
+}
 
 const AppFooter = () => (
   <footer className="footer">
@@ -39,17 +63,9 @@ const AppFooter = () => (
         </div>
         <div className='footer-card-body'>
           <div className='footer-icons-box'>
-            <div className='footer-card-title'>Links</div>
+            <div className='footer-card-title'>{LINKS_TITLE}</div>
             <div>
-              <Link className='footer-icon' href={socialNetworksURL.telegram} target='_blank'>
-                <FontAwesomeIcon className="icon" icon={faTelegramPlane} />
-              </Link>
-              <Link className='footer-icon' href={socialNetworksURL.instagram} target='_blank'>
-                <FontAwesomeIcon className="icon" icon={faInstagram} />
-              </Link>
-              <Link className='footer-icon' href={socialNetworksURL.facebook} target='_blank'>
-                <FontAwesomeIcon className="icon" icon={faFacebook} />
-              </Link>
+              <Links />
             </div>
           </div>
         </div>

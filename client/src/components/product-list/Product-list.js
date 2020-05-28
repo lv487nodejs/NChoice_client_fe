@@ -22,7 +22,7 @@ import {
   filterRemoveBrand,
   filterRemoveCategory,
   filterRemoveColor,
-  setCatalogFilter,
+  setCatalogFilter
 } from '../../actions';
 
 const ProductList = ({
@@ -40,12 +40,10 @@ const ProductList = ({
   sortByRate,
   catalogFilter,
   productsLoadingStart,
-  searchTerm,
+  searchTerm
 }) => {
-
-
   useEffect(() => {
-    productsLoadingStart()
+    productsLoadingStart();
     storeService
       .getProductsByFilter({
         catalog: catalogFilter,
@@ -56,12 +54,13 @@ const ProductList = ({
         postsPerPage,
         sortByPrice,
         sortByRate,
-        searchTerm,
+        searchTerm
       })
       .then((res) => {
-          setProducts(res.products);
-          addPagesCount(res.pagesCount);
-      }).catch((error) => {
+        setProducts(res.products);
+        addPagesCount(res.pagesCount);
+      })
+      .catch((error) => {
         setProducts([]);
       });
   }, [
@@ -81,11 +80,11 @@ const ProductList = ({
   ]);
 
   if (loading) {
-    return <LoadingSpinner />
+    return <LoadingSpinner />;
   }
 
   if (!products.length) {
-    return <h2>No products found</h2>
+    return <h2>No products found</h2>;
   }
 
   return (
@@ -104,14 +103,33 @@ const ProductList = ({
       ))}
     </div>
   );
-}
+};
 
 const mapStateToProps = ({
   catalogsList: { catalog },
-  productsList: { products, currentPage, postsPerPage, sortByPrice, sortByRate, loading },
-  filter: { brand, category, color, searchTerm, catalogFilter },
-
-}) => ({ products, loading, catalog, brand, category, color, searchTerm, catalogFilter, currentPage, postsPerPage, sortByPrice, sortByRate });
+  productsList: {
+    products,
+    currentPage,
+    postsPerPage,
+    sortByPrice,
+    sortByRate,
+    loading
+  },
+  filter: { brand, category, color, searchTerm, catalogFilter }
+}) => ({
+  products,
+  loading,
+  catalog,
+  brand,
+  category,
+  color,
+  searchTerm,
+  catalogFilter,
+  currentPage,
+  postsPerPage,
+  sortByPrice,
+  sortByRate
+});
 
 const mapDispatchToProps = {
   setProducts,
@@ -130,7 +148,9 @@ const mapDispatchToProps = {
   filterRemoveColor,
   categoriesLoaded,
   setCatalogFilter,
-  productsLoadingStop,
+  productsLoadingStop
 };
 
-export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(ProductList));
+export default withStoreService()(
+  connect(mapStateToProps, mapDispatchToProps)(ProductList)
+);
