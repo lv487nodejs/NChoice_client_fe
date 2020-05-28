@@ -166,8 +166,8 @@ export default class StoreService {
   };
 
   registerUser = async (user) => {
-    return await this.postData("users/register", user);
-  };
+    return await this.postData('users/register', user);
+  }
 
   loginUser = async (user) => {
     return await this.postData("auth/login", user);
@@ -199,9 +199,7 @@ export default class StoreService {
   };
 
   deleteComment = async (id, token) => {
-    return await axios.delete(`${_apiBase}comments/${id}`, {
-      headers: { "x-auth-token": token },
-    });
+    return await axios.delete(`${_apiBase}comments/${id}`, { headers: { "x-auth-token": token } })
   };
 
   confirmEmail = async (token) => {
@@ -211,12 +209,18 @@ export default class StoreService {
     } catch (error) {
       throw error;
     }
-  };
-  updateRate = async (id, userId, rate, token) => {
-    return await axios.put(
-      `${_apiBase}rating/${id}`,
-      { rate, userId },
-      { headers: { "x-auth-token": token } }
+  }
+  updateRate = async (id,userId, rate, token) => {
+    return await axios.put(`${_apiBase}rating/${id}`, { rate, userId }, { headers: { 'x-auth-token': token } }
     );
-  };
+  }
+
+  oauthGoogle = async (token) => {
+    const res = await this.postData('auth/oauth/google', token)
+    return res
+  }
+  oauthFacebook = async (token) => {
+    const res = await this.postData('auth/oauth/facebook', token)
+    return res
+  }
 }

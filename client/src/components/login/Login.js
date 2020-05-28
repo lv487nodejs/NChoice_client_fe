@@ -3,70 +3,112 @@ import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
+import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login";
 
-import { setUserLogged, setUserLoading, setCart } from "../../actions";
-import LoadingSpinner from "../Loading-spinner";
+import { setUserLogged, setUserLoading, setCart, setUser } from '../../actions';
+import LoadingSpinner from '../Loading-spinner';
 import withStoreService from '../hoc';
 import { setToLocalStorage } from '../../services/localStoreService';
 
 const addDataToLocalStorage = (token) => {
-    setToLocalStorage('userId', token.userId)
-    setToLocalStorage('accessToken', token.accessToken)
-    setToLocalStorage('refreshToken', token.refreshToken)
-}
-
-const USER_DATA = {
-    email: '',
-    password: ''
+  setToLocalStorage('userId', token.userId);
+  setToLocalStorage('accessToken', token.accessToken);
+  setToLocalStorage('refreshToken', token.refreshToken);
 };
 
-const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
-    const [user, setUser] = useState(USER_DATA);
-    const [errorMsg, setErrorMsg] = useState('');
+const USER_DATA = {
+  email: '',
+  password: ''
+};
 
-    const [passwordShown, setPasswordShown] = useState(false);
-    const eyeClassName = passwordShown?'fa fa-eye':'fa fa-eye-slash';
+const Login = ({
+  storeService,
+  setUserLogged,
+  setUserLoading,
+  userLogged,
+  userLoading,
+  setCart,
+  setUser
+}) => {
+  const [user, setUserData] = useState(USER_DATA);
+  const [errorMsg, setErrorMsg] = useState('');
 
-    useEffect(() => {
-        setUserLogged(false)
-    }, [setUserLogged])
+  const [passwordShown, setPasswordShown] = useState(false);
+  const eyeClassName = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
 
-    const togglePasswordVisiblity = () => {
-        setPasswordShown(!passwordShown);
-    };
+  useEffect(() => {
+    setUserLogged(false);
+  }, [setUserLogged]);
 
-    const handleChange = (event) => {
-        event.persist();
-        setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
-    };
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(!passwordShown);
+  };
 
-    const postUser = async () => {
-        try {
-            setUserLoading();
-            const response = await storeService.loginUser(user);
-            if (!response) throw new Error('Wrong email or password, please try again.')
-            const { accessToken, refreshToken, cart, userId } = response
-            setUserLogged(true);
-            addDataToLocalStorage({ accessToken, refreshToken, userId })
-            setCart(cart)
-        } catch (err) {
-            setUserLogged(false)
-            setErrorMsg(err.message)
-        }
+  const handleChange = (event) => {
+    event.persist();
+    setUserData((prevUser) => ({
+      ...prevUser,
+      [event.target.name]: event.target.value
+    }));
+  };
+
+  const postUser = async () => {
+    try {
+      setUserLoading();
+      const response = await storeService.loginUser(user);
+      if (!response)
+        throw new Error('Wrong email or password, please try again.');
+      const {
+        accessToken,
+        refreshToken,
+        cart,
+        userId,
+        user: receivedUser
+      } = response;
+
+      setUserLogged(true);
+      addDataToLocalStorage({ accessToken, refreshToken, userId });
+      setUser(receivedUser);
+      setCart(cart);
+    } catch (err) {
+      setUserLogged(false);
+      setErrorMsg(err.message);
     }
-    const handleOnSubmit = event => {
-        postUser();
-    };
+  };
 
-    if (userLoading) {
-        return <LoadingSpinner />
+  const handleOnSubmit = (event) => {
+    postUser();
+  };
+
+  if (userLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (userLogged) {
+    return <Redirect to="/" />;
+  }
+
+
+    const responseGoogle = async (res) => {
+        const userFromApi = await storeService.oauthGoogle({access_token: res.accessToken})
+        const { accessToken, refreshToken, cart, userId } = userFromApi
+        setUserLogged(true);
+        addDataToLocalStorage({ accessToken, refreshToken, userId })
+        setCart(cart)
+
+
     }
 
-    if (userLogged) {
-        return <Redirect to='/' />
+    const responseFacebook = async (res) => {
+        const userFromAPI = await storeService.oauthFacebook({access_token: res.accessToken})
+        const { accessToken, refreshToken, cart, userId } = userFromAPI
+        setUserLogged(true);
+        addDataToLocalStorage({ accessToken, refreshToken, userId })
+        setCart(cart)
     }
-
-
+    window.scrollTo(0, 0);
+    
     return (
         <div className={'login'}>
             <Form onSubmit={handleOnSubmit} >
@@ -75,10 +117,12 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter email"
+                        placeholder="Enter email..."
                         name={'email'}
                         value={user.email}
                         onChange={handleChange}
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        title="example@gmail.com"
                     />
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -90,10 +134,12 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     <Form.Group className="pass-wrapper">
                         <Form.Control
                             type={passwordShown ? "text" : "password"}
-                            placeholder="Password"
+                            placeholder="Enter password..."
                             name={'password'}
                             value={user.password}
                             onChange={handleChange}
+                            pattern=".{8,16}"
+                            title="password must be from 8 to 16 characters long"
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
@@ -113,15 +159,37 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     <Link to="/register" className="btn btn-link" >REGISTER</Link>
                 </Form.Group>
             </Form>
+            <div className='login-wrapper'>
+                <FacebookLogin
+                    appId={'1189412381401260'}
+                    textButton={'Facebook'}
+                    fields={'name, email, picture'}
+                    callback={responseFacebook}
+                />
+
+                <GoogleLogin
+                    clientId = {'303875330429-u4510uka1kogr1k4lqcgpr1eree7p20r.apps.googleusercontent.com'}
+                    buttonText={'Google'}
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                    />
+            </div>
         </div>
     )
 };
 
-
-const mapDispatchToProps = { setUserLogged, setUserLoading, setCart };
+const mapDispatchToProps = {
+  setUserLogged,
+  setUserLoading,
+  setCart,
+  setUser
+};
 
 const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({
-    userLogged, userLoading
+  userLogged,
+  userLoading
 });
 
-export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withStoreService()(
+  connect(mapStateToProps, mapDispatchToProps)(Login)
+);
