@@ -70,7 +70,6 @@ const validateConfirmPassword = ()=>{
   if (user.password === user.confirmPassword) {
     setconfirmPasswordError(false);
   }
-
 }
   const handleChange = (event) => {
     event.persist();
