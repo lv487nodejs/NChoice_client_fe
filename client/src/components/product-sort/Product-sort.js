@@ -14,9 +14,17 @@ const ProductSort = ({ options }) => {
     options.handler(sortValue);
   };
 
-  return  <Button className="sort-button" key={options.text} variant={options.variant} onClick={changeHandler}>
-            {options.text} <FA name="sort" className={className ? className : 'fas fa-sort'} />
-          </Button>;
+  return (
+    <Button
+      className="sort-button"
+      key={options.text}
+      variant={options.variant}
+      onClick={changeHandler}
+    >
+      {options.text}{' '}
+      <FA name="sort" className={className ? className : 'fas fa-sort'} />
+    </Button>
+  );
 };
 
 export default ProductSort;

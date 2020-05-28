@@ -4,6 +4,9 @@ import './Materials-page.css'
 
 
 const MaterialsPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
     useEffect(() => {
         window.scrollTo(0, 0)
