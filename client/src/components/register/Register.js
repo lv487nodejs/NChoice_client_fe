@@ -17,7 +17,8 @@ const USER_DATA = {
   firstName: '',
   lastName: '',
   email: '',
-  password: ''
+  password: '',
+  confirmPassword: ''
 };
 
 const Register = ({
@@ -36,7 +37,23 @@ const Register = ({
   const [passwordShown, setPasswordShown] = useState(false);
   const [show, setShow] = useState(false);
 
+  const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
+  const [confirmPasswordError, setconfirmPasswordError] = useState(true);
+  console.log(confirmPasswordError);
+
+  const [agreedWithTerms, setAgreedWithTerms] = useState(false);
+
+  const confirmPasswordErrorMessage = confirmPasswordError
+    ? 'Please confirm password'
+    : '';
+  const agreeWithTermsErrorMessage = agreedWithTerms
+  ? ''
+  : 'Please agree with terms';
+
   const passwordEye = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
+  const confirmedPasswordEye = confirmPasswordShown
+    ? 'fa fa-eye'
+    : 'fa fa-eye-slash';
 
   useEffect(() => {
     setUserLogged(false);
@@ -46,6 +63,16 @@ const Register = ({
     setPasswordShown(!passwordShown);
   };
 
+  const toggleConfirmPasswordVisiblity = () => {
+    setConfirmPasswordShown(!confirmPasswordShown);
+  };
+const validateConfirmPassword = ()=>{
+  setconfirmPasswordError(true);
+  if (user.password === user.confirmPassword) {
+    setconfirmPasswordError(false);
+  }
+
+}
   const handleChange = (event) => {
     event.persist();
     setUser({ ...user, [event.target.name]: event.target.value });
@@ -53,10 +80,12 @@ const Register = ({
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleAgree = () => setAgreedWithTerms(!agreedWithTerms);
 
   const postUser = async () => {
     try {
       setUserLoading();
+      user.confirmPassword = undefined;
       const res = await storeService.registerUser(user);
       if (!res) throw new Error('User with such an email already exist.');
       addDataToLocalStorage(res);
@@ -69,7 +98,9 @@ const Register = ({
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    postUser();
+    if (user.password === user.confirmPassword && agreedWithTerms) {
+      postUser();
+    }
   };
 
   if (userLogged) {
@@ -88,7 +119,7 @@ const Register = ({
             value={user.firstName}
             onChange={handleChange}
             placeholder="Enter firstname..."
-            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,20}$"
+            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=ˆ&*(){}|~<>;:[\]]{2,20}$"
           />
         </Form.Group>
         <Form.Group>
@@ -99,8 +130,7 @@ const Register = ({
             value={user.lastName}
             onChange={handleChange}
             placeholder="Enter lastname..."
-            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,20}$"
-
+            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=ˆ&*(){}|~<>;:[\]]{2,20}$"
           />
         </Form.Group>
 
@@ -131,18 +161,52 @@ const Register = ({
               onChange={handleChange}
               required
               pattern=".{8,16}"
-              title="password must be from 8 to 16 characters long"
+              title="min length 8 max 16 characters"
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>
         </Form.Group>
 
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label> Confirm Password</Form.Label>
+          <Form.Group className="pass-wrapper">
+            <Form.Control
+              type={confirmPasswordShown ? 'text' : 'password'}
+              placeholder="Enter password..."
+              name={'confirmPassword'}
+              value={user.confirmPassword}
+              onChange={handleChange}
+              onBlur={validateConfirmPassword}
+              required
+              pattern=".{8,16}"
+              title="min length 8 max 16 characters"
+            />
+            <i
+              className={confirmedPasswordEye}
+              onClick={toggleConfirmPasswordVisiblity}
+            />
+          </Form.Group>
+          <i className="text-danger position-static">
+            {confirmPasswordErrorMessage}
+          </i>
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Check
+            type="switch"
+            id="custom-switch"
+            label="Agree with term"
+            onChange={handleAgree}
+          />
+        </Form.Group>
+        <i className="text-danger position-static">{agreeWithTermsErrorMessage}</i>
         <Form.Group>
           <Button variant="dark" type="submit" block>
             REGISTER
           </Button>
           <span>{errorMsg}</span>
         </Form.Group>
+
         <Form.Group className="link">
           <Link to="/login" className="btn btn-link">
             LOG IN
