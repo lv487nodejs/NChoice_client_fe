@@ -47,7 +47,8 @@ export const deliveryType = {
 };
 export const _apiBase = 'http://localhost:5000/';
 
-export const socialNetworksURL = {
+export const socialNetworkLinks = {
+    title: 'Links',
     telegram: 'https://web.telegram.org',
     facebook: 'https://www.facebook.com/Fn-100171608356044/',
     instagram: 'https://www.instagram.com/'
