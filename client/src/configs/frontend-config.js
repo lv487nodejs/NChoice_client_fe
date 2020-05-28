@@ -53,9 +53,9 @@ export const socialNetworksURL = {
     instagram: 'https://www.instagram.com/'
 };
 export const policiesFooter = {
-    title: 'About us',
+    title: 'Information',
     items: [
-        { id: 1, url: '#', item: 'About us' },
+        { id: 1, url: '/about-us', item: 'About us' },
         { id: 2, url: '#', item: 'Terms and Conditions' },
         { id: 3, url: '#', item: 'Privacy Policy' },
         { id: 4, url: '/materials', item: 'Materials' }]

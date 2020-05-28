@@ -8,7 +8,7 @@ const ErrorPage = () => {
     const date = new Date().toLocaleDateString("en-US", options)
     return (
         <Card className=" text-center">
-            <Image className="thanks-logo" src="/images/oops.jpg" />
+            <Image className="thanks-logo" src="/images/oops.webp" />
             <Link to="/" >
                 <Button className="thanks-button" variant="dark">Go to home page</Button>
             </Link>

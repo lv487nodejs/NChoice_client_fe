@@ -1,36 +1,43 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import withStoreService from '../hoc';
 import './Star-rating.css';
-import Rating from 'react-rating';
 import { getFromLocalStorage } from '../../services/localStoreService';
-import { addRatingToStore } from '../../actions';
-import { connect } from 'react-redux';
-
+import StarRatings from 'react-star-ratings';
 const accessToken = getFromLocalStorage('accessToken');
 
-const StarsRating = ({ rating, id, storeService, addRatingToStore, rate }) => {
-    
-    const changeRating = useCallback(() => {
-        storeService.updateRate(id, rate, accessToken);
-    }, [id, rate, storeService]);    
-    
-    const ratingChanged = (newRating) => {
-        addRatingToStore(newRating)
-        changeRating();
+const StarsRating = ({
+  rating,
+  id,
+  userId,
+  storeService,
+  color,
+  isSelectable,
+  starSpacing = '0',
+  starDimension = '25px',
+  numberOfStars = 5
+}) => {
+  const changeRating = (rate) => {
+    storeService.updateRate(id, userId, rate, accessToken);
+  };
+
+  const ratingChanging = (newRating) => {
+    if (id && userId) {
+      changeRating(newRating);
     }
-    return (
-        <div className="star-rating" id="starRating" rating={rating} >
-            <Rating readonly={false} onChange={ratingChanged} id="stars" step={1} initialRating={rating} emptySymbol="fa fa-star-o fa-2x"
-                fullSymbol="fa fa-star fa-2x" />
-        </div>
-    );
+  };
+  return (
+    <div className='star-rating' id='starRating' rating={rating}>
+      <StarRatings
+        rating={rating}
+        changeRating={ratingChanging}
+        starSpacing={starSpacing}
+        numberOfStars={numberOfStars}
+        starRatedColor={color}
+        starDimension={starDimension}
+        isSelectable={isSelectable}
+      />
+    </div>
+  );
 };
-const mapStateToProps = ({ ratingReducer: { rate } }) => ({ rate });
 
-const mapDispatchToProps = {
-    addRatingToStore
-}
-
-
-
-export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(StarsRating));
+export default withStoreService()(StarsRating);

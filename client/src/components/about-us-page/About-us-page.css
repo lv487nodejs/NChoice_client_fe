@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+
+.header-about-us-h2,
+.body-about-us-h3 {
+    font-family: 'Staatliches', cursive;
+    margin: 0;
+}
+
+.header-page-about-us {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 50px;
+}
+
+.header-page-about-us > * {
+    flex-basis: 500px;
+    max-width: 500px;
+}
+
+.header-page-about-us:after {
+    display: block;
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: calc(0px - 70px);
+    width: 100%;
+    height: 150px;
+    background: url("/images/about-us/line.png") no-repeat;
+    background-size: 100%;
+    z-index: -1;
+}
+
+.header-about-us-h2 {
+    font-size: 50px;
+    color: #343a40;
+}
+
+.header-page-about-us-image {
+    justify-content: center;
+    display: flex;
+}
+
+
+/*BODY*/
+.body-page-about-us {
+    max-width: 1920px;
+    margin: 50px auto;
+}
+
+.body-page-about-us-item {
+    display: flex;
+    height: 500px;
+}
+
+.body-page-about-us-item > * {
+    flex: 1 0 50%;
+}
+
+.body-page-about-us-item-image img {
+    max-width: 100%;
+}
+
+.body-page-about-us-item-describe {
+    display: flex;
+    justify-content: center;
+    padding: 10px 80px;
+    flex-flow: column;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-y: center;
+}
+
+.body-page-about-us-item:nth-child(even) {
+    flex-flow: row-reverse;
+}
+
+.body-page-about-us-item:nth-child(even) .body-page-about-us-item-image {
+    display: flex;
+    justify-items: flex-end;
+    justify-content: flex-end;
+}
+
+.body-page-about-us-item:first-child .body-page-about-us-item-describe {
+    background-image: url("/images/about-us/bg-1.png");
+}
+
+.body-page-about-us-item:nth-child(2) .body-page-about-us-item-describe {
+    background-image: url("/images/about-us/bg-2.png");
+}
+
+.body-page-about-us-item:last-child .body-page-about-us-item-describe {
+    background-image: url("/images/about-us/bg-3.png");
+}
+
+@media screen and (max-width: 1300px) {
+    .header-page-about-us {
+        flex-flow: column-reverse;
+    }
+
+    .header-page-about-us > * {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+
+    .body-page-about-us-item {
+        flex-flow: column;
+        height: fit-content;
+    }
+
+    .body-page-about-us-item-describe {
+        min-height: 500px;
+        align-self: center;
+        max-width: 800px;
+        padding: 10px 50px;
+    }
+
+    .body-page-about-us-item:nth-child(even) .body-page-about-us-item-image {
+        align-self: flex-end;
+    }
+
+    .body-page-about-us-item:nth-child(even) {
+        flex-flow: column;
+    }
+}
