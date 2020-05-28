@@ -24,6 +24,14 @@
     resize: none;
 }
 
+.error-message {
+    color: rgba(255, 82, 82, 0.84);
+}
+.error, .error:focus {
+    border: 2px solid rgba(255, 82, 82, 0.84);
+    outline: rgba(255, 82, 82, 0.84);
+}
+
 .form-textarea {
     margin-bottom: 2rem;
 }

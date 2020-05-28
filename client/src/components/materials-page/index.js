@@ -1,3 +1,7 @@
 import MaterialsPage from './Materials-page';
+import StaticMaterialsContent from './static-materials-content';
 
-export default MaterialsPage;
+export {
+    MaterialsPage,
+    StaticMaterialsContent
+};

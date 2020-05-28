@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login"
 
-import { setUserLogged, setUserLoading, setCart } from "../../actions";
+import { setUserLogged, setUserLoading, setCart, setUser } from "../../actions";
 import LoadingSpinner from "../Loading-spinner";
 import withStoreService from '../hoc';
 import { setToLocalStorage } from '../../services/localStoreService';
@@ -27,7 +27,7 @@ const formRegExp = {
 const USER_DATA = {
     email: '',
     password: ''
-};
+}
 
 
 const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
@@ -57,7 +57,6 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const handleChange = (event) => {
         event.persist();
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
-
     };
 
     const postUser = async () => {
@@ -127,6 +126,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         addDataToLocalStorage({ accessToken, refreshToken, userId })
         setCart(cart)
     }
+    window.scrollTo(0, 0);
 
     return (
         <div className={'login'}>
@@ -140,7 +140,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     <Form.Control
                         required
                         type="text"
-                        placeholder="Enter email"
+                        placeholder="Enter email..."
                         name={'email'}
                         value={user.email}
                         onChange={handleChange}
@@ -154,7 +154,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     <Form.Group className="pass-wrapper">
                         <Form.Control
                             type={passwordShown ? "text" : "password"}
-                            placeholder="Password"
+                            placeholder="Enter password..."
                             name={'password'}
                             value={user.password}
                             onChange={handleChange}
@@ -187,22 +187,30 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     fields={'name, email, picture'}
                     callback={responseFacebook}
                 />
+
                 <GoogleLogin
                     clientId = {'303875330429-u4510uka1kogr1k4lqcgpr1eree7p20r.apps.googleusercontent.com'}
                     buttonText={'Google'}
                     onSuccess={responseGoogle}
-                    onFailure={undefined}
-                />
+                    onFailure={responseGoogle}
+                    />
             </div>
         </div>
     )
 };
 
-
-const mapDispatchToProps = { setUserLogged, setUserLoading, setCart };
+const mapDispatchToProps = {
+  setUserLogged,
+  setUserLoading,
+  setCart,
+    setUser
+};
 
 const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({
-    userLogged, userLoading
+  userLogged,
+  userLoading
 });
 
-export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withStoreService()(
+  connect(mapStateToProps, mapDispatchToProps)(Login)
+);

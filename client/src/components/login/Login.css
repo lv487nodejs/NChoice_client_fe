@@ -1,7 +1,7 @@
 .login {
   width: 35%;
   margin: 0 auto;
-  font-family: "Ostwald";
+  font-family: 'Ostwald';
 }
 
 .loginHeader {
@@ -48,6 +48,16 @@ label:hover {
   font-size: 15px;
 }
 
+/* radio */
+.custom-control-label {
+  color: black !important;
+}
+
+.custom-control-label:before {
+  border-color: black !important;
+}
+
+
 /* eye */
 .pass-wrapper {
   position: relative;
@@ -64,24 +74,31 @@ i:hover {
   color: #737575;
   cursor: pointer;
 }
-.login-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
-}
-.login-wrapper > button {
-  padding: 2px 25px !important ;
-}
-.kep-login-facebook {
-  padding: 11px 27px !important;
-}
 
+.login-wrapper {
+  display: none;
+  justify-content: space-around;
+  align-items: stretch;
+  margin-bottom: 1rem;
+}
 @media screen and (max-width: 520px) {
-  .login{
+  .login {
     width: 45%;
   }
 
-  .lable{
+  .lable {
     font-size: 32px;
+  }
+  .login-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .kep-login-facebook {
+    margin-bottom: 1rem;
+  }
+  .kep-login-facebook.metro {
+    width: 100%;
   }
 }
