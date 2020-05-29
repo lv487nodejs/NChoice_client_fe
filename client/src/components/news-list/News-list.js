@@ -32,12 +32,12 @@ const NewsList = ({ storeService, storeSetNews, news }) => {
   );
 
   return (
-    <React.Fragment>
-      <h2 className="text-center" id="news-title">
+    <>
+      <h2 className='text-center' id='news-title'>
         News
       </h2>
-      <div className="news-cardDeck">{newsItems}</div>
-    </React.Fragment>
+      <div className='news-cardDeck'>{newsItems}</div>
+    </>
   );
 };
 

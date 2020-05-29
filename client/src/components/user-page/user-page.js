@@ -12,7 +12,7 @@ const UserPage = () => {
   const userId = getFromLocalStorage('userId');
 
   if (!userId) {
-    return <Redirect to="/" />;
+    return <Redirect to='/' />;
   }
   const buttonOptions = [
     {
@@ -29,34 +29,32 @@ const UserPage = () => {
     }
   ];
 
-  const buttons = buttonOptions.map(({ title, handler, value, variant }, i) => {
-    return (
-      <li key={title} className={`user-page-button-${i}`}>
-        <Button variant={variant} value={value} onClick={() => handler(value)}>
-          {title}
-        </Button>
-      </li>
-    );
-  });
+  const buttons = buttonOptions.map(({ title, handler, value, variant }, i) => (
+    <li key={title} className={`user-page-button-${i}`}>
+      <Button variant={variant} value={value} onClick={() => handler(value)}>
+        {title}
+      </Button>
+    </li>
+  ));
   const itemToShow =
     showValue === 1 ? (
-      <div className="user-page-container">
+      <div className='user-page-container'>
         <ul>{buttons}</ul>
-        <div className="container">
+        <div className='container'>
           <UserChangeData />
         </div>
       </div>
     ) : showValue === 2 ? (
-      <div className="user-page-container">
+      <div className='user-page-container'>
         <ul>{buttons}</ul>
-        <div className="container">
+        <div className='container'>
           <Cart />
         </div>
       </div>
     ) : (
       ''
     );
-  return <div className="container">{itemToShow}</div>;
+  return <div className='container'>{itemToShow}</div>;
 };
 
 export default UserPage;

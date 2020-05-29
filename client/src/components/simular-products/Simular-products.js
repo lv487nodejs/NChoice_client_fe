@@ -1,8 +1,7 @@
 import React from 'react';
-import ProductListItem from '../product-list-item';
 import './Simular-products.css';
-
 import Carousel from 'react-multi-carousel';
+import ProductListItem from '../product-list-item';
 import 'react-multi-carousel/lib/styles.css';
 
 const responsive = {
@@ -24,20 +23,20 @@ const responsive = {
   }
 };
 const SimularProducts = ({ products }) => (
-    <Carousel responsive={responsive}  swipeable={false}>
-      {products.map(({ id, title, description, images, price, mrsp, rate }) => (
-        <ProductListItem
-          title={title}
-          description={description}
-          images={images}
-          price={price}
-          mrsp={mrsp}
-          id={id}
-          key={id}
-          rate={rate}
-        />
-      ))}
-    </Carousel>
+  <Carousel responsive={responsive} swipeable={false}>
+    {products.map(({ id, title, description, images, price, mrsp, rate }) => (
+      <ProductListItem
+        title={title}
+        description={description}
+        images={images}
+        price={price}
+        mrsp={mrsp}
+        id={id}
+        key={id}
+        rate={rate}
+      />
+    ))}
+  </Carousel>
 );
 
 export default SimularProducts;

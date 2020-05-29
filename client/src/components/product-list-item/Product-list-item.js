@@ -24,28 +24,28 @@ function ProductListItem({
   }, [currency, price, mrsp]);
 
   return (
-    <div className="wrapper" id="wrapper" key={id}>
-      <div className="productCard" id="productCard">
+    <div className='wrapper' id='wrapper' key={id}>
+      <div className='productCard' id='productCard'>
         <img
-          id="productImg"
+          id='productImg'
           alt={`${images}`}
           src={`/images/products/${images}`}
         />
-        <Link id="productLink" key={id} to={`/products/${id}`}>
-          <div className="info" id={id}>
+        <Link id='productLink' key={id} to={`/products/${id}`}>
+          <div className='info' id={id}>
             <StarsRating rating={rate} id={id} />
 
-            <p className="productName" id="productName">
+            <p className='productName' id='productName'>
               {title}
             </p>
-            <div className="bottomElements" id="bottomElements">
+            <div className='bottomElements' id='bottomElements'>
               <div
-                className="cardPrice"
-                id="realPrice"
+                className='cardPrice'
+                id='realPrice'
               >{`${priceWithRate} ${currencyIcon}`}</div>
               <div
-                className="cardPrice msrp-price"
-                id="msrpPrice"
+                className='cardPrice msrp-price'
+                id='msrpPrice'
               >{`${msrpWithRate} ${currencyIcon}`}</div>
             </div>
           </div>

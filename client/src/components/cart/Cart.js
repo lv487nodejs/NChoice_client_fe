@@ -32,13 +32,9 @@ const Cart = ({
     removeFromCart(item);
   };
 
-  const salePrices = cartProducts.map((i) => {
-    return i.price * i.quantity * currency;
-  });
+  const salePrices = cartProducts.map((i) => i.price * i.quantity * currency);
 
-  const fullPrices = cartProducts.map((i) => {
-    return i.mrsp * i.quantity * currency;
-  });
+  const fullPrices = cartProducts.map((i) => i.mrsp * i.quantity * currency);
 
   const fullPrice = parseFloat(
     fullPrices.length > 0
@@ -57,46 +53,46 @@ const Cart = ({
   ).toFixed(2);
 
   const tableRows = cartProducts.map((item) => (
-    <tr key={item.propetries._id} className="cart-item">
-      <td className="item1">
+    <tr key={item.propetries._id} className='cart-item'>
+      <td className='item1'>
         <Link key={item.id} to={`/products/${item.id}`}>
           <img
-            className="cart-img"
-            alt="order-item"
+            className='cart-img'
+            alt='order-item'
             src={`/images/products/${item.images}`}
           />
         </Link>
       </td>
       <td>
         <Link key={item.id} to={`/products/${item.id}`}>
-          <p className="cart-title-item">{item.title}</p>
+          <p className='cart-title-item'>{item.title}</p>
         </Link>
-        <p className="item-size-cart">
+        <p className='item-size-cart'>
           {' '}
           Size: <span>{item.propetries.size[0]}</span>{' '}
         </p>
       </td>
       <td>
-        <div className="quantity-control">
+        <div className='quantity-control'>
           <FontAwesomeIcon
             icon={faMinus}
-            className="remove-from-cart-button"
+            className='remove-from-cart-button'
             onClick={handleDecreaseFromCart(item)}
           />
-          <span id="quantity"> {item.quantity} </span>
+          <span id='quantity'> {item.quantity} </span>
           <FontAwesomeIcon
             icon={faPlus}
-            className="add-to-cart-button"
+            className='add-to-cart-button'
             onClick={handleIncreaseToCart(item)}
           />
         </div>
       </td>
       <td>
-        <span className="price">
+        <span className='price'>
           {parseFloat(item.price * currency * item.quantity).toFixed(2)}{' '}
           {currencyIcon}
         </span>
-        <span className="full-price">
+        <span className='full-price'>
           {parseFloat(item.mrsp * currency * item.quantity).toFixed(2)}{' '}
           {currencyIcon}
         </span>
@@ -104,7 +100,7 @@ const Cart = ({
       <td>
         <FontAwesomeIcon
           icon={faTrash}
-          className="delte-cart-button"
+          className='delte-cart-button'
           onClick={handleRemoveFromCart(item)}
         />
       </td>
@@ -112,28 +108,25 @@ const Cart = ({
   ));
 
   return (
-    <div className="main-cart">
+    <div className='main-cart'>
       <h5>
         {cartProducts.length < 1 && (
           <div>
-            <p className="empty-cart-p">
+            <p className='empty-cart-p'>
               Your cart is empty.
-              <Link style={{ textDecoration: 'none' }} key="shop-now" to={`/`}>
-                <span className="shop-now">Shop Now </span>
+              <Link style={{ textDecoration: 'none' }} key='shop-now' to='/'>
+                <span className='shop-now'>Shop Now </span>
               </Link>
             </p>
-            <div className="empty-cart">
-              <img
-                src="/images/empty-basket.png"
-                alt="Your cart is empty"
-              ></img>
+            <div className='empty-cart'>
+              <img src='/images/empty-basket.png' alt='Your cart is empty' />
               <br />
               <Link
                 style={{ textDecoration: 'none' }}
-                key="shop-now-btn"
-                to={`/`}
+                key='shop-now-btn'
+                to='/'
               >
-                <Button variant="dark" className="cart-btns shop-now-btn">
+                <Button variant='dark' className='cart-btns shop-now-btn'>
                   <span>Shop Now</span>
                 </Button>
               </Link>
@@ -145,29 +138,29 @@ const Cart = ({
       <div>
         {cartProducts.length >= 1 && (
           <div>
-            <h3 className="cart-name">Cart</h3>
-            <Table responsive className="cart-table">
-              <thead className="thead-cart">
+            <h3 className='cart-name'>Cart</h3>
+            <Table responsive className='cart-table'>
+              <thead className='thead-cart'>
                 <tr>
                   <th>ITEM</th>
-                  <th></th>
+                  <th />
                   <th>QUANTITY</th>
                   <th>PRICE</th>
-                  <th></th>
+                  <th />
                 </tr>
               </thead>
               <tbody>{tableRows}</tbody>
             </Table>
 
-            <div className="total-cart">
-              <h5 className="total-cart">
+            <div className='total-cart'>
+              <h5 className='total-cart'>
                 {cartProducts.length >= 1 && (
                   <>
                     TOTAL: {parseFloat(total).toFixed(2)} {currencyIcon}{' '}
                   </>
                 )}{' '}
               </h5>
-              <h5 className="total-cart">
+              <h5 className='total-cart'>
                 {cartProducts.length >= 1 && (
                   <>
                     SAVE: {parseFloat(fullPrice - total).toFixed(2)}{' '}
@@ -177,28 +170,28 @@ const Cart = ({
               </h5>
             </div>
 
-            <div className="checkout-cart-button-div">
+            <div className='checkout-cart-button-div'>
               <Link
-                to="/"
+                to='/'
                 className={
                   cartProducts.length >= 1
                     ? 'checkout-cart-button'
                     : 'disp-none'
                 }
               >
-                <Button variant="dark" className="cart-btns">
+                <Button variant='dark' className='cart-btns'>
                   Continue shopping
                 </Button>
               </Link>
               <Link
-                to="/checkout"
+                to='/checkout'
                 className={
                   cartProducts.length >= 1
                     ? 'checkout-cart-button'
                     : 'disp-none'
                 }
               >
-                <Button variant="dark" className="cart-btns">
+                <Button variant='dark' className='cart-btns'>
                   Go to checkout
                 </Button>
               </Link>

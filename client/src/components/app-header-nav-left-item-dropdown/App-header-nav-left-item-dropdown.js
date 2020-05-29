@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 
 import './App-header-nav-left-item-dropdown.css';
@@ -8,7 +8,7 @@ import { PRODUCT_LIST_URL } from '../../configs/frontend-config';
 const AppHeaderNavLeftItemDropDown = ({
   catalog,
   clickHandler,
-  categoryRemover,
+  categoryRemover
 }) => {
   const items = catalog.categories.map((category) => (
     <Nav key={category._id}>
@@ -21,7 +21,7 @@ const AppHeaderNavLeftItemDropDown = ({
     </Nav>
   ));
 
-  let categoryRemoverHandler = () => {
+  const categoryRemoverHandler = () => {
     categoryRemover(catalog.catalog);
   };
 
@@ -36,8 +36,7 @@ const AppHeaderNavLeftItemDropDown = ({
         All Categories
       </Link>
       {items}
-
     </Nav>
-  )
+  );
 };
 export default AppHeaderNavLeftItemDropDown;

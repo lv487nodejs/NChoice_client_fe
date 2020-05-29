@@ -8,72 +8,72 @@ const ProductMaterial = ({ product }) => {
   switch (product.material) {
     case 'cotton':
       material = (
-        <div className="material-icon" data-tooltip="cotton">
+        <div className='material-icon' data-tooltip='cotton'>
           <img
-            className="material-icon-img"
-            src="../images/materials/cotton.svg"
-            alt="cotton"
-          ></img>
+            className='material-icon-img'
+            src='../images/materials/cotton.svg'
+            alt='cotton'
+          />
         </div>
       );
       break;
     case 'jute':
       material = (
-        <div className="material-icon" data-tooltip="jute">
+        <div className='material-icon' data-tooltip='jute'>
           <img
-            className="material-icon-img"
-            src="../images/materials/jute.svg"
-            alt="jute"
-          ></img>
+            className='material-icon-img'
+            src='../images/materials/jute.svg'
+            alt='jute'
+          />
         </div>
       );
       break;
     case 'silk':
       material = (
-        <div className="material-icon" data-tooltip="silk">
+        <div className='material-icon' data-tooltip='silk'>
           <img
-            className="material-icon-img"
-            src="../images/materials/silk.svg"
-            alt="silk"
-          ></img>
+            className='material-icon-img'
+            src='../images/materials/silk.svg'
+            alt='silk'
+          />
         </div>
       );
       break;
     case 'wool':
       material = (
-        <div className="material-icon" data-tooltip="wool">
+        <div className='material-icon' data-tooltip='wool'>
           <img
-            className="material-icon-img"
-            src="../images/materials/wool.svg"
-            alt="wool"
-          ></img>
+            className='material-icon-img'
+            src='../images/materials/wool.svg'
+            alt='wool'
+          />
         </div>
       );
       break;
     case 'ramie':
       material = (
-        <div className="material-icon" data-tooltip="ramie">
+        <div className='material-icon' data-tooltip='ramie'>
           <img
-            className="material-icon-img"
-            src="../images/materials/ramie.svg"
-            alt="ramie"
-          ></img>
+            className='material-icon-img'
+            src='../images/materials/ramie.svg'
+            alt='ramie'
+          />
         </div>
       );
       break;
     case 'recycled':
       material = (
-        <div className="material-icon" data-tooltip="recycled">
+        <div className='material-icon' data-tooltip='recycled'>
           <img
-            className="material-icon-img"
-            src="../images/materials/recycled.svg"
-            alt="recycled"
-          ></img>
+            className='material-icon-img'
+            src='../images/materials/recycled.svg'
+            alt='recycled'
+          />
         </div>
       );
       break;
     default:
-      material = <div className="material-icon"></div>;
+      material = <div className='material-icon' />;
   }
 
   return <div>{material}</div>;

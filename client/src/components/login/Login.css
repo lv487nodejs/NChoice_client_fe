@@ -48,6 +48,16 @@ label:hover {
   font-size: 15px;
 }
 
+/* radio */
+.custom-control-label {
+  color: black !important;
+}
+
+.custom-control-label:before {
+  border-color: black !important;
+}
+
+
 /* eye */
 .pass-wrapper {
   position: relative;
@@ -64,13 +74,9 @@ i:hover {
   color: #737575;
   cursor: pointer;
 }
+
 .login-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
-}
-.login-wrapper {
-  display: flex;
+  display: none;
   justify-content: space-around;
   align-items: stretch;
   margin-bottom: 1rem;

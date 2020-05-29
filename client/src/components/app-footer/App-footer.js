@@ -1,60 +1,91 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './App-footer.css';
 import {
   faTelegramPlane,
   faInstagram,
-  faFacebook,
+  faFacebook
 } from '@fortawesome/free-brands-svg-icons';
-import './App-footer.css';
-import { Row, Card, CardDeck } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { socialNetworksURL, contactInformationFooter, policiesFooter, catalogsFooter, CATALOGS_URL } from '../../configs/frontend-config'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  contactInformationFooter,
+  policiesFooter,
+  catalogsFooter,
+  CATALOGS_URL,
+  socialNetworksURL
+} from '../../configs/frontend-config';
+
+const LINKS_TITLE = 'Links';
 
 const catalogs = catalogsFooter.items.map((item) => (
-  <Row key={item.item}><Link to={CATALOGS_URL + item.url}>{item.item}</Link></Row>
-))
+  <div key={item.item}>
+    <Link to={CATALOGS_URL + item.url}>{item.item}</Link>
+  </div>
+));
 
-const policies = policiesFooter.items.map((item) =>
-  (<Row key={item.item}><Link to={item.url}>{item.item}</Link></Row>
-  ))
+const policies = policiesFooter.items.map((item) => (
+  <div key={item.item}>
+    <Link to={item.url}>{item.item}</Link>
+  </div>
+));
 
-const contacts = contactInformationFooter.items.map((item, index) =>
-  (<Row key={index}><Card.Link>{item}</Card.Link></Row>
-  ))
+const contacts = contactInformationFooter.items.map((item, index) => (
+  <div key={index}>{item}</div>
+));
+
+const Links = () => (
+  <>
+    <Link
+      className='footer-icon'
+      to={socialNetworksURL.telegram}
+      target='_blank'
+    >
+      <FontAwesomeIcon className='icon' icon={faTelegramPlane} />
+    </Link>
+    <Link
+      className='footer-icon'
+      to={socialNetworksURL.instagram}
+      target='_blank'
+    >
+      <FontAwesomeIcon className='icon' icon={faInstagram} />
+    </Link>
+    <Link
+      className='footer-icon'
+      to={socialNetworksURL.facebook}
+      target='_blank'
+    >
+      <FontAwesomeIcon className='icon' icon={faFacebook} />
+    </Link>
+  </>
+);
 
 const AppFooter = () => (
-  <footer className="footer">
-    <div className="footer-inner">
-      <CardDeck id="footer-card">
-        <Card.Body >
-          <Card.Title>{catalogsFooter.title}</Card.Title>
+  <footer className='footer'>
+    <div className='footer-inner'>
+      <div className='footer-card-deck' id='footer-card'>
+        <div className='footer-card-body'>
+          <div className='footer-card-title'>{catalogsFooter.title}</div>
           {catalogs}
-        </Card.Body>
-        <Card.Body>
-          <Card.Title>{policiesFooter.title}</Card.Title>
+        </div>
+        <div className='footer-card-body'>
+          <div className='footer-card-title'>{policiesFooter.title}</div>
           {policies}
-        </Card.Body>
-        <Card.Body>
-          <Card.Title>{contactInformationFooter.title}</Card.Title>
+        </div>
+        <div className='footer-card-body'>
+          <div className='footer-card-title'>
+            {contactInformationFooter.title}
+          </div>
           {contacts}
-        </Card.Body>
-        <Card.Body>
-          <Row className="d-flex flex-column align-items-center">
-            <Card.Title>Links</Card.Title>
-            <Card.Title>
-              <Card.Link href={socialNetworksURL.telegram} target='_blank'>
-                <FontAwesomeIcon className="icon" icon={faTelegramPlane} />
-              </Card.Link>
-              <Card.Link href={socialNetworksURL.instagram} target='_blank'>
-                <FontAwesomeIcon className="icon" icon={faInstagram} />
-              </Card.Link>
-              <Card.Link href={socialNetworksURL.facebook} target='_blank'>
-                <FontAwesomeIcon className="icon" icon={faFacebook} />
-              </Card.Link>
-            </Card.Title>
-          </Row>
-        </Card.Body>
-      </CardDeck>
+        </div>
+        <div className='footer-card-body'>
+          <div className='footer-icons-box'>
+            <div className='footer-card-title'>{LINKS_TITLE}</div>
+            <div>
+              <Links />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </footer>
 );

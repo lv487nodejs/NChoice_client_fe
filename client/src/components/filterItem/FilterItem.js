@@ -18,9 +18,9 @@ const FilterItem = (props) => {
 
     return (
       <li key={item[type]}>
-        <label className="list-group-item">
+        <label className='list-group-item'>
           <input
-            type="checkbox"
+            type='checkbox'
             value={item[type]}
             checked={checked}
             onChange={(e) => handler(e, e.target.value)}
@@ -35,13 +35,13 @@ const FilterItem = (props) => {
     isVisible ? setFilterIcon('plus') : setFilterIcon('minus');
   };
   return (
-    <div className="filter-item">
+    <div className='filter-item'>
       <FontAwesome
         name={filterIcon}
-        className="btn btn-outline-primary plus-button expand-button"
+        className='btn btn-outline-primary plus-button expand-button'
         onClick={changeHandler}
-      ></FontAwesome>
-      <p className="filter-name">By {type}:</p>
+      />
+      <p className='filter-name'>By {type}:</p>
       <ul className={listClass}>{elements}</ul>
     </div>
   );

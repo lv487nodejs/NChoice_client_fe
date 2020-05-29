@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import './comment-form.css';
+import { Link } from 'react-router-dom';
 import { setComments } from '../../actions';
 import withStoreService from '../hoc';
 import { getFromLocalStorage } from '../../services/localStoreService';
 import CommentItem from '../comment-item/comment-item';
-import { Link } from 'react-router-dom';
 import StarsRating from '../star-rating';
 
 const ratingColor = 'black';
@@ -20,6 +20,7 @@ const CommentForm = ({
   const [text, setText] = useState('');
   const userId = getFromLocalStorage('userId');
   const [tempText, setTempText] = useState(null);
+  const [isTextareaFilled, setTextareaFilled] = useState(false);
 
   useEffect(() => {
     if (productId) {
@@ -29,15 +30,35 @@ const CommentForm = ({
     }
   }, [tempText, userId, storeService, productId, setComments]);
 
+  const textarea = document.querySelector('textarea.feedback-form');
+
   const addComment = (e) => {
     e.preventDefault();
+
+    if (!text.trim() && !isTextareaFilled) {
+      textarea.classList.add('error');
+      textarea.focus();
+      setTextareaFilled(true);
+      return;
+    }
+
     storeService.postComments({ text, productId, user: userId });
     setText('');
     setTempText(text);
   };
 
+  const onChangeTextarea = (e) => {
+    const targetValue = e.target.value;
+
+    setText(targetValue);
+    if (targetValue) {
+      textarea.classList.remove('error');
+      setTextareaFilled(false);
+    }
+  };
+
   const logged = (
-    <form className="form my-1 comments-form" onSubmit={addComment}>
+    <form className='form my-1 comments-form' onSubmit={addComment}>
       <h3> Leave a comment </h3>
       <div className='star'>
         <h6 className='rate'> Rate the product: </h6>
@@ -47,26 +68,28 @@ const CommentForm = ({
           userId={userId}
           readonly={false}
           color={ratingColor}
-          isSelectable={true}
+          isSelectable
         />
       </div>
       <textarea
-        className="feedback-form"
-        name="text"
+        className='feedback-form'
+        name='text'
         value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Share your thoughts with other customers"
-        required
+        onChange={onChangeTextarea}
+        placeholder='Share your thoughts with other customers'
       />
-      <input type="submit" value="Add a comment" className="comment-submit" />
+      {isTextareaFilled && (
+        <span className='error-message'>Please, leave your comment</span>
+      )}
+      <input type='submit' value='Add a comment' className='comment-submit' />
     </form>
   );
 
   const notLogged = (
     <div>
-      <h3 className="login-link">
+      <h3 className='login-link'>
         To leave a comment please
-        <Link to="/login">
+        <Link to='/login'>
           {' '}
           <span>login</span>{' '}
         </Link>
@@ -76,22 +99,21 @@ const CommentForm = ({
 
   const items = comments
     .filter((comment) => comment.user != null)
-    .map((comment) => {
-      return (
-        <CommentItem
-          key={comment._id}
-          text={comment.text}
-          date={comment.date}
-          reviewerName={comment.user.firstName}
-          reviewerId={comment.user._id}
-          commentId={comment._id}
-        />
-      );
-    })
+    .map((comment) => (
+      <CommentItem
+        key={comment._id}
+        text={comment.text}
+        date={comment.date}
+        reviewerName={comment.user.firstName}
+        reviewerId={comment.user._id}
+        commentId={comment._id}
+      />
+    ))
     .sort((a, b) => b.date - a.date)
     .reverse();
 
-  let comentsNumber = comments.filter((comment) => comment.user != null).length;
+  const comentsNumber = comments.filter((comment) => comment.user != null)
+    .length;
 
   return (
     <div>

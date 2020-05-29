@@ -27,13 +27,13 @@ const CategoriesCarousel = ({
   };
 
   const items = brands.map((item) => (
-    <Carousel.Item key={item.brand} className="carousel">
+    <Carousel.Item key={item.brand} className='carousel'>
       <Link
         to={PRODUCT_LIST_URL + catalog}
         onClick={filterAddBrandHandler(item.brand)}
       >
         <img
-          className="d-block w-100 img-carousel"
+          className='d-block w-100 img-carousel'
           alt={item.images[0][catalog]}
           src={`/images/brands/${item.images[0][catalog]}`}
         />

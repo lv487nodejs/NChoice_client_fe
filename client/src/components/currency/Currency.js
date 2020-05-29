@@ -13,16 +13,14 @@ function Currency() {
     fetch(BASE_URL)
       .then((res) => res.json())
       .then((data) => {
-        let currenciesArray = Object.entries(data.rates);
+        const currenciesArray = Object.entries(data.rates);
         return currenciesArray;
       })
       .then((currency) =>
-        currency.map(([currencyName, coefficient]) => {
-          return {
-            name: currencyName,
-            coefficient: coefficient
-          };
-        })
+        currency.map(([currencyName, coefficient]) => ({
+          name: currencyName,
+          coefficient
+        }))
       )
       .then((currency) =>
         currency.filter((i) => currencies.hasOwnProperty(i.name))
