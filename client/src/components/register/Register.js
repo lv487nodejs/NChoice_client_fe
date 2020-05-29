@@ -13,12 +13,18 @@ const addDataToLocalStorage = (token) => {
   setToLocalStorage("refreshToken", token.refreshToken);
 };
 
+const formRegExp = {
+  email: '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
+  name: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
+  password: '.{8,30}'
+}
+
 const USER_DATA = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
 };
 
 const Register = ({
@@ -33,26 +39,26 @@ const Register = ({
   const initialUser = { ...USER_DATA, cart: { cartNumbers, cartProducts } };
 
   const [user, setUser] = useState(initialUser);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
   const [passwordShown, setPasswordShown] = useState(false);
   const [show, setShow] = useState(false);
 
   const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
   const [confirmPasswordError, setconfirmPasswordError] = useState(true);
-  const [emailiError, setEmailError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
 
   const confirmPasswordErrorMessage = confirmPasswordError
-    ? "Please confirm password"
-    : "";
+    ? 'Please confirm password'
+    : '';
   const agreeWithTermsErrorMessage = agreedWithTerms
-    ? ""
-    : "Please agree with terms";
-  const emailErrorMessage = emailiError ? "Please enter email" : "";
-  const passwordEye = passwordShown ? "fa fa-eye" : "fa fa-eye-slash";
+  ? ''
+  : 'Please agree with terms';
+  const emailErrorMessage = emailError ? "Please enter email" : "";
+  const passwordEye = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
   const confirmedPasswordEye = confirmPasswordShown
-    ? "fa fa-eye"
-    : "fa fa-eye-slash";
+    ? 'fa fa-eye'
+    : 'fa fa-eye-slash';
 
   useEffect(() => {
     setUserLogged(false);
@@ -66,11 +72,13 @@ const Register = ({
     setConfirmPasswordShown(!confirmPasswordShown);
   };
   const validateConfirmPassword = () => {
-    setconfirmPasswordError(true);
+
     if (user.password === user.confirmPassword) {
-      setconfirmPasswordError(false);
+      setconfirmPasswordError(false) }
+     else {
+        setconfirmPasswordError(true)
+     }
     }
-  };
   const handleChange = (event) => {
     event.persist();
     setUser({ ...user, [event.target.name]: event.target.value });
@@ -85,7 +93,7 @@ const Register = ({
       setUserLoading();
       user.confirmPassword = undefined;
       const res = await storeService.registerUser(user);
-      if (!res) throw new Error("User with such an email already exist.");
+      if (!res) throw new Error('User with such an email already exist.');
       addDataToLocalStorage(res);
       handleShow();
     } catch (err) {
@@ -105,36 +113,38 @@ const Register = ({
   if (userLogged) {
     return <Redirect to="/" />;
   }
-  const checkEmail = () => {
-    setEmailError(true);    
-    if (/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$/.test(user.email)) {
+  const checkEmail = (event) => {
+    setEmailError(true);
+    if (event.target.value.match(formRegExp.email)) {
       setEmailError(false);
     }
   };
   return (
     <>
-      <Form className="register" onSubmit={handleOnSubmit}>
+      <Form
+          className="register"
+          onSubmit={handleOnSubmit}
+      >
         <Form.Label className="lable">Register</Form.Label>
         <Form.Group>
           <Form.Label>First name</Form.Label>
           <Form.Control
             type="text"
-            name={"firstName"}
+            name={'firstName'}
             value={user.firstName}
             onChange={handleChange}
             placeholder="Enter firstname..."
-            pattern={"^[A-Za-z]+((s)?(('|-)?([A-Za-z])+))*{2,30}$"}
           />
+
         </Form.Group>
         <Form.Group>
           <Form.Label>Last name</Form.Label>
           <Form.Control
             type="text"
-            name={"lastName"}
+            name={'lastName'}
             value={user.lastName}
             onChange={handleChange}
             placeholder="Enter lastname..."
-            pattern={"^[A-Za-z]+((s)?(('|-)?([A-Za-z])+))*{2,30}$"}
           />
         </Form.Group>
 
@@ -142,14 +152,12 @@ const Register = ({
           <Form.Label>Email address</Form.Label>
           <Form.Control
             type="text"
-            name={"email"}
+            name={'email'}
             value={user.email}
             onChange={handleChange}
             onBlur={checkEmail}
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             title="example@gmail.com"
             placeholder="Enter email..."
-            required
           />
           <i className="text-danger position-static">{emailErrorMessage}</i>
           <Form.Text className="text-muted">
@@ -161,32 +169,29 @@ const Register = ({
           <Form.Label>Password</Form.Label>
           <Form.Group className="pass-wrapper">
             <Form.Control
-              type={passwordShown ? "text" : "password"}
+              type={passwordShown ? 'text' : 'password'}
               placeholder="Enter password..."
-              name={"password"}
+              name={'password'}
               value={user.password}
               onChange={handleChange}
-              required
-              pattern=".{8,30}"
-              title="min length 8 max 30 characters"
+              title="min length 8 max 16 characters"
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>
+
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label> Confirm Password</Form.Label>
           <Form.Group className="pass-wrapper">
             <Form.Control
-              type={confirmPasswordShown ? "text" : "password"}
+              type={confirmPasswordShown ? 'text' : 'password'}
               placeholder="Enter password..."
-              name={"confirmPassword"}
+              name={'confirmPassword'}
               value={user.confirmPassword}
               onChange={handleChange}
               onBlur={validateConfirmPassword}
-              required
-              pattern=".{8,30}"
-              title="min length 8 max 30 characters"
+              title="min length 8 max 16 characters"
             />
             <i
               className={confirmedPasswordEye}
