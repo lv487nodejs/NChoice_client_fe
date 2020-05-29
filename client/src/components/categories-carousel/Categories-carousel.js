@@ -39,8 +39,7 @@ const CategoriesCarousel = ({
         />
       </Link>
       <Carousel.Caption>
-        {' '}
-        <h2 style={captionStyle}>{item.brand}</h2>{' '}
+        <h2 style={captionStyle}>{item.brand}</h2>
       </Carousel.Caption>
     </Carousel.Item>
   ));
