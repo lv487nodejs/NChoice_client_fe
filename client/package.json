@@ -118,7 +118,7 @@
   "lint-staged": {
     "*.js": [
       "eslint --fix",
-      "prettier --write",
+      "prettier --write"
     ]
   }
 }
