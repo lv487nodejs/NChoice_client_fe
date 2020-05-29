@@ -26,30 +26,32 @@ function ProductListItem({
   return (
     <div className="wrapper" id="wrapper" key={id}>
       <div className="productCard" id="productCard">
+        <Link id="productLink" key={id} to={`/products/${id}`}>
+
         <img
           id="productImg"
           alt={`${images}`}
           src={`/images/products/${images}`}
         />
-        <Link id="productLink" key={id} to={`/products/${id}`}>
-          <div className="info" id={id}>
-            <StarsRating rating={rate} id={id} />
 
-            <p className="productName" id="productName">
-              {title}
-            </p>
-            <div className="bottomElements" id="bottomElements">
-              <div
-                className="cardPrice"
-                id="realPrice"
-              >{`${priceWithRate} ${currencyIcon}`}</div>
-              <div
-                className="cardPrice msrp-price"
-                id="msrpPrice"
-              >{`${msrpWithRate} ${currencyIcon}`}</div>
-            </div>
-          </div>
         </Link>
+      </div>
+      <div className="info" id={id}>
+        <StarsRating rating={rate} id={id} />
+
+        <p className="productName" id="productName">
+          {title}
+        </p>
+        <div className="bottomElements" id="bottomElements">
+          <div
+            className="cardPrice"
+            id="realPrice"
+          >{`${priceWithRate} ${currencyIcon}`}</div>
+          <div
+            className="cardPrice msrp-price"
+            id="msrpPrice"
+          >{`${msrpWithRate} ${currencyIcon}`}</div>
+        </div>
       </div>
     </div>
   );
