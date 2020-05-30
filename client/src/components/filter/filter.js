@@ -110,6 +110,7 @@ const Filter = ({
   return (
     <div>
       <Button
+        type='button'
         variant='dark'
         className={`filter-button ${filterButtonIcon}`}
         onClick={showHandler}

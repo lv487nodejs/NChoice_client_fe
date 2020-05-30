@@ -215,6 +215,7 @@ const ProductDetails = ({
               onClick={() => addToWishlist(product)}
             />
             <Button
+              type='button'
               variant='dark'
               className={checkSize ? 'button' : 'button disabled'}
               onClick={handleAddToCart}
@@ -227,7 +228,7 @@ const ProductDetails = ({
               id='buyNow'
               className={checkSize ? 'disp-block' : 'disp-none'}
             >
-              <Button variant='dark' onClick={handleAddToCart}>
+              <Button type='button' variant='dark' onClick={handleAddToCart}>
                 Buy now
               </Button>
             </Link>

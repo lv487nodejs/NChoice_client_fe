@@ -37,7 +37,7 @@ const Welcome = (props) => {
     <Card className=' text-center'>
       <Image className='welcome-logo' src='/images/welcome.png' />
       <Link to='/login'>
-        <Button className='thanks-button' variant='dark'>
+        <Button type='button' className='thanks-button' variant='dark'>
           Go to login!
         </Button>
       </Link>

@@ -91,7 +91,11 @@ const Wishlist = ({ removeFromWishlist }) => {
                 key='shop-now-btn'
                 to='/'
               >
-                <Button variant='dark' className='cart-btns shop-now-btn'>
+                <Button
+                  type='button'
+                  variant='dark'
+                  className='cart-btns shop-now-btn'
+                >
                   <span>{WISHLIST_TITLE}</span>
                 </Button>
               </Link>

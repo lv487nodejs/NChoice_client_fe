@@ -30,7 +30,7 @@ const Thanks = () => {
         <Card.Title>Thank You for Your Order</Card.Title>
         <Card.Text className='text'>{message}</Card.Text>
         <Link to='/'>
-          <Button className='thanks-button' variant='dark'>
+          <Button type='button' className='thanks-button' variant='dark'>
             Lets go shop some more!
           </Button>
         </Link>

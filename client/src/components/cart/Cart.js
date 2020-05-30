@@ -126,7 +126,11 @@ const Cart = ({
                 key='shop-now-btn'
                 to='/'
               >
-                <Button variant='dark' className='cart-btns shop-now-btn'>
+                <Button
+                  type='button'
+                  variant='dark'
+                  className='cart-btns shop-now-btn'
+                >
                   <span>Shop Now</span>
                 </Button>
               </Link>
@@ -179,7 +183,7 @@ const Cart = ({
                     : 'disp-none'
                 }
               >
-                <Button variant='dark' className='cart-btns'>
+                <Button type='button' variant='dark' className='cart-btns'>
                   Continue shopping
                 </Button>
               </Link>
@@ -191,7 +195,7 @@ const Cart = ({
                     : 'disp-none'
                 }
               >
-                <Button variant='dark' className='cart-btns'>
+                <Button type='button' variant='dark' className='cart-btns'>
                   Go to checkout
                 </Button>
               </Link>

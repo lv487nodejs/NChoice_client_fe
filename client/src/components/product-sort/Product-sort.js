@@ -16,6 +16,7 @@ const ProductSort = ({ options }) => {
 
   return (
     <Button
+      type='button'
       className='sort-button'
       key={options.text}
       variant={options.variant}

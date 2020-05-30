@@ -89,6 +89,7 @@ const ProductListPage = ({
         <div className='search-wrapp'>
           <SearchBar />
           <Button
+            type='button'
             className='clear-button'
             variant='dark'
             onClick={clearAllHandler}

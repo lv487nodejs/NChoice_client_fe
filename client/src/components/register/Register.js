@@ -44,7 +44,7 @@ const Register = ({
   const [show, setShow] = useState(false);
 
   const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
-  const [confirmPasswordError, setconfirmPasswordError] = useState(true);
+  const [confirmPasswordError, setconfirmPasswordError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
 
@@ -229,7 +229,7 @@ const Register = ({
           You have successfully registered! Please confirm your email
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button type='button' variant='secondary' onClick={handleClose}>
             Close
           </Button>
         </Modal.Footer>

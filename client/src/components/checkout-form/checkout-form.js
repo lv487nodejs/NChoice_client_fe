@@ -301,7 +301,9 @@ const CheckoutForm = ({
             <h2>Your Items</h2>
             <CheckoutTable />
             <Link to='/cart'>
-              <Button variant='dark'>Go to cart to make changes</Button>
+              <Button type='button' variant='dark'>
+                Go to cart to make changes
+              </Button>
             </Link>
             <div id='user-page-snackbar' className='col-12'>
               <Snackbar className='snackbar' />

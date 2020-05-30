@@ -19,7 +19,7 @@ const UserChangeData = ({
   const emailErrorMessage = emailiError ? 'Please enter email' : '';
   const [validatePasswordError, setValidatePasswordError] = useState(false);
   const validatePasswordErrorMessage = validatePasswordError
-    ? 'please enter password'
+    ? 'Please enter password'
     : '';
 
   const eyeClassName = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
@@ -57,7 +57,7 @@ const UserChangeData = ({
         snackbarHandler(res.data.msg);
       })
       .catch((error) => {
-        snackbarHandler(error.message);
+        snackbarHandler('Something went wrong');
         throw new Error(error);
       });
   };
@@ -75,7 +75,11 @@ const UserChangeData = ({
 
   const checkEmail = () => {
     setEmailError(true);
-    if (user.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$/)) {
+    if (
+      user.email.match(
+        /^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,4}|[.][\w-]{2,4}[.][a-zA-Z]{2,4})$/
+      )
+    ) {
       setEmailError(false);
     }
   };
@@ -96,7 +100,6 @@ const UserChangeData = ({
             value={user.firstName}
             onChange={changeHandler}
             placeholder='Enter firstname...'
-            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,20}$"
           />
         </Form.Group>
         <Form.Group>
@@ -107,7 +110,6 @@ const UserChangeData = ({
             value={user.lastName}
             onChange={changeHandler}
             placeholder='Enter lastname...'
-            pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,20}$"
           />
         </Form.Group>
         <Form.Group>
@@ -119,7 +121,7 @@ const UserChangeData = ({
             value={user.email}
             placeholder='Enter email...'
             required
-            pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
+            pattern='^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,4}|[.][\w-]{2,4}[.][a-zA-Z]{2,4})$'
             title='example@gmail.com'
             onChange={changeHandler}
             onBlur={checkEmail}

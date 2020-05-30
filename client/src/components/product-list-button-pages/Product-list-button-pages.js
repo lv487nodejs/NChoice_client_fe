@@ -10,6 +10,7 @@ export default function ProductListButtonPages({
   const pickAmount = (number) => changeItems(number);
   const buttons = itemsPerPage.map((number) => (
     <Button
+      type='button'
       variant='dark'
       className='btn btn-primary'
       key={number}
