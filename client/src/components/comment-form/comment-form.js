@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux';
+import classNames from 'classnames'
 import './comment-form.css'
 import {setComments} from "../../actions";
 import withStoreService from "../hoc";
@@ -23,14 +24,10 @@ const CommentForm = ({productId, setComments, storeService, comments, rate}) => 
   }, [tempText, userId, storeService, productId, setComments]);
 
 
-  let textarea = document.querySelector('textarea.feedback-form');
-
   const addComment = (e) => {
     e.preventDefault();
 
     if (!text.trim() && !isTextareaFilled) {
-      textarea.classList.add('error')
-      textarea.focus()
       setTextareaFilled(true)
       return;
     }
@@ -42,12 +39,8 @@ const CommentForm = ({productId, setComments, storeService, comments, rate}) => 
 
   const onChangeTextarea = (e) => {
     const targetValue = e.target.value;
-
-    setText(targetValue);
-    if (targetValue) {
-      textarea.classList.remove('error');
-      setTextareaFilled(false);
-    }
+    targetValue && setTextareaFilled(false);
+    setText(targetValue)
   }
 
   const logged = (
@@ -56,7 +49,7 @@ const CommentForm = ({productId, setComments, storeService, comments, rate}) => 
     >
       <h3> Leave a comment </h3>
       <div className='star'><h6 className='rate'> Rate the product: </h6> <StarsRating rating={rate} id={productId}/></div>
-      <textarea className='feedback-form'
+      <textarea className={classNames('feedback-form', {'error': isTextareaFilled})}
                 name='text'
                 value={text}
                 onChange={onChangeTextarea}
