@@ -1,16 +1,16 @@
 // import ProductInfo from "../../fixtures/productList/"
 const id = '5e8da1fcd9a7af033c9b1bce'
 const pcatalogLink = '/productlist/women'
-const imgAlt = 'dresses_women.jpg'
-const linkHref = '/products/'+id 
+const imgAlt = 'dresses_women.webp'
+const linkHref = '/products/' + id
 const rate = '3.86'
-const productName='dresses zori abipuniv fal po.'
+const productName = 'dresses zori abipuniv fal po.'
 const price = 144
 const msrp = 207
-const currency ='1' //if euro, if PLN = 4.5185, if $ = 1.086
+const currency = '1' //if euro, if PLN = 4.5185, if $ = 1.086
 const currencyIcon = '€' //if euro, if PLN = zł, if $ = $
-const real_price = `${price*currency} ${currencyIcon}`
-const msrp_price = `${msrp*currency} ${currencyIcon}`
+const real_price = `${price * currency} ${currencyIcon}`
+const msrp_price = `${msrp * currency} ${currencyIcon}`
 
 describe('Visit product list page', () => {
     it('Visit product list page', () => {
@@ -25,7 +25,7 @@ describe('Visit product list page', () => {
     });
     it('Check link', () => {
         cy.viewport(1280, 720);
-        cy.get('a#productLink').should('have.attr', 'href', linkHref )
+        cy.get('a#productLink').should('have.attr', 'href', linkHref)
     });
     it('Check product image, rate, name', () => {
         cy.viewport(1280, 720);
@@ -39,7 +39,7 @@ describe('Visit product list page', () => {
         cy.viewport(1280, 720);
         cy.get('#realPrice').should('have.length', 1);
         cy.get('#realPrice').should('have.text', real_price);
-        cy.get('#msrpPrice').should('have.length',1);
+        cy.get('#msrpPrice').should('have.length', 1);
         cy.get('#msrpPrice').should('have.text', msrp_price);
     });
 })

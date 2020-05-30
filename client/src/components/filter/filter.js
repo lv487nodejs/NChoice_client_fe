@@ -7,7 +7,7 @@ import {
   filterAddCategories,
   filterRemoveColor,
   filterRemoveCategory,
-  filterRemoveBrand,
+  filterRemoveBrand
 } from '../../actions';
 
 import FilterItem from '../filterItem';
@@ -29,35 +29,38 @@ const Filter = ({
   const [getBrands, setBrands] = useState([]);
   const [getCategories, setCategories] = useState([]);
   const [getColors, setColors] = useState([]);
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
 
-  const showFilterClass = isVisible ? 'show-filter' : ''
+  const showFilterClass = isVisible ? 'show-filter' : '';
   const filterButtonIcon = isVisible ? 'fa fa-close' : 'fa fa-filter';
 
   useEffect(() => {
     storeService
       .getAllBrands()
       .then((response) => setBrands(response))
-      .catch((err) => {throw new Error(err)});
+      .catch((err) => {
+        throw new Error(err);
+      });
 
     storeService
       .getAllColors()
       .then((response) => setColors(response))
-      .catch((err) => {throw new Error(err)});
-
+      .catch((err) => {
+        throw new Error(err);
+      });
   }, [catalogLoaded, storeService]);
 
   useEffect(() => {
-    const catalog = match.params.name
+    const catalog = match.params.name;
     storeService
       .getCatalogCategories(catalog)
       .then((response) => {
-        setCategories(response)
+        setCategories(response);
       })
-      .catch((err) => {throw new Error(err)});
+      .catch((err) => {
+        throw new Error(err);
+      });
   }, [storeService, match.params.name]);
-
-
 
   const filterAddBrandHandler = (e, item) => {
     if (e.target.checked) {
@@ -81,52 +84,53 @@ const Filter = ({
     }
   };
   const showHandler = () => {
-    setIsVisible(!isVisible)
-  }
+    setIsVisible(!isVisible);
+  };
 
   const filterOptions = [
     {
       items: getBrands,
       type: 'brand',
-      handler: filterAddBrandHandler,
+      handler: filterAddBrandHandler
     },
     {
       items: getCategories,
       type: 'category',
-      handler: filterAddCategoriesHandler,
+      handler: filterAddCategoriesHandler
     },
     {
       items: getColors,
       type: 'color',
-      handler: filterAddColorHandler,
-    },
-  ]
+      handler: filterAddColorHandler
+    }
+  ];
   const itemsToShow = filterOptions.map(({ items, type, handler }) => {
-    return <FilterItem
-      key={type}
-      items={items}
-      type={type}
-      handler={handler}
-    />
-  })
+    return (
+      <FilterItem key={type} items={items} type={type} handler={handler} />
+    );
+  });
   return (
     <div>
-      <Button variant="dark" className={`filter-button ${filterButtonIcon}`} onClick={showHandler}></Button>
+      <Button
+        variant="dark"
+        className={`filter-button ${filterButtonIcon}`}
+        onClick={showHandler}
+      ></Button>
       <div className={`filter-group ${showFilterClass}`}>
         <span className="filter-title">Filters</span>
         {itemsToShow}
       </div>
-      </div>
+    </div>
   );
 };
 
 const mapDispatchToProps = {
-        filterAddBrand,
-        filterAddColor,
-        filterAddCategories,
-        filterRemoveBrand,
-        filterRemoveCategory,
-        filterRemoveColor,
+  filterAddBrand,
+  filterAddColor,
+  filterAddCategories,
+  filterRemoveBrand,
+  filterRemoveCategory,
+  filterRemoveColor
 };
 
 export default withStoreService()(

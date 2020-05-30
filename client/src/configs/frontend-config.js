@@ -53,9 +53,9 @@ export const socialNetworksURL = {
     instagram: 'https://www.instagram.com/'
 };
 export const policiesFooter = {
-    title: 'About us',
+    title: 'Information',
     items: [
-        { id: 1, url: '#', item: 'About us' },
+        { id: 1, url: '/about-us', item: 'About us' },
         { id: 2, url: '#', item: 'Terms and Conditions' },
         { id: 3, url: '#', item: 'Privacy Policy' },
         { id: 4, url: '/materials', item: 'Materials' }]
@@ -73,4 +73,9 @@ export const catalogsFooter = {
         { id: 2, url: 'women', item: 'Women' },
         { id: 3, url: 'kids', item: 'Kids' }
     ]
+}
+export const formRegExp = {
+    email: '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
+    name: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
+    password: '.{8,30}'
 }

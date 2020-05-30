@@ -51,6 +51,7 @@
     "react-scripts": "3.4.0",
     "react-scroll-up-button": "^1.6.4",
     "react-select": "^3.1.0",
+    "react-star-ratings": "^2.3.0",
     "reactstrap": "^8.4.1",
     "read-more-react": "^1.0.10",
     "redux": "^4.0.5",
@@ -81,7 +82,6 @@
   "devDependencies": {
     "babel-eslint": "^10.0.3",
     "cypress": "^4.4.0",
-    "husky": "^4.2.5",
     "prettier": "^2.0.5"
   }
 }

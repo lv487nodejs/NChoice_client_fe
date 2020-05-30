@@ -24,9 +24,11 @@
     resize: none;
 }
 
+
 .error, .error:focus {
-    border: 2px solid #dc3545;
-    outline: #dc3545;
+    border: 2px solid rgba(255, 82, 82, 0.84);
+    outline: rgba(255, 82, 82, 0.84);
+
 }
 
 .form-textarea {

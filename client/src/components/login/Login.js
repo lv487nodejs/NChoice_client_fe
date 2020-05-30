@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login"
 
-import { setUserLogged, setUserLoading, setCart } from "../../actions";
+import { setUserLogged, setUserLoading, setCart, setUser } from "../../actions";
 import LoadingSpinner from "../Loading-spinner";
 import withStoreService from '../hoc';
 import { setToLocalStorage } from '../../services/localStoreService';
@@ -15,6 +15,12 @@ const addDataToLocalStorage = (token) => {
     setToLocalStorage('userId', token.userId)
     setToLocalStorage('accessToken', token.accessToken)
     setToLocalStorage('refreshToken', token.refreshToken)
+}
+
+const formRegExp = {
+    email: '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
+    name: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
+    password: '.{8,30}'
 }
 
 const USER_DATA = {
@@ -68,7 +74,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
 
     const handlePasswordChange = event => {
         event.preventDefault()
-        if(event.target.value.length >= 8 && event.target.value.length <= 30){
+        if(event.target.value.match(formRegExp.password)){
             setPasswordError(true)
             return
         }
@@ -80,7 +86,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
 
     const handleEmailChange = event => {
         event.preventDefault()
-        if(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(event.target.value)){
+        if(event.target.value.match(formRegExp.email)){
             setEmailError(true)
             return
         }
@@ -118,6 +124,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         addDataToLocalStorage({ accessToken, refreshToken, userId })
         setCart(cart)
     }
+    window.scrollTo(0, 0);
 
     return (
         <div className={'login'}>
@@ -131,7 +138,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     <Form.Control
                         required
                         type="text"
-                        placeholder="Enter email"
+                        placeholder="Enter email..."
                         name={'email'}
                         value={user.email}
                         onChange={handleChange}
@@ -145,14 +152,12 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     <Form.Group className="pass-wrapper">
                         <Form.Control
                             type={passwordShown ? "text" : "password"}
-                            placeholder="Password"
+                            placeholder="Enter password..."
                             name={'password'}
                             value={user.password}
                             onChange={handleChange}
                             onBlur={handlePasswordChange}
                             title="min length 8 max 30 characters"
-                            pattern=".{8,30}"
-
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
@@ -180,22 +185,30 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     fields={'name, email, picture'}
                     callback={responseFacebook}
                 />
+
                 <GoogleLogin
                     clientId = {'303875330429-u4510uka1kogr1k4lqcgpr1eree7p20r.apps.googleusercontent.com'}
                     buttonText={'Google'}
                     onSuccess={responseGoogle}
-                    onFailure={undefined}
-                />
+                    onFailure={responseGoogle}
+                    />
             </div>
         </div>
     )
 };
 
-
-const mapDispatchToProps = { setUserLogged, setUserLoading, setCart };
+const mapDispatchToProps = {
+  setUserLogged,
+  setUserLoading,
+  setCart,
+  setUser
+};
 
 const mapStateToProps = ({ authReducer: { userLogged, userLoading } }) => ({
-    userLogged, userLoading
+  userLogged,
+  userLoading
 });
 
-export default withStoreService()(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withStoreService()(
+  connect(mapStateToProps, mapDispatchToProps)(Login)
+);

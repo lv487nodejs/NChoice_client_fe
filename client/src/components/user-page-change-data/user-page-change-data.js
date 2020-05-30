@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { connect } from "react-redux";
-import { FormControl, Form } from "react-bootstrap";
-import "./user-page-change-data.css";
-import { setUser, setShowSnackbar, setSnackbarText } from "../../actions";
-import withStoreService from "../hoc";
-import Snackbar from "../snackbar";
-import { getFromLocalStorage } from "../../services/localStoreService";
+import React, { useState, useEffect, useCallback } from 'react';
+import { connect } from 'react-redux';
+import { FormControl, Form } from 'react-bootstrap';
+import './user-page-change-data.css';
+import { setUser, setShowSnackbar, setSnackbarText } from '../../actions';
+import withStoreService from '../hoc';
+import Snackbar from '../snackbar';
+import { getFromLocalStorage } from '../../services/localStoreService';
 
 const UserChangeData = ({
   user,
@@ -116,7 +116,7 @@ const validatePasswordErrorMessage = validatePasswordError ? "please enter passw
             name="email"
             id="email"
             value={user.email}
-            placeholder="Enter emai..."
+            placeholder="Enter email..."
             required
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             title="example@gmail.com"
@@ -156,12 +156,12 @@ const validatePasswordErrorMessage = validatePasswordError ? "please enter passw
   );
 };
 const mapStateToProps = ({ authReducer: { user } }) => ({
-  user,
+  user
 });
 const mapDispatchToProps = {
   setUser,
   setShowSnackbar,
-  setSnackbarText,
+  setSnackbarText
 };
 export default withStoreService()(
   connect(mapStateToProps, mapDispatchToProps)(UserChangeData)

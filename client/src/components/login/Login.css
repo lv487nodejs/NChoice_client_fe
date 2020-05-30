@@ -1,7 +1,7 @@
 .login {
   width: 35%;
   margin: 0 auto;
-  font-family: "Ostwald";
+  font-family: 'Ostwald';
 }
 
 .loginHeader {
@@ -74,25 +74,31 @@ i:hover {
   color: #737575;
   cursor: pointer;
 }
+
 .login-wrapper {
-
   display: none;
-  justify-content: space-between;
-  align-content: center;
+  justify-content: space-around;
+  align-items: stretch;
+  margin-bottom: 1rem;
 }
-.login-wrapper > button {
-  padding: 2px 25px !important ;
-}
-.kep-login-facebook {
-  padding: 11px 27px !important;
-}
-
 @media screen and (max-width: 520px) {
-  .login{
+  .login {
     width: 45%;
   }
 
-  .lable{
+  .lable {
     font-size: 32px;
+  }
+  .login-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .kep-login-facebook {
+    margin-bottom: 1rem;
+  }
+  .kep-login-facebook.metro {
+    width: 100%;
   }
 }
