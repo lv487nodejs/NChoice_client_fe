@@ -54,10 +54,10 @@ const AppHeaderNavLeft = ({
     }
   }, [catalogsLoaded, catalogsRequested, storeService, setUser]);
 
-  const onEnter = (catalog) => {
+  const onEnter = (e, catalog) => {
     setIsShown(catalog);
   };
-  const onLeave = () => {
+  const onLeave = (e) => {
     setIsShown('');
   };
   const filterAddCategoryHandler = (category, catalog) => {
