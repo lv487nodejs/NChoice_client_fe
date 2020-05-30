@@ -48,6 +48,8 @@
     "no-unused-vars": [
       1,
       {
+        "vars": "all",
+        "args": "none",
         "ignoreSiblings": true,
         "argsIgnorePattern": "res|next|^err"
       }
