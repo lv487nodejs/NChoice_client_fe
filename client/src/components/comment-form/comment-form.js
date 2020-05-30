@@ -10,93 +10,93 @@ import {Link} from 'react-router-dom';
 import StarsRating from "../star-rating";
 
 const CommentForm = ({productId, setComments, storeService, comments, rate}) => {
-  const [text, setText] = useState('');
-  const userId = getFromLocalStorage('userId');
-  const [tempText, setTempText] = useState(null);
-  const [isTextareaFilled, setTextareaFilled] = useState(false);
+    const [text, setText] = useState('');
+    const userId = getFromLocalStorage('userId');
+    const [tempText, setTempText] = useState(null);
+    const [isTextareaFilled, setTextareaFilled] = useState(false);
 
-  useEffect(() => {
-    if (productId) {
-      storeService.getCommentsByProductId(productId).then((res) => {
-        setComments(res)
-      });
+    useEffect(() => {
+        if (productId) {
+            storeService.getCommentsByProductId(productId).then((res) => {
+                setComments(res)
+            });
+        }
+    }, [tempText, userId, storeService, productId, setComments]);
+
+
+    const addComment = (e) => {
+        e.preventDefault();
+
+        if (!text.trim() && !isTextareaFilled) {
+            setTextareaFilled(true)
+        } else if (!isTextareaFilled) {
+            storeService.postComments({text, productId, user: userId});
+            setText('');
+            setTempText(text);
+        }
+    };
+
+    const onChangeTextarea = (e) => {
+        const targetValue = e.target.value;
+        targetValue && setTextareaFilled(false);
+        setText(targetValue)
     }
-  }, [tempText, userId, storeService, productId, setComments]);
 
+    const logged = (
+        <form className='form my-1 comments-form'
+              onSubmit={addComment}
+        >
+            <h3> Leave a comment </h3>
+            <div className='star'><h6 className='rate'> Rate the product: </h6> <StarsRating rating={rate}
+                                                                                             id={productId}/></div>
+            <textarea className={classNames('feedback-form', {'error': isTextareaFilled})}
+                      name='text'
+                      value={text}
+                      onChange={onChangeTextarea}
+                      placeholder="Share your thoughts with other customers"
+            />
+            {isTextareaFilled && <i className='text-danger position-static'>Please, leave your comment</i>}
+            <input type='submit' value='Add a comment' className='comment-submit'/>
+        </form>
+    );
 
-  const addComment = (e) => {
-    e.preventDefault();
+    const notLogged = (
+        <div>
+            <h3 className='login-link'>To leave a comment please
+                <Link to="/login"> <span>login</span> </Link></h3>
+        </div>
+    );
 
-    if (!text.trim() && !isTextareaFilled) {
-      setTextareaFilled(true)
-      return;
-    }
+    const items = comments.filter(comment => comment.user != null).map(comment => {
+            return <CommentItem key={comment._id}
+                                text={comment.text}
+                                date={comment.date}
+                                reviewerName={comment.user.firstName}
+                                reviewerId={comment.user._id}
+                                commentId={comment._id}/>
+        }
+    ).sort((a, b) => b.date - a.date).reverse();
 
-    storeService.postComments({text, productId, user: userId});
-    setText('');
-    setTempText(text);
-  };
+    let comentsNumber = comments.filter(comment => comment.user != null).length;
 
-  const onChangeTextarea = (e) => {
-    const targetValue = e.target.value;
-    targetValue && setTextareaFilled(false);
-    setText(targetValue)
-  }
-
-  const logged = (
-    <form className='form my-1 comments-form'
-          onSubmit={addComment}
-    >
-      <h3> Leave a comment </h3>
-      <div className='star'><h6 className='rate'> Rate the product: </h6> <StarsRating rating={rate} id={productId}/></div>
-      <textarea className={classNames('feedback-form', {'error': isTextareaFilled})}
-                name='text'
-                value={text}
-                onChange={onChangeTextarea}
-                placeholder="Share your thoughts with other customers"
-      />
-      {isTextareaFilled && <span className='error-message'>Please, leave your comment</span>}
-      <input type='submit' value='Add a comment' className='comment-submit'/>
-    </form>
-  );
-
-  const notLogged = (
-    <div>
-      <h3 className='login-link'>To leave a comment please
-        <Link to="/login"> <span>login</span> </Link></h3>
-    </div>
-  );
-
-  const items = comments.filter(comment => comment.user != null).map(comment => {
-      return <CommentItem key={comment._id}
-                          text={comment.text}
-                          date={comment.date}
-                          reviewerName={comment.user.firstName}
-                          reviewerId={comment.user._id}
-                          commentId={comment._id} />
-    }
-  ).sort((a, b) => b.date - a.date).reverse();
-
-  let comentsNumber = comments.filter(comment => comment.user != null).length;
-
-  return (
-    <div>
-      <div>
-        {userId === null && notLogged}
-      </div>
-      <div className='form-textarea'>
-        {userId !== null && logged}
-      </div>
-      <h3 className='review-title'>Customer reviews
-        <span className='review-length'> {comentsNumber} </span></h3>
-      {items}
-    </div>
-  )
+    return (
+        <div>
+            <div>
+                {userId === null && notLogged}
+            </div>
+            <div className='form-textarea'>
+                {userId !== null && logged}
+            </div>
+            <h3 className='review-title'>Customer reviews
+                <span className='review-length'> {comentsNumber} </span></h3>
+            {items}
+        </div>
+    )
 };
 
 const mapStateToProps = ({commentsReduser: {comments}}) => ({comments});
 const mapDispatchToProps = {setComments};
 
 export default withStoreService()(
-  connect(mapStateToProps, mapDispatchToProps)(CommentForm)
+    connect(mapStateToProps, mapDispatchToProps)(CommentForm)
 );

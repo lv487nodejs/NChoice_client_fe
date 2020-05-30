@@ -24,13 +24,6 @@
     resize: none;
 }
 
-.error-message {
-    color: #dc3545;
-    font-style: italic;
-    font-size: 1rem;
-    margin-bottom: 5px;
-}
-
 .error, .error:focus {
     border: 2px solid #dc3545;
     outline: #dc3545;
