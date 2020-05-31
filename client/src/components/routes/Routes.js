@@ -22,6 +22,7 @@ import UserPage from '../user-page';
 import Thanks from '../thanks-page'
 import ErrorPage from '../error-page';
 import Welcome from '../welcome-page';
+import NewsDetailPage from '../news-detail-page';
 import { MaterialsPage } from '../materials-page'
 import { AboutUsPage } from '../about-us-page'
 
@@ -65,6 +66,7 @@ const Routes = () => (
         <Route path="/thanks" exact component={Thanks} />
         <Route path="/error-page" exact component={ErrorPage} />
         <Route path="/news" exact component={NewsContainer} />
+        <Route path="/news/:id" exact component={NewsDetailPage} />
         <Route path="/welcome/:token" exact component={Welcome} />
         <Route path="/materials" exact component={MaterialsPage} />
         <Route path="/about-us" exact component={AboutUsPage} />
