@@ -1,6 +1,7 @@
 import React from 'react';
 import './News-list-item.css';
 import { Card, Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const NewsListItem = ({
   text,
@@ -8,7 +9,8 @@ const NewsListItem = ({
   newsImage,
   authorPhoto,
   date,
-  author
+  author,
+  newsId
 }) => {
   const options = {
     weekday: 'long',
@@ -33,6 +35,7 @@ const NewsListItem = ({
       <Card.Body>
         <Card.Title className='news-card-title'>{title}</Card.Title>
         <Card.Text className='article'>{text}</Card.Text>
+        <Link className='news-card-readMore' to={`/news/${newsId}`}>read more...</Link>
       </Card.Body>
       <div className='news-footer'>
         <small id='loading' className='author'>

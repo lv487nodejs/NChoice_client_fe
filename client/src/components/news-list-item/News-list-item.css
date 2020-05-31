@@ -23,6 +23,15 @@
     min-width: 17rem;
     margin-bottom: 2rem;
 }
+.news-card-readMore{
+    color: blue;
+    display: flex;
+    justify-content: flex-end;
+}
+.news-card-readMore:hover{
+    color:black;
+    text-decoration: underline!important;
+}
 
 .news-footer{
     display: flex;
