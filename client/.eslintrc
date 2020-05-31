@@ -106,7 +106,7 @@
       }
     ],
     "no-return-await": 2,
-    "react/jsx-no-duplicate-props":0,
+    "react/jsx-no-duplicate-props":2,
     "camelcase": 0,
     "no-useless-return": 2,
     "no-multi-str": 2,

@@ -39,16 +39,20 @@ const Login = ({
 }) => {
   const [user, setUser] = useState(USER_DATA);
   const [errorMsg, setErrorMsg] = useState('');
-  const [emailError, setEmailError] = useState(true);
-  const [passwordError, setPasswordError] = useState(true);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const [passwordShown, setPasswordShown] = useState(false);
   const eyeClassName = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
 
-  const emailErrorMessage = emailError ? '' : 'Please enter correct email';
+  const emailErrorMessage = emailError ? 'Please enter correct email' : '';
   const passwordErrorMessage = passwordError
-    ? ''
-    : 'Please enter correct password';
+    ? 'Please enter correct password'
+    : '';
+
+  const emailErrorClassName = emailError ? 'error' : '';
+  const passwordErrorClassName = passwordError ? 'error' : '';
+
   useEffect(() => {
     setUserLogged(false);
   }, [setUserLogged]);
@@ -84,18 +88,18 @@ const Login = ({
   const handlePasswordChange = (event) => {
     event.preventDefault();
     if (event.target.value.match(formRegExp.password)) {
-      setPasswordError(true);
-    } else {
       setPasswordError(false);
+    } else {
+      setPasswordError(true);
     }
   };
 
   const handleEmailChange = (event) => {
     event.preventDefault();
     if (event.target.value.match(formRegExp.email)) {
-      setEmailError(true);
-    } else {
       setEmailError(false);
+    } else {
+      setEmailError(true);
     }
   };
 
@@ -131,6 +135,7 @@ const Login = ({
     addDataToLocalStorage({ accessToken, refreshToken, userId });
     setCart(cart);
   };
+
   window.scrollTo(0, 0);
 
   return (
@@ -140,13 +145,15 @@ const Login = ({
         <Form.Group controlId='formBasicEmail'>
           <Form.Label>Email address</Form.Label>
           <Form.Control
+            className={`${emailErrorClassName}`}
             required
             type='text'
             placeholder='Enter email...'
             name='email'
             value={user.email}
             onChange={handleChange}
-            onBlur={handleEmailChange}
+            onKeyUp={handleEmailChange}
+            title='example@gmail.com'
           />
           <i className='text-danger position-static'>{emailErrorMessage}</i>
         </Form.Group>
@@ -155,12 +162,13 @@ const Login = ({
           <Form.Label>Password</Form.Label>
           <Form.Group className='pass-wrapper'>
             <Form.Control
+              className={`${passwordErrorClassName}`}
               type={passwordShown ? 'text' : 'password'}
               placeholder='Enter password...'
               name='password'
               value={user.password}
               onChange={handleChange}
-              onBlur={handlePasswordChange}
+              onKeyUp={handlePasswordChange}
               title='min length 8 max 30 characters'
             />
             <i className={eyeClassName} onClick={togglePasswordVisiblity} />

@@ -15,14 +15,22 @@ const UserChangeData = ({
   setSnackbarText
 }) => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [emailiError, setEmailError] = useState(false);
-  const emailErrorMessage = emailiError ? 'Please enter email' : '';
+  const [validateEmailError, setValidateEmailError] = useState(false);
+  const validateEmailErrorMessage = validateEmailError
+    ? 'Please enter email'
+    : '';
+
   const [validatePasswordError, setValidatePasswordError] = useState(false);
   const validatePasswordErrorMessage = validatePasswordError
     ? 'Please enter password'
     : '';
+  const emailErrorClassName = validateEmailError ? 'error' : '';
+  const passwordErrorClassName = validatePasswordError ? 'error' : '';
 
   const eyeClassName = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
+
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
   const userId = getFromLocalStorage('userId');
   const accessToken = getFromLocalStorage('accessToken');
 
@@ -45,6 +53,18 @@ const UserChangeData = ({
     addUserDataToSTore(userId, accessToken);
   }, [addUserDataToSTore, userId, accessToken]);
 
+  const checkValidations = useCallback(
+    (emailValidate, passwordValidate) => {
+      setButtonDisabled(true);
+      if (emailValidate && passwordValidate) {
+        setButtonDisabled(false);
+      }
+    },
+    [validateEmailError, validatePasswordError]
+  );
+  useEffect(() => {
+    checkValidations(validateEmail(), validatePassword());
+  }, [user.email, user.password]);
   const changeHandler = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -73,28 +93,34 @@ const UserChangeData = ({
     setPasswordShown(!passwordShown);
   };
 
-  const checkEmail = () => {
-    setEmailError(true);
+  const validateEmail = () => {
+    setValidateEmailError(true);
     if (
       user.email.match(
-        /^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,4}|[.][\w-]{2,4}[.][a-zA-Z]{2,4})$/
+        /^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,4}|[.][\w-]{2,4}[.][a-zA-Z]{2,4})$/g
       )
     ) {
-      setEmailError(false);
+      setValidateEmailError(false);
+      return true;
     }
+    return false;
   };
-  const checkPassword = () => {
+  const validatePassword = () => {
     setValidatePasswordError(true);
     if (user.password.length >= 8 && user.password.length <= 30) {
       setValidatePasswordError(false);
+      return true;
     }
+    return false;
   };
+
   return (
     <div className='relative'>
       <Form id='user-form' onSubmit={submitHandler}>
         <Form.Group>
           <Form.Label htmlFor='firstname'>Change your firstname</Form.Label>
           <FormControl
+            type='text'
             id='firstname'
             name='firstName'
             value={user.firstName}
@@ -105,6 +131,7 @@ const UserChangeData = ({
         <Form.Group>
           <Form.Label htmlFor='lastname'>Change your lastname</Form.Label>
           <FormControl
+            type='text'
             id='lastname'
             name='lastName'
             value={user.lastName}
@@ -115,6 +142,7 @@ const UserChangeData = ({
         <Form.Group>
           <Form.Label htmlFor='email'>Change your email</Form.Label>
           <FormControl
+            className={`${emailErrorClassName}`}
             type='text'
             name='email'
             id='email'
@@ -124,14 +152,17 @@ const UserChangeData = ({
             pattern='^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,4}|[.][\w-]{2,4}[.][a-zA-Z]{2,4})$'
             title='example@gmail.com'
             onChange={changeHandler}
-            onBlur={checkEmail}
+            onKeyUp={validateEmail}
           />
-          <i className='text-danger position-static'>{emailErrorMessage}</i>
+          <i className='text-danger position-static'>
+            {validateEmailErrorMessage}
+          </i>
         </Form.Group>
         <Form.Group>
           <Form.Label htmlFor='password'>Enter your password</Form.Label>
           <Form.Group className='pass-wrapper'>
             <Form.Control
+              className={`${passwordErrorClassName}`}
               type={passwordShown ? 'text' : 'password'}
               name='password'
               onChange={changeHandler}
@@ -140,7 +171,7 @@ const UserChangeData = ({
               title='min length 8 max 30 characters'
               placeholder='Enter password...'
               value={user.password}
-              onBlur={checkPassword}
+              onKeyUp={validatePassword}
             />
             <i className={eyeClassName} onClick={togglePasswordVisiblity} />
           </Form.Group>
@@ -149,6 +180,7 @@ const UserChangeData = ({
           </i>
         </Form.Group>
         <input
+          disabled={buttonDisabled}
           className='btn btn-dark user-page-button'
           type='submit'
           value='Send changed data'
