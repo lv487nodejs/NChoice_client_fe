@@ -41,7 +41,7 @@
 .sort-buttons {
     display: flex;
     align-items: center;
-    margin-right: 3rem;
+    margin-right: 1rem;
 }
 
 .sort-buttons h5 {
@@ -84,6 +84,19 @@
 .list > div.paginator {
     background-color: rgb(175, 115, 127);
 }
+
+.jumbo .table {
+    flex-direction: column;
+    align-items: center;
+}
+
+
+@media screen and (max-width: 1100px) {
+    .products-items {
+        grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+    }
+}
+
 @media screen and (max-width: 992px) {
     .product-list-page {
         grid-template-columns: 1fr 1fr;
@@ -91,12 +104,6 @@
         grid-template-rows: auto;
         grid-template-areas: "productlist productlist productlist productlist" ".  . . pages";
     }
-
-    
-.products-items {
-    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
-}
-
     .filters {
         position: fixed;
         top: 0;
@@ -107,10 +114,22 @@
         height: 100vh;
         transition: .3s ease-in-out;
     }
-}
-.jumbo .table {
-    flex-direction: column;
-    align-items: center;
+
+    .clear-button {
+        width: 130px;
+        font-size: .8rem !important;
+    }
+
+    .sort-button {
+        font-size: .8rem !important;
+        width: 80px;
+        padding: .6rem .75rem !important;
+    }
+
+    .sort-buttons h5 {
+        font-size: 1rem;
+    }
+
 }
 
 @media only screen and (max-device-width: 768px) {
@@ -118,13 +137,13 @@
         display: none;
     }
 
-    .clear-button{
+    .clear-button {
         width: 110px;
         font-size: .7rem !important;
     }
 
-    .sort-button{
-        font-size: .7rem !important; ;
+    .sort-button {
+        font-size: .7rem !important;
         width: 80px;
         padding: .6rem .75rem !important;
     }
@@ -133,7 +152,6 @@
         font-size: 0.9rem;
     }
 }
-
 
 @media screen and (max-width: 650px) {
     .products-options {
@@ -144,18 +162,22 @@
     .search-wrapp{
         margin-bottom: 1rem;
     }
-    .sort-buttons h5{
+
+    .sort-buttons h5 {
         display: none;
     }
+
 }
 
-@media screen and (max-width: 410px) {
+@media screen and (max-width: 460px) {
     .filters {
         overflow: auto;
         height: 100vh;
         transition: .3s ease-in-out;
     }
-    .sort-buttons h5{
-        display: none;
+
+    .products-items {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
     }
+
 }
