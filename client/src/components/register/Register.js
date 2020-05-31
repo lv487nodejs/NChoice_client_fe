@@ -13,13 +13,6 @@ const addDataToLocalStorage = (token) => {
   setToLocalStorage('refreshToken', token.refreshToken);
 };
 
-const formRegExp = {
-  email:
-    "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
-  name: "^(?=.{1,30}$)[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
-  password: '.{8,30}'
-};
-
 const USER_DATA = {
   firstName: '',
   lastName: '',
@@ -44,23 +37,7 @@ const Register = ({
   const [show, setShow] = useState(false);
 
   const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
-  const [confirmPasswordError, setconfirmPasswordError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
-
-  const passwordErrorMessage = passwordError ? 'Please enter password' : '';
-  const confirmPasswordErrorMessage = confirmPasswordError
-    ? 'Please confirm password'
-    : '';
-  const agreeWithTermsErrorMessage = agreedWithTerms
-    ? ''
-    : 'Please agree with terms';
-  const emailErrorMessage = emailError ? 'Please enter email' : '';
-
-  const emailErrorClassName = emailError ? 'error' : '';
-  const passwordErrorClassName = passwordError ? 'error' : '';
-  const confirmPasswordClassName = confirmPasswordError ? 'error' : '';
 
   const passwordEye = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
   const confirmedPasswordEye = confirmPasswordShown
@@ -78,20 +55,7 @@ const Register = ({
   const toggleConfirmPasswordVisiblity = () => {
     setConfirmPasswordShown(!confirmPasswordShown);
   };
-  const validateConfirmPassword = () => {
-    if (user.password === user.confirmPassword) {
-      setconfirmPasswordError(false);
-    } else {
-      setconfirmPasswordError(true);
-    }
-  };
-  const validatePassword = () => {
-    if (user.password.match(formRegExp.password)) {
-      setPasswordError(false);
-    } else {
-      setPasswordError(true);
-    }
-  };
+
   const handleChange = (event) => {
     event.persist();
     setUser({ ...user, [event.target.name]: event.target.value });
@@ -125,12 +89,7 @@ const Register = ({
   if (userLogged) {
     return <Redirect to='/' />;
   }
-  const validateEmail = (event) => {
-    setEmailError(true);
-    if (event.target.value.match(formRegExp.email)) {
-      setEmailError(false);
-    }
-  };
+
   return (
     <>
       <Form className='register' onSubmit={handleOnSubmit}>
@@ -159,16 +118,17 @@ const Register = ({
         <Form.Group controlId='formBasicEmail'>
           <Form.Label>Email address</Form.Label>
           <Form.Control
-            className={`${emailErrorClassName}`}
             type='text'
             name='email'
             value={user.email}
             onChange={handleChange}
-            onKeyUp={validateEmail}
             title='example@gmail.com'
             placeholder='Enter email...'
+            required
+            pattern={
+              "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+            }
           />
-          <i className='text-danger position-static'>{emailErrorMessage}</i>
           <Form.Text className='text-muted'>
             We&#39;ll never share your email with anyone else.
           </Form.Text>
@@ -178,42 +138,37 @@ const Register = ({
           <Form.Label>Password</Form.Label>
           <Form.Group className='pass-wrapper'>
             <Form.Control
-              className={`${passwordErrorClassName}`}
               type={passwordShown ? 'text' : 'password'}
               placeholder='Enter password...'
               name='password'
               value={user.password}
               onChange={handleChange}
-              onKeyUp={validatePassword}
               title='min length 8 max 30 characters'
+              required
+              pattern={'.{8,30}'}
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>
-          <i className='text-danger position-static'>{passwordErrorMessage}</i>
         </Form.Group>
 
         <Form.Group controlId='formBasicPassword'>
           <Form.Label> Confirm Password</Form.Label>
           <Form.Group className='pass-wrapper'>
             <Form.Control
-              className={`${confirmPasswordClassName}`}
               type={confirmPasswordShown ? 'text' : 'password'}
               placeholder='Enter password...'
               name='confirmPassword'
               value={user.confirmPassword}
               onChange={handleChange}
-              onKeyUp={validateConfirmPassword}
               required
               title='min length 8 max 30 characters'
+              pattern={'.{8,30}'}
             />
             <i
               className={confirmedPasswordEye}
               onClick={toggleConfirmPasswordVisiblity}
             />
           </Form.Group>
-          <i className='text-danger position-static'>
-            {confirmPasswordErrorMessage}
-          </i>
         </Form.Group>
         <Form.Group>
           <Form.Check
@@ -222,9 +177,7 @@ const Register = ({
             label='Agree with term'
             onChange={handleAgree}
           />
-          <i className='text-danger position-static'>
-            {agreeWithTermsErrorMessage}
-          </i>
+          <i className='text-danger position-static' />
         </Form.Group>
         <Form.Group>
           <Button variant='dark' type='submit' block>

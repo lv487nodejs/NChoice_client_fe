@@ -15,15 +15,6 @@ const UserChangeData = ({
   setSnackbarText
 }) => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [validateEmailError, setValidateEmailError] = useState(false);
-  const validateEmailErrorMessage = validateEmailError
-    ? 'Please enter email'
-    : '';
-
-  const [validatePasswordError, setValidatePasswordError] = useState(false);
-  const validatePasswordErrorMessage = validatePasswordError
-    ? 'Please enter password'
-    : '';
 
   const eyeClassName = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
 
@@ -49,7 +40,7 @@ const UserChangeData = ({
     addUserDataToSTore(userId, accessToken);
   }, [addUserDataToSTore, userId, accessToken]);
 
-  const changeHandler = (e) => {
+  const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
   const submitHandler = (e) => {
@@ -77,23 +68,6 @@ const UserChangeData = ({
     setPasswordShown(!passwordShown);
   };
 
-  const validateEmail = () => {
-    setValidateEmailError(true);
-    if (
-      user.email.match(
-        /^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,4}|[.][\w-]{2,4}[.][a-zA-Z]{2,4})$/g
-      )
-    ) {
-      setValidateEmailError(false);
-    }
-  };
-  const validatePassword = () => {
-    setValidatePasswordError(true);
-    if (user.password.length >= 8 && user.password.length <= 30) {
-      setValidatePasswordError(false);
-    }
-  };
-
   return (
     <div className='relative'>
       <Form id='user-form' onSubmit={submitHandler}>
@@ -104,7 +78,7 @@ const UserChangeData = ({
             id='firstname'
             name='firstName'
             value={user.firstName}
-            onChange={changeHandler}
+            onChange={handleChange}
             placeholder='Enter firstname...'
           />
         </Form.Group>
@@ -115,7 +89,7 @@ const UserChangeData = ({
             id='lastname'
             name='lastName'
             value={user.lastName}
-            onChange={changeHandler}
+            onChange={handleChange}
             placeholder='Enter lastname...'
           />
         </Form.Group>
@@ -128,14 +102,12 @@ const UserChangeData = ({
             value={user.email}
             placeholder='Enter email...'
             required
-            pattern='^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,4}|[.][\w-]{2,4}[.][a-zA-Z]{2,4})$'
             title='example@gmail.com'
-            onChange={changeHandler}
-            onBlur={validateEmail}
+            onChange={handleChange}
+            pattern={
+              "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+            }
           />
-          <i className='text-danger position-static'>
-            {validateEmailErrorMessage}
-          </i>
         </Form.Group>
         <Form.Group>
           <Form.Label htmlFor='password'>Enter your password</Form.Label>
@@ -143,19 +115,15 @@ const UserChangeData = ({
             <Form.Control
               type={passwordShown ? 'text' : 'password'}
               name='password'
-              onChange={changeHandler}
+              onChange={handleChange}
               required
               pattern='.{8,30}'
               title='min length 8 max 30 characters'
               placeholder='Enter password...'
               value={user.password}
-              onBlur={validatePassword}
             />
             <i className={eyeClassName} onClick={togglePasswordVisiblity} />
           </Form.Group>
-          <i className='text-danger position-static'>
-            {validatePasswordErrorMessage}
-          </i>
         </Form.Group>
         <input
           className='btn btn-dark user-page-button'

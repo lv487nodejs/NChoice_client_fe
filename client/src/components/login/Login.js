@@ -17,13 +17,6 @@ const addDataToLocalStorage = (token) => {
   setToLocalStorage('refreshToken', token.refreshToken);
 };
 
-const formRegExp = {
-  email:
-    "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
-  name: "^(?=.{1,30}$)[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
-  password: '.{8,30}'
-};
-
 const USER_DATA = {
   email: '',
   password: ''
@@ -39,19 +32,9 @@ const Login = ({
 }) => {
   const [user, setUser] = useState(USER_DATA);
   const [errorMsg, setErrorMsg] = useState('');
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
 
   const [passwordShown, setPasswordShown] = useState(false);
   const eyeClassName = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
-
-  const emailErrorMessage = emailError ? 'Please enter correct email' : '';
-  const passwordErrorMessage = passwordError
-    ? 'Please enter correct password'
-    : '';
-
-  const emailErrorClassName = emailError ? 'error' : '';
-  const passwordErrorClassName = passwordError ? 'error' : '';
 
   useEffect(() => {
     setUserLogged(false);
@@ -82,24 +65,6 @@ const Login = ({
     } catch (err) {
       setUserLogged(false);
       setErrorMsg(err.message);
-    }
-  };
-
-  const handlePasswordChange = (event) => {
-    event.preventDefault();
-    if (event.target.value.match(formRegExp.password)) {
-      setPasswordError(false);
-    } else {
-      setPasswordError(true);
-    }
-  };
-
-  const handleEmailChange = (event) => {
-    event.preventDefault();
-    if (event.target.value.match(formRegExp.email)) {
-      setEmailError(false);
-    } else {
-      setEmailError(true);
     }
   };
 
@@ -142,38 +107,37 @@ const Login = ({
     <div className='login'>
       <Form noValidate onSubmit={handleOnSubmit}>
         <Form.Label className='lable'>Log In</Form.Label>
-        <Form.Group controlId='formBasicEmail'>
+        <Form.Group controlId='emailValidate'>
           <Form.Label>Email address</Form.Label>
           <Form.Control
-            className={`${emailErrorClassName}`}
             required
-            type='text'
+            type='email'
             placeholder='Enter email...'
             name='email'
             value={user.email}
             onChange={handleChange}
-            onBlur={handleEmailChange}
             title='example@gmail.com'
+            pattern={
+              "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+            }
           />
-          <i className='text-danger position-static'>{emailErrorMessage}</i>
         </Form.Group>
 
-        <Form.Group controlId='formBasicPassword'>
+        <Form.Group controlId='passwordValidate'>
           <Form.Label>Password</Form.Label>
           <Form.Group className='pass-wrapper'>
             <Form.Control
-              className={`${passwordErrorClassName}`}
               type={passwordShown ? 'text' : 'password'}
               placeholder='Enter password...'
               name='password'
               value={user.password}
               onChange={handleChange}
-              onBlue={handlePasswordChange}
+              pattern={'.{8,30}'}
               title='min length 8 max 30 characters'
+              required
             />
             <i className={eyeClassName} onClick={togglePasswordVisiblity} />
           </Form.Group>
-          <i className='text-danger position-static'>{passwordErrorMessage}</i>
         </Form.Group>
         <Form.Check type='switch' id='custom-switch' label='Remember me' />
         <Form.Group>
