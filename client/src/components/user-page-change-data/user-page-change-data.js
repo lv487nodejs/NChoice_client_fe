@@ -15,14 +15,18 @@ const UserChangeData = ({
   setSnackbarText
 }) => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [emailiError, setEmailError] = useState(false);
-  const emailErrorMessage = emailiError ? 'Please enter email' : '';
+  const [validateEmailError, setValidateEmailError] = useState(false);
+  const validateEmailErrorMessage = validateEmailError
+    ? 'Please enter email'
+    : '';
+
   const [validatePasswordError, setValidatePasswordError] = useState(false);
   const validatePasswordErrorMessage = validatePasswordError
     ? 'Please enter password'
     : '';
 
   const eyeClassName = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
+
   const userId = getFromLocalStorage('userId');
   const accessToken = getFromLocalStorage('accessToken');
 
@@ -73,28 +77,30 @@ const UserChangeData = ({
     setPasswordShown(!passwordShown);
   };
 
-  const checkEmail = () => {
-    setEmailError(true);
+  const validateEmail = () => {
+    setValidateEmailError(true);
     if (
       user.email.match(
-        /^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,4}|[.][\w-]{2,4}[.][a-zA-Z]{2,4})$/
+        /^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,4}|[.][\w-]{2,4}[.][a-zA-Z]{2,4})$/g
       )
     ) {
-      setEmailError(false);
+      setValidateEmailError(false);
     }
   };
-  const checkPassword = () => {
+  const validatePassword = () => {
     setValidatePasswordError(true);
     if (user.password.length >= 8 && user.password.length <= 30) {
       setValidatePasswordError(false);
     }
   };
+
   return (
     <div className='relative'>
       <Form id='user-form' onSubmit={submitHandler}>
         <Form.Group>
           <Form.Label htmlFor='firstname'>Change your firstname</Form.Label>
           <FormControl
+            type='text'
             id='firstname'
             name='firstName'
             value={user.firstName}
@@ -105,6 +111,7 @@ const UserChangeData = ({
         <Form.Group>
           <Form.Label htmlFor='lastname'>Change your lastname</Form.Label>
           <FormControl
+            type='text'
             id='lastname'
             name='lastName'
             value={user.lastName}
@@ -124,9 +131,11 @@ const UserChangeData = ({
             pattern='^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,4}|[.][\w-]{2,4}[.][a-zA-Z]{2,4})$'
             title='example@gmail.com'
             onChange={changeHandler}
-            onBlur={checkEmail}
+            onBlur={validateEmail}
           />
-          <i className='text-danger position-static'>{emailErrorMessage}</i>
+          <i className='text-danger position-static'>
+            {validateEmailErrorMessage}
+          </i>
         </Form.Group>
         <Form.Group>
           <Form.Label htmlFor='password'>Enter your password</Form.Label>
@@ -140,7 +149,7 @@ const UserChangeData = ({
               title='min length 8 max 30 characters'
               placeholder='Enter password...'
               value={user.password}
-              onBlur={checkPassword}
+              onBlur={validatePassword}
             />
             <i className={eyeClassName} onClick={togglePasswordVisiblity} />
           </Form.Group>

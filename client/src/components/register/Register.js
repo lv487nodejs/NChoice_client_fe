@@ -45,9 +45,11 @@ const Register = ({
 
   const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
   const [confirmPasswordError, setconfirmPasswordError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
 
+  const passwordErrorMessage = passwordError ? 'Please enter password' : '';
   const confirmPasswordErrorMessage = confirmPasswordError
     ? 'Please confirm password'
     : '';
@@ -55,6 +57,11 @@ const Register = ({
     ? ''
     : 'Please agree with terms';
   const emailErrorMessage = emailError ? 'Please enter email' : '';
+
+  const emailErrorClassName = emailError ? 'error' : '';
+  const passwordErrorClassName = passwordError ? 'error' : '';
+  const confirmPasswordClassName = confirmPasswordError ? 'error' : '';
+
   const passwordEye = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
   const confirmedPasswordEye = confirmPasswordShown
     ? 'fa fa-eye'
@@ -76,6 +83,13 @@ const Register = ({
       setconfirmPasswordError(false);
     } else {
       setconfirmPasswordError(true);
+    }
+  };
+  const validatePassword = () => {
+    if (user.password.match(formRegExp.password)) {
+      setPasswordError(false);
+    } else {
+      setPasswordError(true);
     }
   };
   const handleChange = (event) => {
@@ -111,7 +125,7 @@ const Register = ({
   if (userLogged) {
     return <Redirect to='/' />;
   }
-  const checkEmail = (event) => {
+  const validateEmail = (event) => {
     setEmailError(true);
     if (event.target.value.match(formRegExp.email)) {
       setEmailError(false);
@@ -145,11 +159,12 @@ const Register = ({
         <Form.Group controlId='formBasicEmail'>
           <Form.Label>Email address</Form.Label>
           <Form.Control
+            className={`${emailErrorClassName}`}
             type='text'
             name='email'
             value={user.email}
             onChange={handleChange}
-            onBlur={checkEmail}
+            onKeyUp={validateEmail}
             title='example@gmail.com'
             placeholder='Enter email...'
           />
@@ -163,27 +178,31 @@ const Register = ({
           <Form.Label>Password</Form.Label>
           <Form.Group className='pass-wrapper'>
             <Form.Control
+              className={`${passwordErrorClassName}`}
               type={passwordShown ? 'text' : 'password'}
               placeholder='Enter password...'
               name='password'
               value={user.password}
               onChange={handleChange}
+              onKeyUp={validatePassword}
               title='min length 8 max 30 characters'
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>
+          <i className='text-danger position-static'>{passwordErrorMessage}</i>
         </Form.Group>
 
         <Form.Group controlId='formBasicPassword'>
           <Form.Label> Confirm Password</Form.Label>
           <Form.Group className='pass-wrapper'>
             <Form.Control
+              className={`${confirmPasswordClassName}`}
               type={confirmPasswordShown ? 'text' : 'password'}
               placeholder='Enter password...'
               name='confirmPassword'
               value={user.confirmPassword}
               onChange={handleChange}
-              onBlur={validateConfirmPassword}
+              onKeyUp={validateConfirmPassword}
               required
               title='min length 8 max 30 characters'
             />
@@ -229,7 +248,7 @@ const Register = ({
           You have successfully registered! Please confirm your email
         </Modal.Body>
         <Modal.Footer>
-          <Button type='button' variant='secondary' onClick={handleClose}>
+          <Button variant='secondary' onClick={handleClose}>
             Close
           </Button>
         </Modal.Footer>
