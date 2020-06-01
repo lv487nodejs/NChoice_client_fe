@@ -13,13 +13,13 @@ import store from './store/store';
 export const storeService = new StoreService();
 
 ReactDOM.render(
-    <Provider store={store}>
-        <StoreServiceProvider value={storeService}>
-            <App />
-        </StoreServiceProvider>
-    </Provider>,
-    document.getElementById('root')
+  <Provider store={store}>
+    <StoreServiceProvider value={storeService}>
+      <App />
+    </StoreServiceProvider>
+  </Provider>,
+  document.getElementById('root')
 );
 if (window.Cypress) {
-    window.store = store;
+  window.store = store;
 }

@@ -12,14 +12,14 @@ const CheckoutSelect = ({ selectOptions, handleChange }) => {
       <Form.Label>{selectOptions.title}</Form.Label>
       <Form.Control
         required
-        as="select"
+        as='select'
         name={selectOptions.name}
         onChange={handleChange}
       >
         {options}
       </Form.Control>
       <Form.Control.Feedback>Much better now</Form.Control.Feedback>
-      <Form.Control.Feedback type="invalid">
+      <Form.Control.Feedback type='invalid'>
         Please choose {selectOptions.title}. This field is required
       </Form.Control.Feedback>
     </Form.Group>

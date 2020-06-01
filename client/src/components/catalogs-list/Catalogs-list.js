@@ -27,7 +27,7 @@ const CatalogsList = ({
     <CatalogsListItem key={catalog._id} catalog={catalog.catalog} />
   ));
 
-  return <div className="catalogs">{items}</div>;
+  return <div className='catalogs'>{items}</div>;
 };
 
 const mapStateToProps = ({ catalogsList: { catalogs, loading } }) => ({

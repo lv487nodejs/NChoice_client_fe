@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import './Product-list-page.css';
+import { Button } from 'react-bootstrap';
 import ProductList from '../product-list';
 import ProductListPaginator from '../product-list-paginator';
 import ProductListButtonPages from '../product-list-button-pages';
@@ -18,7 +19,6 @@ import {
 } from '../../actions';
 import withStoreService from '../hoc';
 import ProductSort from '../product-sort';
-import { Button } from 'react-bootstrap';
 
 const sortAsc = 1;
 
@@ -79,37 +79,38 @@ const ProductListPage = ({
   };
 
   const changePagination = () => addCurrentPage(0);
-  const sortButtons = sortOptions.map((item) => {
-    return <ProductSort key={item.text} options={item} />;
-  });
+  const sortButtons = sortOptions.map((item) => (
+    <ProductSort key={item.text} options={item} />
+  ));
   return (
     <div>
-      <h2 className="catalog-top-name">{catalog} Catalog</h2>
-      <div className="products-options">
-        <div className="search-wrapp">
+      <h2 className='catalog-top-name'>{catalog} Catalog</h2>
+      <div className='products-options'>
+        <div className='search-wrapp'>
           <SearchBar />
           <Button
-            className="clear-button"
-            variant="dark"
+            type='button'
+            className='clear-button'
+            variant='dark'
             onClick={clearAllHandler}
           >
             CLEAR FILTERS
           </Button>
         </div>
-        <div className="sort-wrapp">
-          <div className="sort-buttons">
+        <div className='sort-wrapp'>
+          <div className='sort-buttons'>
             <h5>SORT BY:</h5>
             {sortButtons}
           </div>
           <ProductListButtonPages
             changeItems={changeItemsMethod}
             changeCurrentPage={changePagination}
-            className="buttonsGroup productListButtons "
+            className='buttonsGroup productListButtons '
           />
         </div>
       </div>
-      <div className="product-list-page">
-        <div className="filters">
+      <div className='product-list-page'>
+        <div className='filters'>
           <Filter />
         </div>
         <ProductList />
@@ -117,7 +118,7 @@ const ProductListPage = ({
       <ProductListPaginator
         pagesCount={pagesCount}
         paginate={paginateMethod}
-        className="paginator"
+        className='paginator'
       />
     </div>
   );

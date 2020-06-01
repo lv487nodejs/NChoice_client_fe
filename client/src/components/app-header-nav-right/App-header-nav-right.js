@@ -9,8 +9,8 @@ import {
   faSignOutAlt,
   faSignInAlt
 } from '@fortawesome/free-solid-svg-icons';
-import Currency from '../currency';
 import { connect } from 'react-redux';
+import Currency from '../currency';
 import { setUserLogged, setCart } from '../../actions';
 import {
   clearLocalStorage,
@@ -30,20 +30,20 @@ const AppHeaderNavRight = ({
   };
 
   return (
-    <nav className="nav-bar nav-right">
+    <nav className='nav-bar nav-right'>
       <ul>
-        <li key="5">
-          <span className="currency-button">
+        <li key='5'>
+          <span className='currency-button'>
             <Currency />
           </span>
         </li>
-        <li key="4">
-          <Link to="/wishlist">
+        <li key='4'>
+          <Link to='/wishlist'>
             <FontAwesomeIcon icon={faHeart} />
           </Link>
         </li>
-        <li key="7">
-          <Link to="/cart">
+        <li key='7'>
+          <Link to='/cart'>
             <FontAwesomeIcon icon={faShoppingBasket} />
             <span>
               {' '}
@@ -51,22 +51,22 @@ const AppHeaderNavRight = ({
             </span>
           </Link>
         </li>
-        <li key="6">
+        <li key='6'>
           {getFromLocalStorage('userId') || userLogged ? (
-            <p key="8">
-              <Link to={'/userpage'}>
+            <p key='8'>
+              <Link to='/userpage'>
                 <FontAwesomeIcon icon={faUser} />
               </Link>
             </p>
           ) : (
-            <Link to="/login">
+            <Link to='/login'>
               <FontAwesomeIcon icon={faSignInAlt} />
             </Link>
           )}
         </li>
         {getFromLocalStorage('userId') || userLogged ? (
-          <li key="8" onClick={handleLogOut}>
-            <Link to={'/login'}>
+          <li key='8' onClick={handleLogOut}>
+            <Link to='/login'>
               <FontAwesomeIcon icon={faSignOutAlt} />
             </Link>
           </li>

@@ -7,7 +7,7 @@ const instate = {
   color: [],
   catalogFilter: '',
   searchTerm: '',
-  searchValue: '',
+  searchValue: ''
 };
 
 const filter = (state = instate, action) => {
@@ -15,13 +15,13 @@ const filter = (state = instate, action) => {
     case 'FILTER_ADD_BRAND': {
       return {
         ...state,
-        brand: [...state.brand, action.payload],
+        brand: [...state.brand, action.payload]
       };
     }
     case 'SET_CATALOG_FILTER': {
       return {
         ...state,
-        catalogFilter: action.payload,
+        catalogFilter: action.payload
       };
     }
 
@@ -32,26 +32,26 @@ const filter = (state = instate, action) => {
         category: [],
         color: [],
         searchTerm: '',
-        searchValue: '',
-      }
+        searchValue: ''
+      };
     }
 
     case 'FILTER_REMOVE_BRAND': {
       return {
         ...state,
-        brand: filterRemoveItems(state.brand, action.payload),
+        brand: filterRemoveItems(state.brand, action.payload)
       };
     }
     case 'FILTER_REMOVE_ALL_BRANDS': {
       return {
         ...state,
-        brand: [],
+        brand: []
       };
     }
     case 'FILTER_REMOVE_ALL_COLORS': {
       return {
         ...state,
-        brand: [],
+        brand: []
       };
     }
     case 'FILTER_ADD_CATEGORIES': {
@@ -70,13 +70,13 @@ const filter = (state = instate, action) => {
     case 'FILTER_REMOVE_CATEGORY': {
       return {
         ...state,
-        category: filterRemoveItems(state.category, action.payload),
+        category: filterRemoveItems(state.category, action.payload)
       };
     }
     case 'FILTER_REMOVE_ALL_CATEGORIES': {
       return {
         ...state,
-        category: [],
+        category: []
       };
     }
     case 'FILTER_ADD_COLOR': {
@@ -85,20 +85,20 @@ const filter = (state = instate, action) => {
     case 'FILTER_REMOVE_COLOR': {
       return {
         ...state,
-        color: filterRemoveItems(state.color, action.payload),
+        color: filterRemoveItems(state.color, action.payload)
       };
     }
- 
+
     case 'FILTER_BY_NAME': {
       return {
         ...state,
-        searchTerm: action.payload,
+        searchTerm: action.payload
       };
     }
     case 'CLEAR_FIELD': {
       return {
         ...state,
-        searchValue: action.payload,
+        searchValue: action.payload
       };
     }
     default:

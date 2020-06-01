@@ -1,8 +1,9 @@
 import React from 'react';
+import StarRatings from 'react-star-ratings';
 import withStoreService from '../hoc';
 import './Star-rating.css';
 import { getFromLocalStorage } from '../../services/localStoreService';
-import StarRatings from 'react-star-ratings';
+
 const accessToken = getFromLocalStorage('accessToken');
 
 const StarsRating = ({

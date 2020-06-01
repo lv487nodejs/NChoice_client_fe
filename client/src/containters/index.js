@@ -6,10 +6,10 @@ import CheckoutContainer from './Checkout-container';
 import NewsContainer from './News-container';
 
 export {
-    HomePageContainer,
-    CategoriesPageContainer,
-    ProductListPageContainer,
-    ProductDetailsContainer,
-    CheckoutContainer,
-    NewsContainer
+  HomePageContainer,
+  CategoriesPageContainer,
+  ProductListPageContainer,
+  ProductDetailsContainer,
+  CheckoutContainer,
+  NewsContainer
 };

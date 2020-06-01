@@ -25,7 +25,7 @@ function ProductListPaginator({ pagesCount, paginate, currentPage }) {
   });
   return (
     <nav>
-      <ul className="pagination">{pageNumbersView}</ul>
+      <ul className='pagination'>{pageNumbersView}</ul>
     </nav>
   );
 }
