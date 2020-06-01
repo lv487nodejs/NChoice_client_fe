@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login"
-
+import {formRegExp} from '../../configs/frontend-config'
 import { setUserLogged, setUserLoading, setCart, setUser } from "../../actions";
 import LoadingSpinner from "../Loading-spinner";
 import withStoreService from '../hoc';
@@ -17,12 +17,6 @@ const addDataToLocalStorage = (token) => {
     setToLocalStorage('refreshToken', token.refreshToken)
 }
 
-const formRegExp = {
-    email: '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
-    name: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
-    password: '.{8,30}'
-}
-
 const USER_DATA = {
     email: '',
     password: ''
@@ -30,20 +24,14 @@ const USER_DATA = {
 
 const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
     const [user, setUser] = useState(USER_DATA);
-    const [errorMsg, setErrorMsg] = useState('');
-    const [emailError, setEmailError] = useState(true);
-    const [passwordError, setPasswordError] = useState(true);
-
+    const [errorMsgServer, setErrorMsg] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     const [passwordShown, setPasswordShown] = useState(false);
+
     const eyeClassName = passwordShown?'fa fa-eye':'fa fa-eye-slash';
 
-    const emailErrorMessage = emailError
-    ? ''
-    : 'Please enter correct email';
-    const passwordErrorMessage = passwordError
-    ? ''
-    : 'Please enter correct password';
     useEffect(() => {
         setUserLogged(false)
     }, [setUserLogged])
@@ -75,11 +63,11 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const handlePasswordChange = event => {
         event.preventDefault()
         if(event.target.value.match(formRegExp.password)){
-            setPasswordError(true)
+            setPasswordError('')
             return
         }
         else{
-            setPasswordError(false)
+            setPasswordError('Please enter a password with min 8 up to 30 symbols')
             return
         }
     }
@@ -87,11 +75,11 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const handleEmailChange = event => {
         event.preventDefault()
         if(event.target.value.match(formRegExp.email)){
-            setEmailError(true)
+            setEmailError('')
             return
         }
         else{
-            setEmailError(false)
+            setEmailError('Please enter correct email')
             return
         }
     }
@@ -144,7 +132,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                         onChange={handleChange}
                         onBlur={handleEmailChange}
                     />
-                    <i className="text-danger position-static">{emailErrorMessage}</i>
+                    <i className="text-danger position-static">{emailError}</i>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword" >
@@ -161,7 +149,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
-                    <i className="text-danger position-static">{passwordErrorMessage}</i>
+                    <i className="text-danger position-static">{passwordError}</i>
                 </Form.Group>
                     <Form.Check
                         type="switch"
@@ -172,7 +160,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     <Button variant="dark" type="submit" block>
                         LOG IN
                         </Button>
-                    <span className="errorMessage">{errorMsg}</span>
+                    <span className="errorMessage">{errorMsgServer}</span>
                 </Form.Group>
                 <Form.Group className="link">
                     <Link to="/register" className="btn btn-link" >REGISTER</Link>

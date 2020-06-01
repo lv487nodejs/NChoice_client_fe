@@ -3,21 +3,17 @@ import "./Register.css";
 import { Form, Button, Modal } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import {universal} from '../../validators/form-validators'
 import { setUserLogged, setUserLoading } from "../../actions";
 import withStoreService from "../hoc";
 import { setToLocalStorage } from "../../services/localStoreService";
-
+import {formRegExp} from '../../configs/frontend-config'
 const addDataToLocalStorage = (token) => {
   setToLocalStorage("userId", token.userId);
   setToLocalStorage("accessToken", token.accessToken);
   setToLocalStorage("refreshToken", token.refreshToken);
 };
 
-const formRegExp = {
-  email: '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
-  name: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
-  password: '.{8,30}'
-}
 
 const USER_DATA = {
   firstName: '',
@@ -42,23 +38,26 @@ const Register = ({
   const [errorMsg, setErrorMsg] = useState('');
   const [passwordShown, setPasswordShown] = useState(false);
   const [show, setShow] = useState(false);
-
+  const [allFieldsValidated, setAllFieldsValidated] = useState(false)
   const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
-  const [confirmPasswordError, setconfirmPasswordError] = useState(true);
-  const [emailError, setEmailError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
 
-  const confirmPasswordErrorMessage = confirmPasswordError
-    ? 'Please confirm password'
-    : '';
   const agreeWithTermsErrorMessage = agreedWithTerms
   ? ''
   : 'Please agree with terms';
-  const emailErrorMessage = emailError ? "Please enter email" : "";
+
   const passwordEye = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
   const confirmedPasswordEye = confirmPasswordShown
     ? 'fa fa-eye'
     : 'fa fa-eye-slash';
+
+  useEffect(() => {
+    if ((agreedWithTerms && (emailError === '') && (confirmPasswordError === ''))) {
+      setAllFieldsValidated(true)
+    }
+  }, [allFieldsValidated, agreedWithTerms, emailError ])
 
   useEffect(() => {
     setUserLogged(false);
@@ -72,13 +71,12 @@ const Register = ({
     setConfirmPasswordShown(!confirmPasswordShown);
   };
   const validateConfirmPassword = () => {
-
     if (user.password === user.confirmPassword) {
-      setconfirmPasswordError(false) }
-     else {
-        setconfirmPasswordError(true)
-     }
-    }
+      setConfirmPasswordError('') }
+    else {
+    setConfirmPasswordError('Please confirm password')
+  }}
+
   const handleChange = (event) => {
     event.persist();
     setUser({ ...user, [event.target.name]: event.target.value });
@@ -91,7 +89,6 @@ const Register = ({
   const postUser = async () => {
     try {
       setUserLoading();
-      user.confirmPassword = undefined;
       const res = await storeService.registerUser(user);
       if (!res) throw new Error('User with such an email already exist.');
       addDataToLocalStorage(res);
@@ -105,7 +102,7 @@ const Register = ({
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    if (user.password === user.confirmPassword && agreedWithTerms) {
+    if ((emailError === '') && agreedWithTerms && !emailError) {
       postUser();
     }
   };
@@ -116,7 +113,9 @@ const Register = ({
   const checkEmail = (event) => {
     setEmailError(true);
     if (event.target.value.match(formRegExp.email)) {
-      setEmailError(false);
+      setEmailError('')
+    } else {
+      setEmailError('Please enter correct email')
     }
   };
   return (
@@ -159,7 +158,7 @@ const Register = ({
             title="example@gmail.com"
             placeholder="Enter email..."
           />
-          <i className="text-danger position-static">{emailErrorMessage}</i>
+          <i className="text-danger position-static">{emailError}</i>
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
@@ -199,7 +198,7 @@ const Register = ({
             />
           </Form.Group>
           <i className="text-danger position-static">
-            {confirmPasswordErrorMessage}
+            {confirmPasswordError}
           </i>
         </Form.Group>
 
@@ -215,7 +214,11 @@ const Register = ({
           </i>
         </Form.Group>
         <Form.Group>
-          <Button variant="dark" type="submit" block>
+          <Button
+              disabled={ !allFieldsValidated }
+              variant="dark"
+              type="submit"
+              block>
             REGISTER
           </Button>
           <span>{errorMsg}</span>
