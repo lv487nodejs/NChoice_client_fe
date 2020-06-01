@@ -1,8 +1,43 @@
 .news-article{
-    width:80%;
-    border:1px solid grey;
-    border-radius:5px;
+    padding: 2rem;
+    width: 80%;
+    border: 1px solid #aaa5a5;
+    border-radius: 5px;
     display: grid;
-    margin:auto;
-    background-color: lightgrey;
+    margin: 2rem auto;
+}
+.news-header{
+    text-align: center;
+}
+
+.line{
+    width:90%;
+}
+
+.main-img{
+    transition: 2s;
+    transform: scale(1);
+}
+
+.main-img:hover {
+    transform: scale(1.1);
+}
+
+.main-image-container{
+    margin: 1rem auto;
+    height: 20rem;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.ndp-footer{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+#ndp-author-img{
+    height: 5rem;
+    border-radius: 20px;
+    margin-left: 2rem;
 }

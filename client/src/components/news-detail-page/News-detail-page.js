@@ -14,11 +14,18 @@ const NewsDetailPage = ({
   const [articleToShow, setArticleToShow] = useState({})
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    //get article id from query
     const articleId = match.params.id;
+    //check if the article is in redux store
     if (news.length === 0) {
-      console.log('go to database')
+      //get article from database
+      storeService.getNewsById(articleId).then((res) => {
+        setArticleToShow(res)
+      })
     }
     else {
+      //get article from redux store
       const article = news.filter(news => {
         return news._id === articleId
       });
@@ -33,22 +40,40 @@ const NewsDetailPage = ({
   };
   const dateToShow = new Date(articleToShow.date);
   const dateNews = dateToShow.toLocaleString('en-US', options);
-  const newsVideo = '/video/horondi.mp4'
+
   return (
     <div className="news-article">
-      <h3 className="center">{articleToShow.title}</h3>
-      <p>{dateNews}</p>
-      <img
-        src={`/images/news/${articleToShow.newsImage}`}
-        alt={`${articleToShow.newsImage}`} ></img>
+      <div className="news-header">
+        <h3 className="center">{articleToShow.title}</h3>
+      </div>
+      <small>{dateNews}</small>
+      <hr className="line" />
+      <div className="main-image-container">
+        <img
+          className="main-img"
+          src={`/images/news/${articleToShow.newsImage}`}
+          alt={`${articleToShow.newsImage}`} >
+        </img>
+      </div>
       <p>{articleToShow.text}</p>
-      <video width="320" height="240" controls>
-        <source src={newsVideo} type="video/mp4"></source>
-      </video>
-      <div>{articleToShow.author}</div>
+      <iframe
+        title='articleToShow.title'
+        width="100%"
+        height="400"
+        src={articleToShow.newsVideo}
+        frameBorder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen>
+      </iframe>
+      <hr className="line" />
+      <div className="ndp-footer">
+      <div>created by {articleToShow.author}</div>
       <img
+        id="ndp-author-img"
         src={`/images/news-authors/${articleToShow.authorPhoto}`}
-        alt={`${articleToShow.authorPhoto}`} ></img>
+        alt={`${articleToShow.authorPhoto}`} >
+      </img>
+      </div>
     </div>
   );
 };
