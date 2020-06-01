@@ -12,10 +12,10 @@ const NewsDetailPage = ({
 }) => {
 
   const [articleToShow, setArticleToShow] = useState({})
-  
+
   useEffect(() => {
     const articleId = match.params.id;
-    if (news.length===0){
+    if (news.length === 0) {
       console.log('go to database')
     }
     else {
@@ -25,9 +25,31 @@ const NewsDetailPage = ({
       setArticleToShow(article[0])
     }
   }, [storeService, match.params.id, news])
-
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  };
+  const dateToShow = new Date(articleToShow.date);
+  const dateNews = dateToShow.toLocaleString('en-US', options);
+  const newsVideo = '/video/horondi.mp4'
   return (
-  <h1>{articleToShow.title}</h1>
+    <div className="news-article">
+      <h3 className="center">{articleToShow.title}</h3>
+      <p>{dateNews}</p>
+      <img
+        src={`/images/news/${articleToShow.newsImage}`}
+        alt={`${articleToShow.newsImage}`} ></img>
+      <p>{articleToShow.text}</p>
+      <video width="320" height="240" controls>
+        <source src={newsVideo} type="video/mp4"></source>
+      </video>
+      <div>{articleToShow.author}</div>
+      <img
+        src={`/images/news-authors/${articleToShow.authorPhoto}`}
+        alt={`${articleToShow.authorPhoto}`} ></img>
+    </div>
   );
 };
 

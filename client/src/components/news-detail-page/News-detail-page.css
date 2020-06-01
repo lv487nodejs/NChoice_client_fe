@@ -1,0 +1,8 @@
+.news-article{
+    width:80%;
+    border:1px solid grey;
+    border-radius:5px;
+    display: grid;
+    margin:auto;
+    background-color: lightgrey;
+}
