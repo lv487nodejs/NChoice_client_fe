@@ -71,7 +71,7 @@ const CommentForm = ({
           color={ratingColor}
           isSelectable={true}
         />
-      </div>    
+      </div>
       <textarea className='feedback-form'
                 name='text'
                 value={text}
@@ -88,8 +88,7 @@ const CommentForm = ({
       <h3 className="login-link">
         To leave a comment please
         <Link to="/login">
-          {' '}
-          <span>login</span>{' '}
+          <span>login</span>
         </Link>
       </h3>
     </div>
@@ -103,7 +102,7 @@ const CommentForm = ({
           key={comment._id}
           text={comment.text}
           date={comment.date}
-          reviewerName={comment.user.firstName}
+          reviewerName={comment.user.firstName || "Anonym"}
           reviewerId={comment.user._id}
           commentId={comment._id}
         />
