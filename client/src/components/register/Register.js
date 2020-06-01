@@ -39,9 +39,9 @@ const Register = ({
   const [passwordShown, setPasswordShown] = useState(false);
   const [show, setShow] = useState(false);
   const [allFieldsValidated, setAllFieldsValidated] = useState(false)
-  const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [confirmPasswordShown, setConfirmPasswordShown] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
 
   const agreeWithTermsErrorMessage = agreedWithTerms
@@ -54,10 +54,13 @@ const Register = ({
     : 'fa fa-eye-slash';
 
   useEffect(() => {
-    if ((agreedWithTerms && (emailError === '') && (confirmPasswordError === ''))) {
+    if ((agreedWithTerms && (emailError === false) && (confirmPasswordError === false))) {
       setAllFieldsValidated(true)
     }
-  }, [allFieldsValidated, agreedWithTerms, emailError ])
+    else{
+      setAllFieldsValidated(false)
+    }
+  }, [allFieldsValidated, agreedWithTerms, emailError, confirmPasswordError ])
 
   useEffect(() => {
     setUserLogged(false);
@@ -72,9 +75,9 @@ const Register = ({
   };
   const validateConfirmPassword = () => {
     if (user.password === user.confirmPassword) {
-      setConfirmPasswordError('') }
+      setConfirmPasswordError(false) }
     else {
-    setConfirmPasswordError('Please confirm password')
+      setConfirmPasswordError('Please confirm password')
   }}
 
   const handleChange = (event) => {
@@ -102,7 +105,7 @@ const Register = ({
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    if ((emailError === '') && agreedWithTerms && !emailError) {
+    if ((emailError === false) && agreedWithTerms && !emailError) {
       postUser();
     }
   };
@@ -113,7 +116,7 @@ const Register = ({
   const checkEmail = (event) => {
     setEmailError(true);
     if (event.target.value.match(formRegExp.email)) {
-      setEmailError('')
+      setEmailError(false)
     } else {
       setEmailError('Please enter correct email')
     }
@@ -126,7 +129,7 @@ const Register = ({
       >
         <Form.Label className="lable">Register</Form.Label>
         <Form.Group>
-          <Form.Label>First name</Form.Label>
+          <Form.Label>First name<sup style = {{ color: "red" }}>*</sup></Form.Label>
           <Form.Control
             type="text"
             name={'firstName'}
@@ -137,7 +140,7 @@ const Register = ({
 
         </Form.Group>
         <Form.Group>
-          <Form.Label>Last name</Form.Label>
+          <Form.Label>Last name<sup style = {{ color: "red" }}>*</sup></Form.Label>
           <Form.Control
             type="text"
             name={'lastName'}
@@ -148,7 +151,7 @@ const Register = ({
         </Form.Group>
 
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+          <Form.Label>Email address<sup style = {{ color: "red" }}>*</sup></Form.Label>
           <Form.Control
             type="text"
             name={'email'}
@@ -165,7 +168,7 @@ const Register = ({
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Password<sup style = {{ color: "red" }}>*</sup></Form.Label>
           <Form.Group className="pass-wrapper">
             <Form.Control
               type={passwordShown ? 'text' : 'password'}
@@ -181,7 +184,7 @@ const Register = ({
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
-          <Form.Label> Confirm Password</Form.Label>
+          <Form.Label> Confirm Password<sup style = {{ color: "red" }}  >*</sup></Form.Label>
           <Form.Group className="pass-wrapper">
             <Form.Control
               type={confirmPasswordShown ? 'text' : 'password'}
@@ -201,7 +204,7 @@ const Register = ({
             {confirmPasswordError}
           </i>
         </Form.Group>
-
+        <Form.Label style = {{ fontSize: "14px" }}> Required field marked by <sup style = {{ color: "red" }}>*</sup></Form.Label>
         <Form.Group>
           <Form.Check
             type="switch"
@@ -223,7 +226,7 @@ const Register = ({
           </Button>
           <span>{errorMsg}</span>
         </Form.Group>
-
+        
         <Form.Group className="link">
           <Link to="/login" className="btn btn-link">
             LOG IN
