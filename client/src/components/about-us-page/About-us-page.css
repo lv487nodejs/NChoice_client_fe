@@ -1,126 +1,113 @@
 @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
 
-.header-about-us-h2,
-.body-about-us-h3 {
+.about-owner__title,
+.about-team__title {
     font-family: 'Staatliches', cursive;
     margin: 0;
 }
 
-.header-page-about-us {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+h4 {
+    font-size: 30px;
+}
+
+.horondi {
+    color: white;
+    padding: 2px;
+    align-self: flex-end;
     position: relative;
-    padding: 50px;
+    font-weight: bold;
 }
 
-.header-page-about-us > * {
-    flex-basis: 500px;
-    max-width: 500px;
-}
-
-.header-page-about-us:after {
-    display: block;
+.horondi:after {
     content: '';
     position: absolute;
+    right: 0;
+    top: 0;
     left: 0;
-    bottom: calc(0px - 70px);
-    width: 100%;
-    height: 150px;
-    background: url("/images/about-us/line.png") no-repeat;
-    background-size: 100%;
+    bottom: 0;
+    background-color: black;
     z-index: -1;
 }
 
-.header-about-us-h2 {
-    font-size: 50px;
-    color: #343a40;
+.underline {
+    text-decoration: underline orangered;
 }
 
-.header-page-about-us-image {
-    justify-content: center;
+.about-us {
+    margin: 0 auto;
+    max-width: 1280px;
+}
+
+.header-page-about-us {
+    margin-top: 30px;
+    height: 700px;
+    background: url("/images/about-us/hero-bg.jpg") no-repeat center;
+    background-size: cover;
+    position: relative;
     display: flex;
+    border-radius: 10px;
+}
+
+.header-page-about-us-describe {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 50px;
+}
+
+.header-page-about-us-describe:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: black;
+    opacity: .3;
+    z-index: 1;
+    border-radius: 10px;
+}
+
+.header-about-us-h2 {
+    position: relative;
+    z-index: 2;
+    color: white;
+    margin-left: 10%;
+    font-size: 50px;
+    text-align: right;
+    letter-spacing: .2em;
+}
+
+.header-about-us-h4 {
+    position: relative;
+    z-index: 2;
+    text-align: right;
+    margin-top: 5px;
 }
 
 
 /*BODY*/
 .body-page-about-us {
-    max-width: 1920px;
-    margin: 50px auto;
+    margin-top: 50px;
+    padding: 50px;
 }
 
-.body-page-about-us-item {
-    display: flex;
-    height: 500px;
+.body-page-about-us > * {
+    border-bottom: 1px solid #ffaa00;
 }
 
-.body-page-about-us-item > * {
-    flex: 1 0 50%;
+.section {
+    margin: 50px 0;
 }
 
-.body-page-about-us-item-image img {
-    max-width: 100%;
+.section p {
+    text-indent: 40px;
 }
 
-.body-page-about-us-item-describe {
-    display: flex;
-    justify-content: center;
-    padding: 10px 80px;
-    flex-flow: column;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position-y: center;
-}
-
-.body-page-about-us-item:nth-child(even) {
-    flex-flow: row-reverse;
-}
-
-.body-page-about-us-item:nth-child(even) .body-page-about-us-item-image {
-    display: flex;
-    justify-items: flex-end;
-    justify-content: flex-end;
-}
-
-.body-page-about-us-item:first-child .body-page-about-us-item-describe {
-    background-image: url("/images/about-us/bg-1.png");
-}
-
-.body-page-about-us-item:nth-child(2) .body-page-about-us-item-describe {
-    background-image: url("/images/about-us/bg-2.png");
-}
-
-.body-page-about-us-item:last-child .body-page-about-us-item-describe {
-    background-image: url("/images/about-us/bg-3.png");
-}
-
-@media screen and (max-width: 1300px) {
-    .header-page-about-us {
-        flex-flow: column-reverse;
-    }
-
-    .header-page-about-us > * {
-        flex-basis: 100%;
-        max-width: 100%;
-    }
-
-    .body-page-about-us-item {
-        flex-flow: column;
-        height: fit-content;
-    }
-
-    .body-page-about-us-item-describe {
-        min-height: 500px;
-        align-self: center;
-        max-width: 800px;
-        padding: 10px 50px;
-    }
-
-    .body-page-about-us-item:nth-child(even) .body-page-about-us-item-image {
-        align-self: flex-end;
-    }
-
-    .body-page-about-us-item:nth-child(even) {
-        flex-flow: column;
+@media only screen and (max-width: 991px) {
+    .header-about-us-h2 {
+        font-size: 30px;
     }
 }
+

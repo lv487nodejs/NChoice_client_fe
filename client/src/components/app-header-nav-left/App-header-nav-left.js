@@ -10,23 +10,17 @@ import {
   filterRemoveAllCategories,
   filterByName,
   setCatalogFilter,
-  clearFilter,
-  setUser
+  clearFilter
 } from '../../actions';
 
 import withStoreService from '../hoc';
 import AppHeaderNavLeftItem from '../app-header-nav-left-item';
 import AppHeaderNavLeftItemDropDown from '../app-header-nav-left-item-dropdown';
-import {
-  getFromLocalStorage,
-  setToLocalStorage
-} from '../../services/localStoreService';
-
-const userId = getFromLocalStorage('userId');
-const accessToken = getFromLocalStorage('accessToken');
 
 const LINK_FOR_NEWS = '/news';
 const NEWS_LINK_TITLE = 'News';
+const LINK_FOR_ABOUT_US = '/about-us';
+const ABOUT_US_LINK_TITLE = 'About us';
 
 const AppHeaderNavLeft = ({
   storeService,
@@ -38,26 +32,18 @@ const AppHeaderNavLeft = ({
   filterByName,
   setCatalogFilter,
   clearFilter,
-  setUser
 }) => {
   const [isShown, setIsShown] = useState('');
 
   useEffect(() => {
     catalogsRequested();
     storeService.getAllCatalogs().then((res) => catalogsLoaded(res));
-    if (userId) {
-      storeService.getUserById(userId, accessToken).then((res) => {
-        setUser(res.data.user);
-        setToLocalStorage('accessToken', res.data.accessToken);
-        setToLocalStorage('refreshToken', res.data.refreshToken);
-      });
-    }
-  }, [catalogsLoaded, catalogsRequested, storeService, setUser]);
+    }, [catalogsLoaded, catalogsRequested, storeService]);
 
-  const onEnter = (e, catalog) => {
+  const onEnter = ( catalog) => {
     setIsShown(catalog);
   };
-  const onLeave = (e) => {
+  const onLeave = () => {
     setIsShown('');
   };
   const filterAddCategoryHandler = (category, catalog) => {
@@ -107,6 +93,7 @@ const AppHeaderNavLeft = ({
       <ul>
         {items}
         <li>
+          <Link to={LINK_FOR_ABOUT_US}>{ABOUT_US_LINK_TITLE}</Link>
           <Link to={LINK_FOR_NEWS}>{NEWS_LINK_TITLE}</Link>
         </li>
       </ul>
@@ -114,9 +101,8 @@ const AppHeaderNavLeft = ({
   );
 };
 
-const mapStateToProps = ({ catalogsList: { catalogs, loading } }) => ({
-  catalogs,
-  loading
+const mapStateToProps = ({ catalogsList: { catalogs } }) => ({
+  catalogs
 });
 const mapDispatchToProps = {
   catalogsLoaded,
@@ -125,8 +111,7 @@ const mapDispatchToProps = {
   filterRemoveAllCategories,
   filterByName,
   setCatalogFilter,
-  clearFilter,
-  setUser
+  clearFilter
 };
 
 export default withStoreService()(
