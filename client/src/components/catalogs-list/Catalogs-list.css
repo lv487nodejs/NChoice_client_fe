@@ -81,6 +81,15 @@
     width: 100%;
 }
 
+.home-page-footer{
+    display: flex;
+}
+
+.people-img{
+    width: 100%;
+    display: block;
+}
+
 @media (max-width: 768px) {
     .catalogs {
         flex-direction: column;

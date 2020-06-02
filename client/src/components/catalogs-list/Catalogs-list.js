@@ -36,6 +36,12 @@ const CatalogsList = ({
             </div>
         </div>
         <div className="catalogs">{items}</div>
+        <div className='home-page-footer'>
+          <div><img className='people-img' src='/images/people/img1.jpg'/> </div>
+          <div><img className='people-img' src='/images/people/img2.jpg'/> </div>
+          <div><img className='people-img' src='/images/people/img3.jpg'/> </div>
+          <div><img className='people-img' src='/images/people/img4.jpg'/> </div>
+        </div>
     </div>;
 };
 
