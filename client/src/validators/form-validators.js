@@ -45,28 +45,28 @@ export const universal = (type, text) => {
             if (text.match(formRegExp.password)) {
                 return false
             } else {
-                return 'Please enter a correct password. Min 8 symbols'
+                return 'Password must be at least 8 characters long'
             }
             break
         case  type === 'email':
             if (text.match(formRegExp.email)) {
                 return false
             } else {
-                return 'Please enter a correct email'
+                return 'Please check that your e-mail address is indicated correctly'
             }
             break
         case  type === 'firstName':
             if (text.match(formRegExp.name)) {
                 return false
             } else {
-                return 'Please enter alphabetic characters. '
+                return 'Please, set from 2 to 30 alphabetic characters'
             }
             break
         case  type === 'lastName':
             if (text.match(formRegExp.name)) {
                 return false
             } else {
-                return 'Please enter a correct name'
+                return 'Please, set from 2 to 30 alphabetic characters'
             }
             break
         case type ==='contactPhone':

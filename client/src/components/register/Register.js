@@ -35,32 +35,46 @@ const Register = ({
   const initialUser = { ...USER_DATA, cart: { cartNumbers, cartProducts } };
 
   const [user, setUser] = useState(initialUser);
-  const [errorMsg, setErrorMsg] = useState('');
-  const [passwordShown, setPasswordShown] = useState(false);
-  const [show, setShow] = useState(false);
-  const [allFieldsValidated, setAllFieldsValidated] = useState(false)
-  const [confirmPasswordShown, setConfirmPasswordShown] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('')
+
+  const [firstNameError, setFirstNameError] = useState('')
+  const [lastNameError, setLastNameError] = useState('')
   const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState('')
+  const [allFieldsValidated, setAllFieldsValidated] = useState(false)
+
+
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [show, setShow] = useState(false);
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(false);
 
   const agreeWithTermsErrorMessage = agreedWithTerms
   ? ''
   : 'Please agree with terms';
 
   const passwordEye = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
-  const confirmedPasswordEye = confirmPasswordShown
-    ? 'fa fa-eye'
-    : 'fa fa-eye-slash';
+
 
   useEffect(() => {
-    if ((agreedWithTerms && (emailError === false) && (confirmPasswordError === false))) {
+    if ((agreedWithTerms &&
+        (emailError === false) &&
+        (confirmPasswordError === false) &&
+        (passwordError === false) &&
+        (lastNameError === false) &&
+        (firstNameError === false))) {
       setAllFieldsValidated(true)
     }
     else{
       setAllFieldsValidated(false)
     }
-  }, [allFieldsValidated, agreedWithTerms, emailError, confirmPasswordError ])
+  }, [
+      allFieldsValidated,
+      agreedWithTerms,
+      emailError,
+      confirmPasswordError,
+      lastNameError,
+      firstNameError ])
 
   useEffect(() => {
     setUserLogged(false);
@@ -70,12 +84,10 @@ const Register = ({
     setPasswordShown(!passwordShown);
   };
 
-  const toggleConfirmPasswordVisiblity = () => {
-    setConfirmPasswordShown(!confirmPasswordShown);
-  };
   const validateConfirmPassword = () => {
     if (user.password === user.confirmPassword) {
-      setConfirmPasswordError(false) }
+      setConfirmPasswordError(false)
+    console.log('ZALYYYYYPA')}
     else {
       setConfirmPasswordError('Please confirm password')
   }}
@@ -83,6 +95,17 @@ const Register = ({
   const handleChange = (event) => {
     event.persist();
     setUser({ ...user, [event.target.name]: event.target.value });
+    const err = universal(event.target.name, event.target.value)
+
+    if(event.target.name === 'email')
+      setEmailError(err)
+    else if((event.target.name === 'password')){
+      setPasswordError(err)
+    }
+    else if((event.target.name === 'lastName'))
+      setLastNameError(err)
+    else if ((event.target.name === 'firstName'))
+      setFirstNameError(err)
   };
 
   const handleClose = () => setShow(false);
@@ -113,14 +136,7 @@ const Register = ({
   if (userLogged) {
     return <Redirect to="/" />;
   }
-  const checkEmail = (event) => {
-    setEmailError(true);
-    if (event.target.value.match(formRegExp.email)) {
-      setEmailError(false)
-    } else {
-      setEmailError('Please enter correct email')
-    }
-  };
+
   return (
     <>
       <Form
@@ -137,7 +153,7 @@ const Register = ({
             onChange={handleChange}
             placeholder="Enter firstname..."
           />
-
+          <i className="text-danger position-static">{firstNameError}</i>
         </Form.Group>
         <Form.Group>
           <Form.Label>Last name<sup style = {{ color: "red" }}>*</sup></Form.Label>
@@ -148,6 +164,7 @@ const Register = ({
             onChange={handleChange}
             placeholder="Enter lastname..."
           />
+          <i className="text-danger position-static">{lastNameError}</i>
         </Form.Group>
 
         <Form.Group controlId="formBasicEmail">
@@ -157,7 +174,6 @@ const Register = ({
             name={'email'}
             value={user.email}
             onChange={handleChange}
-            onBlur={checkEmail}
             title="example@gmail.com"
             placeholder="Enter email..."
           />
@@ -176,10 +192,12 @@ const Register = ({
               name={'password'}
               value={user.password}
               onChange={handleChange}
-              title="min length 8 max 16 characters"
+              //onBlur={validateConfirmPassword}
+              title="min length 8 max 30 characters"
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>
+          <i className="text-danger position-static">{passwordError}</i>
 
         </Form.Group>
 
@@ -187,17 +205,17 @@ const Register = ({
           <Form.Label> Confirm Password<sup style = {{ color: "red" }}  >*</sup></Form.Label>
           <Form.Group className="pass-wrapper">
             <Form.Control
-              type={confirmPasswordShown ? 'text' : 'password'}
+              type={passwordShown ? 'text' : 'password'}
               placeholder="Enter password..."
               name={'confirmPassword'}
               value={user.confirmPassword}
               onChange={handleChange}
               onBlur={validateConfirmPassword}
-              title="min length 8 max 16 characters"
+              title="min length 8 max 30 characters"
             />
             <i
-              className={confirmedPasswordEye}
-              onClick={toggleConfirmPasswordVisiblity}
+              className={passwordEye}
+              onClick={togglePasswordVisiblity}
             />
           </Form.Group>
           <i className="text-danger position-static">

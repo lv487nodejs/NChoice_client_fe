@@ -115,7 +115,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                         value={user.email}
                         onChange={handleChange}
                     />
-                    <i className="text-danger position-static">{emailError}</i>
+                    <i className="text-danger position-static">{emailError.email}</i>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword" >
