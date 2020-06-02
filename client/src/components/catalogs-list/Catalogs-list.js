@@ -35,12 +35,18 @@ const CatalogsList = ({
                 <h5 className='home-page-bg__logo__row-3'>made in lviv</h5>
             </div>
         </div>
-        <div className="catalogs">{items}</div>
+      <h2 className='people-title'>Our products</h2>
+      <div className="catalogs">{items}</div>
+        <h2 className='people-title'>Our looks</h2>
         <div className='home-page-footer'>
-          <div><img className='people-img' src='/images/people/img1.jpg'/> </div>
-          <div><img className='people-img' src='/images/people/img2.jpg'/> </div>
-          <div><img className='people-img' src='/images/people/img3.jpg'/> </div>
-          <div><img className='people-img' src='/images/people/img4.jpg'/> </div>
+          <div><img className='people-img' src='/images/people/img5.webp'/> </div>
+          <div><img className='people-img' src='/images/people/img6.webp'/> </div>
+          <div><img className='people-img' src='/images/people/img7.webp'/> </div>
+          <div><img className='people-img' src='/images/people/img8.webp'/> </div>
+          <div><img className='people-img' src='/images/people/img1.webp'/> </div>
+          <div><img className='people-img' src='/images/people/img2.webp'/> </div>
+          <div><img className='people-img' src='/images/people/img3.webp'/> </div>
+          <div><img className='people-img' src='/images/people/img4.webp'/> </div>
         </div>
     </div>;
 };

@@ -1,7 +1,8 @@
+
 .catalogs {
     display: flex;
     align-items: center;
-    margin: 3rem auto;
+    margin: 0 auto 3rem auto;
     justify-content: space-around;
     max-width: 1300px;
 }
@@ -83,11 +84,27 @@
 
 .home-page-footer{
     display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.home-page-footer div{
+    width: 25%;
+    margin: auto;
+    height: 300px;
 }
 
 .people-img{
     width: 100%;
-    display: block;
+    height: 100%;
+    object-fit: cover;
+}
+
+.people-title{
+    text-transform: uppercase;
+    letter-spacing: .33em;
+    text-align: center;
+    margin: 2rem auto;
 }
 
 @media (max-width: 768px) {
