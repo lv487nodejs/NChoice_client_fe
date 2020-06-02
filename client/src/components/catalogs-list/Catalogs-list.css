@@ -20,10 +20,10 @@
 .home-page-bg__logo {
     color: black;
     width: fit-content;
+    height: fit-content;
     padding: 30px;
     text-transform: uppercase;
     position: relative;
-    height: fit-content;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -82,6 +82,11 @@
 }
 
 @media (max-width: 768px) {
+    .home-page-bg {
+        height: fit-content;
+        min-height: 500px;
+    }
+
     .catalogs {
         flex-direction: column;
         width: 90%;

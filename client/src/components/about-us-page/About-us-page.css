@@ -51,7 +51,7 @@ h4 {
 .header-page-about-us-describe {
     display: flex;
     flex-flow: column;
-    justify-content: flex-start;
+    justify-content: flex-end;
     width: 100%;
     padding: 50px;
 }
