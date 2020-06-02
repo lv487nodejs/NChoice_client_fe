@@ -4,6 +4,7 @@ import {
   setToLocalStorage
 } from '../services/localStoreService';
 import { _apiBase } from '../configs/frontend-config';
+import { setUser } from '../actions';
 
 const initialState = { cartNumbers: 0, cartProducts: [] };
 
@@ -29,6 +30,7 @@ const setInitial = async () => {
       headers: { 'x-auth-token': accessToken }
     });
     const { cart } = res.data.user;
+    setUser(res.data.user);
     if (!cart) {
       saveCart(userId, { cartNumbers: 0, cartProducts: [] });
       return;
