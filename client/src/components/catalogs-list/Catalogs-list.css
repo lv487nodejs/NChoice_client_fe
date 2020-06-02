@@ -3,7 +3,14 @@
     align-items: center;
     margin: 3rem auto;
     justify-content: space-around;
-    max-width: 1200px;
+    max-width: 1300px;
+}
+
+.home-page-bg{
+    background-image: url("/images/bg-home-page.jpg");
+    background-size: cover;
+    height: 500px;
+    opacity: 0.9;
 }
 
 .catalogs img {
