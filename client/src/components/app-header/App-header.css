@@ -5,13 +5,8 @@ header {
 .logo {
     padding: 1rem;
     background-image: url(/images/logo.svg);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
     height: 3rem;
-    width: 3rem;
+    width: 15rem;
     background-size: cover;
 }
 .bg-dark {
@@ -26,6 +21,15 @@ header {
 }
 
 @media only screen and (max-device-width: 991px) {
+    .logo {
+        height: 1.5rem;
+        width: 9rem;
+        background-size: cover;
+    }
+
+    .navbar {
+       justify-content: flex-start;
+    }
 
     .navbar-collapse {
         position: absolute;
@@ -43,8 +47,8 @@ header {
 
 @media only screen and (max-device-width: 520px) {
     .logo{
-        height: 2.5rem;
-        width: 2.5rem;
+        height: .3rem;
+        width: 9rem;
     }
     .navbar-toggler{
         padding: .2rem .6rem;
