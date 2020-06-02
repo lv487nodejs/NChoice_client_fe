@@ -137,7 +137,7 @@ const Register = ({
 
         </Form.Group>
         <Form.Group>
-          <Form.Label>Last name</Form.Label>
+          <Form.Label><sup style={{"color: red"}}>Last name</sup></Form.Label>
           <Form.Control
             type="text"
             name={'lastName'}
