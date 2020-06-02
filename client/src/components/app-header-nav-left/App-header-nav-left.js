@@ -27,6 +27,8 @@ const accessToken = getFromLocalStorage('accessToken');
 
 const LINK_FOR_NEWS = '/news';
 const NEWS_LINK_TITLE = 'News';
+const LINK_FOR_ABOUT_US = '/about-us';
+const ABOUT_US_LINK_TITLE = 'About us';
 
 const AppHeaderNavLeft = ({
   storeService,
@@ -107,6 +109,7 @@ const AppHeaderNavLeft = ({
       <ul>
         {items}
         <li>
+          <Link to={LINK_FOR_ABOUT_US}>{ABOUT_US_LINK_TITLE}</Link>
           <Link to={LINK_FOR_NEWS}>{NEWS_LINK_TITLE}</Link>
         </li>
       </ul>
