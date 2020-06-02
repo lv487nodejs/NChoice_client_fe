@@ -5,8 +5,8 @@ header {
 .logo {
     padding: 1rem;
     background-image: url(/images/logo.svg);
-    height: 3rem;
-    width: 15rem;
+    height: 1rem;
+    width: 11rem;
     background-size: cover;
 }
 .bg-dark {
