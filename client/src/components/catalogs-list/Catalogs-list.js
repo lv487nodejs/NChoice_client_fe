@@ -28,13 +28,23 @@ const CatalogsList = ({
     ));
 
     return <div>
-        <div className='home-page-bg'>
-            <div className='home-page-bg__logo'>
-                <h6 className='home-page-bg__logo__row-1'>designed</h6>
-                <h1 className='home-page-bg__logo__row-2'>horondi</h1>
-                <h5 className='home-page-bg__logo__row-3'>made in lviv</h5>
+            <div className="wrapper">
+                <pad></pad>
+                <div className='home-page-bg__logo'>
+                    <h6 className='home-page-bg__logo__row-1'>designed</h6>
+                    <h1 className='home-page-bg__logo__row-2'>horondi</h1>
+                    <h5 className='home-page-bg__logo__row-3'>made in lviv</h5>
+                </div>
+                
+                <iframe 
+                className='home-page-bg'
+               
+                src="https://www.youtube.com/embed/7zzhNWW-zhE?controls=0&autoplay=1&mute=1&loop=1&playlist=7zzhNWW-zhE" 
+                frameborder="0" 
+                ></iframe>
             </div>
-        </div>
+            
+
         <div className="catalogs">{items}</div>
     </div>;
 };
