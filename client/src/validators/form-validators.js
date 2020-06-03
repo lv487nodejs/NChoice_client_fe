@@ -1,45 +1,6 @@
 import {formRegExp} from "../configs/frontend-config";
 
-// export const checkEmail = (event) => {
-//     setEmailError(true);
-//     if (event.target.value.match(formRegExp.email)) {
-//         setEmailError('')
-//     } else {
-//         setEmailError('Please enter correct email')
-//     }
-// };
-//
-// export const validateConfirmPassword = (firstpass, secondpass) => {
-//     if (firstpass === secondpass) {
-//         setConfirmPasswordError('') }
-//     else {
-//         setConfirmPasswordError('Please confirm password')
-//     }}
-//
-// export const handlePasswordChange = event => {
-//     event.preventDefault()
-//     if(event.target.value.match(formRegExp.password)){
-//         setPasswordError('')
-//         return
-//     }
-//     else{
-//         setPasswordError('Please enter a password with min 8 up to 30 symbols')
-//         return
-//     }
-// }
-//
-// export const handleEmailChange = event => {
-//     event.preventDefault()
-//     if(event.target.value.match(formRegExp.email)){
-//         setEmailError('')
-//     }
-//     else{
-//         setEmailError('Please enter correct email')
-//     }
-// }
-
 export const universal = (type, text) => {
-    //console.log(type,'aaa', text)
     switch (true) {
         case type === 'password':
             if (text.match(formRegExp.password)) {

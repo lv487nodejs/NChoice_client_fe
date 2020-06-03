@@ -87,7 +87,7 @@ const Register = ({
   const validateConfirmPassword = () => {
     if (user.password === user.confirmPassword) {
       setConfirmPasswordError(false)
-    console.log('ZALYYYYYPA')}
+    }
     else {
       setConfirmPasswordError('Please confirm password')
   }}

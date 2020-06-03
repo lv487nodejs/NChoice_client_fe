@@ -164,19 +164,6 @@ const CheckoutForm = ({
     });
   };
 
-  // const validationState = (event) => {
-  //   const erora = universal(event.target.name, event.target.value)
-  //   console.log(erora)
-  //   setEmailError({...emailError, [event.target.name]: erora})
-  //   setValidated(true)
-  //   Object.entries(emailError).forEach(([key, value]) => {
-  //     //console.log(`${key} ${value}`);
-  //     if (value !== '') {
-  //       setValidated(false)
-  //     }
-  //   });
-  //   //console.log(emailError)
-  // }
   return (
     <Container>
       <Row id="checkout-row">

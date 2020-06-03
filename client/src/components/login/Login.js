@@ -5,7 +5,6 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login"
-import {formRegExp} from '../../configs/frontend-config'
 import { setUserLogged, setUserLoading, setCart, setUser } from "../../actions";
 import LoadingSpinner from "../Loading-spinner";
 import withStoreService from '../hoc';
