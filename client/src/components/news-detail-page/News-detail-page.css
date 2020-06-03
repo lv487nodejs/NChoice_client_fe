@@ -17,6 +17,12 @@
 .main-img{
     transition: 2s;
     transform: scale(1);
+    width:100%;
+}
+
+.articleText{
+    text-align: justify;
+    margin-bottom: 2rem;
 }
 
 .main-img:hover {
@@ -41,3 +47,4 @@
     border-radius: 20px;
     margin-left: 2rem;
 }
+

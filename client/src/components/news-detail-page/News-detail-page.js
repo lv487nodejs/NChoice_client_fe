@@ -55,11 +55,12 @@ const NewsDetailPage = ({
           alt={`${articleToShow.newsImage}`} >
         </img>
       </div>
-      <p>{articleToShow.text}</p>
+      <p className="articleText">{articleToShow.text}</p>
       <iframe
+      className={articleToShow.newsVideo ? 'disp-block' : 'disp-none'}
         title='articleToShow.title'
         width="100%"
-        height="400"
+        height="600"
         src={articleToShow.newsVideo}
         frameBorder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"

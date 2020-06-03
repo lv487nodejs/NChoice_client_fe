@@ -1,6 +1,8 @@
 .article {
     height: 25rem;
     overflow: hidden;
+    text-align: justify;
+    margin-bottom: 1rem;
 }
 
 .card-img{
@@ -22,15 +24,6 @@
     height: 4.5rem;
     min-width: 17rem;
     margin-bottom: 2rem;
-}
-.news-card-readMore{
-    color: blue;
-    display: flex;
-    justify-content: flex-end;
-}
-.news-card-readMore:hover{
-    color:black;
-    text-decoration: underline!important;
 }
 
 .news-footer{
