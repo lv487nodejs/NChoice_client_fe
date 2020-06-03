@@ -1,13 +1,20 @@
 import React from 'react';
+import './App-footer.css';
+import {
+  contactInformationFooter,
+  policiesFooter,
+  catalogsFooter,
+  CATALOGS_URL,
+  socialNetworkLinks
+} from '../../configs/frontend-config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTelegramPlane,
   faInstagram,
   faFacebook,
 } from '@fortawesome/free-brands-svg-icons';
-import './App-footer.css';
 import { Link } from 'react-router-dom';
-import { socialNetworkLinks, contactInformationFooter, policiesFooter, catalogsFooter, CATALOGS_URL } from '../../configs/frontend-config'
+// import { socialNetworkLinks, contactInformationFooter, policiesFooter, catalogsFooter, CATALOGS_URL } from '../../configs/frontend-config'
 
 const catalogs = catalogsFooter.items.map((item) => (
   <div key={item.item}><Link to={CATALOGS_URL + item.url}>{item.item}</Link></div>
@@ -20,6 +27,22 @@ const policies = policiesFooter.items.map((item) =>
 const contacts = contactInformationFooter.items.map((item, index) =>
   (<div key={index}>{item}</div>
   ))
+
+// const Links = () => {
+//   return (
+//     <>
+//       <Link className='footer-icon' href={socialNetworksURL.telegram} target='_blank'>
+//         <FontAwesomeIcon className="icon" icon={faTelegramPlane} />
+//       </Link>
+//       <Link className='footer-icon' href={socialNetworksURL.instagram} target='_blank'>
+//         <FontAwesomeIcon className="icon" icon={faInstagram} />
+//       </Link>
+//       <Link className='footer-icon' href={socialNetworksURL.facebook} target='_blank'>
+//         <FontAwesomeIcon className="icon" icon={faFacebook} />
+//       </Link>
+//     </>
+//   );
+// }
 
 const AppFooter = () => (
   <footer className="footer">

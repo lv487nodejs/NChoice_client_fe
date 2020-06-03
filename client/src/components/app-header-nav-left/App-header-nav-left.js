@@ -11,10 +11,22 @@ import {
   filterByName,
   setCatalogFilter,
   clearFilter,
+  setUser
 } from '../../actions';
+
 import withStoreService from '../hoc';
 import AppHeaderNavLeftItem from '../app-header-nav-left-item';
 import AppHeaderNavLeftItemDropDown from '../app-header-nav-left-item-dropdown';
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from '../../services/localStoreService';
+
+const userId = getFromLocalStorage('userId');
+const accessToken = getFromLocalStorage('accessToken');
+
+const LINK_FOR_NEWS = '/news';
+const NEWS_LINK_TITLE = 'News';
 
 const AppHeaderNavLeft = ({
   storeService,
@@ -26,13 +38,21 @@ const AppHeaderNavLeft = ({
   filterByName,
   setCatalogFilter,
   clearFilter,
+  setUser
 }) => {
   const [isShown, setIsShown] = useState('');
 
   useEffect(() => {
     catalogsRequested();
     storeService.getAllCatalogs().then((res) => catalogsLoaded(res));
-  }, [catalogsLoaded, catalogsRequested, storeService]);
+    if (userId) {
+      storeService.getUserById(userId, accessToken).then((res) => {
+        setUser(res.data.user);
+        setToLocalStorage('accessToken', res.data.accessToken);
+        setToLocalStorage('refreshToken', res.data.refreshToken);
+      });
+    }
+  }, [catalogsLoaded, catalogsRequested, storeService, setUser]);
 
   const onEnter = (e, catalog) => {
     setIsShown(catalog);
@@ -48,10 +68,10 @@ const AppHeaderNavLeft = ({
     setIsShown('');
   };
 
-  const filterRemoveCategoriesHandler = () =>{
+  const filterRemoveCategoriesHandler = () => {
     filterRemoveAllCategories();
-    setIsShown('')
-  }
+    setIsShown('');
+  };
 
   const filterAddCatalog = (catalog) => () => {
     filterByName('');
@@ -66,7 +86,10 @@ const AppHeaderNavLeft = ({
       onMouseEnter={(e) => onEnter(e, catalog.catalog)}
       onMouseLeave={onLeave}
     >
-      <AppHeaderNavLeftItem catalog={catalog.catalog} catalogHandler={filterAddCatalog} />
+      <AppHeaderNavLeftItem
+        catalog={catalog.catalog}
+        catalogHandler={filterAddCatalog}
+      />
       {isShown === catalog.catalog && (
         <div key={catalog.catalog} className="drop-down-container">
           <AppHeaderNavLeftItemDropDown
@@ -83,15 +106,17 @@ const AppHeaderNavLeft = ({
     <nav className="nav-bar nav-left">
       <ul>
         {items}
-        <li><Link to="/news" >News</Link></li>
-        </ul>
+        <li>
+          <Link to={LINK_FOR_NEWS}>{NEWS_LINK_TITLE}</Link>
+        </li>
+      </ul>
     </nav>
   );
 };
 
 const mapStateToProps = ({ catalogsList: { catalogs, loading } }) => ({
   catalogs,
-  loading,
+  loading
 });
 const mapDispatchToProps = {
   catalogsLoaded,
@@ -101,6 +126,7 @@ const mapDispatchToProps = {
   filterByName,
   setCatalogFilter,
   clearFilter,
+  setUser
 };
 
 export default withStoreService()(

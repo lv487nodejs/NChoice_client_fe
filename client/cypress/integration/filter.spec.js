@@ -30,11 +30,11 @@ describe('filter', () => {
     it('brand filter should return Gosha brand items only', () => {
         cy.visit('/productlist/kids');
         cy.viewport(1280, 720);
-        cy.get(':nth-child(2) > ul > :nth-child(1) > .list-group-item').click();        
+        cy.get(':nth-child(2) > ul > :nth-child(1) > .list-group-item').click();
         cy.window().its('store').invoke('getState').its('filter').its('brand').should('contain', 'gosha');
 
     });
-    
+
     it('brand filter should return Ruma brand items only', () => {
         cy.visit('/productlist/kids');
         cy.viewport(1280, 720);
@@ -101,7 +101,7 @@ describe('filter', () => {
         cy.viewport(1280, 720);
         cy.get(':nth-child(4) > ul > :nth-child(1) > .list-group-item').click();
         cy.window().its('store').invoke('getState').its('filter').its('color').should('contain', 'blue');
-    // });
+    });
     it('brands should be not visible and  visible', () => {
         cy.get('.filter-group > :nth-child(2) > .fa').click();
         cy.get(':nth-child(2) > ul').should('be.not.visible');
@@ -124,7 +124,7 @@ describe('filter', () => {
     it('should show Hoodies Gosha items', () => {
         cy.get(':nth-child(2) > ul > :nth-child(1) > .list-group-item').click();
         cy.get(':nth-child(3) > ul > :nth-child(1) > .list-group-item').click();
-        cy.window().its('store').invoke('getState').its('filter').its('brand').should('contain','gosha');
+        cy.window().its('store').invoke('getState').its('filter').its('brand').should('contain', 'gosha');
         cy.window().its('store').invoke('getState').its('filter').its('category').should('contain', 'hoodies');
 
     });
