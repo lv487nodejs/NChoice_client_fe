@@ -51,7 +51,7 @@ export const socialNetworkLinks = {
     title: 'Links',
     telegram: 'https://web.telegram.org',
     facebook: 'https://www.facebook.com/Fn-100171608356044/',
-    instagram: 'https://www.instagram.com/'
+    instagram: "https://www.instagram.com/"
 };
 export const policiesFooter = {
     title: 'Information',
