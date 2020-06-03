@@ -47,10 +47,13 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         event.persist();
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
         const err = universal(event.target.name, event.target.value)
-        if(event.target.name === 'email')
+        if(event.target.name == 'email'){
+            console.log("here")
             setEmailError(err)
-        else
+        }
+        else{
             setPasswordError(err)
+        }
     };
 
     const postUser = async () => {
@@ -115,7 +118,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                         value={user.email}
                         onChange={handleChange}
                     />
-                    <i className="text-danger position-static">{emailError.email}</i>
+                    <i className="text-danger position-static">{emailError}</i>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword" >
