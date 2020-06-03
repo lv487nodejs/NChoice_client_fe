@@ -1,5 +1,4 @@
 import classNames from 'classnames'
-const CommentForm = ({productId, setComments, storeService, comments, rate}) => {
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import './comment-form.css';
@@ -11,6 +10,8 @@ import { Link } from 'react-router-dom';
 import StarsRating from '../star-rating';
 
 const ratingColor = 'black';
+const rateTitle = 'Rate the product:'
+const leaveAComment = 'Leave a comment'
 
 const CommentForm = ({
   productId,
@@ -52,10 +53,9 @@ const CommentForm = ({
 
   const logged = (
     <form className="form my-1 comments-form" onSubmit={addComment}>
-      <h3> Leave a comment </h3>
-      <div className='star'><h6 className='rate'> Rate the product: </h6> <StarsRating rating={rate} id={productId}/></div>
+      <h3>{leaveAComment}</h3>
       <div className='star'>
-        <h6 className='rate'> Rate the product: </h6>
+        <h6 className='rate'>{rateTitle} </h6>
         <StarsRating
           rating={rate}
           id={productId}
