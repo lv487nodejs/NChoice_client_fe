@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 
 const CheckoutTable = ({ cartProducts, currency, currencyIcon}) => {
 
+
+
     // Count one row total price
     const tableRowPrice = (price , quantity) => {
         return (parseFloat(price * quantity * currency).toFixed(2));

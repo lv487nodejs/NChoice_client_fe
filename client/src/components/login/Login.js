@@ -5,22 +5,16 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login"
-
 import { setUserLogged, setUserLoading, setCart, setUser } from "../../actions";
 import LoadingSpinner from "../Loading-spinner";
 import withStoreService from '../hoc';
 import { setToLocalStorage } from '../../services/localStoreService';
+import { universal } from "../../validators/form-validators";
 
 const addDataToLocalStorage = (token) => {
     setToLocalStorage('userId', token.userId)
     setToLocalStorage('accessToken', token.accessToken)
     setToLocalStorage('refreshToken', token.refreshToken)
-}
-
-const formRegExp = {
-    email: '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
-    name: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
-    password: '.{8,30}'
 }
 
 const USER_DATA = {
@@ -30,20 +24,16 @@ const USER_DATA = {
 
 const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
     const [user, setUser] = useState(USER_DATA);
-    const [errorMsg, setErrorMsg] = useState('');
+    const [errorMsgServer, setErrorMsg] = useState('');
     const [emailError, setEmailError] = useState(true);
     const [passwordError, setPasswordError] = useState(true);
 
-
     const [passwordShown, setPasswordShown] = useState(false);
+
+
+
     const eyeClassName = passwordShown?'fa fa-eye':'fa fa-eye-slash';
 
-    const emailErrorMessage = emailError
-    ? ''
-    : 'Please enter correct email';
-    const passwordErrorMessage = passwordError
-    ? ''
-    : 'Please enter correct password';
     useEffect(() => {
         setUserLogged(false)
     }, [setUserLogged])
@@ -55,6 +45,14 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     const handleChange = (event) => {
         event.persist();
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
+        const err = universal(event.target.name, event.target.value)
+        if(event.target.name == 'email'){
+            console.log("here")
+            setEmailError(err)
+        }
+        else{
+            setPasswordError(err)
+        }
     };
 
     const postUser = async () => {
@@ -69,30 +67,6 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         } catch (err) {
             setUserLogged(false)
             setErrorMsg(err.message)
-        }
-    }
-
-    const handlePasswordChange = event => {
-        event.preventDefault()
-        if(event.target.value.match(formRegExp.password)){
-            setPasswordError(true)
-            return
-        }
-        else{
-            setPasswordError(false)
-            return
-        }
-    }
-
-    const handleEmailChange = event => {
-        event.preventDefault()
-        if(event.target.value.match(formRegExp.email)){
-            setEmailError(true)
-            return
-        }
-        else{
-            setEmailError(false)
-            return
         }
     }
 
@@ -142,9 +116,8 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                         name={'email'}
                         value={user.email}
                         onChange={handleChange}
-                        onBlur={handleEmailChange}
                     />
-                    <i className="text-danger position-static">{emailErrorMessage}</i>
+                    <i className="text-danger position-static">{emailError}</i>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword" >
@@ -156,12 +129,11 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                             name={'password'}
                             value={user.password}
                             onChange={handleChange}
-                            onBlur={handlePasswordChange}
                             title="min length 8 max 30 characters"
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
-                    <i className="text-danger position-static">{passwordErrorMessage}</i>
+                    <i className="text-danger position-static">{passwordError}</i>
                 </Form.Group>
                     <Form.Check
                         type="switch"
@@ -169,10 +141,10 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                         label="Remember me"
                     />
                 <Form.Group >
-                    <Button variant="dark" type="submit" block>
+                    <Button variant="dark" type="submit" block disabled={ !!( emailError + passwordError ) }>
                         LOG IN
-                        </Button>
-                    <span className="errorMessage">{errorMsg}</span>
+                    </Button>
+                    <span className="errorMessage">{errorMsgServer}</span>
                 </Form.Group>
                 <Form.Group className="link">
                     <Link to="/register" className="btn btn-link" >REGISTER</Link>

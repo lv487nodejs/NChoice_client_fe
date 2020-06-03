@@ -3,21 +3,17 @@ import "./Register.css";
 import { Form, Button, Modal } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import {universal} from '../../validators/form-validators'
 import { setUserLogged, setUserLoading } from "../../actions";
 import withStoreService from "../hoc";
 import { setToLocalStorage } from "../../services/localStoreService";
-
+import {formRegExp} from '../../configs/frontend-config'
 const addDataToLocalStorage = (token) => {
   setToLocalStorage("userId", token.userId);
   setToLocalStorage("accessToken", token.accessToken);
   setToLocalStorage("refreshToken", token.refreshToken);
 };
 
-const formRegExp = {
-  email: '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
-  name: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
-  password: '.{8,30}'
-}
 
 const USER_DATA = {
   firstName: '',
@@ -39,26 +35,46 @@ const Register = ({
   const initialUser = { ...USER_DATA, cart: { cartNumbers, cartProducts } };
 
   const [user, setUser] = useState(initialUser);
-  const [errorMsg, setErrorMsg] = useState('');
-  const [passwordShown, setPasswordShown] = useState(false);
-  const [show, setShow] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('')
 
-  const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
-  const [confirmPasswordError, setconfirmPasswordError] = useState(true);
+  const [firstNameError, setFirstNameError] = useState('')
+  const [lastNameError, setLastNameError] = useState('')
   const [emailError, setEmailError] = useState(false);
-  const [agreedWithTerms, setAgreedWithTerms] = useState(false);
+  const [passwordError, setPasswordError] = useState('')
+  const [allFieldsValidated, setAllFieldsValidated] = useState(false)
 
-  const confirmPasswordErrorMessage = confirmPasswordError
-    ? 'Please confirm password'
-    : '';
+
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [show, setShow] = useState(false);
+  const [agreedWithTerms, setAgreedWithTerms] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(false);
+
   const agreeWithTermsErrorMessage = agreedWithTerms
   ? ''
   : 'Please agree with terms';
-  const emailErrorMessage = emailError ? "Please enter email" : "";
+
   const passwordEye = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
-  const confirmedPasswordEye = confirmPasswordShown
-    ? 'fa fa-eye'
-    : 'fa fa-eye-slash';
+
+
+  useEffect(() => {
+    if ((agreedWithTerms &&
+        (emailError === false) &&
+        (confirmPasswordError === false) &&
+        (passwordError === false) &&
+        (lastNameError === false) &&
+        (firstNameError === false))) {
+      setAllFieldsValidated(true)
+    }
+    else{
+      setAllFieldsValidated(false)
+    }
+  }, [
+      allFieldsValidated,
+      agreedWithTerms,
+      emailError,
+      confirmPasswordError,
+      lastNameError,
+      firstNameError ])
 
   useEffect(() => {
     setUserLogged(false);
@@ -68,20 +84,28 @@ const Register = ({
     setPasswordShown(!passwordShown);
   };
 
-  const toggleConfirmPasswordVisiblity = () => {
-    setConfirmPasswordShown(!confirmPasswordShown);
-  };
   const validateConfirmPassword = () => {
-
     if (user.password === user.confirmPassword) {
-      setconfirmPasswordError(false) }
-     else {
-        setconfirmPasswordError(true)
-     }
+      setConfirmPasswordError(false)
     }
+    else {
+      setConfirmPasswordError('Please confirm password')
+  }}
+
   const handleChange = (event) => {
     event.persist();
     setUser({ ...user, [event.target.name]: event.target.value });
+    const err = universal(event.target.name, event.target.value)
+
+    if(event.target.name === 'email')
+      setEmailError(err)
+    else if((event.target.name === 'password')){
+      setPasswordError(err)
+    }
+    else if((event.target.name === 'lastName'))
+      setLastNameError(err)
+    else if ((event.target.name === 'firstName'))
+      setFirstNameError(err)
   };
 
   const handleClose = () => setShow(false);
@@ -91,7 +115,6 @@ const Register = ({
   const postUser = async () => {
     try {
       setUserLoading();
-      user.confirmPassword = undefined;
       const res = await storeService.registerUser(user);
       if (!res) throw new Error('User with such an email already exist.');
       addDataToLocalStorage(res);
@@ -105,7 +128,7 @@ const Register = ({
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    if (user.password === user.confirmPassword && agreedWithTerms) {
+    if ((emailError === false) && agreedWithTerms && !emailError) {
       postUser();
     }
   };
@@ -113,12 +136,7 @@ const Register = ({
   if (userLogged) {
     return <Redirect to="/" />;
   }
-  const checkEmail = (event) => {
-    setEmailError(true);
-    if (event.target.value.match(formRegExp.email)) {
-      setEmailError(false);
-    }
-  };
+
   return (
     <>
       <Form
@@ -127,7 +145,7 @@ const Register = ({
       >
         <Form.Label className="lable">Register</Form.Label>
         <Form.Group>
-          <Form.Label>First name</Form.Label>
+          <Form.Label>First name<sup style = {{ color: "red" }}>*</sup></Form.Label>
           <Form.Control
             type="text"
             name={'firstName'}
@@ -135,10 +153,10 @@ const Register = ({
             onChange={handleChange}
             placeholder="Enter firstname..."
           />
-
+          <i className="text-danger position-static">{firstNameError}</i>
         </Form.Group>
         <Form.Group>
-          <Form.Label>Last name</Form.Label>
+          <Form.Label>Last name<sup style = {{ color: "red" }}>*</sup></Form.Label>
           <Form.Control
             type="text"
             name={'lastName'}
@@ -146,27 +164,27 @@ const Register = ({
             onChange={handleChange}
             placeholder="Enter lastname..."
           />
+          <i className="text-danger position-static">{lastNameError}</i>
         </Form.Group>
 
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+          <Form.Label>Email address<sup style = {{ color: "red" }}>*</sup></Form.Label>
           <Form.Control
             type="text"
             name={'email'}
             value={user.email}
             onChange={handleChange}
-            onBlur={checkEmail}
             title="example@gmail.com"
             placeholder="Enter email..."
           />
-          <i className="text-danger position-static">{emailErrorMessage}</i>
+          <i className="text-danger position-static">{emailError}</i>
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Password<sup style = {{ color: "red" }}>*</sup></Form.Label>
           <Form.Group className="pass-wrapper">
             <Form.Control
               type={passwordShown ? 'text' : 'password'}
@@ -174,35 +192,37 @@ const Register = ({
               name={'password'}
               value={user.password}
               onChange={handleChange}
-              title="min length 8 max 16 characters"
+              //onBlur={validateConfirmPassword}
+              title="min length 8 max 30 characters"
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>
+          <i className="text-danger position-static">{passwordError}</i>
 
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
-          <Form.Label> Confirm Password</Form.Label>
+          <Form.Label> Confirm Password<sup style = {{ color: "red" }}  >*</sup></Form.Label>
           <Form.Group className="pass-wrapper">
             <Form.Control
-              type={confirmPasswordShown ? 'text' : 'password'}
+              type={passwordShown ? 'text' : 'password'}
               placeholder="Enter password..."
               name={'confirmPassword'}
               value={user.confirmPassword}
               onChange={handleChange}
               onBlur={validateConfirmPassword}
-              title="min length 8 max 16 characters"
+              title="min length 8 max 30 characters"
             />
             <i
-              className={confirmedPasswordEye}
-              onClick={toggleConfirmPasswordVisiblity}
+              className={passwordEye}
+              onClick={togglePasswordVisiblity}
             />
           </Form.Group>
           <i className="text-danger position-static">
-            {confirmPasswordErrorMessage}
+            {confirmPasswordError}
           </i>
         </Form.Group>
-
+        <Form.Label style = {{ fontSize: "14px" }}> Required field marked by <sup style = {{ color: "red" }}>*</sup></Form.Label>
         <Form.Group>
           <Form.Check
             type="switch"
@@ -215,12 +235,16 @@ const Register = ({
           </i>
         </Form.Group>
         <Form.Group>
-          <Button variant="dark" type="submit" block>
+          <Button
+              disabled={ !allFieldsValidated }
+              variant="dark"
+              type="submit"
+              block>
             REGISTER
           </Button>
           <span>{errorMsg}</span>
         </Form.Group>
-
+        
         <Form.Group className="link">
           <Link to="/login" className="btn btn-link">
             LOG IN
