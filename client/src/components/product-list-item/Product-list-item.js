@@ -17,6 +17,7 @@ function ProductListItem({
 }) {
   const [priceWithRate, setPriceWithRate] = useState();
   const [msrpWithRate, setMsrpWithRate] = useState();
+  const starColor = '#3d3d3d'
 
   useEffect(() => {
     setPriceWithRate(parseFloat(price * currency).toFixed(2));
@@ -37,7 +38,7 @@ function ProductListItem({
         </Link>
       </div>
       <div className="info" id={id}>
-        <StarsRating rating={rate} id={id} />
+        <StarsRating rating={rate} id={id} color= {starColor}/>
 
         <p className="productName" id="productName">
           {title}
@@ -52,6 +53,7 @@ function ProductListItem({
             id="msrpPrice"
           >{`${msrpWithRate} ${currencyIcon}`}</div>
         </div>
+          <hr className='line'/>
       </div>
     </div>
   );
