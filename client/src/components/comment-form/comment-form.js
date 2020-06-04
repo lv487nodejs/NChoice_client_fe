@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import './comment-form.css';
@@ -9,6 +10,10 @@ import { Link } from 'react-router-dom';
 import StarsRating from '../star-rating';
 
 const ratingColor = 'black';
+const rateTitle = 'Rate the product:'
+const leaveAComment = 'Leave a comment'
+const errorMessage = 'Please, leave your comment';
+
 
 const CommentForm = ({
   productId,
@@ -30,39 +35,28 @@ const CommentForm = ({
     }
   }, [tempText, userId, storeService, productId, setComments]);
 
-
-  let textarea = document.querySelector('textarea.feedback-form');
-
   const addComment = (e) => {
     e.preventDefault();
-
     if (!text.trim() && !isTextareaFilled) {
-      textarea.classList.add('error')
-      textarea.focus()
       setTextareaFilled(true)
-      return;
+    } else if (!isTextareaFilled) {
+      storeService.postComments({text, productId, user: userId});
+      setText('');
+      setTempText(text);
     }
-
-    storeService.postComments({text, productId, user: userId});
-    setText('');
-    setTempText(text);
   };
 
   const onChangeTextarea = (e) => {
     const targetValue = e.target.value;
-
-    setText(targetValue);
-    if (targetValue) {
-      textarea.classList.remove('error');
-      setTextareaFilled(false);
-    }
+    targetValue && setTextareaFilled(false);
+    setText(targetValue)
   }
 
   const logged = (
     <form className="form my-1 comments-form" onSubmit={addComment}>
-      <h3> Leave a comment </h3>
+      <h3>{leaveAComment}</h3>
       <div className='star'>
-        <h6 className='rate'> Rate the product: </h6>
+        <h6 className='rate'>{rateTitle} </h6>
         <StarsRating
           rating={rate}
           id={productId}
@@ -72,13 +66,14 @@ const CommentForm = ({
           isSelectable={true}
         />
       </div>    
-      <textarea className='feedback-form'
+      <textarea className={classNames('feedback-form', {'error': isTextareaFilled})}
                 name='text'
                 value={text}
                 onChange={onChangeTextarea}
                 placeholder="Share your thoughts with other customers"
       />
-      {isTextareaFilled && <span className='error-message'>Please, leave your comment</span>}
+                  
+      {isTextareaFilled && <i className='text-danger position-static'>{errorMessage}</i>}
       <input type='submit' value='Add a comment' className='comment-submit'/>
     </form>
   );
@@ -88,8 +83,7 @@ const CommentForm = ({
       <h3 className="login-link">
         To leave a comment please
         <Link to="/login">
-          {' '}
-          <span>login</span>{' '}
+          <span>login</span>
         </Link>
       </h3>
     </div>
@@ -103,7 +97,7 @@ const CommentForm = ({
           key={comment._id}
           text={comment.text}
           date={comment.date}
-          reviewerName={comment.user.firstName}
+          reviewerName={comment.user.firstName || anonim}
           reviewerId={comment.user._id}
           commentId={comment._id}
         />
@@ -117,10 +111,10 @@ const CommentForm = ({
   return (
     <div>
       <div>{userId === null && notLogged}</div>
-      <div className='form-textarea'>{userId !== null && logged}</div>
-      <h3 className='review-title'>
+      <div className="form-textarea">{userId !== null && logged}</div>
+      <h3 className="review-title">
         Customer reviews
-        <span className='review-length'> {comentsNumber} </span>
+        <span className="review-length"> {comentsNumber} </span>
       </h3>
       {items}
     </div>

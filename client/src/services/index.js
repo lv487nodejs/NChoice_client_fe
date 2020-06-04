@@ -113,13 +113,13 @@ export default class StoreService {
   };
 
   getAllOrders = async () => {
-    const catalogs = await this.getResource("orders");
-    return catalogs;
+    const orders = await this.getResource("orders");
+    return orders;
   };
 
   getOrderById = async (id) => {
-    const catalogs = await this.getResource(`orders/${id}`);
-    return catalogs;
+    const order = await this.getResource(`orders/${id}`);
+    return order;
   };
 
   postOrder = async (order) => {
@@ -178,8 +178,14 @@ export default class StoreService {
       "x-auth-token": token,
     });
   };
+
   getAllNews = async () => {
     const news = await this.getResource("news");
+    return news;
+  };
+
+  getNewsById = async (id) => {
+    const news = await this.getResource(`news/${id}`);
     return news;
   };
 
