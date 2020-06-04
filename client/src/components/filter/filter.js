@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
 import {
   filterAddBrand,
   filterAddColor,
@@ -12,7 +13,6 @@ import {
 
 import FilterItem from '../filterItem';
 import withStoreService from '../hoc';
-import { Button } from 'react-bootstrap';
 import './filter.css';
 
 const Filter = ({
@@ -104,20 +104,18 @@ const Filter = ({
       handler: filterAddColorHandler
     }
   ];
-  const itemsToShow = filterOptions.map(({ items, type, handler }) => {
-    return (
-      <FilterItem key={type} items={items} type={type} handler={handler} />
-    );
-  });
+  const itemsToShow = filterOptions.map(({ items, type, handler }) => (
+    <FilterItem key={type} items={items} type={type} handler={handler} />
+  ));
   return (
     <div>
       <Button
-        variant="dark"
+        variant='dark'
         className={`filter-button ${filterButtonIcon}`}
         onClick={showHandler}
-      ></Button>
+      />
       <div className={`filter-group ${showFilterClass}`}>
-        <span className="filter-title">Filters</span>
+        <span className='filter-title'>Filters</span>
         {itemsToShow}
       </div>
     </div>

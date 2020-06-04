@@ -29,14 +29,14 @@ const AppHeaderNavLeft = ({
   filterRemoveAllCategories,
   filterByName,
   setCatalogFilter,
-  clearFilter,
+  clearFilter
 }) => {
   const [isShown, setIsShown] = useState('');
 
   useEffect(() => {
     catalogsRequested();
     storeService.getAllCatalogs().then((res) => catalogsLoaded(res));
-    }, [catalogsLoaded, catalogsRequested, storeService]);
+  }, [catalogsLoaded, catalogsRequested, storeService]);
 
   const onEnter = (e, catalog) => {
     setIsShown(catalog);
@@ -66,7 +66,7 @@ const AppHeaderNavLeft = ({
   const items = catalogs.map((catalog) => (
     <li
       key={catalog._id}
-      className="nav-item"
+      className='nav-item'
       onMouseEnter={(e) => onEnter(e, catalog.catalog)}
       onMouseLeave={onLeave}
     >
@@ -75,7 +75,7 @@ const AppHeaderNavLeft = ({
         catalogHandler={filterAddCatalog}
       />
       {isShown === catalog.catalog && (
-        <div key={catalog.catalog} className="drop-down-container">
+        <div key={catalog.catalog} className='drop-down-container'>
           <AppHeaderNavLeftItemDropDown
             catalog={catalog}
             clickHandler={filterAddCategoryHandler}
@@ -87,7 +87,7 @@ const AppHeaderNavLeft = ({
   ));
 
   return (
-    <nav className="nav-bar nav-left">
+    <nav className='nav-bar nav-left'>
       <ul>
         {items}
         <li>

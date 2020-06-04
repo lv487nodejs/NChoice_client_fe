@@ -1,5 +1,5 @@
-import axios from "axios";
-import { _apiBase } from "../configs/frontend-config";
+import axios from 'axios';
+import { _apiBase } from '../configs/frontend-config';
 
 export default class StoreService {
   getResource = async (url) => {
@@ -22,7 +22,7 @@ export default class StoreService {
   };
 
   getAllProducts = async () => {
-    const products = await this.getResource("products");
+    const products = await this.getResource('products');
     return products.products;
   };
 
@@ -32,7 +32,7 @@ export default class StoreService {
   };
 
   getProductsByFilter = async (filter) => {
-    let queryString = "products/?";
+    let queryString = 'products/?';
     const {
       brand,
       color,
@@ -42,7 +42,7 @@ export default class StoreService {
       postsPerPage,
       sortByPrice,
       sortByRate,
-      searchTerm,
+      searchTerm
     } = filter;
     if (brand) {
       queryString = `${queryString}&brand=${brand}`;
@@ -76,7 +76,7 @@ export default class StoreService {
   };
 
   getAllCatalogs = async () => {
-    const catalogs = await this.getResource("catalogs");
+    const catalogs = await this.getResource('catalogs');
     return catalogs;
   };
 
@@ -98,23 +98,23 @@ export default class StoreService {
   };
 
   getAllBrands = async () => {
-    const brands = await this.getResource("brands");
+    const brands = await this.getResource('brands');
     return brands;
   };
 
   getAllCategories = async () => {
-    const categories = await this.getResource("categories");
+    const categories = await this.getResource('categories');
     return categories;
   };
 
   getAllColors = async () => {
-    const colors = await this.getResource("colors");
+    const colors = await this.getResource('colors');
     return colors;
   };
 
   getAllOrders = async () => {
-    const orders = await this.getResource("orders");
-    return orders;
+    const catalogs = await this.getResource('orders');
+    return catalogs;
   };
 
   getOrderById = async (id) => {
@@ -123,7 +123,7 @@ export default class StoreService {
   };
 
   postOrder = async (order) => {
-    const res = await this.postData("orders", order);
+    const res = await this.postData('orders', order);
     return res;
   };
 
@@ -141,7 +141,7 @@ export default class StoreService {
   };
 
   getAllCarts = async () => {
-    const carts = await this.getResource("cart");
+    const carts = await this.getResource('cart');
     return carts;
   };
 
@@ -149,38 +149,35 @@ export default class StoreService {
     const cart = await this.getResource(`cart/${id}`);
     return cart;
   };
-  getUserById = async (id, token) => {
-    return axios({
-      method: "GET",
+
+  getUserById = async (id, token) =>
+    axios({
+      method: 'GET',
       url: `${_apiBase}users/${id}`,
-      headers: { "x-auth-token": token },
+      headers: { 'x-auth-token': token }
     });
-  };
-  sendUserChangedData = async (id, token, data) => {
-    return axios({
-      method: "PUT",
+
+  sendUserChangedData = async (id, token, data) =>
+    axios({
+      method: 'PUT',
       url: `${_apiBase}users/${id}`,
       data,
-      headers: { "x-auth-token": token },
+      headers: { 'x-auth-token': token }
     });
-  };
 
-  registerUser = async (user) => {
-    return await this.postData('users/register', user);
-  }
+  registerUser = (user) => this.postData('users/register', user);
 
-  loginUser = async (user) => {
-    return await this.postData("auth/login", user);
-  };
-  putToCart = async (id, data, token) => {
-    return await axios.put(`${_apiBase}users/cart/${id}`, {
+  loginUser = (user) => this.postData('auth/login', user);
+
+  putToCart = (id, data, token) => {
+    axios.put(`${_apiBase}users/cart/${id}`, {
       data,
-      "x-auth-token": token,
+      'x-auth-token': token
     });
   };
 
   getAllNews = async () => {
-    const news = await this.getResource("news");
+    const news = await this.getResource('news');
     return news;
   };
 
@@ -190,7 +187,7 @@ export default class StoreService {
   };
 
   getAllComments = async () => {
-    const comments = await this.getResource("comments");
+    const comments = await this.getResource('comments');
     return comments;
   };
 
@@ -200,33 +197,34 @@ export default class StoreService {
   };
 
   postComments = async (comment) => {
-    const res = await this.postData("comments", comment);
+    const res = await this.postData('comments', comment);
     return res;
   };
 
-  deleteComment = async (id, token) => {
-    return await axios.delete(`${_apiBase}comments/${id}`, { headers: { "x-auth-token": token } })
-  };
+  deleteComment = (id, token) =>
+    axios.delete(`${_apiBase}comments/${id}`, {
+      headers: { 'x-auth-token': token }
+    });
 
   confirmEmail = async (token) => {
-    try {
-      const res = await this.getResource(`auth/confirmation/${token}`);
-      return res;
-    } catch (error) {
-      throw error;
-    }
-  }
-  updateRate = async (id,userId, rate, token) => {
-    return await axios.put(`${_apiBase}rating/${id}`, { rate, userId }, { headers: { 'x-auth-token': token } }
-    );
-  }
+    const res = await this.getResource(`auth/confirmation/${token}`);
+    return res;
+  };
 
-  oauthGoogle = async (token) => {
-    const res = await this.postData('auth/oauth/google', token)
-    return res
-  }
+  updateRate = (id, userId, rate, token) =>
+    axios.put(
+      `${_apiBase}rating/${id}`,
+      { rate, userId },
+      { headers: { 'x-auth-token': token } }
+    );
+
+  oauthGoogle = (token) => {
+    const res = this.postData('auth/oauth/google', token);
+    return res;
+  };
+
   oauthFacebook = async (token) => {
-    const res = await this.postData('auth/oauth/facebook', token)
-    return res
-  }
+    const res = await this.postData('auth/oauth/facebook', token);
+    return res;
+  };
 }

@@ -5,11 +5,12 @@ import './Product-details.css';
 import { Card, Col, Image, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import ImgsViewer from 'react-images-viewer';
 import SimularProducts from '../simular-products/Simular-products';
 import StarsRating from '../star-rating';
 import LoadingSpinner from '../Loading-spinner';
-import ImgsViewer from 'react-images-viewer';
 
+import CommentForm from '../comment-form';
 import ProductMaterial from '../product-material';
 
 import withStoreService from '../hoc';
@@ -23,7 +24,6 @@ import {
   productsLoadingStart,
   productsLoadingStop
 } from '../../actions';
-import CommentForm from '../comment-form/comment-form';
 
 const ratingColor = 'black';
 
@@ -101,7 +101,7 @@ const ProductDetails = ({
   const sizeItem = getSizes
     .reduce((accum, { size }) => [...accum, ...size], [])
     .map((item) => (
-      <div key={item} className="sizeItem" onClick={handleCheck(item)}>
+      <div key={item} className='sizeItem' onClick={handleCheck(item)}>
         <span className={item === checkSize ? 'check' : ''} id={item}>
           {' '}
           {item}{' '}
@@ -113,13 +113,13 @@ const ProductDetails = ({
     return <LoadingSpinner />;
   }
   return (
-    <Card className="wrapperDetails" id="wrapper">
-      <Card.Body className="cardBody">
-        <Col className="images" id="images">
-          <Col className="one">
+    <Card className='wrapperDetails' id='wrapper'>
+      <Card.Body className='cardBody'>
+        <Col className='images' id='images'>
+          <Col className='one'>
             <Image
               src={imgUrl}
-              className="img"
+              className='img'
               rounded
               onClick={(e) => {
                 setIsOpen(true);
@@ -128,11 +128,11 @@ const ProductDetails = ({
               alt={`${product.images}`}
             />
           </Col>
-          <Col className="two">
+          <Col className='two'>
             {' '}
             <Image
               src={imgUrl}
-              className="img"
+              className='img'
               rounded
               onClick={(e) => {
                 setIsOpen(true);
@@ -141,11 +141,11 @@ const ProductDetails = ({
               alt={`${product.images}`}
             />
           </Col>
-          <Col className="three">
+          <Col className='three'>
             {' '}
             <Image
               src={imgUrl}
-              className="img"
+              className='img'
               rounded
               onClick={(e) => {
                 setIsOpen(true);
@@ -154,10 +154,10 @@ const ProductDetails = ({
               alt={`${product.images}`}
             />
           </Col>
-          <Col className="four">
+          <Col className='four'>
             <Image
               src={imgUrl}
-              className="img"
+              className='img'
               rounded
               onClick={(e) => {
                 setIsOpen(true);
@@ -169,7 +169,7 @@ const ProductDetails = ({
           <ImgsViewer
             imgs={imgs}
             currImg={currImg}
-            showThumbnails={true}
+            showThumbnails
             isOpen={isOpen}
             onClickPrev={(e) => setCurrImg(currImg - 1)}
             onClickNext={(e) => setCurrImg(currImg + 1)}
@@ -177,57 +177,58 @@ const ProductDetails = ({
             onClose={(e) => setIsOpen(false)}
           />
         </Col>
-        <Col className="text" id="text">
+        <Col className='text' id='text'>
           <StarsRating
             rating={product.rate}
             color={ratingColor}
             isSelectable={false}
           />
-          <Card.Title className="title" id="title">
+          <Card.Title className='title' id='title'>
             {product.title}
           </Card.Title>
-          <Card.Text className="productDescription" id="description">
+          <Card.Text className='productDescription' id='description'>
             {product.description}
           </Card.Text>
-          <div className="prices">
-            <span className="cardPrice price-pdp">{`${parseFloat(
+          <div className='prices'>
+            <span className='cardPrice price-pdp'>{`${parseFloat(
               product.price * currency
             ).toFixed(2)} ${currencyIcon}`}</span>
-            <span id="msrp-price" className="cardPrice">{`${parseFloat(
+            <span id='msrp-price' className='cardPrice'>{`${parseFloat(
               product.mrsp * currency
             ).toFixed(2)} ${currencyIcon}`}</span>
           </div>
           <Card.Text
             style={{ backgroundColor: product.color }}
-            className="color"
-            id="color"
-          ></Card.Text>
-          <Link to="/materials">
+            className='color'
+            id='color'
+          />
+          <Link to='/materials'>
             <ProductMaterial />
           </Link>
-          <Col className="size" id="size">
+          <Col className='size' id='size'>
             {sizeItem}
           </Col>
-          <Card.Body className="buttons" id="buttons">
+          <Card.Body className='buttons' id='buttons'>
             <FontAwesomeIcon
               icon={faHeart}
-              className="heart button"
+              className='heart button'
               onClick={() => addToWishlist(product)}
             />
             <Button
-              variant="dark"
+              type='button'
+              variant='dark'
               className={checkSize ? 'button' : 'button disabled'}
               onClick={handleAddToCart}
-              id="addToCartButton"
+              id='addToCartButton'
             >
               Add to cart{' '}
             </Button>
             <Link
-              to="/checkout"
-              id="buyNow"
+              to='/checkout'
+              id='buyNow'
               className={checkSize ? 'disp-block' : 'disp-none'}
             >
-              <Button variant="dark" onClick={handleAddToCart}>
+              <Button variant='dark' onClick={handleAddToCart}>
                 Buy now
               </Button>
             </Link>
@@ -235,9 +236,9 @@ const ProductDetails = ({
         </Col>
       </Card.Body>
       <hr />
-      <div className="similarItems">Similar items</div>
+      <div className='similarItems'>Similar items</div>
       <hr />
-      <SimularProducts products={simularProducts} className="routingImg" />
+      <SimularProducts products={simularProducts} className='routingImg' />
       <hr />
       <CommentForm productId={product.id} rate={product.rate} />
     </Card>

@@ -10,8 +10,9 @@ export default function ProductListButtonPages({
   const pickAmount = (number) => changeItems(number);
   const buttons = itemsPerPage.map((number) => (
     <Button
-      variant="dark"
-      className="btn btn-primary"
+      type='button'
+      variant='dark'
+      className='btn btn-primary'
       key={number}
       onClick={() => {
         pickAmount(number);
@@ -22,8 +23,8 @@ export default function ProductListButtonPages({
     </Button>
   ));
   return (
-    <div className="buttonsGroup">
-      <ButtonGroup aria-label="Buttons per page">{buttons}</ButtonGroup>
+    <div className='buttonsGroup'>
+      <ButtonGroup aria-label='Buttons per page'>{buttons}</ButtonGroup>
     </div>
   );
 }

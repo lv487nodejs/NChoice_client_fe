@@ -1,3 +1,3 @@
-import TermsConditionsPage from "./Terms-conditions-page";
+import TermsConditionsPage from './Terms-conditions-page';
 
 export default TermsConditionsPage;

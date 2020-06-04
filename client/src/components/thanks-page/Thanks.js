@@ -25,12 +25,12 @@ const Thanks = () => {
     Best Regards, Your friends at NChoice`;
 
   return (
-    <Card className=" text-center">
+    <Card className=' text-center'>
       <Card.Body>
         <Card.Title>Thank You for Your Order</Card.Title>
-        <Card.Text className="text">{message}</Card.Text>
-        <Link to="/">
-          <Button className="thanks-button" variant="dark">
+        <Card.Text className='text'>{message}</Card.Text>
+        <Link to='/'>
+          <Button type='button' className='thanks-button' variant='dark'>
             Lets go shop some more!
           </Button>
         </Link>

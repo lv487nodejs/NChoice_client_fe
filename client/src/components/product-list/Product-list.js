@@ -88,7 +88,7 @@ const ProductList = ({
   }
 
   return (
-    <div className="products-items">
+    <div className='products-items'>
       {products.map(({ id, title, description, images, price, mrsp, rate }) => (
         <ProductsListItem
           title={title}

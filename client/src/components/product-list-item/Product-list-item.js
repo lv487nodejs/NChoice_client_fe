@@ -17,7 +17,7 @@ function ProductListItem({
 }) {
   const [priceWithRate, setPriceWithRate] = useState();
   const [msrpWithRate, setMsrpWithRate] = useState();
-  const starColor = '#3d3d3d'
+  const starColor = '#3d3d3d';
 
   useEffect(() => {
     setPriceWithRate(parseFloat(price * currency).toFixed(2));
@@ -25,35 +25,33 @@ function ProductListItem({
   }, [currency, price, mrsp]);
 
   return (
-    <div className="wrapper" id="wrapper" key={id}>
-      <div className="productCard" id="productCard">
-        <Link id="productLink" key={id} to={`/products/${id}`}>
-
-        <img
-          id="productImg"
-          alt={`${images}`}
-          src={`/images/products/${images}`}
-        />
-
+    <div className='wrapper' id='wrapper' key={id}>
+      <div className='productCard' id='productCard'>
+        <Link id='productLink' key={id} to={`/products/${id}`}>
+          <img
+            id='productImg'
+            alt={`${images}`}
+            src={`/images/products/${images}`}
+          />
         </Link>
       </div>
-      <div className="info" id={id}>
-        <StarsRating rating={rate} id={id} color= {starColor}/>
+      <div className='info' id={id}>
+        <StarsRating rating={rate} id={id} color={starColor} />
 
-        <p className="productName" id="productName">
+        <p className='productName' id='productName'>
           {title}
         </p>
-        <div className="bottomElements" id="bottomElements">
+        <div className='bottomElements' id='bottomElements'>
           <div
-            className="cardPrice"
-            id="realPrice"
+            className='cardPrice'
+            id='realPrice'
           >{`${priceWithRate} ${currencyIcon}`}</div>
           <div
-            className="cardPrice msrp-price"
-            id="msrpPrice"
+            className='cardPrice msrp-price'
+            id='msrpPrice'
           >{`${msrpWithRate} ${currencyIcon}`}</div>
         </div>
-          <hr className='line'/>
+        <hr className='line' />
       </div>
     </div>
   );

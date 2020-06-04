@@ -4,34 +4,25 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import withStoreService from '../hoc';
 
-
-const NewsDetailPage = ({
-  news,
-  match,
-  storeService
-}) => {
-
-  const [articleToShow, setArticleToShow] = useState({})
+const NewsDetailPage = ({ news, match, storeService }) => {
+  const [articleToShow, setArticleToShow] = useState({});
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    //get article id from query
+    // get article id from query
     const articleId = match.params.id;
-    //check if the article is in redux store
+    // check if the article is in redux store
     if (news.length === 0) {
-      //get article from database
+      // get article from database
       storeService.getNewsById(articleId).then((res) => {
-        setArticleToShow(res)
-      })
-    }
-    else {
-      //get article from redux store
-      const article = news.filter(news => {
-        return news._id === articleId
+        setArticleToShow(res);
       });
-      setArticleToShow(article[0])
+    } else {
+      // get article from redux store
+      const article = news.filter((news) => news._id === articleId);
+      setArticleToShow(article[0]);
     }
-  }, [storeService, match.params.id, news])
+  }, [storeService, match.params.id, news]);
   const options = {
     weekday: 'long',
     year: 'numeric',
@@ -42,50 +33,47 @@ const NewsDetailPage = ({
   const dateNews = dateToShow.toLocaleString('en-US', options);
 
   return (
-    <div className="news-article">
-      <div className="news-header">
-        <h3 className="center">{articleToShow.title}</h3>
+    <div className='news-article'>
+      <div className='news-header'>
+        <h3 className='center'>{articleToShow.title}</h3>
       </div>
       <small>{dateNews}</small>
-      <hr className="line" />
-      <div className="main-image-container">
+      <hr className='line' />
+      <div className='main-image-container'>
         <img
-          className="main-img"
+          className='main-img'
           src={`/images/news/${articleToShow.newsImage}`}
-          alt={`${articleToShow.newsImage}`} >
-        </img>
+          alt={`${articleToShow.newsImage}`}
+        />
       </div>
-      <p className="articleText">{articleToShow.text}</p>
+      <p className='articleText'>{articleToShow.text}</p>
       <iframe
-      className={articleToShow.newsVideo ? 'disp-block' : 'disp-none'}
+        className={articleToShow.newsVideo ? 'disp-block' : 'disp-none'}
         title='articleToShow.title'
-        width="100%"
-        height="600"
+        width='100%'
+        height='600'
         src={articleToShow.newsVideo}
-        frameBorder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen>
-      </iframe>
-      <hr className="line" />
-      <div className="ndp-footer">
-      <div>created by {articleToShow.author}</div>
-      <img
-        id="ndp-author-img"
-        src={`/images/news-authors/${articleToShow.authorPhoto}`}
-        alt={`${articleToShow.authorPhoto}`} >
-      </img>
+        frameBorder='0'
+        allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+        allowFullScreen
+      />
+      <hr className='line' />
+      <div className='ndp-footer'>
+        <div>created by {articleToShow.author}</div>
+        <img
+          id='ndp-author-img'
+          src={`/images/news-authors/${articleToShow.authorPhoto}`}
+          alt={`${articleToShow.authorPhoto}`}
+        />
       </div>
     </div>
   );
 };
 
-const mapStateToProps = ({
-  newsReduser: { news }
-}) => ({
+const mapStateToProps = ({ newsReduser: { news } }) => ({
   news
 });
 
 export default withStoreService()(
   connect(mapStateToProps)(withRouter(NewsDetailPage))
 );
-

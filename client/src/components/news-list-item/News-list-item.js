@@ -3,7 +3,6 @@ import './News-list-item.css';
 import { Card, Image, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-
 const NewsListItem = ({
   text,
   title,
@@ -38,13 +37,11 @@ const NewsListItem = ({
         <Card.Title className='news-card-title'>{title}</Card.Title>
         <Card.Text className='article'>{text}</Card.Text>
         <Link to={`/news/${newsId}`}>
-          <Button variant="dark">read more...</Button>
+          <Button variant='dark'>read more...</Button>
         </Link>
       </Card.Body>
       <div className='news-footer'>
-        <small className='author'>
-          by {author}
-        </small>
+        <small className='author'>by {author}</small>
         <Image
           className='footer-image'
           src={`/images/news-authors/${authorPhoto}`}

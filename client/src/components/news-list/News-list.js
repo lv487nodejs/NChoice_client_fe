@@ -3,9 +3,7 @@ import './News-list.css';
 import { connect } from 'react-redux';
 import NewsListItem from '../news-list-item/News-list-item';
 import withStoreService from '../hoc';
-import {
-  storeSetNews
-} from '../../actions';
+import { storeSetNews } from '../../actions';
 
 const NewsList = ({ storeService, storeSetNews, news }) => {
   useEffect(() => {
@@ -30,18 +28,16 @@ const NewsList = ({ storeService, storeSetNews, news }) => {
   );
 
   return (
-    <React.Fragment>
-      <h2 className="text-center" id="news-title">
+    <>
+      <h2 className='text-center' id='news-title'>
         News
       </h2>
-      <div className="news-cardDeck">{newsItems}</div>
-    </React.Fragment>
+      <div className='news-cardDeck'>{newsItems}</div>
+    </>
   );
 };
 
-const mapStateToProps = ({
-  newsReduser: { news }
-}) => ({
+const mapStateToProps = ({ newsReduser: { news } }) => ({
   news
 });
 const mapDispatchToProps = {
