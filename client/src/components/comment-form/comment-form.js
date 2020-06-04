@@ -12,6 +12,8 @@ import StarsRating from '../star-rating';
 const ratingColor = 'black';
 const rateTitle = 'Rate the product:'
 const leaveAComment = 'Leave a comment'
+const errorMessage = 'Please, leave your comment';
+
 
 const CommentForm = ({
   productId,
@@ -42,7 +44,6 @@ const CommentForm = ({
       setText('');
       setTempText(text);
     }
-
   };
 
   const onChangeTextarea = (e) => {
@@ -72,7 +73,7 @@ const CommentForm = ({
                 placeholder="Share your thoughts with other customers"
       />
                   
-      {isTextareaFilled && <i className='text-danger position-static'>Please, leave your comment</i>}
+      {isTextareaFilled && <i className='text-danger position-static'>{errorMessage}</i>}
       <input type='submit' value='Add a comment' className='comment-submit'/>
     </form>
   );
@@ -82,8 +83,7 @@ const CommentForm = ({
       <h3 className="login-link">
         To leave a comment please
         <Link to="/login">
-          {' '}
-          <span>login</span>{' '}
+          <span>login</span>
         </Link>
       </h3>
     </div>
@@ -97,7 +97,7 @@ const CommentForm = ({
           key={comment._id}
           text={comment.text}
           date={comment.date}
-          reviewerName={comment.user.firstName}
+          reviewerName={comment.user.firstName || anonim}
           reviewerId={comment.user._id}
           commentId={comment._id}
         />
@@ -111,10 +111,10 @@ const CommentForm = ({
   return (
     <div>
       <div>{userId === null && notLogged}</div>
-      <div className='form-textarea'>{userId !== null && logged}</div>
-      <h3 className='review-title'>
+      <div className="form-textarea">{userId !== null && logged}</div>
+      <h3 className="review-title">
         Customer reviews
-        <span className='review-length'> {comentsNumber} </span>
+        <span className="review-length"> {comentsNumber} </span>
       </h3>
       {items}
     </div>

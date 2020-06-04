@@ -32,13 +32,13 @@ const contacts = contactInformationFooter.items.map((item, index) =>
 const Links = () => {
   return (
     <>
-      <Link className='footer-icon' href={socialNetworksURL.telegram} target='_blank'>
+      <Link className='footer-icon' to={socialNetworksURL.telegram} target='_blank'>
         <FontAwesomeIcon className="icon" icon={faTelegramPlane} />
       </Link>
-      <Link className='footer-icon' href={socialNetworksURL.instagram} target='_blank'>
+      <Link className='footer-icon' to={socialNetworksURL.instagram} target='_blank'>
         <FontAwesomeIcon className="icon" icon={faInstagram} />
       </Link>
-      <Link className='footer-icon' href={socialNetworksURL.facebook} target='_blank'>
+      <Link className='footer-icon' to={socialNetworksURL.facebook} target='_blank'>
         <FontAwesomeIcon className="icon" icon={faFacebook} />
       </Link>
     </>
