@@ -10,8 +10,8 @@
 .home-page-bg {
     background: url("/images/bg-home-page.jpg");
     background-size: cover;
-    min-height: 600px;
-    height: 100vh;
+    min-height: 400px;
+    height: 25vh;
     opacity: 0.9;
     display: flex;
     align-items: center;

@@ -17,7 +17,7 @@ header {
     position: relative;
     display: flex;
     align-items: center;
-    background: #1b1b1b !important;
+    background: black !important;
 }
 
 @media only screen and (max-device-width: 991px) {
