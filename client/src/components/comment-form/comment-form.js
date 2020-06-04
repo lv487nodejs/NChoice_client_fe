@@ -97,7 +97,7 @@ const CommentForm = ({
           key={comment._id}
           text={comment.text}
           date={comment.date}
-          reviewerName={comment.user.firstName || anonim}
+          reviewerName={comment.user.firstName}
           reviewerId={comment.user._id}
           commentId={comment._id}
         />
