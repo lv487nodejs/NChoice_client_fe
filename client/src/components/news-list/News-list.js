@@ -3,15 +3,10 @@ import './News-list.css';
 import { connect } from 'react-redux';
 import NewsListItem from '../news-list-item/News-list-item';
 import withStoreService from '../hoc';
-import {
-  productsLoadingStart,
-  productsLoadingStop,
-  storeSetNews
-} from '../../actions';
+import { storeSetNews } from '../../actions';
 
 const NewsList = ({ storeService, storeSetNews, news }) => {
   useEffect(() => {
-    productsLoadingStart();
     storeService.getAllNews().then((newsArray) => {
       storeSetNews(newsArray);
     });
@@ -27,6 +22,7 @@ const NewsList = ({ storeService, storeSetNews, news }) => {
         author={author}
         authorPhoto={authorPhoto}
         date={date}
+        newsId={_id}
       />
     )
   );
@@ -41,16 +37,10 @@ const NewsList = ({ storeService, storeSetNews, news }) => {
   );
 };
 
-const mapStateToProps = ({
-  productsList: { loading },
-  newsReduser: { news }
-}) => ({
-  loading,
+const mapStateToProps = ({ newsReduser: { news } }) => ({
   news
 });
 const mapDispatchToProps = {
-  productsLoadingStart,
-  productsLoadingStop,
   storeSetNews
 };
 

@@ -17,6 +17,7 @@ function ProductListItem({
 }) {
   const [priceWithRate, setPriceWithRate] = useState();
   const [msrpWithRate, setMsrpWithRate] = useState();
+  const starColor = '#3d3d3d';
 
   useEffect(() => {
     setPriceWithRate(parseFloat(price * currency).toFixed(2));
@@ -26,30 +27,31 @@ function ProductListItem({
   return (
     <div className='wrapper' id='wrapper' key={id}>
       <div className='productCard' id='productCard'>
-        <img
-          id='productImg'
-          alt={`${images}`}
-          src={`/images/products/${images}`}
-        />
         <Link id='productLink' key={id} to={`/products/${id}`}>
-          <div className='info' id={id}>
-            <StarsRating rating={rate} id={id} />
-
-            <p className='productName' id='productName'>
-              {title}
-            </p>
-            <div className='bottomElements' id='bottomElements'>
-              <div
-                className='cardPrice'
-                id='realPrice'
-              >{`${priceWithRate} ${currencyIcon}`}</div>
-              <div
-                className='cardPrice msrp-price'
-                id='msrpPrice'
-              >{`${msrpWithRate} ${currencyIcon}`}</div>
-            </div>
-          </div>
+          <img
+            id='productImg'
+            alt={`${images}`}
+            src={`/images/products/${images}`}
+          />
         </Link>
+      </div>
+      <div className='info' id={id}>
+        <StarsRating rating={rate} id={id} color={starColor} />
+
+        <p className='productName' id='productName'>
+          {title}
+        </p>
+        <div className='bottomElements' id='bottomElements'>
+          <div
+            className='cardPrice'
+            id='realPrice'
+          >{`${priceWithRate} ${currencyIcon}`}</div>
+          <div
+            className='cardPrice msrp-price'
+            id='msrpPrice'
+          >{`${msrpWithRate} ${currencyIcon}`}</div>
+        </div>
+        <hr className='line' />
       </div>
     </div>
   );

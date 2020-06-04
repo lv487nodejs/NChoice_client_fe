@@ -118,8 +118,8 @@ export default class StoreService {
   };
 
   getOrderById = async (id) => {
-    const catalogs = await this.getResource(`orders/${id}`);
-    return catalogs;
+    const order = await this.getResource(`orders/${id}`);
+    return order;
   };
 
   postOrder = async (order) => {
@@ -169,14 +169,20 @@ export default class StoreService {
 
   loginUser = (user) => this.postData('auth/login', user);
 
-  putToCart = (id, data, token) =>
+  putToCart = (id, data, token) => {
     axios.put(`${_apiBase}users/cart/${id}`, {
       data,
       'x-auth-token': token
     });
+  };
 
   getAllNews = async () => {
     const news = await this.getResource('news');
+    return news;
+  };
+
+  getNewsById = async (id) => {
+    const news = await this.getResource(`news/${id}`);
     return news;
   };
 

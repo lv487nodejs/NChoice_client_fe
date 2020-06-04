@@ -9,8 +9,8 @@ import { setUser } from '../actions';
 const initialState = { cartNumbers: 0, cartProducts: [] };
 
 const userId = getFromLocalStorage('userId');
-const productCollection = getFromLocalStorage('products_collection');
-const localCartNumbers = getFromLocalStorage('cart_numbers');
+const productCollection = getFromLocalStorage('productsCollection');
+const localCartNumbers = getFromLocalStorage('cartNumbers');
 const accessToken = getFromLocalStorage('accessToken');
 
 const saveCart = async (userId, data, token) => {
@@ -68,8 +68,8 @@ const addToCart = (state, payload) => {
     };
     saveCart(userId, cart, accessToken);
   }
-  setToLocalStorage('products_collection', newProducts);
-  setToLocalStorage('cart_numbers', state.cartNumbers + 1);
+  setToLocalStorage('productsCollection', newProducts);
+  setToLocalStorage('cartNumbers', state.cartNumbers + 1);
 
   return {
     ...state,
@@ -92,8 +92,8 @@ const increaseToCart = (state, payload) => {
     };
     saveCart(userId, cart, accessToken);
   }
-  setToLocalStorage('products_collection', newIncreaseProducts);
-  setToLocalStorage('cart_numbers', state.cartNumbers + 1);
+  setToLocalStorage('productsCollection', newIncreaseProducts);
+  setToLocalStorage('cartNumbers', state.cartNumbers + 1);
 
   return {
     ...state,
@@ -120,8 +120,8 @@ const decreaseToCart = (state, payload) => {
       };
       saveCart(userId, cart, accessToken);
     }
-    setToLocalStorage('products_collection', new_items);
-    setToLocalStorage('cart_numbers', state.cartNumbers - 1);
+    setToLocalStorage('productsCollection', new_items);
+    setToLocalStorage('cartNumbers', state.cartNumbers - 1);
 
     return {
       ...state,
@@ -137,8 +137,8 @@ const decreaseToCart = (state, payload) => {
     };
     saveCart(userId, cart, accessToken);
   }
-  setToLocalStorage('products_collection', new_products);
-  setToLocalStorage('cart_numbers', state.cartNumbers - 1);
+  setToLocalStorage('productsCollection', new_products);
+  setToLocalStorage('cartNumbers', state.cartNumbers - 1);
 
   return {
     ...state,
@@ -156,9 +156,9 @@ const removeFromCart = (state, payload) => {
   );
   let quantity = 0;
   if (itemToRemove) {
-    setToLocalStorage('products_collection', newItems);
+    setToLocalStorage('productsCollection', newItems);
     quantity = itemToRemove.quantity;
-    setToLocalStorage('cart_numbers', state.cartNumbers - quantity);
+    setToLocalStorage('cartNumbers', state.cartNumbers - quantity);
 
     if (userId) {
       const cart = {
@@ -174,8 +174,8 @@ const removeFromCart = (state, payload) => {
       cartProducts: newItems
     };
   }
-  setToLocalStorage('products_collection', newItems);
-  setToLocalStorage('cart_numbers', state.cartNumbers);
+  setToLocalStorage('productsCollection', newItems);
+  setToLocalStorage('cartNumbers', state.cartNumbers);
 
   if (userId) {
     const cart = { cartNumbers: state.cartNumbers, cartProducts: newItems };

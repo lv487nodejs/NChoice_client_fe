@@ -170,7 +170,7 @@ const Register = ({
               name='password'
               value={user.password}
               onChange={handleChange}
-              title='min length 8 max 16 characters'
+              title='min length 8 max 30 characters'
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
           </Form.Group>
@@ -185,8 +185,8 @@ const Register = ({
               name='confirmPassword'
               value={user.confirmPassword}
               onChange={handleChange}
-              onBlur={validateConfirmPassword}
-              title='min length 8 max 16 characters'
+              onKeyUp={validateConfirmPassword}
+              title='min length 8 max 30 characters'
             />
             <i
               className={confirmedPasswordEye}
