@@ -1,6 +1,8 @@
 .article {
     height: 25rem;
     overflow: hidden;
+    text-align: justify;
+    margin-bottom: 1rem;
 }
 
 .card-img{
