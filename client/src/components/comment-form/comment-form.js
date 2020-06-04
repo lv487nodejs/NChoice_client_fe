@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import './comment-form.css';
@@ -9,9 +10,10 @@ import { Link } from 'react-router-dom';
 import StarsRating from '../star-rating';
 
 const ratingColor = 'black';
-const anonim = 'Anonim';
-const rateText = 'Rate the product:';
+const rateTitle = 'Rate the product:'
+const leaveAComment = 'Leave a comment'
 const errorMessage = 'Please, leave your comment';
+
 
 const CommentForm = ({
   productId,
@@ -33,38 +35,28 @@ const CommentForm = ({
     }
   }, [tempText, userId, storeService, productId, setComments]);
 
-  let textarea = document.querySelector('textarea.feedback-form');
-
   const addComment = (e) => {
     e.preventDefault();
-
     if (!text.trim() && !isTextareaFilled) {
-      textarea.classList.add('error');
-      textarea.focus();
-      setTextareaFilled(true);
-      return;
+      setTextareaFilled(true)
+    } else if (!isTextareaFilled) {
+      storeService.postComments({text, productId, user: userId});
+      setText('');
+      setTempText(text);
     }
-
-    storeService.postComments({ text, productId, user: userId });
-    setText('');
-    setTempText(text);
   };
 
   const onChangeTextarea = (e) => {
     const targetValue = e.target.value;
-
-    setText(targetValue);
-    if (targetValue) {
-      textarea.classList.remove('error');
-      setTextareaFilled(false);
-    }
-  };
+    targetValue && setTextareaFilled(false);
+    setText(targetValue)
+  }
 
   const logged = (
     <form className="form my-1 comments-form" onSubmit={addComment}>
-      <h3> Leave a comment </h3>
-      <div className="star">
-        <h6 className="rate">{rateText} </h6>
+      <h3>{leaveAComment}</h3>
+      <div className='star'>
+        <h6 className='rate'>{rateTitle} </h6>
         <StarsRating
           rating={rate}
           id={productId}
@@ -73,18 +65,16 @@ const CommentForm = ({
           color={ratingColor}
           isSelectable={true}
         />
-      </div>
-      <textarea
-        className="feedback-form"
-        name="text"
-        value={text}
-        onChange={onChangeTextarea}
-        placeholder="Share your thoughts with other customers"
+      </div>    
+      <textarea className={classNames('feedback-form', {'error': isTextareaFilled})}
+                name='text'
+                value={text}
+                onChange={onChangeTextarea}
+                placeholder="Share your thoughts with other customers"
       />
-      {isTextareaFilled && (
-        <span className="error-message">{errorMessage}</span>
-      )}
-      <input type="submit" value="Add a comment" className="comment-submit" />
+                  
+      {isTextareaFilled && <i className='text-danger position-static'>{errorMessage}</i>}
+      <input type='submit' value='Add a comment' className='comment-submit'/>
     </form>
   );
 
