@@ -4,91 +4,110 @@ import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import GoogleLogin from "react-google-login";
-import FacebookLogin from "react-facebook-login";
+import FacebookLogin from "react-facebook-login"
 
-import { setUserLogged, setUserLoading, setCart, setUser } from '../../actions';
-import LoadingSpinner from '../Loading-spinner';
+import { setUserLogged, setUserLoading, setCart, setUser } from "../../actions";
+import LoadingSpinner from "../Loading-spinner";
 import withStoreService from '../hoc';
 import { setToLocalStorage } from '../../services/localStoreService';
 
 const addDataToLocalStorage = (token) => {
-  setToLocalStorage('userId', token.userId);
-  setToLocalStorage('accessToken', token.accessToken);
-  setToLocalStorage('refreshToken', token.refreshToken);
-};
+    setToLocalStorage('userId', token.userId)
+    setToLocalStorage('accessToken', token.accessToken)
+    setToLocalStorage('refreshToken', token.refreshToken)
+}
+
+const formRegExp = {
+    email: '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
+    name: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
+    password: '.{8,30}'
+}
 
 const USER_DATA = {
-  email: '',
-  password: ''
+    email: '',
+    password: ''
 };
 
-const Login = ({
-  storeService,
-  setUserLogged,
-  setUserLoading,
-  userLogged,
-  userLoading,
-  setCart,
-  setUser
-}) => {
-  const [user, setUserData] = useState(USER_DATA);
-  const [errorMsg, setErrorMsg] = useState('');
+const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
+    const [user, setUser] = useState(USER_DATA);
+    const [errorMsg, setErrorMsg] = useState('');
+    const [emailError, setEmailError] = useState(true);
+    const [passwordError, setPasswordError] = useState(true);
 
-  const [passwordShown, setPasswordShown] = useState(false);
-  const eyeClassName = passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash';
 
-  useEffect(() => {
-    setUserLogged(false);
-  }, [setUserLogged]);
+    const [passwordShown, setPasswordShown] = useState(false);
+    const eyeClassName = passwordShown?'fa fa-eye':'fa fa-eye-slash';
 
-  const togglePasswordVisiblity = () => {
-    setPasswordShown(!passwordShown);
-  };
+    const emailErrorMessage = emailError
+    ? ''
+    : 'Please enter correct email';
+    const passwordErrorMessage = passwordError
+    ? ''
+    : 'Please enter correct password';
+    useEffect(() => {
+        setUserLogged(false)
+    }, [setUserLogged])
 
-  const handleChange = (event) => {
-    event.persist();
-    setUserData((prevUser) => ({
-      ...prevUser,
-      [event.target.name]: event.target.value
-    }));
-  };
+    const togglePasswordVisiblity = () => {
+        setPasswordShown(!passwordShown);
+    };
 
-  const postUser = async () => {
-    try {
-      setUserLoading();
-      const response = await storeService.loginUser(user);
-      if (!response)
-        throw new Error('Wrong email or password, please try again.');
-      const {
-        accessToken,
-        refreshToken,
-        cart,
-        userId,
-        user: receivedUser
-      } = response;
+    const handleChange = (event) => {
+        event.persist();
+        setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
+    };
 
-      setUserLogged(true);
-      addDataToLocalStorage({ accessToken, refreshToken, userId });
-      setUser(receivedUser);
-      setCart(cart);
-    } catch (err) {
-      setUserLogged(false);
-      setErrorMsg(err.message);
+    const postUser = async () => {
+        try {
+            setUserLoading();
+            const response = await storeService.loginUser(user);
+            if (!response) throw new Error('Wrong email or password, please try again.')
+            const { accessToken, refreshToken, cart, userId } = response
+            setUserLogged(true);
+            addDataToLocalStorage({ accessToken, refreshToken, userId })
+            setCart(cart)
+        } catch (err) {
+            setUserLogged(false)
+            setErrorMsg(err.message)
+        }
     }
-  };
 
-  const handleOnSubmit = (event) => {
-    postUser();
-  };
+    const handlePasswordChange = event => {
+        event.preventDefault()
+        if(event.target.value.match(formRegExp.password)){
+            setPasswordError(true)
+            return
+        }
+        else{
+            setPasswordError(false)
+            return
+        }
+    }
 
-  if (userLoading) {
-    return <LoadingSpinner />;
-  }
+    const handleEmailChange = event => {
+        event.preventDefault()
+        if(event.target.value.match(formRegExp.email)){
+            setEmailError(true)
+            return
+        }
+        else{
+            setEmailError(false)
+            return
+        }
+    }
 
-  if (userLogged) {
-    return <Redirect to="/" />;
-  }
+    const handleOnSubmit = event => {
+        event.preventDefault()
+        postUser();
+    };
 
+    if (userLoading) {
+        return <LoadingSpinner />
+    }
+
+    if (userLogged) {
+        return <Redirect to='/' />
+    }
 
     const responseGoogle = async (res) => {
         const userFromApi = await storeService.oauthGoogle({access_token: res.accessToken})
@@ -96,8 +115,6 @@ const Login = ({
         setUserLogged(true);
         addDataToLocalStorage({ accessToken, refreshToken, userId })
         setCart(cart)
-
-
     }
 
     const responseFacebook = async (res) => {
@@ -108,25 +125,26 @@ const Login = ({
         setCart(cart)
     }
     window.scrollTo(0, 0);
-    
+
     return (
         <div className={'login'}>
-            <Form onSubmit={handleOnSubmit} >
+            <Form
+                noValidate
+                onSubmit={handleOnSubmit}
+            >
                 <Form.Label className="lable">Log In</Form.Label>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
+                        required
                         type="text"
                         placeholder="Enter email..."
                         name={'email'}
                         value={user.email}
                         onChange={handleChange}
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                        title="example@gmail.com"
+                        onBlur={handleEmailChange}
                     />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                            </Form.Text>
+                    <i className="text-danger position-static">{emailErrorMessage}</i>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword" >
@@ -138,17 +156,18 @@ const Login = ({
                             name={'password'}
                             value={user.password}
                             onChange={handleChange}
-                            pattern=".{8,16}"
-                            title="password must be from 8 to 16 characters long"
+                            onBlur={handlePasswordChange}
+                            title="min length 8 max 30 characters"
                         />
                         <i className={eyeClassName} onClick={togglePasswordVisiblity}></i>
                     </Form.Group>
+                    <i className="text-danger position-static">{passwordErrorMessage}</i>
                 </Form.Group>
-                <Form.Check
-                    type="switch"
-                    id="custom-switch"
-                    label="Remember me"
-                />
+                    <Form.Check
+                        type="switch"
+                        id="custom-switch"
+                        label="Remember me"
+                    />
                 <Form.Group >
                     <Button variant="dark" type="submit" block>
                         LOG IN

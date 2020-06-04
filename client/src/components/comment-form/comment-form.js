@@ -20,6 +20,7 @@ const CommentForm = ({
   const [text, setText] = useState('');
   const userId = getFromLocalStorage('userId');
   const [tempText, setTempText] = useState(null);
+  const [isTextareaFilled, setTextareaFilled] = useState(false);
 
   useEffect(() => {
     if (productId) {
@@ -29,12 +30,33 @@ const CommentForm = ({
     }
   }, [tempText, userId, storeService, productId, setComments]);
 
+
+  let textarea = document.querySelector('textarea.feedback-form');
+
   const addComment = (e) => {
     e.preventDefault();
-    storeService.postComments({ text, productId, user: userId });
+
+    if (!text.trim() && !isTextareaFilled) {
+      textarea.classList.add('error')
+      textarea.focus()
+      setTextareaFilled(true)
+      return;
+    }
+
+    storeService.postComments({text, productId, user: userId});
     setText('');
     setTempText(text);
   };
+
+  const onChangeTextarea = (e) => {
+    const targetValue = e.target.value;
+
+    setText(targetValue);
+    if (targetValue) {
+      textarea.classList.remove('error');
+      setTextareaFilled(false);
+    }
+  }
 
   const logged = (
     <form className="form my-1 comments-form" onSubmit={addComment}>
@@ -49,16 +71,15 @@ const CommentForm = ({
           color={ratingColor}
           isSelectable={true}
         />
-      </div>
-      <textarea
-        className="feedback-form"
-        name="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Share your thoughts with other customers"
-        required
+      </div>    
+      <textarea className='feedback-form'
+                name='text'
+                value={text}
+                onChange={onChangeTextarea}
+                placeholder="Share your thoughts with other customers"
       />
-      <input type="submit" value="Add a comment" className="comment-submit" />
+      {isTextareaFilled && <span className='error-message'>Please, leave your comment</span>}
+      <input type='submit' value='Add a comment' className='comment-submit'/>
     </form>
   );
 

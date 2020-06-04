@@ -75,3 +75,8 @@ export const catalogsFooter = {
         { id: 3, url: 'kids', item: 'Kids' }
     ]
 }
+export const formRegExp = {
+    email: '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
+    name: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
+    password: '.{8,30}'
+}
