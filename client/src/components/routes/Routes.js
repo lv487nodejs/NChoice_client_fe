@@ -25,6 +25,7 @@ import Welcome from '../welcome-page';
 import NewsDetailPage from '../news-detail-page';
 import { MaterialsPage } from '../materials-page'
 import { AboutUsPage } from '../about-us-page'
+import TermsConditionsPage from '../terms-conditions-page'
 
 
 const Routes = () => (
@@ -70,6 +71,7 @@ const Routes = () => (
         <Route path="/welcome/:token" exact component={Welcome} />
         <Route path="/materials" exact component={MaterialsPage} />
         <Route path="/about-us" exact component={AboutUsPage} />
+        <Route path="/terms-conditions" exact component={TermsConditionsPage} />
       </Switch>
     </div>
     <AppFooter />

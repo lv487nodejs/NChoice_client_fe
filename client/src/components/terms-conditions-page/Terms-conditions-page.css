@@ -1,0 +1,57 @@
+.main-content {
+    margin: 40px 10% 40px 20% ;
+    padding-left: 30px;
+    line-height: 2.5rem;
+    font-size: 1.2rem;
+}
+
+.sidebar {
+    position: absolute;
+    margin-left: 3%;
+}
+
+.item-link {
+    color:black;
+}
+
+.subtitle, .title, .sidebar-title, .sidebar-list {
+    color: #343a40;
+}
+
+.sidebar-list {
+    line-height: 3rem;
+    font-size: 1.5rem;
+    margin-left: 5%;
+}
+
+.subtitle {
+    margin: 15px 0;
+}
+
+.link-to-main-page {
+    color: black;
+}
+
+.link-to-main-page:hover, .item-link:hover {
+    color: #5d6d6c;
+}
+
+.title {
+    font-weight: 800;
+    font-size: 2rem;
+    width: 400px;
+    margin: 40px auto;
+    padding-left: 30px;
+    letter-spacing: 3px;
+}
+
+@media screen and (max-width: 1300px) {
+    .sidebar {
+        display: none;
+    }
+    .main-content {
+        margin: 40px 5% 40px 7% ;
+    }
+}
+
+
