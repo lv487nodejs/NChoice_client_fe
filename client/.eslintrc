@@ -35,15 +35,6 @@
   ],
   "rules": {
     "semi": "off",
-    //   "max-len": [
-    //     "error",
-    //     100,
-    //     {
-    //       "ignoreComments": true,
-    //       "ignoreUrls": true,
-    //       "ignoreRegExpLiterals": true
-    //     }
-    //   ],
     "no-var": "warn",
     "no-unused-vars": [
       1,
