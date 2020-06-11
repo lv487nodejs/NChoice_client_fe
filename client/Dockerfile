@@ -3,4 +3,4 @@ FROM node:latest as node
 WORKDIR /app
 COPY . .
 CMD ["npm", "install"]
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
