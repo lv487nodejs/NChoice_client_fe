@@ -33,7 +33,7 @@ const NewsListItem = ({
       </div>
       <hr />
       <small className='text-muted'>{dateNews}</small>
-      <Card.Body>
+      <Card.Body id = 'news-card'>
         <Card.Title className='news-card-title'>{title}</Card.Title>
         <Card.Text className='article'>{text}</Card.Text>
         <Link to={`/news/${newsId}`}>
