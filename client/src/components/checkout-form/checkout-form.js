@@ -23,7 +23,6 @@ import {
   getFromLocalStorage,
   setToLocalStorage
 } from '../../services/localStoreService';
-import {universal} from "../../validators/form-validators";
 
 const snackBarMsg = (
   notAvailableItem
@@ -32,29 +31,17 @@ There are just ${notAvailableItem.available}.
 Please go to cart and change amount of ${notAvailableItem.name}`;
 
 const CheckoutForm = ({
-  cartProducts,
-  orderStore,
-  clearCart,
-  storeService,
-  setShowSnackbar,
-  setSnackbarText,
-  setOrderToStore
-}) => {
+                        cartProducts,
+                        orderStore,
+                        clearCart,
+                        storeService,
+                        setShowSnackbar,
+                        setSnackbarText,
+                        setOrderToStore
+                      }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const [emailError, setEmailError] = useState({
-    email: '',
-    firstName: '',
-    lastName:'',
-    contactPhone: '',
-    country: '',
-    city: '',
-    street: '',
-    buildingNumber: '',
-    deliveryType: '',
-    paymentMethod: ''});
 
   const [validated, setValidated] = useState(false);
   const [order, setOrder] = useState(orderStore);
@@ -114,6 +101,15 @@ const CheckoutForm = ({
 
     setOrderToStore(order);
 
+    const form = event.currentTarget;
+
+    if (!orderToServer.orderItems.length) return;
+
+    if (!form.checkValidity()) {
+      setValidated(true);
+      return;
+    }
+
     applyOrder();
   };
 
@@ -150,17 +146,9 @@ const CheckoutForm = ({
   };
 
   const handleChange = (event) => {
-    const error = universal(event.target.name, event.target.value)
     event.persist();
     setOrder({ ...order, [event.target.name]: event.target.value });
     setOrderToStore(order);
-    setEmailError({...emailError, [event.target.name]: error})
-    setValidated(true)
-    Object.entries(emailError).forEach(([key, value]) => {
-      if (value !== false) {
-        setValidated(false)
-      }
-    });
   };
 
   return (
@@ -170,6 +158,8 @@ const CheckoutForm = ({
           <Jumbotron className="jumbo">
             <h2>Order Form</h2>
             <Form
+              noValidate
+              validated={validated}
               onSubmit={handleSubmit}
               id="checkout-form"
             >
@@ -178,84 +168,109 @@ const CheckoutForm = ({
                 <Form.Group controlId="firstNameValidate">
                   <Form.Label>Firstname</Form.Label>
                   <Form.Control
+                    required
                     placeholder={placeholder}
                     name={'firstName'}
                     onChange={handleChange}
                     value={order.firstName}
                   />
-                  <i className="text-danger position-static">{emailError.firstName}</i>
-
+                  <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please type Your Firstname. This field is required
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="lastNameValidate">
                   <Form.Label>Lastname</Form.Label>
                   <Form.Control
+                    required
                     placeholder={placeholder}
                     name={'lastName'}
                     onChange={handleChange}
                     value={order.lastName}
                   />
-                  <i className="text-danger position-static">{emailError.lastName}</i>
+                  <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please type Your Lastname. This field is required
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="emailValidate">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
+                    required
                     placeholder={placeholder}
                     name={'email'}
                     type="email"
                     onChange={handleChange}
                     value={order.email}
                   />
-                  <i className="text-danger position-static">{emailError.email}</i>
+                  <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please type Your email. This field is required
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="phoneValidate">
                   <Form.Label>Contact Phone Number</Form.Label>
                   <Form.Control
+                    required
                     type="number"
                     placeholder={placeholder}
                     name="contactPhone"
                     onChange={handleChange}
                     value={order.contactPhone}
                   />
-                  <i className="text-danger position-static">{emailError.phone}</i>
+                  <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please type Phone number. This field is required
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group>
                   <CheckoutSelect
                     selectOptions={countries}
                     name="country"
                     handleChange={handleChange}
-                    value={order.country}
                   />
-                  <i className="text-danger position-static">{emailError.country}</i>
                 </Form.Group>
                 <Form.Group controlId="cityValidate">
                   <Form.Label>City</Form.Label>
                   <Form.Control
+                    required
                     placeholder={placeholder}
                     name={'city'}
                     onChange={handleChange}
                     value={order.city}
                   />
-                  <i className="text-danger position-static">{emailError.city}</i>
+                  <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please type City. This field is required
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="streetValidate">
                   <Form.Label required>Street</Form.Label>
                   <Form.Control
+                    required
                     placeholder={placeholder}
                     name="street"
                     onChange={handleChange}
                     value={order.street}
                   />
-                  <i className="text-danger position-static">{emailError.street}</i>
+                  <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please type street name. This field is required
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="buildingValidate">
                   <Form.Label>Building number</Form.Label>
                   <Form.Control
+                    required
                     placeholder={placeholder}
                     name="buildingNumber"
                     onChange={handleChange}
                     value={order.buildingNumber}
                   />
-                  <i className="text-danger position-static">{emailError.buildingNum}</i>
+                  <Form.Control.Feedback>Much better now</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please type your building. This field is required
+                  </Form.Control.Feedback>
                 </Form.Group>
               </fieldset>
               <Form.Group className="form-space">
@@ -264,22 +279,17 @@ const CheckoutForm = ({
                     Please coose delivery type and payment method
                   </h3>
                   <CheckoutSelect
-                      name='deliveryType'
                     selectOptions={deliveryType}
                     handleChange={handleChange}
-                    value={order.deliveryType}
                   />
 
                   <CheckoutSelect
-                    name='paymentMethods'
                     selectOptions={paymentMethods}
                     handleChange={handleChange}
-                    value={order.paymentMethod}
                   />
-
                 </fieldset>
               </Form.Group>
-              <Button variant="dark" type="submit" disabled={!validated}>
+              <Button variant="dark" type="submit">
                 Create order
               </Button>
               <div id="user-page-snackbar" className="col-12">
@@ -306,9 +316,9 @@ const CheckoutForm = ({
 };
 
 const mapStateToProps = ({
-  cartReducer: { cartProducts },
-  checkoutReduser: { orderStore }
-}) => ({
+                           cartReducer: { cartProducts },
+                           checkoutReduser: { orderStore }
+                         }) => ({
   orderStore,
   cartProducts
 });
