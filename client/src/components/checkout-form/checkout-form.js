@@ -150,14 +150,13 @@ const CheckoutForm = ({
   };
 
   const handleChange = (event) => {
-    const erora = universal(event.target.name, event.target.value)
+    const error = universal(event.target.name, event.target.value)
     event.persist();
     setOrder({ ...order, [event.target.name]: event.target.value });
     setOrderToStore(order);
-    setEmailError({...emailError, [event.target.name]: erora})
+    setEmailError({...emailError, [event.target.name]: error})
     setValidated(true)
     Object.entries(emailError).forEach(([key, value]) => {
-      console.log(`${key} -- ${value}`);
       if (value !== false) {
         setValidated(false)
       }
@@ -183,7 +182,6 @@ const CheckoutForm = ({
                     name={'firstName'}
                     onChange={handleChange}
                     value={order.firstName}
-                    //onBlur = {validationState}
                   />
                   <i className="text-danger position-static">{emailError.firstName}</i>
 
@@ -195,7 +193,6 @@ const CheckoutForm = ({
                     name={'lastName'}
                     onChange={handleChange}
                     value={order.lastName}
-                    //onBlur = {validationState}
                   />
                   <i className="text-danger position-static">{emailError.lastName}</i>
                 </Form.Group>
@@ -207,7 +204,6 @@ const CheckoutForm = ({
                     type="email"
                     onChange={handleChange}
                     value={order.email}
-                    //onBlur = {validationState}
                   />
                   <i className="text-danger position-static">{emailError.email}</i>
                 </Form.Group>
@@ -219,7 +215,6 @@ const CheckoutForm = ({
                     name="contactPhone"
                     onChange={handleChange}
                     value={order.contactPhone}
-                    //onBlur = {validationState}
                   />
                   <i className="text-danger position-static">{emailError.phone}</i>
                 </Form.Group>
@@ -228,7 +223,6 @@ const CheckoutForm = ({
                     selectOptions={countries}
                     name="country"
                     handleChange={handleChange}
-                    // onBlur = {validationState}
                     value={order.country}
                   />
                   <i className="text-danger position-static">{emailError.country}</i>
@@ -240,7 +234,6 @@ const CheckoutForm = ({
                     name={'city'}
                     onChange={handleChange}
                     value={order.city}
-                    //onBlur = {validationState}
                   />
                   <i className="text-danger position-static">{emailError.city}</i>
                 </Form.Group>
@@ -251,7 +244,6 @@ const CheckoutForm = ({
                     name="street"
                     onChange={handleChange}
                     value={order.street}
-                    //onBlur = {validationState}
                   />
                   <i className="text-danger position-static">{emailError.street}</i>
                 </Form.Group>
@@ -262,7 +254,6 @@ const CheckoutForm = ({
                     name="buildingNumber"
                     onChange={handleChange}
                     value={order.buildingNumber}
-                    //onBlur = {validationState}
                   />
                   <i className="text-danger position-static">{emailError.buildingNum}</i>
                 </Form.Group>
@@ -276,15 +267,13 @@ const CheckoutForm = ({
                       name='deliveryType'
                     selectOptions={deliveryType}
                     handleChange={handleChange}
-                    //onChange = {validationState}
                     value={order.deliveryType}
                   />
 
                   <CheckoutSelect
-                      name='paymentMethods'
+                    name='paymentMethods'
                     selectOptions={paymentMethods}
                     handleChange={handleChange}
-                    //onChange = {validationState}
                     value={order.paymentMethod}
                   />
 

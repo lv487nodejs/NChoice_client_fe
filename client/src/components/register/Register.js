@@ -7,7 +7,6 @@ import {universal} from '../../validators/form-validators'
 import { setUserLogged, setUserLoading } from "../../actions";
 import withStoreService from "../hoc";
 import { setToLocalStorage } from "../../services/localStoreService";
-import {formRegExp} from '../../configs/frontend-config'
 const addDataToLocalStorage = (token) => {
   setToLocalStorage("userId", token.userId);
   setToLocalStorage("accessToken", token.accessToken);
@@ -74,7 +73,9 @@ const Register = ({
       emailError,
       confirmPasswordError,
       lastNameError,
-      firstNameError ])
+      firstNameError,
+      passwordError
+  ])
 
   useEffect(() => {
     setUserLogged(false);
@@ -192,7 +193,6 @@ const Register = ({
               name={'password'}
               value={user.password}
               onChange={handleChange}
-              //onBlur={validateConfirmPassword}
               title="min length 8 max 30 characters"
             />
             <i className={passwordEye} onClick={togglePasswordVisiblity} />
@@ -244,7 +244,7 @@ const Register = ({
           </Button>
           <span>{errorMsg}</span>
         </Form.Group>
-        
+
         <Form.Group className="link">
           <Link to="/login" className="btn btn-link">
             LOG IN
