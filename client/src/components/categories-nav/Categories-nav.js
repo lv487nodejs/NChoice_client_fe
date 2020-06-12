@@ -14,6 +14,7 @@ import {
 import CategoriesNavItem from '../categories-nav-item';
 import withStoreService from '../hoc';
 import { PRODUCT_LIST_URL } from '../../configs/frontend-config';
+
 const CategoriesNav = ({
   storeService,
   categoriesLoaded,
@@ -44,7 +45,7 @@ const CategoriesNav = ({
   };
 
   const items = categories.map((category) => (
-    <li key={category.category} className="category-item">
+    <li key={category.category} className='category-item'>
       <CategoriesNavItem
         handler={filterAddCategoriesHandler}
         catalog={catalog}
@@ -55,8 +56,8 @@ const CategoriesNav = ({
   ));
   window.scrollTo(0, 0);
   return (
-    <ul className="categories-nav">
-      <li key="all" className="category-item">
+    <ul className='categories-nav'>
+      <li key='all' className='category-item'>
         <Link
           to={PRODUCT_LIST_URL + catalog}
           onClick={filterRemoveCategoriesHandler}

@@ -10,20 +10,12 @@ import {
   filterRemoveAllCategories,
   filterByName,
   setCatalogFilter,
-  clearFilter,
-  setUser
+  clearFilter
 } from '../../actions';
 
 import withStoreService from '../hoc';
 import AppHeaderNavLeftItem from '../app-header-nav-left-item';
 import AppHeaderNavLeftItemDropDown from '../app-header-nav-left-item-dropdown';
-import {
-  getFromLocalStorage,
-  setToLocalStorage
-} from '../../services/localStoreService';
-
-const userId = getFromLocalStorage('userId');
-const accessToken = getFromLocalStorage('accessToken');
 
 const LINK_FOR_NEWS = '/news';
 const NEWS_LINK_TITLE = 'News';
@@ -37,22 +29,14 @@ const AppHeaderNavLeft = ({
   filterRemoveAllCategories,
   filterByName,
   setCatalogFilter,
-  clearFilter,
-  setUser
+  clearFilter
 }) => {
   const [isShown, setIsShown] = useState('');
 
   useEffect(() => {
     catalogsRequested();
     storeService.getAllCatalogs().then((res) => catalogsLoaded(res));
-    if (userId) {
-      storeService.getUserById(userId, accessToken).then((res) => {
-        setUser(res.data.user);
-        setToLocalStorage('accessToken', res.data.accessToken);
-        setToLocalStorage('refreshToken', res.data.refreshToken);
-      });
-    }
-  }, [catalogsLoaded, catalogsRequested, storeService, setUser]);
+  }, [catalogsLoaded, catalogsRequested, storeService]);
 
   const onEnter = (e, catalog) => {
     setIsShown(catalog);
@@ -82,7 +66,7 @@ const AppHeaderNavLeft = ({
   const items = catalogs.map((catalog) => (
     <li
       key={catalog._id}
-      className="nav-item"
+      className='nav-item'
       onMouseEnter={(e) => onEnter(e, catalog.catalog)}
       onMouseLeave={onLeave}
     >
@@ -91,7 +75,7 @@ const AppHeaderNavLeft = ({
         catalogHandler={filterAddCatalog}
       />
       {isShown === catalog.catalog && (
-        <div key={catalog.catalog} className="drop-down-container">
+        <div key={catalog.catalog} className='drop-down-container'>
           <AppHeaderNavLeftItemDropDown
             catalog={catalog}
             clickHandler={filterAddCategoryHandler}
@@ -103,7 +87,7 @@ const AppHeaderNavLeft = ({
   ));
 
   return (
-    <nav className="nav-bar nav-left">
+    <nav className='nav-bar nav-left'>
       <ul>
         {items}
         <li>
@@ -114,9 +98,8 @@ const AppHeaderNavLeft = ({
   );
 };
 
-const mapStateToProps = ({ catalogsList: { catalogs, loading } }) => ({
-  catalogs,
-  loading
+const mapStateToProps = ({ catalogsList: { catalogs } }) => ({
+  catalogs
 });
 const mapDispatchToProps = {
   catalogsLoaded,
@@ -125,8 +108,7 @@ const mapDispatchToProps = {
   filterRemoveAllCategories,
   filterByName,
   setCatalogFilter,
-  clearFilter,
-  setUser
+  clearFilter
 };
 
 export default withStoreService()(

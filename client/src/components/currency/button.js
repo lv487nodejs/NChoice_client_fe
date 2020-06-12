@@ -1,32 +1,42 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { currencyChange, currencyIconChange } from '../../actions';
-import './button.css'
+import './button.css';
 
-const currencies = {'EUR': '€', 'USD': '$', 'UAH': '₴'}
+const currencies = { EUR: '€', USD: '$', UAH: '₴' };
 
 const Button = ({ currencyOptions, currencyChange, currencyIconChange }) => {
-    const selectCurrency = (val) => {
-        currencyChange(val.coefficient)
-        currencyIconChange(currencies[val.name])
-    };
+  const selectCurrency = (val) => {
+    currencyChange(val.coefficient);
+    currencyIconChange(currencies[val.name]);
+  };
 
-    const onClickHandler = (item) => () => {
-        selectCurrency(item)
-    }
+  const onClickHandler = (item) => () => {
+    selectCurrency(item);
+  };
 
-    return (
-        <>
-            <div className="dropdown">
-            <button className="curr"><img className='img-curr' alt="currency" src='/images/dollar.png'></img></button>
-            <ul className="currency">
-                {currencyOptions.map(item =>(
-                    <li key={item.name}><button className='button-currency' onClick={onClickHandler(item)}>{item.name}</button></li>
-                ))}
-            </ul>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div className='dropdown'>
+        <button type='button' className='curr'>
+          <img className='img-curr' alt='currency' src='/images/dollar.png' />
+        </button>
+        <ul className='currency'>
+          {currencyOptions.map((item) => (
+            <li key={item.name}>
+              <button
+                type='button'
+                className='button-currency'
+                onClick={onClickHandler(item)}
+              >
+                {item.name}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+  );
 };
 
 const mapStateToProps = ({ productsList: { currency } }) => ({ currency });

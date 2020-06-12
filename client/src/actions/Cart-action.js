@@ -1,52 +1,37 @@
-const addToCart = (productName) => {
-  return {
-      type: 'ADD_PRODUCT_TO_CART',
-      payload: productName    
-  }
-};
+const addToCart = (productName) => ({
+  type: 'ADD_PRODUCT_TO_CART',
+  payload: productName
+});
 
-const setCart = newCart => {
-  return {
-    type: 'SET_CART',
-    payload: newCart
-  }
-}
+const setCart = (newCart) => ({
+  type: 'SET_CART',
+  payload: newCart
+});
 
-const increaseToCart = (productName) => {
-  return{
-      type: 'INCREASE_TO_CART',
-      payload: productName    
-  }
-};
+const increaseToCart = (productName) => ({
+  type: 'INCREASE_TO_CART',
+  payload: productName
+});
 
-const decreaseFromCart = (productName) => {
-  return{
-      type: 'DECREASE_TO_CART',
-      payload: productName    
-  }
-};
+const decreaseFromCart = (productName) => ({
+  type: 'DECREASE_TO_CART',
+  payload: productName
+});
 
-const removeFromCart = (productName) => {
-  return{
-      type: 'REMOVE_FROM_CART',
-      payload: productName
-  }
-};
+const removeFromCart = (productName) => ({
+  type: 'REMOVE_FROM_CART',
+  payload: productName
+});
 
-const clearCart = () => {
-  return{
-      type: 'CLEAR_CART',
-  }
-};
+const clearCart = () => ({
+  type: 'CLEAR_CART'
+});
 
-export  {
+export {
   addToCart,
   setCart,
   increaseToCart,
   decreaseFromCart,
   removeFromCart,
   clearCart
-}
-
-
-
+};

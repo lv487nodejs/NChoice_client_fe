@@ -54,19 +54,16 @@ const CheckoutForm = ({
     setToLocalStorage('products_collection', null);
   };
 
-  const productsForOrder = cartProducts.map((product) => {
-    return {
-      item: product.id,
-      quantity: product.quantity
-    };
-  });
+  const productsForOrder = cartProducts.map((product) => ({
+    item: product.id,
+    quantity: product.quantity
+  }));
 
-  // Create object with form data to send to server
   const orderToServer = {
     firstName: order.firstName,
     lastName: order.lastName,
     orderItems: productsForOrder,
-    userId: userId,
+    userId,
     email: order.email,
     deliveryAddress: {
       country: order.country,
@@ -81,11 +78,11 @@ const CheckoutForm = ({
   };
 
   if (successOrder) {
-    return <Redirect to="/thanks" />;
+    return <Redirect to='/thanks' />;
   }
 
   if (cartProducts.length === 0) {
-    return <Redirect to="/" />;
+    return <Redirect to='/' />;
   }
 
   const snackbarHandler = (text) => {
@@ -113,7 +110,6 @@ const CheckoutForm = ({
     applyOrder();
   };
 
-  // Check the database for quantity of products in order
   const applyOrder = async () => {
     const notAvailable = [];
     const productsPromises = await Promise.all(
@@ -133,9 +129,9 @@ const CheckoutForm = ({
     });
 
     if (notAvailable.length) {
-      const snackbarMessages = notAvailable.map((notAvailableItem) => {
-        return snackBarMsg(notAvailableItem);
-      });
+      const snackbarMessages = notAvailable.map((notAvailableItem) =>
+        snackBarMsg(notAvailableItem)
+      );
       snackbarHandler(snackbarMessages);
       return;
     }
@@ -153,129 +149,129 @@ const CheckoutForm = ({
 
   return (
     <Container>
-      <Row id="checkout-row">
+      <Row id='checkout-row'>
         <Col>
-          <Jumbotron className="jumbo">
+          <Jumbotron className='jumbo'>
             <h2>Order Form</h2>
             <Form
               noValidate
               validated={validated}
               onSubmit={handleSubmit}
-              id="checkout-form"
+              id='checkout-form'
             >
-              <fieldset className="field">
-                <h3 className="text-center">Please tell us about yourself</h3>
-                <Form.Group controlId="firstNameValidate">
+              <fieldset className='field'>
+                <h3 className='text-center'>Please tell us about yourself</h3>
+                <Form.Group controlId='firstNameValidate'>
                   <Form.Label>Firstname</Form.Label>
                   <Form.Control
                     required
                     placeholder={placeholder}
-                    name={'firstName'}
+                    name='firstName'
                     onChange={handleChange}
                     value={order.firstName}
                   />
                   <Form.Control.Feedback>Much better now</Form.Control.Feedback>
-                  <Form.Control.Feedback type="invalid">
+                  <Form.Control.Feedback type='invalid'>
                     Please type Your Firstname. This field is required
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group controlId="lastNameValidate">
+                <Form.Group controlId='lastNameValidate'>
                   <Form.Label>Lastname</Form.Label>
                   <Form.Control
                     required
                     placeholder={placeholder}
-                    name={'lastName'}
+                    name='lastName'
                     onChange={handleChange}
                     value={order.lastName}
                   />
                   <Form.Control.Feedback>Much better now</Form.Control.Feedback>
-                  <Form.Control.Feedback type="invalid">
+                  <Form.Control.Feedback type='invalid'>
                     Please type Your Lastname. This field is required
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group controlId="emailValidate">
+                <Form.Group controlId='emailValidate'>
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     required
                     placeholder={placeholder}
-                    name={'email'}
-                    type="email"
+                    name='email'
+                    type='email'
                     onChange={handleChange}
                     value={order.email}
                   />
                   <Form.Control.Feedback>Much better now</Form.Control.Feedback>
-                  <Form.Control.Feedback type="invalid">
+                  <Form.Control.Feedback type='invalid'>
                     Please type Your email. This field is required
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group controlId="phoneValidate">
+                <Form.Group controlId='phoneValidate'>
                   <Form.Label>Contact Phone Number</Form.Label>
                   <Form.Control
                     required
-                    type="number"
+                    type='number'
                     placeholder={placeholder}
-                    name="contactPhone"
+                    name='contactPhone'
                     onChange={handleChange}
                     value={order.contactPhone}
                   />
                   <Form.Control.Feedback>Much better now</Form.Control.Feedback>
-                  <Form.Control.Feedback type="invalid">
+                  <Form.Control.Feedback type='invalid'>
                     Please type Phone number. This field is required
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group>
                   <CheckoutSelect
                     selectOptions={countries}
-                    name="country"
+                    name='country'
                     handleChange={handleChange}
                   />
                 </Form.Group>
-                <Form.Group controlId="cityValidate">
+                <Form.Group controlId='cityValidate'>
                   <Form.Label>City</Form.Label>
                   <Form.Control
                     required
                     placeholder={placeholder}
-                    name={'city'}
+                    name='city'
                     onChange={handleChange}
                     value={order.city}
                   />
                   <Form.Control.Feedback>Much better now</Form.Control.Feedback>
-                  <Form.Control.Feedback type="invalid">
+                  <Form.Control.Feedback type='invalid'>
                     Please type City. This field is required
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group controlId="streetValidate">
+                <Form.Group controlId='streetValidate'>
                   <Form.Label required>Street</Form.Label>
                   <Form.Control
                     required
                     placeholder={placeholder}
-                    name="street"
+                    name='street'
                     onChange={handleChange}
                     value={order.street}
                   />
                   <Form.Control.Feedback>Much better now</Form.Control.Feedback>
-                  <Form.Control.Feedback type="invalid">
+                  <Form.Control.Feedback type='invalid'>
                     Please type street name. This field is required
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group controlId="buildingValidate">
+                <Form.Group controlId='buildingValidate'>
                   <Form.Label>Building number</Form.Label>
                   <Form.Control
                     required
                     placeholder={placeholder}
-                    name="buildingNumber"
+                    name='buildingNumber'
                     onChange={handleChange}
                     value={order.buildingNumber}
                   />
                   <Form.Control.Feedback>Much better now</Form.Control.Feedback>
-                  <Form.Control.Feedback type="invalid">
+                  <Form.Control.Feedback type='invalid'>
                     Please type your building. This field is required
                   </Form.Control.Feedback>
                 </Form.Group>
               </fieldset>
-              <Form.Group className="form-space">
-                <fieldset className="field">
-                  <h3 className="text-center">
+              <Form.Group className='form-space'>
+                <fieldset className='field'>
+                  <h3 className='text-center'>
                     Please coose delivery type and payment method
                   </h3>
                   <CheckoutSelect
@@ -289,24 +285,26 @@ const CheckoutForm = ({
                   />
                 </fieldset>
               </Form.Group>
-              <Button variant="dark" type="submit">
+              <Button variant='dark' type='submit'>
                 Create order
               </Button>
-              <div id="user-page-snackbar" className="col-12">
-                <Snackbar className="snackbar" />
+              <div id='user-page-snackbar' className='col-12'>
+                <Snackbar className='snackbar' />
               </div>
             </Form>
           </Jumbotron>
         </Col>
         <Col>
-          <Jumbotron className="jumbo" id="checkout-table">
+          <Jumbotron className='jumbo' id='checkout-table'>
             <h2>Your Items</h2>
             <CheckoutTable />
-            <Link to="/cart">
-              <Button variant="dark">Go to cart to make changes</Button>
+            <Link to='/cart'>
+              <Button type='button' variant='dark'>
+                Go to cart to make changes
+              </Button>
             </Link>
-            <div id="user-page-snackbar" className="col-12">
-              <Snackbar className="snackbar" />
+            <div id='user-page-snackbar' className='col-12'>
+              <Snackbar className='snackbar' />
             </div>
           </Jumbotron>
         </Col>

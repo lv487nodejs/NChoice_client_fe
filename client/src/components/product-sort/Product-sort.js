@@ -16,13 +16,12 @@ const ProductSort = ({ options }) => {
 
   return (
     <Button
-      className="sort-button"
+      className='sort-button'
       key={options.text}
       variant={options.variant}
       onClick={changeHandler}
     >
-      {options.text}{' '}
-      <FA name="sort" className={className ? className : 'fas fa-sort'} />
+      {options.text} <FA name='sort' className={className || 'fas fa-sort'} />
     </Button>
   );
 };

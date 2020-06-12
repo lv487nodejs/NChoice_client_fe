@@ -1,14 +1,10 @@
-const setOrderToStore = order => ({
-    type: 'SET_ORDER',
-    payload: order,
+const setOrderToStore = (order) => ({
+  type: 'SET_ORDER',
+  payload: order
 });
 
 const clearOrderStore = () => ({
-    type: 'CLEAR_ORDER',
+  type: 'CLEAR_ORDER'
 });
 
-
-export {
-    setOrderToStore,
-    clearOrderStore
-};
+export { setOrderToStore, clearOrderStore };

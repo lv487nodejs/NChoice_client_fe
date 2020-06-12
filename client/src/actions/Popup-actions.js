@@ -1,5 +1,3 @@
-export const popupShownFn = () => {
-    return {
-        type: 'POPUP_SHOWN'
-    }
-};
+export const popupShownFn = () => ({
+  type: 'POPUP_SHOWN'
+});

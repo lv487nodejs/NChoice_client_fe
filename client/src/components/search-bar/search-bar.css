@@ -8,11 +8,16 @@
     margin-left: 1rem;
     margin-right: .3rem;
 }
+@media only screen and (max-device-width: 992px) {
+    .search-bar {
+        width: 165px;
+    }
+}
 
 @media only screen and (max-device-width: 768px) {
     .search-bar {
         width: 120px;
-       margin-right: 1rem;
+        margin-right: 1rem;
         margin-left: 0;
     }
 
