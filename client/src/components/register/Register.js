@@ -46,7 +46,9 @@ const Register = ({
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [show, setShow] = useState(false);
   const [agreedWithTerms, setAgreedWithTerms] = useState(false);
+
   const [passwordShown, setPasswordShown] = useState(false);
+  const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
 
   const agreeWithTermsErrorMessage = agreedWithTerms
   ? ''
@@ -83,6 +85,10 @@ const Register = ({
 
   const togglePasswordVisiblity = () => {
     setPasswordShown(!passwordShown);
+  };
+
+  const toggleConfirmPasswordVisiblity = () => {
+    setConfirmPasswordShown(!confirmPasswordShown);
   };
 
   const validateConfirmPassword = () => {
@@ -205,7 +211,7 @@ const Register = ({
           <Form.Label> Confirm Password<sup style = {{ color: "red" }}  >*</sup></Form.Label>
           <Form.Group className="pass-wrapper">
             <Form.Control
-              type={passwordShown ? 'text' : 'password'}
+              type={confirmPasswordShown ? 'text' : 'password'}
               placeholder="Enter password..."
               name={'confirmPassword'}
               value={user.confirmPassword}
@@ -215,7 +221,7 @@ const Register = ({
             />
             <i
               className={passwordEye}
-              onClick={togglePasswordVisiblity}
+              onClick={toggleConfirmPasswordVisiblity}
             />
           </Form.Group>
           <i className="text-danger position-static">

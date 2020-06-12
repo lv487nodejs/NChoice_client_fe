@@ -46,8 +46,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         event.persist();
         setUser(prevUser => ({ ...prevUser, [event.target.name]: event.target.value }));
         const err = universal(event.target.name, event.target.value)
-        if(event.target.name == 'email'){
-            console.log("here")
+        if(event.target.name === 'email'){
             setEmailError(err)
         }
         else{
