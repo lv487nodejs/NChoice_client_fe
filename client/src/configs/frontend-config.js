@@ -46,7 +46,7 @@ export const deliveryType = {
     ]
 };
 //export const _apiBase = 'http://localhost:5000/';
-export const _apiBase = 'http://nchoicebe.azurewebsites.net';
+export const _apiBase = 'https://nchoicebe.azurewebsites.net';
 
 export const socialNetworksURL = {
     telegram: 'https://web.telegram.org',
