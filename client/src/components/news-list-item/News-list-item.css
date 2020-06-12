@@ -10,12 +10,16 @@
     transform: scale(1);
 }
 
+#news-card{
+    padding:1.25rem 0;
+}
+
 .card-img:hover {
     transform: scale(1.1);
 }
 
 .images-container{
-    height: 20rem;
+    height: 17rem;
     overflow: hidden;
     border-radius: 5px;
 }

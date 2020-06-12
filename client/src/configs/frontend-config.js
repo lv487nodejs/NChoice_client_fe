@@ -40,8 +40,7 @@ export const deliveryType = {
   name: 'deliveryType',
   value: ['', 'currier', 'post', 'delivery servise']
 };
-export const _apiBase = 'http://localhost:5000/';
-
+export const _apiBase = 'https://nchoicebe.azurewebsites.net/';
 export const socialNetworkLinks = {
   title: 'Links',
   telegram: 'https://web.telegram.org',
