@@ -3,8 +3,8 @@ import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
-import GoogleLogin from "react-google-login";
-import FacebookLogin from "react-facebook-login"
+// import GoogleLogin from "react-google-login";
+// import FacebookLogin from "react-facebook-login"
 import { setUserLogged, setUserLoading, setCart, setUser } from "../../actions";
 import LoadingSpinner from "../Loading-spinner";
 import withStoreService from '../hoc';
@@ -82,21 +82,21 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
         return <Redirect to='/' />
     }
 
-    const responseGoogle = async (res) => {
-        const userFromApi = await storeService.oauthGoogle({access_token: res.accessToken})
-        const { accessToken, refreshToken, cart, userId } = userFromApi
-        setUserLogged(true);
-        addDataToLocalStorage({ accessToken, refreshToken, userId })
-        setCart(cart)
-    }
+    // const responseGoogle = async (res) => {
+    //     const userFromApi = await storeService.oauthGoogle({access_token: res.accessToken})
+    //     const { accessToken, refreshToken, cart, userId } = userFromApi
+    //     setUserLogged(true);
+    //     addDataToLocalStorage({ accessToken, refreshToken, userId })
+    //     setCart(cart)
+    // }
 
-    const responseFacebook = async (res) => {
-        const userFromAPI = await storeService.oauthFacebook({access_token: res.accessToken})
-        const { accessToken, refreshToken, cart, userId } = userFromAPI
-        setUserLogged(true);
-        addDataToLocalStorage({ accessToken, refreshToken, userId })
-        setCart(cart)
-    }
+    // const responseFacebook = async (res) => {
+    //     const userFromAPI = await storeService.oauthFacebook({access_token: res.accessToken})
+    //     const { accessToken, refreshToken, cart, userId } = userFromAPI
+    //     setUserLogged(true);
+    //     addDataToLocalStorage({ accessToken, refreshToken, userId })
+    //     setCart(cart)
+    // }
     window.scrollTo(0, 0);
 
     return (
@@ -149,7 +149,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     <Link to="/register" className="btn btn-link" >REGISTER</Link>
                 </Form.Group>
             </Form>
-            <div className='login-wrapper'>
+            {/* <div className='login-wrapper'>
                 <FacebookLogin
                     appId={'1189412381401260'}
                     textButton={'Facebook'}
@@ -163,7 +163,7 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
                     />
-            </div>
+            </div> */}
         </div>
     )
 };

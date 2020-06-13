@@ -31,14 +31,14 @@ There are just ${notAvailableItem.available}.
 Please go to cart and change amount of ${notAvailableItem.name}`;
 
 const CheckoutForm = ({
-                        cartProducts,
-                        orderStore,
-                        clearCart,
-                        storeService,
-                        setShowSnackbar,
-                        setSnackbarText,
-                        setOrderToStore
-                      }) => {
+  cartProducts,
+  orderStore,
+  clearCart,
+  storeService,
+  setShowSnackbar,
+  setSnackbarText,
+  setOrderToStore
+}) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -316,9 +316,9 @@ const CheckoutForm = ({
 };
 
 const mapStateToProps = ({
-                           cartReducer: { cartProducts },
-                           checkoutReduser: { orderStore }
-                         }) => ({
+  cartReducer: { cartProducts },
+  checkoutReduser: { orderStore }
+}) => ({
   orderStore,
   cartProducts
 });
