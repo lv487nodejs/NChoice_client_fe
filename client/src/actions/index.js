@@ -15,14 +15,21 @@ import {
   productsLoadingStop
 } from './Products-actions';
 
-import { addToCart, increaseToCart, decreaseFromCart, removeFromCart, clearCart, setCart } from './Cart-action'
-import { addToWishlist, removeFromWishlist } from './Wishlist-actions'
-import { setOrderToStore, clearOrderStore } from './Checkout-actions'
+import {
+  addToCart,
+  increaseToCart,
+  decreaseFromCart,
+  removeFromCart,
+  clearCart,
+  setCart
+} from './Cart-action';
+import { addToWishlist, removeFromWishlist } from './Wishlist-actions';
+import { setOrderToStore, clearOrderStore } from './Checkout-actions';
 
 import {
   catalogsLoaded,
   catalogsRequested,
-  catalogLoaded,
+  catalogLoaded
 } from './Catalogs-actions';
 
 import {
@@ -39,16 +46,14 @@ import {
   setCatalogFilter,
   filterRemoveAllColors,
   filterAddCategory,
-  clearFilter,
+  clearFilter
 } from './Filter-actions';
 
-import {
-  setUserLogged, setUserLoading, setUser
-} from './Auth-actions';
+import { setUserLogged, setUserLoading, setUser } from './Auth-actions';
 
 import { setShowSnackbar, setSnackbarText } from './Snackbar--actions';
 import { storeSetNews } from './News-actions';
-import {setComments, removeComments} from "./comments-action";
+import { setComments, removeComments } from './comments-action';
 
 export {
   categoriesRequested,

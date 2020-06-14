@@ -1,18 +1,18 @@
 const initialState = {
-    news: [],
+  news: []
 };
 
 const newsReduser = (state = initialState, action) => {
-    switch (action.type) {
-        case 'SET_NEWS':
-            return {
-                ...state,
-                news: action.payload,
-            };
+  switch (action.type) {
+    case 'SET_NEWS':
+      return {
+        ...state,
+        news: action.payload
+      };
 
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 };
 
 export default newsReduser;

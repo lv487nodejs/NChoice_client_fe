@@ -7,12 +7,12 @@ import {universal} from '../../validators/form-validators'
 import { setUserLogged, setUserLoading } from "../../actions";
 import withStoreService from "../hoc";
 import { setToLocalStorage } from "../../services/localStoreService";
-const addDataToLocalStorage = (token) => {
-  setToLocalStorage("userId", token.userId);
-  setToLocalStorage("accessToken", token.accessToken);
-  setToLocalStorage("refreshToken", token.refreshToken);
-};
 
+const addDataToLocalStorage = (token) => {
+  setToLocalStorage('userId', token.userId);
+  setToLocalStorage('accessToken', token.accessToken);
+  setToLocalStorage('refreshToken', token.refreshToken);
+};
 
 const USER_DATA = {
   firstName: '',
@@ -90,7 +90,7 @@ const Register = ({
   const toggleConfirmPasswordVisiblity = () => {
     setConfirmPasswordShown(!confirmPasswordShown);
   };
-
+  
   const validateConfirmPassword = () => {
     if (user.password === user.confirmPassword) {
       setConfirmPasswordError(false)
@@ -141,35 +141,32 @@ const Register = ({
   };
 
   if (userLogged) {
-    return <Redirect to="/" />;
+    return <Redirect to='/' />;
   }
 
   return (
     <>
-      <Form
-          className="register"
-          onSubmit={handleOnSubmit}
-      >
-        <Form.Label className="lable">Register</Form.Label>
+      <Form className='register' onSubmit={handleOnSubmit}>
+        <Form.Label className='lable'>Register</Form.Label>
         <Form.Group>
           <Form.Label>First name<sup style = {{ color: "red" }}>*</sup></Form.Label>
           <Form.Control
-            type="text"
-            name={'firstName'}
+            type='text'
+            name='firstName'
             value={user.firstName}
             onChange={handleChange}
-            placeholder="Enter firstname..."
+            placeholder='Enter firstname...'
           />
           <i className="text-danger position-static">{firstNameError}</i>
         </Form.Group>
         <Form.Group>
           <Form.Label>Last name<sup style = {{ color: "red" }}>*</sup></Form.Label>
           <Form.Control
-            type="text"
-            name={'lastName'}
+            type='text'
+            name='lastName'
             value={user.lastName}
             onChange={handleChange}
-            placeholder="Enter lastname..."
+            placeholder='Enter lastname...'
           />
           <i className="text-danger position-static">{lastNameError}</i>
         </Form.Group>
@@ -177,10 +174,11 @@ const Register = ({
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address<sup style = {{ color: "red" }}>*</sup></Form.Label>
           <Form.Control
-            type="text"
-            name={'email'}
+            type='text'
+            name='email'
             value={user.email}
             onChange={handleChange}
+
             title="example@gmail.com"
             placeholder="Enter email..."
           />
@@ -195,8 +193,8 @@ const Register = ({
           <Form.Group className="pass-wrapper">
             <Form.Control
               type={passwordShown ? 'text' : 'password'}
-              placeholder="Enter password..."
-              name={'password'}
+              placeholder='Enter password...'
+              name='password'
               value={user.password}
               onChange={handleChange}
               title="min length 8 max 30 characters"
@@ -212,8 +210,8 @@ const Register = ({
           <Form.Group className="pass-wrapper">
             <Form.Control
               type={confirmPasswordShown ? 'text' : 'password'}
-              placeholder="Enter password..."
-              name={'confirmPassword'}
+              placeholder='Enter password...'
+              name='confirmPassword'
               value={user.confirmPassword}
               onChange={handleChange}
               onBlur={validateConfirmPassword}
@@ -231,12 +229,12 @@ const Register = ({
         <Form.Label style = {{ fontSize: "14px" }}> Required field marked by <sup style = {{ color: "red" }}>*</sup></Form.Label>
         <Form.Group>
           <Form.Check
-            type="switch"
-            id="custom-switch"
-            label="Agree with term"
+            type='switch'
+            id='custom-switch'
+            label='Agree with term'
             onChange={handleAgree}
           />
-          <i className="text-danger position-static">
+          <i className='text-danger position-static'>
             {agreeWithTermsErrorMessage}
           </i>
         </Form.Group>
@@ -251,8 +249,8 @@ const Register = ({
           <span>{errorMsg}</span>
         </Form.Group>
 
-        <Form.Group className="link">
-          <Link to="/login" className="btn btn-link">
+        <Form.Group className='link'>
+          <Link to='/login' className='btn btn-link'>
             LOG IN
           </Link>
         </Form.Group>
@@ -266,7 +264,7 @@ const Register = ({
           You have successfully registered! Please confirm your email
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant='secondary' onClick={handleClose}>
             Close
           </Button>
         </Modal.Footer>
@@ -279,12 +277,12 @@ const mapDispatchToProps = { setUserLogged, setUserLoading };
 
 const mapStateToProps = ({
   authReducer: { userLogged, userLoading },
-  cartReducer: { cartNumbers, cartProducts },
+  cartReducer: { cartNumbers, cartProducts }
 }) => ({
   userLogged,
   userLoading,
   cartNumbers,
-  cartProducts,
+  cartProducts
 });
 
 export default withStoreService()(

@@ -1,13 +1,20 @@
-import React from 'react'
+import React from 'react';
 import Moment from 'react-moment';
-import './comment-item.css'
-import withStoreService from "../hoc";
-import connect from "react-redux/es/connect/connect";
-import {removeComments} from '../../actions';
-import {getFromLocalStorage} from "../../services/localStoreService";
+import './comment-item.css';
+import connect from 'react-redux/es/connect/connect';
+import withStoreService from '../hoc';
+import { removeComments } from '../../actions';
+import { getFromLocalStorage } from '../../services/localStoreService';
 
-const CommentItem = ({text, date, reviewerName, reviewerId, commentId, storeService, removeComments}) => {
-
+const CommentItem = ({
+  text,
+  date,
+  reviewerName,
+  reviewerId,
+  commentId,
+  storeService,
+  removeComments
+}) => {
   const userId = getFromLocalStorage('userId');
   const deleteHandler = (commentId) => () => {
     storeService.deleteComment(commentId);
@@ -20,21 +27,23 @@ const CommentItem = ({text, date, reviewerName, reviewerId, commentId, storeServ
         <div className='review-items'>
           <h6>{reviewerName}</h6>
           <div className='review-date'>
-            <Moment format="YYYY/MM/DD ">{date}</Moment>
+            <Moment format='YYYY/MM/DD '>{date}</Moment>
           </div>
         </div>
-        <div className='review-items' >
+        <div className='review-items'>
           <p className='my-1 review-text'> {text} </p>
           {userId === reviewerId && (
-            <button onClick={deleteHandler(commentId)}>x</button>
+            <button type='button' onClick={deleteHandler(commentId)}>
+              x
+            </button>
           )}
         </div>
       </div>
     </div>
-  )
+  );
 };
 
-const mapDispatchToProps = {removeComments};
+const mapDispatchToProps = { removeComments };
 
 export default withStoreService()(
   connect(null, mapDispatchToProps)(CommentItem)

@@ -3,15 +3,10 @@ import './News-list.css';
 import { connect } from 'react-redux';
 import NewsListItem from '../news-list-item/News-list-item';
 import withStoreService from '../hoc';
-import {
-  productsLoadingStart,
-  productsLoadingStop,
-  storeSetNews
-} from '../../actions';
+import { storeSetNews } from '../../actions';
 
 const NewsList = ({ storeService, storeSetNews, news }) => {
   useEffect(() => {
-    productsLoadingStart();
     storeService.getAllNews().then((newsArray) => {
       storeSetNews(newsArray);
     });
@@ -27,30 +22,25 @@ const NewsList = ({ storeService, storeSetNews, news }) => {
         author={author}
         authorPhoto={authorPhoto}
         date={date}
+        newsId={_id}
       />
     )
   );
 
   return (
-    <React.Fragment>
-      <h2 className="text-center" id="news-title">
+    <>
+      <h2 className='text-center' id='news-title'>
         News
       </h2>
-      <div className="news-cardDeck">{newsItems}</div>
-    </React.Fragment>
+      <div className='news-cardDeck'>{newsItems}</div>
+    </>
   );
 };
 
-const mapStateToProps = ({
-  productsList: { loading },
-  newsReduser: { news }
-}) => ({
-  loading,
+const mapStateToProps = ({ newsReduser: { news } }) => ({
   news
 });
 const mapDispatchToProps = {
-  productsLoadingStart,
-  productsLoadingStop,
   storeSetNews
 };
 

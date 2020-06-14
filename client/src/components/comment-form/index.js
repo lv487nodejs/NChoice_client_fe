@@ -1,3 +1,3 @@
-import CommentForm from "./Comment-form";
+import CommentForm from './comment-form';
 
 export default CommentForm;
