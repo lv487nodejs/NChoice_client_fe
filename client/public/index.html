@@ -6,26 +6,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <link rel="icon" type="image/png" href="/images/logo.png" />
   <title>NChoice Online Shop</title>
 </head>
 
 <body>
   <script>
-    window.fbAsyncInit = function() {
+    window.fbAsyncInit = function () {
       FB.init({
-        appId      : '1189412381401260',
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v7.0'
+        appId: '1189412381401260',
+        cookie: true,
+        xfbml: true,
+        version: 'v7.0'
       });
 
       FB.AppEvents.logPageView();
 
     };
 
-    (function(d, s, id){
+    (function (d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
+      if (d.getElementById(id)) { return; }
       js = d.createElement(s); js.id = id;
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
