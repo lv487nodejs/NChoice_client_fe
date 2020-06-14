@@ -2,24 +2,24 @@ import React, { useState, useEffect } from 'react';
 import './Login.css';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-// import GoogleLogin from 'react-google-login';
-// import FacebookLogin from 'react-facebook-login';
-import { setUserLogged, setUserLoading, setCart, setUser } from '../../actions';
-import LoadingSpinner from '../Loading-spinner';
+import { connect } from "react-redux";
+// import GoogleLogin from "react-google-login";
+// import FacebookLogin from "react-facebook-login"
+import { setUserLogged, setUserLoading, setCart, setUser } from "../../actions";
+import LoadingSpinner from "../Loading-spinner";
 import withStoreService from '../hoc';
 import { setToLocalStorage } from '../../services/localStoreService';
 import { universal } from "../../validators/form-validators";
 
 const addDataToLocalStorage = (token) => {
-  setToLocalStorage('userId', token.userId);
-  setToLocalStorage('accessToken', token.accessToken);
-  setToLocalStorage('refreshToken', token.refreshToken);
-};
+    setToLocalStorage('userId', token.userId)
+    setToLocalStorage('accessToken', token.accessToken)
+    setToLocalStorage('refreshToken', token.refreshToken)
+}
 
 const USER_DATA = {
-  email: '',
-  password: ''
+    email: '',
+    password: ''
 };
 
 const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLoading, setCart }) => {
@@ -77,11 +77,10 @@ const Login = ({ storeService, setUserLogged, setUserLoading, userLogged, userLo
     if (userLoading) {
         return <LoadingSpinner />
     }
-  };
 
-  if (userLogged) {
+    if (userLogged) {
         return <Redirect to='/' />
-  }
+    }
 
     // const responseGoogle = async (res) => {
     //     const userFromApi = await storeService.oauthGoogle({access_token: res.accessToken})
