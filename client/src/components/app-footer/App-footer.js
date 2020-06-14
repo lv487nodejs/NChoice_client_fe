@@ -5,7 +5,7 @@ import {
   policiesFooter,
   catalogsFooter,
   CATALOGS_URL,
-  socialNetworksURL
+  socialNetworkLinks
 } from '../../configs/frontend-config';
 import {
   faTelegramPlane,
@@ -32,13 +32,13 @@ const contacts = contactInformationFooter.items.map((item, index) =>
 const Links = () => {
   return (
     <>
-      <Link className='footer-icon' href={socialNetworksURL.telegram} target='_blank'>
+      <Link className='footer-icon' href={socialNetworkLinks.telegram} target='_blank'>
         <FontAwesomeIcon className="icon" icon={faTelegramPlane} />
       </Link>
-      <Link className='footer-icon' href={socialNetworksURL.instagram} target='_blank'>
+      <Link className='footer-icon' href={socialNetworkLinks.instagram} target='_blank'>
         <FontAwesomeIcon className="icon" icon={faInstagram} />
       </Link>
-      <Link className='footer-icon' href={socialNetworksURL.facebook} target='_blank'>
+      <Link className='footer-icon' href={socialNetworkLinks.facebook} target='_blank'>
         <FontAwesomeIcon className="icon" icon={faFacebook} />
       </Link>
     </>

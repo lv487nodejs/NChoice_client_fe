@@ -45,11 +45,13 @@ export const deliveryType = {
         "delivery servise"
     ]
 };
+
 export const _apiBase = 'https://nchoicebe.azurewebsites.net/';
-export const socialNetworksURL = {
-    telegram: 'https://web.telegram.org',
-    facebook: 'https://www.facebook.com/Fn-100171608356044/',
-    instagram: 'https://www.instagram.com/'
+export const socialNetworkLinks = {
+  title: 'Links',
+  telegram: 'https://web.telegram.org',
+  facebook: 'https://www.facebook.com/Fn-100171608356044/',
+  instagram: 'https://www.instagram.com/'
 };
 export const policiesFooter = {
     title: 'Information',
@@ -78,8 +80,6 @@ export const formRegExp = {
     name: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
     password: '.{8,30}',
     phone: '/^+?[0-9]{3}-?[0-9]{6,12}$/g',
-        // /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/g,
-    //^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$
     country: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
     city: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
     street: '^(?=.{1,30}$)[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
