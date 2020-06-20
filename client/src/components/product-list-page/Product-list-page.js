@@ -20,7 +20,23 @@ import {
 import withStoreService from '../hoc';
 import ProductSort from '../product-sort';
 
-const sortAsc = 1;
+const sortAsc = 0;
+
+const classNameSelector = (value) => {
+  switch (value) {
+  case 0: {
+    return 'fa fa-sort';
+  }
+  case 1: {
+    return 'fa fa-sort-asc';
+  }
+  case -1: {
+    return 'fa fa-sort-desc';
+  }
+  default:
+    return 0;
+  }
+};
 
 const ProductListPage = ({
   catalogLoaded,
@@ -31,8 +47,12 @@ const ProductListPage = ({
   pagesCount,
   setCatalogFilter,
   catalog,
-  clearFilter
+  clearFilter,
+  sortByPrice,
+  sortByRate
 }) => {
+  const priceButtonClassName = classNameSelector(sortByPrice);
+  const rateButtonClassName = classNameSelector(sortByRate);
   const sortByPriceHandler = (value) => {
     addSortByRate(0);
     addSortByPrice(value);
@@ -50,16 +70,14 @@ const ProductListPage = ({
       value: sortAsc,
       handler: sortByPriceHandler,
       variant: 'dark',
-      defaultClass: 'fas fa-sort-up',
-      toChangeClass: 'fas fa-sort-down'
+      className: priceButtonClassName
     },
     {
       text: 'RATE',
       value: sortAsc,
       handler: sortByRateHandler,
       variant: 'dark',
-      defaultClass: 'fas fa-sort-up',
-      toChangeClass: 'fas fa-sort-down'
+      className: rateButtonClassName
     }
   ];
 
@@ -124,7 +142,10 @@ const ProductListPage = ({
   );
 };
 
-const mapStateToProps = ({ productsList: { pagesCount } }) => ({ pagesCount });
+const mapStateToProps = ({
+  productsList: { pagesCount, sortByPrice, sortByRate }
+}) => ({ pagesCount, sortByPrice, sortByRate });
+
 const mapDispatchToProps = {
   catalogLoaded,
   addCurrentPage,

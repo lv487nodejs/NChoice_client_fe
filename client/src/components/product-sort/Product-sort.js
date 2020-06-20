@@ -4,13 +4,9 @@ import Button from 'react-bootstrap/Button';
 import FA from 'react-fontawesome';
 
 const ProductSort = ({ options }) => {
-  const [sortValue, setSortValue] = useState(options.value);
-  const [className, setClassName] = useState(null);
+  const [sortValue, setSortValue] = useState(1);
   const changeHandler = () => {
     setSortValue(-sortValue);
-    sortValue === 1
-      ? setClassName(options.defaultClass)
-      : setClassName(options.toChangeClass);
     options.handler(sortValue);
   };
 
@@ -21,7 +17,7 @@ const ProductSort = ({ options }) => {
       variant={options.variant}
       onClick={changeHandler}
     >
-      {options.text} <FA name='sort' className={className || 'fas fa-sort'} />
+      {options.text} <FA name='sort' className={options.className} />
     </Button>
   );
 };
