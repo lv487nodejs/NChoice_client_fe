@@ -9,6 +9,6 @@ RUN npm install --silent
 RUN npm run build 
 
 #prepare nginx
-FROM nginx:latest
+FROM maksymsahan/nginx:latest
 
 COPY --from=react_build /app/build /usr/share/nginx/html
