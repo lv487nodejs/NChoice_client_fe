@@ -41,7 +41,7 @@ export const deliveryType = {
   value: ['', 'currier', 'post', 'delivery servise']
 };
 
-export const _apiBase = 'https://nchoicebe.azurewebsites.net/';
+export const _apiBase = 'https://nchoice-back.azurewebsites.net/';
 
 export const socialNetworkLinks = {
   title: 'Links',
